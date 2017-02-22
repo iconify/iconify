@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!--
+		Tests for browser.
+		Open this file in browser via web server.
+
+		Before opening this file you need to compile library.
+		To compile library run "node build/dist".
+
+		Important: this file should be ran from web server, not file://
+	-->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!--[if IE]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20150312/classList.min.js"></script>
+	<![endif]-->
+	<title>IE polyfill test</title>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			font: 16px / 24px sans-serif;
+		}
+
+		#content {
+			padding: 16px;
+		}
+
+		p {
+			margin: 8px 0;
+			padding: 0;
+		}
+
+		.simple-svg {
+			border: 1px solid #ccc;
+			color: #444;
+		}
+
+		.simple-svg:hover {
+			color: #800;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="content">
+		<p>This demo shows observer and observer polyfill for IE.</p>
+		<p>Set of images will load 5 seconds after page load, another set 15 seconds after page load. Both sets rely on observer to detect their presence.</p>
+		<p>In IE9/10 observer will be delayed by 10 seconds, so first set of icons will be loaded 5-6 seconds after its intended display time.</p>
+		<p>Few starter images:</p>
+		<i class="simple-svg" data-icon="fa-home" data-height="32px"></i>
+		<i class="simple-svg" data-icon="twemoji-cat" data-height="auto"></i>
+	</div>
+	<script>
+        var SimpleSVGConfig = {
+			polyfill: './delayed-polyfill.js'
+		};
+        $(document).ready(function() {
+            var $content = $('#content');
+
+            setTimeout(function() {
+                $content.append('<p>More images, loaded 5 seconds after page load.</p><p>Observer should instantly kick in for modern browsers.</p><p>In IE9/10 observer is delayed by 10 seconds for testing, so images should load in additional 5-6 seconds.</p>');
+                $content.append('<i class="simple-svg svg-flip-horizontal" data-icon="twemoji-cat2" data-height="auto"></i> ');
+                $content.append('<i class="simple-svg" data-icon="twemoji-cake" data-height="auto"></i> ');
+			}, 5000);
+
+            setTimeout(function() {
+                function test() {
+                    if (!window.MutationObserver) {
+                        $content.append('<p>Observer is still not available</p>');
+                        setTimeout(test, 3000);
+                        return;
+                    }
+
+                    $content.append('<p>Showing more images, observer should transform them immediately.</p>');
+                    $content.append('<i class="simple-svg" data-icon="twemoji-frog" data-height="auto"></i> ');
+                    $content.append('<i class="simple-svg" data-icon="twemoji-ghost" data-height="auto"></i> ');
+				}
+                test();
+            }, 15000);
+		});
+	</script>
+	<script src="../dist/simple-svg.js"></script>
+</body>
+</html>

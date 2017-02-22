@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!--
+		Tests for browser.
+		Open this file in browser via web server.
+
+		Tun run tests in node run "node test".
+
+		Before opening this file you need to compile tests.
+		To compile tests run "node build/tests".
+
+		Important: this file should be ran from web server, not file://
+	-->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=1024px">
+	<!--[if IE]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20150312/classList.min.js"></script>
+	<![endif]-->
+	<title>Tests</title>
+    <link href="./node_modules/mocha/mocha.css" rel="stylesheet" />
+	<style>
+		#debug, #debug2 { display: none }
+
+		#log {
+			font: 11px / 15px sans-serif;
+		}
+
+		#samples {
+			margin: 0;
+			padding: 10px;
+			font: 16px / 24px sans-serif;
+		}
+		#samples p, #samples ul, #samples li {
+			margin: 0;
+			padding: 0;
+		}
+		#samples ul {
+			list-style: none;
+			overflow: hidden;
+		}
+		#samples li {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin: 8px;
+			float: left;
+			white-space: nowrap;
+		}
+
+		#samples li:hover .simple-svg {
+			color: #800;
+		}
+	</style>
+</head>
+<body>
+	<div id="mocha"></div>
+	<div id="debug"></div>
+	<div id="debug2"></div>
+	<div id="log"></div>
+	<div id="samples">
+		<p>Few sample images to see SimpleSVG in action:</p>
+		<ul>
+			<li>fa-home, default height (1em): <i class="simple-svg" data-icon="fa-home"></i></li>
+			<li>fa-home, horizontally flipped: <i class="simple-svg svg-flip-horizontal" data-icon="fa-home"></i></li>
+			<li>batch-user, automatic size (data-height="auto"): <i class="simple-svg" data-icon="batch-user" data-height="auto"></i></li>
+			<li>dashicons-book, automatic size: <i class="simple-svg" data-icon="dashicons-book" data-height="auto"></i></li>
+			<li>ei-user, 50px, 270&deg; and horizontally flipped <i class="simple-svg svg-rotate-270 svg-flip-horizontal" data-icon="ei-user" data-height="50px"></i></li>
+			<li>Gift emoji, several variations from different sources:
+				<i class="simple-svg" data-icon="emoji-gift" data-height="auto"></i>
+				<i class="simple-svg" data-icon="emoji-bw-gift" data-height="auto"></i>
+				<i class="simple-svg" data-icon="emoji1-gift" data-height="auto"></i>
+				<i class="simple-svg" data-icon="noto-gift" data-height="64px"></i>
+				<i class="simple-svg" data-icon="twemoji-gift" data-height="auto"></i>
+			</li>
+			<li>Testing clip path with unique id:
+				<i class="simple-svg" data-icon="mdi-airplane-landing" data-height="auto"></i>
+				<i class="simple-svg" data-icon="mdi-airplane-takeoff" data-height="auto"></i>
+				<i class="simple-svg" data-icon="mdi-copyright" data-height="auto"></i>
+				<i class="simple-svg" data-icon="mdi-update" data-height="auto"></i>
+			</li>
+			<li>
+				Koala, upside down
+				<i class="simple-svg svg-flip-vertical" data-icon="noto-koala" data-height="64px"></i>
+			</li>
+		</ul>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="./node_modules/mocha/mocha.js"></script>
+	<script src="./node_modules/chai/chai.js"></script>
+	<script>mocha.setup('bdd');</script>
+
+	<script src="./debug/tests.js"></script>
+	<script>
+		$(document).ready(function() {
+            mocha.checkLeaks();
+            mocha.setup({
+                globals: ['SSVGLoaderTest1', 'SSVGRenderTest', 'SSVGRenderTest2']
+			});
+            mocha.run();
+		});
+
+		console.log = function() {
+		    var html = '';
+		    for (var i = 0; i < arguments.length; i ++) {
+		        switch (typeof arguments[i]) {
+					case 'string':
+					case 'number':
+					case 'function':
+					    html += ' ' + arguments[i];
+					    break;
+
+					default:
+					    html += ' ' + JSON.stringify(arguments[i]);
+				}
+			}
+			$('#log').append($('<p />').text(html));
+		};
+
+        var SimpleSVGConfig = {
+			rootElement: document.getElementById('samples')
+		};
+	</script>
+	<script src="./dist/simple-svg.without-observer.js"></script>
+</body>
+</html>

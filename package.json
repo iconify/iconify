@@ -1,0 +1,30 @@
+{
+  "name": "simple-svg",
+  "description": "SVG framework designed to replace glyph web fonts",
+  "author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
+  "version": "0.0.1",
+  "license": "MIT",
+  "keywords": [
+    "svg",
+    "icons",
+    "icon",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/simplesvg/simple-svg.git"
+  },
+  "scripts": {
+    "pretest": "node build/tests",
+    "test": "mocha tests/**/*_test.js",
+    "posttest": "echo \"Open tests.html in browser to run browser tests.\"",
+    "build": "node build/all",
+    "publish": "node build/all"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "glob": "^7.1.1",
+    "mocha": "^3.2.0",
+    "uglify-js": "^2.7.5"
+  }
+}
