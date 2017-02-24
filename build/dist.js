@@ -122,7 +122,7 @@ function parse(config) {
     });
     if (config.plugins) {
         config.plugins.forEach(plugin => {
-            testFiles.push('browser/plugins/' + file + '.js');
+            testFiles.push('browser/plugins/' + plugin + '.js');
         });
     }
 
