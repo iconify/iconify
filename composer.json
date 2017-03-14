@@ -4,5 +4,10 @@
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
 	"type": "library",
 	"license": "MIT",
-	"homepage": "https://simplesvg.com/"
+	"homepage": "https://simplesvg.com/",
+	"autoload": {
+		"psr-4": {
+			"SimpleSVG\\SimpleSVG\\": "build"
+		}
+	}
 }
