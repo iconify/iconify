@@ -1,0 +1,8 @@
+{
+	"name": "simple-svg/simple-svg",
+	"description": "SVG framework designed to replace glyph web fonts",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
+	"type": "library",
+	"license": "MIT",
+	"homepage": "https://simplesvg.com/"
+}
