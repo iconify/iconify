@@ -1,13 +1,11 @@
 /**
- * This file is part of the @cyberalien/simple-svg package.
+ * This file is part of the simple-svg package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
- * This is not open source library.
- * This library can be used only with products available on artodia.com
- *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the license.txt
  * file that was distributed with this source code.
+ * @license MIT
  */
 
 /**
