@@ -68,7 +68,7 @@
 
             // Load libraries
             load(SimpleSVG);
-            SimpleSVG.config.api = SimpleSVG.config.api.replace('{callback}', 'window.SSVGLoaderTest1');
+            SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
             window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
 
             // Find icons
@@ -87,6 +87,53 @@
             // Load icons
             expect(SimpleSVG._loadImage(apple)).to.be.equal(false, 'fa-apple should not be loaded');
             expect(SimpleSVG._loadImage(star)).to.be.equal(false, 'fa-star should not be loaded');
+        });
+
+        it('multiple CDN', function(done) {
+            var SimpleSVG = {},
+                element = document.createElement('div'),
+                expecting = [
+                    'default?icons=mdi-home,mdi-arrow-left,emoji-cat,foo-bar',
+                    'fa?icons=fa-apple,fa-home',
+                    'test?icons=test-foo'
+                ],
+                icons;
+
+            // Setup fake SimpleSVG instance
+            SimpleSVG = {
+            };
+
+            // Load libraries
+            load(SimpleSVG);
+            SimpleSVG.testLoaderURL = function(url) {
+                var index = expecting.indexOf(url);
+                expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
+                expecting.splice(index, 1);
+                if (!expecting.length) {
+                    done();
+                }
+                return false;
+            };
+            SimpleSVG.config.defaultCDN = 'default?icons={icons}';
+            SimpleSVG.config.customCDN['fa'] = 'fa?icons={icons}';
+            SimpleSVG.config.customCDN['test'] = 'test?icons={icons}';
+            SimpleSVG._debugLoader = true;
+
+            // Add dummy icons
+            icons = {};
+            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'emoji-cat', 'test-foo', 'foo-bar'].forEach(function(key) {
+                icons[key] = SimpleSVG._newImage(element, key, null);
+            });
+
+            // Check if icons exist
+            expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
+            expect(SimpleSVG.iconExists('fa-home')).to.be.equal(false, 'fa-home should not exist');
+            expect(SimpleSVG.iconExists('mdi-home')).to.be.equal(false, 'mdi-home should not exist');
+
+            // Load icons
+            Object.keys(icons).forEach(function(key) {
+                expect(SimpleSVG._loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
+            });
         });
     });
 })();

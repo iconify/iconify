@@ -73,8 +73,8 @@
             expect(svg.height('-webkit-calc(1em + 8px)')).to.be.equal('-webkit-calc(0.75em + 6px)');
 
             // Invalid units
-            expect(svg.height('-.')).to.be.equal(null);
-            expect(svg.height('@foo')).to.be.equal(null);
+            expect(svg.height('-.')).to.be.equal('-.');
+            expect(svg.width('@foo')).to.be.equal('@foo');
         });
     });
 })();

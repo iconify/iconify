@@ -115,7 +115,7 @@ function parse(config) {
         testFiles.push('browser/' + file);
         testFiles.push('browser/' + (config.observer || config.lazy ? 'with-' : 'no-') + 'polyfill/' + file);
         testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'observer/' + file);
-        testFiles.push('browser/' + (config.api ? 'with-' : 'no-') + 'api/' + file);
+        testFiles.push('browser/' + (config.cdn ? 'with-' : 'no-') + 'cdn/' + file);
         testFiles.push('browser/' + (config.lazy ? 'with-' : 'no-') + 'lazy/' + file);
     });
     if (config.plugins) {
@@ -152,21 +152,21 @@ Helper.mkdir(resolvedDistDir);
 // Parse with observer
 content = parse({
     observer: true,
-    api: true,
+    cdn: true,
     lazy: false
 });
 save(baseName, content);
 
 content = parse({
     observer: false,
-    api: true,
+    cdn: true,
     lazy: false
 });
 save(baseName + '.without-observer', content);
 
 content = parse({
     observer: false,
-    api: false,
+    cdn: false,
     lazy: false
 });
 save(baseName + '.basic', content);

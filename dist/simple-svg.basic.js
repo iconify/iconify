@@ -48,24 +48,37 @@ self.SimpleSVG = {};
     
     var customConfig = SimpleSVG.config === void 0 ? null : SimpleSVG.config;
 
-    SimpleSVG.config = SimpleSVG._defaultConfig;
-
-    // Merge with SimpleSVGConfig object
-    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+    function merge(list) {
         Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (global.SimpleSVGConfig[key] !== void 0) {
-                SimpleSVG.config[key] = global.SimpleSVGConfig[key];
+            if (list[key] === void 0) {
+                return;
+            }
+
+            switch (key) {
+                case 'customCDN':
+                    // Merge objects
+                    Object.keys(list[key]).forEach(function(key2) {
+                        SimpleSVG.config[key][key2] = list[key][key2];
+                    });
+                    break;
+
+                default:
+                    // Overwrite config
+                    SimpleSVG.config[key] = list[key];
             }
         });
     }
 
+    SimpleSVG.config = SimpleSVG._defaultConfig;
+
+    // Merge with SimpleSVGConfig object
+    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+        merge(global.SimpleSVGConfig);
+    }
+
     // Merge with existing config object
     if (customConfig !== null) {
-        Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (customConfig[key] !== void 0) {
-                SimpleSVG.config[key] = customConfig[key];
-            }
-        });
+        merge(customConfig);
     }
 
 })(self, self.SimpleSVG);
@@ -719,10 +732,10 @@ self.SimpleSVG = {};
 	        // height = props.height !== void 0 ? props.height : (props.width !== void 0 ? this.height(props.width) : this.item.height);
 	
 	        if (width !== null) {
-	            attributes.width = width === 'auto' ? item.width : width;
+	            attributes.width = width === 'auto' ? this.item.width : width;
 	        }
 	        if (height !== null) {
-	            attributes.height = height === 'auto' ? item.height : height;
+	            attributes.height = height === 'auto' ? this.item.height : height;
 	        }
 	
 	        // Style
@@ -1075,7 +1088,7 @@ self.SimpleSVG = {};
 })(self.SimpleSVG);
 
 /**
- * Replacement for loader module when API is disabled
+ * Replacement for loader module when CDN is disabled
  */
 (function(SimpleSVG) {
     

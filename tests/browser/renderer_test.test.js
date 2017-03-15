@@ -31,7 +31,7 @@
 
                 // Load libraries
                 load(SimpleSVG);
-                SimpleSVG.config.api = SimpleSVG.config.api.replace('{callback}', 'window.SSVGRenderTest');
+                SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
                 window.SSVGRenderTest = SimpleSVG._loaderCallback;
 
                 // Load images, start tests when images are available
@@ -98,7 +98,7 @@
 
                 // Load libraries
                 load(SimpleSVG);
-                SimpleSVG.config.api = SimpleSVG.config.api.replace('{callback}', 'window.SSVGRenderTest2');
+                SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest2');
                 window.SSVGRenderTest2 = SimpleSVG._loaderCallback;
 
                 // Load images, start tests when images are available

@@ -9,7 +9,7 @@
  */
 
 /**
- * Replacement for loader module when API is disabled
+ * Replacement for loader module when CDN is disabled
  */
 (function(SimpleSVG) {
     "use strict";

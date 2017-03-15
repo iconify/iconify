@@ -50,14 +50,20 @@ self.SimpleSVG = {};
 })(self.SimpleSVG);
 
 /**
- * Default configuration when API is included
+ * Default configuration when CDN is included
  */
 (function(SimpleSVG, scope) {
     
     var isAncientBrowser = !Object.assign || !scope.MutationObserver;
 
-    // API callback script
-    SimpleSVG._defaultConfig.api = (isAncientBrowser ? '' : 'https:') + '//www.artodia.com/ssvg/?callback={callback}&icons={icons}';
+    // CDN callback script
+    SimpleSVG._defaultConfig.defaultCDN = (isAncientBrowser ? '' : 'https:') + '//cdn.simplesvg.com/icons/?callback={callback}&icons={icons}';
+
+    // Custom CDN list. Key = prefix, value = CDN URL
+    SimpleSVG._defaultConfig.customCDN = {};
+
+    // Maximum number of icons per request
+    SimpleSVG._defaultConfig.loaderIconsLimit = 100;
 
 })(self.SimpleSVG, self);
 
@@ -70,24 +76,37 @@ self.SimpleSVG = {};
     
     var customConfig = SimpleSVG.config === void 0 ? null : SimpleSVG.config;
 
-    SimpleSVG.config = SimpleSVG._defaultConfig;
-
-    // Merge with SimpleSVGConfig object
-    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+    function merge(list) {
         Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (global.SimpleSVGConfig[key] !== void 0) {
-                SimpleSVG.config[key] = global.SimpleSVGConfig[key];
+            if (list[key] === void 0) {
+                return;
+            }
+
+            switch (key) {
+                case 'customCDN':
+                    // Merge objects
+                    Object.keys(list[key]).forEach(function(key2) {
+                        SimpleSVG.config[key][key2] = list[key][key2];
+                    });
+                    break;
+
+                default:
+                    // Overwrite config
+                    SimpleSVG.config[key] = list[key];
             }
         });
     }
 
+    SimpleSVG.config = SimpleSVG._defaultConfig;
+
+    // Merge with SimpleSVGConfig object
+    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+        merge(global.SimpleSVGConfig);
+    }
+
     // Merge with existing config object
     if (customConfig !== null) {
-        Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (customConfig[key] !== void 0) {
-                SimpleSVG.config[key] = customConfig[key];
-            }
-        });
+        merge(customConfig);
     }
 
 })(self, self.SimpleSVG);
@@ -807,10 +826,10 @@ self.SimpleSVG = {};
 	        // height = props.height !== void 0 ? props.height : (props.width !== void 0 ? this.height(props.width) : this.item.height);
 	
 	        if (width !== null) {
-	            attributes.width = width === 'auto' ? item.width : width;
+	            attributes.width = width === 'auto' ? this.item.width : width;
 	        }
 	        if (height !== null) {
-	            attributes.height = height === 'auto' ? item.height : height;
+	            attributes.height = height === 'auto' ? this.item.height : height;
 	        }
 	
 	        // Style
@@ -1183,19 +1202,65 @@ self.SimpleSVG = {};
     var queued = false;
 
     function loadQueue() {
-        var url = SimpleSVG.config.api.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', queue.join(',')),
-            element;
+        var defaultQueue = [],
+            customQueues = {},
+            prefixes = Object.keys(SimpleSVG.config.customCDN);
 
+        function addScript(url, items) {
+            var element;
+
+            url = url.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', items.join(','));
+
+            // Create script
+            element = document.createElement('script');
+            element.setAttribute('type', 'text/javascript');
+            element.setAttribute('src', url);
+            element.setAttribute('async', true);
+            document.head.appendChild(element);
+        }
+
+        queue.forEach(function(icon) {
+            var prefix = '';
+
+            // Check for custom CDN
+            prefixes.forEach(function(customPrefix) {
+                if (icon.slice(0, customPrefix.length) === customPrefix) {
+                    prefix = customPrefix;
+                }
+            });
+
+            // Add to queue
+            if (prefix === '') {
+                defaultQueue.push(icon);
+                if (defaultQueue.length >= SimpleSVG.config.loaderIconsLimit) {
+                    addScript(SimpleSVG.config.defaultCDN, defaultQueue);
+                    defaultQueue = [];
+                }
+            } else {
+                if (customQueues[prefix] === void 0) {
+                    customQueues[prefix] = [];
+                }
+                if (customQueues[prefix].length >= SimpleSVG.config.loaderIconsLimit) {
+                    addScript(SimpleSVG.config.customCDN[prefix], customQueues[prefix]);
+                    customQueues[prefix] = [];
+                }
+            }
+        });
+
+        // Add extra queues
+        if (defaultQueue.length) {
+            addScript(SimpleSVG.config.defaultCDN, defaultQueue);
+        }
+        prefixes.forEach(function(prefix) {
+            if (customQueues[prefix] !== void 0 && customQueues[prefix].length) {
+                addScript(SimpleSVG.config.customCDN[prefix], customQueues[prefix]);
+            }
+        });
+
+        // Mark icons as loaded
         tested = tested.concat(queue);
         queue = [];
         queued = false;
-
-        // Create script
-        element = document.createElement('script');
-        element.setAttribute('type', 'text/javascript');
-        element.setAttribute('src', url);
-        element.setAttribute('async', true);
-        document.head.appendChild(element);
     }
 
     /**

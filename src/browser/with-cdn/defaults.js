@@ -9,14 +9,20 @@
  */
 
 /**
- * Default configuration when API is included
+ * Default configuration when CDN is included
  */
 (function(SimpleSVG, scope) {
     "use strict";
 
     var isAncientBrowser = !Object.assign || !scope.MutationObserver;
 
-    // API callback script
-    SimpleSVG._defaultConfig.api = (isAncientBrowser ? '' : 'https:') + '//www.artodia.com/ssvg/?callback={callback}&icons={icons}';
+    // CDN callback script
+    SimpleSVG._defaultConfig.defaultCDN = (isAncientBrowser ? '' : 'https:') + '//cdn.simplesvg.com/json/?callback={callback}&icons={icons}';
+
+    // Custom CDN list. Key = prefix, value = CDN URL
+    SimpleSVG._defaultConfig.customCDN = {};
+
+    // Maximum number of icons per request
+    SimpleSVG._defaultConfig.loaderIconsLimit = 100;
 
 })(self.SimpleSVG, self);

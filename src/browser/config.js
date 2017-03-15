@@ -18,24 +18,37 @@
 
     var customConfig = SimpleSVG.config === void 0 ? null : SimpleSVG.config;
 
-    SimpleSVG.config = SimpleSVG._defaultConfig;
-
-    // Merge with SimpleSVGConfig object
-    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+    function merge(list) {
         Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (global.SimpleSVGConfig[key] !== void 0) {
-                SimpleSVG.config[key] = global.SimpleSVGConfig[key];
+            if (list[key] === void 0) {
+                return;
+            }
+
+            switch (key) {
+                case 'customCDN':
+                    // Merge objects
+                    Object.keys(list[key]).forEach(function(key2) {
+                        SimpleSVG.config[key][key2] = list[key][key2];
+                    });
+                    break;
+
+                default:
+                    // Overwrite config
+                    SimpleSVG.config[key] = list[key];
             }
         });
     }
 
+    SimpleSVG.config = SimpleSVG._defaultConfig;
+
+    // Merge with SimpleSVGConfig object
+    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
+        merge(global.SimpleSVGConfig);
+    }
+
     // Merge with existing config object
     if (customConfig !== null) {
-        Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (customConfig[key] !== void 0) {
-                SimpleSVG.config[key] = customConfig[key];
-            }
-        });
+        merge(customConfig);
     }
 
 })(self, self.SimpleSVG);

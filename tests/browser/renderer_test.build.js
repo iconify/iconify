@@ -21,11 +21,11 @@ module.exports = (Helper, codeDir, testFile) => {
             '\n})(self.SimpleSVG);\n',
 
             fs.readFileSync(codeDir + '/browser/defaults.js', 'utf8'),
-            fs.readFileSync(codeDir + '/browser/with-api/defaults.js', 'utf8'),
+            fs.readFileSync(codeDir + '/browser/with-cdn/defaults.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/config.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/image.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/finder.js', 'utf8'),
-            fs.readFileSync(codeDir + '/browser/with-api/loader.js', 'utf8'),
+            fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/renderer.js', 'utf8'),
         ];
 
