@@ -32,8 +32,17 @@
     function loadQueue() {
         var defaultQueue = [],
             customQueues = {},
+            defaultURLLength,
+            customURLLengths = {},
+            limit = SimpleSVG.config.loaderMaxURLSize,
             prefixes = Object.keys(SimpleSVG.config.customCDN);
 
+        /**
+         * Send JSONP request by adding script tag to document
+         *
+         * @param {string} url
+         * @param {Array} items
+         */
         function addScript(url, items) {
             var element;
 
@@ -47,6 +56,18 @@
             document.head.appendChild(element);
         }
 
+        /**
+         * Calculate base length of URL
+         *
+         * @param {string} url
+         * @return {number}
+         */
+        function baseLength(url) {
+            return url.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', '').length;
+        }
+
+        defaultURLLength = baseLength(SimpleSVG.config.defaultCDN);
+
         queue.forEach(function(icon) {
             var prefix = '';
 
@@ -59,20 +80,28 @@
 
             // Add to queue
             if (prefix === '') {
-                defaultQueue.push(icon);
-                if (defaultQueue.length >= SimpleSVG.config.loaderIconsLimit) {
+                defaultURLLength += icon.length + 1;
+                if (defaultURLLength >= limit) {
                     addScript(SimpleSVG.config.defaultCDN, defaultQueue);
                     defaultQueue = [];
+                    defaultURLLength = baseLength(SimpleSVG.config.defaultCDN);
                 }
+
+                defaultQueue.push(icon);
             } else {
                 if (customQueues[prefix] === void 0) {
                     customQueues[prefix] = [];
+                    customURLLengths[prefix] = baseLength(SimpleSVG.config.customCDN[prefix]);
                 }
-                customQueues[prefix].push(icon);
-                if (customQueues[prefix].length >= SimpleSVG.config.loaderIconsLimit) {
+
+                customURLLengths[prefix] += icon.length + 1;
+                if (customURLLengths[prefix] >= limit) {
                     addScript(SimpleSVG.config.customCDN[prefix], customQueues[prefix]);
                     customQueues[prefix] = [];
+                    customURLLengths[prefix] = baseLength(SimpleSVG.config.customCDN[prefix]);
                 }
+
+                customQueues[prefix].push(icon);
             }
         });
 

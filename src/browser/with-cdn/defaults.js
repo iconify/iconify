@@ -22,7 +22,7 @@
     // Custom CDN list. Key = prefix, value = CDN URL
     SimpleSVG._defaultConfig.customCDN = {};
 
-    // Maximum number of icons per request
-    SimpleSVG._defaultConfig.loaderIconsLimit = 100;
+    // Maximum URL size for CDN
+    SimpleSVG._defaultConfig.loaderMaxURLSize = 500;
 
 })(self.SimpleSVG, self);

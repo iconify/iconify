@@ -89,11 +89,12 @@
             expect(SimpleSVG._loadImage(star)).to.be.equal(false, 'fa-star should not be loaded');
         });
 
-        it('multiple CDN', function(done) {
+        it('multiple CDNs and icons limit', function(done) {
             var SimpleSVG = {},
                 element = document.createElement('div'),
                 expecting = [
-                    'default?icons=mdi-home,mdi-arrow-left,emoji-cat,foo-bar',
+                    'default?icons=mdi-home,mdi-arrow-left,emoji-cat',
+                    'default?icons=foo-bar,mdi-arrow-right',
                     'fa?icons=fa-apple,fa-home',
                     'test?icons=test-foo'
                 ],
@@ -117,11 +118,12 @@
             SimpleSVG.config.defaultCDN = 'default?icons={icons}';
             SimpleSVG.config.customCDN['fa'] = 'fa?icons={icons}';
             SimpleSVG.config.customCDN['test'] = 'test?icons={icons}';
+            SimpleSVG.config.loaderMaxURLSize = 50;
             SimpleSVG._debugLoader = true;
 
             // Add dummy icons
             icons = {};
-            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'emoji-cat', 'test-foo', 'foo-bar'].forEach(function(key) {
+            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'emoji-cat', 'foo-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
                 icons[key] = SimpleSVG._newImage(element, key, null);
             });
 
