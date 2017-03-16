@@ -19,7 +19,7 @@
     "test": "mocha tests/**/*_test.js",
     "posttest": "echo \"Open tests.html in browser to run browser tests.\"",
     "build": "node build/all",
-    "publish": "node build/all"
+    "prepublish": "node build/all"
   },
   "devDependencies": {
     "chai": "^3.5.0",
