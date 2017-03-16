@@ -512,7 +512,7 @@ self.SimpleSVG = {};
 	 * @return {string|number|null} Another dimension, null on error
 	 */
 	function calculateDimension(size, ratio, precision) {
-	    var split, number, results, code, isNumber, valid, num;
+	    var split, number, results, code, isNumber, num;
 	
 	    if (ratio === 1) {
 	        return size;
@@ -523,16 +523,19 @@ self.SimpleSVG = {};
 	        return Math.ceil(size * ratio * precision) / precision;
 	    }
 	
-	    // split code into sets of strings and numbers
+	    if (typeof size !== 'string') {
+	        return size;
+	    }
+	
+	    // Split code into sets of strings and numbers
 	    split = size.split(unitsSplit);
 	    if (split === null || !split.length) {
-	        return null;
+	        return size;
 	    }
 	
 	    results = [];
 	    code = split.shift();
 	    isNumber = unitsTest.test(code);
-	    valid = false;
 	
 	    while (true) {
 	        if (isNumber) {
@@ -540,7 +543,6 @@ self.SimpleSVG = {};
 	            if (isNaN(num)) {
 	                return null;
 	            }
-	            valid = true;
 	            results.push(Math.ceil(num * ratio * precision) / precision);
 	        } else {
 	            results.push(code);
@@ -549,7 +551,7 @@ self.SimpleSVG = {};
 	        // next
 	        code = split.shift();
 	        if (code === void 0) {
-	            return valid ? results.join('') : null;
+	            return results.join('');
 	        }
 	        isNumber = !isNumber;
 	    }
@@ -559,13 +561,14 @@ self.SimpleSVG = {};
 	 * Get transformation string
 	 *
 	 * @param {object} attr Attributes
-	 * @return {string}
+	 * @return {string} Result is never empty. If no transformation is applied, returns rotate(360deg) that fixes
+	 *  rendering issue for small icons in Firefox
 	 */
 	function calculateTransformation(attr) {
 	    var rotate = attr.rotate;
 	
 	    function rotation() {
-	        while (rotate < 1) {
+	        if (rotate < 1) {
 	            rotate += 4;
 	        }
 	        while (rotate > 4) {
@@ -580,7 +583,8 @@ self.SimpleSVG = {};
 	    }
 	
 	    if (attr.vFlip || attr.hFlip) {
-	        return 'scale(' + (attr.hFlip ? '-' : '') + '1, ' + (attr.vFlip ? '-' : '') + '1)' + (rotate ? ' ' + rotation() : '');
+	        return 'scale(' + (attr.hFlip ? '-' : '') + '1, ' + (attr.vFlip ? '-' : '') + '1)' +
+	            (rotate ? ' ' + rotation() : '');
 	    }
 	    return rotation();
 	}

@@ -118,11 +118,6 @@ function parse(config) {
         testFiles.push('browser/' + (config.cdn ? 'with-' : 'no-') + 'cdn/' + file);
         testFiles.push('browser/' + (config.lazy ? 'with-' : 'no-') + 'lazy/' + file);
     });
-    if (config.plugins) {
-        config.plugins.forEach(plugin => {
-            testFiles.push('browser/plugins/' + plugin + '.js');
-        });
-    }
 
     // Add all files
     testFiles.forEach(file => {
@@ -149,7 +144,7 @@ function save(file, content) {
 // Create dist directory
 Helper.mkdir(resolvedDistDir);
 
-// Parse with observer
+// Parse different packages
 content = parse({
     observer: true,
     cdn: true,
@@ -170,3 +165,15 @@ content = parse({
     lazy: false
 });
 save(baseName + '.basic', content);
+
+// Copy plugins
+let resolvedPluginsDir = resolvedCodeDir + '/browser/plugins';
+fs.readdirSync(resolvedPluginsDir).forEach(file => {
+    if (file.slice(-3) !== '.js') {
+        return;
+    }
+    let content = fs.readFileSync(resolvedPluginsDir + '/' + file, 'utf8');
+
+    file = file.slice(0, file.length - 3);
+    save('plugin-' + file, content);
+});
