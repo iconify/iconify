@@ -14,10 +14,8 @@
 (function(SimpleSVG, scope) {
     "use strict";
 
-    var isAncientBrowser = !Object.assign || !scope.MutationObserver;
-
     // CDN callback script
-    SimpleSVG._defaultConfig.defaultCDN = (isAncientBrowser ? '' : 'https:') + '//cdn.simplesvg.com/json/?callback={callback}&icons={icons}';
+    SimpleSVG._defaultConfig.defaultCDN = '//cdn.simplesvg.com/json/?callback={callback}&icons={icons}';
 
     // Custom CDN list. Key = prefix, value = CDN URL
     SimpleSVG._defaultConfig.customCDN = {};
