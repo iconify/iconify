@@ -106,7 +106,7 @@ function addFile(file, callback) {
 
 // Parse all files
 function parse(config) {
-    let content = '"use strict;"\n\nself.SimpleSVG = {};\n\n';
+    let content = '"use strict";\n\nself.SimpleSVG = {};\n\n';
 
     // List of files
     let testFiles = [];
