@@ -24,6 +24,38 @@
         transformationChanges = {},
         transformationClasses;
 
+    /**
+     * Generate SVG code
+     *
+     * @param {string} html SVG code with all attributes
+     * @param {string} body Body
+     * @return {string}
+     */
+    function generateSVG(html, body) {
+        var pos;
+
+        if (html.slice(0, 2) === '<?') {
+            // XML prefix from old IE
+            pos = html.indexOf('>');
+            html = html.slice(pos + 1);
+        }
+
+        // Fix viewBox attribute
+        html = html.replace('viewbox=', 'viewBox=');
+
+        // Add body
+        pos = html.indexOf('</');
+        if (pos !== -1) {
+            // Closing tag
+            html = html.replace('</', body + '</');
+        } else {
+            // Self-closing
+            html = html.replace('/>', '>' + body + '</svg>');
+        }
+
+        return html;
+    }
+
     // Add transformations
     transformationChanges[hFlipClass] = {
         attr: 'hFlip',
@@ -54,7 +86,7 @@
     SimpleSVG._renderSVG = function(image, hidden) {
         var attributes = SimpleSVG._getImageAttributes(image),
             item = SimpleSVG.getIcon(image.icon),
-            svg, el, el2, data, html, pos;
+            svg, el, el2, data, html;
 
         hidden = hidden === true;
 
@@ -83,20 +115,8 @@
         if (!hidden) {
             // innerHTML is not supported for SVG element :(
             // Creating temporary element instead
-            html = el.outerHTML;
-            if (html.slice(0, 2) === '<?') {
-                // XML prefix from old IE
-                pos = html.indexOf('>');
-                html = html.slice(pos + 1);
-            }
-            pos = html.indexOf('</');
-            if (pos !== -1) {
-                // Closing tag
-                html = html.replace('</', data.body + '</');
-            } else {
-                // Self-closing
-                html = html.replace('/>', '>' + data.body + '</svg>');
-            }
+            html = generateSVG(el.outerHTML, data.body);
+
             el = document.createElement('span');
             el.innerHTML = html;
         }
@@ -114,6 +134,31 @@
         delete image.parser;
         delete image.loading;
         image.hidden = hidden;
+    };
+
+    /**
+     * Get SVG icon code
+     *
+     * @param {string} name Icon name
+     * @param {object} [properties] Custom properties
+     * @return {string|false}
+     */
+    SimpleSVG.getSVG = function(name, properties) {
+        var svg, el, data;
+
+        if (!SimpleSVG.iconExists(name)) {
+            return false;
+        }
+
+        svg = new SimpleSVG._SVG(SimpleSVG.getIcon(name));
+        data = svg.svgObject(properties, false);
+
+        el = document.createElement('svg');
+        Object.keys(data.attributes).forEach(function(attr) {
+            el.setAttribute(attr, data.attributes[attr]);
+        });
+
+        return generateSVG(el.outerHTML, data.body);
     };
 
 })(self.SimpleSVG);
