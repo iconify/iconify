@@ -23,4 +23,7 @@
     // Maximum URL size for CDN
     SimpleSVG._defaultConfig.loaderMaxURLSize = 500;
 
+    // Custom event to call when new set of images is added
+    SimpleSVG._defaultConfig.loaderEvent = 'newSSVGImages';
+
 })(self.SimpleSVG, self);

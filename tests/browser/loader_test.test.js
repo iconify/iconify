@@ -25,50 +25,49 @@
 
             containerRoot = document.getElementById(containerID);
 
-            // Setup fake SimpleSVG instance
-            SimpleSVG = {
-                _onIconsAdded: function() {
-                    if (firstCallback) {
-                        // First time callback is called, check class names
-                        expect(apple.element.classList.contains('svg-loading')).to.be.equal(true, 'apple icon should have class svg-loading');
-                        expect(star.element.classList.contains('svg-loading')).to.be.equal(true, 'star icon should have class svg-loading');
-                        expect(star2.element.classList.contains('svg-loading')).to.be.equal(false, 'star2 icon should not have class svg-loading');
-
-                        // Check if icons exist
-                        expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(true, 'fa-apple should exist');
-                        expect(SimpleSVG.iconExists('fa-star')).to.be.equal(true, 'fa-star should exist');
-                        expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist (2)');
-                        expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');
-
-                        // loadImage should return true for existing icon
-                        expect(SimpleSVG._loadImage(star)).to.be.equal(true, 'fa-star should be loaded (1)');
-                        expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'fa-star should be loaded (2)');
-
-                        // Load 1 more icon
-                        expect(SimpleSVG._loadImage(star3)).to.be.equal(false, 'fa-star-half-full should not be loaded');
-
-                        firstCallback = false;
-                        return;
-                    }
-
-                    // Second time callback is called, check class names
-                    expect(star3.element.classList.contains('svg-loading')).to.be.equal(true, 'star3 icon should have class svg-loading');
+            // Add event listener
+            document.addEventListener('newSSVGImagesTest', function() {
+                if (firstCallback) {
+                    // First time callback is called, check class names
+                    expect(apple.element.classList.contains('svg-loading')).to.be.equal(true, 'apple icon should have class svg-loading');
+                    expect(star.element.classList.contains('svg-loading')).to.be.equal(true, 'star icon should have class svg-loading');
                     expect(star2.element.classList.contains('svg-loading')).to.be.equal(false, 'star2 icon should not have class svg-loading');
 
                     // Check if icons exist
-                    expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(true, 'fa-star-half-full should exist');
-                    expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(true, 'fa-star-half-empty should exist - alias of fa-star-half-full');
+                    expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(true, 'fa-apple should exist');
+                    expect(SimpleSVG.iconExists('fa-star')).to.be.equal(true, 'fa-star should exist');
+                    expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist (2)');
+                    expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');
 
-                    expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
-                    expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
+                    // loadImage should return true for existing icon
+                    expect(SimpleSVG._loadImage(star)).to.be.equal(true, 'fa-star should be loaded (1)');
+                    expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'fa-star should be loaded (2)');
 
-                    done();
+                    // Load 1 more icon
+                    expect(SimpleSVG._loadImage(star3)).to.be.equal(false, 'fa-star-half-full should not be loaded');
+
+                    firstCallback = false;
+                    return;
                 }
-            };
+
+                // Second time callback is called, check class names
+                expect(star3.element.classList.contains('svg-loading')).to.be.equal(true, 'star3 icon should have class svg-loading');
+                expect(star2.element.classList.contains('svg-loading')).to.be.equal(false, 'star2 icon should not have class svg-loading');
+
+                // Check if icons exist
+                expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(true, 'fa-star-half-full should exist');
+                expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(true, 'fa-star-half-empty should exist - alias of fa-star-half-full');
+
+                expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
+                expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
+
+                done();
+            });
 
             // Load libraries
             load(SimpleSVG);
             SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
+            SimpleSVG.config.loaderEvent = 'newSSVGImagesTest';
             window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
 
             // Find icons
@@ -99,10 +98,6 @@
                     'test?icons=test-foo'
                 ],
                 icons;
-
-            // Setup fake SimpleSVG instance
-            SimpleSVG = {
-            };
 
             // Load libraries
             load(SimpleSVG);

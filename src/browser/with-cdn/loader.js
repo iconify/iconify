@@ -29,6 +29,9 @@
      */
     var queued = false;
 
+    /**
+     * Load all queued images
+     */
     function loadQueue() {
         var queues = {},
             URLLengths = {},
@@ -117,6 +120,27 @@
     }
 
     /**
+     * Add image to loading queue
+     *
+     * @param {string} image Image name
+     * @return {boolean} True if image was added to queue
+     */
+    function addToQueue(image) {
+        // Check queue
+        if (queue.indexOf(image) !== -1 || tested.indexOf(image) !== -1) {
+            return false;
+        }
+
+        // Add to queue
+        queue.push(image);
+        if (!queued) {
+            queued = true;
+            setTimeout(loadQueue, 0);
+        }
+        return true;
+    }
+
+    /**
      * Callback for JSONP
      *
      * @param {object} data
@@ -125,6 +149,9 @@
     SimpleSVG._loaderCallback = function(data) {
         if (typeof data === 'object') {
             SimpleSVG.addLibrary(data);
+
+            // Dispatch event
+            document.dispatchEvent(new CustomEvent(SimpleSVG.config.loaderEvent));
         }
     };
 
@@ -141,25 +168,50 @@
             return true;
         }
 
-        if (checkQueue === false) {
-            return false;
+        if (checkQueue !== false && addToQueue(image.icon)) {
+            // Mark as loading
+            image.element.classList.add(SimpleSVG.config.loadingClass);
         }
 
-        // Check queue
-        if (queue.indexOf(image.icon) !== -1 || tested.indexOf(image.icon) !== -1) {
-            return false;
-        }
-
-        // Add to queue
-        queue.push(image.icon);
-        if (!queued) {
-            queued = true;
-            setTimeout(loadQueue, 0);
-        }
-
-        // Mark as loading
-        image.element.classList.add(SimpleSVG.config.loadingClass);
         return false;
     };
+
+    /**
+     * Preload images
+     *
+     * @param {Array} images List of images
+     * @returns {boolean} True if images are queued for preload, false if images are already available
+     */
+    SimpleSVG.preloadImages = function(images) {
+        var queued = false;
+        images.forEach(function(key) {
+            if (!SimpleSVG.iconExists(key)) {
+                addToQueue(key);
+                queued = true;
+            }
+        });
+        return queued;
+    };
+
+    /**
+     * CustomEvent polyfill for IE9
+     * From https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
+     */
+    (function() {
+        if (typeof window.CustomEvent === 'function') return false;
+
+        function CustomEvent(event, params) {
+            var evt;
+
+            params = params || { bubbles: false, cancelable: false, detail: void 0 };
+            evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+
+            return evt;
+        }
+
+        CustomEvent.prototype = window.Event.prototype;
+        window.CustomEvent = CustomEvent;
+    })();
 
 })(self, self.SimpleSVG);
