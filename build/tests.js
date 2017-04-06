@@ -27,19 +27,81 @@ let resolvedSourceDir = path.resolve(__dirname, '../' + sourceDir),
     resolvedTargetDir = path.resolve(__dirname, '../' + targetDir),
     resolvedCodeDir = path.resolve(__dirname, '../' + codeDir);
 
-// Find all files, parse them
+/**
+ * Helper functions for test builders
+ */
+let TestHelper = {
+    replace: (content, search, replace, error) => {
+        if (content.indexOf(search) === -1) {
+            throw new Error(error);
+        }
+        return content.replace(search, replace);
+    },
+
+    // Get common/storage.js
+    getStorage: () => {
+        return '(function (local) {\n' +
+            fs.readFileSync(resolvedCodeDir + '/common/storage.js', 'utf8')
+                .replace('module.exports = Storage;', 'local.Storage = Storage;') +
+            '\n})(local);\n';
+    },
+
+    // Get common/svg.js
+    getSVG: () => {
+        return '(function (local) {\n' +
+            fs.readFileSync(resolvedCodeDir + '/common/svg.js', 'utf8')
+                .replace('module.exports = SVG;', 'local.SVG = SVG;')
+                .replace('require(\'./storage\')', 'local.Storage') +
+            '\n})(local);\n';
+    },
+
+    // Fake events.js
+    fakeEvents: () => {
+        return 'local.event = function(name, params) { if (local[name] !== void 0) local[name](params); };'
+    },
+
+    // Fake init.js
+    fakeInit: () => {
+        let content = fs.readFileSync(resolvedCodeDir + '/browser/init.js', 'utf8');
+
+        content = TestHelper.replace(
+            content,
+            'if (document.readyState === \'complete\' || (document.readyState !== \'loading\' && !document.documentElement.doScroll)) {',
+            'if (true) {',
+            'Cannot find required code in init.js'
+        );
+
+        content = TestHelper.replace(
+            content,
+            'SimpleSVG.ready = function(callback) {',
+            'SimpleSVG.ready = function(callback) { local.initQueue.push(callback); return; ',
+            'Cannot find required code in init.js'
+        );
+
+        return content;
+    }
+};
+
+/**
+ * Find all files, parse them
+ */
 glob(resolvedSourceDir + '/**/*.js', {
     dot: true
 }, (err, files) => {
     files.forEach(file => {
         if (file.slice(-9) === '.build.js') {
-            let code = require(file)(Helper, resolvedCodeDir, file.replace('.build.', '.test.')),
-                targetFile = resolvedTargetDir + file.slice(resolvedSourceDir.length).replace('.build.', '.');
+            let code = require(file)(Helper, resolvedCodeDir, file.replace('.build.', '.test.'), TestHelper),
+                targetFile = resolvedTargetDir + file.slice(resolvedSourceDir.length).replace('.build.', '.'),
+                test = targetDir + targetFile.slice(resolvedTargetDir.length);
+
+            if (!code.length) {
+                console.log('Ignoring compiled test:', test);
+                return;
+            }
 
             Helper.mkdir(path.dirname(targetFile));
             fs.writeFileSync(targetFile, code, 'utf8');
 
-            let test = targetDir + targetFile.slice(resolvedTargetDir.length);
             console.log('Compiled test:', test);
             tests.push(test);
             return;

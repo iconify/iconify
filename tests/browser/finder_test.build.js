@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 
-module.exports = (Helper, codeDir, testFile) => {
+module.exports = (Helper, codeDir, testFile, TestHelper) => {
     let code = fs.readFileSync(testFile, 'utf8'),
         modules = [
             fs.readFileSync(codeDir + '/browser/defaults.js', 'utf8'),
@@ -15,7 +15,7 @@ module.exports = (Helper, codeDir, testFile) => {
         ];
 
     // Replace code
-    modules = modules.map(item => item.replace('self.SimpleSVG', 'SimpleSVG')).join('');
+    modules = modules.join('');
 
     // Merge modules and test
     code = code.replace('/* Modules() */', modules);

@@ -19,7 +19,10 @@
      *
      * @type {[string]}
      */
-    var faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'];
+    var faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'],
+        rotationClasses = SimpleSVG.getConfig('_rotationClasses'),
+        hFlipClass = SimpleSVG.getConfig('_hFlipClass'),
+        vFlipClass = SimpleSVG.getConfig('_vFlipClass');
 
     /**
      * Add finder to list of finders
@@ -59,23 +62,23 @@
             for (var i = 0; i < list.length; i++) {
                 switch (list[i]) {
                     case 'fa-rotate-90':
-                        results.push(SimpleSVG.config.rotationClasses['1']);
+                        results.push(rotationClasses['1']);
                         break;
 
                     case 'fa-rotate-180':
-                        results.push(SimpleSVG.config.rotationClasses['2']);
+                        results.push(rotationClasses['2']);
                         break;
 
                     case 'fa-rotate-270':
-                        results.push(SimpleSVG.config.rotationClasses['3']);
+                        results.push(rotationClasses['3']);
                         break;
 
                     case 'fa-flip-horizontal':
-                        results.push(SimpleSVG.config.hFlipClass);
+                        results.push(hFlipClass);
                         break;
 
                     case 'fa-flip-vertical':
-                        results.push(SimpleSVG.config.vFlipClass);
+                        results.push(vFlipClass);
                         break;
 
                     default:
@@ -89,4 +92,4 @@
         }
     });
 
-})(self.SimpleSVG);
+})(SimpleSVG);

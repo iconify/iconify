@@ -49,22 +49,29 @@
             mocha.run();
 		});
 
-		console.log = function() {
-		    var html = '';
-		    for (var i = 0; i < arguments.length; i ++) {
-		        switch (typeof arguments[i]) {
-					case 'string':
-					case 'number':
-					case 'function':
-					    html += ' ' + arguments[i];
-					    break;
+		(function() {
+		    var oldLog = console.log;
 
-					default:
-					    html += ' ' + JSON.stringify(arguments[i]);
-				}
-			}
-			$('#log').append($('<p />').text(html));
-		};
+            console.log = function() {
+                oldLog.apply(this, arguments);
+
+                var html = '';
+                for (var i = 0; i < arguments.length; i ++) {
+                    switch (typeof arguments[i]) {
+                        case 'string':
+                        case 'number':
+                        case 'function':
+                            html += ' ' + arguments[i];
+                            break;
+
+                        default:
+                            html += ' ' + JSON.stringify(arguments[i]);
+                    }
+                }
+                $('#log').append($('<p />').text(html));
+            };
+
+		})();
 	</script>
 </body>
 </html>

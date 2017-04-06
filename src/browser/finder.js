@@ -11,15 +11,13 @@
 /**
  * Functions that find images in DOM
  */
-(function(SimpleSVG) {
+(function(SimpleSVG, local, config) {
     "use strict";
 
-    var imageClass = SimpleSVG.config.imageClass,
-        loadingClass = SimpleSVG.config.loadingClass,
-        hFlipClass = SimpleSVG.config.hFlipClass,
-        vFlipClass = SimpleSVG.config.vFlipClass,
-        iconAttribute = SimpleSVG.config.iconAttribute,
-        placeholderTag = SimpleSVG.config.placeholderTag,
+    var imageClass = config._imageClass,
+        loadingClass = config._loadingClass,
+        iconAttribute = config._iconAttribute,
+        placeholderTag = config._placeholderTag,
         newSelectorExtra = ':not(.' + loadingClass + ')',
         loadingSelectorExtra = '.' + loadingClass;
 
@@ -116,11 +114,12 @@
      * @param {Element} root Root element
      * @param {boolean} [loading] Filter images by loading status. If missing, result will not be filtered
      * @return {Array}
-     * @private
      */
-    SimpleSVG._findNewImages = function(root, loading) {
+    local.findNewImages = function(root, loading) {
         var results = [],
             duplicates = [];
+
+        root = root === void 0 ? (config._root === void 0 ? document.querySelector('body') : config._root) : root;
 
         finderKeys.forEach(function(key) {
             var finder = finders[key],
@@ -135,7 +134,7 @@
 
                 if (icon && duplicates.indexOf(node) === -1) {
                     duplicates.push(node);
-                    results.push(SimpleSVG._newImage(node, icon, finder));
+                    results.push(local.newImage(node, icon, finder));
                 }
             }
         });
@@ -150,9 +149,8 @@
      * @param {string} tag Element tag
      * @param {boolean} hidden Status
      * @return {Array}
-     * @private
      */
-    SimpleSVG._findHiddenOrParsedImages = function(root, tag, hidden) {
+    local.findHiddenOrParsedImages = function(root, tag, hidden) {
         var results = [];
 
         var nodes = root.querySelectorAll(tag + '.' + imageClass),
@@ -163,7 +161,7 @@
             icon = node.getAttribute(iconAttribute);
 
             if (icon) {
-                results.push(SimpleSVG._parsedImage(node, icon, hidden));
+                results.push(local.parsedImage(node, icon, hidden));
             }
         }
 
@@ -175,10 +173,9 @@
      *
      * @param {Element} root Root element
      * @return {Array}
-     * @private
      */
-    SimpleSVG._findHiddenImages = function(root) {
-        return SimpleSVG._findHiddenOrParsedImages(root, placeholderTag, true);
+    local.findHiddenImages = function(root) {
+        return local.findHiddenOrParsedImages(root, placeholderTag, true);
     };
 
     /**
@@ -186,10 +183,9 @@
      *
      * @param {Element} root Root element
      * @return {Array}
-     * @private
      */
-    SimpleSVG._findParsedImages = function(root) {
-        return SimpleSVG._findHiddenOrParsedImages(root, 'svg', false);
+    local.findParsedImages = function(root) {
+        return local.findHiddenOrParsedImages(root, 'svg', false);
     };
 
-})(self.SimpleSVG);
+})(SimpleSVG, local, local.config);

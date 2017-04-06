@@ -4,13 +4,25 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG) {
+    function load(SimpleSVG, local) {
+        var global = {};
+
+        if (SimpleSVG.isReady === void 0) {
+            SimpleSVG.isReady = true;
+        }
+
+        local.config = {};
+        local.iconsAdded = function() {};
+
         /* Modules() */
     }
 
     describe('Testing image loader', function() {
         it('loading images', function(done) {
-            var SimpleSVG = {},
+            var SimpleSVG = {
+                },
+                local = {
+                },
                 containerID = 'loader-basic',
                 firstCallback = true,
                 containerRoot, apple, star, star2, star3;
@@ -26,7 +38,7 @@
             containerRoot = document.getElementById(containerID);
 
             // Add event listener
-            document.addEventListener('newSSVGImagesTest', function() {
+            local.newSSVGImagesTest = function() {
                 if (firstCallback) {
                     // First time callback is called, check class names
                     expect(apple.element.classList.contains('svg-loading')).to.be.equal(true, 'apple icon should have class svg-loading');
@@ -40,11 +52,11 @@
                     expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');
 
                     // loadImage should return true for existing icon
-                    expect(SimpleSVG._loadImage(star)).to.be.equal(true, 'fa-star should be loaded (1)');
-                    expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'fa-star should be loaded (2)');
+                    expect(local.loadImage(star)).to.be.equal(true, 'fa-star should be loaded (1)');
+                    expect(local.loadImage(star2)).to.be.equal(true, 'fa-star should be loaded (2)');
 
                     // Load 1 more icon
-                    expect(SimpleSVG._loadImage(star3)).to.be.equal(false, 'fa-star-half-full should not be loaded');
+                    expect(local.loadImage(star3)).to.be.equal(false, 'fa-star-half-full should not be loaded');
 
                     firstCallback = false;
                     return;
@@ -58,24 +70,24 @@
                 expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(true, 'fa-star-half-full should exist');
                 expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(true, 'fa-star-half-empty should exist - alias of fa-star-half-full');
 
-                expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
-                expect(SimpleSVG._loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
+                expect(local.loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
+                expect(local.loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
 
                 done();
-            });
+            };
 
             // Load libraries
-            load(SimpleSVG);
-            SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
-            SimpleSVG.config.loaderEvent = 'newSSVGImagesTest';
+            load(SimpleSVG, local);
+            local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
+            local.config.loaderEvent = 'newSSVGImagesTest';
             window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
 
             // Find icons
-            apple = SimpleSVG._newImage(containerRoot.querySelector('.fa.fa-apple'), 'fa-apple', null);
-            star = SimpleSVG._newImage(containerRoot.querySelector('.star'), 'fa-star', null);
-            star2 = SimpleSVG._newImage(containerRoot.querySelector('.another-star'), 'fa-star', null);
+            apple = local.newImage(containerRoot.querySelector('.fa.fa-apple'), 'fa-apple', null);
+            star = local.newImage(containerRoot.querySelector('.star'), 'fa-star', null);
+            star2 = local.newImage(containerRoot.querySelector('.another-star'), 'fa-star', null);
             // fa-star-half-full is alias of fa-star-half-empty
-            star3 = SimpleSVG._newImage(containerRoot.querySelector('.third-star'), 'fa-star-half-full', null);
+            star3 = local.newImage(containerRoot.querySelector('.third-star'), 'fa-star-half-full', null);
 
             // Check if icons exist
             expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
@@ -84,12 +96,15 @@
             expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist');
 
             // Load icons
-            expect(SimpleSVG._loadImage(apple)).to.be.equal(false, 'fa-apple should not be loaded');
-            expect(SimpleSVG._loadImage(star)).to.be.equal(false, 'fa-star should not be loaded');
+            expect(local.loadImage(apple)).to.be.equal(false, 'fa-apple should not be loaded');
+            expect(local.loadImage(star)).to.be.equal(false, 'fa-star should not be loaded');
         });
 
         it('multiple CDNs and icons limit', function(done) {
-            var SimpleSVG = {},
+            var SimpleSVG = {
+                },
+                local = {
+                },
                 element = document.createElement('div'),
                 expecting = [
                     'default?icons=mdi-home,mdi-arrow-left,emoji-cat',
@@ -100,7 +115,7 @@
                 icons;
 
             // Load libraries
-            load(SimpleSVG);
+            load(SimpleSVG, local);
             SimpleSVG.testLoaderURL = function(url) {
                 var index = expecting.indexOf(url);
                 expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
@@ -110,16 +125,16 @@
                 }
                 return false;
             };
-            SimpleSVG.config.defaultCDN = 'default?icons={icons}';
-            SimpleSVG.config.customCDN['fa'] = 'fa?icons={icons}';
-            SimpleSVG.config.customCDN['test'] = 'test?icons={icons}';
-            SimpleSVG.config.loaderMaxURLSize = 50;
-            SimpleSVG._debugLoader = true;
+            local.config.defaultCDN = 'default?icons={icons}';
+            local.config.customCDN['fa'] = 'fa?icons={icons}';
+            local.config.customCDN['test'] = 'test?icons={icons}';
+            local.config.loaderMaxURLSize = 50;
+            local._debugLoader = true;
 
             // Add dummy icons
             icons = {};
             ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'emoji-cat', 'foo-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
-                icons[key] = SimpleSVG._newImage(element, key, null);
+                icons[key] = local.newImage(element, key, null);
             });
 
             // Check if icons exist
@@ -129,7 +144,7 @@
 
             // Load icons
             Object.keys(icons).forEach(function(key) {
-                expect(SimpleSVG._loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
+                expect(local.loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
             });
         });
     });

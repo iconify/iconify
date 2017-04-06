@@ -11,10 +11,6 @@
 /**
  * Replacement for observer module when observer is disabled
  */
-(function(SimpleSVG) {
-    "use strict";
 
-    SimpleSVG.pauseObserving = function() {};
-    SimpleSVG.resumeObserving = function() {};
-
-})(self.SimpleSVG);
+SimpleSVG.pauseObserving = function() {};
+SimpleSVG.resumeObserving = function() {};

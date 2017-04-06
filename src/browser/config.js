@@ -9,46 +9,85 @@
  */
 
 /**
- * Merge custom and default configuration
+ * Merge custom and default configuration and functions for changing config values
  *
- * It will merge with existing SimpleSVG.config and SimpleSVGConfig objects, adding only items that aren't set
+ * It will merge default config with SimpleSVGConfig object if it exists
  */
-(function(global, SimpleSVG) {
+(function(SimpleSVG, global, config) {
     "use strict";
 
-    var customConfig = SimpleSVG.config === void 0 ? null : SimpleSVG.config;
+    /**
+     * Change config value
+     *
+     * @param {string} key
+     * @param {*} value
+     * @param {boolean} canChangeHardcoded
+     */
+    function setConfig(key, value, canChangeHardcoded) {
+        if (!canChangeHardcoded && key.slice(0, 1) === '_') {
+            return;
+        }
 
-    function merge(list) {
-        Object.keys(SimpleSVG.config).forEach(function(key) {
-            if (list[key] === void 0) {
-                return;
-            }
+        switch (key) {
+            case 'customCDN':
+            case 'SVGAttributes':
+                // Merge objects
+                Object.keys(value).forEach(function (key2) {
+                    config[key][key2] = value[key2];
+                });
+                break;
 
-            switch (key) {
-                case 'customCDN':
-                    // Merge objects
-                    Object.keys(list[key]).forEach(function(key2) {
-                        SimpleSVG.config[key][key2] = list[key][key2];
-                    });
-                    break;
+            default:
+                // Overwrite config
+                config[key] = value;
+        }
+    }
 
-                default:
-                    // Overwrite config
-                    SimpleSVG.config[key] = list[key];
-            }
+    /**
+     * Merge configuration objects
+     *
+     * @param {object} list
+     * @param {boolean} canChangeHardcoded
+     */
+    function mergeConfig(list, canChangeHardcoded) {
+        Object.keys(list).forEach(function(key) {
+            setConfig(key, list[key], canChangeHardcoded);
         });
     }
 
-    SimpleSVG.config = SimpleSVG._defaultConfig;
+    /**
+     * Change configuration option
+     *
+     * @param {string} name
+     * @param {*} value
+     */
+    SimpleSVG.setConfig = function(name, value) {
+        setConfig(key, value, false);
+    };
 
-    // Merge with SimpleSVGConfig object
+    /**
+     * Set custom CDN URL
+     *
+     * @param {string} prefix Collection prefix
+     * @param {string} url JSONP URL
+     */
+    SimpleSVG.setCustomCDN = function(prefix, url) {
+        config['customCDN'][prefix] = url;
+    };
+
+    /**
+     * Get configuration value
+     *
+     * @param {string} name
+     * @return {*}
+     */
+    SimpleSVG.getConfig = function(name) {
+        return config[name];
+    };
+
+    // Merge configuration with SimpleSVGConfig object
     if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
-        merge(global.SimpleSVGConfig);
+        mergeConfig(global.SimpleSVGConfig, true);
     }
 
-    // Merge with existing config object
-    if (customConfig !== null) {
-        merge(customConfig);
-    }
-
-})(self, self.SimpleSVG);
+})(SimpleSVG, global, local.config);

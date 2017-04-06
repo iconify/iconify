@@ -9,21 +9,21 @@
  */
 
 /**
- * Default configuration when CDN is included
+ * Default configuration when CDN module is included
  */
-(function(SimpleSVG, scope) {
+(function(config) {
     "use strict";
 
     // CDN callback script
-    SimpleSVG._defaultConfig.defaultCDN = '//cdn.simplesvg.com/json/?callback={callback}&icons={icons}';
+    config.defaultCDN = '//cdn.simplesvg.com/json/?callback={callback}&icons={icons}';
 
     // Custom CDN list. Key = prefix, value = CDN URL
-    SimpleSVG._defaultConfig.customCDN = {};
+    config.customCDN = {};
 
     // Maximum URL size for CDN
-    SimpleSVG._defaultConfig.loaderMaxURLSize = 500;
+    config.loaderMaxURLSize = 500;
 
     // Custom event to call when new set of images is added
-    SimpleSVG._defaultConfig.loaderEvent = 'newSSVGImages';
+    config._loaderEvent = 'SimpleSVGAddedIcons';
 
-})(self.SimpleSVG, self);
+})(local.config);

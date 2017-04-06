@@ -9,38 +9,39 @@
  */
 
 /**
- * Default configuration
+ * Default configuration.
+ * Configuration variables that cannot be changed after script has loaded start with _
  *
  * Additional defaults.js are included in sub-directories, with different content for different builds
  */
-(function(SimpleSVG) {
+(function(config) {
     "use strict";
 
-    SimpleSVG._defaultConfig = {
-        // Custom default attributes for SVG
-        SVGAttributes: {
-        },
+    // Custom default attributes for SVG
+    config.SVGAttributes = {};
 
-        // Class name for icons
-        imageClass: 'simple-svg',
+    // Class name for icons
+    config._imageClass = 'simple-svg';
 
-        // Class name for image that is being loaded
-        loadingClass: 'svg-loading',
+    // Class name for image that is being loaded
+    config._loadingClass = 'svg-loading';
 
-        // Attribute that stores icon name
-        iconAttribute: 'data-icon',
+    // Attribute that stores icon name
+    config._iconAttribute = 'data-icon';
 
-        // Tag for SVG placeholder
-        placeholderTag: 'svg-placeholder',
+    // Tag for SVG placeholder
+    config._placeholderTag = 'svg-placeholder';
 
-        // Rotation and flip classes
-        rotationClasses: {
-            '1': 'svg-rotate-90',
-            '2': 'svg-rotate-180',
-            '3': 'svg-rotate-270'
-        },
-        hFlipClass: 'svg-flip-horizontal',
-        vFlipClass: 'svg-flip-vertical'
+    // Rotation and flip classes
+    config._rotationClasses = {
+        '1': 'svg-rotate-90',
+        '2': 'svg-rotate-180',
+        '3': 'svg-rotate-270'
     };
+    config._hFlipClass = 'svg-flip-horizontal';
+    config._vFlipClass = 'svg-flip-vertical';
 
-})(self.SimpleSVG);
+    // Event to call when SimpleSVG is ready
+    config._readyEvent = 'SimpleSVGReady';
+
+})(local.config);

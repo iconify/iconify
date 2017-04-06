@@ -9,20 +9,19 @@
  */
 
 /**
- * Replacement for lazy loader when lazy loader is disabled
+ * Lazy loader - renders only SVG icons that are visible
  */
-(function(SimpleSVG) {
+(function(local) {
     "use strict";
 
     /**
      * TODO!
      *
-     * @param image
+     * @param {object} image
      * @return {boolean}
-     * @private
      */
-    SimpleSVG._imageVisible = function(image) {
+    local.imageVisible = function(image) {
         return true;
     };
 
-})(self.SimpleSVG);
+})(local);

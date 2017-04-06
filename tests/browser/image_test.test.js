@@ -4,13 +4,22 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG) {
+    function load(SimpleSVG, local) {
+        var global = {};
+
+        if (SimpleSVG.isReady === void 0) {
+            SimpleSVG.isReady = true;
+        }
+
+        local.config = {};
+
         /* Modules() */
     }
 
     describe('Testing image object', function() {
         it('filtering attributes and classes', function() {
             var SimpleSVG = {},
+                local = {},
                 prefix = 'image-id-',
                 image, result;
 
@@ -23,23 +32,23 @@
 
             // Setup fake SimpleSVG instance and load libraries
             // Load libraries
-            load(SimpleSVG);
+            load(SimpleSVG, local);
 
             // Empty image
-            image = SimpleSVG._newImage(document.querySelector('#' + prefix + 'empty > i'), 'foo', {});
-            result = SimpleSVG._getImageAttributes(image);
+            image = local.newImage(document.querySelector('#' + prefix + 'empty > i'), 'foo', {});
+            result = local.getImageAttributes(image);
             expect(result).to.be.eql({});
 
             // Simple image
-            image = SimpleSVG._newImage(document.querySelector('#' + prefix + 'simple > i'), 'foo', {});
-            result = SimpleSVG._getImageAttributes(image);
+            image = local.newImage(document.querySelector('#' + prefix + 'simple > i'), 'foo', {});
+            result = local.getImageAttributes(image);
             expect(result).to.be.eql({
                 'class': ''
             });
 
             // Many attributes
-            image = SimpleSVG._newImage(document.querySelector('#' + prefix + 'custom > i'), 'foo', {});
-            result = SimpleSVG._getImageAttributes(image);
+            image = local.newImage(document.querySelector('#' + prefix + 'custom > i'), 'foo', {});
+            result = local.getImageAttributes(image);
             expect(result).to.be.eql({
                 'class': 'icon fa fa-home loaded',
                 style: 'height: 1em;',
@@ -48,7 +57,7 @@
             });
 
             // Using class filter
-            image = SimpleSVG._newImage(document.querySelector('#' + prefix + 'custom > i'), 'foo', {
+            image = local.newImage(document.querySelector('#' + prefix + 'custom > i'), 'foo', {
                 filterClasses: function(image, list) {
                     var results = [],
                         item;
@@ -68,7 +77,7 @@
                 }
 
             });
-            result = SimpleSVG._getImageAttributes(image);
+            result = local.getImageAttributes(image);
             expect(result).to.be.eql({
                 'class': 'icon loaded',
                 style: 'height: 1em;',

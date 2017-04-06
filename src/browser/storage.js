@@ -9,13 +9,13 @@
  */
 
 /**
- * Replacement for observer module when observer is disabled
+ * Icons storage handler
  */
-(function(SimpleSVG) {
+(function(SimpleSVG, local) {
     "use strict";
 
     var eventQueued = false,
-        storage = new SimpleSVG._Storage();
+        storage = new local.Storage();
 
     /**
      * Triggers callback
@@ -25,23 +25,21 @@
             return;
         }
         eventQueued = false;
-        if (typeof SimpleSVG._onIconsAdded === 'function') {
-            SimpleSVG._onIconsAdded();
-        }
+        local.iconsAdded();
     }
 
     /**
-     * Function to add library
+     * Function to add collection
      *
      * @param {object} json JSON data
      * @return {number} Number of added items
      */
-    SimpleSVG.addLibrary = function(json) {
-        var result = storage.addLibrary(json);
+    SimpleSVG.addCollection = function(json) {
+        var result = storage.addCollection(json);
         if (result) {
             if (!eventQueued) {
                 eventQueued = true;
-                setTimeout(triggerCallback, 0);
+                window.setTimeout(triggerCallback, 0);
             }
         }
     };
@@ -58,7 +56,7 @@
         if (result) {
             if (!eventQueued) {
                 eventQueued = true;
-                setTimeout(triggerCallback, 0);
+                window.setTimeout(triggerCallback, 0);
             }
         }
         return result;
@@ -88,4 +86,4 @@
      */
     SimpleSVG.listIcons = storage.list.bind(storage);
 
-})(self.SimpleSVG);
+})(SimpleSVG, local);

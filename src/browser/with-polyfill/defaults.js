@@ -11,10 +11,10 @@
 /**
  * Default configuration when observer is included
  */
-(function(SimpleSVG) {
+(function(config) {
     "use strict";
 
     // Polyfill script URL
-    SimpleSVG._defaultConfig.polyfill = '//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js';
+    config._polyfill = '//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js';
 
-})(self.SimpleSVG);
+})(local.config);

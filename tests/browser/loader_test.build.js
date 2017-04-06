@@ -5,26 +5,27 @@
 
 const fs = require('fs');
 
-module.exports = (Helper, codeDir, testFile) => {
+module.exports = (Helper, codeDir, testFile, TestHelper) => {
     let code = fs.readFileSync(testFile, 'utf8'),
         modules = [
-            '(function (SimpleSVG) {\n' +
-                fs.readFileSync(codeDir + '/common/storage.js', 'utf8')
-                    .replace('module.exports = Storage;', 'SimpleSVG._Storage = Storage;') +
-            '\n})(self.SimpleSVG);\n',
+            TestHelper.fakeEvents() +
+            TestHelper.fakeInit() +
+            TestHelper.getStorage() +
             fs.readFileSync(codeDir + '/browser/storage.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/defaults.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/with-cdn/defaults.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/config.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/image.js', 'utf8'),
-            '(function (SimpleSVG) {\n' +
-                'SimpleSVG.testLoaderURL = function() { return true; }' +
-            '\n})(self.SimpleSVG);\n',
+
+            // Temporary function
+            'SimpleSVG.testLoaderURL = function() { return true; };' +
+
+            // Replace content of addScript()
             fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8').replace('// Create script', 'if (!SimpleSVG.testLoaderURL(url)) return;')
         ];
 
     // Replace code
-    modules = modules.map(item => item.replace('self.SimpleSVG', 'SimpleSVG')).join('');
+    modules = modules.join('');
 
     // Merge modules and test
     code = code.replace('/* Modules() */', modules);

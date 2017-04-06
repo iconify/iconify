@@ -4,12 +4,21 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG) {
+    function load(SimpleSVG, local) {
+        var global = {};
+
+        if (SimpleSVG.isReady === void 0) {
+            SimpleSVG.isReady = true;
+        }
+
+        local.config = {};
+
         /* Modules() */
     }
 
     describe('Testing image finder', function() {
         var SimpleSVG,
+            local,
             containerID = 'finder-container',
             validIconsID = 'finder-basic',
             invalidIconsID = 'finder-invalid',
@@ -52,48 +61,49 @@
 
             // Setup fake SimpleSVG instance
             SimpleSVG = {};
+            local = {};
 
             // Load libraries
-            load(SimpleSVG);
+            load(SimpleSVG, local);
 
-            expect(typeof SimpleSVG._findNewImages).to.be.equal('function');
-            expect(typeof SimpleSVG._findHiddenImages).to.be.equal('function');
-            expect(typeof SimpleSVG._findParsedImages).to.be.equal('function');
+            expect(typeof local.findNewImages).to.be.equal('function');
+            expect(typeof local.findHiddenImages).to.be.equal('function');
+            expect(typeof local.findParsedImages).to.be.equal('function');
         });
 
         it('finding valid images', function() {
             var results;
 
             // Find new icons
-            results = SimpleSVG._findNewImages(validIconsRoot, false);
+            results = local.findNewImages(validIconsRoot, false);
             expect(results.length).to.be.equal(4, 'Wrong number of new images');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi-arrow-up']);
 
             // Find icons that are being loaded
-            results = SimpleSVG._findNewImages(validIconsRoot, true);
+            results = local.findNewImages(validIconsRoot, true);
             expect(results.length).to.be.equal(2, 'Wrong number of images awaiting loader');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['fa-login', 'mdi-home']);
 
             // Find all icons that have not been parsed
-            results = SimpleSVG._findNewImages(validIconsRoot);
+            results = local.findNewImages(validIconsRoot);
             expect(results.length).to.be.equal(6, 'Wrong number of unparsed images');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi-arrow-up', 'fa-login', 'mdi-home']);
 
             // Find all icons awaiting lazy loader
-            results = SimpleSVG._findHiddenImages(validIconsRoot);
+            results = local.findHiddenImages(validIconsRoot);
             expect(results.length).to.be.equal(2, 'Wrong number of hidden images');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['icon-home', 'mdi-close']);
 
             // Find all parsed icons
-            results = SimpleSVG._findParsedImages(validIconsRoot);
+            results = local.findParsedImages(validIconsRoot);
             expect(results.length).to.be.equal(1, 'Wrong number of parsed images');
             expect(results.map(function(item) {
                 return item.icon
@@ -104,26 +114,26 @@
             var results;
 
             // Find new icons
-            results = SimpleSVG._findNewImages(invalidIconsRoot, false);
+            results = local.findNewImages(invalidIconsRoot, false);
             expect(results.length).to.be.equal(0, 'Wrong number of new images');
 
             // Find icons that are being loaded
-            results = SimpleSVG._findNewImages(invalidIconsRoot, true);
+            results = local.findNewImages(invalidIconsRoot, true);
             expect(results.length).to.be.equal(0, 'Wrong number of images awaiting loader');
 
             // Find all icons that have not been parsed
-            results = SimpleSVG._findNewImages(invalidIconsRoot);
+            results = local.findNewImages(invalidIconsRoot);
             expect(results.length).to.be.equal(0, 'Wrong number of unparsed images');
 
             // Find all icons awaiting lazy loader
-            results = SimpleSVG._findHiddenImages(invalidIconsRoot);
+            results = local.findHiddenImages(invalidIconsRoot);
             expect(results.length).to.be.equal(1, 'Wrong number of hidden images');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['pending-placeholder']);
 
             // Find all parsed icons
-            results = SimpleSVG._findParsedImages(invalidIconsRoot);
+            results = local.findParsedImages(invalidIconsRoot);
             expect(results.length).to.be.equal(1, 'Wrong number of parsed images');
             expect(results.map(function(item) {
                 return item.icon
@@ -134,28 +144,29 @@
             var results;
 
             // Find new icons
-            results = SimpleSVG._findNewImages(containerRoot, false);
+            results = local.findNewImages(containerRoot, false);
             expect(results.length).to.be.equal(4, 'Wrong number of new images');
 
             // Find icons that are being loaded
-            results = SimpleSVG._findNewImages(containerRoot, true);
+            results = local.findNewImages(containerRoot, true);
             expect(results.length).to.be.equal(2, 'Wrong number of images awaiting loader');
 
             // Find all icons that have not been parsed
-            results = SimpleSVG._findNewImages(containerRoot);
+            results = local.findNewImages(containerRoot);
             expect(results.length).to.be.equal(6, 'Wrong number of unparsed images');
 
             // Find all icons awaiting lazy loader
-            results = SimpleSVG._findHiddenImages(containerRoot);
+            results = local.findHiddenImages(containerRoot);
             expect(results.length).to.be.equal(3, 'Wrong number of hidden images');
 
             // Find all parsed icons
-            results = SimpleSVG._findParsedImages(containerRoot);
+            results = local.findParsedImages(containerRoot);
             expect(results.length).to.be.equal(2, 'Wrong number of parsed images');
         });
 
         it('checking custom finder', function() {
-            var SimpleSVG = {},
+            var SimpleSVG,
+                local,
                 containerID = 'custom-finder',
                 containerRoot, faReserved, results;
 
@@ -172,9 +183,10 @@
 
             // Setup fake SimpleSVG instance
             SimpleSVG = {};
+            local = {};
 
             // Load libraries
-            load(SimpleSVG);
+            load(SimpleSVG, local);
 
             // Add FontAwesome finder
             faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'];
@@ -195,35 +207,35 @@
             });
 
             // Find new icons
-            results = SimpleSVG._findNewImages(containerRoot, false);
+            results = local.findNewImages(containerRoot, false);
             expect(results.length).to.be.equal(4, 'Wrong number of new images');
             expect(results.map(function(item) {
                 return item.icon
             }).sort()).to.be.eql(['mdi-bear', 'fa-star', 'fa-apple', 'fa-bookmark'].sort());
 
             // Find icons that are being loaded
-            results = SimpleSVG._findNewImages(containerRoot, true);
+            results = local.findNewImages(containerRoot, true);
             expect(results.length).to.be.equal(2, 'Wrong number of images awaiting loader');
             expect(results.map(function(item) {
                 return item.icon
             }).sort()).to.be.eql(['mdi-login', 'fa-home'].sort());
 
             // Find all icons that have not been parsed
-            results = SimpleSVG._findNewImages(containerRoot);
+            results = local.findNewImages(containerRoot);
             expect(results.length).to.be.equal(6, 'Wrong number of unparsed images');
             expect(results.map(function(item) {
                 return item.icon
             }).sort()).to.be.eql(['mdi-bear', 'fa-star', 'fa-apple', 'fa-bookmark', 'mdi-login', 'fa-home'].sort());
 
             // Find all icons awaiting lazy loader
-            results = SimpleSVG._findHiddenImages(containerRoot);
+            results = local.findHiddenImages(containerRoot);
             expect(results.length).to.be.equal(1, 'Wrong number of hidden images');
             expect(results.map(function(item) {
                 return item.icon
             })).to.be.eql(['mdi-close']);
 
             // Find all parsed icons
-            results = SimpleSVG._findParsedImages(containerRoot);
+            results = local.findParsedImages(containerRoot);
             expect(results.length).to.be.equal(1, 'Wrong number of parsed images');
             expect(results.map(function(item) {
                 return item.icon

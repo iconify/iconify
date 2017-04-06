@@ -11,10 +11,8 @@
 /**
  * Main file
  */
-(function(SimpleSVG, scope) {
+(function(SimpleSVG, local) {
     "use strict";
-
-    var initialized = false;
 
     /**
      * Find new icons and change them
@@ -22,14 +20,18 @@
     function findNewIcons() {
         var paused = false;
 
-        SimpleSVG._findNewImages(SimpleSVG.config.rootElement === void 0 ? document.body : SimpleSVG.config.rootElement).forEach(function(image) {
-            if (SimpleSVG._loadImage(image)) {
+        if (!SimpleSVG.isReady) {
+            return;
+        }
+
+        local.findNewImages().forEach(function(image) {
+            if (local.loadImage(image)) {
                 if (!paused) {
                     paused = true;
                     SimpleSVG.pauseObserving();
                 }
 
-                SimpleSVG._renderSVG(image, !SimpleSVG._imageVisible(image));
+                local.renderSVG(image, !local.imageVisible(image));
             }
         });
 
@@ -39,52 +41,28 @@
     }
 
     /**
-     * Callback when new icons were added to storage
-     */
-    function newIcons() {
-        findNewIcons();
-    }
-
-    /**
      * Callback when DOM was changed
      */
     function scanDOM() {
+        if (!SimpleSVG.isReady) {
+            return;
+        }
+
         // Find new icons
         findNewIcons();
 
-        // Check visibility of existing icons
-        if (SimpleSVG._checkLazyLoader !== void 0) {
-            SimpleSVG._checkLazyLoader();
-        }
+        // TODO: Check visibility of existing icons
     }
-    SimpleSVG._scanDOM = scanDOM;
 
     /**
-     * Start script
+     * Set local functions
      */
-    function init() {
-        if (initialized) {
-            return;
-        }
-        initialized = true;
+    local.iconsAdded = findNewIcons;
+    local.nodesAdded = scanDOM;
 
-        // Setup events
-        SimpleSVG._onIconsAdded = newIcons;
-        SimpleSVG._onNodesAdded = scanDOM;
-        // window.addEventListener('load', scanDOM);
+    /**
+     * Scan DOM when script is ready
+     */
+    local.initQueue.push(scanDOM);
 
-        // Scan DOM
-        scanDOM();
-    }
-
-    switch (document.readyState) {
-        case 'loading':
-            document.addEventListener('DOMContentLoaded', init);
-            document.onreadystatechange = init;
-            break;
-
-        default:
-            init();
-    }
-
-})(self.SimpleSVG, self);
+})(SimpleSVG, local);

@@ -4,13 +4,23 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG) {
+    function load(SimpleSVG, local, global) {
         /* Modules() */
     }
 
     describe('Testing renderer', function() {
         it('rendering svg images', function(done) {
-            var SimpleSVG = {},
+            var SimpleSVG = {
+                    isReady: false
+                },
+                local = {
+                    config: {}
+                },
+                global = {
+                    SimpleSVGConfig: {
+                        _readyEvent: 'RendererTestReadyEvent1'
+                    }
+                },
                 containerID = 'renderer-svg',
                 containerRoot,
                 pending = 0;
@@ -25,32 +35,30 @@
                 containerRoot = document.getElementById(containerID);
 
                 // Setup fake SimpleSVG instance
-                SimpleSVG = {
-                    _onIconsAdded: renderImages
-                };
-
-                // Load libraries
-                load(SimpleSVG);
-                SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
+                local.iconsAdded = renderImages;
+                load(SimpleSVG, local, global);
+                local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
                 window.SSVGRenderTest = SimpleSVG._loaderCallback;
 
-                // Load images, start tests when images are available
-                SimpleSVG._findNewImages(containerRoot).forEach(function(image) {
-                    if (!SimpleSVG._loadImage(image)) {
-                        pending ++;
-                    } else {
-                        SimpleSVG._renderSVG(image);
+                SimpleSVG.ready(() => {
+                    // Load images, start tests when images are available
+                    local.findNewImages(containerRoot).forEach(function(image) {
+                        if (!local.loadImage(image)) {
+                            pending ++;
+                        } else {
+                            local.renderSVG(image);
+                        }
+                    });
+                    if (!pending) {
+                        test();
                     }
                 });
-                if (!pending) {
-                    test();
-                }
             }
 
             // Callback to load pending images
             function renderImages() {
-                SimpleSVG._findNewImages(containerRoot).forEach(function(image) {
-                    SimpleSVG._renderSVG(image);
+                local.findNewImages(containerRoot).forEach(function(image) {
+                    local.renderSVG(image);
                 });
                 test();
             }
@@ -77,7 +85,17 @@
         });
 
         it('rendering placeholder', function(done) {
-            var SimpleSVG = {},
+            var SimpleSVG = {
+                    isReady: false
+                },
+                local = {
+                    config: {}
+                },
+                global = {
+                    SimpleSVGConfig: {
+                        _readyEvent: 'RendererTestReadyEvent1'
+                    }
+                },
                 containerID = 'renderer-placeholder',
                 containerRoot,
                 pending = 0;
@@ -92,18 +110,14 @@
                 containerRoot = document.getElementById(containerID);
 
                 // Setup fake SimpleSVG instance
-                SimpleSVG = {
-                    _onIconsAdded: renderImages
-                };
-
-                // Load libraries
-                load(SimpleSVG);
-                SimpleSVG.config.defaultCDN = SimpleSVG.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest2');
+                local.iconsAdded = renderImages;
+                load(SimpleSVG, local, global);
+                local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest2');
                 window.SSVGRenderTest2 = SimpleSVG._loaderCallback;
 
                 // Load images, start tests when images are available
-                SimpleSVG._findNewImages(containerRoot).forEach(function(image) {
-                    if (!SimpleSVG._loadImage(image)) {
+                local.findNewImages(containerRoot).forEach(function(image) {
+                    if (!local.loadImage(image)) {
                         pending ++;
                     }
                 });
@@ -114,8 +128,8 @@
 
             // Render images
             function renderImages() {
-                SimpleSVG._findNewImages(containerRoot).forEach(function(image) {
-                    SimpleSVG._renderSVG(image, true);
+                local.findNewImages(containerRoot).forEach(function(image) {
+                    local.renderSVG(image, true);
                 });
                 test();
             }
@@ -136,8 +150,8 @@
                 expect(image2.getAttribute('style')).to.be.equal(null, 'Second placeholder should not have style attribute');
 
                 // Change images to SVG
-                SimpleSVG._findHiddenImages(containerRoot).forEach(function(image) {
-                    SimpleSVG._renderSVG(image);
+                local.findHiddenImages(containerRoot).forEach(function(image) {
+                    local.renderSVG(image);
                 });
 
                 image1 = containerRoot.childNodes[0];

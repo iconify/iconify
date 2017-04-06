@@ -11,23 +11,23 @@
 /**
  * Module for changing images
  */
-(function(SimpleSVG) {
+(function(SimpleSVG, local, config) {
     "use strict";
 
-    var placeholderTag = SimpleSVG.config.placeholderTag,
-        iconAttribute = SimpleSVG.config.iconAttribute,
-        loadingClass = SimpleSVG.config.loadingClass,
-        imageClass = SimpleSVG.config.imageClass,
-        hFlipClass = SimpleSVG.config.hFlipClass,
-        vFlipClass = SimpleSVG.config.vFlipClass,
-        rotationClasses = SimpleSVG.config.rotationClasses,
+    var placeholderTag = config._placeholderTag,
+        iconAttribute = config._iconAttribute,
+        loadingClass = config._loadingClass,
+        imageClass = config._imageClass,
+        hFlipClass = config._hFlipClass,
+        vFlipClass = config._vFlipClass,
+        rotationClasses = config._rotationClasses,
         transformationChanges = {},
         transformationClasses;
 
     /**
      * Generate SVG code
      *
-     * @param {string} html SVG code with all attributes
+     * @param {string} html Empty SVG element with all attributes
      * @param {string} body Body
      * @return {string}
      */
@@ -81,17 +81,16 @@
      *
      * @param {object} image
      * @param {boolean} [hidden]
-     * @private
      */
-    SimpleSVG._renderSVG = function(image, hidden) {
-        var attributes = SimpleSVG._getImageAttributes(image),
+    local.renderSVG = function(image, hidden) {
+        var attributes = local.getImageAttributes(image),
             item = SimpleSVG.getIcon(image.icon),
             svg, el, el2, data, html;
 
         hidden = hidden === true;
 
         attributes[iconAttribute] = image.icon;
-        svg = new SimpleSVG._SVG(item, hidden);
+        svg = new local.SVG(item, hidden);
         el = document.createElement(hidden ? placeholderTag : 'svg');
 
         // flip and rotate
@@ -150,7 +149,7 @@
             return false;
         }
 
-        svg = new SimpleSVG._SVG(SimpleSVG.getIcon(name));
+        svg = new local.SVG(SimpleSVG.getIcon(name));
         data = svg.svgObject(properties, false);
 
         el = document.createElement('svg');
@@ -161,4 +160,4 @@
         return generateSVG(el.outerHTML, data.body);
     };
 
-})(self.SimpleSVG);
+})(SimpleSVG, local, local.config);

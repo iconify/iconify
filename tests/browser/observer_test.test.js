@@ -18,8 +18,8 @@
     /* Observer() */
 
     describe('Testing observer', function() {
-        it('dummy observer', function(done) {
-            var context, SimpleSVG,
+        it('inactive observer', function(done) {
+            var context, SimpleSVG, local,
                 tempId = 'observer-dummy',
                 called = false;
 
@@ -31,23 +31,28 @@
 
             // Setup fake global scope and SimpleSVG instance
             context = {
+                MutationObserver: MutationObserver
             };
             SimpleSVG = {
+                isReady: true
+            };
+            local = {
                 config: {
-                    observe: true,
-                    rootElement: document.getElementById(tempId)
+                    _root: document.getElementById(tempId)
                 },
-                _onNodesAdded: function(nodes) {
+                initQueue: [],
+                nodesAdded: function(nodes) {
                     called = true;
                 },
-                _loadingPolyfill: true
             };
 
             // Load observer
-            Observer(SimpleSVG, context);
+            Observer(SimpleSVG, local, context);
 
             expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
             expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+
+            // Do not initialize observer!
 
             // Check if observer is working
             expect(called).to.be.equal(false, 'Observer callback was triggered too early');
@@ -59,7 +64,7 @@
         });
 
         it('setting up working observer', function(done) {
-            var context, SimpleSVG,
+            var context, SimpleSVG, local,
                 tempId = 'observer-basic',
                 called = false;
 
@@ -75,20 +80,28 @@
                 MutationObserver: MutationObserver
             };
             SimpleSVG = {
+                isReady: true
+            };
+            local = {
                 config: {
-                    observe: true,
-                    rootElement: document.getElementById(tempId)
+                    _root: document.getElementById(tempId)
                 },
-                _onNodesAdded: function(nodes) {
+                initQueue: [],
+                nodesAdded: function(nodes) {
                     called = true;
                 }
             };
 
             // Load observer
-            Observer(SimpleSVG, context);
+            Observer(SimpleSVG, local, context);
 
             expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
             expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+
+            // Init observer
+            local.initQueue.forEach(function(callback) {
+                callback();
+            });
 
             // Check if observer is working
             expect(called).to.be.equal(false, 'Observer callback was triggered too early');
@@ -101,7 +114,7 @@
         });
 
         it('pause and resume observer', function(done) {
-            var context, SimpleSVG,
+            var context, SimpleSVG, local,
                 tempId = 'observer-pause',
                 callbackResult = false;
 
@@ -117,20 +130,28 @@
                 MutationObserver: MutationObserver
             };
             SimpleSVG = {
+                isReady: true
+            };
+            local = {
                 config: {
-                    observe: true,
-                    rootElement: document.getElementById(tempId)
+                    _root: document.getElementById(tempId)
                 },
-                _onNodesAdded: function(nodes) {
+                initQueue: [],
+                nodesAdded: function(nodes) {
                     callbackResult = nodes;
                 }
             };
 
             // Load observer
-            Observer(SimpleSVG, context);
+            Observer(SimpleSVG, local, context);
 
             expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
             expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+
+            // Init observer
+            local.initQueue.forEach(function(callback) {
+                callback();
+            });
 
             // Call observer
             expect(callbackResult).to.be.equal(false, 'Observer callback was triggered too early');
@@ -164,6 +185,5 @@
                 });
             });
         });
-
     });
 })();

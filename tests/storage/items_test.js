@@ -83,7 +83,7 @@
             expect(storage.get('foo-baz').width).to.be.equal(16);
         });
 
-        it('library', function() {
+        it('collection', function() {
             var storage = new Storage();
 
             storage.addIcon('single', {
@@ -91,7 +91,7 @@
                 width: 48,
                 height: 36
             });
-            storage.addLibrary({
+            storage.addCollection({
                 icons: {
                     icon1: {
                         body: '<path d="" />'
@@ -127,7 +127,7 @@
             expect(storage.get('icon3').height).to.be.equal(20);
 
             // Add items without width
-            storage.addLibrary({
+            storage.addCollection({
                 icons: {
                     icon11: {
                         // missing width - invalid icon
@@ -154,7 +154,7 @@
             expect(storage.list()).to.be.eql(['single', 'icon1', 'icon2', 'icon3', 'icon12']);
 
             // Add aliases
-            storage.addLibrary({
+            storage.addCollection({
                 icons: {
                     icon21: {
                         body: '<path d="" />',

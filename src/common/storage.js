@@ -177,12 +177,12 @@ function Storage() {
     this.items = {};
 
     /**
-     * Function to add library
+     * Function to add collection
      *
      * @param {object} json JSON data
      * @return {number} Number of added items
      */
-    this.addLibrary = function(json) {
+    this.addCollection = function(json) {
         // Get default values
         var defaults = {},
             items = this.items,

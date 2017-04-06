@@ -11,21 +11,18 @@
 /**
  * Observer function
  *
- * This function waits for new nodes to be added to DOM, then calls
- * private function SimpleSVG._onNodesAdded(nodes)
- *
- * Callback argument "nodes" is not checked for duplicate nodes and list could be incorrect when using IE
- *
  * Observer automatically loads polyfill for MutationObserver for IE9-10 from CDN that can be configured
+ * See polyfill.js
  *
  * Observer should be paused before adding any new items using SimpleSVG.pauseObserving()
  * and resumed after that using SimpleSVG.resumeObserving()
  * Pause/resume can stack, so if you call pause twice, resume should be called twice.
  */
-(function(SimpleSVG, scope) {
+(function(local, config, global) {
     "use strict";
 
-    var poly = false;
+    var polyCounter = false,
+        polyLoaded = true;
 
     /**
      * Try to load polyfill
@@ -36,20 +33,18 @@
         var timer, element;
 
         function check() {
-            if (!scope.MutationObserver || !scope.WeakMap) {
-                poly ++;
+            if (!global.MutationObserver || !global.WeakMap) {
+                polyCounter ++;
                 // Check up to 50 times (25 seconds), then give up
-                if (poly > 50) {
+                if (polyCounter > 50) {
                     clearInterval(timer);
                 }
             } else {
                 clearInterval(timer);
                 // Loaded!
 
-                SimpleSVG._loadingPolyfill = false;
-                if (SimpleSVG._onPolyfillLoaded !== void 0) {
-                    SimpleSVG._onPolyfillLoaded();
-                }
+                polyLoaded = true;
+                local.init();
             }
         }
 
@@ -57,7 +52,7 @@
         element.setAttribute('src', url);
         element.setAttribute('type', 'text/javascript');
         element.setAttribute('async', true);
-        poly = 1;
+        polyCounter = 1;
 
         document.head.appendChild(element);
 
@@ -66,11 +61,13 @@
 
     // Check if MutationObserver is available in browser
     // P.S. IE must die!
-    SimpleSVG._loadingPolyfill = false;
-    if ((!scope.MutationObserver || !scope.WeakMap) && SimpleSVG.config.polyfill) {
+    if ((!global.MutationObserver || !global.WeakMap) && config._polyfill) {
         // Try to load polyfill
-        SimpleSVG._loadingPolyfill = true;
-        loadPolyFill(SimpleSVG.config.polyfill);
+        polyLoaded = false;
+        local.preInitQueue.push(function() {
+            return polyLoaded;
+        });
+        loadPolyFill(config._polyfill);
     }
 
-})(self.SimpleSVG, self);
+})(local, local.config, global);

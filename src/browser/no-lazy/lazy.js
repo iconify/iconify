@@ -11,11 +11,7 @@
 /**
  * Replacement for lazy loader when lazy loader is disabled
  */
-(function(SimpleSVG) {
-    "use strict";
 
-    SimpleSVG._imageVisible = function(image) {
-        return true;
-    };
-
-})(self.SimpleSVG);
+local.imageVisible = function(image) {
+    return true;
+};

@@ -12,15 +12,15 @@
  * Observer function
  *
  * This function waits for new nodes to be added to DOM, then calls
- * private function SimpleSVG._onNodesAdded(nodes)
+ * function local.nodesAdded(nodes)
  *
  * Callback argument "nodes" is not checked for duplicate nodes and list could be incorrect when using IE
  *
- * Observer should be paused before adding any new items using SimpleSVG.pauseObserving()
- * and resumed after that using SimpleSVG.resumeObserving()
+ * Observer can be paused using SimpleSVG.pauseObserving()
+ * and resumed using SimpleSVG.resumeObserving()
  * Pause/resume can stack, so if you call pause twice, resume should be called twice.
  */
-(function(SimpleSVG, scope) {
+(function(SimpleSVG, local, config, global) {
     "use strict";
 
     var observer = null,
@@ -33,25 +33,6 @@
         };
 
     /**
-     * Setup dummy functions that replace observer
-     */
-    function setupDummy() {
-        SimpleSVG.pauseObserving = function() {};
-        SimpleSVG.resumeObserving = function() {};
-    }
-
-    /**
-     * Trigger callback function
-     *
-     * @param {Array} nodes List of added nodes
-     */
-    function triggerEvent(nodes) {
-        if (typeof SimpleSVG._onNodesAdded === 'function') {
-            SimpleSVG._onNodesAdded(nodes);
-        }
-    }
-
-    /**
      * Process all pending mutations
      */
     function processPendingMutations() {
@@ -60,7 +41,7 @@
         addedNodes = false;
         if (temp !== false && temp.length) {
             // At least 1 node was added
-            triggerEvent(temp);
+            local.nodesAdded(temp);
         }
     }
 
@@ -76,7 +57,7 @@
             // Parse on next tick to collect all mutations
             if (addedNodes === false) {
                 addedNodes = [];
-                setTimeout(processPendingMutations, 0);
+                window.setTimeout(processPendingMutations, 0);
             }
             if (mutation.addedNodes) {
                 for (i = 0; i < mutation.addedNodes.length; i++) {
@@ -90,33 +71,7 @@
      * Start/resume observing
      */
     function observe() {
-        observer.observe(SimpleSVG.config.rootElement === void 0 ? document.body : SimpleSVG.config.rootElement, params);
-    }
-
-    /**
-     * Create observer instance and start observing
-     */
-    function init() {
-        observer = new scope.MutationObserver(processMutations);
-        observe();
-    }
-
-    /**
-     * Queue polyfill callback
-     */
-    function queuePolyfill() {
-        var oldCallback = SimpleSVG._onPolyfillLoaded;
-
-        SimpleSVG._onPolyfillLoaded = function() {
-            // Init observer and scan
-            init(true);
-            triggerEvent([]);
-
-            // Call previous callback
-            if (oldCallback !== void 0) {
-                oldCallback();
-            }
-        };
+        observer.observe(config._root === void 0 ? document.querySelector('body') : config._root, params);
     }
 
     /**
@@ -126,8 +81,10 @@
      */
     SimpleSVG.pauseObserving = function() {
         if (observer === null) {
+            paused ++;
             return;
         }
+
         if (!paused) {
             // Store pending records, stop observer
             queue = observer.takeRecords();
@@ -142,7 +99,11 @@
     SimpleSVG.resumeObserving = function() {
         var temp;
 
-        if (observer === null || !paused) {
+        if (observer === null) {
+            paused --;
+            return;
+        }
+        if (!paused) {
             return;
         }
 
@@ -156,10 +117,14 @@
         }
     };
 
-    if (SimpleSVG._loadingPolyfill) {
-        queuePolyfill();
-    } else {
-        init();
-    }
+    /**
+     * Start observing when all modules and DOM are ready
+     */
+    local.initQueue.push(function () {
+        observer = new global.MutationObserver(processMutations);
+        if (!paused) {
+            observe();
+        }
+    });
 
-})(self.SimpleSVG, self);
+})(SimpleSVG, local, local.config, global);

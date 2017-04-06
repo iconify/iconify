@@ -5,25 +5,24 @@
 
 const fs = require('fs');
 
-module.exports = (Helper, codeDir, testFile) => {
+module.exports = (Helper, codeDir, testFile, TestHelper) => {
     let code = fs.readFileSync(testFile, 'utf8'),
-        observerCode = fs.readFileSync(codeDir + '/browser/with-observer/observer.js', 'utf8'),
-        search, pos, index;
+        observerCode = fs.readFileSync(codeDir + '/browser/with-observer/observer.js', 'utf8');
 
     // Change observer code
-    search = '(function';
-    pos = observerCode.indexOf(search);
-    if (pos === -1) {
-        throw new Error('Could not find required code in observer.js');
-    }
-    observerCode = 'function Observer' + observerCode.slice(pos + search.length);
+    observerCode = TestHelper.replace(
+        observerCode,
+        '(function(SimpleSVG, local, config, global) {',
+        'function Observer(SimpleSVG, local, global) { var config = local.config; ',
+        'Could not find required code in observer.js'
+    );
 
-    search = '})(self.SimpleSVG, self);';
-    pos = observerCode.indexOf(search);
-    if (pos === -1) {
-        throw new Error('Could not find required code in observer.js');
-    }
-    observerCode = observerCode.slice(0, pos) + '}';
+    observerCode = TestHelper.replace(
+        observerCode,
+        '})(SimpleSVG, local, local.config, global);',
+        '}',
+        'Could not find required code in observer.js (2)'
+    );
 
     // Merge observer and test
     code = code.replace('/* Observer() */', observerCode);

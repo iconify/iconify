@@ -11,17 +11,5 @@
 /**
  * Replacement for loader module when CDN is disabled
  */
-(function(SimpleSVG) {
-    "use strict";
 
-    /**
-     * Check if image exists in library
-     *
-     * @param {object} image Image object
-     * @param {boolean} [checkQueue] True if queue should be checked. Default = true
-     * @return {boolean}
-     * @private
-     */
-    SimpleSVG._loadImage = SimpleSVG.iconExists;
-
-})(self.SimpleSVG);
+local.loadImage = SimpleSVG.iconExists;
