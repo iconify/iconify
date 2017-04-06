@@ -67,13 +67,18 @@ function normalizeIcon(item, defaults) {
  * @return {object|null}
  */
 function normalizeAlias(item, items) {
-    var parent, result, error;
+    var parent, result, error, prefix;
 
-    if (typeof item.parent !== 'string' || items[item.parent] === void 0) {
+    if (typeof item.parent !== 'string') {
         return null;
     }
 
-    parent = items[item.parent];
+    prefix = item.parent.split('-').shift();
+    if (!items[prefix] || items[prefix][item.parent] === void 0) {
+        return null;
+    }
+
+    parent = items[prefix][item.parent];
     result = {
         parent: item.parent
     };
@@ -180,9 +185,10 @@ function Storage() {
      * Function to add collection
      *
      * @param {object} json JSON data
+     * @param {string} [collectionPrefix] Common prefix used in collection
      * @return {number} Number of added items
      */
-    this.addCollection = function(json) {
+    this.addCollection = function(json, collectionPrefix) {
         // Get default values
         var defaults = {},
             items = this.items,
@@ -200,9 +206,16 @@ function Storage() {
         // Parse icons
         if (json.icons !== void 0) {
             Object.keys(json.icons).forEach(function(key) {
-                var item = normalizeIcon(json.icons[key], defaults);
+                var item = normalizeIcon(json.icons[key], defaults),
+                    prefix;
+
                 if (item !== null) {
-                    items[key] = item;
+                    prefix = collectionPrefix ? collectionPrefix : key.split('-').shift();
+                    if (items[prefix] === void 0) {
+                        items[prefix] = {};
+                    }
+
+                    items[prefix][key] = item;
                     added ++;
                 }
             });
@@ -211,9 +224,16 @@ function Storage() {
         // Parse aliases
         if (json.aliases !== void 0) {
             Object.keys(json.aliases).forEach(function(key) {
-                var item = normalizeAlias(json.aliases[key], items);
+                var item = normalizeAlias(json.aliases[key], items),
+                    prefix;
+
                 if (item !== null) {
-                    items[key] = item;
+                    prefix = collectionPrefix ? collectionPrefix : key.split('-').shift();
+                    if (items[prefix] === void 0) {
+                        items[prefix] = {};
+                    }
+
+                    items[prefix][key] = item;
                     added ++;
                 }
             });
@@ -230,31 +250,50 @@ function Storage() {
      * @return {boolean} True if icon was added, false on error
      */
     this.addIcon = function(name, data) {
+        var prefix = name.split('-').shift();
+
         if (data.parent !== void 0) {
             data = normalizeAlias(data, this.items);
         } else {
             data = normalizeIcon(data, itemDefaults);
+            if (this.items[prefix] === void 0) {
+                this.items[prefix] = {};
+            }
         }
-        return !!(this.items[name] = data);
+        return !!(this.items[prefix][name] = data);
     };
 
     /**
      * Check if icon exists
      *
      * @param {string} name Icon name
+     * @param {string} [prefix] Icon prefix
      * @return {boolean}
      */
-    this.exists = function(name) {
-        return !!this.items[name];
+    this.exists = function(name, prefix) {
+        prefix = prefix === void 0 ? name.split('-').shift() : prefix;
+        return this.items[prefix] !== void 0 && this.items[prefix][name] !== void 0;
     };
 
     /**
      * Get list of available items
      *
+     * @param {string} [prefix] Optional prefix
      * @return {Array}
      */
-    this.list = function() {
-        return Object.keys(this.items);
+    this.list = function(prefix) {
+        var results, items;
+
+        if (prefix !== void 0) {
+            return this.items[prefix] === void 0 ? [] : Object.keys(this.items[prefix]);
+        }
+
+        results = [];
+        items = this.items;
+        Object.keys(items).forEach(function(prefix) {
+            results = results.concat(Object.keys(items[prefix]));
+        });
+        return results;
     };
 
     /**
@@ -265,18 +304,19 @@ function Storage() {
      * @return {null}
      */
     this.get = function(name, copy) {
-        var result, item;
+        var prefix = name.split('-').shift(),
+            result, item;
 
-        if (this.items[name] === void 0) {
+        if (!this.items[prefix] || this.items[prefix][name] === void 0) {
             return null;
         }
 
         if (copy === false) {
-            return this.items[name];
+            return this.items[prefix][name];
         }
 
         result = {};
-        item = this.items[name];
+        item = this.items[prefix][name];
 
         itemAttributes.forEach(function(key) {
             result[key] = item[key];

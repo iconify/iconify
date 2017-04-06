@@ -79,7 +79,7 @@
             // Load libraries
             load(SimpleSVG, local);
             local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
-            local.config.loaderEvent = 'newSSVGImagesTest';
+            local.config._loaderEvent = 'newSSVGImagesTest';
             window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
 
             // Find icons

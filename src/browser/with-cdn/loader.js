@@ -151,7 +151,6 @@
             SimpleSVG.addCollection(data);
 
             // Dispatch event
-            console.log('Added few images, dispatching event');
             local.event(config._loaderEvent);
         }
     };
