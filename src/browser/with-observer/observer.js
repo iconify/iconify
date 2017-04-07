@@ -11,10 +11,8 @@
 /**
  * Observer function
  *
- * This function waits for new nodes to be added to DOM, then calls
- * function local.nodesAdded(nodes)
- *
- * Callback argument "nodes" is not checked for duplicate nodes and list could be incorrect when using IE
+ * Observer automatically loads polyfill for MutationObserver for IE9-10 from CDN that can be configured
+ * See ../polyfill.js
  *
  * Observer can be paused using SimpleSVG.pauseObserving()
  * and resumed using SimpleSVG.resumeObserving()

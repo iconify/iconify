@@ -38,7 +38,7 @@
      * List of callbacks to call to test if script is ready
      * Callback should return false if not ready, true if ready
      *
-     * @type {[function]}
+     * @type {[{Function}]}
      */
     local.preInitQueue = [function() {
         return loaded;
@@ -47,7 +47,7 @@
     /**
      * List of callbacks to call when SimpleSVG is ready
      *
-     * @type {[function]}
+     * @type {[function}]}
      */
     local.initQueue = [];
 

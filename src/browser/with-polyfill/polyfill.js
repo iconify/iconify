@@ -9,14 +9,7 @@
  */
 
 /**
- * Observer function
- *
- * Observer automatically loads polyfill for MutationObserver for IE9-10 from CDN that can be configured
- * See polyfill.js
- *
- * Observer should be paused before adding any new items using SimpleSVG.pauseObserving()
- * and resumed after that using SimpleSVG.resumeObserving()
- * Pause/resume can stack, so if you call pause twice, resume should be called twice.
+ * Observer polyfill loader
  */
 (function(local, config, global) {
     "use strict";
