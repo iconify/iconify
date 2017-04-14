@@ -40,14 +40,12 @@
      *
      * @param {Element} element DOM element
      * @param {string} icon Icon name
-     * @param {boolean} [hidden] True if image is hidden
-     * @return {{element: Element, icon: string, hidden: boolean}}
+     * @return {{element: Element, icon: string}}
      */
-    local.parsedImage = function(element, icon, hidden) {
+    local.parsedImage = function(element, icon) {
         return {
             element: element,
-            icon: icon,
-            hidden: hidden === true
+            icon: icon
         };
     };
 

@@ -29,9 +29,6 @@
     // Attribute that stores icon name
     config._iconAttribute = 'data-icon';
 
-    // Tag for SVG placeholder
-    config._placeholderTag = 'svg-placeholder';
-
     // Rotation and flip classes
     config._rotationClasses = {
         '1': 'svg-rotate-90',

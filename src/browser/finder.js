@@ -17,7 +17,6 @@
     var imageClass = config._imageClass,
         loadingClass = config._loadingClass,
         iconAttribute = config._iconAttribute,
-        placeholderTag = config._placeholderTag,
         newSelectorExtra = ':not(.' + loadingClass + ')',
         loadingSelectorExtra = '.' + loadingClass;
 
@@ -125,7 +124,7 @@
             var finder = finders[key],
                 selector = loading === true ? finder.selectorLoading : (loading === false ? finder.selectorNew : finder.selector);
 
-            var nodes = root.querySelectorAll(selector + ':not(svg):not(' + placeholderTag + ')'),
+            var nodes = root.querySelectorAll(selector + ':not(svg)'),
                 index, node, icon;
 
             for (index = 0; index < nodes.length; index ++) {
@@ -143,17 +142,15 @@
     };
 
     /**
-     * Find hidden or parsed images
+     * Find all svg images
      *
      * @param {Element} root Root element
-     * @param {string} tag Element tag
-     * @param {boolean} hidden Status
      * @return {Array}
      */
-    local.findHiddenOrParsedImages = function(root, tag, hidden) {
+    local.findParsedImages = function(root) {
         var results = [];
 
-        var nodes = root.querySelectorAll(tag + '.' + imageClass),
+        var nodes = root.querySelectorAll('svg.' + imageClass),
             index, node, icon;
 
         for (index = 0; index < nodes.length; index ++) {
@@ -161,31 +158,11 @@
             icon = node.getAttribute(iconAttribute);
 
             if (icon) {
-                results.push(local.parsedImage(node, icon, hidden));
+                results.push(local.parsedImage(node, icon));
             }
         }
 
         return results;
-    };
-
-    /**
-     * Find all hidden images (waiting to be displayed)
-     *
-     * @param {Element} root Root element
-     * @return {Array}
-     */
-    local.findHiddenImages = function(root) {
-        return local.findHiddenOrParsedImages(root, placeholderTag, true);
-    };
-
-    /**
-     * Find all parsed images
-     *
-     * @param {Element} root Root element
-     * @return {Array}
-     */
-    local.findParsedImages = function(root) {
-        return local.findHiddenOrParsedImages(root, 'svg', false);
     };
 
 })(SimpleSVG, local, local.config);

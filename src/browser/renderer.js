@@ -14,8 +14,7 @@
 (function(SimpleSVG, local, config) {
     "use strict";
 
-    var placeholderTag = config._placeholderTag,
-        iconAttribute = config._iconAttribute,
+    var iconAttribute = config._iconAttribute,
         loadingClass = config._loadingClass,
         imageClass = config._imageClass,
         hFlipClass = config._hFlipClass,
@@ -77,32 +76,27 @@
     transformationClasses = Object.keys(transformationChanges);
 
     /**
-     * Render SVG or SVG placeholder
+     * Render SVG
      *
      * @param {object} image
-     * @param {boolean} [hidden]
      */
-    local.renderSVG = function(image, hidden) {
+    local.renderSVG = function(image) {
         var attributes = local.getImageAttributes(image),
             item = SimpleSVG.getIcon(image.icon),
             svg, el, el2, data, html;
 
-        hidden = hidden === true;
-
         attributes[iconAttribute] = image.icon;
-        svg = new local.SVG(item, hidden);
-        el = document.createElement(hidden ? placeholderTag : 'svg');
+        svg = new local.SVG(item);
+        el = document.createElement('svg');
 
         // flip and rotate
-        if (!hidden) {
-            transformationClasses.forEach(function(key) {
-                if (image.element.classList.contains(key)) {
-                    attributes[transformationChanges[key].attr] = transformationChanges[key].value;
-                }
-            });
-        }
+        transformationClasses.forEach(function(key) {
+            if (image.element.classList.contains(key)) {
+                attributes[transformationChanges[key].attr] = transformationChanges[key].value;
+            }
+        });
 
-        data = svg.svgObject(attributes, hidden);
+        data = svg.svgObject(attributes);
         Object.keys(data.attributes).forEach(function(attr) {
             el.setAttribute(attr, data.attributes[attr]);
         });
@@ -111,28 +105,21 @@
         }
         el.classList.add(imageClass);
 
-        if (!hidden) {
-            // innerHTML is not supported for SVG element :(
-            // Creating temporary element instead
-            html = generateSVG(el.outerHTML, data.body);
+        // innerHTML is not supported for SVG element :(
+        // Creating temporary element instead
+        html = generateSVG(el.outerHTML, data.body);
 
-            el = document.createElement('span');
-            el.innerHTML = html;
-        }
+        el = document.createElement('span');
+        el.innerHTML = html;
 
         image.element.parentNode.replaceChild(el, image.element);
 
-        if (!hidden) {
-            el2 = el.childNodes[0];
-            el.parentNode.replaceChild(el2, el);
-            image.element = el2;
-        } else {
-            image.element = el;
-        }
+        el2 = el.childNodes[0];
+        el.parentNode.replaceChild(el2, el);
+        image.element = el2;
 
         delete image.parser;
         delete image.loading;
-        image.hidden = hidden;
     };
 
     /**

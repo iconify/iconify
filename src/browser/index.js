@@ -31,7 +31,7 @@
                     SimpleSVG.pauseObserving();
                 }
 
-                local.renderSVG(image, !local.imageVisible(image));
+                local.renderSVG(image);
             }
         });
 
@@ -50,8 +50,6 @@
 
         // Find new icons
         findNewIcons();
-
-        // TODO: Check visibility of existing icons
     }
 
     /**

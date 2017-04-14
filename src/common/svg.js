@@ -260,16 +260,14 @@ function SVG(item) {
      * Get SVG object for output
      *
      * @param {object} [props] Custom properties
-     * @param {boolean} [placeholder] True if element is placeholder
      * @return {object|null}
      */
-    this.svgObject = function(props, placeholder) {
+    this.svgObject = function(props) {
         var attributes, transformation, width, height, customWidth, customHeight, body, regex;
 
         props = props === void 0 ? {} : props;
-        placeholder = placeholder === true;
 
-        attributes = placeholder ? {} : this.defaultAttributes();
+        attributes = this.defaultAttributes();
         transformation = this.transformation(props);
 
         customWidth = props['data-width'] === void 0 ? props.width : props['data-width'];
@@ -300,12 +298,10 @@ function SVG(item) {
         }
 
         // Style
-        if (!placeholder) {
-            attributes.style = '-ms-transform: ' + transformation + ';' +
-                ' -webkit-transform: ' + transformation + ';' +
-                ' transform: ' + transformation + ';' +
-                (props.style === void 0 ? '' : props.style);
-        }
+        attributes.style = '-ms-transform: ' + transformation + ';' +
+            ' -webkit-transform: ' + transformation + ';' +
+            ' transform: ' + transformation + ';' +
+            (props.style === void 0 ? '' : props.style);
 
         // Copy custom properties
         Object.keys(props).forEach(function(attr) {
@@ -322,35 +318,21 @@ function SVG(item) {
                     return;
 
                 case 'style':
-                    if (placeholder) {
-                        break;
-                    }
                     return;
 
                 case 'before':
                 case 'after':
-                    if (placeholder) {
-                        attributes['data-' + attr] = props[attr];
-                    }
                     return;
 
                 case 'data-before':
                 case 'data-after':
-                    if (!placeholder) {
-                        props[attr.slice(5)] = props[attr];
-                        return;
-                    }
+                    props[attr.slice(5)] = props[attr];
+                    return;
             }
             attributes[attr] = props[attr];
         });
 
         // Output
-        if (placeholder) {
-            return {
-                attributes: attributes
-            };
-        }
-
         body = (typeof props.before === 'string' ? props.before : '') + this.item.body + (typeof props.after === 'string' ? props.after : '');
         body = replaceIDs(body);
 

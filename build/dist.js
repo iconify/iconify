@@ -49,7 +49,6 @@ let codeDir = 'src',
         'image.js',
         'finder.js', // requires image.js
         'loader.js',
-        'lazy.js',
 
         // DOM observer
         'observer.js',
@@ -120,10 +119,9 @@ function parse(config) {
     filesOrder.forEach(file => {
         testFiles.push('common/' + file);
         testFiles.push('browser/' + file);
-        testFiles.push('browser/' + (config.observer || config.lazy ? 'with-' : 'no-') + 'polyfill/' + file);
+        testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'polyfill/' + file);
         testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'observer/' + file);
         testFiles.push('browser/' + (config.cdn ? 'with-' : 'no-') + 'cdn/' + file);
-        testFiles.push('browser/' + (config.lazy ? 'with-' : 'no-') + 'lazy/' + file);
     });
 
     // Add all files
@@ -154,22 +152,19 @@ Helper.mkdir(resolvedDistDir);
 // Parse different packages
 content = parse({
     observer: true,
-    cdn: true,
-    lazy: false
+    cdn: true
 });
 save(baseName, content);
 
 content = parse({
     observer: false,
-    cdn: true,
-    lazy: false
+    cdn: true
 });
 save(baseName + '.without-observer', content);
 
 content = parse({
     observer: false,
-    cdn: false,
-    lazy: false
+    cdn: false
 });
 save(baseName + '.basic', content);
 
