@@ -40,8 +40,8 @@
             html = html.slice(pos + 1);
         }
 
-        // Fix viewBox attribute
-        html = html.replace('viewbox=', 'viewBox=');
+        // Fix lower case attributes
+        html = html.replace('viewbox=', 'viewBox=').replace('preserveaspectratio=', 'preserveAspectRatio=');
 
         // Add body
         pos = html.indexOf('</');
