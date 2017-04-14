@@ -112,7 +112,11 @@
 
         el = document.createElement('svg');
         Object.keys(data.attributes).forEach(function(attr) {
-            el.setAttribute(attr, data.attributes[attr]);
+            try {
+                el.setAttribute(attr, data.attributes[attr]);
+            } catch (err) {
+                
+            }
         });
 
         return generateSVG(el.outerHTML, data.body);
