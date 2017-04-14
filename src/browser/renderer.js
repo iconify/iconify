@@ -115,7 +115,7 @@
             try {
                 el.setAttribute(attr, data.attributes[attr]);
             } catch (err) {
-                
+
             }
         });
 

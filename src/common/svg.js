@@ -237,6 +237,15 @@ function getValue(attributes, properties, defaultValue) {
  * @constructor
  */
 function SVG(item) {
+    if (!item) {
+        // Set empty icon
+        item = Storage.normalizeIcon({
+            body: '',
+            width: 16,
+            height: 16
+        });
+    }
+
     this.item = item;
 
     /**
@@ -487,6 +496,16 @@ function SVG(item) {
                     transform.rotate += value;
                 }
             }
+        }
+
+        if (item.rotate) {
+            transform.rotate = Storage.mergeRotation(item.rotate, transform.rotate);
+        }
+        if (item.hFlip) {
+            transform.hFlip = Storage.mergeFlip(item.hFlip, transform.hFlip);
+        }
+        if (item.vFlip) {
+            transform.vFlip = Storage.mergeFlip(item.vFlip, transform.vFlip);
         }
 
         // Add transformation to style

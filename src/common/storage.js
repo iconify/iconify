@@ -52,6 +52,8 @@ function normalizeIcon(item, defaults) {
     var error = false,
         result = {};
 
+    defaults = defaults === void 0 ? itemDefaults : defaults;
+
     itemAttributes.forEach(function(attr) {
         if (error) {
             return;
@@ -352,5 +354,6 @@ function Storage() {
 // Export static functions used by SVG object
 Storage.mergeFlip = mergeFlip;
 Storage.mergeRotation = mergeRotation;
+Storage.normalizeIcon = normalizeIcon;
 
 module.exports = Storage;

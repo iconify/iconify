@@ -104,5 +104,49 @@
                 'data-<bar': 'Test >\''
             })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-foo="Test&quot; quote" data-&lt;bar="Test &gt;&#039;"><path d="" /></svg>');
         });
+
+        it('transformation', function() {
+            var storage = new Storage(),
+                svg;
+
+            storage.addIcon('test-icon', {
+                body: '<path d="" />',
+                width: 20,
+                height: 16
+            });
+            storage.addIcon('test-alias1', {
+                parent: 'test-icon',
+                hFlip: true
+            });
+            storage.addIcon('test-alias2', {
+                parent: 'test-alias1',
+                vFlip: true,
+                rotate: 1
+            });
+
+            // Icon without transformation
+            svg = new SVG(storage.get('test-icon'));
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+
+            // Horizontal flip from parent icon
+            svg = new SVG(storage.get('test-alias1'));
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); transform: scale(-1, 1);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+
+            // Horizontal flip from attributes
+            svg = new SVG(storage.get('test-icon'));
+            expect(svg.toString({
+                'data-flip': 'horizontal'
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); transform: scale(-1, 1);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-flip="horizontal"><path d="" /></svg>');
+
+            // Double horizontal flip
+            svg = new SVG(storage.get('test-alias1'));
+            expect(svg.toString({
+                'data-flip': 'horizontal'
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-flip="horizontal"><path d="" /></svg>');
+
+            // Many attributes from merging aliases
+            svg = new SVG(storage.get('test-alias2'));
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+        });
     });
 })();
