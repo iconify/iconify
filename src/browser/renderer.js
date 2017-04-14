@@ -16,12 +16,7 @@
 
     var iconAttribute = config._iconAttribute,
         loadingClass = config._loadingClass,
-        imageClass = config._imageClass,
-        hFlipClass = config._hFlipClass,
-        vFlipClass = config._vFlipClass,
-        rotationClasses = config._rotationClasses,
-        transformationChanges = {},
-        transformationClasses;
+        imageClass = config._imageClass;
 
     /**
      * Generate SVG code
@@ -55,26 +50,6 @@
         return html;
     }
 
-    // Add transformations
-    transformationChanges[hFlipClass] = {
-        attr: 'hFlip',
-        value: true
-    };
-
-    transformationChanges[vFlipClass] = {
-        attr: 'vFlip',
-        value: true
-    };
-
-    [1, 2, 3].forEach(function(key) {
-        transformationChanges[rotationClasses[key]] = {
-            attr: 'rotate',
-            value: key
-        };
-    });
-
-    transformationClasses = Object.keys(transformationChanges);
-
     /**
      * Render SVG
      *
@@ -89,14 +64,7 @@
         svg = new local.SVG(item);
         el = document.createElement('svg');
 
-        // flip and rotate
-        transformationClasses.forEach(function(key) {
-            if (image.element.classList.contains(key)) {
-                attributes[transformationChanges[key].attr] = transformationChanges[key].value;
-            }
-        });
-
-        data = svg.svgObject(attributes);
+        data = svg.attributes(attributes);
         Object.keys(data.attributes).forEach(function(attr) {
             el.setAttribute(attr, data.attributes[attr]);
         });
@@ -137,7 +105,7 @@
         }
 
         svg = new local.SVG(SimpleSVG.getIcon(name));
-        data = svg.svgObject(properties, false);
+        data = svg.attributes(properties, false);
 
         el = document.createElement('svg');
         Object.keys(data.attributes).forEach(function(attr) {

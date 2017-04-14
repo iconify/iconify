@@ -51,7 +51,7 @@
              * @param {Array|DOMTokenList} list
              * @return {Array}
              */
-            // filterClasses: function(image, list) { return list ; }
+            // filterClasses: function(image, list) { return list; }
 
             /**
              * Filter attributes, removing any attributes that should not be passed to SVG
@@ -86,21 +86,6 @@
         }
         if (finder.selectorLoading === void 0) {
             finder.selectorLoading = finder.selector + '.' + loadingClass;
-        }
-
-        ['icon', 'hFlip', 'vFlip'].forEach(function(key) {
-            if (finder[key] === void 0) {
-                finder[key] = finders.ssvg[key];
-            }
-        });
-
-        if (finder.rotation === void 0) {
-            if (finder.rotationClasses !== void 0) {
-                finder.rotation = function(element) {
-                    return finders.ssvg.rotation(element, finder.rotationClasses);
-                };
-            }
-            finder.rotation = finders.ssvg.rotation;
         }
 
         finders[name] = finder;

@@ -11,6 +11,7 @@
 "use strict";
 
 var Storage = require('./storage');
+var config = {};
 
 /**
  * Regular expressions for calculating dimensions
@@ -21,11 +22,11 @@ var unitsSplit = /(-?[0-9.]*[0-9]+[0-9.]*)/g,
     unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
 
 /**
- * List of default attributes
+ * List of attributes used in generating SVG code that should not be passed to SVG object
  *
- * @type {[string]}
+ * @type {Array}
  */
-var defaultAttributes = ['xmlns', 'xmlns:xlink', 'preserveAspectRatio', 'viewBox'];
+var reservedAttributes = ['width', 'height', 'inline'];
 
 /**
  * Unique id counter
@@ -33,30 +34,6 @@ var defaultAttributes = ['xmlns', 'xmlns:xlink', 'preserveAspectRatio', 'viewBox
  * @type {number}
  */
 var idCounter = 0;
-
-/**
- * Calculate custom width or height
- *
- * @param {object} item Default item data
- * @param {object} data Custom properties
- * @param {string} prop1 Property to calculate (width or height)
- * @param {string} prop2 Second property
- * @return {string|number|null}
- */
-function calculateCustomDimension(item, data, prop1, prop2) {
-    // Custom value is set - return it
-    if (data[prop1] !== void 0 && data[prop1] !== false) {
-        return data[prop1];
-    }
-
-    // Both custom values aren't set or custom value matches default value - return default
-    if (data[prop2] === void 0 || data[prop2] === false || data[prop2] === item[prop2]) {
-        return item[prop1];
-    }
-
-    // One of custom values is set - calculate another value
-    return calculateDimension(data[prop2], item[prop1] / item[prop2], data.precision);
-}
 
 /**
  * Calculate second dimension when only 1 dimension is set
@@ -125,7 +102,7 @@ function calculateTransformation(attr) {
     var rotate = attr.rotate;
 
     function rotation() {
-        if (rotate < 1) {
+        while (rotate < 1) {
             rotate += 4;
         }
         while (rotate > 4) {
@@ -146,6 +123,12 @@ function calculateTransformation(attr) {
     return rotation();
 }
 
+/**
+ * Replace IDs in SVG output with unique IDs
+ *
+ * @param body
+ * @return {*}
+ */
 function replaceIDs(body) {
     var regex = /\sid="(\S+)"/gi,
         ids = [],
@@ -182,6 +165,70 @@ function replaceIDs(body) {
     return body;
 }
 
+
+/**
+ * Get boolean attribute value
+ *
+ * @param {object} attributes
+ * @param {Array} properties
+ * @param {*} defaultValue
+ * @return {*}
+ */
+function getBooleanValue(attributes, properties, defaultValue) {
+    var i, prop, value;
+
+    for (i = 0; i < properties.length; i++) {
+        prop = properties[i];
+        if (attributes[prop] !== void 0) {
+            value = attributes[prop];
+            switch (typeof value) {
+                case 'boolean':
+                    return value;
+
+                case 'number':
+                    return !!value;
+
+                case 'string':
+                    switch (value.toLowerCase()) {
+                        case '1':
+                        case 'true':
+                        case prop:
+                            return true;
+
+                        case '0':
+                        case 'false':
+                        case '':
+                            return false;
+                    }
+            }
+        }
+    }
+
+    return defaultValue;
+}
+
+/**
+ * Get boolean attribute value
+ *
+ * @param {object} attributes
+ * @param {Array} properties
+ * @param {*} defaultValue
+ * @return {*}
+ */
+function getValue(attributes, properties, defaultValue) {
+    var i, prop;
+
+    for (i = 0; i < properties.length; i++) {
+        prop = properties[i];
+        if (attributes[prop] !== void 0) {
+            return attributes[prop];
+        }
+    }
+
+    return defaultValue;
+
+}
+
 /**
  * SVG object constructor
  *
@@ -196,28 +243,24 @@ function SVG(item) {
      * Get icon height
      *
      * @param {string|number} [width] Width to calculate height for. If missing, default icon height will be returned.
+     * @param {boolean} [inline] Inline mode. If missing, assumed to be false
      * @param {number} [precision] Precision for calculating height. Result is rounded to 1/precision. Default = 100
      * @return {number|null}
      */
-    this.height = function(width, precision) {
-        return calculateCustomDimension(this.item, {
-            width: width,
-            precision: precision
-        }, 'height', 'width');
+    this.height = function(width, inline, precision) {
+        return calculateDimension(width, (inline ? this.item.inlineHeight : this.item.height) / this.item.width, precision);
     };
 
     /**
      * Get icon width
      *
      * @param {string|number} [height] Height to calculate width for. If missing, default icon width will be returned.
+     * @param {boolean} [inline] Inline mode. If missing, assumed to be false
      * @param {number} [precision] Precision for calculating width. Result is rounded to 1/precision. Default = 100
      * @return {number|null}
      */
-    this.width = function(height, precision) {
-        return calculateCustomDimension(this.item, {
-            height: height,
-            precision: precision
-        }, 'width', 'height');
+    this.width = function(height, inline, precision) {
+        return calculateDimension(height, this.item.width / (inline ? this.item.inlineHeight : this.item.height), precision);
     };
 
     /**
@@ -250,94 +293,227 @@ function SVG(item) {
     this.defaultAttributes = function() {
         return {
             xmlns: 'http://www.w3.org/2000/svg',
-            'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-            preserveAspectRatio: 'xMidYMid meet',
-            viewBox: '0 0 ' + this.item.width + ' ' + this.item.height
+            'xmlns:xlink': 'http://www.w3.org/1999/xlink'
         };
     };
 
     /**
-     * Get SVG object for output
+     * Get align value
      *
-     * @param {object} [props] Custom properties
+     * @param {*} [horizontal] Horizontal alignment: left, center, right. Default = center
+     * @param {*} [vertical] Vertical alignment: top, middle, bottom. Default = middle
+     * @param {boolean} [slice] Slice: true or false. Default = false
+     * @return {string}
+     */
+    this.align = function(horizontal, vertical, slice) {
+        var align = '';
+        switch (horizontal) {
+            case 'left':
+                align += 'xMin';
+                break;
+
+            case 'right':
+                align += 'xMax';
+                break;
+
+            default:
+                align += 'xMid';
+        }
+        switch (vertical) {
+            case 'top':
+                align += 'YMin';
+                break;
+
+            case 'bottom':
+                align += 'YMax';
+                break;
+
+            default:
+                align += 'YMid';
+        }
+        align += slice === true ? ' slice' : ' meet';
+        return align;
+    };
+
+    /**
+     * Generate SVG attributes from attributes list
+     *
+     * @param {object} [attributes] Element attributes
      * @return {object|null}
      */
-    this.svgObject = function(props) {
-        var attributes, transformation, width, height, customWidth, customHeight, body, regex;
+    this.attributes = function(attributes) {
+        var align = {
+            horizontal: 'center',
+            vertical: 'middle',
+            crop: false
+        };
+        var box = {
+            left: item.left,
+            top: item.top,
+            width: item.width,
+            height: item.height
+        };
+        var transform = {
+            rotate: 0,
+            hFlip: false,
+            vFlip: false
+        };
+        var style = '';
+        var result = this.defaultAttributes();
 
-        props = props === void 0 ? {} : props;
+        var customWidth, customHeight, width, height, inline, body, value, split;
 
-        attributes = this.defaultAttributes();
-        transformation = this.transformation(props);
+        attributes = typeof attributes === 'object' ? attributes : {};
 
-        customWidth = props['data-width'] === void 0 ? props.width : props['data-width'];
-        customHeight = props['data-height'] === void 0 ? props.height : props['data-height'];
+        // Check for inline mode
+        inline = getBooleanValue(attributes, [config._inlineModeAttribute, 'inline'], null);
 
-        if (customWidth === void 0 && customHeight === void 0) {
+        // Calculate dimensions
+        // Values for width/height: null = default, 'auto' = from svg, false = do not set
+        // Default: if both values aren't set, height defaults to '1em', width is calculated from height
+        customWidth = getValue(attributes, ['data-width', 'width'], null);
+        customHeight = getValue(attributes, ['data-height', 'height'], null);
+
+        if (customWidth === null && customHeight === null) {
+            inline = inline === null ? true : inline;
             height = '1em';
-            width = this.width(height);
-        } else if (customWidth !== void 0 && customHeight !== void 0) {
+            width = this.width(height, inline);
+        } else if (customWidth !== null && customHeight !== null) {
+            inline = inline === null ? (customHeight === '1em' || customHeight === false) : inline;
             width = customWidth;
             height = customHeight;
-        } else if (customWidth !== void 0) {
+        } else if (customWidth !== null) {
+            inline = inline === null ? false : inline;
             width = customWidth;
-            height = width === null ? null : this.height(width);
+            height = this.height(width, inline);
         } else {
+            inline = inline === null ? (customHeight === '1em' || customHeight === false) : inline;
             height = customHeight;
-            width = height === null ? null : this.width(height);
+            width = this.width(height, inline);
         }
 
-        // width = props.width !== void 0 ? props.width : (props.height !== void 0 ? this.width(props.height) : this.item.width);
-        // height = props.height !== void 0 ? props.height : (props.width !== void 0 ? this.height(props.width) : this.item.height);
-
-        if (width !== null) {
-            attributes.width = width === 'auto' ? this.item.width : width;
-        }
-        if (height !== null) {
-            attributes.height = height === 'auto' ? this.item.height : height;
+        if (width !== false) {
+            result.width = width === 'auto' ? this.item.width : width;
         }
 
-        // Style
-        attributes.style = '-ms-transform: ' + transformation + ';' +
-            ' -webkit-transform: ' + transformation + ';' +
-            ' transform: ' + transformation + ';' +
-            (props.style === void 0 ? '' : props.style);
+        if (height !== false) {
+            result.height = height === 'auto' ? (inline ? this.item.inlineHeight : this.item.height) : height;
+        }
 
-        // Copy custom properties
-        Object.keys(props).forEach(function(attr) {
-            if (props[attr] === null) {
-                return;
+        // Apply inline mode to offsets
+        if (inline) {
+            box.top = item.inlineTop;
+            box.height = item.inlineHeight;
+            if (item.verticalAlign !== 0) {
+                style += 'vertical-align: ' + item.verticalAlign + 'em;';
             }
-            switch (attr) {
-                case 'rotate':
-                case 'vFlip':
-                case 'hFlip':
-                case 'body':
-                case 'width':
-                case 'height':
-                    return;
+        }
 
-                case 'style':
-                    return;
+        // Check custom alignment
+        if (typeof attributes[config._alignAttribute] === 'string') {
+            attributes[config._alignAttribute].split(/[\s,]+/).forEach(function(value) {
+                value = value.toLowerCase();
+                switch (value) {
+                    case 'left':
+                    case 'right':
+                    case 'center':
+                        align.horizontal = value;
+                        break;
 
-                case 'before':
-                case 'after':
-                    return;
+                    case 'top':
+                    case 'bottom':
+                    case 'middle':
+                        align.vertical = value;
+                        break;
 
-                case 'data-before':
-                case 'data-after':
-                    props[attr.slice(5)] = props[attr];
-                    return;
+                    case 'crop':
+                        align.crop = true;
+                        break;
+
+                    case 'meet':
+                        align.crop = false;
+                }
+            });
+        }
+
+        // Transformations
+        if (typeof attributes[config._flipAttribute] === 'string') {
+            attributes[config._flipAttribute].split(/[\s,]+/).forEach(function(value) {
+                value = value.toLowerCase();
+                switch (value) {
+                    case 'horizontal':
+                        transform.hFlip = !transform.hFlip;
+                        break;
+
+                    case 'vertical':
+                        transform.vFlip = !transform.vFlip;
+                        break;
+                }
+            });
+        }
+        if (attributes[config._rotateAttribute] !== void 0) {
+            value = attributes[config._rotateAttribute];
+            if (typeof value === 'number') {
+                transform.rotate += value;
+            } else if (typeof value === 'string') {
+                split = value.split(unitsSplit);
+                value = 0;
+                switch (split.length) {
+                    case 1:
+                        value = parseInt(split[0]);
+                        break;
+
+                    case 2:
+                        switch (split[1].toLowerCase()) {
+                            case '%':
+                                // 25% -> 1, 50% -> 2, ...
+                                split = 25;
+                                break;
+
+                            case 'deg':
+                                // 90deg -> 1, 180deg -> 2, ...
+                                split = 90;
+                                break;
+
+                            default:
+                                split = null;
+                        }
+                        if (split !== null) {
+                            value = parseInt(split[0]);
+                            value = !isNaN(value) && value % split === 0 ? value / split : 0;
+                        }
+                }
+                if (!isNaN(value) && value !== 0) {
+                    transform.rotate += value;
+                }
             }
-            attributes[attr] = props[attr];
+        }
+
+        // Add transformation to style
+        transform = calculateTransformation(transform);
+        style += '-ms-transform: ' + transform + ';' +
+            ' -webkit-transform: ' + transform + ';' +
+            ' transform: ' + transform + ';';
+
+        // Generate style
+        result.style = style + (attributes.style === void 0 ? '' : attributes.style);
+
+        // Generate viewBox and preserveAspectRatio attributes
+        result.preserveAspectRatio = this.align(align.horizontal, align.vertical, align.crop);
+        result.viewBox = box.left + ' ' + box.top + ' ' + box.width + ' ' + box.height;
+
+        // Generate body
+        body = replaceIDs(this.item.body);
+
+        // Add misc attributes
+        Object.keys(attributes).forEach(function(attr) {
+            if (result[attr] === void 0 && reservedAttributes.indexOf(attr) === -1) {
+                result[attr] = attributes[attr];
+            }
         });
 
-        // Output
-        body = (typeof props.before === 'string' ? props.before : '') + this.item.body + (typeof props.after === 'string' ? props.after : '');
-        body = replaceIDs(body);
-
         return {
-            attributes: attributes,
+            attributes: result,
             body: body
         };
     };
@@ -345,7 +521,6 @@ function SVG(item) {
     return this;
 }
 
-// Export static variables and functions
-SVG.defaultAttributes = defaultAttributes;
-
+// Node.js only
+SVG._config = config;
 module.exports = SVG;

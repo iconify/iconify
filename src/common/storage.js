@@ -16,9 +16,13 @@
  * @type {object}
  */
 var itemDefaults = {
+    left: 0,
+    top: 0,
     rotate: 0,
     vFlip: false,
-    hFlip: false
+    hFlip: false,
+    inlineTop: 0,
+    verticalAlign: -0.125
 };
 
 /**
@@ -26,7 +30,16 @@ var itemDefaults = {
  *
  * @type {[string]}
  */
-var itemAttributes = ['body', 'rotate', 'vFlip', 'hFlip', 'width', 'height'];
+var itemAttributes = [
+    // Dimensions
+    'left', 'top', 'width', 'height',
+    // Content
+    'body',
+    // Transformations
+    'rotate', 'vFlip', 'hFlip',
+    // Inline mode data
+    'inlineTop', 'inlineHeight', 'verticalAlign'
+];
 
 /**
  * Normalize icon, return new object
@@ -45,7 +58,11 @@ function normalizeIcon(item, defaults) {
         }
         if (item[attr] === void 0) {
             if (defaults[attr] === void 0) {
-                error = true;
+                if (attr === 'inlineHeight') {
+                    result[attr] = result.height;
+                } else {
+                    error = true;
+                }
                 return;
             }
             result[attr] = defaults[attr];
@@ -56,6 +73,7 @@ function normalizeIcon(item, defaults) {
             }
         }
     });
+
     return error ? null : result;
 }
 
@@ -137,6 +155,9 @@ function normalizeValue(attr, value) {
 
         case 'width':
         case 'height':
+        case 'inlineHeight':
+        case 'inlineTop':
+        case 'verticalAlign':
             value = parseFloat(value);
             return isNaN(value) ? null : value;
 

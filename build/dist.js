@@ -93,6 +93,8 @@ function addFile(file, callback) {
 
             case 'svg.js':
                 content = content.replace('module.exports = SVG;', 'local.SVG = SVG;')
+                    .replace('var config = {};', 'var config = local.config;')
+                    .replace('SVG._config = config;', '')
                     .replace('require(\'./storage\')', 'local.Storage');
                 break;
 

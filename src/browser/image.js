@@ -14,9 +14,7 @@
 (function(local, config) {
     "use strict";
 
-    var iconAttribute = config._iconAttribute,
-        loadingClass = config._loadingClass,
-        imageClass = config._imageClass;
+    var loadingClass = config._loadingClass;
 
     /**
      * Create object for new image
@@ -63,27 +61,21 @@
             return results;
         }
 
-        // Copy all attributes, filter them
+        // Copy all attributes
         for (i = 0; i < image.element.attributes.length; i++) {
             attr = image.element.attributes[i];
-            if (attr.name !== iconAttribute) {
-                results[attr.name] = attr.value;
-            }
+            results[attr.name] = attr.value;
         }
 
         // Filter attributes
         if (image.parser && image.parser.filterAttributes !== void 0) {
             results = image.parser.filterAttributes(image, results);
-        } else if (image.element.tagName === 'SVG') {
-            local.SVG.defaultAttributes.forEach(function(attr) {
-                delete results[attr];
-            });
         }
 
         // Filter class names
         if (results['class'] !== void 0) {
             results['class'] = results['class'].split(' ').filter(function(item) {
-                return item !== loadingClass && item !== imageClass;
+                return item !== loadingClass;
             });
 
             if (image.parser && image.parser.filterClasses !== void 0) {
@@ -91,6 +83,13 @@
             }
 
             results['class'] = results['class'].join(' ');
+        }
+
+        // Add attributes from image
+        if (image.attributes !== void 0) {
+            Object.keys(image.attributes).forEach(function (attr) {
+                results[attr] = image.attributes[attr];
+            });
         }
 
         return results;

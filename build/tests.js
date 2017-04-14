@@ -51,6 +51,8 @@ let TestHelper = {
         return '(function (local) {\n' +
             fs.readFileSync(resolvedCodeDir + '/common/svg.js', 'utf8')
                 .replace('module.exports = SVG;', 'local.SVG = SVG;')
+                .replace('var config = {};', 'var config = local.config;')
+                .replace('SVG._config = config;', '')
                 .replace('require(\'./storage\')', 'local.Storage') +
             '\n})(local);\n';
     },

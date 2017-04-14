@@ -12,8 +12,27 @@
 
 let SVG = require('../common/svg');
 
-SVG.prototype.svgString = function(props) {
-    let data = this.svgObject(props),
+let config = SVG._config;
+
+// Attribute for rotation
+config._rotateAttribute = 'data-rotate';
+
+// Attribute for flip
+config._flipAttribute = 'data-flip';
+
+// Attribute for inline mode
+config._inlineModeAttribute = 'data-icon-inline';
+
+// Attribute for alignment
+config._alignAttribute = 'data-align';
+/**
+ * Function to convert SVG to string
+ *
+ * @param props
+ * @return {string|null}
+ */
+SVG.prototype.toString = function(props) {
+    let data = this.attributes(props),
         html;
 
     function htmlspecialchars(value) {

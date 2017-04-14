@@ -29,14 +29,17 @@
     // Attribute that stores icon name
     config._iconAttribute = 'data-icon';
 
-    // Rotation and flip classes
-    config._rotationClasses = {
-        '1': 'svg-rotate-90',
-        '2': 'svg-rotate-180',
-        '3': 'svg-rotate-270'
-    };
-    config._hFlipClass = 'svg-flip-horizontal';
-    config._vFlipClass = 'svg-flip-vertical';
+    // Attribute for rotation
+    config._rotateAttribute = 'data-rotate';
+
+    // Attribute for flip
+    config._flipAttribute = 'data-flip';
+
+    // Attribute for inline mode
+    config._inlineModeAttribute = 'data-icon-inline';
+
+    // Attribute for alignment
+    config._alignAttribute = 'data-align';
 
     // Event to call when SimpleSVG is ready
     config._readyEvent = 'SimpleSVGReady';

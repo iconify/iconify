@@ -18,7 +18,9 @@
             storage.addIcon('test', {
                 body: '<path d="" />',
                 width: 48,
-                height: 36
+                height: 36,
+                inlineHeight: 64,
+                inlineTop: 12
             });
             svg = new SVG(storage.get('test'));
 
@@ -38,7 +40,11 @@
             // Test floating numbers
             expect(svg.width(100 / 3)).to.be.equal(44.45);
             expect(svg.height(11.1111111)).to.be.equal(8.34);
-            expect(svg.height(11.1111111, 1000)).to.be.equal(8.334);
+            expect(svg.height(11.1111111, false, 1000)).to.be.equal(8.334);
+
+            // Test inline mode
+            expect(svg.height(48, true)).to.be.equal(64);
+            expect(svg.width(32, true)).to.be.equal(24);
         });
 
         it('strings', function() {
@@ -60,7 +66,7 @@
             expect(svg.height('24%')).to.be.equal('18%');
             expect(svg.height('1em')).to.be.equal('0.75em');
             expect(svg.width('1em')).to.be.equal('1.34em');
-            expect(svg.width('1em', 1000)).to.be.equal('1.334em');
+            expect(svg.width('1em', false, 1000)).to.be.equal('1.334em');
 
             // Custom units with space
             expect(svg.height('24 Whatever')).to.be.equal('18 Whatever');

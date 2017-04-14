@@ -43,7 +43,8 @@
             image = local.newImage(document.querySelector('#' + prefix + 'simple > i'), 'foo', {});
             result = local.getImageAttributes(image);
             expect(result).to.be.eql({
-                'class': ''
+                'class': 'simple-svg',
+                'data-icon': 'icon-name'
             });
 
             // Many attributes

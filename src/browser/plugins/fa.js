@@ -20,9 +20,8 @@
      * @type {[string]}
      */
     var faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'],
-        rotationClasses = SimpleSVG.getConfig('_rotationClasses'),
-        hFlipClass = SimpleSVG.getConfig('_hFlipClass'),
-        vFlipClass = SimpleSVG.getConfig('_vFlipClass');
+        rotateAttribute = SimpleSVG.getConfig('_rotateAttribute'),
+        flipAttribute = SimpleSVG.getConfig('_flipAttribute');
 
     /**
      * Add finder to list of finders
@@ -57,28 +56,41 @@
          * @return {Array}
          */
         filterClasses: function(image, list) {
-            var results = [];
+            var results = [],
+                transform = {
+                    rotate: 0,
+                    hFlip: false,
+                    vFlip: false
+                };
 
             for (var i = 0; i < list.length; i++) {
                 switch (list[i]) {
                     case 'fa-rotate-90':
-                        results.push(rotationClasses['1']);
+                        transform.rotate = 1;
                         break;
 
                     case 'fa-rotate-180':
-                        results.push(rotationClasses['2']);
+                        transform.rotate = 2;
                         break;
 
                     case 'fa-rotate-270':
-                        results.push(rotationClasses['3']);
+                        transform.rotate = 3;
                         break;
 
                     case 'fa-flip-horizontal':
-                        results.push(hFlipClass);
+                        transform.hFlip = true;
                         break;
 
                     case 'fa-flip-vertical':
-                        results.push(vFlipClass);
+                        transform.vFlip = true;
+                        break;
+
+                    case 'fa-fw':
+                        if (image.attributes === void 0) {
+                            image.attributes = {};
+                        }
+                        image.attributes.width = '1.28571429em';
+                        image.attributes.height = '1em';
                         break;
 
                     default:
@@ -86,6 +98,22 @@
                             results.push(list[i]);
                         }
                 }
+            }
+
+            // Add transformation as attributes
+            if (transform.rotate) {
+                if (image.attributes === void 0) {
+                    image.attributes = {};
+                }
+                image.attributes[rotateAttribute] = transform.rotate;
+            }
+            if (transform.hFlip || transform.vFlip) {
+                if (image.attributes === void 0) {
+                    image.attributes = {};
+                }
+                image.attributes[flipAttribute] = (transform.hFlip && transform.vFlip) ? 'horizontal vertical' : (
+                    transform.hFlip ? 'horizontal' : 'vertical'
+                );
             }
 
             return results;

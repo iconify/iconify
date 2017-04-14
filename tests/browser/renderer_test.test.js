@@ -29,7 +29,7 @@
                 // Add dummy code
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                         '<i class="simple-svg" data-icon="fa-home" />' +
-                        '<i class="simple-svg svg-flip-horizontal" data-icon="fa-arrow-left" height="20px" />' +
+                        '<i class="simple-svg" data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -75,7 +75,6 @@
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid');
                 expect(image1.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 expect(image1.hasAttribute('xmlns')).to.be.equal(true, 'xmlns is missing');
-
                 expect(image2.getAttribute('style').indexOf('scale(-1, 1)')).to.not.be.equal(-1, 'Style should contain scale rotation');
 
                 done();
