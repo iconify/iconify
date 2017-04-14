@@ -62,7 +62,7 @@
      * @param {*} value
      */
     SimpleSVG.setConfig = function(name, value) {
-        setConfig(key, value, false);
+        setConfig(name, value, false);
     };
 
     /**
