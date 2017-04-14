@@ -66,7 +66,10 @@
 
         data = svg.attributes(attributes);
         Object.keys(data.attributes).forEach(function(attr) {
-            el.setAttribute(attr, data.attributes[attr]);
+            try {
+                el.setAttribute(attr, data.attributes[attr]);
+            } catch (err) {
+            }
         });
         if (image.loading) {
             el.classList.remove(loadingClass);
