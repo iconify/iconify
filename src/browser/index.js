@@ -63,4 +63,9 @@
      */
     local.initQueue.push(scanDOM);
 
+    /**
+     * Export function to scan DOM
+     */
+    SimpleSVG.scanDOM = scanDOM;
+
 })(SimpleSVG, local);
