@@ -118,11 +118,6 @@
                         transform.vFlip = true;
                         break;
 
-                    case 'fa-fw':
-                        image.attributes.width = '1.28571429em';
-                        image.attributes.height = '1em';
-                        break;
-
                     default:
                         results.push(list[i]);
                 }
