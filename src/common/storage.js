@@ -21,8 +21,7 @@ var itemDefaults = {
     rotate: 0,
     vFlip: false,
     hFlip: false,
-    inlineTop: 0,
-    verticalAlign: -0.125
+    inlineTop: 0
 };
 
 /**
@@ -60,10 +59,23 @@ function normalizeIcon(item, defaults) {
         }
         if (item[attr] === void 0) {
             if (defaults[attr] === void 0) {
-                if (attr === 'inlineHeight') {
-                    result[attr] = result.height;
-                } else {
-                    error = true;
+                switch (attr) {
+                    case 'inlineHeight':
+                        result[attr] = result.height;
+                        break;
+
+                    case 'verticalAlign':
+                        if (item.height % 7 === 0 && item.height % 8 !== 0) {
+                            // Icons designed for 14px height
+                            result[attr] = -0.143;
+                        } else {
+                            // Assume icon is designed for 16px height
+                            result[attr] = -0.125;
+                        }
+                        break;
+
+                    default:
+                        error = true;
                 }
                 return;
             }
