@@ -150,8 +150,8 @@ function normalizeValue(attr, value) {
             while (value < 0) {
                 value += 4;
             }
-            while (value > 3) {
-                value -= 4;
+            if (value > 3) {
+                value %= 4;
             }
             return value;
 

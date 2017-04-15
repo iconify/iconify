@@ -117,8 +117,7 @@ function calculateTransformation(attr) {
     }
 
     if (attr.vFlip || attr.hFlip) {
-        return 'scale(' + (attr.hFlip ? '-' : '') + '1, ' + (attr.vFlip ? '-' : '') + '1)' +
-            (rotate ? ' ' + rotation() : '');
+        return (rotate ? rotation() + ' ' : '') + 'scale(' + (attr.hFlip ? '-' : '') + '1, ' + (attr.vFlip ? '-' : '') + '1)';
     }
     return rotation();
 }
@@ -388,7 +387,7 @@ function SVG(item) {
             height = '1em';
             width = this.width(height, inline);
         } else if (customWidth !== null && customHeight !== null) {
-            inline = inline === null ? (customHeight === '1em' || customHeight === false) : inline;
+            inline = inline === null ? (customHeight === false) : inline;
             width = customWidth;
             height = customHeight;
         } else if (customWidth !== null) {
@@ -396,7 +395,7 @@ function SVG(item) {
             width = customWidth;
             height = this.height(width, inline);
         } else {
-            inline = inline === null ? (customHeight === '1em' || customHeight === false) : inline;
+            inline = inline === null ? (customHeight === false) : inline;
             height = customHeight;
             width = this.width(height, inline);
         }
