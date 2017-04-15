@@ -12,6 +12,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             fs.readFileSync(codeDir + '/browser/config.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/image.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/finder.js', 'utf8')
+                .replace('SimpleSVG.scanDOM();', '')
         ];
 
     // Replace code

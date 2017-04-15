@@ -16,9 +16,11 @@
 
     var imageClass = config._imageClass,
         loadingClass = config._loadingClass,
+        appendedClass = config._appendedClass,
         iconAttribute = config._iconAttribute,
-        newSelectorExtra = ':not(.' + loadingClass + ')',
-        loadingSelectorExtra = '.' + loadingClass;
+        negativeSelectors = ':not(svg):not(.' + appendedClass + ')',
+        negativeLoadingSelectors = ':not(.' + loadingClass + ')',
+        loadingSelector = '.' + loadingClass;
 
     /**
      * List of finders
@@ -28,8 +30,9 @@
     var finders = {
         ssvg: {
             selector: '.' + imageClass,
-            selectorNew: '.' + imageClass + newSelectorExtra,
-            selectorLoading: '.' + imageClass + loadingSelectorExtra,
+            selectorAll: '.' + imageClass + negativeSelectors,
+            selectorNew: '.' + imageClass + negativeSelectors + negativeLoadingSelectors,
+            selectorLoading: '.' + imageClass + negativeSelectors + loadingSelector,
 
             /**
              * Get icon name from element
@@ -81,11 +84,14 @@
      */
     SimpleSVG.addFinder = function(name, finder) {
         // Set missing properties
+        if (finder.selectorAll === void 0) {
+            finder.selectorAll = finder.selector + negativeSelectors;
+        }
         if (finder.selectorNew === void 0) {
-            finder.selectorNew = finder.selector + ':not(.' + loadingClass + ')';
+            finder.selectorNew = finder.selector + negativeSelectors + negativeLoadingSelectors;
         }
         if (finder.selectorLoading === void 0) {
-            finder.selectorLoading = finder.selector + '.' + loadingClass;
+            finder.selectorLoading = finder.selector + negativeSelectors + loadingSelector;
         }
 
         finders[name] = finder;
@@ -112,18 +118,32 @@
 
         finderKeys.forEach(function(key) {
             var finder = finders[key],
-                selector = loading === true ? finder.selectorLoading : (loading === false ? finder.selectorNew : finder.selector);
+                selector = loading === true ? finder.selectorLoading : (loading === false ? finder.selectorNew : finder.selectorAll);
 
-            var nodes = root.querySelectorAll(selector + ':not(svg)'),
-                index, node, icon;
+            var nodes = root.querySelectorAll(selector),
+                index, node, icon, iconData, image;
 
             for (index = 0; index < nodes.length; index ++) {
                 node = nodes[index];
                 icon = finder.icon(node);
+                if (typeof icon === 'object') {
+                    iconData = icon;
+                    icon = icon.icon;
+                } else {
+                    iconData = null;
+                }
 
                 if (icon && duplicates.indexOf(node) === -1) {
                     duplicates.push(node);
-                    results.push(local.newImage(node, icon, finder));
+                    image = local.newImage(node, icon, finder);
+
+                    // Add custom attributes passed from plugin
+                    if (iconData !== null) {
+                        Object.keys(iconData).forEach(function(attr) {
+                            image[attr] = iconData[attr];
+                        });
+                    }
+                    results.push(image);
                 }
             }
         });

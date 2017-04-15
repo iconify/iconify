@@ -16,7 +16,8 @@
 
     var iconAttribute = config._iconAttribute,
         loadingClass = config._loadingClass,
-        imageClass = config._imageClass;
+        imageClass = config._imageClass,
+        appendedClass = config._appendedClass;
 
     /**
      * Generate SVG code
@@ -58,36 +59,51 @@
     local.renderSVG = function(image) {
         var attributes = local.getImageAttributes(image),
             item = SimpleSVG.getIcon(image.icon),
-            svg, el, el2, data, html;
+            svgObject, svgElement, temp, span, data, html;
 
         attributes[iconAttribute] = image.icon;
-        svg = new local.SVG(item);
-        el = document.createElement('svg');
+        svgObject = new local.SVG(item);
+        temp = document.createElement('svg');
 
-        data = svg.attributes(attributes);
+        data = svgObject.attributes(attributes);
+
         Object.keys(data.attributes).forEach(function(attr) {
             try {
-                el.setAttribute(attr, data.attributes[attr]);
+                temp.setAttribute(attr, data.attributes[attr]);
             } catch (err) {
             }
         });
+        Object.keys(data.elementAttributes).forEach(function(attr) {
+            try {
+                (data.append ? image.element : temp).setAttribute(attr, data.elementAttributes[attr]);
+            } catch (err) {
+            }
+        });
+
         if (image.loading) {
-            el.classList.remove(loadingClass);
+            temp.classList.remove(loadingClass);
+            if (data.append) {
+                image.element.classList.remove(loadingClass);
+            }
         }
-        el.classList.add(imageClass);
+        temp.classList.add(imageClass);
 
         // innerHTML is not supported for SVG element :(
         // Creating temporary element instead
-        html = generateSVG(el.outerHTML, data.body);
+        html = generateSVG(temp.outerHTML, data.body);
 
-        el = document.createElement('span');
-        el.innerHTML = html;
+        span = document.createElement('span');
+        span.innerHTML = html;
 
-        image.element.parentNode.replaceChild(el, image.element);
+        svgElement = span.childNodes[0];
 
-        el2 = el.childNodes[0];
-        el.parentNode.replaceChild(el2, el);
-        image.element = el2;
+        if (data.append) {
+            image.element.classList.add(appendedClass);
+            image.element.appendChild(svgElement);
+        } else {
+            image.element.parentNode.replaceChild(svgElement, image.element);
+            image.element = svgElement;
+        }
 
         delete image.parser;
         delete image.loading;

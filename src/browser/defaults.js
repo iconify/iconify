@@ -41,6 +41,12 @@
     // Attribute for alignment
     config._alignAttribute = 'data-align';
 
+    // Attribute to append icon to element instead of replacing element
+    config._appendAttribute = 'data-icon-append';
+
+    // Class to add to container when content has been appended
+    config._appendedClass = 'svg-appended';
+
     // Event to call when SimpleSVG is ready
     config._readyEvent = 'SimpleSVGReady';
 

@@ -369,12 +369,13 @@ function SVG(item) {
         var style = '';
         var result = this.defaultAttributes();
 
-        var customWidth, customHeight, width, height, inline, body, value, split;
+        var customWidth, customHeight, width, height, inline, body, value, split, append, extraAttributes;
 
         attributes = typeof attributes === 'object' ? attributes : {};
 
-        // Check for inline mode
+        // Check mode
         inline = getBooleanValue(attributes, [config._inlineModeAttribute, 'inline'], null);
+        append = getBooleanValue(attributes, [config._appendAttribute], false);
 
         // Calculate dimensions
         // Values for width/height: null = default, 'auto' = from svg, false = do not set
@@ -467,12 +468,15 @@ function SVG(item) {
                 split = value.split(unitsSplit);
                 value = 0;
                 switch (split.length) {
-                    case 1:
-                        value = parseInt(split[0]);
+                    case 2:
+                        value = split[0] !== '' ? 0 : parseInt(split[0]);
                         break;
 
-                    case 2:
-                        switch (split[1].toLowerCase()) {
+                    case 3:
+                        if (split[0] !== '') {
+                            break;
+                        }
+                        switch (split[2].toLowerCase()) {
                             case '%':
                                 // 25% -> 1, 50% -> 2, ...
                                 split = 25;
@@ -487,7 +491,7 @@ function SVG(item) {
                                 split = null;
                         }
                         if (split !== null) {
-                            value = parseInt(split[0]);
+                            value = parseInt(split[1]);
                             value = !isNaN(value) && value % split === 0 ? value / split : 0;
                         }
                 }
@@ -524,15 +528,18 @@ function SVG(item) {
         body = replaceIDs(this.item.body);
 
         // Add misc attributes
+        extraAttributes = {};
         Object.keys(attributes).forEach(function(attr) {
             if (result[attr] === void 0 && reservedAttributes.indexOf(attr) === -1) {
-                result[attr] = attributes[attr];
+                extraAttributes[attr] = attributes[attr];
             }
         });
 
         return {
             attributes: result,
-            body: body
+            elementAttributes: extraAttributes,
+            body: body,
+            append: append
         };
     };
 
