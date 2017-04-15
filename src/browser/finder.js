@@ -90,6 +90,11 @@
 
         finders[name] = finder;
         finderKeys = Object.keys(finders);
+
+        // Re-scan DOM
+        if (SimpleSVG.isReady) {
+            SimpleSVG.scanDOM();
+        }
     };
 
     /**
