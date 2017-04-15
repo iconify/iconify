@@ -25,6 +25,34 @@
         inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute');
 
     /**
+     * Link to stylesheet
+     *
+     * @type {string}
+     */
+    var stylesheetCDN = '//cdn.simplesvg.com/css/fa.css';
+
+    /**
+     * True if stylesheet has been added
+     *
+     * @type {boolean}
+     */
+    var styleAdded = false;
+
+    /**
+     * Inserts short version of FontAwesome stylesheet into DOM
+     */
+    function insertStylesheet() {
+        var element = document.createElement('link');
+
+        styleAdded = true;
+
+        element.setAttribute('rel', 'stylesheet');
+        element.setAttribute('type', 'text/css');
+        element.setAttribute('href', stylesheetCDN);
+        document.head.appendChild(element);
+    }
+
+    /**
      * Add finder to list of finders
      */
     SimpleSVG.addFinder('fa', {
@@ -96,9 +124,7 @@
                         break;
 
                     default:
-                        if (list[i] !== 'fa' && list[i].slice(0, 3) !== 'fa-') {
-                            results.push(list[i]);
-                        }
+                        results.push(list[i]);
                 }
             }
 
@@ -114,6 +140,11 @@
                 image.attributes[flipAttribute] = (transform.hFlip && transform.vFlip) ? 'horizontal vertical' : (
                     transform.hFlip ? 'horizontal' : 'vertical'
                 );
+            }
+
+            // Insert short version of FontAwesome stylesheet into DOM
+            if (!styleAdded) {
+                insertStylesheet();
             }
 
             return results;
