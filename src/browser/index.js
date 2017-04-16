@@ -14,6 +14,13 @@
 (function(SimpleSVG, local) {
     "use strict";
 
+    var useHTTPS = false;
+
+    try {
+        useHTTPS = (window && window.CSS && window.CSS.supports);
+    } catch (err) {
+    }
+
     /**
      * Find new icons and change them
      */
@@ -67,5 +74,15 @@
      * Export function to scan DOM
      */
     SimpleSVG.scanDOM = scanDOM;
+
+    /**
+     * Change protocol-less URL to secure URL if browser supports it
+     *
+     * @param {string} url
+     * @return {string}
+     */
+    SimpleSVG.secureURL = function(url) {
+        return (useHTTPS && url.slice(0, 2) === '//') ? 'https:' + url : url;
+    };
 
 })(SimpleSVG, local);

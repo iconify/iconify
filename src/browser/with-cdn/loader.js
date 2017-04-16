@@ -48,7 +48,11 @@
             var url = prefix === '.' ? config.defaultCDN : config.customCDN[prefix],
                 element;
 
+            // Replace variables
             url = url.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', items.join(','));
+
+            // Change to protocol-less to secure
+            url = SimpleSVG.secureURL(url);
 
             // Create script
             element = document.createElement('script');
