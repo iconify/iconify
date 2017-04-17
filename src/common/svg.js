@@ -259,6 +259,9 @@ function SVG(item) {
      * @return {number|null}
      */
     this.height = function(width, inline, precision) {
+        if (width === void 0) {
+            return inline ? this.item.inlineHeight : this.item.height;
+        }
         return calculateDimension(width, (inline ? this.item.inlineHeight : this.item.height) / this.item.width, precision);
     };
 
@@ -271,6 +274,9 @@ function SVG(item) {
      * @return {number|null}
      */
     this.width = function(height, inline, precision) {
+        if (height === void 0) {
+            return this.item.width;
+        }
         return calculateDimension(height, this.item.width / (inline ? this.item.inlineHeight : this.item.height), precision);
     };
 

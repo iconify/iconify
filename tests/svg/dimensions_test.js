@@ -24,6 +24,10 @@
             });
             svg = new SVG(storage.get('test'));
 
+            // Without parameters
+            expect(svg.width()).to.be.equal(48);
+            expect(svg.height()).to.be.equal(36);
+
             // Test default numbers
             expect(svg.width(36)).to.be.equal(48);
             expect(svg.height(48)).to.be.equal(36);
