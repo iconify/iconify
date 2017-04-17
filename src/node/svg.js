@@ -60,6 +60,9 @@ SVG.prototype.toString = function(props) {
     Object.keys(data.attributes).forEach(function(attr) {
         html += ' ' + htmlspecialchars(attr) + '="' + htmlspecialchars(data.attributes[attr]) + '"';
     });
+    Object.keys(data.elementAttributes).forEach(function(attr) {
+        html += ' ' + htmlspecialchars(attr) + '="' + htmlspecialchars(data.elementAttributes[attr]) + '"';
+    });
 
     return html + '>' + data.body + '</svg>';
 };

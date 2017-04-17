@@ -124,14 +124,15 @@ function calculateTransformation(attr) {
 
 /**
  * Replace IDs in SVG output with unique IDs
+ * Fast replacement without parsing XML, assuming commonly used patterns.
  *
  * @param body
  * @return {*}
  */
 function replaceIDs(body) {
-    var regex = /\sid="(\S+)"/gi,
+    var regex = /\sid="(\S+)"/g,
         ids = [],
-        match;
+        match, prefix;
 
     function strReplace(search, replace, subject) {
         var pos = 0;
@@ -152,9 +153,11 @@ function replaceIDs(body) {
         return body;
     }
 
+    prefix = 'SimpleSVGId-' + Math.round(Math.random() * 65536).toString(16) + '-';
+
     // Replace with unique ids
     ids.forEach(function(id) {
-        var newID = 'SimpleSVGId' + idCounter;
+        var newID = prefix + idCounter;
         idCounter ++;
         body = strReplace('="' + id + '"', '="' + newID + '"', body);
         body = strReplace('="#' + id + '"', '="#' + newID + '"', body);
@@ -306,41 +309,41 @@ function SVG(item) {
     };
 
     /**
-     * Get align value
+     * Get preserveAspectRatio attribute value
      *
      * @param {*} [horizontal] Horizontal alignment: left, center, right. Default = center
      * @param {*} [vertical] Vertical alignment: top, middle, bottom. Default = middle
      * @param {boolean} [slice] Slice: true or false. Default = false
      * @return {string}
      */
-    this.align = function(horizontal, vertical, slice) {
-        var align = '';
+    this.preserveAspectRatio = function(horizontal, vertical, slice) {
+        var result = '';
         switch (horizontal) {
             case 'left':
-                align += 'xMin';
+                result += 'xMin';
                 break;
 
             case 'right':
-                align += 'xMax';
+                result += 'xMax';
                 break;
 
             default:
-                align += 'xMid';
+                result += 'xMid';
         }
         switch (vertical) {
             case 'top':
-                align += 'YMin';
+                result += 'YMin';
                 break;
 
             case 'bottom':
-                align += 'YMax';
+                result += 'YMax';
                 break;
 
             default:
-                align += 'YMid';
+                result += 'YMid';
         }
-        align += slice === true ? ' slice' : ' meet';
-        return align;
+        result += slice === true ? ' slice' : ' meet';
+        return result;
     };
 
     /**
@@ -362,9 +365,9 @@ function SVG(item) {
             height: item.height
         };
         var transform = {
-            rotate: 0,
-            hFlip: false,
-            vFlip: false
+            rotate: item.rotate,
+            hFlip: item.hFlip,
+            vFlip: item.vFlip
         };
         var style = '';
         var result = this.defaultAttributes();
@@ -420,8 +423,7 @@ function SVG(item) {
 
         // Check custom alignment
         if (typeof attributes[config._alignAttribute] === 'string') {
-            attributes[config._alignAttribute].split(/[\s,]+/).forEach(function(value) {
-                value = value.toLowerCase();
+            attributes[config._alignAttribute].toLowerCase().split(/[\s,]+/).forEach(function(value) {
                 switch (value) {
                     case 'left':
                     case 'right':
@@ -463,7 +465,7 @@ function SVG(item) {
         if (attributes[config._rotateAttribute] !== void 0) {
             value = attributes[config._rotateAttribute];
             if (typeof value === 'number') {
-                transform.rotate += value;
+                transform.rotate = Storage.mergeRotation(transform.rotate, value);
             } else if (typeof value === 'string') {
                 split = value.split(unitsSplit);
                 value = 0;
@@ -496,19 +498,9 @@ function SVG(item) {
                         }
                 }
                 if (!isNaN(value) && value !== 0) {
-                    transform.rotate += value;
+                    transform.rotate = Storage.mergeRotation(transform.rotate, value);
                 }
             }
-        }
-
-        if (item.rotate) {
-            transform.rotate = Storage.mergeRotation(item.rotate, transform.rotate);
-        }
-        if (item.hFlip) {
-            transform.hFlip = Storage.mergeFlip(item.hFlip, transform.hFlip);
-        }
-        if (item.vFlip) {
-            transform.vFlip = Storage.mergeFlip(item.vFlip, transform.vFlip);
         }
 
         // Add transformation to style
@@ -521,7 +513,7 @@ function SVG(item) {
         result.style = style + (attributes.style === void 0 ? '' : attributes.style);
 
         // Generate viewBox and preserveAspectRatio attributes
-        result.preserveAspectRatio = this.align(align.horizontal, align.vertical, align.crop);
+        result.preserveAspectRatio = this.preserveAspectRatio(align.horizontal, align.vertical, align.crop);
         result.viewBox = box.left + ' ' + box.top + ' ' + box.width + ' ' + box.height;
 
         // Generate body
