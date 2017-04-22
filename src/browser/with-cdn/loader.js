@@ -94,11 +94,12 @@
                 if (URLLengths[prefix] === null) {
                     // URL without list of icons - loads entire library
                     addScript(prefix, []);
+                } else {
+                    URLLengths[prefix] += icon.length + 1;
+                    queues[prefix].push(icon);
                 }
-            }
-
-            // Add icon to queue
-            if (URLLengths[prefix] !== null) {
+            } else if (URLLengths[prefix] !== null) {
+                // Add icon to queue
                 URLLengths[prefix] += icon.length + 1;
                 if (URLLengths[prefix] >= limit) {
                     addScript(prefix, queues[prefix]);
