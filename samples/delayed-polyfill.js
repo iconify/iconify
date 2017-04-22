@@ -8,6 +8,6 @@ setTimeout(function() {
     element.setAttribute('type', 'text/javascript');
     element.setAttribute('async', true);
 
-    console.log('Loading polyfill');
+    console.log('Loading real polyfill');
     document.head.appendChild(element);
 }, 10000);

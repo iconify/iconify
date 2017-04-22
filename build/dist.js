@@ -121,7 +121,6 @@ function parse(config) {
     filesOrder.forEach(file => {
         testFiles.push('common/' + file);
         testFiles.push('browser/' + file);
-        testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'polyfill/' + file);
         testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'observer/' + file);
         testFiles.push('browser/' + (config.cdn ? 'with-' : 'no-') + 'cdn/' + file);
     });
