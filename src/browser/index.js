@@ -85,4 +85,13 @@
         return (useHTTPS && url.slice(0, 2) === '//') ? 'https:' + url : url;
     };
 
+    /**
+     * Get version
+     *
+     * @return {string}
+     */
+    SimpleSVG.getVersion = function() {
+        return local.version;
+    };
+
 })(SimpleSVG, local);
