@@ -6,7 +6,8 @@ if (self.SimpleSVG === void 0) {
     };
     (function (SimpleSVG, global) {
         var local = {
-            config: {}
+            config: {},
+            version: '{version}'
         };
 
         /* content */

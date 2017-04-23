@@ -22,6 +22,7 @@ const fs = require('fs'),
 let codeDir = 'src',
     distDir = 'dist',
     baseName = 'simple-svg',
+    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')).version,
 
     /**
      * List of files in order of compilation.
@@ -114,7 +115,7 @@ function addFile(file, callback) {
 // Parse all files
 function parse(config) {
     let content = '',
-        template = fs.readFileSync(__dirname + '/_template.js', 'utf8');
+        template = fs.readFileSync(__dirname + '/_template.js', 'utf8').replace('{version}', version);
 
     // List of files
     let testFiles = [];
