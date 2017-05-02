@@ -43,7 +43,7 @@ var idCounter = 0;
  *      If size is width, ratio = height/width
  *      If size is height, ratio = width/height
  * @param {number} [precision] Floating number precision in result to minimize output. Default = 100
- * @return {string|number|null} Another dimension, null on error
+ * @return {string|number} Another dimension
  */
 function calculateDimension(size, ratio, precision) {
     var split, number, results, code, isNumber, num;
@@ -75,9 +75,10 @@ function calculateDimension(size, ratio, precision) {
         if (isNumber) {
             num = parseFloat(code);
             if (isNaN(num)) {
-                return null;
+                results.push(code);
+            } else {
+                results.push(Math.ceil(num * ratio * precision) / precision);
             }
-            results.push(Math.ceil(num * ratio * precision) / precision);
         } else {
             results.push(code);
         }
