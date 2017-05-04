@@ -13,7 +13,7 @@
  *
  * It will merge default config with SimpleSVGConfig object if it exists
  */
-(function(SimpleSVG, global, config) {
+(function(SimpleSVG, global, local, config) {
     "use strict";
 
     /**
@@ -29,7 +29,7 @@
         }
 
         switch (key) {
-            case 'customCDN':
+            case '_customCDN':
             case 'SVGAttributes':
                 // Merge objects
                 Object.keys(value).forEach(function (key2) {
@@ -68,11 +68,20 @@
     /**
      * Set custom CDN URL
      *
-     * @param {string} prefix Collection prefix
-     * @param {string} url JSONP URL
+     * @param {string|Array} prefix Collection prefix
+     * @param {string} url JSONP URL. There are several possible variables in URL:
+     *
+     *      {icons} represents icons list
+     *      {callback} represents SimpleSVG callback function
+     *      {prefix} is replaced with collection prefix (used when multiple collections are added with same url)
+     *
+     *      All variables are optional. If {icons} is missing, callback must return entire collection.
      */
     SimpleSVG.setCustomCDN = function(prefix, url) {
-        config['customCDN'][prefix] = url;
+        (typeof prefix === 'string' ? [prefix] : prefix).forEach(function(key) {
+            config._cdn[key] = url;
+        });
+        local._sortPrefixes = true;
     };
 
     /**
@@ -90,4 +99,4 @@
         mergeConfig(global.SimpleSVGConfig, true);
     }
 
-})(SimpleSVG, global, local.config);
+})(SimpleSVG, global, local, local.config);

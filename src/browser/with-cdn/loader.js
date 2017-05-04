@@ -30,13 +30,76 @@
     var queued = false;
 
     /**
+     * List of all prefixes
+     *
+     * @type {Array}
+     */
+    var prefixes = [];
+
+    /**
+     * List of prefixes, sorted
+     *
+     * @type {Array|null}
+     */
+    var sortedPrefixes = null;
+
+    /**
+     * Sort prefixes
+     */
+    function sortPrefixes() {
+        var prefixesSortedKeys = {};
+        sortedPrefixes = [];
+
+        prefixes = Object.keys(config._cdn);
+        prefixes.sort(function(a, b) {
+            return b.length - a.length;
+        });
+
+        prefixes.forEach(function(prefix) {
+            if (prefixesSortedKeys[prefix.length] === void 0) {
+                sortedPrefixes.push({
+                    length: prefix.length,
+                    items: []
+                });
+                prefixesSortedKeys[prefix.length] = sortedPrefixes[sortedPrefixes.length - 1];
+            }
+            prefixesSortedKeys[prefix.length].items.push(prefix);
+        });
+    }
+
+    /**
+     * Find prefix for icon
+     *
+     * @param {string} icon Icon name
+     * @return {string}
+     */
+    function getPrefix(icon) {
+        var i, j, length, prefixes, slice;
+
+        // Check custom prefixes
+        for (i = 0; i < sortedPrefixes.length; i++) {
+            length = sortedPrefixes[i].length;
+            prefixes = sortedPrefixes[i].items;
+            slice = icon.slice(0, length);
+            for (j = 0; j < prefixes.length; j++) {
+                if (prefixes[j] === slice) {
+                    return slice;
+                }
+            }
+        }
+
+        // Default prefix: part before first -
+        return icon.split('-')[0];
+    }
+
+    /**
      * Load all queued images
      */
     function loadQueue() {
         var queues = {},
             URLLengths = {},
-            limit = config.loaderMaxURLSize,
-            prefixes = Object.keys(config.customCDN);
+            urls = {},
+            limit = config.loaderMaxURLSize;
 
         /**
          * Send JSONP request by adding script tag to document
@@ -45,11 +108,11 @@
          * @param {Array} items
          */
         function addScript(prefix, items) {
-            var url = prefix === '.' ? config.defaultCDN : config.customCDN[prefix],
+            var url = urls[prefix],
                 element;
 
-            // Replace variables
-            url = url.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', items.join(','));
+            // Replace icons list
+            url = url.replace('{icons}', items.join(','));
 
             // Change to protocol-less to secure
             url = SimpleSVG.secureURL(url);
@@ -69,23 +132,25 @@
          * @return {number|null}
          */
         function baseLength(prefix) {
-            var url = prefix === '.' ? config.defaultCDN : config.customCDN[prefix];
-            return url.indexOf('{icons}') === -1 ? null : url.replace('{callback}', 'SimpleSVG._loaderCallback').replace('{icons}', '').length;
+            var url = config._cdn[prefix] === void 0 ? config.defaultCDN : config._cdn[prefix];
+
+            if (url.indexOf('{icons}') === -1) {
+                urls[prefix] = url;
+                return null;
+            }
+            url = url.replace('{prefix}', prefix).replace('{callback}', 'SimpleSVG._loaderCallback');
+            urls[prefix] = url;
+            return url.replace('{icons}', '').length;
         }
 
+        // Sort prefixes
+        if (local._sortPrefixes) {
+            sortPrefixes();
+        }
+
+        // Check queue
         queue.forEach(function(icon) {
-            var prefix = '';
-
-            // Check for custom CDN
-            prefixes.forEach(function(customPrefix) {
-                if (icon.slice(0, customPrefix.length) === customPrefix) {
-                    prefix = customPrefix;
-                }
-            });
-
-            if (prefix === '') {
-                prefix = '.';
-            }
+            var prefix = getPrefix(icon);
 
             // Check if queue for prefix exists
             if (queues[prefix] === void 0) {
@@ -196,5 +261,8 @@
         });
         return queued;
     };
+
+    // Mark prefixes as unsorted
+    local._sortPrefixes = true;
 
 })(SimpleSVG, local, local.config, global);

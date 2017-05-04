@@ -29,7 +29,7 @@
      *
      * @type {string}
      */
-    var stylesheetCDN = '//cdn.simplesvg.com/css/fa.css';
+    var stylesheetCDN = '//code.simplesvg.com/css/fa.css';
 
     /**
      * True if stylesheet has been added

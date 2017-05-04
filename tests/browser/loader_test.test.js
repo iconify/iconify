@@ -78,7 +78,11 @@
 
             // Load libraries
             load(SimpleSVG, local);
-            local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
+            if (local.config.defaultCDN.indexOf('{callback}') === -1) {
+                local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGLoaderTest1';
+            } else {
+                local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
+            }
             local.config._loaderEvent = 'newSSVGImagesTest';
             window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
 
@@ -107,8 +111,8 @@
                 },
                 element = document.createElement('div'),
                 expecting = [
-                    'default?icons=mdi-home,mdi-arrow-left,emoji-cat',
-                    'default?icons=foo-bar,mdi-arrow-right',
+                    'default?icons=mdi-home,mdi-arrow-left,mdi-cat',
+                    'default?icons=mdi-bar,mdi-arrow-right',
                     'fa?icons=fa-apple,fa-home',
                     'test?icons=test-foo'
                 ],
@@ -126,14 +130,14 @@
                 return false;
             };
             local.config.defaultCDN = 'default?icons={icons}';
-            local.config.customCDN['fa'] = 'fa?icons={icons}';
-            local.config.customCDN['test'] = 'test?icons={icons}';
+            local.config._cdn['fa'] = 'fa?icons={icons}';
+            local.config._cdn['test'] = 'test?icons={icons}';
             local.config.loaderMaxURLSize = 50;
             local._debugLoader = true;
 
             // Add dummy icons
             icons = {};
-            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'emoji-cat', 'foo-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
+            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
                 icons[key] = local.newImage(element, key, null);
             });
 

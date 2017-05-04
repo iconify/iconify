@@ -30,7 +30,7 @@
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                         '<i class="simple-svg" data-icon="fa-home" />' +
                         '<i class="simple-svg" data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
-                        '<i class="simple-svg" data-icon="mdi-home" data-rotate="90deg" data-icon-append="true" height="24px" />' +
+                        '<i class="simple-svg" data-icon="fa-android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -38,7 +38,11 @@
                 // Setup fake SimpleSVG instance
                 local.iconsAdded = renderImages;
                 load(SimpleSVG, local, global);
-                local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
+                if (local.config.defaultCDN.indexOf('{callback}') === -1) {
+                    local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTest';
+                } else {
+                    local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
+                }
                 window.SSVGRenderTest = SimpleSVG._loaderCallback;
 
                 SimpleSVG.ready(() => {

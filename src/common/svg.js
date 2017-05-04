@@ -379,7 +379,7 @@ function SVG(item) {
         var style = '';
         var result = this.defaultAttributes();
 
-        var customWidth, customHeight, width, height, inline, body, value, split, append, extraAttributes;
+        var customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes;
 
         attributes = typeof attributes === 'object' ? attributes : {};
 
@@ -472,40 +472,32 @@ function SVG(item) {
         if (attributes[config._rotateAttribute] !== void 0) {
             value = attributes[config._rotateAttribute];
             if (typeof value === 'number') {
-                transform.rotate = Storage.mergeRotation(transform.rotate, value);
+                transform.rotate += value;
             } else if (typeof value === 'string') {
-                split = value.split(unitsSplit);
-                value = 0;
-                switch (split.length) {
-                    case 2:
-                        value = split[0] !== '' ? 0 : parseInt(split[0]);
-                        break;
-
-                    case 3:
-                        if (split[0] !== '') {
+                units = value.replace(/^-?[0-9.]*/, '');
+                if (units === '') {
+                    value = parseInt(value);
+                    if (!isNaN(value)) {
+                        transform.rotate += value;
+                    }
+                } else if (units !== value) {
+                    split = false;
+                    switch (units) {
+                        case '%':
+                            // 25% -> 1, 50% -> 2, ...
+                            split = 25;
                             break;
-                        }
-                        switch (split[2].toLowerCase()) {
-                            case '%':
-                                // 25% -> 1, 50% -> 2, ...
-                                split = 25;
-                                break;
 
-                            case 'deg':
-                                // 90deg -> 1, 180deg -> 2, ...
-                                split = 90;
-                                break;
-
-                            default:
-                                split = null;
+                        case 'deg':
+                            // 90deg -> 1, 180deg -> 2, ...
+                            split = 90;
+                    }
+                    if (split) {
+                        value = parseInt(value.slice(0, value.length - units.length));
+                        if (!isNaN(value)) {
+                            transform.rotate += Math.round(value / split);
                         }
-                        if (split !== null) {
-                            value = parseInt(split[1]);
-                            value = !isNaN(value) && value % split === 0 ? value / split : 0;
-                        }
-                }
-                if (!isNaN(value) && value !== 0) {
-                    transform.rotate = Storage.mergeRotation(transform.rotate, value);
+                    }
                 }
             }
         }
