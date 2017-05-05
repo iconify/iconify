@@ -16,10 +16,13 @@
 
     var useHTTPS = false;
 
+    /*
+    // Disabled because SSL adds 50-100ms to loading time. Uncomment to enable forced SSL in modern browsers.
     try {
         useHTTPS = (window && window.CSS && window.CSS.supports);
     } catch (err) {
     }
+    */
 
     /**
      * Find new icons and change them
