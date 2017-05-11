@@ -33,7 +33,7 @@ There are 2 types of icons: monotone and colored.
 
 * Monotone icons are icons that use only 1 color. All icons from glyph fonts fall into this category: FontAwesome,
 GlyphIcons, Material Design Icons, etc.
-* Colored icons are icons that use preset palette. Most emoji icons fall into this category: Emoji One, Twitter Emoji,
+* Colored icons are icons that use preset palette. Most emoji icons fall into this category: Noto Emoji, Emoji One,
 etc. You cannot change palette for those icons.
 
 Monotone icons use font color, just like glyph fonts. To change color you can do this:
@@ -63,7 +63,7 @@ Sample:
 By default all icons are scaled to 1em height. To control icon height use font-size:
 
 ```
-<span class="simple-svg icon-clipboard" data-icon="emoji-clipboard"></span>
+<span class="simple-svg icon-clipboard" data-icon="emoji1-clipboard"></span>
 ```
     
 and add this to css:
@@ -111,7 +111,7 @@ solutions:
 
 1. Adding data-inline attribute:
 ```
-<span class="simple-svg" data-icon="emoji-frog" data-inline="false"></span>
+<span class="simple-svg" data-icon="noto-frog-face" data-inline="false"></span>
 ```
 
 2. Removing vertical-alignment via css:
@@ -172,7 +172,7 @@ that creates background images for any icon. You can use it like this:
 
 ```
 .foo {
-    background: url("https://icons.simplesvg.com/emoji/emoji-ice-skate.svg") left center no-repeat;
+    background: url("https://icons.simplesvg.com/emoji1/emoji1-ice-skate.svg") left center no-repeat;
 }
 ```
 

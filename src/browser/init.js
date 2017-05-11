@@ -47,7 +47,7 @@
     /**
      * List of callbacks to call when SimpleSVG is ready
      *
-     * @type {[function}]}
+     * @type {[function]}
      */
     local.initQueue = [];
 

@@ -48,8 +48,8 @@
 		<p>Set of images will load 5 seconds after page load, another set 15 seconds after page load. Both sets rely on observer to detect their presence.</p>
 		<p>In IE9/10 observer will be delayed by 10 seconds, so first set of icons will be loaded 5-6 seconds after its intended display time.</p>
 		<p>Few starter images:</p>
-		<i class="simple-svg" data-icon="fa-home" data-height="32px"></i>
-		<i class="simple-svg" data-icon="twemoji-cat" data-height="auto"></i>
+		<i class="simple-svg" data-icon="noto-mushroom" data-height="64"></i>
+		<i class="simple-svg" data-icon="noto-hot-beverage" data-height="64"></i>
 	</div>
 	<script>
         var SimpleSVGConfig = {
@@ -60,8 +60,8 @@
 
             setTimeout(function() {
                 $content.append('<p>More images, loaded 5 seconds after page load.</p><p>Observer should instantly kick in for modern browsers.</p><p>In IE9/10 observer is delayed by 10 seconds for testing, so images should load in additional 5-6 seconds.</p>');
-                $content.append('<i class="simple-svg svg-flip-horizontal" data-icon="twemoji-cat2" data-height="auto"></i> ');
-                $content.append('<i class="simple-svg" data-icon="twemoji-cake" data-height="auto"></i> ');
+                $content.append('<i class="simple-svg svg-flip-horizontal" data-icon="noto-bird" data-height="64"></i> ');
+                $content.append('<i class="simple-svg" data-icon="noto-direct-hit" data-height="64"></i> ');
 			}, 5000);
 
             setTimeout(function() {
@@ -73,8 +73,8 @@
                     }
 
                     $content.append('<p>Showing more images, observer should transform them immediately.</p>');
-                    $content.append('<i class="simple-svg" data-icon="twemoji-frog" data-height="auto"></i> ');
-                    $content.append('<i class="simple-svg" data-icon="twemoji-ghost" data-height="auto"></i> ');
+                    $content.append('<i class="simple-svg" data-icon="noto-baby-chick" data-height="64"></i> ');
+                    $content.append('<i class="simple-svg" data-icon="noto-dragon" data-height="64"></i> ');
 				}
                 test();
             }, 15000);
