@@ -109,9 +109,9 @@ to glyph fonts, fitting perfectly into text.
 But what if you don't want that behavior? What if you want SimpleSVG icons to behave like images? There are several
 solutions:
 
-1. Adding data-inline attribute:
+1. Adding data-icon-inline attribute:
 ```
-<span class="simple-svg" data-icon="noto-frog-face" data-inline="false"></span>
+<span class="simple-svg" data-icon="noto-frog-face" data-icon-inline="false"></span>
 ```
 
 2. Removing vertical-alignment via css:
