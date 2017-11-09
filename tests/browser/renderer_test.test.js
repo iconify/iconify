@@ -45,7 +45,7 @@
                 }
                 window.SSVGRenderTest = SimpleSVG._loaderCallback;
 
-                SimpleSVG.ready(() => {
+                SimpleSVG.ready(function() {
                     // Load images, start tests when images are available
                     local.findNewImages(containerRoot).forEach(function(image) {
                         if (!local.loadImage(image)) {
