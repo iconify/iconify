@@ -18,6 +18,7 @@
         loadingClass = config._loadingClass,
         appendedClass = config._appendedClass,
         iconAttribute = config._iconAttribute,
+        inlineAttribute = config._inlineModeAttribute,
         negativeSelectors = ':not(svg):not(.' + appendedClass + ')',
         negativeLoadingSelectors = ':not(.' + loadingClass + ')',
         loadingSelector = '.' + loadingClass;
@@ -43,7 +44,7 @@
             icon: function(element) {
                 var result = element.getAttribute(iconAttribute);
                 return typeof result === 'string' ? result : '';
-            },
+            }
 
             /**
              * Filter class names list, removing any custom classes
@@ -104,6 +105,27 @@
     };
 
     /**
+     * Add custom tag finder
+     *
+     * @param {string} name Tag name
+     * @param {boolean} inline True/false if icon should be inline by default
+     * @param {function} [resolver] Function to return icon name, null or undefined if default resolver should be used
+     */
+    SimpleSVG.addTag = function(name, inline, resolver) {
+        SimpleSVG.addFinder('tag-' + name, {
+            selector: name,
+            icon: resolver === void 0 || resolver === null ? finders.ssvg.icon : resolver,
+            filterAttributes: function(image, attributes) {
+                if (attributes[inlineAttribute] === void 0) {
+                    attributes[inlineAttribute] = inline;
+                }
+                return attributes;
+            }
+        });
+    };
+    SimpleSVG.addTag('simple-svg', false);
+
+    /**
      * Find new images
      *
      * @param {Element} root Root element
@@ -121,28 +143,15 @@
                 selector = loading === true ? finder.selectorLoading : (loading === false ? finder.selectorNew : finder.selectorAll);
 
             var nodes = root.querySelectorAll(selector),
-                index, node, icon, iconData, image;
+                index, node, icon, image;
 
             for (index = 0; index < nodes.length; index ++) {
                 node = nodes[index];
                 icon = finder.icon(node);
-                if (typeof icon === 'object') {
-                    iconData = icon;
-                    icon = icon.icon;
-                } else {
-                    iconData = null;
-                }
 
                 if (icon && duplicates.indexOf(node) === -1) {
                     duplicates.push(node);
                     image = local.newImage(node, icon, finder);
-
-                    // Add custom attributes passed from plugin
-                    if (iconData !== null) {
-                        Object.keys(iconData).forEach(function(attr) {
-                            image[attr] = iconData[attr];
-                        });
-                    }
                     results.push(image);
                 }
             }
