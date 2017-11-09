@@ -43,7 +43,7 @@
                 initQueue: [],
                 nodesAdded: function(nodes) {
                     called = true;
-                },
+                }
             };
 
             // Load observer
