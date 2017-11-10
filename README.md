@@ -15,7 +15,11 @@ To add any icon, write something like this:
 ```
 <span class="simple-svg" data-icon="fa-home"></span>
 ```
-    
+or this:
+```
+<simple-svg data-icon="fci-alarm-clock"></simple-svg>
+```
+
 Sample:
     
 &nbsp;&nbsp;&nbsp; ![Sample](https://simplesvg.com/samples/icon.png)
@@ -107,14 +111,20 @@ To solve that issue SimpleSVG adds vertical alignment to all icons, placing them
 to glyph fonts, fitting perfectly into text.
 
 But what if you don't want that behavior? What if you want SimpleSVG icons to behave like images? There are several
-solutions:
+solutions, use whichever you prefer:
 
-1. Adding data-icon-inline attribute:
+1. Using simple-svg tag instead of span:
+```
+<simple-svg data-icon="noto-frog-face"></simple-svg>
+```
+simple-svg tag same as using class="simple-svg" on any other element, but by default inline mode is disabled.
+
+2. Adding data-icon-inline attribute:
 ```
 <span class="simple-svg" data-icon="noto-frog-face" data-icon-inline="false"></span>
 ```
 
-2. Removing vertical-alignment via css:
+3. Removing vertical-alignment via css:
 ```
 .simple-svg {
     vertical-align: baseline !important;
