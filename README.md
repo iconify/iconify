@@ -220,7 +220,7 @@ same as in data-align attribute mentioned above.
 There are over 20,000 icons to choose from.
 
 General collections (monotone icons):
-* Material Design Icons (1900+ icons)
+* Material Design Icons (2000+ icons)
 * Material Design Iconic Font (700+ icons)
 * IconIcons (700+ icons)
 * FontAwesome (600+ icons)
@@ -231,9 +231,9 @@ General collections (monotone icons):
 and many others.
 
 Emoji collections (mostly colored icons):
-* Emoji One (1800+ colored icons, 1400+ monotone icons)
+* Emoji One (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
 * Firefox OS Emoji (1000+ icons)
-* Noto Emoji (800+ icons)
+* Noto Emoji (2000+ icons for version 2, 2000+ icons for version 1)
 * Twitter Emoji (800+ icons)
 
 Also there are several thematic collections, such as weather icons, map icons, etc.

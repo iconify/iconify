@@ -81,7 +81,6 @@
         (typeof prefix === 'string' ? [prefix] : prefix).forEach(function(key) {
             config._cdn[key] = url;
         });
-        local._sortPrefixes = true;
     };
 
     /**

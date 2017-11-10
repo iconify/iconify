@@ -151,5 +151,53 @@
                 expect(local.loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
             });
         });
+
+        it('custom and invalid prefixes', function(done) {
+            var SimpleSVG = {
+                },
+                local = {
+                },
+                element = document.createElement('div'),
+                expecting = [
+                    'mdi?icons=home',
+                    'fa?icons=apple,home,arrow-left',
+                    'fapro?icons=pro-test'
+                ],
+                icons;
+
+            // Load libraries
+            load(SimpleSVG, local);
+            SimpleSVG.testLoaderURL = function(url) {
+                var index = expecting.indexOf(url);
+                expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
+                expecting.splice(index, 1);
+                if (!expecting.length) {
+                    done();
+                }
+                return false;
+            };
+            local.config.defaultCDN = '{prefix}?icons={icons}';
+            local.config._cdn['fa'] = 'fa?icons={icons}';
+            local._debugLoader = true;
+
+            // Add dummy icons
+            icons = {};
+            [
+                'fa-apple', 'fa-home', 'mdi-home',
+                // Test for partial prefix match
+                'fapro-pro-test',
+                // prefix:icon syntax
+                'fa:arrow-left',
+                // Invalid icon
+                'badicon'
+            ].forEach(function(key) {
+                icons[key] = local.newImage(element, key, null);
+            });
+
+            // Load icons
+            Object.keys(icons).forEach(function(key) {
+                expect(local.loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
+            });
+        });
     });
 })();

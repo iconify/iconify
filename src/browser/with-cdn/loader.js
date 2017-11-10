@@ -37,67 +37,34 @@
     var prefixes = [];
 
     /**
-     * List of prefixes, sorted
-     *
-     * @type {Array|null}
-     */
-    var sortedPrefixes = null;
-
-    /**
-     * Sort prefixes
-     */
-    function sortPrefixes() {
-        var prefixesSortedKeys = {};
-        sortedPrefixes = [];
-
-        prefixes = Object.keys(config._cdn);
-        prefixes.sort(function(a, b) {
-            return b.length - a.length;
-        });
-
-        prefixes.forEach(function(prefix) {
-            if (prefixesSortedKeys[prefix.length] === void 0) {
-                sortedPrefixes.push({
-                    length: prefix.length,
-                    items: []
-                });
-                prefixesSortedKeys[prefix.length] = sortedPrefixes[sortedPrefixes.length - 1];
-            }
-            prefixesSortedKeys[prefix.length].items.push(prefix);
-        });
-    }
-
-    /**
      * Find prefix for icon
      *
      * @param {string} icon Icon name
-     * @return {object}
+     * @return {object|null}
      */
     function getPrefix(icon) {
-        var i, j, length, prefixes, slice, prefix;
+        var split, prefix;
 
-        // Check custom prefixes
-        for (i = 0; i < sortedPrefixes.length; i++) {
-            length = sortedPrefixes[i].length;
-            prefixes = sortedPrefixes[i].items;
-            slice = icon.slice(0, length);
-            for (j = 0; j < prefixes.length; j++) {
-                if (prefixes[j] === slice) {
-                    return {
-                        prefix: slice,
-                        icon: icon.slice(length + 1)
-                    };
-                }
+        // Check for fa:home
+        split = icon.split(':');
+        if (split.length === 2) {
+            return {
+                prefix: split[0],
+                icon: split[1]
+            };
+        }
+
+        // Check for fa-home
+        split = icon.split('-');
+        if (split.length > 1) {
+            prefix = split.shift();
+            return {
+                prefix: prefix,
+                icon: split.join('-')
             }
         }
 
-        // Default prefix: part before first -
-        slice = icon.split('-');
-        prefix = slice.shift();
-        return {
-            prefix: prefix,
-            icon: slice.join('-')
-        };
+        return null;
     }
 
     /**
@@ -151,17 +118,16 @@
             return url.replace('{icons}', '').length;
         }
 
-        // Sort prefixes
-        if (local._sortPrefixes) {
-            sortPrefixes();
-        }
-
         // Check queue
         queue.forEach(function(icon) {
-            var prefix = getPrefix(icon),
-                shortIcon = prefix.icon;
+            var prefixParts = getPrefix(icon),
+                prefix, shortIcon;
 
-            prefix = prefix.prefix;
+            if (prefixParts === null) {
+                return;
+            }
+            shortIcon = prefixParts.icon;
+            prefix = prefixParts.prefix;
 
             // Check if queue for prefix exists
             if (queues[prefix] === void 0) {
@@ -271,8 +237,5 @@
         });
         return queued;
     };
-
-    // Mark prefixes as unsorted
-    local._sortPrefixes = true;
 
 })(SimpleSVG, local, local.config, global);
