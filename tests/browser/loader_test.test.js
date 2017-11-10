@@ -111,10 +111,10 @@
                 },
                 element = document.createElement('div'),
                 expecting = [
-                    'default?icons=mdi-home,mdi-arrow-left,mdi-cat',
-                    'default?icons=mdi-bar,mdi-arrow-right',
-                    'fa?icons=fa-apple,fa-home',
-                    'test?icons=test-foo'
+                    'mdi?icons=home,arrow-left,cat,rather-long-item',
+                    'mdi?icons=bar,arrow-right',
+                    'fa?icons=apple,home',
+                    'test?icons=foo'
                 ],
                 icons;
 
@@ -129,7 +129,7 @@
                 }
                 return false;
             };
-            local.config.defaultCDN = 'default?icons={icons}';
+            local.config.defaultCDN = '{prefix}?icons={icons}';
             local.config._cdn['fa'] = 'fa?icons={icons}';
             local.config._cdn['test'] = 'test?icons={icons}';
             local.config.loaderMaxURLSize = 50;
@@ -137,7 +137,7 @@
 
             // Add dummy icons
             icons = {};
-            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
+            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-rather-long-item', 'mdi-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
                 icons[key] = local.newImage(element, key, null);
             });
 

@@ -15,7 +15,7 @@
     "use strict";
 
     // CDN callback script
-    config.defaultCDN = '//icons.simplesvg.com/{prefix}/icons.js?icons={icons}';
+    config.defaultCDN = '//icons.simplesvg.com/{prefix}.js?icons={icons}';
 
     // Custom CDN list. Key = prefix, value = CDN URL
     config._cdn = {};

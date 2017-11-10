@@ -71,10 +71,10 @@
      * Find prefix for icon
      *
      * @param {string} icon Icon name
-     * @return {string}
+     * @return {object}
      */
     function getPrefix(icon) {
-        var i, j, length, prefixes, slice;
+        var i, j, length, prefixes, slice, prefix;
 
         // Check custom prefixes
         for (i = 0; i < sortedPrefixes.length; i++) {
@@ -83,13 +83,21 @@
             slice = icon.slice(0, length);
             for (j = 0; j < prefixes.length; j++) {
                 if (prefixes[j] === slice) {
-                    return slice;
+                    return {
+                        prefix: slice,
+                        icon: icon.slice(length + 1)
+                    };
                 }
             }
         }
 
         // Default prefix: part before first -
-        return icon.split('-')[0];
+        slice = icon.split('-');
+        prefix = slice.shift();
+        return {
+            prefix: prefix,
+            icon: slice.join('-')
+        };
     }
 
     /**
@@ -150,7 +158,10 @@
 
         // Check queue
         queue.forEach(function(icon) {
-            var prefix = getPrefix(icon);
+            var prefix = getPrefix(icon),
+                shortIcon = prefix.icon;
+
+            prefix = prefix.prefix;
 
             // Check if queue for prefix exists
             if (queues[prefix] === void 0) {
@@ -159,20 +170,19 @@
                 if (URLLengths[prefix] === null) {
                     // URL without list of icons - loads entire library
                     addScript(prefix, []);
-                } else {
-                    URLLengths[prefix] += icon.length + 1;
-                    queues[prefix].push(icon);
+                    return;
                 }
+                queues[prefix].push(shortIcon);
+                URLLengths[prefix] += shortIcon.length + 1;
             } else if (URLLengths[prefix] !== null) {
                 // Add icon to queue
-                URLLengths[prefix] += icon.length + 1;
+                URLLengths[prefix] += shortIcon.length + 1;
                 if (URLLengths[prefix] >= limit) {
                     addScript(prefix, queues[prefix]);
                     queues[prefix] = [];
-                    URLLengths[prefix] = baseLength(prefix);
+                    URLLengths[prefix] = baseLength(prefix) + shortIcon.length + 1;
                 }
-
-                queues[prefix].push(icon);
+                queues[prefix].push(shortIcon);
             }
         });
 
