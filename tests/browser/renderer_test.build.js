@@ -13,6 +13,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             TestHelper.fakeInit(),
 
             // Common files
+            TestHelper.getPrefix(),
             TestHelper.getStorage(),
             fs.readFileSync(codeDir + '/browser/storage.js', 'utf8'),
             TestHelper.getSVG(),

@@ -47,6 +47,7 @@
 
                     // Check if icons exist
                     expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(true, 'fa-apple should exist');
+                    expect(SimpleSVG.iconExists('fa:apple')).to.be.equal(true, 'fa:apple should exist');
                     expect(SimpleSVG.iconExists('fa-star')).to.be.equal(true, 'fa-star should exist');
                     expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist (2)');
                     expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');

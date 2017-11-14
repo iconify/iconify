@@ -10,6 +10,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
         modules = [
             TestHelper.fakeEvents() +
             TestHelper.fakeInit() +
+            TestHelper.getPrefix() +
             TestHelper.getStorage() +
             fs.readFileSync(codeDir + '/browser/storage.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/defaults.js', 'utf8'),

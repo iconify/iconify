@@ -43,6 +43,7 @@ let codeDir = 'src',
         'polyfill.js', // requires config.js and event.js
 
         // Common files
+        'prefix.js',
         'storage.js',
         'svg.js',
 
@@ -89,7 +90,12 @@ function addFile(file, callback) {
         let split = file.split('/');
         switch (split.pop()) {
             case 'storage.js':
-                content = content.replace('module.exports = Storage;', 'local.Storage = Storage;');
+                content = content.replace('module.exports = Storage;', 'local.Storage = Storage;')
+                    .replace('require(\'./prefix\')', 'local.getPrefix');
+                break;
+
+            case 'prefix.js':
+                content = content.replace('module.exports = getPrefix;', 'local.getPrefix = getPrefix;');
                 break;
 
             case 'svg.js':

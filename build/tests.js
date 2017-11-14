@@ -38,11 +38,20 @@ let TestHelper = {
         return content.replace(search, replace);
     },
 
+    // Get common/prefix.js
+    getPrefix: () => {
+        return '(function (local) {\n' +
+            fs.readFileSync(resolvedCodeDir + '/common/prefix.js', 'utf8')
+                .replace('module.exports = getPrefix;', 'local.getPrefix = getPrefix;') +
+            '\n})(local);\n';
+    },
+
     // Get common/storage.js
     getStorage: () => {
         return '(function (local) {\n' +
             fs.readFileSync(resolvedCodeDir + '/common/storage.js', 'utf8')
-                .replace('module.exports = Storage;', 'local.Storage = Storage;') +
+                .replace('module.exports = Storage;', 'local.Storage = Storage;')
+                .replace('require(\'./prefix\')', 'local.getPrefix') +
             '\n})(local);\n';
     },
 

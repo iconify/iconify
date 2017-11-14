@@ -34,7 +34,7 @@
             jQuery('#debug').append('<div id="' + containerID + '">' +
                 '<div id="' + validIconsID + '">' +
                     '<p>Few icons: <i class="simple-svg" data-icon="fa-bear" /> <i class="simple-svg" data-icon="fa-apple" /></p>' +
-                    '<p>Few more icons: <i class="simple-svg" data-icon="fa-apple" /> <i class="simple-svg" data-icon="mdi-arrow-up" /></p>' +
+                    '<p>Few more icons: <i class="simple-svg" data-icon="fa-apple" /> <i class="simple-svg" data-icon="mdi:arrow-up" /></p>' +
                     '<p>Some pending icons: <i class="simple-svg svg-loading" data-icon="fa-login" /> <i class="simple-svg svg-loading" data-icon="mdi-home" /></p>' +
                     '<p>Some parsed icons: <svg class="simple-svg" data-icon="empty-icon"><g /></svg></p>' +
                 '</div>' +
@@ -74,7 +74,7 @@
             expect(results.length).to.be.equal(4, 'Wrong number of new images');
             expect(results.map(function(item) {
                 return item.icon
-            })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi-arrow-up']);
+            })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi:arrow-up']);
 
             // Find icons that are being loaded
             results = local.findNewImages(validIconsRoot, true);
@@ -88,7 +88,7 @@
             expect(results.length).to.be.equal(6, 'Wrong number of unparsed images');
             expect(results.map(function(item) {
                 return item.icon
-            })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi-arrow-up', 'fa-login', 'mdi-home']);
+            })).to.be.eql(['fa-bear', 'fa-apple', 'fa-apple', 'mdi:arrow-up', 'fa-login', 'mdi-home']);
 
             // Find all parsed icons
             results = local.findParsedImages(validIconsRoot);

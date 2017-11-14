@@ -37,37 +37,6 @@
     var prefixes = [];
 
     /**
-     * Find prefix for icon
-     *
-     * @param {string} icon Icon name
-     * @return {object|null}
-     */
-    function getPrefix(icon) {
-        var split, prefix;
-
-        // Check for fa:home
-        split = icon.split(':');
-        if (split.length === 2) {
-            return {
-                prefix: split[0],
-                icon: split[1]
-            };
-        }
-
-        // Check for fa-home
-        split = icon.split('-');
-        if (split.length > 1) {
-            prefix = split.shift();
-            return {
-                prefix: prefix,
-                icon: split.join('-')
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Load all queued images
      */
     function loadQueue() {
@@ -120,12 +89,9 @@
 
         // Check queue
         queue.forEach(function(icon) {
-            var prefixParts = getPrefix(icon),
+            var prefixParts = local.getPrefix(icon),
                 prefix, shortIcon;
 
-            if (prefixParts === null) {
-                return;
-            }
             shortIcon = prefixParts.icon;
             prefix = prefixParts.prefix;
 

@@ -13,37 +13,40 @@
         it('one simple icon', function() {
             var storage = new Storage();
 
-            storage.addIcon('test', {
+            storage.addIcon('test-icon', {
                 body: '<path d="" />',
                 width: 20,
                 height: 16
             });
 
             // Check if icon exists
-            expect(storage.exists('test')).to.be.equal(true);
-            expect(storage.exists('test2')).to.be.equal(false);
-            expect(storage.list()).to.be.eql(['test']);
+            expect(storage.exists('test-icon')).to.be.equal(true);
+            expect(storage.exists('test:icon')).to.be.equal(true);
+            expect(storage.exists('test')).to.be.equal(false);
+            expect(storage.exists('icon')).to.be.equal(false);
+            expect(storage.exists('test-icon2')).to.be.equal(false);
+            expect(storage.list()).to.be.eql(['test:icon']);
 
             // Check dimensions
-            expect(storage.get('test').width).to.be.equal(20);
-            expect(storage.get('test2')).to.be.equal(null);
+            expect(storage.get('test-icon').width).to.be.equal(20);
+            expect(storage.get('test-icon2')).to.be.equal(null);
 
-            expect(storage.get('test').height).to.be.equal(16);
-            expect(storage.get('test2')).to.be.equal(null);
+            expect(storage.get('test:icon').height).to.be.equal(16);
+            expect(storage.get('test-icon2')).to.be.equal(null);
 
             // Reset object to test storage scope
             storage = new Storage();
 
-            storage.addIcon('test2', {
+            storage.addIcon('test:icon2', {
                 body: '<path d="" />',
                 width: 20,
                 height: 16
             });
 
             // Check if icon exists
-            expect(storage.exists('test')).to.be.equal(false);
-            expect(storage.exists('test2')).to.be.equal(true);
-            expect(storage.list()).to.be.eql(['test2']);
+            expect(storage.exists('test-icon')).to.be.equal(false);
+            expect(storage.exists('test-icon2')).to.be.equal(true);
+            expect(storage.list()).to.be.eql(['test:icon2']);
         });
 
         it('multiple icons', function() {
@@ -54,7 +57,12 @@
                 width: 48,
                 height: 36
             });
-            storage.addIcon('foo-baz', {
+            storage.addIcon('foo:baz', {
+                body: '<path d="" />',
+                width: 20,
+                height: 20
+            });
+            storage.addIcon('foo-suffixed:baz-suffixed', {
                 body: '<path d="" />',
                 width: 20,
                 height: 20
@@ -64,11 +72,14 @@
             expect(storage.exists('test')).to.be.equal(false);
             expect(storage.exists('foo-bar')).to.be.equal(true);
             expect(storage.exists('foo-baz')).to.be.equal(true);
-            expect(storage.list()).to.be.eql(['foo-bar', 'foo-baz']);
+            expect(storage.exists('foo:baz')).to.be.equal(true);
+            expect(storage.exists('foo-suffixed:baz-suffixed')).to.be.equal(true);
+            expect(storage.exists('foo-suffixed-baz-suffixed')).to.be.equal(false); // Wrong prefix
+            expect(storage.list()).to.be.eql(['foo:bar', 'foo:baz', 'foo-suffixed:baz-suffixed']);
 
             // Get width
             expect(storage.get('foo-bar').width).to.be.equal(48);
-            expect(storage.get('foo-baz').width).to.be.equal(20);
+            expect(storage.get('foo:baz').width).to.be.equal(20);
 
             // Overwrite item
             storage.addIcon('foo-baz', {
@@ -76,11 +87,11 @@
                 width: 16,
                 height: 16
             });
-            expect(storage.list()).to.be.eql(['foo-bar', 'foo-baz']);
+            expect(storage.list()).to.be.eql(['foo:bar', 'foo:baz', 'foo-suffixed:baz-suffixed']);
 
             // Test width
             expect(storage.get('foo-bar').width).to.be.equal(48);
-            expect(storage.get('foo-baz').width).to.be.equal(16);
+            expect(storage.get('foo:baz').width).to.be.equal(16);
         });
 
         it('collection', function() {
