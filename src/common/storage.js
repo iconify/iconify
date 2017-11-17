@@ -303,11 +303,17 @@ function Storage() {
      * Check if icon exists
      *
      * @param {string} name Icon name
+     * @param {string} [prefix] Icon prefix. If prefix is set, name should not include prefix
      * @return {boolean}
      */
-    this.exists = function(name) {
-        var iconData = getPrefix(name);
-        return this.items[iconData.prefix] !== void 0 && this.items[iconData.prefix][iconData.icon] !== void 0;
+    this.exists = function(name, prefix) {
+        var icon;
+        if (prefix === void 0) {
+            icon = getPrefix(name);
+            prefix = icon.prefix;
+            name = icon.icon;
+        }
+        return this.items[prefix] !== void 0 && this.items[prefix][name] !== void 0;
     };
 
     /**

@@ -4,3 +4,4 @@ npm-debug.log
 debug
 dist/*.js
 yarn.lock
+package-lock.json

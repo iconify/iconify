@@ -114,8 +114,8 @@
                 expecting = [
                     'mdi?icons=home,arrow-left,cat,rather-long-item',
                     'mdi?icons=bar,arrow-right',
-                    'fa?icons=apple,home',
-                    'test?icons=foo'
+                    'fa?fa-icons=apple,twitter',
+                    'test?testing=foo'
                 ],
                 icons;
 
@@ -131,14 +131,18 @@
                 return false;
             };
             local.config.defaultCDN = '{prefix}?icons={icons}';
-            local.config._cdn['fa'] = 'fa?icons={icons}';
-            local.config._cdn['test'] = 'test?icons={icons}';
+            local.config._cdn['fa'] = 'fa?fa-icons={icons}';
+            local.config._cdn['test'] = 'test?testing={icons}';
             local.config.loaderMaxURLSize = 50;
             local._debugLoader = true;
 
             // Add dummy icons
             icons = {};
-            ['fa-apple', 'fa-home', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-rather-long-item', 'mdi-bar', 'test-foo', 'mdi-arrow-right'].forEach(function(key) {
+            [
+                'fa-apple', 'fa-twitter', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-rather-long-item', 'mdi-bar', 'test-foo', 'mdi-arrow-right',
+                // check for duplicate items in url by using different syntax
+                'fa:twitter'
+            ].forEach(function(key) {
                 icons[key] = local.newImage(element, key, null);
             });
 
@@ -151,6 +155,9 @@
             Object.keys(icons).forEach(function(key) {
                 expect(local.loadImage(icons[key])).to.be.equal(false, key + ' should not be loaded');
             });
+
+            // Preload few more items that exist in array above to make sure same images aren't added twice
+            SimpleSVG.preloadImages(['fa-twitter', 'mdi:home']);
         });
 
         it('custom and invalid prefixes', function(done) {
@@ -188,9 +195,7 @@
                 // Test for partial prefix match
                 'fapro-pro-test',
                 // prefix:icon syntax
-                'fa:arrow-left',
-                // Invalid icon
-                'badicon'
+                'fa:arrow-left'
             ].forEach(function(key) {
                 icons[key] = local.newImage(element, key, null);
             });

@@ -22,9 +22,11 @@
             // Check if icon exists
             expect(storage.exists('test-icon')).to.be.equal(true);
             expect(storage.exists('test:icon')).to.be.equal(true);
+            expect(storage.exists('icon', 'test')).to.be.equal(true); // Prefix specified separately
             expect(storage.exists('test')).to.be.equal(false);
             expect(storage.exists('icon')).to.be.equal(false);
             expect(storage.exists('test-icon2')).to.be.equal(false);
+            expect(storage.exists('test-icon', '')).to.be.equal(false); // Wrong prefix
             expect(storage.list()).to.be.eql(['test:icon']);
 
             // Check dimensions

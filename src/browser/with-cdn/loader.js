@@ -15,12 +15,24 @@
     "use strict";
 
     /**
-     * List of images queued for loading
+     * List of images queued for loading.
      *
-     * @type {Array}
+     * key = prefix
+     * value = array of queued images
+     *
+     * @type {{Array}}
      */
-    var queue = [],
-        tested = [];
+    var queue = {};
+
+    /**
+     * List of images queued for loading.
+     *
+     * key = prefix
+     * value === true -> entire collection has been queued, value === {Array} -> list of tested images
+     *
+     * @type {{Array}|true}
+     */
+    var tested = {};
 
     /**
      * True if queue will be parsed on next tick
@@ -40,10 +52,8 @@
      * Load all queued images
      */
     function loadQueue() {
-        var queues = {},
-            URLLengths = {},
-            urls = {},
-            limit = config.loaderMaxURLSize;
+        var limit = config.loaderMaxURLSize,
+            urls = {};
 
         /**
          * Send JSONP request by adding script tag to document
@@ -88,63 +98,61 @@
         }
 
         // Check queue
-        queue.forEach(function(icon) {
-            var prefixParts = local.getPrefix(icon),
-                prefix, shortIcon;
+        Object.keys(queue).forEach(function(prefix) {
+            var URLLength = baseLength(prefix),
+                queued = [];
 
-            shortIcon = prefixParts.icon;
-            prefix = prefixParts.prefix;
-
-            // Check if queue for prefix exists
-            if (queues[prefix] === void 0) {
-                queues[prefix] = [];
-                URLLengths[prefix] = baseLength(prefix);
-                if (URLLengths[prefix] === null) {
-                    // URL without list of icons - loads entire library
-                    addScript(prefix, []);
-                    return;
-                }
-                queues[prefix].push(shortIcon);
-                URLLengths[prefix] += shortIcon.length + 1;
-            } else if (URLLengths[prefix] !== null) {
-                // Add icon to queue
-                URLLengths[prefix] += shortIcon.length + 1;
-                if (URLLengths[prefix] >= limit) {
-                    addScript(prefix, queues[prefix]);
-                    queues[prefix] = [];
-                    URLLengths[prefix] = baseLength(prefix) + shortIcon.length + 1;
-                }
-                queues[prefix].push(shortIcon);
+            if (URLLength === null) {
+                // URL without list of icons - loads entire library
+                addScript(prefix, []);
+                tested[prefix] = true;
+                return;
             }
+
+            queue[prefix].forEach(function(icon, index) {
+                URLLength += icon.length + 1;
+                if (URLLength >= limit) {
+                    addScript(prefix, queued);
+                    queued = [];
+                    URLLength = baseLength(prefix) + icon.length + 1;
+                }
+                queued.push(icon);
+            });
+
+            // Get remaining items
+            if (queued.length) {
+                addScript(prefix, queued);
+            }
+
+            // Mark icons as loaded
+            tested[prefix] = tested[prefix] === void 0 ? queue[prefix] : tested[prefix].concat(queue[prefix]);
+            delete queue[prefix];
         });
 
-        // Get remaining items
-        Object.keys(queues).forEach(function(prefix) {
-            if (URLLengths[prefix] !== null && queues[prefix].length) {
-                addScript(prefix, queues[prefix]);
-            }
-        });
-
-        // Mark icons as loaded
-        tested = tested.concat(queue);
-        queue = [];
         queued = false;
     }
 
     /**
      * Add image to loading queue
      *
-     * @param {string} image Image name
+     * @param {string} prefix Collection prefix
+     * @param {string} icon Image name
      * @return {boolean} True if image was added to queue
      */
-    function addToQueue(image) {
+    function addToQueue(prefix, icon) {
         // Check queue
-        if (queue.indexOf(image) !== -1 || tested.indexOf(image) !== -1) {
+        if (
+            (queue[prefix] !== void 0 && queue[prefix].indexOf(icon) !== -1) ||
+            (tested[prefix] !== void 0 && (tested[prefix] === true || tested[prefix].indexOf(icon) !== -1))
+        ) {
             return false;
         }
 
         // Add to queue
-        queue.push(image);
+        if (queue[prefix] === void 0) {
+            queue[prefix] = [];
+        }
+        queue[prefix].push(icon);
         if (!queued) {
             queued = true;
             window.setTimeout(loadQueue, 0);
@@ -175,11 +183,13 @@
      * @return {boolean}
      */
     local.loadImage = function(image, checkQueue) {
-        if (SimpleSVG.iconExists(image.icon)) {
+        var icon = local.getPrefix(image.icon);
+
+        if (SimpleSVG.iconExists(icon.icon, icon.prefix)) {
             return true;
         }
 
-        if (checkQueue !== false && addToQueue(image.icon)) {
+        if (checkQueue !== false && addToQueue(icon.prefix, icon.icon)) {
             // Mark as loading
             image.element.classList.add(config._loadingClass);
         }
@@ -194,10 +204,13 @@
      * @returns {boolean} True if images are queued for preload, false if images are already available
      */
     SimpleSVG.preloadImages = function(images) {
-        var queued = false;
+        var queued = false,
+            icon;
+
         images.forEach(function(key) {
-            if (!SimpleSVG.iconExists(key)) {
-                addToQueue(key);
+            icon = local.getPrefix(key);
+            if (!SimpleSVG.iconExists(icon.icon, icon.prefix)) {
+                addToQueue(icon.prefix, icon.icon);
                 queued = true;
             }
         });
