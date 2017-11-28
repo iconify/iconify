@@ -96,6 +96,60 @@
             expect(storage.get('foo:baz').width).to.be.equal(16);
         });
 
+        it('default attributes', function() {
+            var storage = new Storage();
+
+            // check if inline attributes are fine
+            storage.addIcon('test-icon1', {
+                body: '<path d="" />',
+                width: 48,
+                height: 36,
+                inlineTop: -4,
+                inlineHeight: 44
+            });
+
+            // test inlineTop
+            storage.addIcon('foo-bar', {
+                body: '<path d="" />',
+                width: 48,
+                height: 49, // %7 == 0 --> verticalAlign should be -1/7
+                top: -5
+            });
+
+            // Check if icons exist
+            expect(storage.exists('test-icon1')).to.be.equal(true);
+            expect(storage.exists('foo-bar')).to.be.equal(true);
+
+            // Get data
+            expect(storage.get('test-icon1')).to.be.eql({
+                body: '<path d="" />',
+                width: 48,
+                height: 36,
+                inlineHeight: 44,
+                left: 0,
+                top: 0,
+                inlineTop: -4,
+                hFlip: false,
+                vFlip: false,
+                rotate: 0,
+                verticalAlign: -0.125
+            });
+
+            expect(storage.get('foo-bar')).to.be.eql({
+                body: '<path d="" />',
+                width: 48,
+                height: 49,
+                inlineHeight: 49,
+                left: 0,
+                top: -5,
+                inlineTop: -5,
+                hFlip: false,
+                vFlip: false,
+                rotate: 0,
+                verticalAlign: -0.143
+            });
+        });
+
         it('collection', function() {
             var storage = new Storage();
 

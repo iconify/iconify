@@ -22,8 +22,7 @@ var itemDefaults = {
     top: 0,
     rotate: 0,
     vFlip: false,
-    hFlip: false,
-    inlineTop: 0
+    hFlip: false
 };
 
 /**
@@ -64,6 +63,10 @@ function normalizeIcon(item, defaults) {
                 switch (attr) {
                     case 'inlineHeight':
                         result[attr] = result.height;
+                        break;
+
+                    case 'inlineTop':
+                        result[attr] = result.top === void 0 ? 0 : result.top;
                         break;
 
                     case 'verticalAlign':
