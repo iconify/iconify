@@ -32,15 +32,12 @@
      * Function to add collection
      *
      * @param {object} json JSON data
-     * @return {number} Number of added items
      */
     SimpleSVG.addCollection = function(json) {
-        var result = storage.addCollection(json);
-        if (result) {
-            if (!eventQueued) {
-                eventQueued = true;
-                window.setTimeout(triggerCallback, 0);
-            }
+        storage.addCollection(json);
+        if (!eventQueued) {
+            eventQueued = true;
+            window.setTimeout(triggerCallback, 0);
         }
     };
 
@@ -49,23 +46,20 @@
      *
      * @param {string} name Icon name
      * @param {object} data Icon data
-     * @return {boolean} True if icon was added, false on error
      */
     SimpleSVG.addIcon = function(name, data) {
-        var result = storage.addIcon(name, data);
-        if (result) {
-            if (!eventQueued) {
-                eventQueued = true;
-                window.setTimeout(triggerCallback, 0);
-            }
+        storage.addIcon(name, data);
+        if (!eventQueued) {
+            eventQueued = true;
+            window.setTimeout(triggerCallback, 0);
         }
-        return result;
     };
 
     /**
      * Check if icon exists
      *
      * @param {string} name Icon name
+     * @param {string} [prefix] Optional icon prefix (if prefix is set name should not include prefix)
      * @return {boolean}
      */
     SimpleSVG.iconExists = storage.exists.bind(storage);
@@ -73,15 +67,16 @@
     /**
      * Get icon data
      *
-     * @param {string} name
-     * @param {boolean} [copy] True if object should be copied. Default = true
+     * @param {string} name Icon name
+     * @param {string} [prefix] Optional icon prefix (if prefix is set name should not include prefix)
      * @return {null}
      */
-    SimpleSVG.getIcon = storage.get.bind(storage);
+    SimpleSVG.getIcon = storage.copyIcon.bind(storage);
 
     /**
      * Get list of available icons
      *
+     * @param {string} prefix If prefix is set, only icons with that prefix will be listed
      * @return {Array}
      */
     SimpleSVG.listIcons = storage.list.bind(storage);

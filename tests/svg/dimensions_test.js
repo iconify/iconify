@@ -22,7 +22,7 @@
                 inlineHeight: 64,
                 inlineTop: 12
             });
-            svg = new SVG(storage.get('test'));
+            svg = new SVG(storage.getIcon('test'));
 
             // Without parameters
             expect(svg.width()).to.be.equal(48);
@@ -60,7 +60,7 @@
                 width: 48,
                 height: 36
             });
-            svg = new SVG(storage.get('test'));
+            svg = new SVG(storage.getIcon('test'));
 
             // Test strings without units
             expect(svg.height('48')).to.be.equal('36');

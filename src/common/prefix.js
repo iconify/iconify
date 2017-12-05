@@ -13,11 +13,19 @@
 /**
  * Find prefix for icon
  *
- * @param icon
+ * @param {string} icon Icon name
+ * @param {string} [prefix] Collection prefix
  * @returns {{prefix, icon}}
  */
-function getPrefix(icon) {
-    var split, prefix;
+function getPrefix(icon, prefix) {
+    var split;
+
+    if (typeof prefix === 'string' && prefix !== '') {
+        return {
+            prefix: prefix,
+            icon: icon
+        };
+    }
 
     // Check for fa-pro:home
     split = icon.split(':');

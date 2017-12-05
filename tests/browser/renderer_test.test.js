@@ -30,7 +30,7 @@
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                     '<i class="simple-svg" data-icon="fa-home" />' +
                     '<simple-svg data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
-                    '<i class="simple-svg" data-icon="fa-android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
+                    '<i class="simple-svg" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -88,7 +88,8 @@
                 expect(image1.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 expect(image1.hasAttribute('xmlns')).to.be.equal(true, 'xmlns is missing');
 
-                expect(image2.getAttribute('style').indexOf('scale(-1, 1)')).to.not.be.equal(-1, 'Style should contain scale rotation');
+                expect(image2.innerHTML.indexOf('<g transform="translate')).to.be.equal(0, 'Content should start with transformation');
+                expect(image2.innerHTML.indexOf('scale(-1 1)')).to.not.be.equal(-1, 'Content should contain scale');
 
                 done();
             }

@@ -93,37 +93,6 @@ function calculateDimension(size, ratio, precision) {
 }
 
 /**
- * Get transformation string
- *
- * @param {object} attr Attributes
- * @return {string} Result is never empty. If no transformation is applied, returns rotate(360deg) that fixes
- *  rendering issue for small icons in Firefox
- */
-function calculateTransformation(attr) {
-    var rotate = attr.rotate;
-
-    function rotation() {
-        while (rotate < 1) {
-            rotate += 4;
-        }
-        while (rotate > 4) {
-            rotate -= 4;
-        }
-        return 'rotate(' + (rotate * 90) + 'deg)';
-    }
-
-    if (attr.vFlip && attr.hFlip) {
-        rotate += 2;
-        return rotation();
-    }
-
-    if (attr.vFlip || attr.hFlip) {
-        return (rotate ? rotation() + ' ' : '') + 'scale(' + (attr.hFlip ? '-' : '') + '1, ' + (attr.vFlip ? '-' : '') + '1)';
-    }
-    return rotation();
-}
-
-/**
  * Replace IDs in SVG output with unique IDs
  * Fast replacement without parsing XML, assuming commonly used patterns.
  *
@@ -154,7 +123,7 @@ function replaceIDs(body) {
         return body;
     }
 
-    prefix = 'SimpleSVGId-' + Math.round(Math.random() * 65536).toString(16) + '-';
+    prefix = 'SimpleSVGId-' + Date.now().toString(16) + '-' + (Math.random() * 0x1000000 | 0).toString(16) + '-';
 
     // Replace with unique ids
     ids.forEach(function(id) {
@@ -242,11 +211,7 @@ function getValue(attributes, properties, defaultValue) {
 function SVG(item) {
     if (!item) {
         // Set empty icon
-        item = Storage.normalizeIcon({
-            body: '',
-            width: 16,
-            height: 16
-        });
+        item = Storage.blankIcon();
     }
 
     this.item = item;
@@ -279,28 +244,6 @@ function SVG(item) {
             return this.item.width;
         }
         return calculateDimension(height, this.item.width / (inline ? this.item.inlineHeight : this.item.height), precision);
-    };
-
-    /**
-     * Get transformation string for icon
-     *
-     * @param {object} [props] Custom properties to merge with icon properties
-     * @return {string|null}
-     */
-    this.transformation = function(props) {
-        var data;
-
-        if (props !== void 0) {
-            data = {
-                vFlip: props.vFlip === void 0 ? this.item.vFlip : Storage.mergeFlip(this.item.vFlip, props.vFlip),
-                hFlip: props.hFlip === void 0 ? this.item.hFlip : Storage.mergeFlip(this.item.hFlip, props.hFlip),
-                rotate: props.rotate === void 0 ? this.item.rotate : Storage.mergeRotation(this.item.rotate, props.rotate)
-            };
-        } else {
-            data = this.item;
-        }
-
-        return calculateTransformation(data);
     };
 
     /**
@@ -365,12 +308,7 @@ function SVG(item) {
             vertical: 'middle',
             crop: false
         };
-        var box = {
-            left: item.left,
-            top: item.top,
-            width: item.width,
-            height: item.height
-        };
+
         var transform = {
             rotate: item.rotate,
             hFlip: item.hFlip,
@@ -379,80 +317,21 @@ function SVG(item) {
         var style = '';
         var result = this.defaultAttributes();
 
-        var customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes;
+        var box, customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes;
+        var transformations = [], tempValue;
 
         attributes = typeof attributes === 'object' ? attributes : {};
 
-        // Check mode
-        inline = getBooleanValue(attributes, [config._inlineModeAttribute, 'inline'], null);
+        // Check mode and get dimensions
+        inline = getBooleanValue(attributes, [config._inlineModeAttribute, 'inline'], true);
         append = getBooleanValue(attributes, [config._appendAttribute], false);
 
-        // Calculate dimensions
-        // Values for width/height: null = default, 'auto' = from svg, false = do not set
-        // Default: if both values aren't set, height defaults to '1em', width is calculated from height
-        customWidth = getValue(attributes, ['data-width', 'width'], null);
-        customHeight = getValue(attributes, ['data-height', 'height'], null);
-
-        if (customWidth === null && customHeight === null) {
-            inline = inline === null ? true : inline;
-            height = '1em';
-            width = this.width(height, inline);
-        } else if (customWidth !== null && customHeight !== null) {
-            inline = inline === null ? (customHeight === false) : inline;
-            width = customWidth;
-            height = customHeight;
-        } else if (customWidth !== null) {
-            inline = inline === null ? false : inline;
-            width = customWidth;
-            height = this.height(width, inline);
-        } else {
-            inline = inline === null ? (customHeight === false) : inline;
-            height = customHeight;
-            width = this.width(height, inline);
-        }
-
-        if (width !== false) {
-            result.width = width === 'auto' ? this.item.width : width;
-        }
-
-        if (height !== false) {
-            result.height = height === 'auto' ? (inline ? this.item.inlineHeight : this.item.height) : height;
-        }
-
-        // Apply inline mode to offsets
-        if (inline) {
-            box.top = item.inlineTop;
-            box.height = item.inlineHeight;
-            if (item.verticalAlign !== 0) {
-                style += 'vertical-align: ' + item.verticalAlign + 'em;';
-            }
-        }
-
-        // Check custom alignment
-        if (typeof attributes[config._alignAttribute] === 'string') {
-            attributes[config._alignAttribute].toLowerCase().split(/[\s,]+/).forEach(function(value) {
-                switch (value) {
-                    case 'left':
-                    case 'right':
-                    case 'center':
-                        align.horizontal = value;
-                        break;
-
-                    case 'top':
-                    case 'bottom':
-                    case 'middle':
-                        align.vertical = value;
-                        break;
-
-                    case 'crop':
-                        align.crop = true;
-                        break;
-
-                    case 'meet':
-                        align.crop = false;
-                }
-            });
-        }
+        box = {
+            left: item.left,
+            top: inline ? item.inlineTop : item.top,
+            width: item.width,
+            height: inline ? item.inlineHeight : item.height
+        };
 
         // Transformations
         if (typeof attributes[config._flipAttribute] === 'string') {
@@ -502,11 +381,123 @@ function SVG(item) {
             }
         }
 
-        // Add transformation to style
-        transform = calculateTransformation(transform);
-        style += '-ms-transform: ' + transform + ';' +
-            ' -webkit-transform: ' + transform + ';' +
-            ' transform: ' + transform + ';';
+        // Apply transformations to box
+        if (transform.hFlip) {
+            if (transform.vFlip) {
+                transform.rotate += 2;
+            } else {
+                // Horizontal flip
+                transformations.push('translate(' + (box.width + box.left) + ' ' + (0 - box.top) + ')');
+                transformations.push('scale(-1 1)');
+                box.top = box.left = 0;
+            }
+        } else if (transform.vFlip) {
+            // Vertical flip
+            transformations.push('translate(' + (0 - box.left) + ' ' + (box.height + box.top) + ')');
+            transformations.push('scale(1 -1)');
+            box.top = box.left = 0;
+        }
+        switch (transform.rotate % 4) {
+            case 1:
+                // 90deg
+                tempValue = box.height / 2 + box.top;
+                transformations.unshift('rotate(90 ' + tempValue + ' ' + tempValue + ')');
+                // swap width/height and x/y
+                if (box.left !== 0 || box.top !== 0) {
+                    tempValue = box.left;
+                    box.left = box.top;
+                    box.top = tempValue;
+                }
+                if (box.width !== box.height) {
+                    tempValue = box.width;
+                    box.width = box.height;
+                    box.height = tempValue;
+                }
+                break;
+
+            case 2:
+                // 180deg
+                transformations.unshift('rotate(180 ' + (box.width / 2 + box.left) + ' ' + (box.height / 2 + box.top) + ')');
+                break;
+
+            case 3:
+                // 270deg
+                tempValue = box.width / 2 + box.left;
+                transformations.unshift('rotate(-90 ' + tempValue + ' ' + tempValue + ')');
+                // swap width/height and x/y
+                if (box.left !== 0 || box.top !== 0) {
+                    tempValue = box.left;
+                    box.left = box.top;
+                    box.top = tempValue;
+                }
+                if (box.width !== box.height) {
+                    tempValue = box.width;
+                    box.width = box.height;
+                    box.height = tempValue;
+                }
+                break;
+        }
+
+        // Calculate dimensions
+        // Values for width/height: null = default, 'auto' = from svg, false = do not set
+        // Default: if both values aren't set, height defaults to '1em', width is calculated from height
+        customWidth = getValue(attributes, ['data-width', 'width'], null);
+        customHeight = getValue(attributes, ['data-height', 'height'], null);
+
+        if (customWidth === null && customHeight === null) {
+            customHeight = '1em';
+        }
+        if (customWidth !== null && customHeight !== null) {
+            width = customWidth;
+            height = customHeight;
+        } else if (customWidth !== null) {
+            width = customWidth;
+            height = calculateDimension(width, box.height / box.width);
+        } else {
+            height = customHeight;
+            width = calculateDimension(height, box.width / box.height);
+        }
+
+        if (width !== false) {
+            result.width = width === 'auto' ? box.width : width;
+        }
+        if (height !== false) {
+            result.height = height === 'auto' ? box.height : height;
+        }
+
+        // Apply inline mode to offsets
+        if (inline && item.verticalAlign !== 0) {
+            style += 'vertical-align: ' + item.verticalAlign + 'em;';
+        }
+
+        // Check custom alignment
+        if (typeof attributes[config._alignAttribute] === 'string') {
+            attributes[config._alignAttribute].toLowerCase().split(/[\s,]+/).forEach(function(value) {
+                switch (value) {
+                    case 'left':
+                    case 'right':
+                    case 'center':
+                        align.horizontal = value;
+                        break;
+
+                    case 'top':
+                    case 'bottom':
+                    case 'middle':
+                        align.vertical = value;
+                        break;
+
+                    case 'crop':
+                        align.crop = true;
+                        break;
+
+                    case 'meet':
+                        align.crop = false;
+                }
+            });
+        }
+
+        // Add 360deg transformation to style to prevent subpixel rendering bug
+        style += '-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);';
 
         // Generate style
         result.style = style + (attributes.style === void 0 ? '' : attributes.style);
@@ -517,6 +508,10 @@ function SVG(item) {
 
         // Generate body
         body = replaceIDs(this.item.body);
+
+        if (transformations.length) {
+            body = '<g transform="' + transformations.join(' ') + '">' + body + '</g>';
+        }
 
         // Add misc attributes
         extraAttributes = {};

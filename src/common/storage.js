@@ -20,6 +20,8 @@ var getPrefix = require('./prefix');
 var itemDefaults = {
     left: 0,
     top: 0,
+    width: 16,
+    height: 16,
     rotate: 0,
     vFlip: false,
     hFlip: false
@@ -42,115 +44,6 @@ var itemAttributes = [
 ];
 
 /**
- * Normalize icon, return new object
- *
- * @param {object} item Item data
- * @param {object} [defaults] Default values for missing attributes
- * @return {object|null}
- */
-function normalizeIcon(item, defaults) {
-    var error = false,
-        result = {};
-
-    defaults = defaults === void 0 ? itemDefaults : defaults;
-
-    itemAttributes.forEach(function(attr) {
-        if (error) {
-            return;
-        }
-        if (item[attr] === void 0) {
-            if (defaults[attr] === void 0) {
-                switch (attr) {
-                    case 'inlineHeight':
-                        result[attr] = result.height;
-                        break;
-
-                    case 'inlineTop':
-                        result[attr] = result.top === void 0 ? 0 : result.top;
-                        break;
-
-                    case 'verticalAlign':
-                        if (item.height % 7 === 0 && item.height % 8 !== 0) {
-                            // Icons designed for 14px height
-                            result[attr] = -0.143;
-                        } else {
-                            // Assume icon is designed for 16px height
-                            result[attr] = -0.125;
-                        }
-                        break;
-
-                    default:
-                        error = true;
-                }
-                return;
-            }
-            result[attr] = defaults[attr];
-        } else {
-            result[attr] = normalizeValue(attr, item[attr]);
-            if (result[attr] === null) {
-                error = true;
-            }
-        }
-    });
-
-    return error ? null : result;
-}
-
-/**
- * Normalize alias, return new object
- *
- * @param {object} item Alias data
- * @param {object} items List of available items
- * @return {object|null}
- */
-function normalizeAlias(item, items) {
-    var parentIcon, parent, result, error;
-
-    if (typeof item.parent !== 'string') {
-        return null;
-    }
-
-    parentIcon = getPrefix(item.parent);
-    if (!items[parentIcon.prefix] || items[parentIcon.prefix][parentIcon.icon] === void 0) {
-        return null;
-    }
-
-    parent = items[parentIcon.prefix][parentIcon.icon];
-    result = {
-        parent: item.parent
-    };
-    error = false;
-
-    itemAttributes.forEach(function(attr) {
-        if (error) {
-            return;
-        }
-
-        if (item[attr] === void 0) {
-            result[attr] = parent[attr];
-        } else {
-            switch (attr) {
-                case 'rotate':
-                    result[attr] = mergeRotation(parent[attr], item[attr]);
-                    break;
-
-                case 'hFlip':
-                case 'vFlip':
-                    result[attr] = mergeFlip(parent[attr], item[attr]);
-                    break;
-
-                default:
-                    result[attr] = normalizeValue(attr, item[attr]);
-            }
-            if (result[attr] === null) {
-                error = true;
-            }
-        }
-    });
-    return error ? null : result;
-}
-
-/**
  * Convert value to appropriate type
  *
  * @param {string} attr Attribute name
@@ -163,12 +56,6 @@ function normalizeValue(attr, value) {
             value = parseInt(value);
             if (isNaN(value)) {
                 return null;
-            }
-            while (value < 0) {
-                value += 4;
-            }
-            if (value > 3) {
-                value %= 4;
             }
             return value;
 
@@ -185,6 +72,7 @@ function normalizeValue(attr, value) {
             return !!value;
 
         case 'body':
+        case 'parent':
             return typeof value === 'string' ? value : null;
     }
     return value;
@@ -213,25 +101,166 @@ function mergeFlip(value1, value2) {
 }
 
 /**
+ * Assign default values to item
+ *
+ * @param {object} item
+ * @returns {object}
+ */
+function setDefaults(item) {
+    var result = {};
+
+    (item._defaults === void 0 ? [item, itemDefaults] : [item, item._defaults, itemDefaults]).forEach(function(values) {
+        Object.keys(values).forEach(function(attr) {
+            if (attr.slice(0, 1) !== '_' && result[attr] === void 0) {
+                result[attr] = values[attr];
+            }
+        });
+    });
+
+    if (result.inlineTop === void 0) {
+        result.inlineTop = result.top;
+    }
+    if (result.inlineHeight === void 0) {
+        result.inlineHeight = result.height;
+    }
+    if (result.verticalAlign === void 0) {
+        if (result.height % 7 === 0 && result.height % 8 !== 0) {
+            // Icons designed for 14px height
+            result.verticalAlign = -0.143;
+        } else {
+            // Assume icon is designed for 16px height
+            result.verticalAlign = -0.125;
+        }
+    }
+
+    return result;
+}
+
+
+/**
  * Returns new instance of storage object
  *
  * @return {object}
  * @constructor
  */
 function Storage() {
-    this.items = {};
+    // Raw data
+    this._icons = {};
+    this._aliases = {};
+
+    // Normalized data (both icons and aliases). false = pending, null = cannot be resolved, object = resolved
+    this._resolved = {};
+
+    /**
+     * Add icon or alias to storage
+     *
+     * @param {boolean} alias
+     * @param {object} icon
+     * @param {object} data
+     * @private
+     */
+    this._add = function(alias, icon, data) {
+        var key = alias ? '_aliases' : '_icons';
+
+        if (this._resolved[icon.prefix] === void 0) {
+            // Add resolved object to mark prefix as usable
+            this._resolved[icon.prefix] = {};
+            this._icons[icon.prefix] = {};
+            this._aliases[icon.prefix] = {};
+        } else if (this._resolved[icon.prefix] !== void 0) {
+            // Delete old item with same name
+            delete this._icons[icon.prefix][icon.icon];
+            delete this._aliases[icon.prefix][icon.icon];
+        }
+
+        // Mark that item exists for quick lookup
+        this._resolved[icon.prefix][icon.icon] = false;
+        this[key][icon.prefix][icon.icon] = data;
+    };
+
+    /**
+     * Resolve icon
+     *
+     * @param {object} icon
+     * @returns {object|null}
+     * @private
+     */
+    this._resolveIcon = function(icon) {
+        var item, counter, result, parentIcon, isAlias, parent;
+
+        // Check if icon exists
+        if (this._resolved[icon.prefix] === void 0 || this._resolved[icon.prefix][icon.icon] === void 0) {
+            return null;
+        }
+
+        // Already resolved?
+        if (this._resolved[icon.prefix][icon.icon] !== false) {
+            return this._resolved[icon.prefix][icon.icon];
+        }
+
+        // Icon - set defaults, store resolved value, return
+        if (this._icons[icon.prefix][icon.icon] !== void 0) {
+            return this._resolved[icon.prefix][icon.icon] = setDefaults(this._icons[icon.prefix][icon.icon]);
+        }
+
+        // Resolve alias
+        counter = 0;
+        item = this._aliases[icon.prefix][icon.icon];
+        result = {};
+        Object.keys(item).forEach(function(attr) {
+            if (attr !== 'parent') {
+                result[attr] = item[attr];
+            }
+        });
+        parentIcon = getPrefix(item.parent, item._prefix);
+
+        while (true) {
+            counter ++;
+            if (counter > 5 || this._resolved[parentIcon.prefix] === void 0 || this._resolved[parentIcon.prefix][parentIcon.icon] === void 0) {
+                return this._resolved[icon.prefix][icon.icon] = null;
+            }
+
+            isAlias = this._icons[parentIcon.prefix][parentIcon.icon] === void 0;
+            parent = this[isAlias ? '_aliases' : '_icons'][parentIcon.prefix][parentIcon.icon];
+
+            // Merge data
+            Object.keys(parent).forEach(function(attr) {
+                if (result[attr] === void 0) {
+                    if (attr !== 'parent') {
+                        result[attr] = parent[attr];
+                    }
+                    return;
+                }
+                switch (attr) {
+                    case 'rotate':
+                        result[attr] = mergeRotation(result[attr], parent[attr]);
+                        break;
+
+                    case 'hFlip':
+                    case 'vFlip':
+                        result[attr] = mergeFlip(result[attr], parent[attr]);
+                }
+            });
+
+            if (!isAlias) {
+                break;
+            }
+            parentIcon = getPrefix(parent.parent, parent._prefix);
+        }
+
+        return this._resolved[icon.prefix][icon.icon] = setDefaults(result);
+    };
 
     /**
      * Function to add collection
      *
      * @param {object} json JSON data
-     * @return {number} Number of added items
      */
     this.addCollection = function(json) {
         // Get default values
-        var defaults = {},
-            items = this.items,
-            added = 0;
+        var that = this,
+            defaults = {},
+            prefix = json.prefix;
 
         // Get default values for icons
         itemAttributes.forEach(function(attr) {
@@ -245,40 +274,29 @@ function Storage() {
         // Parse icons
         if (json.icons !== void 0) {
             Object.keys(json.icons).forEach(function(key) {
-                var item = normalizeIcon(json.icons[key], defaults),
-                    iconData;
-
-                if (item !== null) {
-                    iconData = getPrefix(key);
-                    if (items[iconData.prefix] === void 0) {
-                        items[iconData.prefix] = {};
-                    }
-
-                    items[iconData.prefix][iconData.icon] = item;
-                    added ++;
+                var icon = getPrefix(key, prefix),
+                    item = json.icons[key];
+                if (item.body === void 0) {
+                    return;
                 }
+                item._defaults = defaults;
+                that._add(false, icon, item);
             });
         }
 
         // Parse aliases
         if (json.aliases !== void 0) {
             Object.keys(json.aliases).forEach(function(key) {
-                var item = normalizeAlias(json.aliases[key], items),
-                    iconData;
-
-                if (item !== null) {
-                    iconData = getPrefix(key);
-                    if (items[iconData.prefix] === void 0) {
-                        items[iconData.prefix] = {};
-                    }
-
-                    items[iconData.prefix][iconData.icon] = item;
-                    added ++;
+                var icon = getPrefix(key, prefix),
+                    item = json.aliases[key];
+                if (item.parent === void 0) {
+                    return;
                 }
+                item._defaults = defaults;
+                item._prefix = prefix;
+                that._add(true, icon, item);
             });
         }
-
-        return added;
     };
 
     /**
@@ -286,20 +304,17 @@ function Storage() {
      *
      * @param {string} name Icon name
      * @param {object} data Icon data
-     * @return {boolean} True if icon was added, false on error
+     * @param {string} [prefix] Icon prefix
      */
-    this.addIcon = function(name, data) {
-        var iconData = getPrefix(name);
+    this.addIcon = function(name, data, prefix) {
+        var alias = data.parent !== void 0,
+            icon = getPrefix(name, prefix);
 
-        if (data.parent !== void 0) {
-            data = normalizeAlias(data, this.items);
-        } else {
-            data = normalizeIcon(data, itemDefaults);
-            if (this.items[iconData.prefix] === void 0) {
-                this.items[iconData.prefix] = {};
-            }
+        if (alias && typeof prefix === 'string') {
+            data._prefix = prefix;
         }
-        return !!(this.items[iconData.prefix][iconData.icon] = data);
+
+        this._add(alias, icon, data);
     };
 
     /**
@@ -310,13 +325,45 @@ function Storage() {
      * @return {boolean}
      */
     this.exists = function(name, prefix) {
-        var icon;
-        if (prefix === void 0) {
-            icon = getPrefix(name);
-            prefix = icon.prefix;
-            name = icon.icon;
+        var icon = getPrefix(name, prefix);
+
+        return this._resolved[icon.prefix] !== void 0 && this._resolved[icon.prefix][icon.icon] !== void 0;
+    };
+
+    /**
+     * Get item data as object reference (changing it will change original object)
+     *
+     * @param {string} name Icon name
+     * @param {string} [prefix] Optional icon prefix
+     * @return {object|null}
+     */
+    this.getIcon = function(name, prefix) {
+        var icon = getPrefix(name, prefix);
+
+        return this._resolveIcon(icon);
+    };
+
+    /**
+     * Get item data as copy of object
+     *
+     * @param {string} name Icon name
+     * @param {string} [prefix] Optional icon prefix
+     * @return {object|null}
+     */
+    this.copyIcon = function(name, prefix) {
+        var item = this.getIcon(name, prefix),
+            result;
+
+        if (item === null) {
+            return null;
         }
-        return this.items[prefix] !== void 0 && this.items[prefix][name] !== void 0;
+
+        result = {};
+        Object.keys(item).forEach(function(attr) {
+            result[attr] = item[attr];
+        });
+
+        return result;
     };
 
     /**
@@ -329,11 +376,11 @@ function Storage() {
         var results, items;
 
         if (prefix !== void 0) {
-            return this.items[prefix] === void 0 ? [] : Object.keys(this.items[prefix]);
+            return this._resolved[prefix] === void 0 ? [] : Object.keys(this._resolved[prefix]);
         }
 
         results = [];
-        items = this.items;
+        items = this._resolved;
         Object.keys(items).forEach(function(prefix) {
             results = results.concat(Object.keys(items[prefix]).map(function(key) {
                 return prefix === '' && key.indexOf('-') === -1 ? key : prefix + ':' + key;
@@ -342,41 +389,18 @@ function Storage() {
         return results;
     };
 
-    /**
-     * Get item data
-     *
-     * @param {string} name
-     * @param {boolean} [copy] True if object should be copied. Default = true
-     * @return {null}
-     */
-    this.get = function(name, copy) {
-        var iconData = getPrefix(name),
-            result, item;
-
-        if (!this.items[iconData.prefix] || this.items[iconData.prefix][iconData.icon] === void 0) {
-            return null;
-        }
-
-        if (copy === false) {
-            return this.items[iconData.prefix][iconData.icon];
-        }
-
-        result = {};
-        item = this.items[iconData.prefix][iconData.icon];
-
-        itemAttributes.forEach(function(key) {
-            result[key] = item[key];
-        });
-
-        return result;
-    };
-
     return this;
 }
 
-// Export static functions used by SVG object
 Storage.mergeFlip = mergeFlip;
 Storage.mergeRotation = mergeRotation;
-Storage.normalizeIcon = normalizeIcon;
+Storage.blankIcon = function() {
+    var item = {
+        body: '',
+        width: 16,
+        height: 16
+    };
+    return setDefaults(item);
+};
 
 module.exports = Storage;
