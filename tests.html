@@ -41,7 +41,7 @@
 		$(document).ready(function() {
             mocha.checkLeaks();
             mocha.setup({
-                globals: ['SSVGLoaderTest1', 'SSVGRenderTest', 'SSVGRenderTest2', 'SSVGRenderTestCustom']
+                ignoreLeaks: true
 			});
             mocha.run();
 		});
