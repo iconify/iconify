@@ -88,9 +88,13 @@
                 expect(image1.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 expect(image1.hasAttribute('xmlns')).to.be.equal(true, 'xmlns is missing');
 
-                expect(image2.innerHTML.indexOf('<g ')).to.be.equal(0, 'Content should start with group');
-                expect(image2.innerHTML.indexOf('transform="translate') !== -1).to.be.equal(true, 'Content should include transformation');
-                expect(image2.innerHTML.indexOf('scale(-1 1)')).to.not.be.equal(-1, 'Content should contain scale');
+                expect(image2 === void 0).to.be.equal(false, 'image2 is undefined');
+                if (image2.innerHTML !== void 0) {
+                    // Skip tests on IE
+                    expect(image2.innerHTML.indexOf('<g ')).to.be.equal(0, 'Content should start with group');
+                    expect(image2.innerHTML.indexOf('transform="translate') !== -1).to.be.equal(true, 'Content should include transformation');
+                    expect(image2.innerHTML.indexOf('scale(-1 1)')).to.not.be.equal(-1, 'Content should contain scale');
+                }
 
                 done();
             }
