@@ -131,8 +131,8 @@
                 return false;
             };
             local.config.defaultCDN = '{prefix}?icons={icons}';
-            local.config._cdn['fa'] = 'fa?fa-icons={icons}';
-            local.config._cdn['test'] = 'test?testing={icons}';
+            local.config.cdn['fa'] = 'fa?fa-icons={icons}';
+            local.config.cdn['test'] = 'test?testing={icons}';
             local.config.loaderMaxURLSize = 50;
             local._debugLoader = true;
 
@@ -185,7 +185,7 @@
                 return false;
             };
             local.config.defaultCDN = '{prefix}?icons={icons}';
-            local.config._cdn['fa'] = 'fa?icons={icons}';
+            local.config.cdn['fa'] = 'fa?icons={icons}';
             local._debugLoader = true;
 
             // Add dummy icons

@@ -90,7 +90,9 @@
      * @return {*}
      */
     SimpleSVG.getConfig = function(name) {
-        return config[name];
+        return config[name] === void 0 ? (
+            config['_' + name] === void 0 ? null : config['_' + name]
+        ) : config[name];
     };
 
     // Merge configuration with SimpleSVGConfig object
