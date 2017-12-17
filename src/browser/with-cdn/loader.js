@@ -42,13 +42,6 @@
     var queued = false;
 
     /**
-     * List of all prefixes
-     *
-     * @type {Array}
-     */
-    var prefixes = [];
-
-    /**
      * Load all queued images
      */
     function loadQueue() {
