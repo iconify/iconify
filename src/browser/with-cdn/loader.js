@@ -30,7 +30,7 @@
      * key = prefix
      * value === true -> entire collection has been queued, value === {Array} -> list of tested images
      *
-     * @type {{Array}|true}
+     * @type {{Array}|{boolean}}
      */
     var tested = {};
 
@@ -40,6 +40,26 @@
      * @type {boolean}
      */
     var queued = false;
+
+    /**
+     * True if storage should be used (must be enabled before including script)
+     *
+     * @type {{boolean}}
+     */
+    var useStorage = {
+        session: true,
+        local: true
+    };
+
+    /**
+     * Index for last stored data in storage
+     *
+     * @type {{number}}
+     */
+    var storageIndex = {
+        session: 0,
+        local: 0
+    };
 
     /**
      * Load all queued images
@@ -160,8 +180,31 @@
      * @constructor
      */
     SimpleSVG._loaderCallback = function(data) {
+        var stored = false;
+
         if (typeof data === 'object') {
             SimpleSVG.addCollection(data);
+
+            // Add to storage
+            ['local', 'session'].forEach(function(key) {
+                var func;
+
+                if (stored || !useStorage[key] || !config[key + 'Storage']) {
+                    return;
+                }
+                func = global[key + 'Storage'];
+                try {
+                    if (!storageIndex[key]) {
+                        func.setItem('ssvg-version', local.version);
+                    }
+                    func.setItem('ssvg-icons' + storageIndex[key], JSON.stringify(data));
+                    stored = true;
+                    storageIndex[key] ++;
+                    func.setItem('ssvg-count', storageIndex[key]);
+                } catch (err) {
+                    useStorage[key] = false;
+                }
+            });
 
             // Dispatch event
             local.event(config._loaderEvent);
@@ -209,5 +252,52 @@
         });
         return queued;
     };
+
+    /**
+     * Load data from session storage
+     */
+    (function() {
+        ['local', 'session'].forEach(function(key) {
+            var func, item, limit;
+
+            try {
+                func = global[key + 'Storage'];
+
+                if (typeof func !== 'object') {
+                    useStorage[key] = false;
+                    return;
+                }
+
+                if (func.getItem('ssvg-version') !== local.version) {
+                    // Ignore stored data, overwrite it starting with index 0
+                    return;
+                }
+
+                limit = parseInt(func.getItem('ssvg-count'));
+                if (typeof limit !== 'number' || isNaN(limit)) {
+                    return;
+                }
+
+                // Get all data from storage until first error is encountered
+                while (true) {
+                    if (storageIndex[key] >= limit) {
+                        return;
+                    }
+                    item = func.getItem('ssvg-icons' + storageIndex[key]);
+                    if (typeof item === 'string') {
+                        item = JSON.parse(item);
+                        if (typeof item === 'object') {
+                            SimpleSVG.addCollection(item);
+                        }
+                    } else {
+                        return;
+                    }
+                    storageIndex[key] ++;
+                }
+            } catch (err) {
+                useStorage[key] = false;
+            }
+        });
+    })();
 
 })(SimpleSVG, local, local.config, global);
