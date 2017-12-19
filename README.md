@@ -102,13 +102,13 @@ Sample:
 &nbsp;&nbsp;&nbsp; ![Sample](https://simplesvg.com/samples/icon-size2.png)
 
 
-### Baseline alignment
+### Vertical alignment
 
-Trouble with using images in text is they are aligned above baseline. Glyph fonts don't have that issue because
-they are rendered as fonts.
+Trouble with using images in text is they are aligned at baseline. Glyph fonts don't have that issue because
+they are rendered as fonts, vertically centered slightly below baseline so they look nicely aligned in text.
 
-To solve that issue SimpleSVG adds vertical alignment to all icons, placing them to baseline, so icons behave similar
-to glyph fonts, fitting perfectly into text.
+To solve that issue SimpleSVG adds vertical alignment to all icons, placing them below baseline, so icons behave
+similar to glyph fonts, fitting perfectly into text.
 
 But what if you don't want that behavior? What if you want SimpleSVG icons to behave like images? There are several
 solutions, use whichever you prefer:
