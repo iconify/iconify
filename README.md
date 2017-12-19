@@ -22,7 +22,7 @@ or this:
 
 Sample:
     
-&nbsp;&nbsp;&nbsp; ![Sample](https://simplesvg.com/samples/icon.png)
+&nbsp;&nbsp;&nbsp; ![Sample](https://simplesvg.com/samples/icon2.png)
 
 That is it. Change data-icon value to name of icon you want to use. There are over 20,000 premade icons to choose from,
 including FontAwesome, Material Design Icons, Entypo+ and even several emoji sets.
