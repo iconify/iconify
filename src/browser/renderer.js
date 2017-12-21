@@ -114,7 +114,7 @@
      *
      * @param {string} name Icon name
      * @param {object} [properties] Custom properties
-     * @return {string|false}
+     * @return {string|boolean}
      */
     SimpleSVG.getSVG = function(name, properties) {
         var svg, el, data;

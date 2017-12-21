@@ -24,35 +24,36 @@
      * @param {boolean} canChangeHardcoded
      */
     function setConfig(key, value, canChangeHardcoded) {
-        if (!canChangeHardcoded && key.slice(0, 1) === '_') {
+        var configKey = key;
+
+        if (key.slice(0, 1) === '_') {
             return;
         }
 
-        switch (key) {
-            case '_customCDN':
+        if (config[key] === void 0) {
+            if (!canChangeHardcoded || config['_' + key] === void 0) {
+                return;
+            }
+            configKey = '_' + key;
+        }
+
+        switch (configKey) {
+            case 'cdn':
             case 'SVGAttributes':
                 // Merge objects
-                Object.keys(value).forEach(function (key2) {
-                    config[key][key2] = value[key2];
+                Object.keys(value).forEach(function(key2) {
+                    if (value[key] === null) {
+                        delete config[configKey][key2];
+                    } else {
+                        config[configKey][key2] = value[key2];
+                    }
                 });
                 break;
 
             default:
                 // Overwrite config
-                config[key] = value;
+                config[configKey] = value;
         }
-    }
-
-    /**
-     * Merge configuration objects
-     *
-     * @param {object} list
-     * @param {boolean} canChangeHardcoded
-     */
-    function mergeConfig(list, canChangeHardcoded) {
-        Object.keys(list).forEach(function(key) {
-            setConfig(key, list[key], canChangeHardcoded);
-        });
     }
 
     /**
@@ -69,7 +70,7 @@
      * Set custom CDN URL
      *
      * @param {string|Array} prefix Collection prefix
-     * @param {string} url JSONP URL. There are several possible variables in URL:
+     * @param {string} url API JSONP URL. There are several possible variables in URL:
      *
      *      {icons} represents icons list
      *      {callback} represents SimpleSVG callback function
@@ -78,8 +79,29 @@
      *      All variables are optional. If {icons} is missing, callback must return entire collection.
      */
     SimpleSVG.setCustomCDN = function(prefix, url) {
-        (typeof prefix === 'string' ? [prefix] : prefix).forEach(function(key) {
-            config._cdn[key] = url;
+        var keys;
+
+        // noinspection FallThroughInSwitchStatementJS
+        switch (typeof prefix) {
+            case 'string':
+                keys = [prefix];
+                break;
+
+            case 'object':
+                if (prefix instanceof Array) {
+                    keys = prefix;
+                    break;
+                }
+
+            default:
+                return;
+        }
+        prefix.forEach(function(key) {
+            if (url === null) {
+                delete config.cdn[key];
+            } else {
+                config.cdn[key] = url;
+            }
         });
     };
 
@@ -97,7 +119,9 @@
 
     // Merge configuration with SimpleSVGConfig object
     if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
-        mergeConfig(global.SimpleSVGConfig, true);
+        Object.keys(global.SimpleSVGConfig).forEach(function(key) {
+            setConfig(key, global.SimpleSVGConfig[key], true);
+        });
     }
 
 })(SimpleSVG, global, local, local.config);

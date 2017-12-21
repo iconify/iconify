@@ -83,6 +83,7 @@
      *
      * @param {string} url
      * @return {string}
+     * @deprecated
      */
     SimpleSVG.secureURL = function(url) {
         return (useHTTPS && url.slice(0, 2) === '//') ? 'https:' + url : url;
