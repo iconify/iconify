@@ -19,10 +19,11 @@
      *
      * @type {[string]}
      */
-    var faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'],
+    var faReserved = ['fa-lg', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'],
         rotateAttribute = SimpleSVG.getConfig('_rotateAttribute'),
         flipAttribute = SimpleSVG.getConfig('_flipAttribute'),
-        inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute');
+        inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute'),
+        i;
 
     /**
      * Link to stylesheet
@@ -150,6 +151,13 @@
                 return results;
             }
         };
+    }
+
+    /**
+     * Add more reserved keywords
+     */
+    for (i = 2; i < 11; i ++) {
+        faReserved.push('fa-' + i + 'x');
     }
 
     /**
