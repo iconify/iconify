@@ -81,9 +81,6 @@
             // Replace icons list
             url = url.replace('{icons}', items.join(','));
 
-            // Change to protocol-less to secure
-            url = SimpleSVG.secureURL(url);
-
             // Create script
             element = document.createElement('script');
             element.setAttribute('type', 'text/javascript');

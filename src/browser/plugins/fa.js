@@ -48,7 +48,7 @@
 
         element.setAttribute('rel', 'stylesheet');
         element.setAttribute('type', 'text/css');
-        element.setAttribute('href', SimpleSVG.secureURL(stylesheetCDN));
+        element.setAttribute('href', stylesheetCDN);
         document.head.appendChild(element);
     }
 
