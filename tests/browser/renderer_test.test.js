@@ -75,13 +75,13 @@
                     image3 = containerRoot.childNodes[2],
                     svg3;
 
-                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First image supposed to be SVG');
-                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second image supposed to be SVG');
-                expect(image3.tagName.toLowerCase()).to.be.equal('i', 'Third image supposed to be I');
-                expect(image3.childNodes.length).to.be.equal(1, 'Third image must have child node');
+                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
+                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second node supposed to be SVG');
+                expect(image3.tagName.toLowerCase()).to.be.equal('i', 'Third node supposed to be I');
+                expect(image3.childNodes.length).to.be.equal(1, 'Third node must have child node');
 
                 svg3 = image3.childNodes[0];
-                expect(svg3.tagName.toLowerCase()).to.be.equal('svg', 'Third image child node supposed to be SVG');
+                expect(svg3.tagName.toLowerCase()).to.be.equal('svg', 'Third node child node supposed to be SVG');
 
                 expect(image1.getAttribute('class')).to.be.equal('simple-svg', 'Class name should be simple-svg');
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid');
@@ -121,9 +121,9 @@
             function init() {
                 // Add dummy code
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
-                        '<i class="svg-test1 fa-home" />' +
-                        '<i class="svg-test2 fa-arrow-left" />' +
-                        '<i class="svg-test2 fa-shield" data-icon-inline="true" />' +
+                    '<i class="svg-test1 fa-home" />' +
+                    '<i class="svg-test2 fa-arrow-left" />' +
+                    '<i class="svg-test2 fa-shield" data-icon-inline="true" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -205,9 +205,9 @@
                     image2 = containerRoot.childNodes[1],
                     image3 = containerRoot.childNodes[2];
 
-                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First image supposed to be SVG');
-                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second image supposed to be SVG');
-                expect(image3.tagName.toLowerCase()).to.be.equal('svg', 'Third image supposed to be SVG');
+                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
+                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second node supposed to be SVG');
+                expect(image3.tagName.toLowerCase()).to.be.equal('svg', 'Third node supposed to be SVG');
 
                 // Check for correct icons
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid in first image');
@@ -218,6 +218,100 @@
                 expect(image1.getAttribute('style').indexOf('vertical-align')).to.not.be.equal(-1, 'Style for first icon should contain vertical-align');
                 expect(image2.getAttribute('style').indexOf('vertical-align')).to.be.equal(-1, 'Style for second icon should not contain vertical-align');
                 expect(image3.getAttribute('style').indexOf('vertical-align')).to.not.be.equal(-1, 'Style for third icon should contain vertical-align');
+
+                done();
+            }
+
+            init();
+        });
+
+        it('rendering with custom tags', function(done) {
+            var SimpleSVG = {
+                    isReady: false
+                },
+                local = {
+                    config: {}
+                },
+                global = {
+                    SimpleSVGConfig: {
+                        _readyEvent: 'RendererTestReadyEvent3'
+                    }
+                },
+                containerID = 'renderer-svg3',
+                containerRoot,
+                pending = 0;
+
+            function init() {
+                // Add dummy code
+                jQuery('#debug2').append('<div id="' + containerID + '">' +
+                        '<inline-icon data-icon="fa-home" />' +
+                        '<block-icon data-icon="fa-arrow-left" />' +
+                        '<fa-icon data-icon="chevron-up" />' +
+                    '</div>');
+
+                containerRoot = document.getElementById(containerID);
+
+                // Setup fake SimpleSVG instance
+                local.iconsAdded = renderImages;
+                load(SimpleSVG, local, global);
+                if (local.config.defaultCDN.indexOf('{callback}') === -1) {
+                    local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
+                } else {
+                    local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTestCustom');
+                }
+                window.SSVGRenderTestCustom = SimpleSVG._loaderCallback;
+
+                // Add basic custom tags
+                SimpleSVG.addTag('inline-icon', true);
+                SimpleSVG.addTag('block-icon', false);
+
+                SimpleSVG.addTag('fa-icon', false, function(element) {
+                    var result = element.getAttribute(SimpleSVG.getConfig('iconAttribute'));
+                    return typeof result === 'string' ? 'fa:' + result : '';
+                });
+
+                SimpleSVG.ready(function() {
+                    // Load images, start tests when images are available
+                    local.findNewImages(containerRoot).forEach(function(image) {
+                        if (!local.loadImage(image)) {
+                            pending ++;
+                        } else {
+                            local.renderSVG(image);
+                        }
+                    });
+                    if (!pending) {
+                        test();
+                    }
+                });
+            }
+
+            // Callback to load pending images
+            function renderImages() {
+                local.findNewImages(containerRoot).forEach(function(image) {
+                    local.renderSVG(image);
+                });
+                test();
+            }
+
+            // Do test
+            function test() {
+                var image1 = containerRoot.childNodes[0],
+                    image2 = containerRoot.childNodes[1],
+                    image3 = containerRoot.childNodes[2];
+
+                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
+                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second node supposed to be SVG');
+                expect(image3.tagName.toLowerCase()).to.be.equal('svg', 'Third node supposed to be SVG');
+
+                // Check for correct icons
+                expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid in first image');
+                expect(image2.getAttribute('data-icon')).to.be.equal('fa-arrow-left', 'data-icon attribute is missing or invalid in second image');
+                expect(image3.getAttribute('data-icon')).to.be.equal('fa:chevron-up', 'data-icon attribute is missing or invalid in third image');
+
+                // Check for correct inline status
+                expect(image1.getAttribute('style').indexOf('vertical-align')).to.not.be.equal(-1, 'Style for first icon should contain vertical-align');
+                expect(image2.getAttribute('style').indexOf('vertical-align')).to.be.equal(-1, 'Style for second icon should not contain vertical-align');
+                expect(image3.getAttribute('style').indexOf('vertical-align')).to.be.equal(-1, 'Style for third icon should not contain vertical-align');
 
                 done();
             }
