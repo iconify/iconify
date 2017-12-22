@@ -28,7 +28,7 @@
 </head>
 <body>
 <section>
-    <h1>FontAwesome test</h1>
+    <h1>FontAwesome 4 test</h1>
     <p>SimpleSVG syntax:
         <span class="simple-svg" data-icon="fa:home"></span>
         <span class="simple-svg" data-icon="fa:home" data-flip="vertical"></span>
@@ -36,6 +36,22 @@
     <p>Plugin syntax:
         <i class="fa fa-home"></i>
         <i class="fa fa-home fa-flip-vertical"></i>
+    </p>
+</section>
+
+<section>
+    <h1>FontAwesome 5 test</h1>
+    <p>SimpleSVG syntax:
+        <span class="simple-svg" data-icon="fa-brands:500px"></span>
+        <span class="simple-svg" data-icon="fa-solid:cogs"></span>
+        <span class="simple-svg" data-icon="fa-regular:futbol"></span>
+        <span class="simple-svg" data-icon="fa-light:bus"></span>
+    </p>
+    <p>Plugin syntax:
+        <i class="fab fa-500px"></i>
+        <i class="fas fa-cogs"></i>
+        <i class="far fa-futbol"></i>
+        <i class="fal fa-bus"></i>
     </p>
 </section>
 
