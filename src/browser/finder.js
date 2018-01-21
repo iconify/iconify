@@ -123,6 +123,21 @@
             }
         });
     };
+
+    try {
+        // Try to create custom element interface if browser supports it.
+        // If browser doesn't support it, it will fall back to HTMLUnknownElement, which is
+        // fine because simple-svg doesn't have any custom behavior or attributes.
+        if (typeof Reflect === 'object' && typeof customElements === 'object' && Object.setPrototypeOf)
+            (function() {
+                function El() {
+                    return Reflect.construct(HTMLElement, [], El);
+                }
+                Object.setPrototypeOf(El.prototype, HTMLElement.prototype);
+                Object.setPrototypeOf(El, HTMLElement);
+                customElements.define('simple-svg', El);
+            })();
+    } catch (err) { }
     SimpleSVG.addTag('simple-svg', false);
 
     /**

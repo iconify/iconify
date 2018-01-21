@@ -55,8 +55,24 @@
      * Initialize SimpleSVG
      */
     local.init = function() {
+        var head, el;
+
         if (initialized) {
             return;
+        }
+
+        // Add SimpleSVG stylesheet
+        head = document.getElementsByTagName('head');
+        if (head.length) {
+            head = head[0];
+            el = document.createElement('style');
+            el.type = 'text/css';
+            el.innerHTML = 'span.simple-svg, i.simple-svg, simple-svg { display: inline-block; width: 1em; }';
+            if (head.firstChild !== null) {
+                head.insertBefore(el, head.firstChild);
+            } else {
+                head.appendChild(el);
+            }
         }
 
         // Filter all callbacks, keeping only those that return false
@@ -92,6 +108,7 @@
 
     // Do stuff on next tick after script has loaded
     window.setTimeout(function() {
+        // Check for DOM ready state
         if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
             DOMReady();
         } else {
