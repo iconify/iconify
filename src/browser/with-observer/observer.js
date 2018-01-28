@@ -34,12 +34,12 @@
      * Process all pending mutations
      */
     function processPendingMutations() {
-        var temp = addedNodes;
+        var temp;
 
-        addedNodes = false;
-        if (temp !== false && temp.length) {
-            // At least 1 node was added
-            local.nodesAdded(temp);
+        if (addedNodes !== false && addedNodes.length) {
+            temp = addedNodes;
+            addedNodes = false;
+            local.scanDOM(temp);
         }
     }
 
@@ -95,8 +95,6 @@
      * Function to resume observing
      */
     SimpleSVG.resumeObserving = function() {
-        var temp;
-
         if (observer === null) {
             paused --;
             return;
@@ -118,11 +116,12 @@
     /**
      * Start observing when all modules and DOM are ready
      */
-    local.initQueue.push(function () {
+    local.readyQueue.push(function () {
         observer = new global.MutationObserver(processMutations);
         if (!paused) {
             observe();
         }
+        return true;
     });
 
 })(SimpleSVG, local, local.config, global);

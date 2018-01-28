@@ -41,7 +41,8 @@
                     _root: document.getElementById(tempId)
                 },
                 initQueue: [],
-                nodesAdded: function(nodes) {
+                readyQueue: [],
+                scanDOM: function(nodes) {
                     called = true;
                 }
             };
@@ -86,8 +87,8 @@
                 config: {
                     _root: document.getElementById(tempId)
                 },
-                initQueue: [],
-                nodesAdded: function(nodes) {
+                readyQueue: [],
+                scanDOM: function() {
                     called = true;
                 }
             };
@@ -99,7 +100,7 @@
             expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
 
             // Init observer
-            local.initQueue.forEach(function(callback) {
+            local.readyQueue.forEach(function(callback) {
                 callback();
             });
 
@@ -136,8 +137,8 @@
                 config: {
                     _root: document.getElementById(tempId)
                 },
-                initQueue: [],
-                nodesAdded: function(nodes) {
+                readyQueue: [],
+                scanDOM: function(nodes) {
                     callbackResult = nodes;
                 }
             };
@@ -149,7 +150,7 @@
             expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
 
             // Init observer
-            local.initQueue.forEach(function(callback) {
+            local.readyQueue.forEach(function(callback) {
                 callback();
             });
 

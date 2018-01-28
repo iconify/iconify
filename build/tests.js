@@ -82,13 +82,6 @@ let TestHelper = {
             'Cannot find required code in init.js'
         );
 
-        content = TestHelper.replace(
-            content,
-            'SimpleSVG.ready = function(callback) {',
-            'SimpleSVG.ready = function(callback) { local.initQueue.push(callback); return; ',
-            'Cannot find required code in init.js'
-        );
-
         return content;
     }
 };

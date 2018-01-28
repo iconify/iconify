@@ -14,86 +14,87 @@
 (function(local, config, global) {
     "use strict";
 
-    var polyCounter = false,
-        loading = {
+    /**
+     * Add to init queue
+     */
+    local.initQueue.push(function() {
+        var loading = {
             observer: false,
             classList: false
-        },
-        timer;
+        };
 
-    /**
-     * Load script
-     *
-     * @param {string} url
-     */
-    function load(url) {
-        var element;
+        var queued = {
+            observer: false,
+            classList: false
+        };
 
-        if (!url.length) {
-            return;
+        /**
+         * Load script
+         *
+         * @param {string} url
+         * @returns {boolean} True if script has been added to head
+         */
+        function load(url) {
+            var element;
+
+            if (!url.length) {
+                // Assume some other functions will load polyfill
+                return true;
+            }
+
+            if (!document.head) {
+                // local.domready should be equal false. if its true, something went wrong
+                return local.domready;
+            }
+
+            element = document.createElement('script');
+            element.setAttribute('src', url);
+            element.setAttribute('type', 'text/javascript');
+            document.head.appendChild(element);
+
+            return true;
         }
 
-        element = document.createElement('script');
-        element.setAttribute('src', url);
-        element.setAttribute('type', 'text/javascript');
-        element.setAttribute('async', true);
-
-        document.head.appendChild(element);
-    }
-
-    /**
-     * Check if polyfills have loaded
-     */
-    function check() {
-        // Check if observer has loaded
-        if (loading.observer && global.MutationObserver && global.WeakMap) {
-            loading.observer = false;
+        /**
+         * Test if classList is supported
+         *
+         * @returns {boolean}
+         */
+        function testClassList() {
+            if (!('classList' in document.createElement('div'))) {
+                if (!queued.classList) {
+                    queued.classList = load(config._classListPolyfill)
+                }
+                return false;
+            }
+            return true;
         }
 
-        // Check if classList has loaded
-        if (loading.classList && ('classList' in document.createElement('div'))) {
-            loading.classList = false;
+
+        /**
+         * Test is MutationObserver is supported
+         *
+         * @returns {boolean}
+         */
+        function testObserver() {
+            if (!global.MutationObserver || !global.WeakMap) {
+                if (!queued.observer) {
+                    queued.observer = load(config._webComponentsPolyfill);
+                }
+            }
+            return true;
         }
 
-        // Done
-        if (!loading.observer && !loading.classList) {
-            clearInterval(timer);
-            local.init();
-            return;
+        loading.classList = !testClassList();
+        loading.observer = !testObserver();
+
+        if (loading.classList || loading.observer) {
+            local.initTimeout(function() {
+                return !((loading.observer && !testObserver()) || (loading.classList && !testClassList()));
+            });
+            return false;
         }
-
-        // Increase counter
-        polyCounter ++;
-        if (polyCounter === 60) {
-            // Polyfills didn't load after 30 seconds - increase timer to reduce page load
-            clearInterval(timer);
-            timer = setInterval(check, 5000);
-        }
-    }
-
-    // Check if ClassList is available in browser
-    // P.S. IE must die!
-    if (!('classList' in document.createElement('div'))) {
-        // Try to load polyfill
-        loading.classList = true;
-        load(config._classListPolyfill);
-    }
-
-    // Check if MutationObserver is available in browser
-    // P.S. IE must die!
-    if ((!global.MutationObserver || !global.WeakMap)) {
-        // Try to load polyfill
-        loading.observer = true;
-        load(config._webComponentsPolyfill);
-    }
-
-    // Setup timer and callback to check polyfills
-    if (loading.observer || loading.classList) {
-        local.preInitQueue.push(function() {
-            return !loading.observer && !loading.classList;
-        });
-        polyCounter = 1;
-        timer = setInterval(check, 500);
-    }
+        return true;
+    });
 
 })(local, local.config, global);

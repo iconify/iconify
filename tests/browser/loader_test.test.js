@@ -12,7 +12,7 @@
         }
 
         local.config = {};
-        local.iconsAdded = function() {};
+        local.scanDOM = function() {};
 
         /* Modules() */
     }

@@ -14,80 +14,44 @@
 (function(SimpleSVG, local) {
     "use strict";
 
-    var useHTTPS = false;
-
-    /*
-    // Disabled because SSL adds 50-100ms to loading time. Uncomment to enable forced SSL in modern browsers.
-    try {
-        useHTTPS = (window && window.CSS && window.CSS.supports);
-    } catch (err) {
-    }
-    */
-
     /**
      * Find new icons and change them
      */
-    function findNewIcons() {
+    local.scanDOM = function() {
         var paused = false;
 
-        if (!SimpleSVG.isReady) {
-            return;
+        function scan() {
+            local.findNewImages().forEach(function(image) {
+                if (local.loadImage(image)) {
+                    if (!paused) {
+                        paused = true;
+                        SimpleSVG.pauseObserving();
+                    }
+
+                    local.renderSVG(image);
+                }
+            });
         }
 
-        local.findNewImages().forEach(function(image) {
-            if (local.loadImage(image)) {
-                if (!paused) {
-                    paused = true;
-                    SimpleSVG.pauseObserving();
-                }
-
-                local.renderSVG(image);
+        if (local.ready) {
+            scan();
+        } else {
+            // Use try-catch if DOM is not ready yet
+            try {
+                scan();
+            } catch (err) {
             }
-        });
+        }
 
         if (paused) {
             SimpleSVG.resumeObserving();
         }
-    }
-
-    /**
-     * Callback when DOM was changed
-     */
-    function scanDOM() {
-        if (!SimpleSVG.isReady) {
-            return;
-        }
-
-        // Find new icons
-        findNewIcons();
-    }
-
-    /**
-     * Set local functions
-     */
-    local.iconsAdded = findNewIcons;
-    local.nodesAdded = scanDOM;
-
-    /**
-     * Scan DOM when script is ready
-     */
-    local.initQueue.push(scanDOM);
+    };
 
     /**
      * Export function to scan DOM
      */
-    SimpleSVG.scanDOM = scanDOM;
-
-    /**
-     * Change protocol-less URL to secure URL if browser supports it
-     *
-     * @param {string} url
-     * @return {string}
-     * @deprecated
-     */
-    SimpleSVG.secureURL = function(url) {
-        return (useHTTPS && url.slice(0, 2) === '//') ? 'https:' + url : url;
-    };
+    SimpleSVG.scanDOM = local.scanDOM;
 
     /**
      * Get version

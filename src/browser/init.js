@@ -14,15 +14,19 @@
 (function(SimpleSVG, local, config) {
     "use strict";
 
-    var loaded = false,
-        initialized = false;
+    /**
+     * Timer for initTimeout()
+     *
+     * @type {*}
+     */
+    var timer = null;
 
     /**
      * DOM is ready. Initialize stuff
      */
     function DOMReady() {
-        loaded = true;
-        local.init();
+        local.domready = true;
+        local.nextInitItem();
     }
 
     /**
@@ -35,63 +39,149 @@
     }
 
     /**
-     * List of callbacks to call to test if script is ready
-     * Callback should return false if not ready, true if ready
+     * Function to create timer for init callback
      *
-     * @type {[{Function}]}
+     * @param callback
      */
-    local.preInitQueue = [function() {
-        return loaded;
-    }];
+    local.initTimeout = function(callback) {
+        function nextTick() {
+            if (timer === null) {
+                return;
+            }
+            if (timer.callback() !== false) {
+                timer.stop();
+                local.nextInitItem();
+                return;
+            }
+            timer.counter ++;
+
+            if (timer.counter === 10 || timer.counter === 25) {
+                // Increase timer to reduce page load
+                window.clearInterval(timer.id);
+                timer.id = window.setInterval(nextTick, timer.counter === 10 ? 250 : 1000);
+            }
+        }
+
+        if (timer !== null) {
+            timer.stop();
+        }
+
+        timer = {
+            id: window.setInterval(nextTick, 100),
+            counter: 0,
+            callback: callback,
+            stop: function() {
+                window.clearInterval(timer.id);
+                timer = null;
+            },
+            nextTick: nextTick
+        };
+    };
 
     /**
-     * List of callbacks to call when SimpleSVG is ready
+     * State of DOM
      *
-     * @type {[function]}
+     * @type {boolean}
+     */
+    local.domready = false;
+
+    /**
+     * State of ready (DOM is ready, initialized)
+     *
+     * @type {boolean}
+     */
+    local.ready = false;
+
+    /**
+     * List of callbacks to call when SimpleSVG is initializing
+     * Callback should return boolean: true if its ready and next event should be called, false if not ready
+     * If function returns false, it should call local.nextInitItem when its done
+     *
+     * @type {[Function]}
      */
     local.initQueue = [];
 
     /**
-     * Initialize SimpleSVG
+     * List of callbacks to call when DOM is ready and initialization has been finished
+     * Callback should return boolean: true if its ready and next event should be called, false if not ready
+     * If function returns false, it should call local.nextInitItem when its done
+     *
+     * @type {[Function]}
      */
-    local.init = function() {
-        var head, el;
+    local.readyQueue = [];
 
-        if (initialized) {
+    /**
+     * Check init queue, do next step
+     */
+    local.nextInitItem = function() {
+        var callback;
+
+        if (local.ready) {
             return;
         }
 
-        // Add SimpleSVG stylesheet
-        head = document.getElementsByTagName('head');
-        if (head.length) {
-            head = head[0];
-            el = document.createElement('style');
-            el.type = 'text/css';
-            el.innerHTML = 'span.simple-svg, i.simple-svg, simple-svg { display: inline-block; width: 1em; }';
-            if (head.firstChild !== null) {
-                head.insertBefore(el, head.firstChild);
+        if (local.initQueue.length) {
+            callback = local.initQueue.shift();
+        } else {
+            if (!local.domready) {
+                // Init queue is done. Scan DOM on timer to refresh icons during load
+                local.initTimeout(function() {
+                    if (!local.domready && document.body) {
+                        local.scanDOM();
+                    }
+                    return local.domready;
+                });
+
+                return;
+            }
+
+            if (local.readyQueue.length) {
+                callback = local.readyQueue.shift();
             } else {
-                head.appendChild(el);
+                local.ready = SimpleSVG.isReady = true;
+                local.event(config._readyEvent);
+                local.scanDOM();
+                return;
             }
         }
 
-        // Filter all callbacks, keeping only those that return false
-        local.preInitQueue = local.preInitQueue.filter(function(callback) {
-            return !callback();
-        });
-
-        // Callbacks queue is empty - script is ready to be initialized
-        if (!local.preInitQueue.length) {
-            initialized = true;
-            window.setTimeout(function() {
-                SimpleSVG.isReady = true;
-                local.initQueue.forEach(function(callback) {
-                    callback();
-                });
-                local.event(config._readyEvent);
-            });
+        if (callback() !== false) {
+            local.nextInitItem();
         }
     };
+
+    /**
+     * Add stylesheet
+     *
+     * @param timed
+     * @returns {boolean}
+     */
+    local.addStylesheet = function(timed) {
+        var el;
+
+        if (!document.head || !document.body) {
+            if (local.domready) {
+                // head or body is missing, but document is ready? weird
+                return true;
+            }
+            if (!timed) {
+                local.initTimeout(local.addStylesheet.bind(null, true));
+            }
+            return false;
+        }
+
+        // Add SimpleSVG stylesheet
+        el = document.createElement('style');
+        el.type = 'text/css';
+        el.innerHTML = 'span.simple-svg, i.simple-svg, simple-svg { display: inline-block; width: 1em; }';
+        if (document.head.firstChild !== null) {
+            document.head.insertBefore(el, document.head.firstChild);
+        } else {
+            document.head.appendChild(el);
+        }
+        return true;
+    };
+    local.initQueue.push(local.addStylesheet.bind(null, false));
 
     /**
      * Events to run when SimpleSVG is ready
@@ -110,11 +200,12 @@
     window.setTimeout(function() {
         // Check for DOM ready state
         if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
-            DOMReady();
+            local.domready = true;
         } else {
             document.addEventListener('DOMContentLoaded', DOMLoaded);
             window.addEventListener('load', DOMLoaded);
         }
+        local.nextInitItem();
     });
 
 })(SimpleSVG, local, local.config);

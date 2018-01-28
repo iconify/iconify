@@ -124,6 +124,7 @@
         });
     };
 
+    // Add custom simple-svg tag
     try {
         // Try to create custom element interface if browser supports it.
         // If browser doesn't support it, it will fall back to HTMLUnknownElement, which is

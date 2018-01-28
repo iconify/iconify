@@ -36,7 +36,7 @@
                 containerRoot = document.getElementById(containerID);
 
                 // Setup fake SimpleSVG instance
-                local.iconsAdded = renderImages;
+                local.scanDOM = renderImages;
                 load(SimpleSVG, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTest';
@@ -129,7 +129,7 @@
                 containerRoot = document.getElementById(containerID);
 
                 // Setup fake SimpleSVG instance
-                local.iconsAdded = renderImages;
+                local.scanDOM = renderImages;
                 load(SimpleSVG, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
@@ -252,7 +252,7 @@
                 containerRoot = document.getElementById(containerID);
 
                 // Setup fake SimpleSVG instance
-                local.iconsAdded = renderImages;
+                local.scanDOM = renderImages;
                 load(SimpleSVG, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';

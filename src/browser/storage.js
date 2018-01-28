@@ -25,7 +25,7 @@
             return;
         }
         eventQueued = false;
-        local.iconsAdded();
+        local.scanDOM();
     }
 
     /**
