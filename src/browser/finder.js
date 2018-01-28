@@ -152,7 +152,10 @@
         var results = [],
             duplicates = [];
 
-        root = root === void 0 ? (config._root === void 0 ? document.querySelector('body') : config._root) : root;
+        root = root === void 0 ? (config._root === void 0 ? document.body : config._root) : root;
+        if (!root) {
+            return results;
+        }
 
         finderKeys.forEach(function(key) {
             var finder = finders[key],

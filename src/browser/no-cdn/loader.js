@@ -12,4 +12,8 @@
  * Replacement for loader module when CDN is disabled
  */
 
-local.loadImage = SimpleSVG.iconExists;
+local.loadImage = function(image, checkQueue) {
+    var icon = local.getPrefix(image.icon);
+
+    return SimpleSVG.iconExists(icon.icon, icon.prefix);
+};
