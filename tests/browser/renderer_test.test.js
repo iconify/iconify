@@ -30,7 +30,10 @@
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                     '<i class="simple-svg" data-icon="fa-home" />' +
                     '<simple-svg data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
+                    // Append icon as child
                     '<i class="simple-svg" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
+                    // Test class names instead of attributes
+                    '<span class="simple-svg icon:fa-arrow-top icon-flip:vertical icon-rotate:90deg" data-rotate="180deg" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -73,15 +76,14 @@
                 var image1 = containerRoot.childNodes[0],
                     image2 = containerRoot.childNodes[1],
                     image3 = containerRoot.childNodes[2],
+                    image4 = containerRoot.childNodes[3],
                     svg3;
 
                 expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
                 expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second node supposed to be SVG');
                 expect(image3.tagName.toLowerCase()).to.be.equal('i', 'Third node supposed to be I');
                 expect(image3.childNodes.length).to.be.equal(1, 'Third node must have child node');
-
-                svg3 = image3.childNodes[0];
-                expect(svg3.tagName.toLowerCase()).to.be.equal('svg', 'Third node child node supposed to be SVG');
+                expect(image4.tagName.toLowerCase()).to.be.equal('svg', 'Fourth node supposed to be SVG');
 
                 expect(image1.getAttribute('class')).to.be.equal('simple-svg', 'Class name should be simple-svg');
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid');
@@ -89,11 +91,27 @@
                 expect(image1.hasAttribute('xmlns')).to.be.equal(true, 'xmlns is missing');
 
                 expect(image2 === void 0).to.be.equal(false, 'image2 is undefined');
+                expect(image2.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 if (image2.innerHTML !== void 0) {
                     // Skip tests on IE
                     expect(image2.innerHTML.indexOf('<g ')).to.be.equal(0, 'Content should start with group');
                     expect(image2.innerHTML.indexOf('transform="translate') !== -1).to.be.equal(true, 'Content should include transformation');
                     expect(image2.innerHTML.indexOf('scale(-1 1)')).to.not.be.equal(-1, 'Content should contain scale');
+                }
+
+                svg3 = image3.childNodes[0];
+                expect(svg3.tagName.toLowerCase()).to.be.equal('svg', 'Third node child node supposed to be SVG');
+                expect(svg3.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
+
+                expect(image4 === void 0).to.be.equal(false, 'image2 is undefined');
+                expect(image4.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
+                if (image4.innerHTML !== void 0) {
+                    // Skip tests on IE
+                    expect(image4.innerHTML.indexOf('<g ')).to.be.equal(0, 'Content should start with group');
+                    expect(image4.innerHTML.indexOf('transform="') !== -1).to.be.equal(true, 'Content should include transformation');
+                    expect(image4.innerHTML.indexOf('rotate(90 ') !== -1).to.be.equal(true, 'Content should include 90deg rotation');
+                    expect(image4.innerHTML.indexOf('translate') !== -1).to.be.equal(true, 'Content should include translate');
+                    expect(image4.innerHTML.indexOf('scale(1 -1)')).to.not.be.equal(-1, 'Content should contain scale');
                 }
 
                 done();
@@ -123,7 +141,7 @@
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                     '<i class="svg-test1 fa-home" />' +
                     '<i class="svg-test2 fa-arrow-left" />' +
-                    '<i class="svg-test2 fa-shield" data-icon-inline="true" />' +
+                    '<i class="svg-test2 fa-shield" data-inline="true" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -169,8 +187,8 @@
                         return '';
                     },
                     filterAttributes: function(image, attributes) {
-                        if (attributes['data-icon-inline'] === void 0) {
-                            attributes['data-icon-inline'] = false;
+                        if (attributes['data-inline'] === void 0) {
+                            attributes['data-inline'] = false;
                         }
                         return attributes;
                     }

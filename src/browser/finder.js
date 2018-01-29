@@ -42,9 +42,23 @@
              * @return {string} Icon name, empty string if none
              */
             icon: function(element) {
-                var result = element.getAttribute(iconAttribute);
-                return typeof result === 'string' ? result : '';
-            }
+                var result = element.getAttribute(iconAttribute),
+                    item;
+
+                if (typeof result === 'string') {
+                    return result;
+                }
+
+                // Look for icon:icon-name format (icon:fa-home, icon:emojione-monotone:cat)
+                for (var i = 0; i < element.classList.length; i++) {
+                    item = element.classList[i];
+                    if (item.length > 5 && item.slice(0, 5) === 'icon:') {
+                        return item.slice(5);
+                    }
+                }
+
+                return '';
+            },
 
             /**
              * Filter class names list, removing any custom classes
@@ -55,7 +69,29 @@
              * @param {Array|DOMTokenList} list
              * @return {Array}
              */
-            // filterClasses: function(image, list) { return list; }
+            filterClasses: function(image, list) {
+                var item, i, attr;
+
+                // Copy icon-foo:bar classes as data-foo=bar attributes to make it possible to use class names instead of attributes.
+                // Prefix "icon-" is removed.
+                // icon-width:24px -> data-width="24px"
+                // If both class and attribute are present, class has higher priority (to reduce number of checks).
+                for (i = 0; i < list.length; i++) {
+                    item = list[i];
+                    if (item.slice(0, 5) === 'icon-') {
+                        item = item.slice(5).split(':');
+                        if (item.length === 2) {
+                            attr = 'data-' + item[0];
+                            if (image.attributes === void 0) {
+                                image.attributes = {};
+                            }
+                            image.attributes[attr] = item[1];
+                        }
+                    }
+                }
+
+                return list;
+            }
 
             /**
              * Filter attributes, removing any attributes that should not be passed to SVG

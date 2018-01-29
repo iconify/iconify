@@ -36,7 +36,7 @@
     config._flipAttribute = 'data-flip';
 
     // Attribute for inline mode
-    config._inlineModeAttribute = 'data-icon-inline';
+    config._inlineModeAttribute = 'data-inline';
 
     // Attribute for alignment
     config._alignAttribute = 'data-align';

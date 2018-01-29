@@ -21,10 +21,11 @@ config._rotateAttribute = 'data-rotate';
 config._flipAttribute = 'data-flip';
 
 // Attribute for inline mode
-config._inlineModeAttribute = 'data-icon-inline';
+config._inlineModeAttribute = 'data-inline';
 
 // Attribute for alignment
 config._alignAttribute = 'data-align';
+
 /**
  * Function to convert SVG to string
  *
