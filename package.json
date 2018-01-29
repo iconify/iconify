@@ -2,7 +2,7 @@
   "name": "simple-svg",
   "description": "SVG framework designed to replace glyph web fonts",
   "author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
-  "version": "1.0.0-beta3",
+  "version": "1.0.0-beta4",
   "license": "MIT",
   "keywords": [
     "svg",

@@ -5,7 +5,7 @@ SimpleSVG is framework for adding SVG icons to website pages.
 SimpleSVG is designed to be as simple to use as possible. Add this line to your page to load SimpleSVG: 
 
 ```
-<script src="//code.simplesvg.com/1/1.0.0-beta3/simple-svg.min.js"></script>
+<script src="//code.simplesvg.com/1/1.0.0-beta4/simple-svg.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -119,9 +119,9 @@ solutions, use whichever you prefer:
 ```
 simple-svg tag same as using class="simple-svg" on any other element, but by default inline mode is disabled.
 
-2. Adding data-icon-inline attribute:
+2. Adding data-inline attribute:
 ```
-<span class="simple-svg" data-icon="noto-frog-face" data-icon-inline="false"></span>
+<span class="simple-svg" data-icon="noto-frog-face" data-inline="false"></span>
 ```
 
 3. Removing vertical-alignment via css:
@@ -276,7 +276,7 @@ Plugins make SimpleSVG search for other selectors, so you can keep using old lib
 
 How to use plugins? Include plugin script:
 
-    <script src="//code.simplesvg.com/1/1.0.0-beta3/plugin-fa.min.js"></script>
+    <script src="//code.simplesvg.com/1/1.0.0-beta4/plugin-fa.min.js"></script>
 
 Here is FontAwesome example page without using FontAwesome:
 
