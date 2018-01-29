@@ -114,6 +114,15 @@
     };
 
     /**
+     * Check if observer is paused
+     *
+     * @returns {boolean}
+     */
+    SimpleSVG.isObserverPaused = function() {
+        return observer === null || !!paused;
+    };
+
+    /**
      * Start observing when all modules and DOM are ready
      */
     local.readyQueue.push(function () {
