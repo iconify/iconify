@@ -40,6 +40,8 @@
             temp = addedNodes;
             addedNodes = false;
             local.scanDOM(temp);
+        } else {
+            addedNodes = false;
         }
     }
 
