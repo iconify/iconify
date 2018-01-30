@@ -5,7 +5,7 @@ SimpleSVG is framework for adding SVG icons to website pages.
 SimpleSVG is designed to be as simple to use as possible. Add this line to your page to load SimpleSVG: 
 
 ```
-<script src="//code.simplesvg.com/1/1.0.0-beta4/simple-svg.min.js"></script>
+<script src="//code.simplesvg.com/1/1.0.0-beta5/simple-svg.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -276,7 +276,7 @@ Plugins make SimpleSVG search for other selectors, so you can keep using old lib
 
 How to use plugins? Include plugin script:
 
-    <script src="//code.simplesvg.com/1/1.0.0-beta4/plugin-fa.min.js"></script>
+    <script src="//code.simplesvg.com/1/1.0.0-beta5/plugin-fa.min.js"></script>
 
 Here is FontAwesome example page without using FontAwesome:
 
