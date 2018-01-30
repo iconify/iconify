@@ -35,6 +35,13 @@
     var tested = {};
 
     /**
+     * Additional queue for icons to queue when DOM is ready
+     *
+     * @type {object}
+     */
+    var domqueue = {};
+
+    /**
      * True if queue will be parsed on next tick
      *
      * @type {boolean}
@@ -143,13 +150,46 @@
     }
 
     /**
+     * Load queue. Delay queue if DOM isn't ready
+     */
+    function addToDOMReadyQueue(prefix, icon) {
+        if (domqueue[prefix] === void 0) {
+            domqueue[prefix] = {};
+        }
+        domqueue[prefix][icon] = true;
+
+        // Add callback
+        if (local._loaderDOMReady !== void 0) {
+            return;
+        }
+        local._loaderDOMReady = local.DOMReadyCallback;
+        local.DOMReadyCallback = function() {
+            local._loaderDOMReady();
+            Object.keys(domqueue).forEach(function(prefix) {
+                Object.keys(domqueue[prefix]).forEach(function(icon) {
+                    if (!SimpleSVG.iconExists(icon, prefix)) {
+                        addToQueue(prefix, icon, true);
+                    }
+                });
+            });
+        };
+    }
+
+    /**
      * Add image to loading queue
      *
      * @param {string} prefix Collection prefix
      * @param {string} icon Image name
+     * @param {boolean} preload True if icon is being pre-loaded
      * @return {boolean} True if image was added to queue
      */
-    function addToQueue(prefix, icon) {
+    function addToQueue(prefix, icon, preload) {
+        // Check if DOM is ready
+        if (!preload && !local.domready && !config.loadBeforeDOMReady) {
+            addToDOMReadyQueue(prefix, icon);
+            return true;
+        }
+
         // Check queue
         if (
             (queue[prefix] !== void 0 && queue[prefix].indexOf(icon) !== -1) ||
@@ -222,7 +262,7 @@
             return true;
         }
 
-        if (checkQueue !== false && addToQueue(icon.prefix, icon.icon)) {
+        if (checkQueue !== false && addToQueue(icon.prefix, icon.icon, false)) {
             // Mark as loading
             image.element.classList.add(config._loadingClass);
         }
@@ -237,17 +277,17 @@
      * @returns {boolean} True if images are queued for preload, false if images are already available
      */
     SimpleSVG.preloadImages = function(images) {
-        var queued = false,
+        var preloading = false,
             icon;
 
         images.forEach(function(key) {
             icon = local.getPrefix(key);
             if (!SimpleSVG.iconExists(icon.icon, icon.prefix)) {
-                addToQueue(icon.prefix, icon.icon);
-                queued = true;
+                addToQueue(icon.prefix, icon.icon, true);
+                preloading = true;
             }
         });
-        return queued;
+        return preloading;
     };
 
     /**

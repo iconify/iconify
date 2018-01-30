@@ -23,6 +23,10 @@
     // Maximum URL size for CDN
     config.loaderMaxURLSize = 500;
 
+    // True if icons should be loaded before DOM is ready
+    // Disable this option is you are pre-loading any icons
+    config.loadBeforeDOMReady = true;
+
     // Custom event to call when new set of images is added
     config._loaderEvent = 'SimpleSVGAddedIcons';
 
@@ -31,8 +35,8 @@
     config.sessionStorage = true;
 
     // True if local storage should be used to cache icons. This option might require cookie confirmation in some countries,
-    // so it is disabled by default. However it is still accessed for reading stored items regardless of setting. Setting
-    // affects only saving data to storage.
-    config.localStorage = false;
+    // so it is disabled unless storage already has some data, which means website is using it, so script assumes user
+    // has accepted cookies.
+    config.localStorage = !!(window && window.localStorage && window.localStorage.length);
 
 })(local.config);

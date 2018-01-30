@@ -24,10 +24,10 @@
     /**
      * DOM is ready. Initialize stuff
      */
-    function DOMReady() {
+    local.DOMReadyCallback = function() {
         local.domready = true;
         local.nextInitItem();
-    }
+    };
 
     /**
      * Remove event listeners and call DOMReady()
@@ -35,7 +35,7 @@
     function DOMLoaded() {
         document.removeEventListener('DOMContentLoaded', DOMLoaded);
         window.removeEventListener('load', DOMLoaded);
-        DOMReady();
+        local.DOMReadyCallback();
     }
 
     /**
