@@ -11,7 +11,7 @@
 /**
  * Icons storage handler
  */
-(function(SimpleSVG, local) {
+(function(SimpleSVG, local, global) {
     "use strict";
 
     var eventQueued = false,
@@ -81,4 +81,21 @@
      */
     SimpleSVG.listIcons = storage.list.bind(storage);
 
-})(SimpleSVG, local);
+    /**
+     * Add collections from global SimpleSVGPreload array
+     *
+     * This allows preloading icons before including SimpleSVG
+     * To preload icons before and after SimpleSVG, instead of wrapping object in
+     *  SimpleSVG.addCollection(data);
+     * use this:
+     *  (window.SimpleSVG ? window.SimpleSVG.addCollection : ((window.SimpleSVGPreload = window.SimpleSVGPreload || []).push.bind(window.SimpleSVGPreload)))(data);
+     */
+    if (global.SimpleSVGPreload !== void 0 && global.SimpleSVGPreload instanceof Array) {
+        global.SimpleSVGPreload.forEach(function(item) {
+            if (typeof item === 'object' && item.icons !== void 0) {
+                SimpleSVG.addCollection(item);
+            }
+        });
+    }
+
+})(SimpleSVG, local, global);
