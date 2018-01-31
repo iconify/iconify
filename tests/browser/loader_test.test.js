@@ -15,6 +15,8 @@
         local.scanDOM = function() {};
 
         /* Modules() */
+
+        local.config.loadBeforeDOMReady = true;
     }
 
     describe('Testing image loader', function() {

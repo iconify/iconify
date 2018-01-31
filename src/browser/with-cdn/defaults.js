@@ -24,8 +24,9 @@
     config.loaderMaxURLSize = 500;
 
     // True if icons should be loaded before DOM is ready
-    // Disable this option is you are pre-loading any icons
-    config.loadBeforeDOMReady = true;
+    // Disable this option is you are pre-loading any icons and script is in <head> section
+    // Default value: enabled if script is in <head> section, disabled if script is in <body> section
+    config.loadBeforeDOMReady = !(document && document.body);
 
     // Custom event to call when new set of images is added
     config._loaderEvent = 'SimpleSVGAddedIcons';
