@@ -147,9 +147,7 @@ function save(file, content) {
 
     fs.writeFileSync(resolvedDistDir + '/' + file + '.js', content, 'utf8');
 
-    content = uglify.minify(content, {
-        fromString: true
-    });
+    content = uglify.minify(content);
     fs.writeFileSync(resolvedDistDir + '/' + file + '.min.js', content.code);
     console.log('Saved ' + distDir + '/' + file + '.js (' + size + ' bytes full, ' + content.code.length + ' bytes minified)');
 }
