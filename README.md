@@ -217,7 +217,7 @@ Optional parameters:
 * width and height - width and height in pixels. If you set it to "auto", original SVG dimensions will be used. It is enough to set only 1 dimension to "auto", other dimension will be set to "auto" automatically:
 
 ```
-https://icons.simplesvg.com/noto-stars.svg?height=auto
+https://icons.simplesvg.com/fxemoji-star.svg?height=auto
 ```
 
 * align - alignment, used when custom width/height ratio does not match original SVG width/height ratio. Values are the
@@ -227,10 +227,10 @@ same as in data-align attribute mentioned above.
 
 # Available icons
 
-There are over 20,000 icons to choose from.
+There are over 30,000 icons to choose from.
 
 General collections (monotone icons):
-* Material Design Icons (2000+ icons)
+* Material Design Icons (3000+ icons)
 * Material Design Iconic Font (700+ icons)
 * IconIcons (700+ icons)
 * FontAwesome 4 and FontAwesome 5 (1000+ icons)
@@ -244,7 +244,7 @@ Emoji collections (mostly colored icons):
 * Emoji One (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
 * Firefox OS Emoji (1000+ icons)
 * Noto Emoji (2000+ icons for version 2, 2000+ icons for version 1)
-* Twitter Emoji (800+ icons)
+* Twitter Emoji (2000+ icons)
 
 Also there are several thematic collections, such as weather icons, map icons, etc.
 
