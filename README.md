@@ -24,7 +24,7 @@ Sample:
     
 &nbsp;&nbsp;&nbsp; ![Sample](https://simplesvg.com/samples/icon2.png)
 
-That is it. Change data-icon value to name of icon you want to use. There are over 20,000 premade icons to choose from,
+That is it. Change data-icon value to name of icon you want to use. There are over 30,000 premade icons to choose from,
 including FontAwesome, Material Design Icons, Entypo+ and even several emoji sets.
 
 Do you want to make your own icon sets? Tools for making custom icon sets are available on GitHub. See documentation.
