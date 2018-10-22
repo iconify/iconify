@@ -19,7 +19,7 @@
 
     describe('Testing observer', function() {
         it('inactive observer', function(done) {
-            var context, SimpleSVG, local,
+            var context, Iconify, local,
                 tempId = 'observer-dummy',
                 called = false;
 
@@ -29,11 +29,11 @@
             // Add temporary element
             jQuery('#debug').append('<div id="' + tempId + '" />');
 
-            // Setup fake global scope and SimpleSVG instance
+            // Setup fake global scope and Iconify instance
             context = {
                 MutationObserver: MutationObserver
             };
-            SimpleSVG = {
+            Iconify = {
                 isReady: true
             };
             local = {
@@ -48,10 +48,10 @@
             };
 
             // Load observer
-            Observer(SimpleSVG, local, context);
+            Observer(Iconify, local, context);
 
-            expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
-            expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+            expect(typeof Iconify.pauseObserving).to.be.equal('function', 'Iconify.pauseObserving is missing');
+            expect(typeof Iconify.resumeObserving).to.be.equal('function', 'Iconify.resumeObserving is missing');
 
             // Do not initialize observer!
 
@@ -65,7 +65,7 @@
         });
 
         it('setting up working observer', function(done) {
-            var context, SimpleSVG, local,
+            var context, Iconify, local,
                 tempId = 'observer-basic',
                 called = false;
 
@@ -76,11 +76,11 @@
             // Add temporary element
             jQuery('#debug').append('<div id="' + tempId + '" />');
 
-            // Setup fake global scope and SimpleSVG instance
+            // Setup fake global scope and Iconify instance
             context = {
                 MutationObserver: MutationObserver
             };
-            SimpleSVG = {
+            Iconify = {
                 isReady: true
             };
             local = {
@@ -94,10 +94,10 @@
             };
 
             // Load observer
-            Observer(SimpleSVG, local, context);
+            Observer(Iconify, local, context);
 
-            expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
-            expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+            expect(typeof Iconify.pauseObserving).to.be.equal('function', 'Iconify.pauseObserving is missing');
+            expect(typeof Iconify.resumeObserving).to.be.equal('function', 'Iconify.resumeObserving is missing');
 
             // Init observer
             local.readyQueue.forEach(function(callback) {
@@ -115,7 +115,7 @@
         });
 
         it('pause and resume observer', function(done) {
-            var context, SimpleSVG, local,
+            var context, Iconify, local,
                 tempId = 'observer-pause',
                 callbackResult = false;
 
@@ -126,11 +126,11 @@
             // Add temporary element
             jQuery('#debug').append('<div id="' + tempId + '" />');
 
-            // Setup fake global scope and SimpleSVG instance
+            // Setup fake global scope and Iconify instance
             context = {
                 MutationObserver: MutationObserver
             };
-            SimpleSVG = {
+            Iconify = {
                 isReady: true
             };
             local = {
@@ -144,10 +144,10 @@
             };
 
             // Load observer
-            Observer(SimpleSVG, local, context);
+            Observer(Iconify, local, context);
 
-            expect(typeof SimpleSVG.pauseObserving).to.be.equal('function', 'SimpleSVG.pauseObserving is missing');
-            expect(typeof SimpleSVG.resumeObserving).to.be.equal('function', 'SimpleSVG.resumeObserving is missing');
+            expect(typeof Iconify.pauseObserving).to.be.equal('function', 'Iconify.pauseObserving is missing');
+            expect(typeof Iconify.resumeObserving).to.be.equal('function', 'Iconify.resumeObserving is missing');
 
             // Init observer
             local.readyQueue.forEach(function(callback) {
@@ -164,7 +164,7 @@
 
                 // Pause observer
                 callbackResult = false;
-                SimpleSVG.pauseObserving();
+                Iconify.pauseObserving();
 
                 // Add element
                 jQuery('#' + tempId).append('<i />');
@@ -172,7 +172,7 @@
                     expect(callbackResult).to.be.equal(false, 'Observer was supposed to be paused');
 
                     // Resume observer
-                    SimpleSVG.resumeObserving();
+                    Iconify.resumeObserving();
 
                     // Add elements
                     jQuery('#' + tempId).append('<strong /><span /><i />');

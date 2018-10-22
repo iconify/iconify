@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -14,11 +14,11 @@
  * Observer automatically loads polyfill for MutationObserver for IE9-10 from CDN that can be configured
  * See ../polyfill.js
  *
- * Observer can be paused using SimpleSVG.pauseObserving()
- * and resumed using SimpleSVG.resumeObserving()
+ * Observer can be paused using Iconify.pauseObserving()
+ * and resumed using Iconify.resumeObserving()
  * Pause/resume can stack, so if you call pause twice, resume should be called twice.
  */
-(function(SimpleSVG, local, config, global) {
+(function(Iconify, local, config, global) {
     "use strict";
 
     var observer = null,
@@ -79,7 +79,7 @@
      *
      * Multiple pauseObserving() calls stack, resuming observer only when same amount of resumeObserving() is called
      */
-    SimpleSVG.pauseObserving = function() {
+    Iconify.pauseObserving = function() {
         if (observer === null) {
             paused ++;
             return;
@@ -96,7 +96,7 @@
     /**
      * Function to resume observing
      */
-    SimpleSVG.resumeObserving = function() {
+    Iconify.resumeObserving = function() {
         if (observer === null) {
             paused --;
             return;
@@ -120,7 +120,7 @@
      *
      * @returns {boolean}
      */
-    SimpleSVG.isObserverPaused = function() {
+    Iconify.isObserverPaused = function() {
         return observer === null || !!paused;
     };
 
@@ -135,4 +135,4 @@
         return true;
     });
 
-})(SimpleSVG, local, local.config, global);
+})(Iconify, local, local.config, global);

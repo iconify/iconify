@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -21,7 +21,7 @@ const fs = require('fs'),
 
 let codeDir = 'src',
     distDir = 'dist',
-    baseName = 'simple-svg',
+    baseName = 'iconify',
     version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')).version,
 
     /**

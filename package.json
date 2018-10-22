@@ -1,8 +1,8 @@
 {
-  "name": "simple-svg",
-  "description": "SVG framework designed to replace glyph web fonts",
+  "name": "@iconify/iconify",
+  "description": "SVG framework with over 30,000 icons to choose from",
   "author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
-  "version": "1.0.0-beta5",
+  "version": "1.0.0-beta6",
   "license": "MIT",
   "keywords": [
     "svg",
@@ -10,11 +10,11 @@
     "icon",
     "ui"
   ],
-  "bugs": "https://github.com/simplesvg/simple-svg/issues",
-  "homepage": "https://simplesvg.com/",
+  "bugs": "https://github.com/iconify-design/iconify/issues",
+  "homepage": "https://iconify.design/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/simplesvg/simple-svg.git"
+    "url": "git://github.com/iconify-design/iconify.git"
   },
   "scripts": {
     "pretest": "node build/tests",

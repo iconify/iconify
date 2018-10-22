@@ -27,7 +27,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8'),
 
             // Temporary functions
-            'SimpleSVG.secureURL = function(url) { return url; };' +
+            'Iconify.secureURL = function(url) { return url; };' +
 
             // Main file
             fs.readFileSync(codeDir + '/browser/renderer.js', 'utf8'),

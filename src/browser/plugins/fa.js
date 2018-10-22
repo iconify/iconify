@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Plugin for FontAwesome icons
  */
-(function(SimpleSVG) {
+(function(Iconify) {
     "use strict";
 
     /**
@@ -20,9 +20,9 @@
      * @type {[string]}
      */
     var faReserved = ['fa-lg', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'],
-        rotateAttribute = SimpleSVG.getConfig('_rotateAttribute'),
-        flipAttribute = SimpleSVG.getConfig('_flipAttribute'),
-        inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute'),
+        rotateAttribute = Iconify.getConfig('_rotateAttribute'),
+        flipAttribute = Iconify.getConfig('_flipAttribute'),
+        inlineAttribute = Iconify.getConfig('_inlineModeAttribute'),
         i;
 
     /**
@@ -30,7 +30,7 @@
      *
      * @type {string}
      */
-    var stylesheetCDN = '//code.simplesvg.com/css/fa.css';
+    var stylesheetCDN = '//code.iconify.design/css/fa.css';
 
     /**
      * True if stylesheet has been added
@@ -163,10 +163,10 @@
     /**
      * Add finder to list of finders
      */
-    SimpleSVG.addFinder('fa', finder('.fa', 'fa'));
-    SimpleSVG.addFinder('fas', finder('.fas', 'fa-solid'));
-    SimpleSVG.addFinder('far', finder('.far', 'fa-regular'));
-    SimpleSVG.addFinder('fal', finder('.fal', 'fa-light')); // pro only
-    SimpleSVG.addFinder('fab', finder('.fab', 'fa-brands'));
+    Iconify.addFinder('fa', finder('.fa', 'fa'));
+    Iconify.addFinder('fas', finder('.fas', 'fa-solid'));
+    Iconify.addFinder('far', finder('.far', 'fa-regular'));
+    Iconify.addFinder('fal', finder('.fal', 'fa-light')); // pro only
+    Iconify.addFinder('fab', finder('.fab', 'fa-brands'));
 
-})(SimpleSVG);
+})(Iconify);

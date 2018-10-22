@@ -1,13 +1,13 @@
 {
-	"name": "simple-svg/simple-svg",
-	"description": "SVG framework designed to replace glyph web fonts",
+	"name": "iconify/js",
+	"description": "SVG framework with over 30,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
 	"type": "library",
 	"license": "MIT",
-	"homepage": "https://simplesvg.com/",
+	"homepage": "https://iconify.design/",
 	"autoload": {
 		"psr-4": {
-			"SimpleSVG\\SimpleSVG\\": "build"
+			"Iconify\\JS\\": "build"
 		}
 	}
 }

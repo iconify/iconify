@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Module for changing images
  */
-(function(SimpleSVG, local, config) {
+(function(Iconify, local, config) {
     "use strict";
 
     var iconAttribute = config._iconAttribute,
@@ -58,7 +58,7 @@
      */
     local.renderSVG = function(image) {
         var attributes = local.getImageAttributes(image),
-            item = SimpleSVG.getIcon(image.icon),
+            item = Iconify.getIcon(image.icon),
             svgObject, svgElement, temp, span, data, html;
 
         attributes[iconAttribute] = image.icon;
@@ -116,14 +116,14 @@
      * @param {object} [properties] Custom properties
      * @return {string|boolean}
      */
-    SimpleSVG.getSVG = function(name, properties) {
+    Iconify.getSVG = function(name, properties) {
         var svg, el, data;
 
-        if (!SimpleSVG.iconExists(name)) {
+        if (!Iconify.iconExists(name)) {
             return false;
         }
 
-        svg = new local.SVG(SimpleSVG.getIcon(name));
+        svg = new local.SVG(Iconify.getIcon(name));
         data = svg.attributes(properties, false);
 
         el = document.createElement('svg');
@@ -138,4 +138,4 @@
         return generateSVG(el.outerHTML, data.body);
     };
 
-})(SimpleSVG, local, local.config);
+})(Iconify, local, local.config);

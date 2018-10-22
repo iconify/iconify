@@ -30,8 +30,8 @@
 <section>
     <h1>FontAwesome 4 test</h1>
     <p>SimpleSVG syntax:
-        <span class="simple-svg" data-icon="fa:home"></span>
-        <span class="simple-svg" data-icon="fa:home" data-flip="vertical"></span>
+        <span class="iconify" data-icon="fa:home"></span>
+        <span class="iconify" data-icon="fa:home" data-flip="vertical"></span>
     </p>
     <p>Plugin syntax:
         <i class="fa fa-home"></i>
@@ -42,23 +42,21 @@
 <section>
     <h1>FontAwesome 5 test</h1>
     <p>SimpleSVG syntax:
-        <span class="simple-svg" data-icon="fa-brands:500px"></span>
-        <span class="simple-svg" data-icon="fa-solid:cogs"></span>
-        <span class="simple-svg" data-icon="fa-regular:futbol"></span>
-        <span class="simple-svg" data-icon="fa-light:bus"></span>
+        <span class="iconify" data-icon="fa-brands:500px"></span>
+        <span class="iconify" data-icon="fa-solid:cogs"></span>
+        <span class="iconify" data-icon="fa-regular:futbol"></span>
     </p>
     <p>Plugin syntax:
         <i class="fab fa-500px"></i>
         <i class="fas fa-cogs"></i>
         <i class="far fa-futbol"></i>
-        <i class="fal fa-bus"></i>
     </p>
 </section>
 
 <section>
     <h1>Icalicons test</h1>
     <p>SimpleSVG syntax:
-        <span class="simple-svg" data-icon="il-conversation"></span>
+        <span class="iconify" data-icon="il-conversation"></span>
     </p>
     <p>Plugin syntax:
         <i class="il il-conversation"></i>
@@ -68,8 +66,8 @@
 <section>
     <h1>PrestaShop test</h1>
     <p>SimpleSVG syntax:
-        <span class="simple-svg" data-icon="ps-photobucket"></span>
-        <span class="simple-svg" data-icon="ps-aim"></span>
+        <span class="iconify" data-icon="ps-photobucket"></span>
+        <span class="iconify" data-icon="ps-aim"></span>
     </p>
     <p>Plugin syntax:
         <i class="ps" data-ps-icon="_"></i>
@@ -77,7 +75,7 @@
     </p>
 </section>
 
-<script src="./dist/simple-svg.js?<?php echo time(); ?>"></script>
+<script src="./dist/iconify.js?<?php echo time(); ?>"></script>
 <script src="./dist/plugin-fa.js?<?php echo time(); ?>"></script>
 <script src="./dist/plugin-il.js?<?php echo time(); ?>"></script>
 <script src="./dist/plugin-ps.js?<?php echo time(); ?>"></script>

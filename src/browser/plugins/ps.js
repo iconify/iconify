@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Plugin for PrestaShop icons
  */
-(function(SimpleSVG) {
+(function(Iconify) {
     "use strict";
 
     /**
@@ -19,8 +19,8 @@
      *
      * @type {string}
      */
-    var inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute');
-    var appendAttribute = SimpleSVG.getConfig('_appendAttribute');
+    var inlineAttribute = Iconify.getConfig('_inlineModeAttribute');
+    var appendAttribute = Iconify.getConfig('_appendAttribute');
 
     /**
      * Characters map, generated
@@ -525,7 +525,7 @@
     /**
      * Add finder to list of finders
      */
-    SimpleSVG.addFinder('ps-class', {
+    Iconify.addFinder('ps-class', {
         selector: '.ps-icon',
 
         /**
@@ -578,7 +578,7 @@
     /**
      * Add finder to list of finders
      */
-    SimpleSVG.addFinder('ps-attr', {
+    Iconify.addFinder('ps-attr', {
         selector: '[data-ps-icon]',
 
         /**
@@ -623,4 +623,4 @@
         }
     });
 
-})(SimpleSVG);
+})(Iconify);

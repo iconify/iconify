@@ -12,14 +12,14 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
     // Change observer code
     observerCode = TestHelper.replace(
         observerCode,
-        '(function(SimpleSVG, local, config, global) {',
-        'function Observer(SimpleSVG, local, global) { var config = local.config; ',
+        '(function(Iconify, local, config, global) {',
+        'function Observer(Iconify, local, global) { var config = local.config; ',
         'Could not find required code in observer.js'
     );
 
     observerCode = TestHelper.replace(
         observerCode,
-        '})(SimpleSVG, local, local.config, global);',
+        '})(Iconify, local, local.config, global);',
         '}',
         'Could not find required code in observer.js (2)'
     );

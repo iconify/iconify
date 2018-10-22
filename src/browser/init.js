@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Check if DOM is ready, fire stuff when it is
  */
-(function(SimpleSVG, local, config) {
+(function(Iconify, local, config) {
     "use strict";
 
     /**
@@ -93,7 +93,7 @@
     local.ready = false;
 
     /**
-     * List of callbacks to call when SimpleSVG is initializing
+     * List of callbacks to call when Iconify is initializing
      * Callback should return boolean: true if its ready and next event should be called, false if not ready
      * If function returns false, it should call local.nextInitItem when its done
      *
@@ -138,7 +138,7 @@
             if (local.readyQueue.length) {
                 callback = local.readyQueue.shift();
             } else {
-                local.ready = SimpleSVG.isReady = true;
+                local.ready = Iconify.isReady = true;
                 local.event(config._readyEvent);
                 local.scanDOM();
                 return;
@@ -170,10 +170,10 @@
             return false;
         }
 
-        // Add SimpleSVG stylesheet
+        // Add Iconify stylesheet
         el = document.createElement('style');
         el.type = 'text/css';
-        el.innerHTML = 'span.simple-svg, i.simple-svg, simple-svg { display: inline-block; width: 1em; }';
+        el.innerHTML = 'span.iconify, i.iconify, iconify-icon { display: inline-block; width: 1em; }';
         if (document.head.firstChild !== null) {
             document.head.insertBefore(el, document.head.firstChild);
         } else {
@@ -184,12 +184,12 @@
     local.initQueue.push(local.addStylesheet.bind(null, false));
 
     /**
-     * Events to run when SimpleSVG is ready
+     * Events to run when Iconify is ready
      *
      * @param {function} callback
      */
-    SimpleSVG.ready = function(callback) {
-        if (SimpleSVG.isReady) {
+    Iconify.ready = function(callback) {
+        if (Iconify.isReady) {
             window.setTimeout(callback);
         } else {
             document.addEventListener(config._readyEvent, callback);
@@ -208,4 +208,4 @@
         local.nextInitItem();
     });
 
-})(SimpleSVG, local, local.config);
+})(Iconify, local, local.config);

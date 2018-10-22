@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -15,7 +15,7 @@
     "use strict";
 
     // CDN callback script
-    config.defaultCDN = '//icons.simplesvg.com/{prefix}.js?icons={icons}';
+    config.defaultCDN = '//api.iconify.design/{prefix}.js?icons={icons}';
 
     // Custom CDN list. Key = prefix, value = CDN URL
     config.cdn = {};
@@ -28,8 +28,8 @@
     // Default value: enabled if script is in <head> section, disabled if script is in <body> section
     config.loadBeforeDOMReady = !(document && document.body);
 
-    // Custom event to call when new set of images is added
-    config._loaderEvent = 'SimpleSVGAddedIcons';
+    // Custom event to call after new set of images was added
+    config._loaderEvent = 'IconifyAddedIcons';
 
     // True if session storage should be used to cache icons between different pages to minimize number of API calls.
     // If localStorage is enabled, icons will be saved to localStorage instead of sessionStorage.

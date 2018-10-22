@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Module for loading images from remote location
  */
-(function(SimpleSVG, local, config, global) {
+(function(Iconify, local, config, global) {
     "use strict";
 
     /**
@@ -109,7 +109,7 @@
                 urls[prefix] = url;
                 return null;
             }
-            url = url.replace('{prefix}', prefix).replace('{callback}', 'SimpleSVG._loaderCallback');
+            url = url.replace('{prefix}', prefix).replace('{callback}', 'Iconify._loaderCallback');
             urls[prefix] = url;
             return url.replace('{icons}', '').length;
         }
@@ -167,7 +167,7 @@
             local._loaderDOMReady();
             Object.keys(domqueue).forEach(function(prefix) {
                 Object.keys(domqueue[prefix]).forEach(function(icon) {
-                    if (!SimpleSVG.iconExists(icon, prefix)) {
+                    if (!Iconify.iconExists(icon, prefix)) {
                         addToQueue(prefix, icon, true);
                     }
                 });
@@ -216,11 +216,11 @@
      * @param {object} data
      * @constructor
      */
-    SimpleSVG._loaderCallback = function(data) {
+    Iconify._loaderCallback = function(data) {
         var stored = false;
 
         if (typeof data === 'object') {
-            SimpleSVG.addCollection(data);
+            Iconify.addCollection(data);
 
             // Add to storage
             ['local', 'session'].forEach(function(key) {
@@ -258,7 +258,7 @@
     local.loadImage = function(image, checkQueue) {
         var icon = local.getPrefix(image.icon);
 
-        if (SimpleSVG.iconExists(icon.icon, icon.prefix)) {
+        if (Iconify.iconExists(icon.icon, icon.prefix)) {
             return true;
         }
 
@@ -276,13 +276,13 @@
      * @param {Array} images List of images
      * @returns {boolean} True if images are queued for preload, false if images are already available
      */
-    SimpleSVG.preloadImages = function(images) {
+    Iconify.preloadImages = function(images) {
         var preloading = false,
             icon;
 
         images.forEach(function(key) {
             icon = local.getPrefix(key);
-            if (!SimpleSVG.iconExists(icon.icon, icon.prefix)) {
+            if (!Iconify.iconExists(icon.icon, icon.prefix)) {
                 addToQueue(icon.prefix, icon.icon, true);
                 preloading = true;
             }
@@ -324,7 +324,7 @@
                     if (typeof item === 'string') {
                         item = JSON.parse(item);
                         if (typeof item === 'object') {
-                            SimpleSVG.addCollection(item);
+                            Iconify.addCollection(item);
                         }
                     } else {
                         return;
@@ -337,4 +337,4 @@
         });
     })();
 
-})(SimpleSVG, local, local.config, global);
+})(Iconify, local, local.config, global);

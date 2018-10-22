@@ -3,8 +3,8 @@
 (function() {
     var isBrowser = (typeof module !== 'object' || !module.exports);
 
-    var Storage = isBrowser ? SimpleSVG.modules.Storage : require('../../src/common/storage');
-    var SVG = isBrowser ? SimpleSVG.modules.Storage : require('../../src/node/svg');
+    var Storage = isBrowser ? Iconify.modules.Storage : require('../../src/common/storage');
+    var SVG = isBrowser ? Iconify.modules.Storage : require('../../src/node/svg');
 
     var chai = isBrowser ? self.chai : require('chai'),
         expect = chai.expect,
@@ -95,8 +95,8 @@
             expect(svg.toString({
                 id: 'test',
                 style: 'margin:0; transform: scale(0.5);',
-                'class': 'simple-svg test-class loading'
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);margin:0; transform: scale(0.5);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" id="test" class="simple-svg test-class loading"><path d="" /></svg>');
+                'class': 'iconify test-class loading'
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);margin:0; transform: scale(0.5);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" id="test" class="iconify test-class loading"><path d="" /></svg>');
 
             // Values that must be escaped
             expect(svg.toString({
@@ -166,12 +166,12 @@
             result = svg.toString();
 
             // Check for ids
-            expect(result.indexOf('SimpleSVGId-')).to.not.be.equal(-1);
+            expect(result.indexOf('IconifyId-')).to.not.be.equal(-1);
             expect(result.indexOf('url(#diamond')).to.be.equal(-1);
 
             // Remove random stuff
-            result = result.replace(/SimpleSVGId\-[a-f0-9]+\-[a-f0-9]+\-/g, 'SimpleSVGId-');
-            expect(result).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100"><g fill="none"><path d="M 10,50 v -20 h 40 v -20" stroke="red" style="marker: url(#SimpleSVGId-0)"/><path d="M 30,70 v -20 h 40 v -20" stroke="green" style="marker: url(#SimpleSVGId-1)"/><path d="M 50,90 v -20 h 40 v -20" stroke="blue" style="marker: url(#SimpleSVGId-2)"/><marker id="SimpleSVGId-0" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="red" stroke-width="3"/></marker><marker id="SimpleSVGId-1" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="green" stroke-width="3"/></marker><marker id="SimpleSVGId-2" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="blue" stroke-width="3"/></marker></g></svg>');
+            result = result.replace(/IconifyId\-[a-f0-9]+\-[a-f0-9]+\-/g, 'IconifyId-');
+            expect(result).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100"><g fill="none"><path d="M 10,50 v -20 h 40 v -20" stroke="red" style="marker: url(#IconifyId-0)"/><path d="M 30,70 v -20 h 40 v -20" stroke="green" style="marker: url(#IconifyId-1)"/><path d="M 50,90 v -20 h 40 v -20" stroke="blue" style="marker: url(#IconifyId-2)"/><marker id="IconifyId-0" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="red" stroke-width="3"/></marker><marker id="IconifyId-1" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="green" stroke-width="3"/></marker><marker id="IconifyId-2" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="blue" stroke-width="3"/></marker></g></svg>');
         });
 
     });

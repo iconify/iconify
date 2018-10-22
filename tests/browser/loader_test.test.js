@@ -4,11 +4,11 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG, local) {
+    function load(Iconify, local) {
         var global = {};
 
-        if (SimpleSVG.isReady === void 0) {
-            SimpleSVG.isReady = true;
+        if (Iconify.isReady === void 0) {
+            Iconify.isReady = true;
         }
 
         local.config = {};
@@ -21,7 +21,7 @@
 
     describe('Testing image loader', function() {
         it('loading images', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                 },
                 local = {
                 },
@@ -48,11 +48,11 @@
                     expect(star2.element.classList.contains('svg-loading')).to.be.equal(false, 'star2 icon should not have class svg-loading');
 
                     // Check if icons exist
-                    expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(true, 'fa-apple should exist');
-                    expect(SimpleSVG.iconExists('fa:apple')).to.be.equal(true, 'fa:apple should exist');
-                    expect(SimpleSVG.iconExists('fa-star')).to.be.equal(true, 'fa-star should exist');
-                    expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist (2)');
-                    expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');
+                    expect(Iconify.iconExists('fa-apple')).to.be.equal(true, 'fa-apple should exist');
+                    expect(Iconify.iconExists('fa:apple')).to.be.equal(true, 'fa:apple should exist');
+                    expect(Iconify.iconExists('fa-star')).to.be.equal(true, 'fa-star should exist');
+                    expect(Iconify.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist (2)');
+                    expect(Iconify.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist (2)');
 
                     // loadImage should return true for existing icon
                     expect(local.loadImage(star)).to.be.equal(true, 'fa-star should be loaded (1)');
@@ -70,8 +70,8 @@
                 expect(star2.element.classList.contains('svg-loading')).to.be.equal(false, 'star2 icon should not have class svg-loading');
 
                 // Check if icons exist
-                expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(true, 'fa-star-half-full should exist');
-                expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(true, 'fa-star-half-empty should exist - alias of fa-star-half-full');
+                expect(Iconify.iconExists('fa-star-half-full')).to.be.equal(true, 'fa-star-half-full should exist');
+                expect(Iconify.iconExists('fa-star-half-empty')).to.be.equal(true, 'fa-star-half-empty should exist - alias of fa-star-half-full');
 
                 expect(local.loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
                 expect(local.loadImage(star2)).to.be.equal(true, 'star2 should be loaded');
@@ -80,14 +80,14 @@
             };
 
             // Load libraries
-            load(SimpleSVG, local);
+            load(Iconify, local);
             if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                 local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGLoaderTest1';
             } else {
                 local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
             }
             local.config._loaderEvent = 'newSSVGImagesTest';
-            window.SSVGLoaderTest1 = SimpleSVG._loaderCallback;
+            window.SSVGLoaderTest1 = Iconify._loaderCallback;
 
             // Find icons
             apple = local.newImage(containerRoot.querySelector('.fa.fa-apple'), 'fa-apple', null);
@@ -97,10 +97,10 @@
             star3 = local.newImage(containerRoot.querySelector('.third-star'), 'fa-star-half-full', null);
 
             // Check if icons exist
-            expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
-            expect(SimpleSVG.iconExists('fa-star')).to.be.equal(false, 'fa-star should not exist');
-            expect(SimpleSVG.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist');
-            expect(SimpleSVG.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist');
+            expect(Iconify.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
+            expect(Iconify.iconExists('fa-star')).to.be.equal(false, 'fa-star should not exist');
+            expect(Iconify.iconExists('fa-star-half-full')).to.be.equal(false, 'fa-star-half-full should not exist');
+            expect(Iconify.iconExists('fa-star-half-empty')).to.be.equal(false, 'fa-star-half-empty should not exist');
 
             // Load icons
             expect(local.loadImage(apple)).to.be.equal(false, 'fa-apple should not be loaded');
@@ -108,7 +108,7 @@
         });
 
         it('multiple CDNs and icons limit', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                 },
                 local = {
                 },
@@ -122,8 +122,8 @@
                 icons;
 
             // Load libraries
-            load(SimpleSVG, local);
-            SimpleSVG.testLoaderURL = function(url) {
+            load(Iconify, local);
+            Iconify.testLoaderURL = function(url) {
                 var index = expecting.indexOf(url);
                 expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
                 expecting.splice(index, 1);
@@ -149,9 +149,9 @@
             });
 
             // Check if icons exist
-            expect(SimpleSVG.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
-            expect(SimpleSVG.iconExists('fa-home')).to.be.equal(false, 'fa-home should not exist');
-            expect(SimpleSVG.iconExists('mdi-home')).to.be.equal(false, 'mdi-home should not exist');
+            expect(Iconify.iconExists('fa-apple')).to.be.equal(false, 'fa-apple should not exist');
+            expect(Iconify.iconExists('fa-home')).to.be.equal(false, 'fa-home should not exist');
+            expect(Iconify.iconExists('mdi-home')).to.be.equal(false, 'mdi-home should not exist');
 
             // Load icons
             Object.keys(icons).forEach(function(key) {
@@ -159,11 +159,11 @@
             });
 
             // Preload few more items that exist in array above to make sure same images aren't added twice
-            SimpleSVG.preloadImages(['fa-twitter', 'mdi:home']);
+            Iconify.preloadImages(['fa-twitter', 'mdi:home']);
         });
 
         it('custom and invalid prefixes', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                 },
                 local = {
                 },
@@ -176,8 +176,8 @@
                 icons;
 
             // Load libraries
-            load(SimpleSVG, local);
-            SimpleSVG.testLoaderURL = function(url) {
+            load(Iconify, local);
+            Iconify.testLoaderURL = function(url) {
                 var index = expecting.indexOf(url);
                 expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
                 expecting.splice(index, 1);

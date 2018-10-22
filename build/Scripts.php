@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the simple-svg libraries.
+ * This file is part of the iconify.design libraries.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -10,7 +10,7 @@
  * @license MIT
  */
 
-namespace SimpleSVG\SimpleSVG;
+namespace Iconify\JS;
 
 class Scripts
 {

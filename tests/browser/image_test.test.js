@@ -4,11 +4,11 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG, local) {
+    function load(Iconify, local) {
         var global = {};
 
-        if (SimpleSVG.isReady === void 0) {
-            SimpleSVG.isReady = true;
+        if (Iconify.isReady === void 0) {
+            Iconify.isReady = true;
         }
 
         local.config = {};
@@ -18,7 +18,7 @@
 
     describe('Testing image object', function() {
         it('filtering attributes and classes', function() {
-            var SimpleSVG = {},
+            var Iconify = {},
                 local = {},
                 prefix = 'image-id-',
                 image, result;
@@ -26,24 +26,24 @@
             // Add dummy code
             jQuery('#debug').append('<div>' +
                 '<p id="' + prefix + 'empty">Icon without attributes: <i /></p>' +
-                '<p id="' + prefix + 'simple">Icon with basic attributes: <i class="simple-svg svg-loading" data-icon="icon-name" /></p>' +
+                '<p id="' + prefix + 'basic">Icon with basic attributes: <i class="iconify svg-loading" data-icon="icon-name" /></p>' +
                 '<p id="' + prefix + 'custom">Icon with many attributes: <i class="icon fa fa-home svg-loading loaded" style="height: 1em;" data-icon-name="fa-home" title="Title!" /></p>' +
             '</div>');
 
-            // Setup fake SimpleSVG instance and load libraries
+            // Setup fake Iconify instance and load libraries
             // Load libraries
-            load(SimpleSVG, local);
+            load(Iconify, local);
 
             // Empty image
             image = local.newImage(document.querySelector('#' + prefix + 'empty > i'), 'foo', {});
             result = local.getImageAttributes(image);
             expect(result).to.be.eql({});
 
-            // Simple image
-            image = local.newImage(document.querySelector('#' + prefix + 'simple > i'), 'foo', {});
+            // Basic image
+            image = local.newImage(document.querySelector('#' + prefix + 'basic > i'), 'foo', {});
             result = local.getImageAttributes(image);
             expect(result).to.be.eql({
-                'class': 'simple-svg',
+                'class': 'iconify',
                 'data-icon': 'icon-name'
             });
 

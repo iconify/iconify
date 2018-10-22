@@ -4,20 +4,20 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG, local, global) {
+    function load(Iconify, local, global) {
         /* Modules() */
     }
 
     describe('Testing renderer', function() {
         it('rendering svg images', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                     isReady: false
                 },
                 local = {
                     config: {}
                 },
                 global = {
-                    SimpleSVGConfig: {
+                    IconifyConfig: {
                         _readyEvent: 'RendererTestReadyEvent1'
                     }
                 },
@@ -28,27 +28,27 @@
             function init() {
                 // Add dummy code
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
-                    '<i class="simple-svg" data-icon="fa-home" />' +
-                    '<simple-svg data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
+                    '<i class="iconify" data-icon="fa-home" />' +
+                    '<iconify-icon data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
                     // Append icon as child
-                    '<i class="simple-svg" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
+                    '<i class="iconify" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
                     // Test class names instead of attributes
-                    '<span class="simple-svg icon:fa-arrow-top icon-flip:vertical icon-rotate:90deg" data-rotate="180deg" />' +
+                    '<span class="iconify icon:fa-arrow-top icon-flip:vertical icon-rotate:90deg" data-rotate="180deg" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
 
-                // Setup fake SimpleSVG instance
+                // Setup fake Iconify instance
                 local.scanDOM = renderImages;
-                load(SimpleSVG, local, global);
+                load(Iconify, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTest';
                 } else {
                     local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
                 }
-                window.SSVGRenderTest = SimpleSVG._loaderCallback;
+                window.SSVGRenderTest = Iconify._loaderCallback;
 
-                SimpleSVG.ready(function() {
+                Iconify.ready(function() {
                     // Load images, start tests when images are available
                     local.findNewImages(containerRoot).forEach(function(image) {
                         if (!local.loadImage(image)) {
@@ -85,7 +85,7 @@
                 expect(image3.childNodes.length).to.be.equal(1, 'Third node must have child node');
                 expect(image4.tagName.toLowerCase()).to.be.equal('svg', 'Fourth node supposed to be SVG');
 
-                expect(image1.getAttribute('class')).to.be.equal('simple-svg', 'Class name should be simple-svg');
+                expect(image1.getAttribute('class')).to.be.equal('iconify', 'Class name should be iconify');
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid');
                 expect(image1.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 expect(image1.hasAttribute('xmlns')).to.be.equal(true, 'xmlns is missing');
@@ -121,14 +121,14 @@
         });
 
         it('rendering with custom finder', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                     isReady: false
                 },
                 local = {
                     config: {}
                 },
                 global = {
-                    SimpleSVGConfig: {
+                    IconifyConfig: {
                         _readyEvent: 'RendererTestReadyEvent2'
                     }
                 },
@@ -146,18 +146,18 @@
 
                 containerRoot = document.getElementById(containerID);
 
-                // Setup fake SimpleSVG instance
+                // Setup fake Iconify instance
                 local.scanDOM = renderImages;
-                load(SimpleSVG, local, global);
+                load(Iconify, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
                 } else {
                     local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTestCustom');
                 }
-                window.SSVGRenderTestCustom = SimpleSVG._loaderCallback;
+                window.SSVGRenderTestCustom = Iconify._loaderCallback;
 
                 // Add finders
-                SimpleSVG.addFinder('svg-test1', {
+                Iconify.addFinder('svg-test1', {
                     selector: '.svg-test1',
                     icon: function(element) {
                         var item;
@@ -172,7 +172,7 @@
                         return '';
                     }
                 });
-                SimpleSVG.addFinder('svg-test2', {
+                Iconify.addFinder('svg-test2', {
                     selector: '.svg-test2',
                     icon: function(element) {
                         var item;
@@ -194,7 +194,7 @@
                     }
                 });
 
-                SimpleSVG.ready(function() {
+                Iconify.ready(function() {
                     // Load images, start tests when images are available
                     local.findNewImages(containerRoot).forEach(function(image) {
                         if (!local.loadImage(image)) {
@@ -244,14 +244,14 @@
         });
 
         it('rendering with custom tags', function(done) {
-            var SimpleSVG = {
+            var Iconify = {
                     isReady: false
                 },
                 local = {
                     config: {}
                 },
                 global = {
-                    SimpleSVGConfig: {
+                    IconifyConfig: {
                         _readyEvent: 'RendererTestReadyEvent3'
                     }
                 },
@@ -269,26 +269,26 @@
 
                 containerRoot = document.getElementById(containerID);
 
-                // Setup fake SimpleSVG instance
+                // Setup fake Iconify instance
                 local.scanDOM = renderImages;
-                load(SimpleSVG, local, global);
+                load(Iconify, local, global);
                 if (local.config.defaultCDN.indexOf('{callback}') === -1) {
                     local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
                 } else {
                     local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTestCustom');
                 }
-                window.SSVGRenderTestCustom = SimpleSVG._loaderCallback;
+                window.SSVGRenderTestCustom = Iconify._loaderCallback;
 
                 // Add basic custom tags
-                SimpleSVG.addTag('inline-icon', true);
-                SimpleSVG.addTag('block-icon', false);
+                Iconify.addTag('inline-icon', true);
+                Iconify.addTag('block-icon', false);
 
-                SimpleSVG.addTag('fa-icon', false, function(element) {
-                    var result = element.getAttribute(SimpleSVG.getConfig('iconAttribute'));
+                Iconify.addTag('fa-icon', false, function(element) {
+                    var result = element.getAttribute(Iconify.getConfig('iconAttribute'));
                     return typeof result === 'string' ? 'fa:' + result : '';
                 });
 
-                SimpleSVG.ready(function() {
+                Iconify.ready(function() {
                     // Load images, start tests when images are available
                     local.findNewImages(containerRoot).forEach(function(image) {
                         if (!local.loadImage(image)) {

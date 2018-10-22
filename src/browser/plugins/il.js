@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Plugin for icalicons icons
  */
-(function(SimpleSVG) {
+(function(Iconify) {
     "use strict";
 
     /**
@@ -19,12 +19,12 @@
      *
      * @type {[string]}
      */
-    var inlineAttribute = SimpleSVG.getConfig('_inlineModeAttribute');
+    var inlineAttribute = Iconify.getConfig('_inlineModeAttribute');
 
     /**
      * Add finder to list of finders
      */
-    SimpleSVG.addFinder('il', {
+    Iconify.addFinder('il', {
         selector: '.il',
 
         /**
@@ -76,4 +76,4 @@
         }
     });
 
-})(SimpleSVG);
+})(Iconify);

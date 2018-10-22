@@ -4,11 +4,11 @@
     var expect = chai.expect,
         should = chai.should();
 
-    function load(SimpleSVG, local) {
+    function load(Iconify, local) {
         var global = {};
 
-        if (SimpleSVG.isReady === void 0) {
-            SimpleSVG.isReady = true;
+        if (Iconify.isReady === void 0) {
+            Iconify.isReady = true;
         }
 
         local.config = {};
@@ -17,7 +17,7 @@
     }
 
     describe('Testing image finder', function() {
-        var SimpleSVG,
+        var Iconify,
             local,
             containerID = 'finder-container',
             validIconsID = 'finder-basic',
@@ -33,21 +33,21 @@
             // Add dummy code
             jQuery('#debug').append('<div id="' + containerID + '">' +
                 '<div id="' + validIconsID + '">' +
-                    '<p>Few icons: <i class="simple-svg" data-icon="fa-bear" /> <i class="simple-svg" data-icon="fa-apple" /></p>' +
-                    '<p>Few more icons: <i class="simple-svg extra-class" data-icon="fa-apple" /> <i class="simple-svg" data-icon="mdi:arrow-up" /></p>' +
-                    '<p>Some pending icons: <i class="simple-svg svg-loading" data-icon="fa-login" /> <i class="simple-svg svg-loading" data-icon="mdi-home" /></p>' +
-                    '<p>Some parsed icons: <svg class="simple-svg" data-icon="empty-icon"><g /></svg></p>' +
-                    '<p>Icons with icon name in class list: <i class="simple-svg icon:fa-solid:arrow-alt-circle-left foo-bar" /></p>' +
+                    '<p>Few icons: <i class="iconify" data-icon="fa-bear" /> <i class="iconify" data-icon="fa-apple" /></p>' +
+                    '<p>Few more icons: <i class="iconify extra-class" data-icon="fa-apple" /> <i class="iconify" data-icon="mdi:arrow-up" /></p>' +
+                    '<p>Some pending icons: <i class="iconify svg-loading" data-icon="fa-login" /> <i class="iconify svg-loading" data-icon="mdi-home" /></p>' +
+                    '<p>Some parsed icons: <svg class="iconify" data-icon="empty-icon"><g /></svg></p>' +
+                    '<p>Icons with icon name in class list: <i class="iconify icon:fa-solid:arrow-alt-circle-left foo-bar" /></p>' +
                 '</div>' +
                 '<div id="' + invalidIconsID + '">' +
                     '<div>Some invalid attributes:' +
-                        '<p>New icon with empty icon attribute: <i class="simple-svg" data-icon="" /></p>' +
-                        '<p>New icon with wrong class name: <i class="simple-svg2" data-icon="mdi-question" /></p>' +
+                        '<p>New icon with empty icon attribute: <i class="iconify" data-icon="" /></p>' +
+                        '<p>New icon with wrong class name: <i class="iconify2" data-icon="mdi-question" /></p>' +
                         '<p>SVG without class name: <svg data-icon="fa-arrow-left"><g /></svg></p>' +
-                        '<p>SVG without icon name: <svg class="simple-svg"><g /></svg></p>' +
+                        '<p>SVG without icon name: <svg class="iconify"><g /></svg></p>' +
                     '</div>' +
                     '<div>Bad mixes of attributes that might end up detected incorrectly:' +
-                        '<p>Loading SVG: <svg class="simple-svg svg-loading" data-icon="pending-svg"><g /></svg></p>' +
+                        '<p>Loading SVG: <svg class="iconify svg-loading" data-icon="pending-svg"><g /></svg></p>' +
                     '</div>' +
                 '</div>' +
             '</div>');
@@ -56,12 +56,12 @@
             validIconsRoot = document.getElementById(validIconsID);
             invalidIconsRoot = document.getElementById(invalidIconsID);
 
-            // Setup fake SimpleSVG instance
-            SimpleSVG = {};
+            // Setup fake Iconify instance
+            Iconify = {};
             local = {};
 
             // Load libraries
-            load(SimpleSVG, local);
+            load(Iconify, local);
 
             expect(typeof local.findNewImages).to.be.equal('function');
             expect(typeof local.findParsedImages).to.be.equal('function');
@@ -143,31 +143,31 @@
         });
 
         it('checking custom finder', function() {
-            var SimpleSVG,
+            var Iconify,
                 local,
                 containerID = 'custom-finder',
                 containerRoot, faReserved, results;
 
             // Add dummy code
             jQuery('#debug').append('<div id="' + containerID + '">' +
-                '<p>Few icons: <i class="simple-svg" data-icon="mdi-bear" /> <i class="fa fa-apple" /></p>' +
-                '<p>Few more icons: <i class="simple-svg" data-icon="fa-star" /> <i class="fa fa-lg fa-bookmark fa-rotate-90" /></p>' +
-                '<p>Some pending icons: <i class="simple-svg svg-loading" data-icon="mdi-login" /> <i class="fa svg-loading fa-rotate-180 fa-home" /></p>' +
-                '<p>SVG with bad class name: <svg class="simple-svg fa fa-camera" data-icon="empty-icon"><g /></svg></p>' +
+                '<p>Few icons: <i class="iconify" data-icon="mdi-bear" /> <i class="fa fa-apple" /></p>' +
+                '<p>Few more icons: <i class="iconify" data-icon="fa-star" /> <i class="fa fa-lg fa-bookmark fa-rotate-90" /></p>' +
+                '<p>Some pending icons: <i class="iconify svg-loading" data-icon="mdi-login" /> <i class="fa svg-loading fa-rotate-180 fa-home" /></p>' +
+                '<p>SVG with bad class name: <svg class="iconify fa fa-camera" data-icon="empty-icon"><g /></svg></p>' +
             '</div>');
 
             containerRoot = document.getElementById(containerID);
 
-            // Setup fake SimpleSVG instance
-            SimpleSVG = {};
+            // Setup fake Iconify instance
+            Iconify = {};
             local = {};
 
             // Load libraries
-            load(SimpleSVG, local);
+            load(Iconify, local);
 
             // Add FontAwesome finder
             faReserved = ['fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-fw', 'fa-ul', 'fa-li', 'fa-border', 'fa-pull-left', 'fa-pull-right', 'fa-spin', 'fa-pulse', 'fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270', 'fa-flip-horizontal', 'fa-flip-vertical', 'fa-stack', 'fa-stack-1x', 'fa-stack-2x', 'fa-inverse'];
-            SimpleSVG.addFinder('fa', {
+            Iconify.addFinder('fa', {
                 selector: '.fa',
                 icon: function(element) {
                     var item;

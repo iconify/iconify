@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -12,5 +12,5 @@
  * Replacement for observer module when observer is disabled
  */
 
-SimpleSVG.pauseObserving = function() {};
-SimpleSVG.resumeObserving = function() {};
+Iconify.pauseObserving = function() {};
+Iconify.resumeObserving = function() {};

@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Main file
  */
-(function(SimpleSVG, local) {
+(function(Iconify, local) {
     "use strict";
 
     /**
@@ -25,7 +25,7 @@
                 if (local.loadImage(image)) {
                     if (!paused) {
                         paused = true;
-                        SimpleSVG.pauseObserving();
+                        Iconify.pauseObserving();
                     }
 
                     local.renderSVG(image);
@@ -44,22 +44,22 @@
         }
 
         if (paused) {
-            SimpleSVG.resumeObserving();
+            Iconify.resumeObserving();
         }
     };
 
     /**
      * Export function to scan DOM
      */
-    SimpleSVG.scanDOM = local.scanDOM;
+    Iconify.scanDOM = local.scanDOM;
 
     /**
      * Get version
      *
      * @return {string}
      */
-    SimpleSVG.getVersion = function() {
+    Iconify.getVersion = function() {
         return local.version;
     };
 
-})(SimpleSVG, local);
+})(Iconify, local);

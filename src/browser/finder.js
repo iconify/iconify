@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Functions that find images in DOM
  */
-(function(SimpleSVG, local, config) {
+(function(Iconify, local, config) {
     "use strict";
 
     var imageClass = config._imageClass,
@@ -119,7 +119,7 @@
      * @param {string} name Finder name
      * @param {object} finder Finder data
      */
-    SimpleSVG.addFinder = function(name, finder) {
+    Iconify.addFinder = function(name, finder) {
         // Set missing properties
         if (finder.selectorAll === void 0) {
             finder.selectorAll = finder.selector + negativeSelectors;
@@ -135,8 +135,8 @@
         finderKeys = Object.keys(finders);
 
         // Re-scan DOM
-        if (SimpleSVG.isReady) {
-            SimpleSVG.scanDOM();
+        if (Iconify.isReady) {
+            Iconify.scanDOM();
         }
     };
 
@@ -147,8 +147,8 @@
      * @param {boolean} inline True/false if icon should be inline by default
      * @param {function} [resolver] Function to return icon name, null or undefined if default resolver should be used
      */
-    SimpleSVG.addTag = function(name, inline, resolver) {
-        SimpleSVG.addFinder('tag-' + name, {
+    Iconify.addTag = function(name, inline, resolver) {
+        Iconify.addFinder('tag-' + name, {
             selector: name,
             icon: resolver === void 0 || resolver === null ? finders.ssvg.icon : resolver,
             filterAttributes: function(image, attributes) {
@@ -160,11 +160,11 @@
         });
     };
 
-    // Add custom simple-svg tag
+    // Add custom iconify-icon tag
     try {
         // Try to create custom element interface if browser supports it.
         // If browser doesn't support it, it will fall back to HTMLUnknownElement, which is
-        // fine because simple-svg doesn't have any custom behavior or attributes.
+        // fine because iconify-icon doesn't have any custom behavior or attributes.
         if (typeof Reflect === 'object' && typeof customElements === 'object' && Object.setPrototypeOf)
             (function() {
                 function El() {
@@ -172,10 +172,10 @@
                 }
                 Object.setPrototypeOf(El.prototype, HTMLElement.prototype);
                 Object.setPrototypeOf(El, HTMLElement);
-                customElements.define('simple-svg', El);
+                customElements.define('iconify-icon', El);
             })();
     } catch (err) { }
-    SimpleSVG.addTag('simple-svg', false);
+    Iconify.addTag('iconify-icon', false);
 
     /**
      * Find new images
@@ -239,4 +239,4 @@
         return results;
     };
 
-})(SimpleSVG, local, local.config);
+})(Iconify, local, local.config);

@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,9 +11,10 @@
 /**
  * Merge custom and default configuration and functions for changing config values
  *
- * It will merge default config with SimpleSVGConfig object if it exists
+ * It will merge default config with IconifyConfig object if it exists, allowing to set
+ * configuration before including Iconify script (useful if Iconify is loaded asynchronously).
  */
-(function(SimpleSVG, global, local, config) {
+(function(Iconify, global, local, config) {
     "use strict";
 
     /**
@@ -62,7 +63,7 @@
      * @param {string} name
      * @param {*} value
      */
-    SimpleSVG.setConfig = function(name, value) {
+    Iconify.setConfig = function(name, value) {
         setConfig(name, value, false);
     };
 
@@ -73,12 +74,12 @@
      * @param {string} url API JSONP URL. There are several possible variables in URL:
      *
      *      {icons} represents icons list
-     *      {callback} represents SimpleSVG callback function
+     *      {callback} represents Iconify callback function
      *      {prefix} is replaced with collection prefix (used when multiple collections are added with same url)
      *
      *      All variables are optional. If {icons} is missing, callback must return entire collection.
      */
-    SimpleSVG.setCustomCDN = function(prefix, url) {
+    Iconify.setCustomCDN = function(prefix, url) {
         var keys;
 
         // noinspection FallThroughInSwitchStatementJS
@@ -111,17 +112,22 @@
      * @param {string} name
      * @return {*}
      */
-    SimpleSVG.getConfig = function(name) {
+    Iconify.getConfig = function(name) {
         return config[name] === void 0 ? (
             config['_' + name] === void 0 ? null : config['_' + name]
         ) : config[name];
     };
 
-    // Merge configuration with SimpleSVGConfig object
-    if (global.SimpleSVGConfig !== void 0 && typeof global.SimpleSVGConfig === 'object') {
-        Object.keys(global.SimpleSVGConfig).forEach(function(key) {
-            setConfig(key, global.SimpleSVGConfig[key], true);
-        });
-    }
+    // Merge configuration with SimpleSVGConfig (for backwards compatibility) and IconifyConfig objects
+    // TODO: remove backwards compatibility with old beta before final release
+    ['SimpleSVG', 'Iconify'].forEach(function(prefix) {
+        var obj;
+        if (global[prefix + 'Config'] !== void 0 && typeof global[prefix + 'Config'] === 'object') {
+            obj = global[prefix + 'Config'];
+            Object.keys(obj).forEach(function(key) {
+                setConfig(key, obj, true);
+            });
+        }
+    });
 
-})(SimpleSVG, global, local, local.config);
+})(Iconify, global, local, local.config);

@@ -1,10 +1,14 @@
 "use strict";
 
-if (self.SimpleSVG === void 0) {
-    self.SimpleSVG = {
+if (self.Iconify === void 0) {
+    self.Iconify = {
         isReady: false
     };
-    (function (SimpleSVG, global) {
+
+    // Legacy support: keep SimpleSVG variable
+    self.SimpleSVG = self.Iconify;
+
+    (function (Iconify, global) {
         var local = {
             config: {},
             version: '{version}'
@@ -12,5 +16,5 @@ if (self.SimpleSVG === void 0) {
 
         /* content */
 
-    })(self.SimpleSVG, self);
+    })(self.Iconify, self);
 }

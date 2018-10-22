@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -15,5 +15,5 @@
 local.loadImage = function(image, checkQueue) {
     var icon = local.getPrefix(image.icon);
 
-    return SimpleSVG.iconExists(icon.icon, icon.prefix);
+    return Iconify.iconExists(icon.icon, icon.prefix);
 };

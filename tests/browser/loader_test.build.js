@@ -19,11 +19,11 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             fs.readFileSync(codeDir + '/browser/image.js', 'utf8'),
 
             // Temporary functions
-            'SimpleSVG.testLoaderURL = function() { return true; };' +
-            'SimpleSVG.secureURL = function(url) { return url; };' +
+            'Iconify.testLoaderURL = function() { return true; };' +
+            'Iconify.secureURL = function(url) { return url; };' +
 
             // Replace content of addScript()
-            fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8').replace('// Create script', 'if (!SimpleSVG.testLoaderURL(url)) return;')
+            fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8').replace('// Create script', 'if (!Iconify.testLoaderURL(url)) return;')
         ];
 
     // Replace code

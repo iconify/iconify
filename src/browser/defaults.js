@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -21,7 +21,7 @@
     config.SVGAttributes = {};
 
     // Class name for icons
-    config._imageClass = 'simple-svg';
+    config._imageClass = 'iconify';
 
     // Class name for image that is being loaded
     config._loadingClass = 'svg-loading';
@@ -47,8 +47,8 @@
     // Class to add to container when content has been appended
     config._appendedClass = 'svg-appended';
 
-    // Event to call when SimpleSVG is ready
-    config._readyEvent = 'SimpleSVGReady';
+    // Event to call when Iconify is ready
+    config._readyEvent = 'IconifyReady';
 
     // Polyfill URLs
     config._webComponentsPolyfill = '//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js';

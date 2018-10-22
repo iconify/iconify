@@ -1,5 +1,5 @@
 /**
- * This file is part of the simple-svg package.
+ * This file is part of the @iconify/iconify package.
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
@@ -11,7 +11,7 @@
 /**
  * Icons storage handler
  */
-(function(SimpleSVG, local, global) {
+(function(Iconify, local, global) {
     "use strict";
 
     var eventQueued = false,
@@ -33,7 +33,7 @@
      *
      * @param {object} json JSON data
      */
-    SimpleSVG.addCollection = function(json) {
+    Iconify.addCollection = function(json) {
         storage.addCollection(json);
         if (!eventQueued) {
             eventQueued = true;
@@ -47,7 +47,7 @@
      * @param {string} name Icon name
      * @param {object} data Icon data
      */
-    SimpleSVG.addIcon = function(name, data) {
+    Iconify.addIcon = function(name, data) {
         storage.addIcon(name, data);
         if (!eventQueued) {
             eventQueued = true;
@@ -62,7 +62,7 @@
      * @param {string} [prefix] Optional icon prefix (if prefix is set name should not include prefix)
      * @return {boolean}
      */
-    SimpleSVG.iconExists = storage.exists.bind(storage);
+    Iconify.iconExists = storage.exists.bind(storage);
 
     /**
      * Get icon data
@@ -71,7 +71,7 @@
      * @param {string} [prefix] Optional icon prefix (if prefix is set name should not include prefix)
      * @return {null}
      */
-    SimpleSVG.getIcon = storage.copyIcon.bind(storage);
+    Iconify.getIcon = storage.copyIcon.bind(storage);
 
     /**
      * Get list of available icons
@@ -79,23 +79,27 @@
      * @param {string} prefix If prefix is set, only icons with that prefix will be listed
      * @return {Array}
      */
-    SimpleSVG.listIcons = storage.list.bind(storage);
+    Iconify.listIcons = storage.list.bind(storage);
 
     /**
-     * Add collections from global SimpleSVGPreload array
+     * Add collections from global IconifyPreload array
      *
-     * This allows preloading icons before including SimpleSVG
-     * To preload icons before and after SimpleSVG, instead of wrapping object in
-     *  SimpleSVG.addCollection(data);
+     * This allows preloading icons before including Iconify
+     * To preload icons before and after Iconify, instead of wrapping object in
+     *  Iconify.addCollection(data);
      * use this:
-     *  (window.SimpleSVG ? window.SimpleSVG.addCollection : ((window.SimpleSVGPreload = window.SimpleSVGPreload || []).push.bind(window.SimpleSVGPreload)))(data);
+     *  (window.Iconify ? window.Iconify.addCollection : ((window.IconifyPreload = window.IconifyPreload || []).push.bind(window.IconifyPreload)))(data);
+     *
+     * TODO: remove backwards compatibility with old beta before final release
      */
-    if (global.SimpleSVGPreload !== void 0 && global.SimpleSVGPreload instanceof Array) {
-        global.SimpleSVGPreload.forEach(function(item) {
-            if (typeof item === 'object' && item.icons !== void 0) {
-                SimpleSVG.addCollection(item);
-            }
-        });
-    }
+    ['SimpleSVG', 'Iconify'].forEach(function(prefix) {
+        if (global[prefix + 'Preload'] !== void 0 && global[prefix + 'Preload'] instanceof Array) {
+            global[prefix + 'Preload'].forEach(function(item) {
+                if (typeof item === 'object' && item.icons !== void 0) {
+                    Iconify.addCollection(item);
+                }
+            });
+        }
+    });
 
-})(SimpleSVG, local, global);
+})(Iconify, local, global);

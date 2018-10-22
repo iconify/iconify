@@ -3,7 +3,7 @@
 (function() {
     var isBrowser = (typeof module !== 'object' || !module.exports);
 
-    var Storage = isBrowser ? SimpleSVG.modules.Storage : require('../../src/common/storage');
+    var Storage = isBrowser ? Iconify.modules.Storage : require('../../src/common/storage');
 
     var chai = isBrowser ? self.chai : require('chai'),
         expect = chai.expect,
