@@ -14,7 +14,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             TestHelper.getStorage() +
             fs.readFileSync(codeDir + '/browser/storage.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/defaults.js', 'utf8'),
-            fs.readFileSync(codeDir + '/browser/with-cdn/defaults.js', 'utf8'),
+            fs.readFileSync(codeDir + '/browser/with-api/defaults.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/config.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/image.js', 'utf8'),
 
@@ -23,7 +23,7 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             'Iconify.secureURL = function(url) { return url; };' +
 
             // Replace content of addScript()
-            fs.readFileSync(codeDir + '/browser/with-cdn/loader.js', 'utf8').replace('// Create script', 'if (!Iconify.testLoaderURL(url)) return;')
+            fs.readFileSync(codeDir + '/browser/with-api/loader.js', 'utf8').replace('// Create script', 'if (!Iconify.testLoaderURL(url)) return;')
         ];
 
     // Replace code

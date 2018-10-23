@@ -41,10 +41,10 @@
                 // Setup fake Iconify instance
                 local.scanDOM = renderImages;
                 load(Iconify, local, global);
-                if (local.config.defaultCDN.indexOf('{callback}') === -1) {
-                    local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTest';
+                if (local.config.defaultAPI.indexOf('{callback}') === -1) {
+                    local.config.defaultAPI += (local.config.defaultAPI.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTest';
                 } else {
-                    local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTest');
+                    local.config.defaultAPI = local.config.defaultAPI.replace('{callback}', 'window.SSVGRenderTest');
                 }
                 window.SSVGRenderTest = Iconify._loaderCallback;
 
@@ -149,10 +149,10 @@
                 // Setup fake Iconify instance
                 local.scanDOM = renderImages;
                 load(Iconify, local, global);
-                if (local.config.defaultCDN.indexOf('{callback}') === -1) {
-                    local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
+                if (local.config.defaultAPI.indexOf('{callback}') === -1) {
+                    local.config.defaultAPI += (local.config.defaultAPI.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
                 } else {
-                    local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTestCustom');
+                    local.config.defaultAPI = local.config.defaultAPI.replace('{callback}', 'window.SSVGRenderTestCustom');
                 }
                 window.SSVGRenderTestCustom = Iconify._loaderCallback;
 
@@ -272,10 +272,10 @@
                 // Setup fake Iconify instance
                 local.scanDOM = renderImages;
                 load(Iconify, local, global);
-                if (local.config.defaultCDN.indexOf('{callback}') === -1) {
-                    local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
+                if (local.config.defaultAPI.indexOf('{callback}') === -1) {
+                    local.config.defaultAPI += (local.config.defaultAPI.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestCustom';
                 } else {
-                    local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGRenderTestCustom');
+                    local.config.defaultAPI = local.config.defaultAPI.replace('{callback}', 'window.SSVGRenderTestCustom');
                 }
                 window.SSVGRenderTestCustom = Iconify._loaderCallback;
 

@@ -103,7 +103,7 @@
          * @return {number|null}
          */
         function baseLength(prefix) {
-            var url = config.cdn[prefix] === void 0 ? config.defaultCDN : config.cdn[prefix];
+            var url = config.API[prefix] === void 0 ? config.defaultAPI : config.API[prefix];
 
             if (url.indexOf('{icons}') === -1) {
                 urls[prefix] = url;

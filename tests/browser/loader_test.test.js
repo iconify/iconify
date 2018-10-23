@@ -81,10 +81,10 @@
 
             // Load libraries
             load(Iconify, local);
-            if (local.config.defaultCDN.indexOf('{callback}') === -1) {
-                local.config.defaultCDN += (local.config.defaultCDN.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGLoaderTest1';
+            if (local.config.defaultAPI.indexOf('{callback}') === -1) {
+                local.config.defaultAPI += (local.config.defaultAPI.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGLoaderTest1';
             } else {
-                local.config.defaultCDN = local.config.defaultCDN.replace('{callback}', 'window.SSVGLoaderTest1');
+                local.config.defaultAPI = local.config.defaultAPI.replace('{callback}', 'window.SSVGLoaderTest1');
             }
             local.config._loaderEvent = 'newSSVGImagesTest';
             window.SSVGLoaderTest1 = Iconify._loaderCallback;
@@ -107,7 +107,7 @@
             expect(local.loadImage(star)).to.be.equal(false, 'fa-star should not be loaded');
         });
 
-        it('multiple CDNs and icons limit', function(done) {
+        it('multiple APIs and icons limit', function(done) {
             var Iconify = {
                 },
                 local = {
@@ -132,9 +132,9 @@
                 }
                 return false;
             };
-            local.config.defaultCDN = '{prefix}?icons={icons}';
-            local.config.cdn['fa'] = 'fa?fa-icons={icons}';
-            local.config.cdn['test'] = 'test?testing={icons}';
+            local.config.defaultAPI = '{prefix}?icons={icons}';
+            local.config.API['fa'] = 'fa?fa-icons={icons}';
+            local.config.API['test'] = 'test?testing={icons}';
             local.config.loaderMaxURLSize = 50;
             local._debugLoader = true;
 
@@ -186,8 +186,8 @@
                 }
                 return false;
             };
-            local.config.defaultCDN = '{prefix}?icons={icons}';
-            local.config.cdn['fa'] = 'fa?icons={icons}';
+            local.config.defaultAPI = '{prefix}?icons={icons}';
+            local.config.API['fa'] = 'fa?icons={icons}';
             local._debugLoader = true;
 
             // Add dummy icons

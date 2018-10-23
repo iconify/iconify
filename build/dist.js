@@ -129,7 +129,7 @@ function parse(config) {
         testFiles.push('common/' + file);
         testFiles.push('browser/' + file);
         testFiles.push('browser/' + (config.observer ? 'with-' : 'no-') + 'observer/' + file);
-        testFiles.push('browser/' + (config.cdn ? 'with-' : 'no-') + 'cdn/' + file);
+        testFiles.push('browser/' + (config.api ? 'with-' : 'no-') + 'api/' + file);
     });
 
     // Add all files
@@ -158,19 +158,19 @@ Helper.mkdir(resolvedDistDir);
 // Parse different packages
 content = parse({
     observer: true,
-    cdn: true
+    api: true
 });
 save(baseName, content);
 
 content = parse({
     observer: false,
-    cdn: true
+    api: true
 });
 save(baseName + '.without-observer', content);
 
 content = parse({
     observer: false,
-    cdn: false
+    api: false
 });
 save(baseName + '.basic', content);
 

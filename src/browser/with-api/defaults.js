@@ -9,18 +9,18 @@
  */
 
 /**
- * Default configuration when CDN module is included
+ * Default configuration when API module is included
  */
 (function(config) {
     "use strict";
 
-    // CDN callback script
-    config.defaultCDN = '//api.iconify.design/{prefix}.js?icons={icons}';
+    // API callback script
+    config.defaultAPI = '//api.iconify.design/{prefix}.js?icons={icons}';
 
-    // Custom CDN list. Key = prefix, value = CDN URL
-    config.cdn = {};
+    // Custom API list. Key = prefix, value = API URL
+    config.API = {};
 
-    // Maximum URL size for CDN
+    // Maximum length of API URL
     config.loaderMaxURLSize = 500;
 
     // True if icons should be loaded before DOM is ready

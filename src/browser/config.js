@@ -39,7 +39,7 @@
         }
 
         switch (configKey) {
-            case 'cdn':
+            case 'API':
             case 'SVGAttributes':
                 // Merge objects
                 Object.keys(value).forEach(function(key2) {
@@ -68,7 +68,7 @@
     };
 
     /**
-     * Set custom CDN URL
+     * Set custom API URL
      *
      * @param {string|Array} prefix Collection prefix
      * @param {string} url API JSONP URL. There are several possible variables in URL:
@@ -79,7 +79,7 @@
      *
      *      All variables are optional. If {icons} is missing, callback must return entire collection.
      */
-    Iconify.setCustomCDN = function(prefix, url) {
+    Iconify.setCustomAPI = function(prefix, url) {
         var keys;
 
         // noinspection FallThroughInSwitchStatementJS
@@ -99,9 +99,9 @@
         }
         prefix.forEach(function(key) {
             if (url === null) {
-                delete config.cdn[key];
+                delete config.API[key];
             } else {
-                config.cdn[key] = url;
+                config.API[key] = url;
             }
         });
     };

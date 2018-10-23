@@ -9,7 +9,8 @@
  */
 
 /**
- * Replacement for loader module when CDN is disabled
+ * Replacement for loader module when API is disabled
+ * Only icons stored locally or bundled will be used
  */
 
 local.loadImage = function(image, checkQueue) {
