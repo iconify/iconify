@@ -36,7 +36,7 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify:
 
 ```
-<script src="//code.iconify.design/1/1.0.0-beta6/iconify.min.js"></script>
+<script src="//code.iconify.design/1/1.0.0-beta7/iconify.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -308,7 +308,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 
 How to use plugins? Include plugin script:
 
-    <script src="//code.iconify.design/1/1.0.0-beta6/plugin-fa.min.js"></script>
+    <script src="//code.iconify.design/1/1.0.0-beta7/plugin-fa.min.js"></script>
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
 syntax in your pages.
