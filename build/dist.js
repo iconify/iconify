@@ -143,12 +143,19 @@ function parse(config) {
 }
 
 function save(file, content) {
+    // Replace 4 spaces with 1 tab
+    content = content.replace(/[ ]{4}/g, '\t');
+
+    // Save original size for log
     let size = content.length;
 
+    // Save file
     fs.writeFileSync(resolvedDistDir + '/' + file + '.js', content, 'utf8');
 
+    // Save minified file
     content = uglify.minify(content);
     fs.writeFileSync(resolvedDistDir + '/' + file + '.min.js', content.code);
+
     console.log('Saved ' + distDir + '/' + file + '.js (' + size + ' bytes full, ' + content.code.length + ' bytes minified)');
 }
 
