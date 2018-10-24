@@ -220,8 +220,6 @@
         var stored = false;
 
         if (typeof data === 'object') {
-            Iconify.addCollection(data);
-
             // Add to storage
             ['local', 'session'].forEach(function(key) {
                 var func;
@@ -242,6 +240,9 @@
                     useStorage[key] = false;
                 }
             });
+
+            // Add icons to collection and parse icons
+            Iconify.addCollection(data);
 
             // Dispatch event
             local.event(config._loaderEvent);

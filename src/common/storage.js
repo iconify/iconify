@@ -111,7 +111,7 @@ function setDefaults(item) {
 
     (item._defaults === void 0 ? [item, itemDefaults] : [item, item._defaults, itemDefaults]).forEach(function(values) {
         Object.keys(values).forEach(function(attr) {
-            if (attr.slice(0, 1) !== '_' && result[attr] === void 0) {
+            if (typeof values[attr] !== 'object' && result[attr] === void 0) {
                 result[attr] = values[attr];
             }
         });
@@ -167,7 +167,7 @@ function Storage() {
             this._resolved[icon.prefix] = {};
             this._icons[icon.prefix] = {};
             this._aliases[icon.prefix] = {};
-        } else if (this._resolved[icon.prefix] !== void 0) {
+        } else {
             // Delete old item with same name
             delete this._icons[icon.prefix][icon.icon];
             delete this._aliases[icon.prefix][icon.icon];
@@ -212,16 +212,16 @@ function Storage() {
                 result[attr] = item[attr];
             }
         });
-        parentIcon = getPrefix(item.parent, item._prefix);
+        parentIcon = item.parent;
 
         while (true) {
             counter ++;
-            if (counter > 5 || this._resolved[parentIcon.prefix] === void 0 || this._resolved[parentIcon.prefix][parentIcon.icon] === void 0) {
+            if (counter > 5 || this._resolved[icon.prefix][parentIcon] === void 0) {
                 return this._resolved[icon.prefix][icon.icon] = null;
             }
 
-            isAlias = this._icons[parentIcon.prefix][parentIcon.icon] === void 0;
-            parent = this[isAlias ? '_aliases' : '_icons'][parentIcon.prefix][parentIcon.icon];
+            isAlias = this._icons[icon.prefix][parentIcon] === void 0;
+            parent = this[isAlias ? '_aliases' : '_icons'][icon.prefix][parentIcon];
 
             // Merge data
             Object.keys(parent).forEach(function(attr) {
@@ -245,7 +245,7 @@ function Storage() {
             if (!isAlias) {
                 break;
             }
-            parentIcon = getPrefix(parent.parent, parent._prefix);
+            parentIcon = parent.parent;
         }
 
         return this._resolved[icon.prefix][icon.icon] = setDefaults(result);
@@ -259,8 +259,7 @@ function Storage() {
     this.addCollection = function(json) {
         // Get default values
         var that = this,
-            defaults = {},
-            prefix = json.prefix;
+            defaults = {};
 
         // Get default values for icons
         itemAttributes.forEach(function(attr) {
@@ -274,7 +273,7 @@ function Storage() {
         // Parse icons
         if (json.icons !== void 0) {
             Object.keys(json.icons).forEach(function(key) {
-                var icon = getPrefix(key, prefix),
+                var icon = getPrefix(key, json.prefix),
                     item = json.icons[key];
                 if (item.body === void 0) {
                     return;
@@ -287,13 +286,18 @@ function Storage() {
         // Parse aliases
         if (json.aliases !== void 0) {
             Object.keys(json.aliases).forEach(function(key) {
-                var icon = getPrefix(key, prefix),
+                var icon = getPrefix(key, json.prefix),
                     item = json.aliases[key];
                 if (item.parent === void 0) {
                     return;
                 }
-                item._defaults = defaults;
-                item._prefix = prefix;
+                if (json.prefix === void 0) {
+                    // Remove prefix from parent item
+                    if (item.parent.slice(0, icon.prefix.length) !== icon.prefix) {
+                        return;
+                    }
+                    item.parent = item.parent.slice(icon.prefix.length + 1);
+                }
                 that._add(true, icon, item);
             });
         }
@@ -310,8 +314,12 @@ function Storage() {
         var alias = data.parent !== void 0,
             icon = getPrefix(name, prefix);
 
-        if (alias && typeof prefix === 'string') {
-            data._prefix = prefix;
+        if (alias && prefix === void 0) {
+            // Remove prefix from parent item
+            if (data.parent.slice(0, icon.prefix.length) !== icon.prefix) {
+                return;
+            }
+            data.parent = data.parent.slice(icon.prefix.length + 1);
         }
 
         this._add(alias, icon, data);

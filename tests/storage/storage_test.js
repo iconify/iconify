@@ -308,48 +308,48 @@
             // Add aliases
             storage.addCollection({
                 icons: {
-                    icon1: {
+                    'foo-icon1': {
                         body: '<path d="" />',
                         width: 20,
                         height: 20
                     }
                 },
                 aliases: {
-                    alias1: {
-                        parent: 'icon1',
+                    'foo-alias1': {
+                        parent: 'foo-icon1',
                         width: 24
                     },
-                    alias2: {
+                    'foo-alias2': {
                         // parent will be added later
-                        parent: 'alias4',
+                        parent: 'foo-alias4',
                         height: 22
                     },
-                    alias3: {
+                    'foo-alias3': {
                         // parent is another alias added before
-                        parent: 'alias1',
+                        parent: 'foo-alias1',
                         height: 30
                     },
-                    alias4: {
-                        parent: 'icon1',
+                    'foo-alias4': {
+                        parent: 'foo-icon1',
                         height: 21,
                         inlineHeight: 21
                     },
-                    alias5: {
+                    'foo-alias5': {
                         // no such parent
-                        parent: 'icon5'
+                        parent: 'foo-icon5'
                     },
-                    alias6: {
+                    'foo-alias6': {
                         // loop
-                        parent: 'alias6'
+                        parent: 'foo-alias6'
                     }
                 }
             });
 
             // Check if icons exist
-            expect(storage.list()).to.be.eql(['icon1', 'alias1', 'alias2', 'alias3', 'alias4', 'alias5', 'alias6']);
+            expect(storage.list()).to.be.eql(['foo:icon1', 'foo:alias1', 'foo:alias2', 'foo:alias3', 'foo:alias4', 'foo:alias5', 'foo:alias6']);
 
             // Check icon and all aliases
-            expect(storage.getIcon('icon1')).to.be.eql({
+            expect(storage.getIcon('foo:icon1')).to.be.eql({
                 body: '<path d="" />',
                 width: 20,
                 height: 20,
@@ -363,7 +363,7 @@
                 verticalAlign: -0.125
             });
 
-            expect(storage.getIcon('alias1')).to.be.eql({
+            expect(storage.getIcon('foo:alias1')).to.be.eql({
                 body: '<path d="" />',
                 width: 24,
                 height: 20,
@@ -377,7 +377,7 @@
                 verticalAlign: -0.125
             });
 
-            expect(storage.getIcon('alias2')).to.be.eql({
+            expect(storage.getIcon('foo:alias2')).to.be.eql({
                 body: '<path d="" />',
                 width: 20,
                 height: 22,
@@ -391,7 +391,7 @@
                 verticalAlign: -0.125
             });
 
-            expect(storage.getIcon('alias3')).to.be.eql({
+            expect(storage.getIcon('foo:alias3')).to.be.eql({
                 body: '<path d="" />',
                 width: 24,
                 height: 30,
@@ -406,7 +406,7 @@
             });
 
 
-            expect(storage.getIcon('alias4')).to.be.eql({
+            expect(storage.getIcon('foo:alias4')).to.be.eql({
                 body: '<path d="" />',
                 width: 20,
                 height: 21,
@@ -420,8 +420,8 @@
                 verticalAlign: -0.143
             });
 
-            expect(storage.getIcon('alias5')).to.be.equal(null);
-            expect(storage.getIcon('alias6')).to.be.equal(null);
+            expect(storage.getIcon('foo:alias5')).to.be.equal(null);
+            expect(storage.getIcon('foo:alias6')).to.be.equal(null);
         });
 
         it('collection with prefix', function() {
