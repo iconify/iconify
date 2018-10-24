@@ -232,12 +232,12 @@
                 func = global[key + 'Storage'];
                 try {
                     if (!storageIndex[key]) {
-                        func.setItem('ssvg-version', local.version);
+                        func.setItem('iconify-version', local.version);
                     }
-                    func.setItem('ssvg-icons' + storageIndex[key], JSON.stringify(data));
+                    func.setItem('iconify' + storageIndex[key], JSON.stringify(data));
                     stored = true;
                     storageIndex[key] ++;
-                    func.setItem('ssvg-count', storageIndex[key]);
+                    func.setItem('iconify-count', storageIndex[key]);
                 } catch (err) {
                     useStorage[key] = false;
                 }
@@ -305,12 +305,12 @@
                     return;
                 }
 
-                if (func.getItem('ssvg-version') !== local.version) {
+                if (func.getItem('iconify-version') !== local.version) {
                     // Ignore stored data, overwrite it starting with index 0
                     return;
                 }
 
-                limit = parseInt(func.getItem('ssvg-count'));
+                limit = parseInt(func.getItem('iconify-count'));
                 if (typeof limit !== 'number' || isNaN(limit)) {
                     return;
                 }
@@ -320,7 +320,7 @@
                     if (storageIndex[key] >= limit) {
                         return;
                     }
-                    item = func.getItem('ssvg-icons' + storageIndex[key]);
+                    item = func.getItem('iconify' + storageIndex[key]);
                     if (typeof item === 'string') {
                         item = JSON.parse(item);
                         if (typeof item === 'object') {

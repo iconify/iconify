@@ -29,7 +29,7 @@
      * @type {object}
      */
     var finders = {
-        ssvg: {
+        iconify: {
             selector: '.' + imageClass,
             selectorAll: '.' + imageClass + negativeSelectors,
             selectorNew: '.' + imageClass + negativeSelectors + negativeLoadingSelectors,
@@ -150,7 +150,7 @@
     Iconify.addTag = function(name, inline, resolver) {
         Iconify.addFinder('tag-' + name, {
             selector: name,
-            icon: resolver === void 0 || resolver === null ? finders.ssvg.icon : resolver,
+            icon: resolver === void 0 || resolver === null ? finders.iconify.icon : resolver,
             filterAttributes: function(image, attributes) {
                 if (attributes[inlineAttribute] === void 0) {
                     attributes[inlineAttribute] = inline;
