@@ -1,8 +1,6 @@
-### Important beta and backwards compatibility notice
+### Important backwards compatibility notice
 
-Important: project is marked as beta, which means there might be some bugs and there might be big changes before final release.
-
-Important: as of beta 6 project has been renamed from SimpleSVG to Iconify.
+Important: as of version 1.0.0-beta6 project has been renamed from SimpleSVG to Iconify.
 
 Many changes from SimpleSVG 1.0.0-beta5 to Iconify 1.0.0-beta6 are not backwards compatible. If you wrote code for SimpleSVG
 project, there are few changes you need to make to code to work with new version:
@@ -36,7 +34,7 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify:
 
 ```
-<script src="//code.iconify.design/1/1.0.0-beta7/iconify.min.js"></script>
+<script src="//code.iconify.design/1/1.0.0-rc1/iconify.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -289,7 +287,7 @@ Click any icon to get HTML code.
 
 Why use Iconify instead of fonts or other frameworks?
 
-There is a tutorial that explains all differences. See http://iconify.design/docs/simplesvg-svg-fonts/
+There is a tutorial that explains all differences. See http://iconify.design/docs/iconify-svg-fonts/
 
 
 
@@ -308,7 +306,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 
 How to use plugins? Include plugin script:
 
-    <script src="//code.iconify.design/1/1.0.0-beta7/plugin-fa.min.js"></script>
+    <script src="//code.iconify.design/1/1.0.0-rc1/plugin-fa.min.js"></script>
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
 syntax in your pages.

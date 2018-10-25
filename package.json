@@ -2,7 +2,7 @@
   "name": "@iconify/iconify",
   "description": "SVG framework with over 30,000 icons to choose from",
   "author": "Vjacheslav Trushkin <cyberalien@gmail.com> (artodia.com)",
-  "version": "1.0.0-beta7",
+  "version": "1.0.0-rc1",
   "license": "MIT",
   "keywords": [
     "svg",
