@@ -116,7 +116,8 @@ you might also need to set line-height:
 
 ```
 .icon-clipboard {
-    font-size: 32px / 1em;
+    font-size: 32px;
+    line-height: 1em;
 }
 ```
 
