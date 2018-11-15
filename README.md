@@ -331,6 +331,8 @@ load polyfills for those browsers. All newer browsers do not require those polyf
 
 Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
 
+`SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
+
 This license does not apply to icons. Icons are released under different licenses, see each icons set for details.
 Icons available by default are all licensed under some kind of open source or free license. 
 
