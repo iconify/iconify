@@ -3,9 +3,14 @@
  *
  * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
  *
- * For the full copyright and license information, please view the license.txt
- * file that was distributed with this source code.
- * @license MIT
+ * For the full copyright and license information, please view the license.txt or license-gpl.txt
+ * files that were distributed with this source code.
+ *
+ * Licensed under Apache 2.0 or GPL 2.0 at your option.
+ * If derivative product is not compatible with one of licenses, you can pick one of licenses.
+ *
+ * @license Apache 2.0
+ * @license GPL 2.0
  */
 
 /**
@@ -23,6 +28,7 @@ let codeDir = 'src',
     distDir = 'dist',
     baseName = 'iconify',
     version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')).version,
+    header = '',
 
     /**
      * List of files in order of compilation.
@@ -123,6 +129,13 @@ function parse(config) {
     let content = '',
         template = fs.readFileSync(__dirname + '/_template.js', 'utf8').replace('{version}', version);
 
+    // Get header from template
+    let pos = template.indexOf('*/');
+    if (pos > 0) {
+        header = template.slice(0, pos + 2) + "\n";
+        template = template.slice(pos + 2).trim();
+    }
+
     // List of files
     let testFiles = [];
     filesOrder.forEach(file => {
@@ -150,11 +163,11 @@ function save(file, content) {
     let size = content.length;
 
     // Save file
-    fs.writeFileSync(resolvedDistDir + '/' + file + '.js', content, 'utf8');
+    fs.writeFileSync(resolvedDistDir + '/' + file + '.js', header + content, 'utf8');
 
     // Save minified file
     content = uglify.minify(content);
-    fs.writeFileSync(resolvedDistDir + '/' + file + '.min.js', content.code);
+    fs.writeFileSync(resolvedDistDir + '/' + file + '.min.js', header + content.code);
 
     console.log('Saved ' + distDir + '/' + file + '.js (' + size + ' bytes full, ' + content.code.length + ' bytes minified)');
 }

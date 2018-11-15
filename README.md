@@ -34,7 +34,7 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify:
 
 ```
-<script src="//code.iconify.design/1/1.0.0-rc1/iconify.min.js"></script>
+<script src="//code.iconify.design/1/1.0.0-rc2/iconify.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -307,7 +307,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 
 How to use plugins? Include plugin script:
 
-    <script src="//code.iconify.design/1/1.0.0-rc1/plugin-fa.min.js"></script>
+    <script src="//code.iconify.design/1/1.0.0-rc2/plugin-fa.min.js"></script>
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
 syntax in your pages.
@@ -329,7 +329,7 @@ load polyfills for those browsers. All newer browsers do not require those polyf
 
 # License
 
-Iconify is released with MIT license.
+Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
 
 This license does not apply to icons. Icons are released under different licenses, see each icons set for details.
 Icons available by default are all licensed under some kind of open source or free license. 
