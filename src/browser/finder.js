@@ -161,7 +161,8 @@
                     attributes[inlineAttribute] = inline;
                 }
                 return attributes;
-            }
+            },
+            filterClasses: finders.iconify.filterClasses
         });
     };
 

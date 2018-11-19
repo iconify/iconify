@@ -32,8 +32,9 @@
                     '<iconify-icon data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
                     // Append icon as child
                     '<i class="iconify" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
-                    // Test class names instead of attributes
+                    // Test class names instead of attributes (class overrides attribute!)
                     '<span class="iconify icon:fa-arrow-top icon-flip:vertical icon-rotate:90deg" data-rotate="180deg" />' +
+                    '<iconify-icon class="icon:fa-arrow-top icon-flip:vertical icon-rotate:90deg" data-flip="horizontal" />' +
                     '</div>');
 
                 containerRoot = document.getElementById(containerID);
@@ -77,6 +78,7 @@
                     image2 = containerRoot.childNodes[1],
                     image3 = containerRoot.childNodes[2],
                     image4 = containerRoot.childNodes[3],
+                    image5 = containerRoot.childNodes[4],
                     svg3;
 
                 expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
@@ -84,6 +86,7 @@
                 expect(image3.tagName.toLowerCase()).to.be.equal('i', 'Third node supposed to be I');
                 expect(image3.childNodes.length).to.be.equal(1, 'Third node must have child node');
                 expect(image4.tagName.toLowerCase()).to.be.equal('svg', 'Fourth node supposed to be SVG');
+                expect(image5.tagName.toLowerCase()).to.be.equal('svg', 'Fifth node supposed to be SVG');
 
                 expect(image1.getAttribute('class')).to.be.equal('iconify', 'Class name should be iconify');
                 expect(image1.getAttribute('data-icon')).to.be.equal('fa-home', 'data-icon attribute is missing or invalid');
@@ -103,7 +106,7 @@
                 expect(svg3.tagName.toLowerCase()).to.be.equal('svg', 'Third node child node supposed to be SVG');
                 expect(svg3.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
 
-                expect(image4 === void 0).to.be.equal(false, 'image2 is undefined');
+                expect(image4 === void 0).to.be.equal(false, 'image4 is undefined');
                 expect(image4.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
                 if (image4.innerHTML !== void 0) {
                     // Skip tests on IE
@@ -112,6 +115,13 @@
                     expect(image4.innerHTML.indexOf('rotate(90 ') !== -1).to.be.equal(true, 'Content should include 90deg rotation');
                     expect(image4.innerHTML.indexOf('translate') !== -1).to.be.equal(true, 'Content should include translate');
                     expect(image4.innerHTML.indexOf('scale(1 -1)')).to.not.be.equal(-1, 'Content should contain scale');
+                }
+
+                expect(image5 === void 0).to.be.equal(false, 'image5 is undefined');
+                expect(image5.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
+                if (image5.innerHTML !== void 0) {
+                    // Skip tests on IE
+                    expect(image5.innerHTML).to.be.equal(image4.innerHTML, 'Fourth and fifth image should have same content');
                 }
 
                 done();
