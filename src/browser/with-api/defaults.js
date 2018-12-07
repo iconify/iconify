@@ -20,7 +20,7 @@
     "use strict";
 
     // API callback script
-    config.defaultAPI = '//api.iconify.design/{prefix}.js?icons={icons}';
+    config.defaultAPI = 'https://api.iconify.design/{prefix}.js?icons={icons}';
 
     // Custom API list. Key = prefix, value = API URL
     config.API = {};
