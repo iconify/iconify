@@ -43,6 +43,10 @@
     // True if local storage should be used to cache icons. This option might require cookie confirmation in some countries,
     // so it is disabled unless storage already has some data, which means website is using it, so script assumes user
     // has accepted cookies.
-    config.localStorage = !!(window && window.localStorage && window.localStorage.length);
+    try {
+        config.localStorage = !!(window && window.localStorage && window.localStorage.length);
+    } catch (err) {
+        config.localStorage = false;
+    }
 
 })(local.config);
