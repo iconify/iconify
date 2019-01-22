@@ -23,10 +23,10 @@
             });
             svg = new SVG(storage.getIcon('test'));
 
-            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24"><path d="" /></svg>');
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24"><path d="" /></svg>');
             expect(svg.toString({
                 'data-inline': false
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.25em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-inline="false"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-inline="false"><path d="" /></svg>');
         });
 
         it('custom dimensions', function() {
@@ -42,13 +42,13 @@
 
             expect(svg.toString({
                 width: '40px'
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="40px" height="32px" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40px" height="32px" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
 
             // Custom scale
             expect(svg.toString({
                 width: 30,
                 height: 50
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="30" height="50" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="30" height="50" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
         });
 
         it('without width or height', function() {
@@ -66,19 +66,19 @@
             expect(svg.toString({
                 width: false,
                 height: false
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
 
             // No height
             expect(svg.toString({
                 width: 40,
                 height: false
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="40" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
 
             // Invalid width value
             expect(svg.toString({
                 width: 'none',
                 height: 8
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="none" height="8" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="none" height="8" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
         });
 
         it('custom attributes', function() {
@@ -96,13 +96,13 @@
                 id: 'test',
                 style: 'margin:0; transform: scale(0.5);',
                 'class': 'iconify test-class loading'
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);margin:0; transform: scale(0.5);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" id="test" class="iconify test-class loading"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);margin:0; transform: scale(0.5);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" id="test" class="iconify test-class loading"><path d="" /></svg>');
 
             // Values that must be escaped
             expect(svg.toString({
                 'data-foo': 'Test" quote',
                 'data-<bar': 'Test >\''
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-foo="Test&quot; quote" data-&lt;bar="Test &gt;&#039;"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16" data-foo="Test&quot; quote" data-&lt;bar="Test &gt;&#039;"><path d="" /></svg>');
         });
 
         it('transformation', function() {
@@ -128,27 +128,27 @@
 
             // Icon without transformation
             svg = new SVG(storage.getIcon('test-icon'));
-            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -4 20 24"><path d="" /></svg>');
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -4 20 24"><path d="" /></svg>');
 
             // Horizontal flip from parent icon
             svg = new SVG(storage.getIcon('test-alias1'));
-            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24"><g transform="translate(20 4) scale(-1 1)"><path d="" /></g></svg>');
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24"><g transform="translate(20 4) scale(-1 1)"><path d="" /></g></svg>');
 
             // Horizontal flip from attributes
             svg = new SVG(storage.getIcon('test-icon'));
             expect(svg.toString({
                 'data-flip': 'horizontal'
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24" data-flip="horizontal"><g transform="translate(20 4) scale(-1 1)"><path d="" /></g></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 24" data-flip="horizontal"><g transform="translate(20 4) scale(-1 1)"><path d="" /></g></svg>');
 
             // Double horizontal flip
             svg = new SVG(storage.getIcon('test-alias1'));
             expect(svg.toString({
                 'data-flip': 'horizontal'
-            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -4 20 24" data-flip="horizontal"><path d="" /></svg>');
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.84em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -4 20 24" data-flip="horizontal"><path d="" /></svg>');
 
             // Many attributes from merging aliases
             svg = new SVG(storage.getIcon('test-alias2'));
-            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1.2em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="-4 0 24 20"><g transform="rotate(-90 10 10)"><path d="" /></g></svg>');
+            expect(svg.toString()).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.2em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="-4 0 24 20"><g transform="rotate(-90 10 10)"><path d="" /></g></svg>');
         });
 
         it('unique ids', function() {
@@ -171,7 +171,7 @@
 
             // Remove random stuff
             result = result.replace(/IconifyId\-[a-f0-9]+\-[a-f0-9]+\-/g, 'IconifyId-');
-            expect(result).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100"><g fill="none"><path d="M 10,50 v -20 h 40 v -20" stroke="red" style="marker: url(#IconifyId-0)"/><path d="M 30,70 v -20 h 40 v -20" stroke="green" style="marker: url(#IconifyId-1)"/><path d="M 50,90 v -20 h 40 v -20" stroke="blue" style="marker: url(#IconifyId-2)"/><marker id="IconifyId-0" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="red" stroke-width="3"/></marker><marker id="IconifyId-1" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="green" stroke-width="3"/></marker><marker id="IconifyId-2" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="blue" stroke-width="3"/></marker></g></svg>');
+            expect(result).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100"><g fill="none"><path d="M 10,50 v -20 h 40 v -20" stroke="red" style="marker: url(#IconifyId-0)"/><path d="M 30,70 v -20 h 40 v -20" stroke="green" style="marker: url(#IconifyId-1)"/><path d="M 50,90 v -20 h 40 v -20" stroke="blue" style="marker: url(#IconifyId-2)"/><marker id="IconifyId-0" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="red" stroke-width="3"/></marker><marker id="IconifyId-1" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="green" stroke-width="3"/></marker><marker id="IconifyId-2" markerWidth="12" markerHeight="12" refX="6" refY="6" markerUnits="userSpaceOnUse"><circle cx="6" cy="6" r="4" fill="white" stroke="blue" stroke-width="3"/></marker></g></svg>');
         });
 
     });
