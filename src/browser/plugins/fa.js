@@ -35,7 +35,7 @@
      *
      * @type {string}
      */
-    var stylesheetCDN = '//code.iconify.design/css/fa.css';
+    var stylesheetCDN = 'https://code.iconify.design/css/fa.css';
 
     /**
      * True if stylesheet has been added

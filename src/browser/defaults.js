@@ -56,7 +56,7 @@
     config._readyEvent = 'IconifyReady';
 
     // Polyfill URLs
-    config._webComponentsPolyfill = '//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js';
-    config._classListPolyfill = '//cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20150312/classList.min.js';
+    config._webComponentsPolyfill = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js';
+    config._classListPolyfill = 'https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20150312/classList.min.js';
 
 })(local.config);

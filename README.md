@@ -34,7 +34,7 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify:
 
 ```
-<script src="//code.iconify.design/1/1.0.0-rc5/iconify.min.js"></script>
+<script src="https://code.iconify.design/1/1.0.0-rc5/iconify.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
