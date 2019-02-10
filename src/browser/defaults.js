@@ -23,7 +23,7 @@
     "use strict";
 
     // Custom default attributes for SVG
-    config.SVGAttributes = {};
+    config.SVGAttributes = Object.create(null);
 
     // Class name for icons
     config._imageClass = 'iconify';

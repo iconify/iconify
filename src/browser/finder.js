@@ -88,7 +88,7 @@
                         if (item.length === 2) {
                             attr = 'data-' + item[0];
                             if (image.attributes === void 0) {
-                                image.attributes = {};
+                                image.attributes = Object.create(null);
                             }
                             image.attributes[attr] = item[1];
                         }

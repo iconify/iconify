@@ -59,7 +59,7 @@
      * @return {object}
      */
     local.getImageAttributes = function(image) {
-        var results = {},
+        var results = Object.create(null),
             i, attr;
 
         if (!image.element.hasAttributes()) {

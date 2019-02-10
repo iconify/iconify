@@ -112,7 +112,7 @@ function mergeFlip(value1, value2) {
  * @returns {object}
  */
 function setDefaults(item) {
-    var result = {};
+    var result = Object.create(null);
 
     (item._defaults === void 0 ? [item, itemDefaults] : [item, item._defaults, itemDefaults]).forEach(function(values) {
         Object.keys(values).forEach(function(attr) {
@@ -150,11 +150,11 @@ function setDefaults(item) {
  */
 function Storage() {
     // Raw data
-    this._icons = {};
-    this._aliases = {};
+    this._icons = Object.create(null);
+    this._aliases = Object.create(null);
 
     // Normalized data (both icons and aliases). false = pending, null = cannot be resolved, object = resolved
-    this._resolved = {};
+    this._resolved = Object.create(null);
 
     /**
      * Add icon or alias to storage
@@ -169,9 +169,9 @@ function Storage() {
 
         if (this._resolved[icon.prefix] === void 0) {
             // Add resolved object to mark prefix as usable
-            this._resolved[icon.prefix] = {};
-            this._icons[icon.prefix] = {};
-            this._aliases[icon.prefix] = {};
+            this._resolved[icon.prefix] = Object.create(null);
+            this._icons[icon.prefix] = Object.create(null);
+            this._aliases[icon.prefix] = Object.create(null);
         } else {
             // Delete old item with same name
             delete this._icons[icon.prefix][icon.icon];
@@ -211,7 +211,7 @@ function Storage() {
         // Resolve alias
         counter = 0;
         item = this._aliases[icon.prefix][icon.icon];
-        result = {};
+        result = Object.create(null);
         Object.keys(item).forEach(function(attr) {
             if (attr !== 'parent') {
                 result[attr] = item[attr];
@@ -264,7 +264,7 @@ function Storage() {
     this.addCollection = function(json) {
         // Get default values
         var that = this,
-            defaults = {};
+            defaults = Object.create(null);
 
         // Get default values for icons
         itemAttributes.forEach(function(attr) {
@@ -371,7 +371,7 @@ function Storage() {
             return null;
         }
 
-        result = {};
+        result = Object.create(null);
         Object.keys(item).forEach(function(attr) {
             result[attr] = item[attr];
         });

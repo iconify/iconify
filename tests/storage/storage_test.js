@@ -53,6 +53,15 @@
             // Test modifying data. modifying getIcon result should change data
             storage.getIcon('test-icon').body = 'modified!';
             expect(storage.getIcon('test-icon')).to.not.be.eql(expected);
+
+            // Test reserved word
+            storage.addIcon('constructor-constructor', {
+                body: '<path d="" />',
+                width: 20,
+                height: 16
+            });
+            expect(storage.exists('constructor-constructor')).to.be.equal(true);
+            expect(storage.getIcon('constructor-constructor')).to.be.eql(expected);
         });
 
         it('adding aliases', function() {

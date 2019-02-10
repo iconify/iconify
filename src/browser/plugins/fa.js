@@ -104,7 +104,7 @@
                     };
 
                 if (image.attributes === void 0) {
-                    image.attributes = {};
+                    image.attributes = Object.create(null);
                 }
 
                 for (var i = 0; i < list.length; i++) {

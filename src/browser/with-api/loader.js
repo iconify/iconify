@@ -27,7 +27,7 @@
      *
      * @type {{Array}}
      */
-    var queue = {};
+    var queue = Object.create(null);
 
     /**
      * List of images queued for loading.
@@ -37,14 +37,14 @@
      *
      * @type {{Array}|{boolean}}
      */
-    var tested = {};
+    var tested = Object.create(null);
 
     /**
      * Additional queue for icons to queue when DOM is ready
      *
      * @type {object}
      */
-    var domqueue = {};
+    var domqueue = Object.create(null);
 
     /**
      * True if queue will be parsed on next tick
@@ -78,7 +78,7 @@
      */
     function loadQueue() {
         var limit = config.loaderMaxURLSize,
-            urls = {};
+            urls = Object.create(null);
 
         /**
          * Send JSONP request by adding script tag to document
@@ -159,7 +159,7 @@
      */
     function addToDOMReadyQueue(prefix, icon) {
         if (domqueue[prefix] === void 0) {
-            domqueue[prefix] = {};
+            domqueue[prefix] = Object.create(null);
         }
         domqueue[prefix][icon] = true;
 

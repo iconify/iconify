@@ -516,7 +516,7 @@
 
     function changeAttributes(image) {
         if (image.attributes === void 0) {
-            image.attributes = {};
+            image.attributes = Object.create(null);
         }
 
         if (image.attributes[inlineAttribute] === void 0) {

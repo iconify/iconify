@@ -16,7 +16,7 @@
 "use strict";
 
 var Storage = require('./storage');
-var config = {};
+var config = Object.create(null);
 
 /**
  * Regular expressions for calculating dimensions
@@ -327,7 +327,7 @@ function SVG(item) {
         var box, customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes;
         var transformations = [], tempValue;
 
-        attributes = typeof attributes === 'object' ? attributes : {};
+        attributes = typeof attributes === 'object' ? attributes : Object.create(null);
 
         // Check mode and get dimensions
         inline = getBooleanValue(attributes, [config._inlineModeAttribute, 'inline'], true);
@@ -521,7 +521,7 @@ function SVG(item) {
         }
 
         // Add misc attributes
-        extraAttributes = {};
+        extraAttributes = Object.create(null);
         Object.keys(attributes).forEach(function(attr) {
             if (result[attr] === void 0 && reservedAttributes.indexOf(attr) === -1) {
                 extraAttributes[attr] = attributes[attr];
