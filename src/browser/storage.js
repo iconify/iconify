@@ -37,10 +37,11 @@
      * Function to add collection
      *
      * @param {object} json JSON data
+     * @param {boolean} [doNotScan] If true, DOM scan will not be triggered
      */
-    Iconify.addCollection = function(json) {
+    Iconify.addCollection = function(json, doNotScan) {
         storage.addCollection(json);
-        if (!eventQueued) {
+        if (!eventQueued && doNotScan !== true) {
             eventQueued = true;
             window.setTimeout(triggerCallback, 0);
         }
@@ -51,10 +52,11 @@
      *
      * @param {string} name Icon name
      * @param {object} data Icon data
+     * @param {boolean} [doNotScan] If true, DOM scan will not be triggered
      */
-    Iconify.addIcon = function(name, data) {
+    Iconify.addIcon = function(name, data, doNotScan) {
         storage.addIcon(name, data);
-        if (!eventQueued) {
+        if (!eventQueued && doNotScan !== true) {
             eventQueued = true;
             window.setTimeout(triggerCallback, 0);
         }
