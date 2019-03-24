@@ -90,6 +90,11 @@
             var url = urls[prefix],
                 element;
 
+            if (typeof url === 'function') {
+                url.call(Iconify, prefix, items);
+                return;
+            }
+
             // Replace icons list
             url = url.replace('{icons}', items.join(','));
 
@@ -104,12 +109,21 @@
         /**
          * Calculate base length of URL
          *
+         * Returns:
+         *  length of url without icons for valid urls
+         *  null if url does not include icons list (loading entire collection)
+         *  false if url is a callback (no length limits, its up to callback to split url)
+         *
          * @param {string} prefix
-         * @return {number|null}
+         * @return {number|null|false}
          */
         function baseLength(prefix) {
             var url = config.API[prefix] === void 0 ? config.defaultAPI : config.API[prefix];
 
+            if (typeof url === 'function') {
+                urls[prefix] = url;
+                return false;
+            }
             if (url.indexOf('{icons}') === -1) {
                 urls[prefix] = url;
                 return null;
@@ -122,6 +136,7 @@
         // Check queue
         Object.keys(queue).forEach(function(prefix) {
             var URLLength = baseLength(prefix),
+                isCallback = URLLength === false,
                 queued = [];
 
             if (URLLength === null) {
@@ -132,11 +147,13 @@
             }
 
             queue[prefix].forEach(function(icon, index) {
-                URLLength += icon.length + 1;
-                if (URLLength >= limit) {
-                    addScript(prefix, queued);
-                    queued = [];
-                    URLLength = baseLength(prefix) + icon.length + 1;
+                if (!isCallback) {
+                    URLLength += icon.length + 1;
+                    if (URLLength >= limit) {
+                        addScript(prefix, queued);
+                        queued = [];
+                        URLLength = baseLength(prefix) + icon.length + 1;
+                    }
                 }
                 queued.push(icon);
             });

@@ -119,7 +119,26 @@
                     'fa?fa-icons=apple,twitter',
                     'test?testing=foo'
                 ],
+                cbCalled = {},
                 icons;
+
+            function checkCompletion() {
+                if (expecting.length) {
+                    // Expecting more strings
+                    return;
+                }
+                if (!Object.keys(cbCalled).length) {
+                    // Expecting callback
+                    return;
+                }
+
+                // Done
+                expect(cbCalled).to.be.eql({
+                    arrow: 1,
+                    home: 1
+                });
+                done();
+            }
 
             // Load libraries
             load(Iconify, local);
@@ -127,21 +146,29 @@
                 var index = expecting.indexOf(url);
                 expect(index).to.not.be.equal(-1, 'Unexpected callback URL: ' + url);
                 expecting.splice(index, 1);
-                if (!expecting.length) {
-                    done();
-                }
+                checkCompletion();
                 return false;
             };
             local.config.defaultAPI = '{prefix}?icons={icons}';
             local.config.API['fa'] = 'fa?fa-icons={icons}';
             local.config.API['test'] = 'test?testing={icons}';
+            local.config.API['cb'] = function(prefix, icons) {
+                icons.forEach(function(icon) {
+                    if (cbCalled[icon] === void 0) {
+                        cbCalled[icon] = 1;
+                    } else {
+                        cbCalled[icon] ++;
+                    }
+                });
+                checkCompletion();
+            };
             local.config.loaderMaxURLSize = 50;
             local._debugLoader = true;
 
             // Add dummy icons
             icons = {};
             [
-                'fa-apple', 'fa-twitter', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-rather-long-item', 'mdi-bar', 'test-foo', 'mdi-arrow-right',
+                'fa-apple', 'fa-twitter', 'mdi-home', 'mdi-arrow-left', 'mdi-cat', 'mdi-rather-long-item', 'mdi-bar', 'test-foo', 'mdi-arrow-right', 'cb-arrow', 'cb-home',
                 // check for duplicate items in url by using different syntax
                 'fa:twitter'
             ].forEach(function(key) {
