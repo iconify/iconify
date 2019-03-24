@@ -1,25 +1,6 @@
-### Important backwards compatibility notice
-
-Important: as of version 1.0.0-beta6 project has been renamed from SimpleSVG to Iconify.
-
-Many changes from SimpleSVG 1.0.0-beta5 to Iconify 1.0.0-beta6 are not backwards compatible. If you wrote code for SimpleSVG
-project, there are few changes you need to make to code to work with new version:
-
-- ```<simple-svg>``` tag has been relaced by ```<iconify-icon>```
-- Placeholder class name was changed from "simple-svg" to "iconify".
-- URL of script has changed from code.simplesvg.com and simple-svg.min.js to code.iconify.design and iconify.min.js.
-- URL of svg has changed from icons.simplesvg.com to api.iconify.design, though old URL will continue working for at least few years.
-- In global former SimpleSVG objects and events replace "SimpleSVG" with "Iconify" such as SimpleSVGConfig -> IconifyConfig.
-- Same API is used to serve both old and new version, so for backwards compatibility SimpleSVG object is still available so API would work with both SimpleSVG and Iconify.
-
-There won't be anymore similar big changes that break backwards compatibility before release.
-
-SimpleSVG 1.0.0-beta5 will continue to work, so you don't really have to update, though updating is recommended.
-
-
 # What is Iconify?
 
-Iconify project makes it easy to add SVG icons to websites and offers over 30,000 icons to choose from.
+Iconify project makes it easy to add SVG icons to websites and offers over 40,000 icons to choose from.
 
 There are many fonts and SVG sets available, but they all have one thing in common: using any font or SVG set limits you
 to icons that are included in that set and forces browsers to load entire font or icons set. That limits developers to
@@ -34,7 +15,7 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify:
 
 ```
-<script src="https://code.iconify.design/1/1.0.0-rc7/iconify.min.js"></script>
+<script src="https://code.iconify.design/1/1.0.0/iconify.min.js"></script>
 ```
     
 you can add it to ```<head>``` section of page or before ```</body>```. 
@@ -46,14 +27,14 @@ To add any icon, write something like this:
 ```
 or this:
 ```
-<span class="iconify" data-icon="mdi-home"></span>
+<iconify-icon class="iconify" data-icon="mdi-home"></iconify-icon>
 ```
 
 Sample:
     
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/samples/icon2.png)
 
-That is it. Change data-icon value to name of icon you want to use. There are over 30,000 premade icons to choose from,
+That is it. Change data-icon value to name of icon you want to use. There are over 40,000 premade icons to choose from,
 including FontAwesome, Material Design Icons, Entypo+ and even several emoji sets.
 
 Do you want to make your own icon sets? Tools for making custom icon sets are available on GitHub. See documentation.
@@ -258,24 +239,25 @@ same as in data-align attribute mentioned above.
 
 # Available icons
 
-There are over 30,000 icons to choose from.
+There are over 40,000 icons to choose from.
 
 General collections (monotone icons):
-* Material Design Icons (3000+ icons)
-* Material Design Iconic Font (700+ icons)
-* IconIcons (700+ icons)
-* FontAwesome 4 and FontAwesome 5 (1000+ icons)
-* Vaadin Icons (600+ icons)
-* PrestaShop Icons (400+ icons)
-* IcoMoon Free (400+ icons)
-* WebHostingHub Glyphs (2000+ icons)
+* [Material Design Icons](https://iconify.design/icon-sets/mdi/) (3000+ icons)
+* [Unicons](https://iconify.design/icon-sets/uil/) (1000+ icons)
+* [Jam Icons](https://iconify.design/icon-sets/jam/) (900 icons)
+* [IonIcons](https://iconify.design/icon-sets/ion/) (700+ icons)
+* [FontAwesome 4](https://iconify.design/icon-sets/fa/) and [FontAwesome 5](https://iconify.design/icon-sets/fa-solid/) (2000+ icons)
+* [Vaadin Icons](https://iconify.design/icon-sets/vaadin/) (600+ icons)
+* [Feather Icon(s)](https://iconify.design/icon-sets/feather/) (600+ icons)
+* [IcoMoon Free](https://iconify.design/icon-sets/icomoon-free/) (400+ icons)
+* [Dashicons](https://iconify.design/icon-sets/dashicons/) (300 icons)
 and many others.
 
 Emoji collections (mostly colored icons):
-* Emoji One (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
-* Firefox OS Emoji (1000+ icons)
-* Noto Emoji (2000+ icons for version 2, 2000+ icons for version 1)
-* Twitter Emoji (2000+ icons)
+* [Emoji One](https://iconify.design/icon-sets/emojione/) (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
+* [Firefox OS Emoji](https://iconify.design/icon-sets/fxemoji/) (1000+ icons)
+* [Noto Emoji](https://iconify.design/icon-sets/noto/) (2000+ icons for version 2, 2000+ icons for version 1)
+* [Twitter Emoji](https://iconify.design/icon-sets/twemoji/) (2000+ icons)
 
 Also there are several thematic collections, such as weather icons, map icons, etc.
 
@@ -289,7 +271,6 @@ Click any icon to get HTML code.
 Why use Iconify instead of fonts or other frameworks?
 
 There is a tutorial that explains all differences. See http://iconify.design/docs/iconify-svg-fonts/
-
 
 
 # Plugins to make migration easier
@@ -307,7 +288,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 
 How to use plugins? Include plugin script:
 
-    <script src="https://code.iconify.design/1/1.0.0-rc7/plugin-fa.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.0/plugin-fa.min.js"></script>
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
 syntax in your pages.
@@ -336,4 +317,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 This license does not apply to icons. Icons are released under different licenses, see each icons set for details.
 Icons available by default are all licensed under some kind of open source or free license. 
 
-© 2016 - 2018 Vjacheslav Trushkin
+© 2016 - 2019 Vjacheslav Trushkin
