@@ -10,6 +10,7 @@
     "icon",
     "ui"
   ],
+  "browser": "./dist/iconify.min.js",
   "bugs": "https://github.com/iconify-design/iconify/issues",
   "homepage": "https://iconify.design/",
   "repository": {
