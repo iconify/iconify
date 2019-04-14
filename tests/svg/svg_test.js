@@ -81,6 +81,27 @@
             })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="none" height="8" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><path d="" /></svg>');
         });
 
+        it('title attribute', function() {
+            var storage = new Storage(),
+                svg;
+
+            storage.addIcon('test', {
+                body: '<path d="" />',
+                width: 20,
+                height: 16
+            });
+            svg = new SVG(storage.getIcon('test'));
+
+            expect(svg.toString({
+                title: 'Icon Title'
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><title>Icon Title</title><path d="" /></svg>');
+
+            // Test escaping attribute
+            expect(svg.toString({
+                title: '<script>alert("hax!")</script>'
+            })).to.be.equal('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="vertical-align: -0.125em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 16"><title>&lt;script&gt;alert(&quot;hax!&quot;)&lt;/script&gt;</title><path d="" /></svg>');
+        });
+
         it('custom attributes', function() {
             var storage = new Storage(),
                 svg;

@@ -346,5 +346,88 @@
 
             init();
         });
+
+        it('testing title attribute', function(done) {
+            var Iconify = {
+                    isReady: false
+                },
+                local = {
+                    config: {}
+                },
+                global = {
+                    IconifyConfig: {
+                        _readyEvent: 'RendererTestReadyEvent4'
+                    }
+                },
+                containerID = 'renderer-svg4',
+                containerRoot,
+                pending = 0;
+
+            function init() {
+                // Add dummy code
+                jQuery('#debug2').append('<div id="' + containerID + '">' +
+                    '<i class="iconify" data-icon="fa-home" title="Home Icon" />' +
+                    '<i class="iconify" data-icon="fa-arrow-left" title="&lt;script&gt;" />' +
+                    '</div>');
+
+                containerRoot = document.getElementById(containerID);
+
+                // Setup fake Iconify instance
+                local.scanDOM = renderImages;
+                load(Iconify, local, global);
+                if (local.config.defaultAPI.indexOf('{callback}') === -1) {
+                    local.config.defaultAPI += (local.config.defaultAPI.indexOf('?') === -1 ? '?' : '&') + 'callback=window.SSVGRenderTestTitle';
+                } else {
+                    local.config.defaultAPI = local.config.defaultAPI.replace('{callback}', 'window.SSVGRenderTestTitle');
+                }
+                window.SSVGRenderTestTitle = Iconify._loaderCallback;
+
+                Iconify.ready(function() {
+                    // Load images, start tests when images are available
+                    local.findNewImages(containerRoot).forEach(function(image) {
+                        if (!local.loadImage(image)) {
+                            pending ++;
+                        } else {
+                            local.renderSVG(image);
+                        }
+                    });
+                    if (!pending) {
+                        test();
+                    }
+                });
+            }
+
+            // Callback to load pending images
+            function renderImages() {
+                local.findNewImages(containerRoot).forEach(function(image) {
+                    local.renderSVG(image);
+                });
+                test();
+            }
+
+            // Do test
+            function test() {
+                var image1 = containerRoot.childNodes[0],
+                    image2 = containerRoot.childNodes[1];
+
+                expect(image1.tagName.toLowerCase()).to.be.equal('svg', 'First node supposed to be SVG');
+                expect(image1.hasAttribute('title')).to.be.equal(false, 'Title attribute should not be set');
+                if (image1.innerHTML !== void 0) {
+                    // Skip tests on IE
+                    expect(image1.innerHTML.indexOf('<title>Home Icon</title>') !== -1).to.be.equal(true, 'Content should include title');
+                }
+
+                expect(image2.tagName.toLowerCase()).to.be.equal('svg', 'Second node supposed to be SVG');
+                expect(image2.hasAttribute('title')).to.be.equal(false, 'Title attribute should not be set');
+                if (image2.innerHTML !== void 0) {
+                    // Skip tests on IE
+                    expect(image2.innerHTML.indexOf('<title>&lt;script&gt;</title>') !== -1).to.be.equal(true, 'Content should include title and title should be escaped');
+                }
+
+                done();
+            }
+
+            init();
+        });
     });
 })();

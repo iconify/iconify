@@ -34,6 +34,13 @@ var unitsSplit = /(-?[0-9.]*[0-9]+[0-9.]*)/g,
 var reservedAttributes = ['width', 'height', 'inline'];
 
 /**
+ * List of attributes to convert to tags inside SVG
+ *
+ * @type {string[]}
+ */
+var attributesToTags = ['title'];
+
+/**
  * Unique id counter
  *
  * @type {number}
@@ -304,12 +311,37 @@ function SVG(item) {
     };
 
     /**
+     * Escape HTML
+     *
+     * @param {*} value
+     * @return {string}
+     */
+    this.htmlspecialchars = function(value) {
+        switch (typeof value) {
+            case 'boolean':
+            case 'number':
+                return value + '';
+
+            case 'string':
+                return value.
+                replace(/&/g, "&amp;").
+                replace(/</g, "&lt;").
+                replace(/>/g, "&gt;").
+                replace(/"/g, "&quot;").
+                replace(/'/g, "&#039;");
+        }
+        return '';
+    }
+
+    /**
      * Generate SVG attributes from attributes list
      *
      * @param {object} [attributes] Element attributes
      * @return {object|null}
      */
     this.attributes = function(attributes) {
+        var instance = this;
+
         var align = {
             horizontal: 'center',
             vertical: 'middle',
@@ -523,8 +555,12 @@ function SVG(item) {
         // Add misc attributes
         extraAttributes = Object.create(null);
         Object.keys(attributes).forEach(function(attr) {
-            if (result[attr] === void 0 && reservedAttributes.indexOf(attr) === -1) {
-                extraAttributes[attr] = attributes[attr];
+            if (result[attr] === void 0) {
+                if (attributesToTags.indexOf(attr) !== -1) {
+                    body = '<' + attr + '>' + instance.htmlspecialchars(attributes[attr]) + '</' + attr + '>' + body;
+                } else if (reservedAttributes.indexOf(attr) === -1) {
+                    extraAttributes[attr] = attributes[attr];
+                }
             }
         });
 

@@ -41,33 +41,16 @@ SVG.prototype.toString = function(props) {
     let data = this.attributes(props),
         html;
 
-    function htmlspecialchars(value) {
-        switch (typeof value) {
-            case 'boolean':
-            case 'number':
-                return value + '';
-
-            case 'string':
-                return value.
-                replace(/&/g, "&amp;").
-                replace(/</g, "&lt;").
-                replace(/>/g, "&gt;").
-                replace(/"/g, "&quot;").
-                replace(/'/g, "&#039;");
-        }
-        return '';
-    }
-
     if (data === null) {
         return null;
     }
 
     html = '<svg';
-    Object.keys(data.attributes).forEach(function(attr) {
-        html += ' ' + htmlspecialchars(attr) + '="' + htmlspecialchars(data.attributes[attr]) + '"';
+    Object.keys(data.attributes).forEach(attr => {
+        html += ' ' + this.htmlspecialchars(attr) + '="' + this.htmlspecialchars(data.attributes[attr]) + '"';
     });
-    Object.keys(data.elementAttributes).forEach(function(attr) {
-        html += ' ' + htmlspecialchars(attr) + '="' + htmlspecialchars(data.elementAttributes[attr]) + '"';
+    Object.keys(data.elementAttributes).forEach(attr => {
+        html += ' ' + this.htmlspecialchars(attr) + '="' + this.htmlspecialchars(data.elementAttributes[attr]) + '"';
     });
 
     return html + '>' + data.body + '</svg>';
