@@ -21,6 +21,10 @@ or
 ```
 <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@1.0.1/dist/iconify.min.js"></script>
 ```
+or if you are building project with something like WebPack, you can include script by installing @iconify/iconify as dependency and importing it in your project:
+```
+import Iconify from '@iconify/iconify';
+```
 
 you can add it to ```<head>``` section of page or before ```</body>```. 
 
