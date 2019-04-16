@@ -12,7 +12,7 @@ available JSON API (you can make a copy of script and API if you prefer to keep 
 
 Iconify is designed to be as easy to use as possible.
 
-Add this line to your page to load Iconify:
+Add this line to your page to load Iconify (you can add it to ```<head>``` section of page or before ```</body>```):
 
 ```
 <script src="https://code.iconify.design/1/1.0.1/iconify.min.js"></script>
@@ -26,7 +26,6 @@ or if you are building project with something like WebPack, you can include scri
 import Iconify from '@iconify/iconify';
 ```
 
-you can add it to ```<head>``` section of page or before ```</body>```. 
 
 To add any icon, write something like this: 
 
