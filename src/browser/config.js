@@ -130,7 +130,7 @@
         if (global[prefix + 'Config'] !== void 0 && typeof global[prefix + 'Config'] === 'object') {
             obj = global[prefix + 'Config'];
             Object.keys(obj).forEach(function(key) {
-                setConfig(key, obj, true);
+                setConfig(key, obj[key], true);
             });
         }
     });
