@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "glob": "^7.1.3",
+    "glob": "^7.1.4",
     "mocha": "^5.2.0",
-    "uglify-js": "^3.5.11"
+    "uglify-js": "^3.6.0"
   }
 }
