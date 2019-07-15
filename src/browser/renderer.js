@@ -115,6 +115,29 @@
     };
 
     /**
+     * Get SVG icon as object
+     *
+     * @param name
+     * @param properties
+     * @return {object|false}
+     *  Result object keys:
+     *      attributes = list of attributes
+     *      body = SVG code
+     *      append = boolean if icon should be appended to container
+     *      elementAttributes = list of attributes from container (exists only if icon is appended)
+     */
+    Iconify.getSVGObject = function(name, properties) {
+        var svg;
+
+        if (!Iconify.iconExists(name)) {
+            return false;
+        }
+
+        svg = new local.SVG(Iconify.getIcon(name));
+        return svg.attributes(properties, false);
+    };
+
+    /**
      * Get SVG icon code
      *
      * @param {string} name Icon name
@@ -122,14 +145,12 @@
      * @return {string|boolean}
      */
     Iconify.getSVG = function(name, properties) {
-        var svg, el, data;
+        var el, data;
 
-        if (!Iconify.iconExists(name)) {
+        data = Iconify.getSVGObject(name, properties);
+        if (data === false) {
             return false;
         }
-
-        svg = new local.SVG(Iconify.getIcon(name));
-        data = svg.attributes(properties, false);
 
         el = document.createElement('svg');
         Object.keys(data.attributes).forEach(function(attr) {
