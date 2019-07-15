@@ -20,7 +20,6 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
 
             // Temporary functions
             'Iconify.testLoaderURL = function() { return true; };' +
-            'Iconify.secureURL = function(url) { return url; };' +
 
             // Replace content of addScript()
             fs.readFileSync(codeDir + '/browser/with-api/loader.js', 'utf8').replace('// Create script', 'if (!Iconify.testLoaderURL(url)) return;')

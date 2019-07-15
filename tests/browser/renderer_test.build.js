@@ -26,9 +26,6 @@ module.exports = (Helper, codeDir, testFile, TestHelper) => {
             fs.readFileSync(codeDir + '/browser/finder.js', 'utf8'),
             fs.readFileSync(codeDir + '/browser/with-api/loader.js', 'utf8'),
 
-            // Temporary functions
-            'Iconify.secureURL = function(url) { return url; };' +
-
             // Main file
             fs.readFileSync(codeDir + '/browser/renderer.js', 'utf8'),
         ];
