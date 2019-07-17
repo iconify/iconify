@@ -30,4 +30,10 @@ if (self.Iconify === void 0) {
         /* content */
 
     })(self.Iconify, self);
+
+    // Allow bundling with WebPack
+    if (typeof exports === 'object') {
+        exports.__esModule = true;
+        exports.default = Iconify;
+    }
 }
