@@ -15,11 +15,11 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify (you can add it to ```<head>``` section of page or before ```</body>```):
 
 ```
-<script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
+<script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
 ```
 or
 ```
-<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@1.0.3/dist/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@1.0.4/dist/iconify.min.js"></script>
 ```
 or if you are building project with something like WebPack, you can include script by installing @iconify/iconify as dependency and importing it in your project:
 ```
@@ -41,7 +41,7 @@ Sample:
     
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/samples/icon2.png)
 
-That is it. Change data-icon value to name of icon you want to use. There are over 40,000 premade icons to choose from,
+That is it. Change data-icon value to name of icon you want to use. There are over 50,000 premade icons to choose from,
 including FontAwesome, Material Design Icons, Entypo+ and even several emoji sets.
 
 Do you want to make your own icon sets? Tools for making custom icon sets are available on GitHub. See documentation.
@@ -295,7 +295,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 
 How to use plugins? Include plugin script:
 
-    <script src="https://code.iconify.design/1/1.0.3/plugin-fa.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.4/plugin-fa.min.js"></script>
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
 syntax in your pages.
@@ -324,4 +324,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 This license does not apply to icons. Icons are released under different licenses, see each icons set for details.
 Icons available by default are all licensed under some kind of open source or free license. 
 
-© 2016 - 2019 Vjacheslav Trushkin
+© 2016 - 2020 Vjacheslav Trushkin
