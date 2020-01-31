@@ -10,6 +10,8 @@
     "icon",
     "ui"
   ],
+  "main": "./dist/iconify.min.js",
+  "types": "./types.d.ts",
   "browser": "./dist/iconify.min.js",
   "bugs": "https://github.com/iconify/iconify/issues",
   "homepage": "https://iconify.design/",
