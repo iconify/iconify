@@ -356,7 +356,7 @@ function SVG(item) {
         var style = '';
         var result = this.defaultAttributes();
 
-        var box, customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes;
+        var box, customWidth, customHeight, width, height, inline, body, value, split, append, units, extraAttributes, verticalAlign;
         var transformations = [], tempValue;
 
         attributes = typeof attributes === 'object' ? attributes : Object.create(null);
@@ -506,7 +506,10 @@ function SVG(item) {
 
         // Apply inline mode to offsets
         if (inline && item.verticalAlign !== 0) {
-            style += 'vertical-align: ' + item.verticalAlign + 'em;';
+            verticalAlign = item.verticalAlign + 'em';
+            style += 'vertical-align: ' + verticalAlign + ';';
+        } else {
+            verticalAlign = '';
         }
 
         // Check custom alignment
@@ -568,7 +571,9 @@ function SVG(item) {
             attributes: result,
             elementAttributes: extraAttributes,
             body: body,
-            append: append
+            append: append,
+            // Style split, duplicate ot attributes.style
+            verticalAlign: verticalAlign
         };
     };
 

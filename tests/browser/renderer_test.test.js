@@ -8,6 +8,18 @@
         /* Modules() */
     }
 
+    // Quick IE replacement for Object.assign
+    function merge(obj1, obj2) {
+        var key, result = {};
+        for (key in obj1) {
+            result[key] = obj1[key];
+        }
+        for (key in obj2) {
+            result[key] = obj2[key]
+        }
+        return result;
+    }
+
     describe('Testing renderer', function() {
         it('rendering svg images', function(done) {
             var Iconify = {
@@ -516,20 +528,25 @@
                 var expected = {
                     append: false,
                     elementAttributes: {},
-                    attributes: Object.assign({}, defaultAttributes, {
+                    attributes: merge(defaultAttributes, {
                         width: '0.93em',
                         height: '1em',
                         style:
                             'vertical-align: -0.143em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);',
                         viewBox: '0 -224 1664 1792'
                     }),
-                    body: '<path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/>'
+                    body: '<path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/>',
+                    verticalAlign: '-0.143em'
                 };
 
                 expect(result).to.be.eql(expected, 'Failed rendering fa-home without changes');
-                expect(Iconify.getSVG('fa-home')).to.be.equal(
-                    '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.93em" height="1em" style="vertical-align: -0.143em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -224 1664 1792"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></svg>'
-                );
+
+                if (typeof Object.assign === 'function') {
+                    // Skip test in IE because it changes order of attributes
+                    expect(Iconify.getSVG('fa-home')).to.be.equal(
+                        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.93em" height="1em" style="vertical-align: -0.143em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 -224 1664 1792"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></svg>'
+                    );
+                }
 
                 // Append, rotate and set custom size to fa-home
                 result = Iconify.getSVGObject('fa-home', {
@@ -544,7 +561,7 @@
                         'data-rotate': '90deg',
                         'data-height': '256px'
                     },
-                    attributes: Object.assign({}, defaultAttributes, {
+                    attributes: merge(defaultAttributes, {
                         width: '275.7px',
                         height: '256px',
                         style:
@@ -552,21 +569,26 @@
                         viewBox: '-224 0 1792 1664'
                     }),
                     body:
-                        '<g transform="rotate(90 672 672)"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></g>'
+                        '<g transform="rotate(90 672 672)"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></g>',
+                    verticalAlign: '-0.143em'
                 };
                 expect(result).to.be.eql(
                     expected,
                     'Failed rendering fa-home with append, rotation and custom size'
                 );
-                expect(
-                    Iconify.getSVG('fa-home', {
-                        'data-icon-append': true,
-                        'data-rotate': '90deg',
-                        'data-height': '256px'
-                    })
-                ).to.be.equal(
-                    '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="275.7px" height="256px" style="vertical-align: -0.143em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="-224 0 1792 1664"><g transform="rotate(90 672 672)"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></g></svg>'
-                );
+
+                if (typeof Object.assign === 'function') {
+                    // Skip test in IE because it changes order of attributes
+                    expect(
+                        Iconify.getSVG('fa-home', {
+                            'data-icon-append': true,
+                            'data-rotate': '90deg',
+                            'data-height': '256px'
+                        })
+                    ).to.be.equal(
+                        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="275.7px" height="256px" style="vertical-align: -0.143em;-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="-224 0 1792 1664"><g transform="rotate(90 672 672)"><path d="M1408 768v480q0 26-19 45t-45 19H960V928H704v384H320q-26 0-45-19t-19-45V768q0-1 .5-3t.5-3l575-474l575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7L832 200L140 777q-12 8-24 7q-13-2-21-11l-62-74q-8-10-7-23.5T37 654L756 55q32-26 76-26t76 26l244 204V64q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z" fill="currentColor"/></g></svg>'
+                    );
+                }
 
                 done();
             }
