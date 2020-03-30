@@ -176,14 +176,17 @@
         }
 
         // Add Iconify stylesheet
-        el = document.createElement('style');
-        el.type = 'text/css';
-        el.innerHTML = 'span.iconify, i.iconify, iconify-icon { display: inline-block; width: 1em; }';
-        if (document.head.firstChild !== null) {
-            document.head.insertBefore(el, document.head.firstChild);
-        } else {
-            document.head.appendChild(el);
-        }
+        try {
+            el = document.createElement('style');
+            el.type = 'text/css';
+            el.innerHTML = 'span.iconify, i.iconify, iconify-icon { display: inline-block; width: 1em; }';
+            if (document.head.firstChild !== null) {
+                document.head.insertBefore(el, document.head.firstChild);
+            } else {
+                document.head.appendChild(el);
+            }
+        } catch (err) {}
+
         return true;
     };
     local.initQueue.push(local.addStylesheet.bind(null, false));
