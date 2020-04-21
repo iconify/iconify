@@ -41,7 +41,7 @@
                 // Add dummy code
                 jQuery('#debug2').append('<div id="' + containerID + '">' +
                     '<i class="iconify" data-icon="fa-home" />' +
-                    '<iconify-icon data-icon="fa-arrow-left" data-flip="horizontal" height="20px" />' +
+                    '<iconify-icon data-icon="fa-arrow-left" data-flip="horizontal" height="20px" style="border: 1px solid #ccc;" />' +
                     // Append icon as child
                     '<i class="iconify" data-icon="fa:android" data-rotate="90deg" data-icon-append="true" height="24px" />' +
                     // Test class names instead of attributes (class overrides attribute!)
@@ -107,6 +107,9 @@
 
                 expect(image2 === void 0).to.be.equal(false, 'image2 is undefined');
                 expect(image2.getAttribute('style').indexOf('rotate(360deg)')).to.not.be.equal(-1, 'Style should contain 360deg rotation');
+                expect(
+                    image2.getAttribute('style').indexOf('border')
+                ).to.not.be.equal(-1, 'Style should contain border');
                 if (image2.innerHTML !== void 0) {
                     // Skip tests on IE
                     expect(image2.innerHTML.indexOf('<g ')).to.be.equal(0, 'Content should start with group');
