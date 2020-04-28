@@ -11,7 +11,7 @@
 	"homepage": "https://iconify.design/",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/iconify/iconify.git"
+		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
 		"bootstrap": "lerna bootstrap --force-local",
