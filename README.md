@@ -1,3 +1,9 @@
+# Iconify version 1
+
+This is the repository for Iconify version 1.
+
+Check out [https://github.com/iconify/iconify](Iconify master branch) for the latest version.
+
 # What is Iconify?
 
 Iconify project makes it easy to add SVG icons to websites and offers over 50,000 icons to choose from.
