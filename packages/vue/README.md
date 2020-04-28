@@ -180,7 +180,7 @@ After installing the icon component, you no longer need to list `IconifyIcon` in
 
 ## Icon component properties
 
-`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. Value can be a string containing the icon name (icon must be registered before use by calling `addIcon`, see instructions above) or an object containing the icon data.
+`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon`, see instructions above) or an object containing the icon data.
 
 The icon component has the following optional properties:
 
@@ -635,7 +635,7 @@ There are over 60 icon sets. This readme shows only a few examples. See [Iconify
 
 ## License
 
-React component is released with MIT license.
+Vue component is released with MIT license.
 
 © 2020 Vjacheslav Trushkin
 

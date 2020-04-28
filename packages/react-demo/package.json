@@ -1,5 +1,5 @@
 {
-	"name": "iconify-react-demo",
+	"name": "@iconify/react-demo",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {

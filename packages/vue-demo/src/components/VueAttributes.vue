@@ -3,7 +3,7 @@
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
 			Icon with color (red):
-			<iconify-icon :icon="icon" color="red" inline="true" />
+			<iconify-icon :icon="icon" color="red" :inline="true" />
 		</div>
 		<div>
 			Icon size (2em):
@@ -15,36 +15,22 @@
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
-			<IconifyIcon
-				icon="admin-users"
-				style="vertical-align: .25em;"
-				inline="true"
-			/>
+			<IconifyIcon icon="admin-users" style="vertical-align: .25em;" :inline="true" />
 		</div>
 		<div>
-			Inline icon with bound style as object (green, 2em, no alignment):
-			<IconifyIcon
-				icon="admin-users"
-				v-bind:style="icon1StyleObj"
-				inline="true"
-				color="green"
-			/>
+			Inline icon with bound style as object (purple, 2em, no alignment):
+			<IconifyIcon icon="admin-users" v-bind:style="icon1StyleObj" :inline="true" color="green" />
 		</div>
 		<div>
-			Inline icon with bound style as string (green, 2em, no alignment):
-			<IconifyIcon
-				icon="admin-users"
-				v-bind:style="icon1StyleStr"
-				inline="true"
-				color="green"
-			/>
+			Inline icon with bound style as string (purple, 2em, no alignment):
+			<IconifyIcon icon="admin-users" v-bind:style="icon1StyleStr" :inline="true" color="green" />
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
 			<IconifyIcon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, fontSizeStyleObj2]"
-				inline="true"
+				:inline="true"
 				color="green"
 			/>
 		</div>
@@ -53,7 +39,7 @@
 			<IconifyIcon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
-				inline="true"
+				:inline="true"
 				v-on:click="
 					dynamicStyleObj.color =
 						dynamicStyleObj.color === 'red' ? 'green' : 'red'
@@ -67,17 +53,13 @@
 				v-bind:style="[
 					showShadow ? boxShadowStyleObj : dynamicStyleObj,
 				]"
-				inline="true"
+				:inline="true"
 				v-on:click="showShadow = !showShadow"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Reference:
-			<IconifyIcon
-				icon="admin-users"
-				ref="icon1"
-				@click="logReference"
-			/>&nbsp;(click to log)
+			<IconifyIcon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click to log)
 		</div>
 	</section>
 </template>

@@ -53,11 +53,12 @@ Iconify API provides icon data to Iconify SVG framework and other implementation
 
 There are several Iconify implementations included in this repository:
 
-| Implementation                       | Usage | with API | without API |
-| ------------------------------------ | ----- | :------: | :---------: |
-| [SVG Framework](./packages/iconify/) | HTML  |    +     |      +      |
-| [React component](./packages/react/) | React |    -     |      +      |
-| [Vue component](./packages/vue/)     | Vue   |    -     |      +      |
+| Implementation                         | Usage  | with API | without API |
+| -------------------------------------- | ------ | :------: | :---------: |
+| [SVG Framework](./packages/iconify/)   | HTML   |    +     |      +      |
+| [React component](./packages/react/)   | React  |    -     |      +      |
+| [Vue component](./packages/vue/)       | Vue    |    -     |      +      |
+| [Svelte component](./packages/svelte/) | Svelte |    -     |      +      |
 
 Other packages:
 
@@ -65,6 +66,7 @@ Other packages:
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm serve` to start demo.
+-   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Must be ran in browser.
 
 ## Installation
