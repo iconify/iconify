@@ -51,6 +51,31 @@ describe('Testing Iconify object', () => {
 		height: 128,
 	});
 
+	it('Check iconExists', () => {
+		expect(Iconify.iconExists(prefix + ':' + 'account')).to.be.equal(true);
+		expect(Iconify.iconExists(prefix + ':' + 'missing')).to.be.equal(false);
+		expect(Iconify.iconExists(prefix + '-123:' + 'missing')).to.be.equal(
+			false
+		);
+	});
+
+	it('Get SVG node', () => {
+		const node = Iconify.renderSVG(prefix + ':account', {
+			inline: true,
+		});
+		expect(node).to.not.be.equal(null);
+
+		const html = node.outerHTML;
+		console.log('Rendered SVG:', html);
+		expect(html.indexOf('<svg')).to.be.equal(0);
+
+		// Get HTML
+		const html2 = Iconify.renderHTML(prefix + ':account', {
+			inline: true,
+		});
+		expect(html2).to.be.equal(html);
+	});
+
 	it('Rendering icons without API', (done) => {
 		node1.innerHTML =
 			'<div><p>Testing Iconify without API</p>' +

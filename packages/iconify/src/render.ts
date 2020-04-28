@@ -19,19 +19,28 @@ import {
 export function renderIcon(
 	placeholder: PlaceholderElement,
 	customisations: IconifyIconCustomisations,
-	iconData: FullIconifyIcon
-): IconifyElement | null {
+	iconData: FullIconifyIcon,
+	returnString?: boolean
+): IconifyElement | string | null {
 	const data = iconToSVG(iconData, fullCustomisations(customisations));
 
-	// Get class name
+	// Placeholder properties
 	const placeholderElement = placeholder.element;
-	const placeholderClassName = placeholderElement.getAttribute('class');
-	const filteredClassList = placeholder.finder.classFilter(
-		placeholderClassName ? placeholderClassName.split(/\s+/) : []
-	);
+	const finder = placeholder.finder;
+	const name = placeholder.name;
+
+	// Get class name
+	const placeholderClassName = placeholderElement
+		? placeholderElement.getAttribute('class')
+		: '';
+	const filteredClassList = finder
+		? finder.classFilter(
+				placeholderClassName ? placeholderClassName.split(/\s+/) : []
+		  )
+		: [];
 	const className =
 		'iconify iconify--' +
-		placeholder.name.prefix +
+		name.prefix +
 		(filteredClassList.length ? ' ' + filteredClassList.join(' ') : '');
 
 	// Generate SVG as string
@@ -62,42 +71,50 @@ export function renderIcon(
 		svgStyle.verticalAlign = '-0.125em';
 	}
 
-	// Copy attributes from placeholder
-	const placeholderAttributes = placeholderElement.attributes;
-	for (let i = 0; i < placeholderAttributes.length; i++) {
-		const item = placeholderAttributes.item(i);
-		if (item) {
-			const name = item.name;
-			if (
-				name !== 'class' &&
-				name !== 'style' &&
-				svgAttributes[name] === void 0
-			) {
-				try {
-					svg.setAttribute(name, item.value);
-				} catch (err) {}
+	// Copy stuff from placeholder
+	if (placeholderElement) {
+		// Copy attributes
+		const placeholderAttributes = placeholderElement.attributes;
+		for (let i = 0; i < placeholderAttributes.length; i++) {
+			const item = placeholderAttributes.item(i);
+			if (item) {
+				const name = item.name;
+				if (
+					name !== 'class' &&
+					name !== 'style' &&
+					svgAttributes[name] === void 0
+				) {
+					try {
+						svg.setAttribute(name, item.value);
+					} catch (err) {}
+				}
 			}
+		}
+
+		// Copy styles
+		const placeholderStyle = placeholderElement.style;
+		for (let i = 0; i < placeholderStyle.length; i++) {
+			const attr = placeholderStyle[i];
+			svgStyle[attr] = placeholderStyle[attr];
 		}
 	}
 
-	// Copy styles from placeholder
-	const placeholderStyle = placeholderElement.style;
-	for (let i = 0; i < placeholderStyle.length; i++) {
-		const attr = placeholderStyle[i];
-		svgStyle[attr] = placeholderStyle[attr];
+	// Store finder specific data
+	if (finder) {
+		const elementData: IconifyElementData = {
+			name: name,
+			status: 'loaded',
+			customisations: customisations,
+		};
+		svg[elementDataProperty] = elementData;
+		svg[elementFinderProperty] = finder;
 	}
 
-	// Store data
-	const elementData: IconifyElementData = {
-		name: placeholder.name,
-		status: 'loaded',
-		customisations: customisations,
-	};
-	svg[elementDataProperty] = elementData;
-	svg[elementFinderProperty] = placeholder.finder;
+	// Get result
+	const result = returnString ? span.innerHTML : svg;
 
 	// Replace placeholder
-	if (placeholderElement.parentNode) {
+	if (placeholderElement && placeholderElement.parentNode) {
 		placeholderElement.parentNode.replaceChild(svg, placeholderElement);
 	} else {
 		// Placeholder has no parent? Remove SVG parent as well
@@ -105,5 +122,5 @@ export function renderIcon(
 	}
 
 	// Return new node
-	return svg;
+	return result;
 }

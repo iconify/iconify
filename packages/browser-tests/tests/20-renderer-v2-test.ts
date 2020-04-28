@@ -8,6 +8,7 @@ import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconif
 import { getStorage, addIconSet, getIcon } from '@iconify/core/lib/storage';
 import { renderIcon } from '@iconify/iconify/lib/render';
 import { stringToIcon } from '@iconify/core/lib/icon/name';
+import { IconifyElement } from '@iconify/iconify/lib/element';
 
 const expect = chai.expect;
 
@@ -97,7 +98,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -137,7 +142,7 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -180,7 +185,7 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -225,7 +230,7 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -266,7 +271,7 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -316,7 +321,7 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -386,7 +391,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -437,7 +446,7 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test attributes, compare them with last SVG
@@ -502,7 +511,7 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test changed attributes
@@ -548,7 +557,7 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test changed attributes
@@ -594,7 +603,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		/**
 		 * Change icon name to invalid
@@ -638,7 +651,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		/**
 		 * Change icon name to invalid
@@ -684,7 +701,11 @@ describe('Testing renderer', () => {
 		);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Copy variables for next test
 		let lastElement = element;
@@ -723,7 +744,7 @@ describe('Testing renderer', () => {
 			'Wrong icon body: ' + iconData.body
 		);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test finder
@@ -763,15 +784,23 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
-		if (svg.innerHTML) {
-			const html = svg.innerHTML;
-			// Test icon body to make sure icon has no transformation
-			expect(html.indexOf('transform="')).to.be.equal(
-				-1,
-				'Found transform in icon: ' + html
-			);
-		}
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
+		let html = renderIcon(
+			element,
+			customisations,
+			iconData,
+			true
+		) as string;
+
+		// Test icon body to make sure icon has no transformation
+		expect(html.indexOf('transform="')).to.be.equal(
+			-1,
+			'Found transform in icon: ' + html
+		);
 
 		// Copy variables for next test
 		let lastElement = element;
@@ -804,16 +833,16 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
-		if (svg.innerHTML) {
-			const html = svg.innerHTML;
-			// Test icon body to make sure icon was changed
-			expect(html.indexOf('transform="')).to.not.be.equal(
-				-1,
-				'Missing transform in icon: ' + html
-			);
-		}
+
+		html = renderIcon(element, customisations, iconData, true) as string;
+
+		// Test icon body to make sure icon was changed
+		expect(html.indexOf('transform="')).to.not.be.equal(
+			-1,
+			'Missing transform in icon: ' + html
+		);
 
 		// Test finder
 		expect(element.finder.name(svg)).to.be.equal('mdi:home');
@@ -852,7 +881,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Check dimensions
 		expect(svg.getAttribute('width')).to.be.equal('1em');
@@ -889,7 +922,7 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Check dimensions
@@ -935,7 +968,11 @@ describe('Testing renderer', () => {
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(element, customisations, iconData);
+		let svg = renderIcon(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Check dimensions and alignment
 		expect(svg.getAttribute('width')).to.be.equal('48');
@@ -978,7 +1015,7 @@ describe('Testing renderer', () => {
 		iconData = getIcon(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData);
+		svg = renderIcon(element, customisations, iconData) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Check dimensions and alignment

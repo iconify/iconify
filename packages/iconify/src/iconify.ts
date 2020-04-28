@@ -42,9 +42,16 @@ import { API } from '@iconify/core/lib/api/';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig, IconifyAPIConfig } from '@iconify/core/lib/api/config';
 import { prepareQuery, sendQuery } from './modules/api-jsonp';
+import {
+	IconifyIconLoaderCallback,
+	IconifyIconLoaderAbort,
+} from '@iconify/core/lib/interfaces/loader';
 
 // Observer
 import { observer } from './modules/observer';
+
+// Render
+import { renderIcon } from './render';
 
 // Scan
 import { scanDOM } from './scan';
@@ -67,7 +74,7 @@ export {
 export { IconifyIconBuildResult };
 
 // API
-export { IconifyAPIConfig };
+export { IconifyAPIConfig, IconifyIconLoaderCallback, IconifyIconLoaderAbort };
 
 /**
  * Cache types
@@ -100,7 +107,25 @@ export interface IconifyGlobal {
 	 */
 	listIcons: (prefix?: string) => string[];
 
+	/**
+	 * Load icons
+	 */
+	loadIcons: (
+		icons: (IconifyIconName | string)[],
+		callback?: IconifyIconLoaderCallback
+	) => IconifyIconLoaderAbort;
+
 	/* Rendering icons */
+	renderSVG: (
+		name: string,
+		customisations: IconifyIconCustomisations
+	) => SVGElement | null;
+
+	renderHTML: (
+		name: string,
+		customisations: IconifyIconCustomisations
+	) => string | null;
+
 	/**
 	 * Get icon data
 	 */
@@ -110,7 +135,7 @@ export interface IconifyGlobal {
 	) => IconifyIconBuildResult | null;
 
 	/**
-	 * Replace IDs in icon body, should be used when parsing renderIcon() result
+	 * Replace IDs in icon body, should be used when parsing buildIcon() result
 	 */
 	replaceIDs: (body: string) => string;
 
@@ -192,7 +217,7 @@ function getIconData(name: string): FullIconifyIcon | null {
 /**
  * Get SVG data
  */
-function getSVG(
+function buildIcon(
 	name: string,
 	customisations: IconifyIconCustomisations
 ): IconifyIconBuildResult | null {
@@ -210,6 +235,37 @@ function getSVG(
 }
 
 /**
+ * Generate icon
+ */
+function generateIcon(
+	name: string,
+	customisations: IconifyIconCustomisations,
+	returnString: boolean
+): SVGElement | string | null {
+	// Get icon data
+	const iconData = getIconData(name);
+	if (!iconData) {
+		return null;
+	}
+
+	// Split name
+	const iconName = stringToIcon(name);
+
+	// Clean up customisations
+	const changes = fullCustomisations(customisations);
+
+	// Get data
+	return (renderIcon(
+		{
+			name: iconName,
+		},
+		changes,
+		iconData,
+		returnString
+	) as unknown) as SVGElement | string | null;
+}
+
+/**
  * Global variable
  */
 const Iconify: IconifyGlobal = {
@@ -217,7 +273,7 @@ const Iconify: IconifyGlobal = {
 	getVersion: () => '__iconify_version__',
 
 	// Check if icon exists
-	iconExists: (name) => getIconData(name) !== void 0,
+	iconExists: (name) => getIconData(name) !== null,
 
 	// Get raw icon data
 	getIcon: (name) => {
@@ -248,8 +304,20 @@ const Iconify: IconifyGlobal = {
 		return icons;
 	},
 
-	// Render icon
-	renderIcon: getSVG,
+	// Load icons
+	loadIcons: API.loadIcons,
+
+	// Render SVG
+	renderSVG: (name: string, customisations: IconifyIconCustomisations) => {
+		return generateIcon(name, customisations, false) as SVGElement | null;
+	},
+
+	renderHTML: (name: string, customisations: IconifyIconCustomisations) => {
+		return generateIcon(name, customisations, true) as string | null;
+	},
+
+	// Get rendered icon as object that can be used to create SVG (use replaceIDs on body)
+	renderIcon: buildIcon,
 
 	// Replace IDs in body
 	replaceIDs: replaceIDs,

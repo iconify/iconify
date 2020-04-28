@@ -29,9 +29,9 @@ export function addFinder(finder: IconifyFinder): void {
  * Interface for found elements list
  */
 export interface PlaceholderElement {
-	element: IconifyElement;
-	finder: IconifyFinder;
 	name: IconifyIconName;
+	element?: IconifyElement;
+	finder?: IconifyFinder;
 	customisations?: IconifyIconCustomisations;
 }
 
@@ -74,9 +74,9 @@ function compareCustomisations(
 export function findPlaceholders(root: HTMLElement): PlaceholderElement[] {
 	const results: PlaceholderElement[] = [];
 
-	finders.forEach(finder => {
+	finders.forEach((finder) => {
 		const elements = finder.find(root);
-		Array.prototype.forEach.call(elements, item => {
+		Array.prototype.forEach.call(elements, (item) => {
 			const element = item as IconifyElement;
 			if (
 				element[elementFinderProperty] !== void 0 &&
@@ -106,7 +106,7 @@ export function findPlaceholders(root: HTMLElement): PlaceholderElement[] {
 
 	// Find all modified SVG
 	const elements = root.querySelectorAll('svg.iconify');
-	Array.prototype.forEach.call(elements, item => {
+	Array.prototype.forEach.call(elements, (item) => {
 		const element = item as IconifyElement;
 		const finder = element[elementFinderProperty];
 		const data = element[elementDataProperty];
