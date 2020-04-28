@@ -11,14 +11,14 @@
 		"core-js": "^3.6.4",
 		"vue": "^2.6.11",
 		"vue-class-component": "^7.2.2",
-		"vue-property-decorator": "^8.3.0"
+		"vue-property-decorator": "^8.4.2"
 	},
 	"devDependencies": {
-		"@iconify/icons-bx": "^1.0.2",
-		"@iconify/icons-dashicons": "^1.0.7",
+		"@iconify/icons-bx": "^1.0.3",
+		"@iconify/icons-dashicons": "^1.0.9",
 		"@iconify/vue": "^1.0.0",
-		"@typescript-eslint/eslint-plugin": "^2.29.0",
-		"@typescript-eslint/parser": "^2.29.0",
+		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
 		"@vue/cli-plugin-babel": "~4.2.0",
 		"@vue/cli-plugin-eslint": "~4.2.0",
 		"@vue/cli-plugin-typescript": "~4.2.0",

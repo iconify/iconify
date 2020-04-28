@@ -3,13 +3,14 @@
 	"private": true,
 	"description": "Browser tests for @iconify/iconify package",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "2.0.0-dev",
+	"version": "2.0.0-beta.0",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/iconify/iconify.git"
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "packages/browser-tests"
 	},
 	"scripts": {
 		"build": "node build",
@@ -20,7 +21,7 @@
 		"@cyberalien/redundancy": "^1.0.0",
 		"@iconify/core": "^1.0.0-beta.0",
 		"@iconify/iconify": "^2.0.0-beta.0",
-		"@iconify/types": "^1.0.1",
+		"@iconify/types": "^1.0.2",
 		"@rollup/plugin-buble": "^0.21.1",
 		"@rollup/plugin-commonjs": "^11.0.2",
 		"@rollup/plugin-node-resolve": "^7.1.1",

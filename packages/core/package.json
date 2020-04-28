@@ -9,7 +9,8 @@
 	"homepage": "https://iconify.design/",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/iconify/iconify.git"
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "packages/core"
 	},
 	"scripts": {
 		"clean": "rm -rf lib compiled-tests",
@@ -24,10 +25,10 @@
 	"devDependencies": {
 		"@types/chai": "^4.2.11",
 		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.12.34",
+		"@types/node": "^12.12.37",
 		"@types/request": "^2.48.4",
-		"@typescript-eslint/eslint-plugin": "^2.26.0",
-		"@typescript-eslint/parser": "^2.26.0",
+		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
 		"chai": "^4.2.0",
 		"eslint": "^6.8.0",
 		"mocha": "^6.2.3",
@@ -35,7 +36,7 @@
 	},
 	"dependencies": {
 		"@cyberalien/redundancy": "^1.0.0",
-		"@iconify/types": "^1.0.1"
+		"@iconify/types": "^1.0.2"
 	},
 	"optionalDependencies": {
 		"axios": "^0.19.2"

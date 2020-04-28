@@ -63,6 +63,28 @@ Other packages:
 -   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm serve` to start demo.
 -   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Must be ran in browser.
 
+## Installation
+
+This monorepo uses Lerna to manage packages.
+
+First you need to install Lerna:
+
+```bash
+npm run install
+```
+
+To install dependencies in all packages, run
+
+```bash
+npm run bootstrap
+```
+
+This will install all dependencies and create symbolic links to packages.
+
+If links stop working for some reason, run `npm run link` to fix links.
+
+If you want to re-install dependencies, run `npm run clean` to clear all repositories (press "Y" to continue), then `npm run bootstrap` to install everything again.
+
 ## License
 
 Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
