@@ -12,7 +12,7 @@ For more information visit [https://iconify.design/](https://iconify.design/).
 
 ## Iconify version 1
 
-If you are looking for Iconify version 1, check out [https://github.com/iconify/iconify/tree/iconify1]("iconify1" branch).
+If you are looking for Iconify version 1, check out https://github.com/iconify/iconify/tree/iconify1
 
 This repository contains the new version, completely rewritten using modern development process.
 
