@@ -16,7 +16,7 @@ If you are looking for Iconify version 1, check out https://github.com/iconify/i
 
 This repository contains the new version, completely rewritten using modern development process.
 
-## This repository
+## Iconify monorepo
 
 This repository is a big monorepo that contains several implementations of Iconify icon framework.
 
@@ -43,7 +43,11 @@ Iconify API provides data for over 50,000 icons! API is hosted on publicly avail
 
 When you use an icon font, each visitor loads an entire font, even if your page only uses a few icons. This is a major downside of using icon fonts. That limits developers to one or two fonts or icon sets.
 
-Unlike icon fonts, Iconify implementations that use API do not load the entire icon set. Unlike fonts and SVG frameworks, Iconify only loads icons that are used on the current page instead of loading entire icon sets. Iconify API provides icon data to Iconify SVG framework and other implementations that rely on Iconify API.
+Unlike icon fonts, Iconify implementations that use API do not load the entire icon set. Iconify only loads icons that are used on the current page.
+
+This makes it possible to have an unlimited choice of icons!
+
+Iconify API provides icon data to Iconify SVG framework and other implementations that rely on Iconify API.
 
 ## Available packages
 
