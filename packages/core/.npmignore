@@ -1,4 +1,6 @@
 .DS_Store
+tsconfig.json
 node_modules
+tests
 tests-compiled
-lib
+src
