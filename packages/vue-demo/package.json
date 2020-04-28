@@ -1,0 +1,36 @@
+{
+	"name": "@iconify/vue-demo",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
+	},
+	"dependencies": {
+		"core-js": "^3.6.4",
+		"vue": "^2.6.11",
+		"vue-class-component": "^7.2.2",
+		"vue-property-decorator": "^8.3.0"
+	},
+	"devDependencies": {
+		"@iconify/icons-bx": "^1.0.2",
+		"@iconify/icons-dashicons": "^1.0.7",
+		"@iconify/vue": "^1.0.0",
+		"@typescript-eslint/eslint-plugin": "^2.29.0",
+		"@typescript-eslint/parser": "^2.29.0",
+		"@vue/cli-plugin-babel": "~4.2.0",
+		"@vue/cli-plugin-eslint": "~4.2.0",
+		"@vue/cli-plugin-typescript": "~4.2.0",
+		"@vue/cli-service": "~4.2.0",
+		"@vue/eslint-config-prettier": "^6.0.0",
+		"@vue/eslint-config-typescript": "^5.0.1",
+		"babel-eslint": "^10.1.0",
+		"eslint": "^6.7.2",
+		"eslint-plugin-prettier": "^3.1.1",
+		"eslint-plugin-vue": "^6.1.2",
+		"prettier": "^1.19.1",
+		"typescript": "~3.7.5",
+		"vue-template-compiler": "^2.6.11"
+	}
+}

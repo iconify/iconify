@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"rootDir": "./tests",
+		"outDir": "./lib",
+		"target": "ES2019",
+		"module": "ESNext",
+		"declaration": false,
+		"sourceMap": false,
+		"strict": false,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	}
+}

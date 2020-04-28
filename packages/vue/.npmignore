@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+src
+lib
+tests
+api-extractor.json
+build.js
+tsconfig.json
+*.config.js
+
