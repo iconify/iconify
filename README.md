@@ -10,6 +10,12 @@ Iconify is the most versatile icon framework.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
+## Iconify version 1
+
+If you are looking for Iconify version 1, check out [https://github.com/iconify/iconify/tree/iconify1]("iconify1" branch).
+
+This repository contains the new version, completely rewritten using modern development process.
+
 ## This repository
 
 This repository is a big monorepo that contains several implementations of Iconify icon framework.
