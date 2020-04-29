@@ -315,6 +315,53 @@ Visual example to show the difference between inline and block modes:
 
 ![Inline icon](https://iconify.design/assets/images/inline.png)
 
+## Sapper
+
+The icon component works with Sapper.
+
+If you use the component as shown in examples above, SVG will be rendered on the server and sent to visitor as HTML code.
+
+If you are rendering multiple identical icons, rendering them on server is not optimal. It is much better to render them once using JavaScript in browser. How to do that with this icon component? By loading both component and icon data asynchronously.
+
+Example:
+
+```jsx
+<script>
+	// Dynamically load icon component, icon data and render it on client side
+	import { onMount } from 'svelte';
+
+	let IconifyIcon;
+	let postIcon;
+
+	onMount(async () => {
+		const promises = [
+			import('@iconify/svelte'), // Component
+			import('@iconify/icons-bi/link-45deg'), // Icon #1
+		];
+		const results = await Promise.all(promises);
+		IconifyIcon = results[0].default; // Component
+		postIcon = results[1].default; // Icon #1
+	});
+
+	export let posts;
+</script>
+
+<ul>
+	{#each posts as post}
+		<li>
+			<svelte:component this={IconifyIcon} icon={postIcon} />
+			<a rel="prefetch" href="blog/{post.slug}">{post.title}</a>
+		</li>
+	{/each}
+</ul>
+```
+
+This example adds icon stored in `postIcon` to every list item. If it was rendered on the server, HTML would send SVG element multiple times. But because it is rendered in browser, icon data and component needs to be sent to browser only once.
+
+Instead of using `<IconifyIcon />`, you must use `<svelte:component />` to make sure component is rendered dynamically.
+
+This example is based on Iconify Sapper demo: https://github.com/iconify/iconify/blob/master/packages/sapper-demo/src/routes/blog/index.svelte
+
 ## Icon Sets
 
 You can find all available icons at https://iconify.design/icon-sets/
@@ -371,14 +418,14 @@ npm install --save-dev @iconify/icons-ri
 
 Usage:
 
-```jsx
+```html
 <script>
-import IconifyIcon from '@iconify/svelte';
-import alertLine from '@iconify/icons-ri/alert-line';
+	import IconifyIcon from '@iconify/svelte';
+	import alertLine from '@iconify/icons-ri/alert-line';
 </script>
 
 <style>
- 	.alert {
+	.alert {
 		position: relative;
 		margin: 8px;
 		padding: 16px;
@@ -404,8 +451,8 @@ import alertLine from '@iconify/icons-ri/alert-line';
 </style>
 
 <div class="alert">
-    <IconifyIcon icon={alertLine} />
-    Important notice with alert icon!
+	<IconifyIcon icon="{alertLine}" />
+	Important notice with alert icon!
 </div>
 ```
 

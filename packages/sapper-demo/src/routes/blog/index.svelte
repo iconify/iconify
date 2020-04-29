@@ -16,7 +16,7 @@
 	let postIcon;
 
 	onMount(async () => {
-		let promises = [
+		const promises = [
 			import('@iconify/svelte'),
 			import('@iconify/icons-bi/link-45deg'),
 		];
