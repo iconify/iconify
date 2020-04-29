@@ -200,4 +200,32 @@ describe('Testing iconToSVG', () => {
 		const result = iconToSVG(icon, custom);
 		expect(result).to.be.eql(expected);
 	});
+
+	it('Flip with real icon', () => {
+		const iconBody =
+			'<g stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" fill-rule="evenodd"><path d="M40 64l48-48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/><path d="M40 64l48 48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/></g>';
+
+		const custom: FullIconCustomisations = fullCustomisations({});
+		const icon: FullIconifyIcon = fullIcon({
+			body: iconBody,
+			width: 128,
+			height: 128,
+			hFlip: true,
+		});
+		const expected: IconifyIconBuildResult = {
+			attributes: {
+				width: '1em',
+				height: '1em',
+				preserveAspectRatio: 'xMidYMid meet',
+				viewBox: '0 0 128 128',
+			},
+			body:
+				'<g transform="translate(128 0) scale(-1 1)">' +
+				iconBody +
+				'</g>',
+		};
+
+		const result = iconToSVG(icon, custom);
+		expect(result).to.be.eql(expected);
+	});
 });

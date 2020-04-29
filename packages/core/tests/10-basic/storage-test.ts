@@ -400,4 +400,60 @@ describe('Testing storage', () => {
 		};
 		expect(getIcon(storage, 'alias2z3')).to.be.eql(expected);
 	});
+
+	it('Icon set with aliases that use transformations', () => {
+		const storage = newStorage('arty-animated');
+		const iconBody =
+			'<g stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" fill-rule="evenodd"><path d="M40 64l48-48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/><path d="M40 64l48 48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/></g>';
+
+		expect(
+			addIconSet(storage, {
+				prefix: 'arty-animated',
+				icons: {
+					'16-chevron-left': {
+						body: iconBody,
+					},
+				},
+				aliases: {
+					'16-chevron-right': {
+						parent: '16-chevron-left',
+						hFlip: true,
+					},
+				},
+				width: 128,
+				height: 128,
+			})
+		).to.be.equal(true);
+
+		expect(Object.keys(storage.icons)).to.be.eql([
+			'16-chevron-left',
+			'16-chevron-right',
+		]);
+
+		// Test icon
+		let expected: FullIconifyIcon = {
+			body: iconBody,
+			width: 128,
+			height: 128,
+			top: 0,
+			left: 0,
+			hFlip: false,
+			vFlip: false,
+			rotate: 0,
+		};
+		expect(getIcon(storage, '16-chevron-left')).to.be.eql(expected);
+
+		// Test alias
+		expected = {
+			body: iconBody,
+			width: 128,
+			height: 128,
+			top: 0,
+			left: 0,
+			hFlip: true,
+			vFlip: false,
+			rotate: 0,
+		};
+		expect(getIcon(storage, '16-chevron-right')).to.be.eql(expected);
+	});
 });

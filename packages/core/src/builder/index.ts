@@ -86,10 +86,12 @@ export function iconToSVG(
 
 	// Apply transformations
 	const transformations: string[] = [];
-	let rotation = customisations.rotate;
+	const hFlip = customisations.hFlip !== icon.hFlip;
+	const vFlip = customisations.vFlip !== icon.vFlip;
+	let rotation = customisations.rotate + icon.rotate;
 
-	if (customisations.hFlip) {
-		if (customisations.vFlip) {
+	if (hFlip) {
+		if (vFlip) {
 			rotation += 2;
 		} else {
 			// Horizontal flip
@@ -103,7 +105,7 @@ export function iconToSVG(
 			transformations.push('scale(-1 1)');
 			box.top = box.left = 0;
 		}
-	} else if (customisations.vFlip) {
+	} else if (vFlip) {
 		// Vertical flip
 		transformations.push(
 			'translate(' + (0 - box.left) + ' ' + (box.height + box.top) + ')'
