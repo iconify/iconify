@@ -356,11 +356,11 @@ Example:
 </ul>
 ```
 
-This example adds icon stored in `postIcon` to every list item. If it was rendered on the server, HTML would send SVG element multiple times. But because it is rendered in browser, icon data and component needs to be sent to browser only once.
+This example adds an icon stored in `postIcon` to every list item. If it was rendered on the server, HTML would send SVG element multiple times. But because it is rendered in the browser, icon data and component needs to be sent to the browser only once.
 
 Instead of using `<IconifyIcon />`, you must use `<svelte:component />` to make sure component is rendered dynamically.
 
-This example is based on Iconify Sapper demo: https://github.com/iconify/iconify/blob/master/packages/sapper-demo/src/routes/blog/index.svelte
+This example is based on the Iconify Sapper demo: https://github.com/iconify/iconify/blob/master/packages/sapper-demo/src/routes/blog/index.svelte
 
 ## Icon Sets
 
@@ -489,7 +489,7 @@ There are over 60 icon sets. This readme shows only a few examples. See [Iconify
 
 ## License
 
-Svelte component is released with MIT license.
+The Svelte component is released with MIT license.
 
 © 2020 Vjacheslav Trushkin
 
