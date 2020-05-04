@@ -10,9 +10,7 @@ const commands = [];
 // Parse command line
 const compile = {
 	core: false,
-	lib: true,
 	dist: true,
-	api: true,
 };
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
@@ -56,15 +54,7 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.dist && !fileExists(packagesDir + '/react/lib/icon.js')) {
-	compile.lib = true;
-}
-
-if (compile.api && !fileExists(packagesDir + '/react/lib/icon.d.ts')) {
-	compile.lib = true;
-}
-
-if (compile.lib && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.dist && !fileExists(packagesDir + '/core/lib/modules.js')) {
 	compile.core = true;
 }
 

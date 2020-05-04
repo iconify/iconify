@@ -15,7 +15,8 @@
 	"module": "dist/index.mjs",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "rollup -c"
+		"build": "node build",
+		"build:dist": "rollup -c rollup.config.js"
 	},
 	"dependencies": {
 		"@iconify/core": "^1.0.0-beta.0",
