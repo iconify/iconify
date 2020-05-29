@@ -24,14 +24,14 @@
 	"devDependencies": {
 		"@types/chai": "^4.2.11",
 		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.12.37",
-		"@types/request": "^2.48.4",
-		"@typescript-eslint/eslint-plugin": "^2.30.0",
-		"@typescript-eslint/parser": "^2.30.0",
+		"@types/node": "^12.12.42",
+		"@types/request": "^2.48.5",
+		"@typescript-eslint/eslint-plugin": "^2.34.0",
+		"@typescript-eslint/parser": "^2.34.0",
 		"chai": "^4.2.0",
 		"eslint": "^6.8.0",
 		"mocha": "^6.2.3",
-		"typescript": "^3.8.3"
+		"typescript": "^3.9.3"
 	},
 	"dependencies": {
 		"@cyberalien/redundancy": "^1.0.0",

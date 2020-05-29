@@ -30,7 +30,7 @@
 		"chai": "^4.2.0",
 		"mocha": "^6.2.2",
 		"rollup": "^1.32.0",
-		"typescript": "^3.8.3"
+		"typescript": "^3.9.3"
 	},
 	"dependencies": {}
 }

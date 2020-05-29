@@ -14,16 +14,16 @@
 	"dependencies": {
 		"compression": "^1.7.1",
 		"polka": "next",
-		"sirv": "^0.4.0"
+		"sirv": "^0.4.6"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.9.6",
+		"@babel/core": "^7.10.1",
 		"@babel/plugin-syntax-dynamic-import": "^7.0.0",
-		"@babel/plugin-transform-runtime": "^7.9.6",
-		"@babel/preset-env": "^7.9.6",
-		"@babel/runtime": "^7.9.6",
-		"@iconify/icons-bi": "^1.0.0",
-		"@iconify/icons-openmoji": "^1.0.51",
+		"@babel/plugin-transform-runtime": "^7.10.1",
+		"@babel/preset-env": "^7.10.1",
+		"@babel/runtime": "^7.10.1",
+		"@iconify/icons-bi": "^1.0.2",
+		"@iconify/icons-openmoji": "^1.0.55",
 		"@iconify/svelte": "^1.0.0-beta.3",
 		"@rollup/plugin-commonjs": "11.0.2",
 		"@rollup/plugin-node-resolve": "^7.0.0",
@@ -31,9 +31,9 @@
 		"npm-run-all": "^4.1.5",
 		"rollup": "^1.20.0",
 		"rollup-plugin-babel": "^4.0.2",
-		"rollup-plugin-svelte": "^5.0.1",
+		"rollup-plugin-svelte": "^5.2.2",
 		"rollup-plugin-terser": "^5.3.0",
-		"sapper": "^0.27.0",
-		"svelte": "^3.22.1"
+		"sapper": "^0.27.13",
+		"svelte": "^3.23.0"
 	}
 }
