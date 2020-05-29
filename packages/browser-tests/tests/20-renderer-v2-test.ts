@@ -18,7 +18,7 @@ addFinder(iconifyFinder);
 
 describe('Testing renderer', () => {
 	// Add mentioned icons to storage
-	const storage = getStorage('mdi');
+	const storage = getStorage('', 'mdi');
 	addIconSet(storage, {
 		prefix: 'mdi',
 		icons: {
@@ -82,6 +82,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'account-cash',
 		});
@@ -124,6 +125,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'account',
 		});
@@ -167,6 +169,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'account-box',
 		});
@@ -214,6 +217,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -255,6 +259,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -301,6 +306,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'account',
 		});
@@ -374,6 +380,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -541,6 +548,7 @@ describe('Testing renderer', () => {
 		expect(element).to.not.be.eql(lastElement); // different 'element' and 'name' properties
 		expect(element.name).to.not.be.eql(lastElement.name);
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'account',
 		});
@@ -586,6 +594,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -634,6 +643,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -680,6 +690,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -768,6 +779,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -865,6 +877,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});
@@ -950,6 +963,7 @@ describe('Testing renderer', () => {
 
 		// Test element
 		expect(element.name).to.be.eql({
+			provider: '',
 			prefix: 'mdi',
 			name: 'home',
 		});

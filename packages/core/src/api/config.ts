@@ -1,5 +1,4 @@
 import { RedundancyConfig } from '@cyberalien/redundancy';
-import { merge } from '../misc/merge';
 
 /**
  * API config
@@ -12,16 +11,51 @@ export interface IconifyAPIConfig extends RedundancyConfig {
 	maxURL: number;
 }
 
-/**
- * Local storage interfaces
- */
-interface ConfigStorage {
-	// API configuration for all prefixes
-	default: IconifyAPIConfig;
+export type PartialIconifyAPIConfig = Partial<IconifyAPIConfig>;
 
-	// Prefix specific API configuration
-	prefixes: Record<string, IconifyAPIConfig>;
+/**
+ * Create full API configuration from partial data
+ */
+function createConfig(
+	source: PartialIconifyAPIConfig
+): IconifyAPIConfig | null {
+	if (!source.resources) {
+		return null;
+	}
+
+	const result: IconifyAPIConfig = {
+		// API hosts
+		resources: source.resources,
+
+		// Root path
+		path: source.path === void 0 ? '/' : source.path,
+
+		// URL length limit
+		maxURL: source.maxURL ? source.maxURL : 500,
+
+		// Timeout before next host is used.
+		rotate: source.rotate ? source.rotate : 750,
+
+		// Timeout to retry same host.
+		timeout: source.timeout ? source.timeout : 5000,
+
+		// Number of attempts for each host.
+		limit: source.limit ? source.limit : 2,
+
+		// Randomise default API end point.
+		random: source.random === true,
+
+		// Start index
+		index: source.index ? source.index : 0,
+	};
+
+	return result;
 }
+
+/**
+ * Local storage
+ */
+const configStorage: Record<string, IconifyAPIConfig> = Object.create(null);
 
 /**
  * Redundancy for API servers.
@@ -58,70 +92,28 @@ while (fallBackAPISources.length > 0) {
 	}
 }
 
-/**
- * Default configuration
- */
-const defaultConfig: IconifyAPIConfig = {
-	// API hosts
+// Add default API
+configStorage[''] = createConfig({
 	resources: ['https://api.iconify.design'].concat(fallBackAPI),
-
-	// Root path
-	path: '/',
-
-	// URL length limit
-	maxURL: 500,
-
-	// Timeout before next host is used.
-	rotate: 750,
-
-	// Timeout to retry same host.
-	timeout: 5000,
-
-	// Number of attempts for each host.
-	limit: 2,
-
-	// Randomise default API end point.
-	random: false,
-
-	// Start index
-	index: 0,
-};
+}) as IconifyAPIConfig;
 
 /**
- * Local storage
- */
-const configStorage: ConfigStorage = {
-	default: defaultConfig,
-	prefixes: Object.create(null),
-};
-
-/**
- * Add custom config for prefix(es)
- *
- * This function should be used before any API queries.
- * On first API query computed configuration will be cached, so changes to config will not take effect.
+ * Add custom config for provider
  */
 export function setAPIConfig(
-	customConfig: Partial<IconifyAPIConfig>,
-	prefix?: string | string[]
+	provider: string,
+	customConfig: PartialIconifyAPIConfig
 ): void {
-	const mergedConfig = merge(
-		configStorage.default,
-		customConfig
-	) as IconifyAPIConfig;
-	if (prefix === void 0) {
-		configStorage.default = mergedConfig;
+	const config = createConfig(customConfig);
+	if (config === null) {
 		return;
 	}
-	(typeof prefix === 'string' ? [prefix] : prefix).forEach(prefix => {
-		configStorage.prefixes[prefix] = mergedConfig;
-	});
+	configStorage[provider] = config;
 }
 
 /**
  * Get API configuration
  */
-export function getAPIConfig(prefix: string): IconifyAPIConfig | null {
-	const value = configStorage.prefixes[prefix];
-	return value === void 0 ? configStorage.default : value;
+export function getAPIConfig(provider: string): IconifyAPIConfig | undefined {
+	return configStorage[provider];
 }

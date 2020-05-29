@@ -84,9 +84,9 @@ function getGlobal(): JSONPRoot {
 /**
  * Calculate maximum icons list length for prefix
  */
-function calculateMaxLength(prefix: string): number {
+function calculateMaxLength(provider: string, prefix: string): number {
 	// Get config and store path
-	const config = getAPIConfig(prefix);
+	const config = getAPIConfig(provider);
 	if (!config) {
 		return 0;
 	}
@@ -112,7 +112,10 @@ function calculateMaxLength(prefix: string): number {
 			config.maxURL -
 			maxHostLength -
 			config.path.length -
-			endPoint.replace('{prefix}', prefix).replace('{icons}', '').length -
+			endPoint
+				.replace('{provider}', provider)
+				.replace('{prefix}', prefix)
+				.replace('{icons}', '').length -
 			extraLength;
 	}
 
@@ -126,6 +129,7 @@ function calculateMaxLength(prefix: string): number {
  * Prepare params
  */
 export const prepareQuery: IconifyAPIPrepareQuery = (
+	provider: string,
 	prefix: string,
 	icons: string[]
 ): APIQueryParams[] => {
@@ -134,11 +138,12 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 	// Get maximum icons list length
 	let maxLength = maxLengthCache[prefix];
 	if (maxLength === void 0) {
-		maxLength = calculateMaxLength(prefix);
+		maxLength = calculateMaxLength(provider, prefix);
 	}
 
 	// Split icons
 	let item: APIQueryParams = {
+		provider,
 		prefix,
 		icons: [],
 	};
@@ -149,6 +154,7 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 			// Next set
 			results.push(item);
 			item = {
+				provider,
 				prefix,
 				icons: [],
 			};
@@ -170,6 +176,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	params: APIQueryParams,
 	status: RedundancyPendingItem
 ): void => {
+	const provider = params.provider;
 	const prefix = params.prefix;
 	const icons = params.icons;
 	const iconsList = icons.join(',');
@@ -180,7 +187,9 @@ export const sendQuery: IconifyAPISendQuery = (
 	const global = getGlobal();
 
 	// Callback hash
-	let cbCounter = hash(host + ':' + prefix + ':' + iconsList);
+	let cbCounter = hash(
+		provider + ':' + host + ':' + prefix + ':' + iconsList
+	);
 	while (global[cbPrefix + cbCounter] !== void 0) {
 		cbCounter++;
 	}
@@ -189,6 +198,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	let path =
 		pathCache[prefix] +
 		endPoint
+			.replace('{provider}', provider)
 			.replace('{prefix}', prefix)
 			.replace('{icons}', iconsList)
 			.replace('{cb}', callbackName);

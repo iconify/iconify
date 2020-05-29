@@ -5,7 +5,7 @@ import { getNode } from './node';
 import { addFinder } from '@iconify/iconify/lib/finder';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
-import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
@@ -20,7 +20,7 @@ addFinder(iconifyFinder);
 addFinder(iconifyIconFinder);
 
 // Set API
-setAPIModule({
+setDefaultAPIModule({
 	prepare: prepareQuery,
 	send: sendQuery,
 });
@@ -33,16 +33,14 @@ function nextPrefix(): string {
 
 describe('Scanning DOM with API', () => {
 	it('Scan DOM with API', (done) => {
+		const provider = nextPrefix();
 		const prefix1 = nextPrefix();
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			[prefix1, prefix2]
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
 
 		// Set icons, load them with various delay
 		const data1: FakeData = {
@@ -64,7 +62,7 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix1, data1);
+		setFakeData(provider, prefix1, data1);
 
 		const data2: FakeData = {
 			icons: ['account', 'account-box'],
@@ -85,24 +83,32 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix2, data2);
+		setFakeData(provider, prefix2, data2);
 
 		const node = getNode('scan-dom');
 		node.innerHTML =
 			'<div><p>Testing scanning DOM with API</p><ul>' +
 			'<li>Inline icons:' +
-			'   <span class="iconify iconify-inline" data-icon="' +
+			'   <span class="iconify iconify-inline" data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
-			'   <i class="iconify-inline test-icon iconify--mdi-account" data-icon="' +
+			'   <i class="iconify-inline test-icon iconify--mdi-account" data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
 			'</li>' +
 			'<li>Block icons:' +
-			'   <iconify-icon data-icon="' +
+			'   <iconify-icon data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':account-cash" title="&lt;Cash&gt;!"></iconify-icon>' +
-			'   <i class="iconify-icon" data-icon="' +
+			'   <i class="iconify-icon" data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account-box" data-inline="true" data-rotate="2" data-width="42"></i>' +
 			'</li>' +
@@ -133,16 +139,14 @@ describe('Scanning DOM with API', () => {
 	});
 
 	it('Changing icon name before it loaded', (done) => {
+		const provider = nextPrefix();
 		const prefix1 = nextPrefix();
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			[prefix1, prefix2]
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
 
 		// Set icons, load them with various delay
 		const data1: FakeData = {
@@ -164,7 +168,7 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix1, data1);
+		setFakeData(provider, prefix1, data1);
 
 		const data2: FakeData = {
 			icons: ['account', 'account-box'],
@@ -185,7 +189,7 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix2, data2);
+		setFakeData(provider, prefix2, data2);
 
 		const data1b: FakeData = {
 			icons: ['account', 'account-box'],
@@ -206,24 +210,32 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix1, data1b);
+		setFakeData(provider, prefix1, data1b);
 
 		const node = getNode('scan-dom');
 		node.innerHTML =
 			'<div><p>Testing scanning DOM with API: renamed icon</p><ul>' +
 			'<li>Default finder:' +
-			'   <span class="iconify-inline first-icon" data-icon="' +
+			'   <span class="iconify-inline first-icon" data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
-			'   <i class="iconify-inline second-icon iconify--mdi-account" data-icon="' +
+			'   <i class="iconify-inline second-icon iconify--mdi-account" data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
 			'</li>' +
 			'<li>IconifyIcon finder:' +
-			'   <iconify-icon class="third-icon" data-icon="' +
+			'   <iconify-icon class="third-icon" data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':account-cash" title="&lt;Cash&gt;!"></iconify-icon>' +
-			'   <iconify-icon class="fourth-icon" data-icon="' +
+			'   <iconify-icon class="fourth-icon" data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account-box" data-inline="true" data-rotate="2" data-width="42"></iconify-icon>' +
 			'</li>' +
@@ -244,7 +256,10 @@ describe('Scanning DOM with API', () => {
 		const icon = node.querySelector('iconify-icon[title]');
 		expect(icon).to.not.be.equal(null);
 		expect(icon.getAttribute('class')).to.be.equal('third-icon');
-		icon.setAttribute('data-icon', prefix1 + ':account');
+		icon.setAttribute(
+			'data-icon',
+			'@' + provider + ':' + prefix1 + ':account'
+		);
 
 		// First API response should have loaded, but only 1 icon should have been rendered
 		setTimeout(() => {
@@ -273,16 +288,14 @@ describe('Scanning DOM with API', () => {
 	});
 
 	it('Changing icon name before it loaded to invalid name', (done) => {
+		const provider = nextPrefix();
 		const prefix1 = nextPrefix();
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			[prefix1, prefix2]
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
 
 		// Set icons, load them with various delay
 		const data1: FakeData = {
@@ -304,7 +317,7 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix1, data1);
+		setFakeData(provider, prefix1, data1);
 
 		const data2: FakeData = {
 			icons: ['account', 'account-box'],
@@ -325,24 +338,32 @@ describe('Scanning DOM with API', () => {
 				height: 24,
 			},
 		};
-		setFakeData(prefix2, data2);
+		setFakeData(provider, prefix2, data2);
 
 		const node = getNode('scan-dom');
 		node.innerHTML =
 			'<div><p>Testing scanning DOM with API: invalid name</p><ul>' +
 			'<li>Inline icons:' +
-			'   <span class="iconify" data-icon="' +
+			'   <span class="iconify" data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
-			'   <i class="iconify test-icon iconify--mdi-account" data-icon="' +
+			'   <i class="iconify test-icon iconify--mdi-account" data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
 			'</li>' +
 			'<li>Block icons:' +
-			'   <iconify-icon data-icon="' +
+			'   <iconify-icon data-icon="@' +
+			provider +
+			':' +
 			prefix1 +
 			':account-cash" title="&lt;Cash&gt;!"></iconify-icon>' +
-			'   <iconify-icon data-icon="' +
+			'   <iconify-icon data-icon="@' +
+			provider +
+			':' +
 			prefix2 +
 			':account-box" data-inline="true" data-rotate="2" data-width="42"></iconify-icon>' +
 			'</li>' +
@@ -355,7 +376,7 @@ describe('Scanning DOM with API', () => {
 		// Change icon name
 		const icon = node.querySelector('iconify-icon[title]');
 		expect(icon).to.not.be.equal(null);
-		icon.setAttribute('data-icon', 'foo');
+		icon.setAttribute('data-icon', '@' + provider + ':foo');
 
 		// First API response should have loaded, but only 1 icon
 		setTimeout(() => {

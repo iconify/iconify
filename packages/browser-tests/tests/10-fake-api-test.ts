@@ -2,14 +2,14 @@ import mocha from 'mocha';
 import chai from 'chai';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
-import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 
 const expect = chai.expect;
 
 // Set API
-setAPIModule({
+setDefaultAPIModule({
 	prepare: prepareQuery,
 	send: sendQuery,
 });
@@ -21,7 +21,8 @@ function nextPrefix(): string {
 }
 
 describe('Testing fake API', () => {
-	it('Loading results', done => {
+	it('Loading results', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		const data: FakeData = {
 			icons: ['icon1', 'icon2'],
@@ -41,24 +42,26 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			prefix
-		);
-		setFakeData(prefix, data);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
+		setFakeData(provider, prefix, data);
 
 		// Attempt to load icons
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending) => {
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -68,7 +71,8 @@ describe('Testing fake API', () => {
 		);
 	});
 
-	it('Loading results with delay', done => {
+	it('Loading results with delay', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		const data: FakeData = {
 			icons: ['icon1', 'icon2'],
@@ -89,23 +93,22 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			prefix
-		);
-		setFakeData(prefix, data);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
+		setFakeData(provider, prefix, data);
 
 		// Attempt to load icons
 		const start = Date.now();
 		API.loadIcons(
 			[
 				{
+					provider,
 					prefix,
 					name: 'icon1',
 				},
 				{
+					provider,
 					prefix,
 					name: 'icon2',
 				},
@@ -113,10 +116,12 @@ describe('Testing fake API', () => {
 			(loaded, missing, pending) => {
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -129,7 +134,8 @@ describe('Testing fake API', () => {
 		);
 	});
 
-	it('Loading partial results', done => {
+	it('Loading partial results', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		const data: FakeData = {
 			icons: ['icon1'],
@@ -146,21 +152,21 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-				rotate: 20,
-				timeout: 100,
-				limit: 1,
-			},
-			prefix
-		);
-		setFakeData(prefix, data);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+			rotate: 20,
+			timeout: 100,
+			limit: 1,
+		});
+		setFakeData(provider, prefix, data);
 
 		// Attempt to load icons
 		let counter = 0;
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending) => {
 				try {
 					counter++;
@@ -169,12 +175,14 @@ describe('Testing fake API', () => {
 							// Loaded icon1
 							expect(loaded).to.be.eql([
 								{
+									provider,
 									prefix,
 									name: 'icon1',
 								},
 							]);
 							expect(pending).to.be.eql([
 								{
+									provider,
 									prefix,
 									name: 'icon2',
 								},

@@ -13,7 +13,7 @@ import { IconifyJSON } from '@iconify/types';
 
 describe('Testing storage', () => {
 	it('Adding icon', () => {
-		const storage = newStorage('foo');
+		const storage = newStorage('', 'foo');
 
 		// Add one icon
 		addIcon(storage, 'test', {
@@ -82,7 +82,7 @@ describe('Testing storage', () => {
 	});
 
 	it('Adding simple icon set', () => {
-		const storage = newStorage('foo');
+		const storage = newStorage('', 'foo');
 
 		// Add two icons
 		expect(
@@ -138,7 +138,7 @@ describe('Testing storage', () => {
 	});
 
 	it('Icon set with invalid default values', () => {
-		const storage = newStorage('foo');
+		const storage = newStorage('', 'foo');
 
 		// Missing prefix, invalid default values
 		expect(
@@ -205,7 +205,7 @@ describe('Testing storage', () => {
 	});
 
 	it('Icon set with simple aliases', () => {
-		const storage = newStorage('foo');
+		const storage = newStorage('', 'foo');
 
 		expect(
 			addIconSet(storage, {
@@ -275,7 +275,7 @@ describe('Testing storage', () => {
 	});
 
 	it('Icon set with nested aliases', () => {
-		const storage = newStorage('foo');
+		const storage = newStorage('', 'foo');
 
 		expect(
 			addIconSet(storage, {
@@ -402,7 +402,7 @@ describe('Testing storage', () => {
 	});
 
 	it('Icon set with aliases that use transformations', () => {
-		const storage = newStorage('arty-animated');
+		const storage = newStorage('iconify', 'arty-animated');
 		const iconBody =
 			'<g stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" fill-rule="evenodd"><path d="M40 64l48-48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/><path d="M40 64l48 48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/></g>';
 

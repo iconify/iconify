@@ -9,13 +9,14 @@ export function listToIcons(
 ): IconifyIconName[] {
 	const result: IconifyIconName[] = [];
 
-	list.forEach(item => {
+	list.forEach((item) => {
 		const icon: IconifyIconName =
 			typeof item === 'string'
 				? (stringToIcon(item) as IconifyIconName)
 				: item;
 		if (!validate || validateIcon(icon)) {
 			result.push({
+				provider: icon.provider,
 				prefix: icon.prefix,
 				name: icon.name,
 			});
@@ -26,12 +27,12 @@ export function listToIcons(
 }
 
 /**
- * Get all prefixes
+ * Get all providers
  */
-export function getPrefixes(list: IconifyIconName[]): string[] {
-	const prefixes: Record<string, boolean> = Object.create(null);
-	list.forEach(icon => {
-		prefixes[icon.prefix] = true;
+export function getProviders(list: IconifyIconName[]): string[] {
+	const providers: Record<string, boolean> = Object.create(null);
+	list.forEach((icon) => {
+		providers[icon.provider] = true;
 	});
-	return Object.keys(prefixes);
+	return Object.keys(providers);
 }

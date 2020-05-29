@@ -3,8 +3,8 @@
 import 'mocha';
 import { expect } from 'chai';
 import { RedundancyPendingItem } from '@cyberalien/redundancy';
-import { setAPIConfig } from '../../lib/api/config';
-import { setAPIModule, APIQueryParams } from '../../lib/api/modules';
+import { setAPIConfig, IconifyAPIConfig } from '../../lib/api/config';
+import { setProviderAPIModule, APIQueryParams } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 
 describe('Testing API loadIcons', () => {
@@ -16,24 +16,24 @@ describe('Testing API loadIcons', () => {
 		);
 	}
 
-	it('Loading few icons', done => {
+	it('Loading few icons', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		let asyncCounter = 0;
 
 		// Set config
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			prefix
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
 
 		// Icon loader
 		const prepareQuery = (
+			provider: string,
 			prefix: string,
 			icons: string[]
 		): APIQueryParams[] => {
 			const item: APIQueryParams = {
+				provider,
 				prefix,
 				icons,
 			};
@@ -44,6 +44,7 @@ describe('Testing API loadIcons', () => {
 
 			// Test input and return as one item
 			const expected: APIQueryParams = {
+				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
 			};
@@ -64,6 +65,7 @@ describe('Testing API loadIcons', () => {
 			// Test input
 			expect(host).to.be.equal('https://api1.local');
 			const expected: APIQueryParams = {
+				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
 			};
@@ -86,24 +88,22 @@ describe('Testing API loadIcons', () => {
 			expect(asyncCounter).to.be.equal(3);
 		};
 
-		setAPIModule(
-			{
-				prepare: prepareQuery,
-				send: sendQuery,
-			},
-			prefix
-		);
+		setProviderAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
 
 		// Load icons
 		API.loadIcons(
 			[
 				// as icon
 				{
+					provider,
 					prefix,
 					name: 'icon1',
 				},
 				// as string
-				prefix + ':icon2',
+				provider + ':' + prefix + ':icon2',
 			],
 			(loaded, missing, pending, unsubscribe) => {
 				// This callback should be called last
@@ -112,10 +112,12 @@ describe('Testing API loadIcons', () => {
 
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -123,42 +125,54 @@ describe('Testing API loadIcons', () => {
 				expect(missing).to.be.eql([]);
 				expect(pending).to.be.eql([]);
 
-				expect(API.isPending(prefix, 'icon1')).to.be.equal(false);
-				expect(API.isPending(prefix, 'icon3')).to.be.equal(false);
+				expect(
+					API.isPending({
+						provider,
+						prefix,
+						name: 'icon1',
+					})
+				).to.be.equal(false);
+				expect(
+					API.isPending({ provider, prefix, name: 'icon3' })
+				).to.be.equal(false);
 
 				done();
 			}
 		);
 
 		// Test isPending
-		expect(API.isPending(prefix, 'icon1')).to.be.equal(true);
-		expect(API.isPending(prefix, 'icon3')).to.be.equal(false);
+		expect(API.isPending({ provider, prefix, name: 'icon1' })).to.be.equal(
+			true
+		);
+		expect(API.isPending({ provider, prefix, name: 'icon3' })).to.be.equal(
+			false
+		);
 
 		// Make sure asyncCounter wasn't increased because loading shoud happen on next tick
 		expect(asyncCounter).to.be.equal(0);
 		asyncCounter++;
 	});
 
-	it('Split results', done => {
+	it('Split results', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-			},
-			prefix
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
 
 		// Icon loader
 		const prepareQuery = (
+			provider: string,
 			prefix: string,
 			icons: string[]
 		): APIQueryParams[] => {
 			// Split all icons in multiple queries, one icon per query
 			const results: APIQueryParams[] = [];
-			icons.forEach(icon => {
+			icons.forEach((icon) => {
 				const item: APIQueryParams = {
+					provider,
 					prefix,
 					icons: [icon],
 				};
@@ -182,6 +196,7 @@ describe('Testing API loadIcons', () => {
 			// Icon names should match queryCounter: 'icon1' on first run, 'icon2' on second run
 			queryCounter++;
 			const expected: APIQueryParams = {
+				provider,
 				prefix,
 				icons: ['icon' + queryCounter],
 			};
@@ -189,7 +204,7 @@ describe('Testing API loadIcons', () => {
 
 			// Send only requested icons
 			const icons = Object.create(null);
-			params.icons.forEach(icon => {
+			params.icons.forEach((icon) => {
 				icons[icon] = {
 					body: '<path d="" />',
 				};
@@ -200,18 +215,18 @@ describe('Testing API loadIcons', () => {
 			});
 		};
 
-		setAPIModule(
-			{
-				prepare: prepareQuery,
-				send: sendQuery,
-			},
-			prefix
-		);
+		setProviderAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
 
 		// Load icons
 		let callbackCalled = false;
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending, unsubscribe) => {
 				// Callback should be called only once because results should be sent in same tick
 				expect(callbackCalled).to.be.equal(false);
@@ -220,10 +235,12 @@ describe('Testing API loadIcons', () => {
 				// Test data
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -235,24 +252,24 @@ describe('Testing API loadIcons', () => {
 		);
 	});
 
-	it('Fail on default host', done => {
+	it('Fail on default host', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-				rotate: 100, // 100ms to speed up test
-			},
-			prefix
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+			rotate: 100, // 100ms to speed up test
+		});
 
 		// Icon loader
 		const prepareQuery = (
+			provider: string,
 			prefix: string,
 			icons: string[]
 		): APIQueryParams[] => {
 			const item: APIQueryParams = {
+				provider,
 				prefix,
 				icons,
 			};
@@ -299,18 +316,18 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setAPIModule(
-			{
-				prepare: prepareQuery,
-				send: sendQuery,
-			},
-			prefix
-		);
+		setProviderAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
 
 		// Load icons
 		let callbackCalled = false;
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending, unsubscribe) => {
 				// Callback should be called only once
 				expect(callbackCalled).to.be.equal(false);
@@ -319,10 +336,12 @@ describe('Testing API loadIcons', () => {
 				// Test data
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -335,24 +354,24 @@ describe('Testing API loadIcons', () => {
 		);
 	});
 
-	it('Fail on default host, multiple queries', done => {
+	it('Fail on default host, multiple queries', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-				rotate: 100, // 100ms to speed up test
-			},
-			prefix
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+			rotate: 100, // 100ms to speed up test
+		});
 
 		// Icon loader
 		const prepareQuery = (
+			provider: string,
 			prefix: string,
 			icons: string[]
 		): APIQueryParams[] => {
 			const item: APIQueryParams = {
+				provider,
 				prefix,
 				icons,
 			};
@@ -420,18 +439,18 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setAPIModule(
-			{
-				prepare: prepareQuery,
-				send: sendQuery,
-			},
-			prefix
-		);
+		setProviderAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
 
 		// Load icons
 		let callbackCalled = false;
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending, unsubscribe) => {
 				// Callback should be called only once
 				expect(callbackCalled).to.be.equal(false);
@@ -440,10 +459,12 @@ describe('Testing API loadIcons', () => {
 				// Test data
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -455,7 +476,10 @@ describe('Testing API loadIcons', () => {
 				setTimeout(() => {
 					let callbackCalled = false;
 					API.loadIcons(
-						[prefix + ':icon3', prefix + ':icon4'],
+						[
+							provider + ':' + prefix + ':icon3',
+							provider + ':' + prefix + ':icon4',
+						],
 						(loaded, missing, pending, unsubscribe) => {
 							// Callback should be called only once
 							expect(callbackCalled).to.be.equal(false);
@@ -464,10 +488,12 @@ describe('Testing API loadIcons', () => {
 							// Test data
 							expect(loaded).to.be.eql([
 								{
+									provider,
 									prefix,
 									name: 'icon3',
 								},
 								{
+									provider,
 									prefix,
 									name: 'icon4',
 								},
@@ -483,25 +509,25 @@ describe('Testing API loadIcons', () => {
 		);
 	});
 
-	it('Fail on default host, multiple queries with different prefixes', done => {
+	it('Fail on default host, multiple queries with different prefixes', (done) => {
+		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		const prefix2 = nextPrefix();
 
 		// Set config
-		setAPIConfig(
-			{
-				resources: ['https://api1.local', 'https://api2.local'],
-				rotate: 100, // 100ms to speed up test
-			},
-			[prefix, prefix2]
-		);
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+			rotate: 100, // 100ms to speed up test
+		});
 
 		// Icon loader
 		const prepareQuery = (
+			provider: string,
 			prefix: string,
 			icons: string[]
 		): APIQueryParams[] => {
 			const item: APIQueryParams = {
+				provider,
 				prefix,
 				icons,
 			};
@@ -572,18 +598,18 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setAPIModule(
-			{
-				prepare: prepareQuery,
-				send: sendQuery,
-			},
-			[prefix, prefix2]
-		);
+		setProviderAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
 
 		// Load icons
 		let callbackCalled = false;
 		API.loadIcons(
-			[prefix + ':icon1', prefix + ':icon2'],
+			[
+				provider + ':' + prefix + ':icon1',
+				provider + ':' + prefix + ':icon2',
+			],
 			(loaded, missing, pending, unsubscribe) => {
 				// Callback should be called only once
 				expect(callbackCalled).to.be.equal(false);
@@ -592,10 +618,12 @@ describe('Testing API loadIcons', () => {
 				// Test data
 				expect(loaded).to.be.eql([
 					{
+						provider,
 						prefix,
 						name: 'icon1',
 					},
 					{
+						provider,
 						prefix,
 						name: 'icon2',
 					},
@@ -607,7 +635,10 @@ describe('Testing API loadIcons', () => {
 				setTimeout(() => {
 					let callbackCalled = false;
 					API.loadIcons(
-						[prefix2 + ':icon2', prefix2 + ':icon4'],
+						[
+							provider + ':' + prefix2 + ':icon2',
+							provider + ':' + prefix2 + ':icon4',
+						],
 						(loaded, missing, pending, unsubscribe) => {
 							// Callback should be called only once
 							expect(callbackCalled).to.be.equal(false);
@@ -616,10 +647,12 @@ describe('Testing API loadIcons', () => {
 							// Test data
 							expect(loaded).to.be.eql([
 								{
+									provider,
 									prefix: prefix2,
 									name: 'icon2',
 								},
 								{
+									provider,
 									prefix: prefix2,
 									name: 'icon4',
 								},

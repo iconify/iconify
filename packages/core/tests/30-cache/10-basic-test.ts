@@ -14,6 +14,8 @@ import {
 } from './fake_cache';
 
 describe('Testing mocked localStorage', () => {
+	const provider = '';
+
 	it('No usable cache', () => {
 		reset({});
 
@@ -85,6 +87,7 @@ describe('Testing mocked localStorage', () => {
 			cachePrefix + '0',
 			JSON.stringify({
 				cached: Date.now(),
+				provider,
 				data: {
 					prefix: prefix,
 					icons: {
@@ -143,6 +146,7 @@ describe('Testing mocked localStorage', () => {
 			cachePrefix + '0',
 			JSON.stringify({
 				cached: Date.now(),
+				provider,
 				data: {
 					prefix: prefix,
 					icons: {

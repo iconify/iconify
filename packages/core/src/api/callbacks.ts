@@ -4,6 +4,7 @@ import {
 } from '../interfaces/loader';
 import { getStorage } from '../storage';
 import { SortedIcons } from '../icon/sort';
+import { IconifyIconSource } from '../icon/name';
 
 /**
  * Storage for callbacks
@@ -22,49 +23,70 @@ interface CallbackItem {
 	abort: IconifyIconLoaderAbort;
 }
 
+// Records sorted by provider and prefix
 // This export is only for unit testing, should not be used
-export const callbacks: Record<string, CallbackItem[]> = Object.create(null);
-const pendingUpdates: Record<string, boolean> = Object.create(null);
+export const callbacks: Record<
+	string,
+	Record<string, CallbackItem[]>
+> = Object.create(null);
+const pendingUpdates: Record<string, Record<string, boolean>> = Object.create(
+	null
+);
 
 /**
  * Remove callback
  */
-function removeCallback(prefixes: string[], id: number): void {
-	prefixes.forEach(prefix => {
-		const items = callbacks[prefix];
+function removeCallback(sources: IconifyIconSource[], id: number): void {
+	sources.forEach((source) => {
+		const provider = source.provider;
+		if (callbacks[provider] === void 0) {
+			return;
+		}
+		const providerCallbacks = callbacks[provider];
+
+		const prefix = source.prefix;
+		const items = providerCallbacks[prefix];
 		if (items) {
-			callbacks[prefix] = items.filter(row => row.id !== id);
+			providerCallbacks[prefix] = items.filter((row) => row.id !== id);
 		}
 	});
 }
 
 /**
- * Update all callbacks for prefix
+ * Update all callbacks for provider and prefix
  */
-export function updateCallbacks(prefix: string): void {
-	if (!pendingUpdates[prefix]) {
-		pendingUpdates[prefix] = true;
-		setTimeout(() => {
-			pendingUpdates[prefix] = false;
+export function updateCallbacks(provider: string, prefix: string): void {
+	if (pendingUpdates[provider] === void 0) {
+		pendingUpdates[provider] = Object.create(null);
+	}
+	const providerPendingUpdates = pendingUpdates[provider];
 
-			if (callbacks[prefix] === void 0) {
+	if (!providerPendingUpdates[prefix]) {
+		providerPendingUpdates[prefix] = true;
+		setTimeout(() => {
+			providerPendingUpdates[prefix] = false;
+
+			if (
+				callbacks[provider] === void 0 ||
+				callbacks[provider][prefix] === void 0
+			) {
 				return;
 			}
 
 			// Get all items
-			const items = callbacks[prefix].slice(0);
+			const items = callbacks[provider][prefix].slice(0);
 			if (!items.length) {
 				return;
 			}
 
-			const storage = getStorage(prefix);
+			const storage = getStorage(provider, prefix);
 
 			// Check each item for changes
 			let hasPending = false;
 			items.forEach((item: CallbackItem) => {
 				const icons = item.icons;
 				const oldLength = icons.pending.length;
-				icons.pending = icons.pending.filter(icon => {
+				icons.pending = icons.pending.filter((icon) => {
 					if (icon.prefix !== prefix) {
 						// Checking only current prefix
 						return true;
@@ -74,12 +96,14 @@ export function updateCallbacks(prefix: string): void {
 					if (storage.icons[name] !== void 0) {
 						// Loaded
 						icons.loaded.push({
+							provider,
 							prefix,
 							name,
 						});
 					} else if (storage.missing[name] !== void 0) {
 						// Missing
 						icons.missing.push({
+							provider,
 							prefix,
 							name,
 						});
@@ -96,7 +120,15 @@ export function updateCallbacks(prefix: string): void {
 				if (icons.pending.length !== oldLength) {
 					if (!hasPending) {
 						// All icons have been loaded - remove callback from prefix
-						removeCallback([prefix], item.id);
+						removeCallback(
+							[
+								{
+									provider,
+									prefix,
+								},
+							],
+							item.id
+						);
 					}
 					item.callback(
 						icons.loaded.slice(0),
@@ -121,11 +153,11 @@ let idCounter = 0;
 export function storeCallback(
 	callback: IconifyIconLoaderCallback,
 	icons: SortedIcons,
-	pendingPrefixes: string[]
+	pendingSources: IconifyIconSource[]
 ): IconifyIconLoaderAbort {
 	// Create unique id and abort function
 	const id = idCounter++;
-	const abort = removeCallback.bind(null, pendingPrefixes, id);
+	const abort = removeCallback.bind(null, pendingSources, id);
 
 	if (!icons.pending.length) {
 		// Do not store item without pending icons and return function that does nothing
@@ -140,11 +172,17 @@ export function storeCallback(
 		abort: abort,
 	};
 
-	pendingPrefixes.forEach(prefix => {
-		if (callbacks[prefix] === void 0) {
-			callbacks[prefix] = [];
+	pendingSources.forEach((source) => {
+		const provider = source.provider;
+		const prefix = source.prefix;
+		if (callbacks[provider] === void 0) {
+			callbacks[provider] = Object.create(null);
 		}
-		callbacks[prefix].push(item);
+		const providerCallbacks = callbacks[provider];
+		if (providerCallbacks[prefix] === void 0) {
+			providerCallbacks[prefix] = [];
+		}
+		providerCallbacks[prefix].push(item);
 	});
 
 	return abort;

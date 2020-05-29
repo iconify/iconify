@@ -53,18 +53,20 @@ export function scanDOM(root?: HTMLElement): void {
 	// Observer
 	let paused = false;
 
-	// List of icons to load
-	const loadIcons: Record<string, Record<string, boolean>> = Object.create(
-		null
-	);
+	// List of icons to load: [provider][prefix][name] = boolean
+	const loadIcons: Record<
+		string,
+		Record<string, Record<string, boolean>>
+	> = Object.create(null);
 
 	// Get root node and placeholders
 	if (!root) {
 		root = getRoot();
 	}
-	findPlaceholders(root).forEach(item => {
+	findPlaceholders(root).forEach((item) => {
 		const element = item.element;
 		const iconName = item.name;
+		const provider = iconName.provider;
 		const prefix = iconName.prefix;
 		const name = iconName.name;
 		let data: IconifyElementData = element[elementDataProperty];
@@ -79,7 +81,7 @@ export function scanDOM(root?: HTMLElement): void {
 				case 'loading':
 					if (
 						coreModules.api &&
-						coreModules.api.isPending(prefix, name)
+						coreModules.api.isPending({ provider, prefix, name })
 					) {
 						// Pending
 						return;
@@ -88,7 +90,7 @@ export function scanDOM(root?: HTMLElement): void {
 		}
 
 		// Check icon
-		const storage = getStorage(prefix);
+		const storage = getStorage(provider, prefix);
 		if (storage.icons[name] !== void 0) {
 			// Icon exists - replace placeholder
 			if (browserModules.observer && !paused) {
@@ -124,12 +126,16 @@ export function scanDOM(root?: HTMLElement): void {
 		}
 
 		if (coreModules.api) {
-			if (!coreModules.api.isPending(prefix, name)) {
+			if (!coreModules.api.isPending({ provider, prefix, name })) {
 				// Add icon to loading queue
-				if (loadIcons[prefix] === void 0) {
-					loadIcons[prefix] = Object.create(null);
+				if (loadIcons[provider] === void 0) {
+					loadIcons[provider] = Object.create(null);
 				}
-				loadIcons[prefix][name] = true;
+				const providerLoadIcons = loadIcons[provider];
+				if (providerLoadIcons[prefix] === void 0) {
+					providerLoadIcons[prefix] = Object.create(null);
+				}
+				providerLoadIcons[prefix][name] = true;
 			}
 		}
 
@@ -145,17 +151,21 @@ export function scanDOM(root?: HTMLElement): void {
 	// Load icons
 	if (coreModules.api) {
 		const api = coreModules.api;
-		Object.keys(loadIcons).forEach(prefix => {
-			api.loadIcons(
-				Object.keys(loadIcons[prefix]).map(name => {
-					const icon: IconifyIconName = {
-						prefix,
-						name,
-					};
-					return icon;
-				}),
-				checkPendingIcons
-			);
+		Object.keys(loadIcons).forEach((provider) => {
+			const providerLoadIcons = loadIcons[provider];
+			Object.keys(providerLoadIcons).forEach((prefix) => {
+				api.loadIcons(
+					Object.keys(providerLoadIcons[prefix]).map((name) => {
+						const icon: IconifyIconName = {
+							provider,
+							prefix,
+							name,
+						};
+						return icon;
+					}),
+					checkPendingIcons
+				);
+			});
 		});
 	}
 

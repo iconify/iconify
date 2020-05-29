@@ -19,13 +19,23 @@ export interface FakeData {
 /**
  * Fake data storage
  */
-const fakeData: Record<string, FakeData[]> = Object.create(null);
+const fakeData: Record<string, Record<string, FakeData[]>> = Object.create(
+	null
+);
 
-export function setFakeData(prefix: string, item: FakeData): void {
-	if (fakeData[prefix] === void 0) {
-		fakeData[prefix] = [];
+export function setFakeData(
+	provider: string,
+	prefix: string,
+	item: FakeData
+): void {
+	if (fakeData[provider] === void 0) {
+		fakeData[provider] = Object.create(null);
 	}
-	fakeData[prefix].push(item);
+	const providerFakeData = fakeData[provider];
+	if (providerFakeData[prefix] === void 0) {
+		providerFakeData[prefix] = [];
+	}
+	providerFakeData[prefix].push(item);
 }
 
 interface FakeAPIQueryParams extends APIQueryParams {
@@ -36,6 +46,7 @@ interface FakeAPIQueryParams extends APIQueryParams {
  * Prepare params
  */
 export const prepareQuery: IconifyAPIPrepareQuery = (
+	provider: string,
 	prefix: string,
 	icons: string[]
 ): APIQueryParams[] => {
@@ -43,10 +54,15 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 	const items: APIQueryParams[] = [];
 	let missing = icons.slice(0);
 
-	if (fakeData[prefix] !== void 0) {
-		fakeData[prefix].forEach(item => {
+	if (fakeData[provider] === void 0) {
+		fakeData[provider] = Object.create(null);
+	}
+	const providerFakeData = fakeData[provider];
+
+	if (providerFakeData[prefix] !== void 0) {
+		providerFakeData[prefix].forEach((item) => {
 			const matches = item.icons.filter(
-				icon => missing.indexOf(icon) !== -1
+				(icon) => missing.indexOf(icon) !== -1
 			);
 			if (!matches.length) {
 				// No match
@@ -54,8 +70,9 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 			}
 
 			// Contains at least one matching icon
-			missing = missing.filter(icon => matches.indexOf(icon) === -1);
+			missing = missing.filter((icon) => matches.indexOf(icon) === -1);
 			const query: FakeAPIQueryParams = {
+				provider,
 				prefix,
 				icons: matches,
 				data: item,
@@ -75,6 +92,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	params: APIQueryParams,
 	status: RedundancyPendingItem
 ): void => {
+	const provider = params.provider;
 	const prefix = params.prefix;
 	const icons = params.icons;
 
@@ -88,7 +106,13 @@ export const sendQuery: IconifyAPISendQuery = (
 	}
 
 	const sendResponse = () => {
-		console.log('Sending data for prefix "' + prefix + '", icons:', icons);
+		console.log(
+			'Sending data for prefix "' +
+				(provider === '' ? '' : '@' + provider + ':') +
+				prefix +
+				'", icons:',
+			icons
+		);
 		status.done(data.data);
 	};
 

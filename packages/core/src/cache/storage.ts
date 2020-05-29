@@ -13,13 +13,14 @@ type StorageEmptyList = StorageType<number[]>;
 
 export interface StoredItem {
 	cached: number;
+	provider: string;
 	data: IconifyJSON;
 }
 
 // After changing configuration change it in tests/*/fake_cache.ts
 
 // Cache version. Bump when structure changes
-const cacheVersion = 'iconify1';
+const cacheVersion = 'iconify2';
 
 // Cache keys
 const cachePrefix = 'iconify';
@@ -200,14 +201,16 @@ export const loadCache: LoadIconsCache = (): void => {
 					typeof data !== 'object' ||
 					typeof data.cached !== 'number' ||
 					data.cached < minTime ||
+					typeof data.provider !== 'string' ||
 					typeof data.data !== 'object' ||
 					typeof data.data.prefix !== 'string'
 				) {
 					valid = false;
 				} else {
 					// Add icon set
+					const provider = data.provider;
 					const prefix = data.data.prefix;
-					const storage = getStorage(prefix);
+					const storage = getStorage(provider, prefix);
 					valid = addIconSet(storage, data.data) as boolean;
 				}
 			} catch (err) {
@@ -263,7 +266,10 @@ export const loadCache: LoadIconsCache = (): void => {
 /**
  * Function to cache icons
  */
-export const storeCache: CacheIcons = (data: IconifyJSON): void => {
+export const storeCache: CacheIcons = (
+	provider: string,
+	data: IconifyJSON
+): void => {
 	if (!loaded) {
 		loadCache();
 	}
@@ -292,6 +298,7 @@ export const storeCache: CacheIcons = (data: IconifyJSON): void => {
 		try {
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data,
 			};
 			func.setItem(cachePrefix + index, JSON.stringify(item));

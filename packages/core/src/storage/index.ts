@@ -24,21 +24,25 @@ type IconRecords = Record<string, FullIconifyIcon | null>;
  * Storage type
  */
 export interface IconStorage {
+	provider: string;
 	prefix: string;
 	icons: IconRecords;
 	missing: Record<string, number>;
 }
 
 /**
- * Storage by prefix
+ * Storage by provider and prefix
  */
-const storage: Record<string, IconStorage> = Object.create(null);
+const storage: Record<string, Record<string, IconStorage>> = Object.create(
+	null
+);
 
 /**
  * Create new storage
  */
-export function newStorage(prefix: string): IconStorage {
+export function newStorage(provider: string, prefix: string): IconStorage {
 	return {
+		provider,
 		prefix,
 		icons: Object.create(null),
 		missing: Object.create(null),
@@ -46,20 +50,31 @@ export function newStorage(prefix: string): IconStorage {
 }
 
 /**
- * Get storage for prefix
+ * Get storage for provider and prefix
  */
-export function getStorage(prefix: string): IconStorage {
-	if (storage[prefix] === void 0) {
-		storage[prefix] = newStorage(prefix);
+export function getStorage(provider: string, prefix: string): IconStorage {
+	if (storage[provider] === void 0) {
+		storage[provider] = Object.create(null);
 	}
-	return storage[prefix];
+	const providerStorage = storage[provider];
+	if (providerStorage[prefix] === void 0) {
+		providerStorage[prefix] = newStorage(provider, prefix);
+	}
+	return providerStorage[prefix];
+}
+
+/**
+ * Get all providers
+ */
+export function listStoredProviders(): string[] {
+	return Object.keys(storage);
 }
 
 /**
  * Get all prefixes
  */
-export function listStoredPrefixes(): string[] {
-	return Object.keys(storage);
+export function listStoredPrefixes(provider: string): string[] {
+	return storage[provider] === void 0 ? [] : Object.keys(storage[provider]);
 }
 
 /**
@@ -119,7 +134,7 @@ export function addIconSet(
 		// Check for missing icons list returned by API
 		if (data.not_found instanceof Array) {
 			const t = Date.now();
-			data.not_found.forEach(name => {
+			data.not_found.forEach((name) => {
 				storage.missing[name] = t;
 				if (list === 'all') {
 					added.push(name);
@@ -134,7 +149,7 @@ export function addIconSet(
 
 		// Get default values
 		const defaults = Object.create(null);
-		defaultsKeys.forEach(key => {
+		defaultsKeys.forEach((key) => {
 			if (data[key] !== void 0 && typeof data[key] !== 'object') {
 				defaults[key] = data[key];
 			}
@@ -142,7 +157,7 @@ export function addIconSet(
 
 		// Get icons
 		const icons = data.icons;
-		Object.keys(icons).forEach(name => {
+		Object.keys(icons).forEach((name) => {
 			const icon = icons[name];
 			if (typeof icon.body !== 'string') {
 				throw new Error('Invalid icon');
@@ -160,7 +175,7 @@ export function addIconSet(
 		// Get aliases
 		if (typeof data.aliases === 'object') {
 			const aliases = data.aliases;
-			Object.keys(aliases).forEach(name => {
+			Object.keys(aliases).forEach((name) => {
 				const icon = resolveAlias(aliases[name], icons, aliases, 1);
 				if (icon) {
 					// Freeze icon to make sure it will not be modified

@@ -17,7 +17,7 @@ addFinder(iconifyIconFinder);
 
 describe('Scanning DOM', () => {
 	// Add mentioned icons to storage
-	const storage = getStorage('mdi');
+	const storage = getStorage('', 'mdi');
 	addIconSet(storage, {
 		prefix: 'mdi',
 		icons: {

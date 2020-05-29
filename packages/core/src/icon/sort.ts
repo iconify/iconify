@@ -19,35 +19,50 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		missing: [],
 		pending: [],
 	};
-	const storage: Record<string, IconStorage> = Object.create(null);
+	const storage: Record<string, Record<string, IconStorage>> = Object.create(
+		null
+	);
 
 	// Sort icons alphabetically to prevent duplicates and make sure they are sorted in API queries
 	icons.sort((a, b) => {
-		if (a.prefix === b.prefix) {
-			return a.name.localeCompare(b.name);
+		if (a.provider !== b.provider) {
+			return a.provider.localeCompare(b.provider);
 		}
-		return a.prefix.localeCompare(b.prefix);
+		if (a.prefix !== b.prefix) {
+			return a.prefix.localeCompare(b.prefix);
+		}
+		return a.name.localeCompare(b.name);
 	});
 
 	let lastIcon: IconifyIconName = {
+		provider: '',
 		prefix: '',
 		name: '',
 	};
-	icons.forEach(icon => {
-		if (lastIcon.prefix === icon.prefix && lastIcon.name === icon.name) {
+	icons.forEach((icon) => {
+		if (
+			lastIcon.name === icon.name &&
+			lastIcon.prefix === icon.prefix &&
+			lastIcon.provider === icon.provider
+		) {
 			return;
 		}
 		lastIcon = icon;
 
 		// Check icon
+		const provider = icon.provider;
 		const prefix = icon.prefix;
 		const name = icon.name;
 
-		if (storage[prefix] === void 0) {
-			storage[prefix] = getStorage(prefix);
+		if (storage[provider] === void 0) {
+			storage[provider] = Object.create(null);
 		}
+		const providerStorage = storage[provider];
 
-		const localStorage = storage[prefix];
+		if (providerStorage[prefix] === void 0) {
+			providerStorage[prefix] = getStorage(provider, prefix);
+		}
+		const localStorage = providerStorage[prefix];
 
 		let list;
 		if (localStorage.icons[name] !== void 0) {
@@ -59,6 +74,7 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		}
 
 		const item: IconifyIconName = {
+			provider,
 			prefix,
 			name,
 		};

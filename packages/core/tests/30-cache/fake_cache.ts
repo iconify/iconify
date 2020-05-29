@@ -9,7 +9,7 @@ export function nextPrefix(): string {
 }
 
 // Cache version. Bump when structure changes
-export const cacheVersion = 'iconify1';
+export const cacheVersion = 'iconify2';
 
 // Cache keys
 export const cachePrefix = 'iconify';

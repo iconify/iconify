@@ -24,6 +24,8 @@ import {
 import { IconifyIcon, IconifyJSON } from '@iconify/types';
 
 describe('Testing loading from localStorage', () => {
+	const provider = '';
+
 	it('Valid icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
@@ -34,6 +36,7 @@ describe('Testing loading from localStorage', () => {
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -51,7 +54,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Load localStorage
@@ -59,6 +62,64 @@ describe('Testing loading from localStorage', () => {
 
 		// Icon should exist now
 		expect(iconExists(icons, 'foo')).to.be.equal(true);
+
+		// Check data
+		expect(config).to.be.eql({
+			local: true,
+			session: false,
+		});
+		expect(count).to.be.eql({
+			local: 1,
+			session: 0,
+		});
+		expect(emptyList).to.be.eql({
+			local: [],
+			session: [],
+		});
+	});
+
+	it('Different provider', () => {
+		const provider = nextPrefix();
+		const prefix = nextPrefix();
+		const cache = createCache();
+
+		// Add one icon set
+		cache.setItem(versionKey, cacheVersion);
+		cache.setItem(countKey, '1');
+
+		const item: StoredItem = {
+			cached: Math.floor(Date.now() / hour),
+			provider,
+			data: {
+				prefix: prefix,
+				icons: {
+					foo: {
+						body: '<g></g>',
+					},
+				},
+			},
+		};
+		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+
+		// Set cache
+		reset({
+			localStorage: cache,
+		});
+
+		// Check icon storage
+		const icons = getStorage(provider, prefix);
+		expect(iconExists(icons, 'foo')).to.be.equal(false);
+
+		// Check default provider
+		const icons2 = getStorage('', prefix);
+		expect(iconExists(icons2, 'foo')).to.be.equal(false);
+
+		// Load localStorage
+		loadCache();
+
+		// Icon should exist now
+		expect(iconExists(icons, 'foo')).to.be.equal(true);
+		expect(iconExists(icons2, 'foo')).to.be.equal(false);
 
 		// Check data
 		expect(config).to.be.eql({
@@ -86,6 +147,7 @@ describe('Testing loading from localStorage', () => {
 		const item: StoredItem = {
 			// Expiration date
 			cached: Math.floor(Date.now() / hour) - cacheExpiration - 1,
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -103,7 +165,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Load localStorage
@@ -138,6 +200,7 @@ describe('Testing loading from localStorage', () => {
 			cachePrefix + '0',
 			JSON.stringify({
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: {
 					prefix: prefix,
 					icons: {
@@ -156,7 +219,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Load localStorage
@@ -190,6 +253,7 @@ describe('Testing loading from localStorage', () => {
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -207,7 +271,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Load localStorage
@@ -241,6 +305,7 @@ describe('Testing loading from localStorage', () => {
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -258,7 +323,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Load localStorage
@@ -293,6 +358,7 @@ describe('Testing loading from localStorage', () => {
 		// Missing: 0, 2, 3
 		const item1: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -304,6 +370,7 @@ describe('Testing loading from localStorage', () => {
 		};
 		const item4: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: {
 				prefix: prefix,
 				icons: {
@@ -323,7 +390,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo1')).to.be.equal(false);
 		expect(iconExists(icons, 'foo4')).to.be.equal(false);
 
@@ -376,6 +443,7 @@ describe('Testing loading from localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 			icons.push(icon);
@@ -399,7 +467,7 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const iconsStorage = getStorage(prefix);
+		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < 6; i++) {
 			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
 				false,

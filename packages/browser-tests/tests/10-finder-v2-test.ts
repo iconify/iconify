@@ -46,6 +46,7 @@ describe('Testing finder', () => {
 		// Test all icons
 		testIcon(
 			{
+				provider: '',
 				prefix: 'mdi',
 				name: 'home',
 			},
@@ -54,6 +55,7 @@ describe('Testing finder', () => {
 
 		testIcon(
 			{
+				provider: '',
 				prefix: 'mdi',
 				name: 'account',
 			},
@@ -62,6 +64,7 @@ describe('Testing finder', () => {
 
 		testIcon(
 			{
+				provider: '',
 				prefix: 'ic',
 				name: 'baseline-account',
 			},

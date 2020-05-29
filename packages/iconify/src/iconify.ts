@@ -19,6 +19,7 @@ import {
 	getIcon,
 	addIcon,
 	addIconSet,
+	listStoredProviders,
 	listStoredPrefixes,
 } from '@iconify/core/lib/storage';
 import { iconToSVG, IconifyIconBuildResult } from '@iconify/core/lib/builder';
@@ -39,7 +40,7 @@ import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
 
 // API
 import { API } from '@iconify/core/lib/api/';
-import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig, IconifyAPIConfig } from '@iconify/core/lib/api/config';
 import { prepareQuery, sendQuery } from './modules/api-jsonp';
 import {
@@ -105,7 +106,7 @@ export interface IconifyGlobal {
 	/**
 	 * List all available icons
 	 */
-	listIcons: (prefix?: string) => string[];
+	listIcons: (provider?: string, prefix?: string) => string[];
 
 	/**
 	 * Load icons
@@ -157,7 +158,7 @@ export interface IconifyGlobal {
 	/**
 	 * Add icon set to storage
 	 */
-	addCollection: (data: IconifyJSON) => boolean;
+	addCollection: (data: IconifyJSON, provider?: string) => boolean;
 
 	/* API stuff */
 	/**
@@ -174,8 +175,8 @@ export interface IconifyGlobal {
 	 * Set API configuration
 	 */
 	setAPIConfig: (
-		customConfig: Partial<IconifyAPIConfig>,
-		prefix?: string | string[]
+		provider: string,
+		customConfig: Partial<IconifyAPIConfig>
 	) => void;
 
 	/* Scan DOM */
@@ -211,7 +212,9 @@ function getIconName(name: string): IconifyIconName | null {
  */
 function getIconData(name: string): FullIconifyIcon | null {
 	const icon = getIconName(name);
-	return icon ? getIcon(getStorage(icon.prefix), icon.name) : null;
+	return icon
+		? getIcon(getStorage(icon.provider, icon.prefix), icon.name)
+		: null;
 }
 
 /**
@@ -282,23 +285,38 @@ const Iconify: IconifyGlobal = {
 	},
 
 	// List icons
-	listIcons: (prefix?: string) => {
+	listIcons: (provider?: string, prefix?: string) => {
 		let icons = [];
 
-		let prefixes = listStoredPrefixes();
-		let addPrefix = true;
-		if (typeof prefix === 'string') {
-			prefixes = prefixes.indexOf(prefix) !== -1 ? [] : [prefix];
-			addPrefix = false;
+		// Get providers
+		let providers: string[];
+		if (typeof provider === 'string') {
+			providers = [provider];
+		} else {
+			providers = listStoredProviders();
 		}
 
-		prefixes.forEach((prefix) => {
-			const storage = getStorage(prefix);
-			let icons = Object.keys(storage.icons);
-			if (addPrefix) {
-				icons = icons.map((name) => prefix + ':' + name);
+		// Get all icons
+		providers.forEach((provider) => {
+			let prefixes: string[];
+
+			if (typeof prefix === 'string') {
+				prefixes = [prefix];
+			} else {
+				prefixes = listStoredPrefixes(provider);
 			}
-			icons = icons.concat(icons);
+
+			prefixes.forEach((prefix) => {
+				const storage = getStorage(provider, prefix);
+				let icons = Object.keys(storage.icons).map(
+					(name) =>
+						(provider !== '' ? '@' + provider + ':' : '') +
+						prefix +
+						':' +
+						name
+				);
+				icons = icons.concat(icons);
+			});
 		});
 
 		return icons;
@@ -331,16 +349,21 @@ const Iconify: IconifyGlobal = {
 		if (!icon) {
 			return false;
 		}
-		const storage = getStorage(icon.prefix);
+		const storage = getStorage(icon.provider, icon.prefix);
 		return addIcon(storage, icon.name, data);
 	},
 
 	// Add icon set
-	addCollection: (data) => {
+	addCollection: (data, provider?: string) => {
+		if (typeof provider !== 'string') {
+			provider = '';
+		}
+
 		if (
 			typeof data !== 'object' ||
 			typeof data.prefix !== 'string' ||
 			!validateIcon({
+				provider,
 				prefix: data.prefix,
 				name: 'a',
 			})
@@ -348,7 +371,7 @@ const Iconify: IconifyGlobal = {
 			return false;
 		}
 
-		const storage = getStorage(data.prefix);
+		const storage = getStorage(provider, data.prefix);
 		return !!addIconSet(storage, data);
 	},
 
@@ -404,11 +427,11 @@ coreModules.cache = storeCache;
 loadCache();
 
 // Set API
-setAPIModule({
+coreModules.api = API;
+setDefaultAPIModule({
 	send: sendQuery,
 	prepare: prepareQuery,
 });
-coreModules.api = API;
 
 // Load observer
 browserModules.observer = observer;

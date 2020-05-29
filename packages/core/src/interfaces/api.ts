@@ -1,9 +1,10 @@
 import { IconifyLoadIcons } from './loader';
+import { IconifyIconName } from '../icon/name';
 
 /**
  * Function to check if icon is pending
  */
-export type IsPending = (prefix: string, name: string) => boolean;
+export type IsPending = (icon: IconifyIconName) => boolean;
 
 /**
  * API interface

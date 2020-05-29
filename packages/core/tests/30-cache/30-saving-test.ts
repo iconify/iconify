@@ -25,6 +25,8 @@ import {
 import { IconifyJSON } from '@iconify/types';
 
 describe('Testing saving to localStorage', () => {
+	const provider = '';
+
 	it('One icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
@@ -40,6 +42,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon,
 		};
 
@@ -49,11 +52,11 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
 
 		// Save item
-		storeCache(icon);
+		storeCache(provider, icon);
 
 		// Storing in cache should not add item to storage
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
@@ -96,6 +99,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item0: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon0,
 		};
 		const icon1: IconifyJSON = {
@@ -108,6 +112,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item1: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon1,
 		};
 
@@ -117,8 +122,8 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Save items
-		storeCache(icon0);
-		storeCache(icon1);
+		storeCache(provider, icon0);
+		storeCache(provider, icon1);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -161,6 +166,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item0: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon0,
 		};
 		const icon1: IconifyJSON = {
@@ -173,6 +179,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item1: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon1,
 		};
 
@@ -204,7 +211,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Save items
-		storeCache(icon0);
+		storeCache(provider, icon0);
 
 		// Check data
 		expect(count).to.be.eql({
@@ -245,6 +252,7 @@ describe('Testing saving to localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 
@@ -313,7 +321,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Add item 5
-		storeCache(icons[5]);
+		storeCache(provider, icons[5]);
 		expect(count).to.be.eql({
 			local: 0,
 			session: 9,
@@ -328,7 +336,7 @@ describe('Testing saving to localStorage', () => {
 		const list = [4, 2, 1];
 		list.slice(0).forEach((index) => {
 			expect(list.shift()).to.be.equal(index);
-			storeCache(icons[index]);
+			storeCache(provider, icons[index]);
 			expect(count).to.be.eql({
 				local: 0,
 				session: 9,
@@ -341,7 +349,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Add item 10
-		storeCache(icons[10]);
+		storeCache(provider, icons[10]);
 		expect(count).to.be.eql({
 			local: 0,
 			session: 10,
@@ -353,7 +361,7 @@ describe('Testing saving to localStorage', () => {
 		expect(cache.getItem(countKey)).to.be.equal('10');
 
 		// Add item 11
-		storeCache(icons[11]);
+		storeCache(provider, icons[11]);
 		expect(count).to.be.eql({
 			local: 0,
 			session: 11,
@@ -392,7 +400,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(prefix);
+		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo1')).to.be.equal(false);
 
 		// Load cache
@@ -422,11 +430,12 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon,
 		};
 
 		// Save item
-		storeCache(icon);
+		storeCache(provider, icon);
 
 		// Storing in cache should not add item to storage
 		expect(iconExists(icons, 'foo')).to.be.equal(false);
@@ -473,6 +482,7 @@ describe('Testing saving to localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 			cache1.setItem(cachePrefix + index, JSON.stringify(item));
@@ -492,6 +502,7 @@ describe('Testing saving to localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 			cache2.setItem(cachePrefix + index, JSON.stringify(item));
@@ -521,7 +532,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const iconsStorage = getStorage(prefix);
+		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
 			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
 				true,
@@ -546,9 +557,10 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon,
 		};
-		storeCache(icon);
+		storeCache(provider, icon);
 
 		// Check data
 		expect(count).to.be.eql({
@@ -585,6 +597,7 @@ describe('Testing saving to localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 			cache1.setItem(cachePrefix + index, JSON.stringify(item));
@@ -604,6 +617,7 @@ describe('Testing saving to localStorage', () => {
 			};
 			const item: StoredItem = {
 				cached: Math.floor(Date.now() / hour),
+				provider,
 				data: icon,
 			};
 			cache2.setItem(cachePrefix + index, JSON.stringify(item));
@@ -633,7 +647,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const iconsStorage = getStorage(prefix);
+		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
 			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
 				true,
@@ -661,9 +675,10 @@ describe('Testing saving to localStorage', () => {
 		};
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
+			provider,
 			data: icon,
 		};
-		storeCache(icon);
+		storeCache(provider, icon);
 
 		// Check data
 		expect(count).to.be.eql({

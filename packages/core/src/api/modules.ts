@@ -4,6 +4,7 @@ import { RedundancyPendingItem } from '@cyberalien/redundancy';
  * Params for sendQuery()
  */
 export interface APIQueryParams {
+	provider: string;
 	prefix: string;
 	icons: string[];
 }
@@ -12,6 +13,7 @@ export interface APIQueryParams {
  * Functions to implement in module
  */
 export type IconifyAPIPrepareQuery = (
+	provider: string,
 	prefix: string,
 	icons: string[]
 ) => APIQueryParams[];
@@ -33,43 +35,36 @@ export interface IconifyAPIModule {
 /**
  * Local storate types and entries
  */
-interface ModuleStorage {
-	default: IconifyAPIModule | null;
-	prefixes: Record<string, IconifyAPIModule>;
+interface ModulesStorage {
+	default?: IconifyAPIModule;
+	providers: Record<string, IconifyAPIModule>;
 }
-
-const storage: ModuleStorage = {
-	default: null,
-	prefixes: Object.create(null),
+const storage: ModulesStorage = {
+	providers: Object.create(null),
 };
 
 /**
- * Set API module
- *
- * If prefix is not set, function sets default method.
- * If prefix is a string or array of strings, function sets method only for those prefixes.
- *
- * This should be used before sending any API requests. If used after sending API request, method
- * is already cached so changing callback will not have any effect.
+ * Set default API module
  */
-export function setAPIModule(
-	item: IconifyAPIModule,
-	prefix?: string | string[]
-): void {
-	if (prefix === void 0) {
-		storage.default = item;
-		return;
-	}
+export function setDefaultAPIModule(item: IconifyAPIModule): void {
+	storage.default = item;
+}
 
-	(typeof prefix === 'string' ? [prefix] : prefix).forEach(prefix => {
-		storage.prefixes[prefix] = item;
-	});
+/**
+ * Set API module
+ */
+export function setProviderAPIModule(
+	provider: string,
+	item: IconifyAPIModule
+): void {
+	storage.providers[provider] = item;
 }
 
 /**
  * Get API module
  */
-export function getAPIModule(prefix: string): IconifyAPIModule | null {
-	const value = storage.prefixes[prefix];
-	return value === void 0 ? storage.default : value;
+export function getAPIModule(provider: string): IconifyAPIModule | undefined {
+	return storage.providers[provider] === void 0
+		? storage.default
+		: storage.providers[provider];
 }

@@ -15,8 +15,8 @@ import { getAPIModule } from './modules';
 import { getAPIConfig, IconifyAPIConfig } from './config';
 import { getStorage, addIconSet } from '../storage';
 import { coreModules } from '../modules';
-import { IconifyIconName } from '../icon/name';
-import { listToIcons, getPrefixes } from '../icon/list';
+import { IconifyIconName, IconifyIconSource } from '../icon/name';
+import { listToIcons } from '../icon/list';
 import { IconifyJSON } from '@iconify/types';
 
 // Empty abort callback for loadIcons()
@@ -32,10 +32,13 @@ function emptyCallback(): void {
  * either an icon or a missing icon. This way same icon should
  * never be requested twice.
  *
- * [prefix][icon] = time when icon was added to queue
+ * [provider][prefix][icon] = time when icon was added to queue
  */
 type PendingIcons = Record<string, number>;
-const pendingIcons: Record<string, PendingIcons> = Object.create(null);
+const pendingIcons: Record<
+	string,
+	Record<string, PendingIcons>
+> = Object.create(null);
 
 /**
  * List of icons that are waiting to be loaded.
@@ -45,31 +48,39 @@ const pendingIcons: Record<string, PendingIcons> = Object.create(null);
  * This list should not be used for any checks, use pendingIcons to check
  * if icons is being loaded.
  *
- * [prefix] = array of icon names
+ * [provider][prefix] = array of icon names
  */
-const iconsToLoad: Record<string, string[]> = Object.create(null);
+const iconsToLoad: Record<string, Record<string, string[]>> = Object.create(
+	null
+);
 
 // Flags to merge multiple synchronous icon requests in one asynchronous request
-const loaderFlags: Record<string, boolean> = Object.create(null);
-const queueFlags: Record<string, boolean> = Object.create(null);
+const loaderFlags: Record<string, Record<string, boolean>> = Object.create(
+	null
+);
+const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
 
-// Redundancy instances cache
+// Redundancy instances cache, sorted by provider
 interface LocalCache {
-	config: IconifyAPIConfig | null;
-	redundancy: Redundancy | null;
+	config: IconifyAPIConfig;
+	redundancy: Redundancy;
 }
 const redundancyCache: Record<string, LocalCache> = Object.create(null);
 
 /**
  * Function called when new icons have been loaded
  */
-function loadedNewIcons(prefix: string): void {
+function loadedNewIcons(provider: string, prefix: string): void {
 	// Run only once per tick, possibly joining multiple API responses in one call
-	if (!loaderFlags[prefix]) {
-		loaderFlags[prefix] = true;
+	if (loaderFlags[provider] === void 0) {
+		loaderFlags[provider] = Object.create(null);
+	}
+	const providerLoaderFlags = loaderFlags[provider];
+	if (!providerLoaderFlags[prefix]) {
+		providerLoaderFlags[prefix] = true;
 		setTimeout(() => {
-			loaderFlags[prefix] = false;
-			updateCallbacks(prefix);
+			providerLoaderFlags[prefix] = false;
+			updateCallbacks(provider, prefix);
 		});
 	}
 }
@@ -77,7 +88,7 @@ function loadedNewIcons(prefix: string): void {
 /**
  * Load icons
  */
-function loadNewIcons(prefix: string, icons: string[]): void {
+function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 	function err(): void {
 		console.error(
 			'Unable to retrieve icons for prefix "' +
@@ -86,68 +97,82 @@ function loadNewIcons(prefix: string, icons: string[]): void {
 		);
 	}
 
+	// Create nested objects if needed
+	if (iconsToLoad[provider] === void 0) {
+		iconsToLoad[provider] = Object.create(null);
+	}
+	const providerIconsToLoad = iconsToLoad[provider];
+
+	if (queueFlags[provider] === void 0) {
+		queueFlags[provider] = Object.create(null);
+	}
+	const providerQueueFlags = queueFlags[provider];
+
+	if (pendingIcons[provider] === void 0) {
+		pendingIcons[provider] = Object.create(null);
+	}
+	const providerPendingIcons = pendingIcons[provider];
+
 	// Add icons to queue
-	if (iconsToLoad[prefix] === void 0) {
-		iconsToLoad[prefix] = icons;
+	if (providerIconsToLoad[prefix] === void 0) {
+		providerIconsToLoad[prefix] = icons;
 	} else {
-		iconsToLoad[prefix] = iconsToLoad[prefix].concat(icons).sort();
+		providerIconsToLoad[prefix] = providerIconsToLoad[prefix]
+			.concat(icons)
+			.sort();
 	}
 
+	// Redundancy item
+	let cachedReundancy: LocalCache;
+
 	// Trigger update on next tick, mering multiple synchronous requests into one asynchronous request
-	if (!queueFlags[prefix]) {
-		queueFlags[prefix] = true;
+	if (!providerQueueFlags[prefix]) {
+		providerQueueFlags[prefix] = true;
 		setTimeout(() => {
-			queueFlags[prefix] = false;
+			providerQueueFlags[prefix] = false;
 
 			// Get icons and delete queue
-			const icons = iconsToLoad[prefix];
-			delete iconsToLoad[prefix];
+			const icons = providerIconsToLoad[prefix];
+			delete providerIconsToLoad[prefix];
 
 			// Get API module
-			const api = getAPIModule(prefix);
+			const api = getAPIModule(provider);
 			if (!api) {
 				// No way to load icons!
 				err();
 				return;
 			}
 
-			// Get Redundancy instance
-			if (redundancyCache[prefix] === void 0) {
-				const config = getAPIConfig(prefix);
-
-				// Attempt to find matching instance from other prefixes
-				// Using same Redundancy instance allows keeping track of failed hosts for multiple prefixes
-				for (const prefix2 in redundancyCache) {
-					const item = redundancyCache[prefix2];
-					if (item.config === config) {
-						redundancyCache[prefix] = item;
-						break;
+			// Get API config and Redundancy instance
+			if (cachedReundancy === void 0) {
+				if (redundancyCache[provider] === void 0) {
+					const config = getAPIConfig(provider);
+					if (!config) {
+						// No way to load icons because configuration is not set!
+						err();
+						return;
 					}
-				}
 
-				if (redundancyCache[prefix] === void 0) {
-					redundancyCache[prefix] = {
+					const redundancy = initRedundancy(config);
+					cachedReundancy = {
 						config,
-						redundancy: config ? initRedundancy(config) : null,
+						redundancy,
 					};
+					redundancyCache[provider] = cachedReundancy;
+				} else {
+					cachedReundancy = redundancyCache[provider];
 				}
-			}
-			const redundancy = redundancyCache[prefix].redundancy;
-			if (!redundancy) {
-				// No way to load icons because configuration is not set!
-				err();
-				return;
 			}
 
 			// Prepare parameters and run queries
-			const params = api.prepare(prefix, icons);
+			const params = api.prepare(provider, prefix, icons);
 			params.forEach((item) => {
-				redundancy.query(
+				cachedReundancy.redundancy.query(
 					item,
 					api.send as RedundancyQueryCallback,
 					(data) => {
 						// Add icons to storage
-						const storage = getStorage(prefix);
+						const storage = getStorage(provider, prefix);
 						try {
 							const added = addIconSet(
 								storage,
@@ -159,21 +184,24 @@ function loadNewIcons(prefix: string, icons: string[]): void {
 							}
 
 							// Remove added icons from pending list
-							const pending = pendingIcons[prefix];
+							const pending = providerPendingIcons[prefix];
 							added.forEach((name) => {
 								delete pending[name];
 							});
 
 							// Cache API response
 							if (coreModules.cache) {
-								coreModules.cache(data as IconifyJSON);
+								coreModules.cache(
+									provider,
+									data as IconifyJSON
+								);
 							}
 						} catch (err) {
 							console.error(err);
 						}
 
 						// Trigger update on next tick
-						loadedNewIcons(prefix);
+						loadedNewIcons(provider, prefix);
 					}
 				);
 			});
@@ -184,9 +212,11 @@ function loadNewIcons(prefix: string, icons: string[]): void {
 /**
  * Check if icon is being loaded
  */
-const isPending: IsPending = (prefix: string, icon: string): boolean => {
+const isPending: IsPending = (icon: IconifyIconName): boolean => {
 	return (
-		pendingIcons[prefix] !== void 0 && pendingIcons[prefix][icon] !== void 0
+		pendingIcons[icon.provider] !== void 0 &&
+		pendingIcons[icon.provider][icon.prefix] !== void 0 &&
+		pendingIcons[icon.provider][icon.prefix][icon.name] !== void 0
 	);
 };
 
@@ -225,16 +255,42 @@ const loadIcons: IconifyLoadIcons = (
 		};
 	}
 
-	// Get all prefixes
-	const prefixes = getPrefixes(sortedIcons.pending);
+	// Get all sources for pending icons
+	const newIcons: Record<string, Record<string, string[]>> = Object.create(
+		null
+	);
+	const sources: IconifyIconSource[] = [];
+	let lastProvider: string, lastPrefix: string;
 
-	// Get pending icons queue for prefix and create new icons list
-	const newIcons: Record<string, string[]> = Object.create(null);
-	prefixes.forEach((prefix) => {
-		if (pendingIcons[prefix] === void 0) {
-			pendingIcons[prefix] = Object.create(null);
+	sortedIcons.pending.forEach((icon) => {
+		const provider = icon.provider;
+		const prefix = icon.prefix;
+		if (prefix === lastPrefix && provider === lastProvider) {
+			return;
 		}
-		newIcons[prefix] = [];
+
+		lastProvider = provider;
+		lastPrefix = prefix;
+		sources.push({
+			provider,
+			prefix,
+		});
+
+		if (pendingIcons[provider] === void 0) {
+			pendingIcons[provider] = Object.create(null);
+		}
+		const providerPendingIcons = pendingIcons[provider];
+		if (providerPendingIcons[prefix] === void 0) {
+			providerPendingIcons[prefix] = Object.create(null);
+		}
+
+		if (newIcons[provider] === void 0) {
+			newIcons[provider] = Object.create(null);
+		}
+		const providerNewIcons = newIcons[provider];
+		if (providerNewIcons[prefix] === void 0) {
+			providerNewIcons[prefix] = [];
+		}
 	});
 
 	// List of new icons
@@ -244,29 +300,32 @@ const loadIcons: IconifyLoadIcons = (
 	// If icon was called before, it must exist in pendingIcons or storage, but because this
 	// function is called right after sortIcons() that checks storage, icon is definitely not in storage.
 	sortedIcons.pending.forEach((icon) => {
+		const provider = icon.provider;
 		const prefix = icon.prefix;
 		const name = icon.name;
 
-		const pendingQueue = pendingIcons[prefix];
+		const pendingQueue = pendingIcons[provider][prefix];
 		if (pendingQueue[name] === void 0) {
 			// New icon - add to pending queue to mark it as being loaded
 			pendingQueue[name] = time;
 			// Add it to new icons list to pass it to API module for loading
-			newIcons[prefix].push(name);
+			newIcons[provider][prefix].push(name);
 		}
 	});
 
 	// Load icons on next tick to make sure result is not returned before callback is stored and
 	// to consolidate multiple synchronous loadIcons() calls into one asynchronous API call
-	prefixes.forEach((prefix) => {
-		if (newIcons[prefix].length) {
-			loadNewIcons(prefix, newIcons[prefix]);
+	sources.forEach((source) => {
+		const provider = source.provider;
+		const prefix = source.prefix;
+		if (newIcons[provider][prefix].length) {
+			loadNewIcons(provider, prefix, newIcons[provider][prefix]);
 		}
 	});
 
 	// Store callback and return abort function
 	return callback
-		? storeCallback(callback, sortedIcons, prefixes)
+		? storeCallback(callback, sortedIcons, sources)
 		: emptyCallback;
 };
 
