@@ -637,6 +637,6 @@ There are over 60 icon sets. This readme shows only a few examples. See [Iconify
 
 Vue component is released with MIT license.
 
-© 2020 Vjacheslav Trushkin
+© 2020 Iconify OÜ
 
 See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of collections and their licenses.

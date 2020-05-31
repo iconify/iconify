@@ -455,4 +455,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 
 `SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
 
-© 2019, 2020 Vjacheslav Trushkin
+© 2020 Iconify OÜ

@@ -101,4 +101,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2020 Vjacheslav Trushkin
+© 2020 Iconify OÜ

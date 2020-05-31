@@ -432,6 +432,6 @@ There are over 50 icon sets. This readme shows only a few examples. See [Iconify
 
 React component is released with MIT license.
 
-© 2019, 2020 Vjacheslav Trushkin
+© 2020 Iconify OÜ
 
 See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of collections and their licenses.
