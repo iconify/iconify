@@ -9,7 +9,7 @@ import {
 	IconifyAPIConfig,
 } from '../../lib/api/config';
 import {
-	setProviderAPIModule,
+	setAPIModule,
 	APIQueryParams,
 	getAPIModule,
 	IconifyAPIModule,
@@ -55,7 +55,7 @@ describe('Testing API modules', () => {
 		});
 
 		// Set fake module
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});

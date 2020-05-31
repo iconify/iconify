@@ -19,13 +19,19 @@ export type PartialIconifyAPIConfig = Partial<IconifyAPIConfig>;
 function createConfig(
 	source: PartialIconifyAPIConfig
 ): IconifyAPIConfig | null {
-	if (!source.resources) {
-		return null;
+	let resources;
+	if (typeof source.resources === 'string') {
+		resources = [source.resources];
+	} else {
+		resources = source.resources;
+		if (!(resources instanceof Array) || !resources.length) {
+			return null;
+		}
 	}
 
 	const result: IconifyAPIConfig = {
 		// API hosts
-		resources: source.resources,
+		resources: resources,
 
 		// Root path
 		path: source.path === void 0 ? '/' : source.path,
@@ -103,12 +109,13 @@ configStorage[''] = createConfig({
 export function setAPIConfig(
 	provider: string,
 	customConfig: PartialIconifyAPIConfig
-): void {
+): boolean {
 	const config = createConfig(customConfig);
 	if (config === null) {
-		return;
+		return false;
 	}
 	configStorage[provider] = config;
+	return true;
 }
 
 /**

@@ -35,36 +35,18 @@ export interface IconifyAPIModule {
 /**
  * Local storate types and entries
  */
-interface ModulesStorage {
-	default?: IconifyAPIModule;
-	providers: Record<string, IconifyAPIModule>;
-}
-const storage: ModulesStorage = {
-	providers: Object.create(null),
-};
-
-/**
- * Set default API module
- */
-export function setDefaultAPIModule(item: IconifyAPIModule): void {
-	storage.default = item;
-}
+const storage: Record<string, IconifyAPIModule> = Object.create(null);
 
 /**
  * Set API module
  */
-export function setProviderAPIModule(
-	provider: string,
-	item: IconifyAPIModule
-): void {
-	storage.providers[provider] = item;
+export function setAPIModule(provider: string, item: IconifyAPIModule): void {
+	storage[provider] = item;
 }
 
 /**
  * Get API module
  */
 export function getAPIModule(provider: string): IconifyAPIModule | undefined {
-	return storage.providers[provider] === void 0
-		? storage.default
-		: storage.providers[provider];
+	return storage[provider] === void 0 ? storage[''] : storage[provider];
 }

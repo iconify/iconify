@@ -4,7 +4,7 @@ import 'mocha';
 import { expect } from 'chai';
 import { RedundancyPendingItem } from '@cyberalien/redundancy';
 import { setAPIConfig, IconifyAPIConfig } from '../../lib/api/config';
-import { setProviderAPIModule, APIQueryParams } from '../../lib/api/modules';
+import { setAPIModule, APIQueryParams } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 
 describe('Testing API loadIcons', () => {
@@ -88,7 +88,7 @@ describe('Testing API loadIcons', () => {
 			expect(asyncCounter).to.be.equal(3);
 		};
 
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});
@@ -215,7 +215,7 @@ describe('Testing API loadIcons', () => {
 			});
 		};
 
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});
@@ -316,7 +316,7 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});
@@ -439,7 +439,7 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});
@@ -598,7 +598,7 @@ describe('Testing API loadIcons', () => {
 			}
 		};
 
-		setProviderAPIModule(provider, {
+		setAPIModule(provider, {
 			prepare: prepareQuery,
 			send: sendQuery,
 		});

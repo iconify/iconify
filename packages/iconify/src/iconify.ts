@@ -40,8 +40,12 @@ import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
 
 // API
 import { API } from '@iconify/core/lib/api/';
-import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
-import { setAPIConfig, IconifyAPIConfig } from '@iconify/core/lib/api/config';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import {
+	setAPIConfig,
+	PartialIconifyAPIConfig,
+	IconifyAPIConfig,
+} from '@iconify/core/lib/api/config';
 import { prepareQuery, sendQuery } from './modules/api-jsonp';
 import {
 	IconifyIconLoaderCallback,
@@ -172,9 +176,9 @@ export interface IconifyGlobal {
 	resumeObserver: () => void;
 
 	/**
-	 * Set API configuration
+	 * Add API provider
 	 */
-	setAPIConfig: (
+	addAPIProvider: (
 		provider: string,
 		customConfig: Partial<IconifyAPIConfig>
 	) => void;
@@ -381,8 +385,8 @@ const Iconify: IconifyGlobal = {
 	// Resume observer
 	resumeObserver: observer.resume,
 
-	// API configuration
-	setAPIConfig: setAPIConfig,
+	// Add API provider
+	addAPIProvider: setAPIConfig,
 
 	// Scan DOM
 	scanDOM: scanDOM,
@@ -428,10 +432,42 @@ loadCache();
 
 // Set API
 coreModules.api = API;
-setDefaultAPIModule({
+setAPIModule('', {
 	send: sendQuery,
 	prepare: prepareQuery,
 });
+
+// Set API from global "IconifyProviders"
+interface WindowWithIconifyProviders {
+	IconifyProviders: Record<string, PartialIconifyAPIConfig>;
+}
+if (
+	((window as unknown) as WindowWithIconifyProviders).IconifyProviders !==
+	void 0
+) {
+	const providers = ((window as unknown) as WindowWithIconifyProviders)
+		.IconifyProviders;
+	if (typeof providers === 'object' && providers !== null) {
+		for (let key in providers) {
+			const err = 'IconifyProviders[' + key + '] is invalid.';
+			try {
+				const value = providers[key];
+				if (
+					typeof value !== 'object' ||
+					!value ||
+					value.resources === void 0
+				) {
+					continue;
+				}
+				if (!setAPIConfig(key, value)) {
+					console.error(err);
+				}
+			} catch (err) {
+				console.error(err);
+			}
+		}
+	}
+}
 
 // Load observer
 browserModules.observer = observer;
