@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Iconify Demo: Usage</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #fff;
+				color: #000;
+			}
+			body {
+				padding: 8px;
+				font-size: 16px;
+				line-height: 24px;
+			}
+			p {
+				margin: 0;
+				padding: 8px;
+			}
+			p:nth-child(2n) {
+				background-color: #f8f8f8;
+			}
+		</style>
+		<script src="../dist/iconify.min.js"></script>
+	</head>
+	<body>
+		<p>This is a simple HTML page with few icons.</p>
+		<p>
+			Icon that behaves like an image:
+			<span class="iconify" data-icon="bi:house-door"></span>
+		</p>
+		<p>
+			Icon that behaves like an glyph (aligned to bottom of this text):
+			<span class="iconify-inline" data-icon="bi:house-door"></span>
+		</p>
+		<p>
+			Changing icon color:
+			<span
+				class="iconify-inline"
+				style="color: red;"
+				data-icon="bi:house-door"
+			></span>
+		</p>
+		<p>
+			Big icon (showing various ways to do it):
+			<span
+				class="iconify-inline"
+				data-icon="bi:person-lines-fill"
+				style="font-size: 2em;"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:person-lines-fill"
+				data-height="2em"
+			></span>
+			<br />
+			Icons above should be aligned differently because they have
+			different font-size. Vertical alignment is relative to font size.
+		</p>
+		<p>
+			Big icon (showing various ways to do it):
+			<span
+				class="iconify"
+				data-icon="bi:person-lines-fill"
+				style="font-size: 2em;"
+			></span>
+			<span
+				class="iconify"
+				data-icon="bi:person-lines-fill"
+				data-height="2em"
+			></span>
+			<br />
+			Icons above should be aligned identically because they are not using
+			inline mode.
+		</p>
+		<p>
+			Rotation:
+			<span class="iconify-inline" data-icon="bi:image"></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
+				data-rotate="1"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
+				data-rotate="180deg"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
+				data-rotate="75%"
+			></span>
+		</p>
+		<p>
+			Flip:
+			<span class="iconify-inline" data-icon="bi:droplet-half"></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:droplet-half"
+				data-flip="horizontal"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:droplet-half"
+				data-flip="vertical"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:droplet-half"
+				data-flip="horizontal,vertical"
+			></span>
+		</p>
+	</body>
+</html>

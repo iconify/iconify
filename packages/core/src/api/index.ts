@@ -91,7 +91,8 @@ function loadedNewIcons(provider: string, prefix: string): void {
 function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 	function err(): void {
 		console.error(
-			'Unable to retrieve icons for prefix "' +
+			'Unable to retrieve icons for "' +
+				(provider === '' ? '' : '@' + provider + ':') +
 				prefix +
 				'" because API is not configured properly.'
 		);

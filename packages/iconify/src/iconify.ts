@@ -273,6 +273,30 @@ function generateIcon(
 }
 
 /**
+ * Add icon set
+ */
+function addCollection(data: IconifyJSON, provider?: string) {
+	if (typeof provider !== 'string') {
+		provider = typeof data['provider'] === 'string' ? data['provider'] : '';
+	}
+
+	if (
+		typeof data !== 'object' ||
+		typeof data.prefix !== 'string' ||
+		!validateIcon({
+			provider,
+			prefix: data.prefix,
+			name: 'a',
+		})
+	) {
+		return false;
+	}
+
+	const storage = getStorage(provider, data.prefix);
+	return !!addIconSet(storage, data);
+}
+
+/**
  * Global variable
  */
 const Iconify: IconifyGlobal = {
@@ -358,26 +382,7 @@ const Iconify: IconifyGlobal = {
 	},
 
 	// Add icon set
-	addCollection: (data, provider?: string) => {
-		if (typeof provider !== 'string') {
-			provider = '';
-		}
-
-		if (
-			typeof data !== 'object' ||
-			typeof data.prefix !== 'string' ||
-			!validateIcon({
-				provider,
-				prefix: data.prefix,
-				name: 'a',
-			})
-		) {
-			return false;
-		}
-
-		const storage = getStorage(provider, data.prefix);
-		return !!addIconSet(storage, data);
-	},
+	addCollection: addCollection,
 
 	// Pause observer
 	pauseObserver: observer.pause,
@@ -437,6 +442,39 @@ setAPIModule('', {
 	prepare: prepareQuery,
 });
 
+// Load icons from global "IconifyPreload"
+interface WindowWithIconifyPreload {
+	IconifyPreload: IconifyJSON[] | IconifyJSON;
+}
+if (
+	((window as unknown) as WindowWithIconifyPreload).IconifyPreload !== void 0
+) {
+	const preload = ((window as unknown) as WindowWithIconifyPreload)
+		.IconifyPreload;
+	const err = 'Invalid IconifyPreload syntax.';
+	if (typeof preload === 'object' && preload !== null) {
+		(preload instanceof Array ? preload : [preload]).forEach((item) => {
+			try {
+				if (
+					// Check if item is an object and not null/array
+					typeof item !== 'object' ||
+					item === null ||
+					item instanceof Array ||
+					// Check for 'icons' and 'prefix'
+					typeof item.icons !== 'object' ||
+					typeof item.prefix !== 'string' ||
+					// Add icon set
+					!addCollection(item)
+				) {
+					console.error(err);
+				}
+			} catch (e) {
+				console.error(err);
+			}
+		});
+	}
+}
+
 // Set API from global "IconifyProviders"
 interface WindowWithIconifyProviders {
 	IconifyProviders: Record<string, PartialIconifyAPIConfig>;
@@ -462,7 +500,7 @@ if (
 				if (!setAPIConfig(key, value)) {
 					console.error(err);
 				}
-			} catch (err) {
+			} catch (e) {
 				console.error(err);
 			}
 		}

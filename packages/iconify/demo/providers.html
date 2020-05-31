@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Iconify Demo: Providers</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #fff;
+				color: #000;
+			}
+			body {
+				padding: 8px;
+				font-size: 16px;
+				line-height: 24px;
+			}
+			p {
+				margin: 0;
+				padding: 8px;
+			}
+			p:nth-child(2n) {
+				background-color: #f8f8f8;
+			}
+		</style>
+		<script>
+			IconifyProviders = {
+				fake1: {
+					// correct syntax
+					resources: ['https://api.iconify.design'],
+				},
+			};
+		</script>
+		<script src="../dist/iconify.min.js"></script>
+		<script>
+			Iconify.addAPIProvider('fake2', {
+				// string instead of array, but script should handle it
+				resources: 'https://api.iconify.design',
+			});
+		</script>
+	</head>
+	<body>
+		<p>
+			This is a simple HTML page with few icons.<br />
+			Successful icons should look identical, though loaded separately
+		</p>
+		<p>
+			No provider:
+			<span class="iconify" data-icon="bi:house-door"></span>
+		</p>
+		<p>
+			No provider:
+			<span class="iconify" data-icon="@:bi:house-door"></span>
+		</p>
+		<p>
+			Custom provider 1 (3 icons):
+			<span class="iconify" data-icon="@fake1:bi:house-door"></span>
+			<span class="iconify" data-icon="fake1:bi:house-door"></span>
+			<span class="iconify" data-icon="@fake1:bi-house-door"></span>
+		</p>
+		<p>
+			Custom provider 2 (1 icon):
+			<span class="iconify" data-icon="@fake2:bi:house-door"></span>
+		</p>
+		<p>
+			Invalid provider (0 icons):
+			<span class="iconify" data-icon="@fake3:bi:house-door"></span>
+		</p>
+	</body>
+</html>
