@@ -41,6 +41,7 @@ export function renderIcon(
 	const className =
 		'iconify iconify--' +
 		name.prefix +
+		(name.provider === '' ? '' : ' iconify--' + name.provider) +
 		(filteredClassList.length ? ' ' + filteredClassList.join(' ') : '');
 
 	// Generate SVG as string

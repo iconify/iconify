@@ -2,14 +2,14 @@ import mocha from 'mocha';
 import chai from 'chai';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
-import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 
 const expect = chai.expect;
 
 // Set API
-setDefaultAPIModule({
+setAPIModule('', {
 	prepare: prepareQuery,
 	send: sendQuery,
 });

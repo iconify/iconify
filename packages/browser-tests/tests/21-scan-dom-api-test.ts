@@ -5,7 +5,7 @@ import { getNode } from './node';
 import { addFinder } from '@iconify/iconify/lib/finder';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
-import { setDefaultAPIModule } from '@iconify/core/lib/api/modules';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
@@ -20,7 +20,7 @@ addFinder(iconifyFinder);
 addFinder(iconifyIconFinder);
 
 // Set API
-setDefaultAPIModule({
+setAPIModule('', {
 	prepare: prepareQuery,
 	send: sendQuery,
 });
