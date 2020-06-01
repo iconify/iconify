@@ -277,7 +277,7 @@ function generateIcon(
  */
 function addCollection(data: IconifyJSON, provider?: string) {
 	if (typeof provider !== 'string') {
-		provider = typeof data['provider'] === 'string' ? data['provider'] : '';
+		provider = typeof data.provider === 'string' ? data.provider : '';
 	}
 
 	if (

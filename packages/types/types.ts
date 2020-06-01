@@ -205,6 +205,9 @@ export interface IconifyJSON extends IconifyOptional, IconifyMetaData {
 	// Prefix for icons in JSON file, required.
 	prefix: string;
 
+	// API provider, optional.
+	provider?: string;
+
 	// List of icons, required.
 	icons: IconifyIcons;
 
