@@ -18,7 +18,7 @@ Iconify uses a new innovative approach to loading icons. Unlike fonts and SVG fr
 
 Iconify SVG framework is designed to be as easy to use as possible.
 
-Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of page or before `</body>`):
+Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
 <script src="https://code.iconify.design/2/2.0.0-beta.2/iconify.min.js"></script>
@@ -251,7 +251,7 @@ Possible values for `data-rotate`: 90deg, 180deg, 270deg.
 
 If you use both flip and rotation, the icon is flipped first, then rotated.
 
-To use custom transformations use CSS transform rule. Add `!important` after rule to override the SVG inline style (inline style exists to fix a SVG rendering bug in Firefox browser).
+To use custom transformations use CSS transform rule. Add `!important` after rule to override the SVG inline style (inline style exists to fix an SVG rendering bug in Firefox browser).
 
 ```html
 <span data-icon="twemoji-helicopter" class="iconify icon-helicopter"></span>
