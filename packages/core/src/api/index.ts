@@ -61,11 +61,38 @@ const loaderFlags: Record<string, Record<string, boolean>> = Object.create(
 const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
 
 // Redundancy instances cache, sorted by provider
-interface LocalCache {
+export interface IconifyAPIInternalStorage {
 	config: IconifyAPIConfig;
 	redundancy: Redundancy;
 }
-const redundancyCache: Record<string, LocalCache> = Object.create(null);
+const redundancyCache: Record<
+	string,
+	IconifyAPIInternalStorage
+> = Object.create(null);
+
+/**
+ * Get Redundancy instance for provider
+ */
+export function getRedundancyCache(
+	provider: string
+): IconifyAPIInternalStorage | undefined {
+	if (redundancyCache[provider] === void 0) {
+		const config = getAPIConfig(provider);
+		if (!config) {
+			// No way to load icons because configuration is not set!
+			return;
+		}
+
+		const redundancy = initRedundancy(config);
+		const cachedReundancy = {
+			config,
+			redundancy,
+		};
+		redundancyCache[provider] = cachedReundancy;
+	}
+
+	return redundancyCache[provider];
+}
 
 /**
  * Function called when new icons have been loaded
@@ -124,7 +151,7 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 	}
 
 	// Redundancy item
-	let cachedReundancy: LocalCache;
+	let cachedReundancy: IconifyAPIInternalStorage;
 
 	// Trigger update on next tick, mering multiple synchronous requests into one asynchronous request
 	if (!providerQueueFlags[prefix]) {
@@ -146,23 +173,13 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 
 			// Get API config and Redundancy instance
 			if (cachedReundancy === void 0) {
-				if (redundancyCache[provider] === void 0) {
-					const config = getAPIConfig(provider);
-					if (!config) {
-						// No way to load icons because configuration is not set!
-						err();
-						return;
-					}
-
-					const redundancy = initRedundancy(config);
-					cachedReundancy = {
-						config,
-						redundancy,
-					};
-					redundancyCache[provider] = cachedReundancy;
-				} else {
-					cachedReundancy = redundancyCache[provider];
+				const redundancy = getRedundancyCache(provider);
+				if (redundancy === void 0) {
+					// No way to load icons because configuration is not set!
+					err();
+					return;
 				}
+				cachedReundancy = redundancy;
 			}
 
 			// Prepare parameters and run queries

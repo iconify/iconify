@@ -39,7 +39,11 @@ import { finder as iconifyFinder } from './finders/iconify';
 import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
 
 // API
-import { API } from '@iconify/core/lib/api/';
+import {
+	API,
+	getRedundancyCache,
+	IconifyAPIInternalStorage,
+} from '@iconify/core/lib/api/';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import {
 	setAPIConfig,
@@ -60,6 +64,7 @@ import { renderIcon } from './render';
 
 // Scan
 import { scanDOM } from './scan';
+import { Redundancy } from '@iconify/core/node_modules/@cyberalien/redundancy';
 
 /**
  * Export required types
@@ -79,7 +84,12 @@ export {
 export { IconifyIconBuildResult };
 
 // API
-export { IconifyAPIConfig, IconifyIconLoaderCallback, IconifyIconLoaderAbort };
+export {
+	IconifyAPIConfig,
+	IconifyIconLoaderCallback,
+	IconifyIconLoaderAbort,
+	IconifyAPIInternalStorage,
+};
 
 /**
  * Cache types
@@ -182,6 +192,13 @@ export interface IconifyGlobal {
 		provider: string,
 		customConfig: Partial<IconifyAPIConfig>
 	) => void;
+
+	/**
+	 * Get internal API data, used by Icon Finder
+	 */
+	_getInternalAPI: (
+		provider: string
+	) => IconifyAPIInternalStorage | undefined;
 
 	/* Scan DOM */
 	/**
@@ -390,8 +407,11 @@ const Iconify: IconifyGlobal = {
 	// Resume observer
 	resumeObserver: observer.resume,
 
-	// Add API provider
+	// API providers
 	addAPIProvider: setAPIConfig,
+
+	// Get API data
+	_getInternalAPI: getRedundancyCache,
 
 	// Scan DOM
 	scanDOM: scanDOM,
@@ -427,14 +447,6 @@ const Iconify: IconifyGlobal = {
 /**
  * Initialise stuff
  */
-// Add finder modules
-// addFinder(iconifyIconFinder);
-addFinder(iconifyFinder);
-
-// Set cache and load existing cache
-coreModules.cache = storeCache;
-loadCache();
-
 // Set API
 coreModules.api = API;
 setAPIModule('', {
@@ -442,76 +454,89 @@ setAPIModule('', {
 	prepare: prepareQuery,
 });
 
-// Load icons from global "IconifyPreload"
-interface WindowWithIconifyPreload {
-	IconifyPreload: IconifyJSON[] | IconifyJSON;
-}
-if (
-	((window as unknown) as WindowWithIconifyPreload).IconifyPreload !== void 0
-) {
-	const preload = ((window as unknown) as WindowWithIconifyPreload)
-		.IconifyPreload;
-	const err = 'Invalid IconifyPreload syntax.';
-	if (typeof preload === 'object' && preload !== null) {
-		(preload instanceof Array ? preload : [preload]).forEach((item) => {
-			try {
-				if (
-					// Check if item is an object and not null/array
-					typeof item !== 'object' ||
-					item === null ||
-					item instanceof Array ||
-					// Check for 'icons' and 'prefix'
-					typeof item.icons !== 'object' ||
-					typeof item.prefix !== 'string' ||
-					// Add icon set
-					!addCollection(item)
-				) {
-					console.error(err);
-				}
-			} catch (e) {
-				console.error(err);
-			}
-		});
-	}
-}
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+	// Add finder modules
+	// addFinder(iconifyIconFinder);
+	addFinder(iconifyFinder);
 
-// Set API from global "IconifyProviders"
-interface WindowWithIconifyProviders {
-	IconifyProviders: Record<string, PartialIconifyAPIConfig>;
-}
-if (
-	((window as unknown) as WindowWithIconifyProviders).IconifyProviders !==
-	void 0
-) {
-	const providers = ((window as unknown) as WindowWithIconifyProviders)
-		.IconifyProviders;
-	if (typeof providers === 'object' && providers !== null) {
-		for (let key in providers) {
-			const err = 'IconifyProviders[' + key + '] is invalid.';
-			try {
-				const value = providers[key];
-				if (
-					typeof value !== 'object' ||
-					!value ||
-					value.resources === void 0
-				) {
-					continue;
-				}
-				if (!setAPIConfig(key, value)) {
+	// Set cache and load existing cache
+	coreModules.cache = storeCache;
+	loadCache();
+
+	const _window = window;
+
+	// Load icons from global "IconifyPreload"
+	interface WindowWithIconifyPreload {
+		IconifyPreload: IconifyJSON[] | IconifyJSON;
+	}
+	if (
+		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
+		void 0
+	) {
+		const preload = ((_window as unknown) as WindowWithIconifyPreload)
+			.IconifyPreload;
+		const err = 'Invalid IconifyPreload syntax.';
+		if (typeof preload === 'object' && preload !== null) {
+			(preload instanceof Array ? preload : [preload]).forEach((item) => {
+				try {
+					if (
+						// Check if item is an object and not null/array
+						typeof item !== 'object' ||
+						item === null ||
+						item instanceof Array ||
+						// Check for 'icons' and 'prefix'
+						typeof item.icons !== 'object' ||
+						typeof item.prefix !== 'string' ||
+						// Add icon set
+						!addCollection(item)
+					) {
+						console.error(err);
+					}
+				} catch (e) {
 					console.error(err);
 				}
-			} catch (e) {
-				console.error(err);
+			});
+		}
+	}
+
+	// Set API from global "IconifyProviders"
+	interface WindowWithIconifyProviders {
+		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
+	}
+	if (
+		((_window as unknown) as WindowWithIconifyProviders)
+			.IconifyProviders !== void 0
+	) {
+		const providers = ((_window as unknown) as WindowWithIconifyProviders)
+			.IconifyProviders;
+		if (typeof providers === 'object' && providers !== null) {
+			for (let key in providers) {
+				const err = 'IconifyProviders[' + key + '] is invalid.';
+				try {
+					const value = providers[key];
+					if (
+						typeof value !== 'object' ||
+						!value ||
+						value.resources === void 0
+					) {
+						continue;
+					}
+					if (!setAPIConfig(key, value)) {
+						console.error(err);
+					}
+				} catch (e) {
+					console.error(err);
+				}
 			}
 		}
 	}
-}
 
-// Load observer
-browserModules.observer = observer;
-setTimeout(() => {
-	// Init on next tick when entire document has been parsed
-	observer.init(scanDOM);
-});
+	// Load observer
+	browserModules.observer = observer;
+	setTimeout(() => {
+		// Init on next tick when entire document has been parsed
+		observer.init(scanDOM);
+	});
+}
 
 export default Iconify;
