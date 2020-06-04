@@ -64,7 +64,6 @@ import { renderIcon } from './render';
 
 // Scan
 import { scanDOM } from './scan';
-import { Redundancy } from '@iconify/core/node_modules/@cyberalien/redundancy';
 
 /**
  * Export required types
@@ -95,6 +94,20 @@ export {
  * Cache types
  */
 export type IconifyCacheType = 'local' | 'session' | 'all';
+
+/**
+ * Exposed internal functions
+ *
+ * Used by plug-ins, such as Icon Finder
+ *
+ * Important: any changes published in a release must be backwards compatible.
+ */
+export interface IconifyExposedInternals {
+	/**
+	 * Get internal API data, used by Icon Finder
+	 */
+	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
+}
 
 /**
  * Iconify interface
@@ -193,13 +206,6 @@ export interface IconifyGlobal {
 		customConfig: Partial<IconifyAPIConfig>
 	) => void;
 
-	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	_getInternalAPI: (
-		provider: string
-	) => IconifyAPIInternalStorage | undefined;
-
 	/* Scan DOM */
 	/**
 	 * Scan DOM
@@ -215,6 +221,11 @@ export interface IconifyGlobal {
 	 * Toggle local and session storage
 	 */
 	enableCache: (storage: IconifyCacheType, value: boolean) => void;
+
+	/**
+	 * Expose internal functions
+	 */
+	_internal: IconifyExposedInternals;
 }
 
 /**
@@ -410,9 +421,6 @@ const Iconify: IconifyGlobal = {
 	// API providers
 	addAPIProvider: setAPIConfig,
 
-	// Get API data
-	_getInternalAPI: getRedundancyCache,
-
 	// Scan DOM
 	scanDOM: scanDOM,
 
@@ -441,6 +449,12 @@ const Iconify: IconifyGlobal = {
 				}
 				break;
 		}
+	},
+
+	// Exposed internal functions
+	_internal: {
+		// Get API data
+		getAPI: getRedundancyCache,
 	},
 };
 
