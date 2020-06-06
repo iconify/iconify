@@ -83,7 +83,14 @@ const config = [];
 				footer,
 			},
 		],
-		plugins: [resolve(), commonjs(), replace(replacements), buble()],
+		plugins: [
+			resolve({
+				browser: true,
+			}),
+			commonjs(),
+			replace(replacements),
+			buble(),
+		],
 	};
 	if (compress) {
 		item.plugins.push(terser());

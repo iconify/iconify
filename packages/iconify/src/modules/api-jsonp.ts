@@ -19,7 +19,7 @@ let global: JSONPRoot | null = null;
 let endPoint = '{prefix}.js?icons={icons}&callback={callback}';
 
 /**
- * Cache
+ * Cache: provider:prefix = value
  */
 const maxLengthCache: Record<string, number> = Object.create(null);
 const pathCache: Record<string, string> = Object.create(null);
@@ -120,8 +120,9 @@ function calculateMaxLength(provider: string, prefix: string): number {
 	}
 
 	// Cache stuff and return result
-	pathCache[prefix] = config.path;
-	maxLengthCache[prefix] = result;
+	const cacheKey = provider + ':' + prefix;
+	pathCache[cacheKey] = config.path;
+	maxLengthCache[cacheKey] = result;
 	return result;
 }
 
@@ -136,7 +137,8 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 	const results: APIQueryParams[] = [];
 
 	// Get maximum icons list length
-	let maxLength = maxLengthCache[prefix];
+	const cacheKey = provider + ':' + prefix;
+	let maxLength = maxLengthCache[cacheKey];
 	if (maxLength === void 0) {
 		maxLength = calculateMaxLength(provider, prefix);
 	}
@@ -180,6 +182,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	const prefix = params.prefix;
 	const icons = params.icons;
 	const iconsList = icons.join(',');
+	const cacheKey = provider + ':' + prefix;
 
 	// Create callback prefix
 	const cbPrefix = prefix.split('-').shift().slice(0, 3);
@@ -196,7 +199,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	const callbackName = cbPrefix + cbCounter;
 
 	let path =
-		pathCache[prefix] +
+		pathCache[cacheKey] +
 		endPoint
 			.replace('{provider}', provider)
 			.replace('{prefix}', prefix)
