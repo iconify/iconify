@@ -104,6 +104,15 @@ export type IconifyCacheType = 'local' | 'session' | 'all';
  */
 export interface IconifyExposedInternals {
 	/**
+	 * Calculate width knowing height and width/height ratio (or vice versa)
+	 */
+	calculateSize: (
+		size: IconifyIconSize,
+		ratio: number,
+		precision?: number
+	) => IconifyIconSize;
+
+	/**
 	 * Get internal API data, used by Icon Finder
 	 */
 	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
@@ -166,15 +175,6 @@ export interface IconifyGlobal {
 	 * Replace IDs in icon body, should be used when parsing buildIcon() result
 	 */
 	replaceIDs: (body: string) => string;
-
-	/**
-	 * Calculate width knowing height and width/height ratio (or vice versa)
-	 */
-	calculateSize: (
-		size: IconifyIconSize,
-		ratio: number,
-		precision?: number
-	) => IconifyIconSize;
 
 	/* Add icons */
 	/**
@@ -396,9 +396,6 @@ const Iconify: IconifyGlobal = {
 	// Replace IDs in body
 	replaceIDs: replaceIDs,
 
-	// Calculate size
-	calculateSize: calcSize,
-
 	// Add icon
 	addIcon: (name, data) => {
 		const icon = getIconName(name);
@@ -453,6 +450,9 @@ const Iconify: IconifyGlobal = {
 
 	// Exposed internal functions
 	_internal: {
+		// Calculate size
+		calculateSize: calcSize,
+
 		// Get API data
 		getAPI: getRedundancyCache,
 	},
