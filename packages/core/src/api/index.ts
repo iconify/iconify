@@ -112,17 +112,24 @@ function loadedNewIcons(provider: string, prefix: string): void {
 	}
 }
 
+// Storage for errors for loadNewIcons(). Used to avoid spamming log with identical errors.
+const errorsCache: Record<string, number> = Object.create(null);
+
 /**
  * Load icons
  */
 function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 	function err(): void {
-		console.error(
-			'Unable to retrieve icons for "' +
-				(provider === '' ? '' : '@' + provider + ':') +
-				prefix +
-				'" because API is not configured properly.'
-		);
+		const key = (provider === '' ? '' : '@' + provider + ':') + prefix;
+		const time = Math.floor(Date.now() / 60000); // log once in a minute
+		if (errorsCache[key] < time) {
+			errorsCache[key] = time;
+			console.error(
+				'Unable to retrieve icons for "' +
+					key +
+					'" because API is not configured properly.'
+			);
+		}
 	}
 
 	// Create nested objects if needed
