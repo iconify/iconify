@@ -44,13 +44,20 @@ import {
 	getRedundancyCache,
 	IconifyAPIInternalStorage,
 } from '@iconify/core/lib/api/';
-import { setAPIModule } from '@iconify/core/lib/api/modules';
+import {
+	setAPIModule,
+	IconifyAPIModule,
+	IconifyAPISendQuery,
+	IconifyAPIPrepareQuery,
+} from '@iconify/core/lib/api/modules';
 import {
 	setAPIConfig,
 	PartialIconifyAPIConfig,
 	IconifyAPIConfig,
+	getAPIConfig,
+	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import { prepareQuery, sendQuery } from './modules/api-jsonp';
+import { getAPIModule } from './modules/api-jsonp';
 import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
@@ -69,7 +76,7 @@ import { scanDOM } from './scan';
  * Export required types
  */
 // JSON stuff
-export { IconifyIcon, IconifyJSON };
+export { IconifyIcon, IconifyJSON, IconifyIconName };
 
 // Customisations
 export {
@@ -88,6 +95,10 @@ export {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 	IconifyAPIInternalStorage,
+	IconifyAPIModule,
+	GetAPIConfig,
+	IconifyAPIPrepareQuery,
+	IconifyAPISendQuery,
 };
 
 /**
@@ -116,6 +127,16 @@ export interface IconifyExposedInternals {
 	 * Get internal API data, used by Icon Finder
 	 */
 	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
+
+	/**
+	 * Get API config, used by custom modules
+	 */
+	getAPIConfig: GetAPIConfig;
+
+	/**
+	 * Set API module
+	 */
+	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 }
 
 /**
@@ -455,6 +476,12 @@ const Iconify: IconifyGlobal = {
 
 		// Get API data
 		getAPI: getRedundancyCache,
+
+		// Get API config
+		getAPIConfig,
+
+		// Get API module
+		setAPIModule,
 	},
 };
 
@@ -463,10 +490,7 @@ const Iconify: IconifyGlobal = {
  */
 // Set API
 coreModules.api = API;
-setAPIModule('', {
-	send: sendQuery,
-	prepare: prepareQuery,
-});
+setAPIModule('', getAPIModule(getAPIConfig));
 
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Add finder modules

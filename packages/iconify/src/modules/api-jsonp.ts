@@ -3,8 +3,10 @@ import {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,
 	IconifyAPISendQuery,
+	IconifyAPIModule,
+	GetIconifyAPIModule,
 } from '@iconify/core/lib/api/modules';
-import { getAPIConfig } from '@iconify/core/lib/api/config';
+import { GetAPIConfig } from '@iconify/core/lib/api/config';
 
 /**
  * Global
@@ -82,144 +84,157 @@ function getGlobal(): JSONPRoot {
 }
 
 /**
- * Calculate maximum icons list length for prefix
+ * Return API module
  */
-function calculateMaxLength(provider: string, prefix: string): number {
-	// Get config and store path
-	const config = getAPIConfig(provider);
-	if (!config) {
-		return 0;
+export const getAPIModule: GetIconifyAPIModule = (
+	getAPIConfig: GetAPIConfig
+): IconifyAPIModule => {
+	/**
+	 * Calculate maximum icons list length for prefix
+	 */
+	function calculateMaxLength(provider: string, prefix: string): number {
+		// Get config and store path
+		const config = getAPIConfig(provider);
+		if (!config) {
+			return 0;
+		}
+
+		// Calculate
+		let result;
+		if (!config.maxURL) {
+			result = 0;
+		} else {
+			let maxHostLength = 0;
+			config.resources.forEach((host) => {
+				maxHostLength = Math.max(maxHostLength, host.length);
+			});
+
+			// Make sure global is set
+			getGlobal();
+
+			// Extra width: prefix (3) + counter (4) - '{cb}' (4)
+			const extraLength = 3;
+
+			// Get available length
+			result =
+				config.maxURL -
+				maxHostLength -
+				config.path.length -
+				endPoint
+					.replace('{provider}', provider)
+					.replace('{prefix}', prefix)
+					.replace('{icons}', '').length -
+				extraLength;
+		}
+
+		// Cache stuff and return result
+		const cacheKey = provider + ':' + prefix;
+		pathCache[cacheKey] = config.path;
+		maxLengthCache[cacheKey] = result;
+		return result;
 	}
 
-	// Calculate
-	let result;
-	if (!config.maxURL) {
-		result = 0;
-	} else {
-		let maxHostLength = 0;
-		config.resources.forEach((host) => {
-			maxHostLength = Math.max(maxHostLength, host.length);
+	/**
+	 * Prepare params
+	 */
+	const prepare: IconifyAPIPrepareQuery = (
+		provider: string,
+		prefix: string,
+		icons: string[]
+	): APIQueryParams[] => {
+		const results: APIQueryParams[] = [];
+
+		// Get maximum icons list length
+		const cacheKey = provider + ':' + prefix;
+		let maxLength = maxLengthCache[cacheKey];
+		if (maxLength === void 0) {
+			maxLength = calculateMaxLength(provider, prefix);
+		}
+
+		// Split icons
+		let item: APIQueryParams = {
+			provider,
+			prefix,
+			icons: [],
+		};
+		let length = 0;
+		icons.forEach((name, index) => {
+			length += name.length + 1;
+			if (length >= maxLength && index > 0) {
+				// Next set
+				results.push(item);
+				item = {
+					provider,
+					prefix,
+					icons: [],
+				};
+				length = name.length;
+			}
+
+			item.icons.push(name);
 		});
+		results.push(item);
 
-		// Make sure global is set
-		getGlobal();
+		return results;
+	};
 
-		// Extra width: prefix (3) + counter (4) - '{cb}' (4)
-		const extraLength = 3;
+	/**
+	 * Load icons
+	 */
+	const send: IconifyAPISendQuery = (
+		host: string,
+		params: APIQueryParams,
+		status: RedundancyPendingItem
+	): void => {
+		const provider = params.provider;
+		const prefix = params.prefix;
+		const icons = params.icons;
+		const iconsList = icons.join(',');
+		const cacheKey = provider + ':' + prefix;
 
-		// Get available length
-		result =
-			config.maxURL -
-			maxHostLength -
-			config.path.length -
+		// Create callback prefix
+		const cbPrefix = prefix.split('-').shift().slice(0, 3);
+
+		const global = getGlobal();
+
+		// Callback hash
+		let cbCounter = hash(
+			provider + ':' + host + ':' + prefix + ':' + iconsList
+		);
+		while (global[cbPrefix + cbCounter] !== void 0) {
+			cbCounter++;
+		}
+		const callbackName = cbPrefix + cbCounter;
+
+		let path =
+			pathCache[cacheKey] +
 			endPoint
 				.replace('{provider}', provider)
 				.replace('{prefix}', prefix)
-				.replace('{icons}', '').length -
-			extraLength;
-	}
+				.replace('{icons}', iconsList)
+				.replace('{cb}', callbackName);
 
-	// Cache stuff and return result
-	const cacheKey = provider + ':' + prefix;
-	pathCache[cacheKey] = config.path;
-	maxLengthCache[cacheKey] = result;
-	return result;
-}
+		global[callbackName] = (data: unknown): void => {
+			// Remove callback and complete query
+			delete global[callbackName];
+			status.done(data);
+		};
 
-/**
- * Prepare params
- */
-export const prepareQuery: IconifyAPIPrepareQuery = (
-	provider: string,
-	prefix: string,
-	icons: string[]
-): APIQueryParams[] => {
-	const results: APIQueryParams[] = [];
+		// Create URI
+		const uri = host + path;
+		// console.log('API query:', uri);
 
-	// Get maximum icons list length
-	const cacheKey = provider + ':' + prefix;
-	let maxLength = maxLengthCache[cacheKey];
-	if (maxLength === void 0) {
-		maxLength = calculateMaxLength(provider, prefix);
-	}
-
-	// Split icons
-	let item: APIQueryParams = {
-		provider,
-		prefix,
-		icons: [],
-	};
-	let length = 0;
-	icons.forEach((name, index) => {
-		length += name.length + 1;
-		if (length >= maxLength && index > 0) {
-			// Next set
-			results.push(item);
-			item = {
-				provider,
-				prefix,
-				icons: [],
-			};
-			length = name.length;
-		}
-
-		item.icons.push(name);
-	});
-	results.push(item);
-
-	return results;
-};
-
-/**
- * Load icons
- */
-export const sendQuery: IconifyAPISendQuery = (
-	host: string,
-	params: APIQueryParams,
-	status: RedundancyPendingItem
-): void => {
-	const provider = params.provider;
-	const prefix = params.prefix;
-	const icons = params.icons;
-	const iconsList = icons.join(',');
-	const cacheKey = provider + ':' + prefix;
-
-	// Create callback prefix
-	const cbPrefix = prefix.split('-').shift().slice(0, 3);
-
-	const global = getGlobal();
-
-	// Callback hash
-	let cbCounter = hash(
-		provider + ':' + host + ':' + prefix + ':' + iconsList
-	);
-	while (global[cbPrefix + cbCounter] !== void 0) {
-		cbCounter++;
-	}
-	const callbackName = cbPrefix + cbCounter;
-
-	let path =
-		pathCache[cacheKey] +
-		endPoint
-			.replace('{provider}', provider)
-			.replace('{prefix}', prefix)
-			.replace('{icons}', iconsList)
-			.replace('{cb}', callbackName);
-
-	global[callbackName] = (data: unknown): void => {
-		// Remove callback and complete query
-		delete global[callbackName];
-		status.done(data);
+		// Create script and append it to head
+		const script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.async = true;
+		script.src = uri;
+		document.head.appendChild(script);
 	};
 
-	// Create URI
-	const uri = host + path;
-	// console.log('API query:', uri);
-
-	// Create script and append it to head
-	const script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.async = true;
-	script.src = uri;
-	document.head.appendChild(script);
+	// Return functions
+	return {
+		prepare,
+		send,
+	};
 };

@@ -1,4 +1,5 @@
 import { RedundancyPendingItem } from '@cyberalien/redundancy';
+import { GetAPIConfig } from '../api/config';
 
 /**
  * Params for sendQuery()
@@ -50,3 +51,10 @@ export function setAPIModule(provider: string, item: IconifyAPIModule): void {
 export function getAPIModule(provider: string): IconifyAPIModule | undefined {
 	return storage[provider] === void 0 ? storage[''] : storage[provider];
 }
+
+/**
+ * Function to return API interface
+ */
+export type GetIconifyAPIModule = (
+	getAPIConfig: GetAPIConfig
+) => IconifyAPIModule;

@@ -119,8 +119,13 @@ export function setAPIConfig(
 }
 
 /**
+ * Signature for getAPIConfig
+ */
+export type GetAPIConfig = (provider: string) => IconifyAPIConfig | undefined;
+
+/**
  * Get API configuration
  */
-export function getAPIConfig(provider: string): IconifyAPIConfig | undefined {
-	return configStorage[provider];
-}
+export const getAPIConfig: GetAPIConfig = (
+	provider: string
+): IconifyAPIConfig | undefined => configStorage[provider];
