@@ -57,7 +57,7 @@ import {
 	getAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import { getAPIModule } from './modules/api-jsonp';
+import { getAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,

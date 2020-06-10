@@ -5,8 +5,8 @@ import {
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
-} from '@iconify/core/lib/api/modules';
-import { GetAPIConfig } from '@iconify/core/lib/api/config';
+} from '../modules';
+import { GetAPIConfig } from '../config';
 
 /**
  * Global
@@ -193,7 +193,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 		const cacheKey = provider + ':' + prefix;
 
 		// Create callback prefix
-		const cbPrefix = prefix.split('-').shift().slice(0, 3);
+		const cbPrefix = prefix.split('-').shift()!.slice(0, 3);
 
 		const global = getGlobal();
 

@@ -6,8 +6,8 @@ import {
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
-} from '@iconify/core/lib/api/modules';
-import { GetAPIConfig } from '@iconify/core/lib/api/config';
+} from '../modules';
+import { GetAPIConfig } from '../config';
 
 /**
  * Endpoint
