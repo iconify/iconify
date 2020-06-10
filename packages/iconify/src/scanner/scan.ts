@@ -2,10 +2,10 @@ import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage';
 import { coreModules } from '@iconify/core/lib/modules';
 import { FullIconifyIcon } from '@iconify/core/lib/icon';
-import { findPlaceholders } from './finder';
-import { browserModules, getRoot } from './modules';
-import { IconifyElementData, elementDataProperty } from './element';
-import { renderIcon } from './render';
+import { findPlaceholders } from '../finder';
+import { browserModules, getRoot } from '../modules';
+import { IconifyElementData, elementDataProperty } from '../element';
+import { renderIcon } from '../renderer/render';
 
 /**
  * Flag to avoid scanning DOM too often

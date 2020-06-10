@@ -1,4 +1,3 @@
-import { PlaceholderElement } from './finder';
 import { FullIconifyIcon } from '@iconify/core/lib/icon';
 import {
 	IconifyIconCustomisations,
@@ -6,12 +5,13 @@ import {
 } from '@iconify/core/lib/customisations';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
+import { PlaceholderElement } from '../finder';
 import {
 	IconifyElement,
 	IconifyElementData,
 	elementDataProperty,
 	elementFinderProperty,
-} from './element';
+} from '../element';
 
 /**
  * Replace element with SVG

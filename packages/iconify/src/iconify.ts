@@ -39,6 +39,7 @@ import { finder as iconifyFinder } from './finders/iconify';
 import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
 
 // API
+import { IconifyAPI } from './api';
 import {
 	API,
 	getRedundancyCache,
@@ -64,13 +65,16 @@ import {
 } from '@iconify/core/lib/interfaces/loader';
 
 // Observer
-import { observer } from './modules/observer';
+import { IconifyObserver } from './observer';
+import { observer } from './observer/observer';
 
 // Render
-import { renderIcon } from './render';
+import { IconifyRenderer } from './renderer';
+import { renderIcon } from './renderer/render';
 
 // Scan
-import { scanDOM } from './scan';
+import { IconifyScanner } from './scanner';
+import { scanDOM } from './scanner/scan';
 
 /**
  * Export required types
@@ -142,102 +146,18 @@ export interface IconifyExposedInternals {
 /**
  * Iconify interface
  */
-export interface IconifyGlobal {
+export interface IconifyGlobal
+	extends IconifyScanner,
+		IconifyObserver,
+		IconifyRenderer,
+		IconifyAPI {
 	/* General section */
 	/**
 	 * Get version
 	 */
 	getVersion: () => string;
 
-	/* Getting icons */
-	/**
-	 * Check if icon exists
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
-	 * Get icon data with all properties
-	 */
-	getIcon: (name: string) => IconifyIcon | null;
-
-	/**
-	 * List all available icons
-	 */
-	listIcons: (provider?: string, prefix?: string) => string[];
-
-	/**
-	 * Load icons
-	 */
-	loadIcons: (
-		icons: (IconifyIconName | string)[],
-		callback?: IconifyIconLoaderCallback
-	) => IconifyIconLoaderAbort;
-
-	/* Rendering icons */
-	renderSVG: (
-		name: string,
-		customisations: IconifyIconCustomisations
-	) => SVGElement | null;
-
-	renderHTML: (
-		name: string,
-		customisations: IconifyIconCustomisations
-	) => string | null;
-
-	/**
-	 * Get icon data
-	 */
-	renderIcon: (
-		name: string,
-		customisations: IconifyIconCustomisations
-	) => IconifyIconBuildResult | null;
-
-	/**
-	 * Replace IDs in icon body, should be used when parsing buildIcon() result
-	 */
-	replaceIDs: (body: string) => string;
-
-	/* Add icons */
-	/**
-	 * Add icon to storage
-	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
-
-	/**
-	 * Add icon set to storage
-	 */
-	addCollection: (data: IconifyJSON, provider?: string) => boolean;
-
-	/* API stuff */
-	/**
-	 * Pause DOM observer
-	 */
-	pauseObserver: () => void;
-
-	/**
-	 * Resume DOM observer
-	 */
-	resumeObserver: () => void;
-
-	/**
-	 * Add API provider
-	 */
-	addAPIProvider: (
-		provider: string,
-		customConfig: Partial<IconifyAPIConfig>
-	) => void;
-
 	/* Scan DOM */
-	/**
-	 * Scan DOM
-	 */
-	scanDOM: (root?: HTMLElement) => void;
-
-	/**
-	 * Set root node
-	 */
-	setRoot: (root: HTMLElement) => void;
-
 	/**
 	 * Toggle local and session storage
 	 */
@@ -248,6 +168,9 @@ export interface IconifyGlobal {
 	 */
 	_internal: IconifyExposedInternals;
 }
+
+// Export dependencies
+export { IconifyObserver, IconifyScanner, IconifyRenderer, IconifyAPI };
 
 /**
  * Get icon name
@@ -430,12 +353,6 @@ const Iconify: IconifyGlobal = {
 	// Add icon set
 	addCollection: addCollection,
 
-	// Pause observer
-	pauseObserver: observer.pause,
-
-	// Resume observer
-	resumeObserver: observer.resume,
-
 	// API providers
 	addAPIProvider: setAPIConfig,
 
@@ -468,6 +385,10 @@ const Iconify: IconifyGlobal = {
 				break;
 		}
 	},
+
+	// Observer
+	pauseObserver: observer.pause,
+	resumeObserver: observer.resume,
 
 	// Exposed internal functions
 	_internal: {
