@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react-with-api';
 
 export function InlineDemo() {
 	return (
@@ -7,17 +7,17 @@ export function InlineDemo() {
 			<h1>Inline (components/Inline.jsx)</h1>
 			<div>
 				Block icon (behaving like image):
-				<Icon icon="experiment2" />
+				<Icon icon="bi:droplet-half" />
 			</div>
 			<div>
 				Inline icon (behaving line text / icon font):
-				<Icon icon="experiment2" inline={true} />
+				<Icon icon="bi:droplet-half" inline={true} />
 			</div>
 			<div>
 				Using "vertical-align: 0" to override inline attribute:
-				<Icon icon="experiment2" style={{ verticalAlign: 0 }} />
+				<Icon icon="bi:stickies" style={{ verticalAlign: 0 }} />
 				<Icon
-					icon="experiment2"
+					icon="bi:stickies"
 					style={{ verticalAlign: 0 }}
 					inline={true}
 				/>

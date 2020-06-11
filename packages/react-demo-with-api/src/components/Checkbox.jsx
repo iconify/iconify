@@ -1,7 +1,8 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
-import checkedIcon from '@iconify/icons-uil/check-circle';
-import uncheckedIcon from '@iconify/icons-uil/circle';
+import { Icon, loadIcons } from '@iconify/react-with-api';
+
+// Load both icons before starting
+loadIcons(['uil:check-circle', 'uil:circle']);
 
 export class Checkbox extends React.Component {
 	constructor(props) {
@@ -14,7 +15,7 @@ export class Checkbox extends React.Component {
 
 	render() {
 		const checked = this.state.checked;
-		const icon = checked ? checkedIcon : uncheckedIcon;
+		const icon = checked ? 'uil:check-circle' : 'uil:circle';
 		const className =
 			'checkbox checkbox--' + (checked ? 'checked' : 'unchecked');
 
