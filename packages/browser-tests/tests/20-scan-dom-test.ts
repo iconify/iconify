@@ -7,7 +7,7 @@ import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet } from '@iconify/core/lib/storage';
 import { browserModules } from '@iconify/iconify/lib/modules';
-import { scanDOM } from '@iconify/iconify/lib/scan';
+import { scanDOM } from '@iconify/iconify/lib/scanner/scan';
 
 const expect = chai.expect;
 

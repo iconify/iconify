@@ -4,7 +4,7 @@ import chai from 'chai';
 import { getNode } from './node';
 import { elementFinderProperty } from '@iconify/iconify/lib/element';
 import { browserModules } from '@iconify/iconify/lib/modules';
-import { observer } from '@iconify/iconify/lib/modules/observer';
+import { observer } from '@iconify/iconify/lib/observer/observer';
 
 const expect = chai.expect;
 

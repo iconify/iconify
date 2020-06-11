@@ -3,19 +3,19 @@ import chai from 'chai';
 
 import { getNode } from './node';
 import { browserModules } from '@iconify/iconify/lib/modules';
-import { observer } from '@iconify/iconify/lib/modules/observer';
+import { observer } from '@iconify/iconify/lib/observer/observer';
 
 const expect = chai.expect;
 
 describe('Testing observer creation', () => {
-	it('Creating observer and triggering event', done => {
+	it('Creating observer and triggering event', (done) => {
 		const node = getNode('observer-creation');
 		browserModules.root = node;
 
 		let counter = 0;
 
 		node.innerHTML = '<div></div><ul><li>test</li><li>test2</li></ul>';
-		observer.init(root => {
+		observer.init((root) => {
 			expect(root).to.be.equal(node);
 
 			counter++;
