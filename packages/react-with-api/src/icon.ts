@@ -45,8 +45,10 @@ import {
 	IconifyAPIModule,
 	IconifyAPISendQuery,
 	IconifyAPIPrepareQuery,
+	GetIconifyAPIModule,
 } from '@iconify/core/lib/api/modules';
-import { getAPIModule } from '@iconify/core/lib/api/modules/axios';
+import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
+import { getAPIModule as getFetchAPIModule } from '@iconify/core/lib/api/modules/fetch';
 import {
 	setAPIConfig,
 	PartialIconifyAPIConfig,
@@ -412,6 +414,16 @@ export const InlineIcon = (props: IconProps) =>
  */
 // Set API
 coreModules.api = API;
+
+let getAPIModule: GetIconifyAPIModule;
+try {
+	getAPIModule =
+		typeof fetch === 'function' && typeof Promise === 'function'
+			? getFetchAPIModule
+			: getJSONPAPIModule;
+} catch (err) {
+	getAPIModule = getJSONPAPIModule;
+}
 setAPIModule('', getAPIModule(getAPIConfig));
 
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
