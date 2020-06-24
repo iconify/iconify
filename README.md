@@ -21,11 +21,11 @@ Iconify is designed to be as easy to use as possible.
 Add this line to your page to load Iconify (you can add it to ```<head>``` section of page or before ```</body>```):
 
 ```html
-<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 ```
 or
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@1.0.6/dist/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@1.0.7/dist/iconify.min.js"></script>
 ```
 or if you are building project with something like WebPack, you can include script by installing `@iconify/iconify` as dependency and importing it in your project:
 ```js
@@ -306,7 +306,7 @@ Plugins make Iconify search for other selectors, so you can keep using old libra
 How to use plugins? Include plugin script:
 
 ```html
-<script src="https://code.iconify.design/1/1.0.6/plugin-fa.min.js"></script>
+<script src="https://code.iconify.design/1/1.0.7/plugin-fa.min.js"></script>
 ```
 
 Replace link to FontAwesome with link to Iconify and link to FontAwesome plugin and you can keep using old FontAwesome
