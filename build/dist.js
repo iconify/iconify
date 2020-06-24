@@ -189,6 +189,12 @@ content = parse({
 save(baseName + '.without-observer', content);
 
 content = parse({
+    observer: true,
+    api: false
+});
+save(baseName + '.without-api', content);
+
+content = parse({
     observer: false,
     api: false
 });
