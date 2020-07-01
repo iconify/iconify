@@ -77,6 +77,11 @@ if (compile.core) {
 	});
 }
 
+// Add api2
+if (compile.api) {
+	compile.api2 = true;
+}
+
 // Compile other packages
 Object.keys(compile).forEach((key) => {
 	if (key !== 'core' && compile[key]) {

@@ -66,6 +66,7 @@ Other packages:
 -   [Iconify types](./packages/types/) - TypeScript types used by various implementations.
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
+-   [React with API demo](./packages/react-demo-with-api/) - demo for React component that loads icons from Iconify API. Run `npm start` to start demo.
 -   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm serve` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
@@ -93,13 +94,13 @@ If links stop working for some reason, run `npm run link` to fix links.
 
 If you want to re-install dependencies, run `npm run clean` to clear all repositories (press "Y" to continue), then `npm run bootstrap` to install everything again.
 
-## License
+## Licence
 
-Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
+Iconify is dual-licensed under Apache 2.0 and GPL 2.0 licence. You may select, at your option, one of the above-listed licences.
 
 `SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
 
-This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
-Icons available by default are all licensed under some kind of open-source or free license.
+This licence does not apply to icons. Icons are released under different licences, see each icon set for details.
+Icons available by default are all licensed under some kind of open-source or free licence.
 
 © 2020 Iconify OÜ

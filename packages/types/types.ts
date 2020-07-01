@@ -128,7 +128,7 @@ export interface IconifyInfo {
 		url?: string;
 	};
 
-	// Array of icons that should be used for samples in icons list.
+	// Array of icons that should be used for samples in icon sets list.
 	samples: string[];
 
 	// Icon grid: number or array of numbers.

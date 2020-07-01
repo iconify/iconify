@@ -35,37 +35,6 @@ import { addFinder } from './finder';
 import { finder as iconifyFinder } from './finders/iconify';
 // import { finder as iconifyIconFinder } from './finders/iconify-icon';
 
-// Cache
-import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
-
-// API
-import { IconifyAPI } from './api';
-import {
-	API,
-	getRedundancyCache,
-	IconifyAPIInternalStorage,
-} from '@iconify/core/lib/api/';
-import {
-	setAPIModule,
-	IconifyAPIModule,
-	IconifyAPISendQuery,
-	IconifyAPIPrepareQuery,
-	GetIconifyAPIModule,
-} from '@iconify/core/lib/api/modules';
-import {
-	setAPIConfig,
-	PartialIconifyAPIConfig,
-	IconifyAPIConfig,
-	getAPIConfig,
-	GetAPIConfig,
-} from '@iconify/core/lib/api/config';
-import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
-import { getAPIModule as getFetchAPIModule } from '@iconify/core/lib/api/modules/fetch';
-import {
-	IconifyIconLoaderCallback,
-	IconifyIconLoaderAbort,
-} from '@iconify/core/lib/interfaces/loader';
-
 // Observer
 import { IconifyObserver } from './observer';
 import { observer } from './observer/observer';
@@ -95,23 +64,6 @@ export {
 // Build
 export { IconifyIconBuildResult };
 
-// API
-export {
-	IconifyAPIConfig,
-	IconifyIconLoaderCallback,
-	IconifyIconLoaderAbort,
-	IconifyAPIInternalStorage,
-	IconifyAPIModule,
-	GetAPIConfig,
-	IconifyAPIPrepareQuery,
-	IconifyAPISendQuery,
-};
-
-/**
- * Cache types
- */
-export type IconifyCacheType = 'local' | 'session' | 'all';
-
 /**
  * Exposed internal functions
  *
@@ -128,21 +80,6 @@ export interface IconifyExposedInternals {
 		ratio: number,
 		precision?: number
 	) => IconifyIconSize;
-
-	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
-
-	/**
-	 * Get API config, used by custom modules
-	 */
-	getAPIConfig: GetAPIConfig;
-
-	/**
-	 * Set API module
-	 */
-	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 }
 
 /**
@@ -151,8 +88,7 @@ export interface IconifyExposedInternals {
 export interface IconifyGlobal
 	extends IconifyScanner,
 		IconifyObserver,
-		IconifyRenderer,
-		IconifyAPI {
+		IconifyRenderer {
 	/* General section */
 	/**
 	 * Get version
@@ -188,18 +124,13 @@ export interface IconifyGlobal
 
 	/* Scan DOM */
 	/**
-	 * Toggle local and session storage
-	 */
-	enableCache: (storage: IconifyCacheType, value: boolean) => void;
-
-	/**
 	 * Expose internal functions
 	 */
 	_internal: IconifyExposedInternals;
 }
 
 // Export dependencies
-export { IconifyObserver, IconifyScanner, IconifyRenderer, IconifyAPI };
+export { IconifyObserver, IconifyScanner, IconifyRenderer };
 
 /**
  * Get icon name
@@ -351,9 +282,6 @@ const Iconify: IconifyGlobal = {
 		return icons;
 	},
 
-	// Load icons
-	loadIcons: API.loadIcons,
-
 	// Render SVG
 	renderSVG: (name: string, customisations: IconifyIconCustomisations) => {
 		return generateIcon(name, customisations, false) as SVGElement | null;
@@ -382,9 +310,6 @@ const Iconify: IconifyGlobal = {
 	// Add icon set
 	addCollection: addCollection,
 
-	// API providers
-	addAPIProvider: setAPIConfig,
-
 	// Scan DOM
 	scanDOM: scanDOM,
 
@@ -399,22 +324,6 @@ const Iconify: IconifyGlobal = {
 		setTimeout(scanDOM);
 	},
 
-	// Allow storage
-	enableCache: (storage: IconifyCacheType, value: boolean) => {
-		switch (storage) {
-			case 'local':
-			case 'session':
-				config[storage] = value;
-				break;
-
-			case 'all':
-				for (const key in config) {
-					config[key] = value;
-				}
-				break;
-		}
-	},
-
 	// Observer
 	pauseObserver: observer.pause,
 	resumeObserver: observer.resume,
@@ -423,43 +332,16 @@ const Iconify: IconifyGlobal = {
 	_internal: {
 		// Calculate size
 		calculateSize: calcSize,
-
-		// Get API data
-		getAPI: getRedundancyCache,
-
-		// Get API config
-		getAPIConfig,
-
-		// Get API module
-		setAPIModule,
 	},
 };
 
 /**
  * Initialise stuff
  */
-// Set API
-coreModules.api = API;
-
-let getAPIModule: GetIconifyAPIModule;
-try {
-	getAPIModule =
-		typeof fetch === 'function' && typeof Promise === 'function'
-			? getFetchAPIModule
-			: getJSONPAPIModule;
-} catch (err) {
-	getAPIModule = getJSONPAPIModule;
-}
-setAPIModule('', getAPIModule(getAPIConfig));
-
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Add finder modules
 	// addFinder(iconifyIconFinder);
 	addFinder(iconifyFinder);
-
-	// Set cache and load existing cache
-	coreModules.cache = storeCache;
-	loadCache();
 
 	const _window = window;
 
@@ -494,38 +376,6 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 					console.error(err);
 				}
 			});
-		}
-	}
-
-	// Set API from global "IconifyProviders"
-	interface WindowWithIconifyProviders {
-		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
-	}
-	if (
-		((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders !== void 0
-	) {
-		const providers = ((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders;
-		if (typeof providers === 'object' && providers !== null) {
-			for (let key in providers) {
-				const err = 'IconifyProviders[' + key + '] is invalid.';
-				try {
-					const value = providers[key];
-					if (
-						typeof value !== 'object' ||
-						!value ||
-						value.resources === void 0
-					) {
-						continue;
-					}
-					if (!setAPIConfig(key, value)) {
-						console.error(err);
-					}
-				} catch (e) {
-					console.error(err);
-				}
-			}
 		}
 	}
 

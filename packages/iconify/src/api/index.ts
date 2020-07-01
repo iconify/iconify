@@ -11,22 +11,6 @@ import { IconifyAPIConfig } from '@iconify/core/lib/api/config';
  * Iconify interface
  */
 export interface IconifyAPI {
-	/* Getting icons */
-	/**
-	 * Check if icon exists
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
-	 * Get icon data with all properties
-	 */
-	getIcon: (name: string) => IconifyIcon | null;
-
-	/**
-	 * List all available icons
-	 */
-	listIcons: (provider?: string, prefix?: string) => string[];
-
 	/**
 	 * Load icons
 	 */
@@ -34,17 +18,6 @@ export interface IconifyAPI {
 		icons: (IconifyIconName | string)[],
 		callback?: IconifyIconLoaderCallback
 	) => IconifyIconLoaderAbort;
-
-	/* Add icons */
-	/**
-	 * Add icon to storage
-	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
-
-	/**
-	 * Add icon set to storage
-	 */
-	addCollection: (data: IconifyJSON, provider?: string) => boolean;
 
 	/* API stuff */
 	/**

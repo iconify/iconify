@@ -5,7 +5,7 @@ import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
 
-const name = 'iconify';
+const names = ['iconify', 'iconify.without-api'];
 const global = 'Iconify';
 
 // Wrapper to export module as global and as ES module
@@ -71,30 +71,32 @@ if (readme !== oldReadme) {
 
 // Export configuration
 const config = [];
-[false, true].forEach((compress) => {
-	const item = {
-		input: `lib/${name}.js`,
-		output: [
-			{
-				file: `dist/${name}${compress ? '.min' : ''}.js`,
-				format: 'iife',
-				name: global,
-				banner: header,
-				footer,
-			},
-		],
-		plugins: [
-			resolve({
-				browser: true,
-			}),
-			commonjs(),
-			replace(replacements),
-			buble(),
-		],
-	};
-	if (compress) {
-		item.plugins.push(terser());
-	}
-	config.push(item);
+names.forEach((name) => {
+	[false, true].forEach((compress) => {
+		const item = {
+			input: `lib/${name}.js`,
+			output: [
+				{
+					file: `dist/${name}${compress ? '.min' : ''}.js`,
+					format: 'iife',
+					name: global,
+					banner: header,
+					footer,
+				},
+			],
+			plugins: [
+				resolve({
+					browser: true,
+				}),
+				commonjs(),
+				replace(replacements),
+				buble(),
+			],
+		};
+		if (compress) {
+			item.plugins.push(terser());
+		}
+		config.push(item);
+	});
 });
 export default config;
