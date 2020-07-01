@@ -27,7 +27,6 @@ import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { calcSize } from '@iconify/core/lib/builder/calc-size';
 
 // Modules
-import { coreModules } from '@iconify/core/lib/modules';
 import { browserModules } from './modules';
 
 // Finders
@@ -46,6 +45,10 @@ import { renderIcon } from './renderer/render';
 // Scan
 import { IconifyScanner } from './scanner';
 import { scanDOM } from './scanner/scan';
+
+// Other
+import { IconifyExposedCommonInternals } from './internals';
+import { IconifyGlobalCommon } from './common';
 
 /**
  * Export required types
@@ -71,58 +74,17 @@ export { IconifyIconBuildResult };
  *
  * Important: any changes published in a release must be backwards compatible.
  */
-export interface IconifyExposedInternals {
-	/**
-	 * Calculate width knowing height and width/height ratio (or vice versa)
-	 */
-	calculateSize: (
-		size: IconifyIconSize,
-		ratio: number,
-		precision?: number
-	) => IconifyIconSize;
-}
+export interface IconifyExposedInternals
+	extends IconifyExposedCommonInternals {}
 
 /**
  * Iconify interface
  */
 export interface IconifyGlobal
-	extends IconifyScanner,
+	extends IconifyGlobalCommon,
+		IconifyScanner,
 		IconifyObserver,
 		IconifyRenderer {
-	/* General section */
-	/**
-	 * Get version
-	 */
-	getVersion: () => string;
-
-	/* Getting icons */
-	/**
-	 * Check if icon exists
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
-	 * Get icon data with all properties
-	 */
-	getIcon: (name: string) => IconifyIcon | null;
-
-	/**
-	 * List all available icons
-	 */
-	listIcons: (provider?: string, prefix?: string) => string[];
-
-	/* Add icons */
-	/**
-	 * Add icon to storage
-	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
-
-	/**
-	 * Add icon set to storage
-	 */
-	addCollection: (data: IconifyJSON, provider?: string) => boolean;
-
-	/* Scan DOM */
 	/**
 	 * Expose internal functions
 	 */

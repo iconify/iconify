@@ -39,7 +39,7 @@ import { finder as iconifyFinder } from './finders/iconify';
 import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
 
 // API
-import { IconifyAPI } from './api';
+import { IconifyAPI, IconifyExposedAPIInternals } from './api';
 import {
 	API,
 	getRedundancyCache,
@@ -78,6 +78,11 @@ import { renderIcon } from './renderer/render';
 import { IconifyScanner } from './scanner';
 import { scanDOM } from './scanner/scan';
 
+// Other
+import { IconifyExposedCommonInternals } from './internals';
+import { IconifyGlobalCommon } from './common';
+import { IconifyCacheType } from '../dist/iconify';
+
 /**
  * Export required types
  */
@@ -105,12 +110,8 @@ export {
 	GetAPIConfig,
 	IconifyAPIPrepareQuery,
 	IconifyAPISendQuery,
+	IconifyCacheType,
 };
-
-/**
- * Cache types
- */
-export type IconifyCacheType = 'local' | 'session' | 'all';
 
 /**
  * Exposed internal functions
@@ -119,79 +120,19 @@ export type IconifyCacheType = 'local' | 'session' | 'all';
  *
  * Important: any changes published in a release must be backwards compatible.
  */
-export interface IconifyExposedInternals {
-	/**
-	 * Calculate width knowing height and width/height ratio (or vice versa)
-	 */
-	calculateSize: (
-		size: IconifyIconSize,
-		ratio: number,
-		precision?: number
-	) => IconifyIconSize;
-
-	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
-
-	/**
-	 * Get API config, used by custom modules
-	 */
-	getAPIConfig: GetAPIConfig;
-
-	/**
-	 * Set API module
-	 */
-	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
-}
+export interface IconifyExposedInternals
+	extends IconifyExposedAPIInternals,
+		IconifyExposedCommonInternals {}
 
 /**
  * Iconify interface
  */
 export interface IconifyGlobal
-	extends IconifyScanner,
+	extends IconifyGlobalCommon,
+		IconifyScanner,
 		IconifyObserver,
 		IconifyRenderer,
 		IconifyAPI {
-	/* General section */
-	/**
-	 * Get version
-	 */
-	getVersion: () => string;
-
-	/* Getting icons */
-	/**
-	 * Check if icon exists
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
-	 * Get icon data with all properties
-	 */
-	getIcon: (name: string) => IconifyIcon | null;
-
-	/**
-	 * List all available icons
-	 */
-	listIcons: (provider?: string, prefix?: string) => string[];
-
-	/* Add icons */
-	/**
-	 * Add icon to storage
-	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
-
-	/**
-	 * Add icon set to storage
-	 */
-	addCollection: (data: IconifyJSON, provider?: string) => boolean;
-
-	/* Scan DOM */
-	/**
-	 * Toggle local and session storage
-	 */
-	enableCache: (storage: IconifyCacheType, value: boolean) => void;
-
 	/**
 	 * Expose internal functions
 	 */
