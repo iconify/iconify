@@ -3,7 +3,7 @@ import chai from 'chai';
 
 import { getNode } from './node';
 import { finder } from '@iconify/iconify/lib/finders/iconify';
-import { IconifyElement } from '@iconify/iconify/lib/element';
+import { IconifyElement } from '@iconify/iconify/lib/modules/element';
 import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
 
 const expect = chai.expect;

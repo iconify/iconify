@@ -2,7 +2,7 @@ import mocha from 'mocha';
 import chai from 'chai';
 
 import { getNode } from './node';
-import { addFinder } from '@iconify/iconify/lib/finder';
+import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
@@ -10,8 +10,8 @@ import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
-import { browserModules } from '@iconify/iconify/lib/modules';
-import { scanDOM } from '@iconify/iconify/lib/scanner/scan';
+import { setRoot } from '@iconify/iconify/lib/modules/root';
+import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 
 const expect = chai.expect;
 
@@ -114,7 +114,7 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
-		browserModules.root = node;
+		setRoot(node);
 
 		scanDOM();
 
@@ -241,7 +241,7 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
-		browserModules.root = node;
+		setRoot(node);
 
 		scanDOM();
 
@@ -369,7 +369,7 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
-		browserModules.root = node;
+		setRoot(node);
 
 		scanDOM();
 

@@ -1,4 +1,4 @@
-import { IconifyElement } from '../element';
+import { IconifyElement } from '../modules/element';
 import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
 

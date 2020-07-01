@@ -80,6 +80,7 @@ if (compile.core) {
 // Add api2
 if (compile.api) {
 	compile.api2 = true;
+	compile.api2min = true;
 }
 
 // Compile other packages

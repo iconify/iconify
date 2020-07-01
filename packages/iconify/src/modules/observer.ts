@@ -1,11 +1,15 @@
-import { elementFinderProperty, IconifyElement } from '../element';
-import { ObserverCallback, Observer } from '../interfaces/observer';
-import { getRoot } from '../modules';
+import { elementFinderProperty, IconifyElement } from './element';
+import { getRoot } from './root';
 
 /**
  * MutationObserver instance, null until DOM is ready
  */
 let instance: MutationObserver | null = null;
+
+/**
+ * Observer callback function
+ */
+export type ObserverCallback = (root: HTMLElement) => void;
 
 /**
  * Callback
@@ -110,68 +114,68 @@ interface OldIEElement extends HTMLElement {
 /**
  * Export module
  */
-export const observer: Observer = {
-	/**
-	 * Start observer when DOM is ready
-	 */
-	init: (cb: ObserverCallback): void => {
-		callback = cb;
+/**
+ * Start observer when DOM is ready
+ */
+export function initObserver(cb: ObserverCallback): void {
+	callback = cb;
 
-		if (instance && !paused) {
-			// Restart observer
-			instance.disconnect();
-			observe();
-			return;
-		}
-
-		setTimeout(() => {
-			const doc = document;
-			if (
-				doc.readyState === 'complete' ||
-				(doc.readyState !== 'loading' &&
-					!(doc.documentElement as OldIEElement).doScroll)
-			) {
-				startObserver();
-			} else {
-				doc.addEventListener('DOMContentLoaded', startObserver);
-				window.addEventListener('load', startObserver);
-			}
-		});
-	},
-
-	/**
-	 * Pause observer
-	 */
-	pause: (): void => {
-		paused++;
-		if (paused > 1 || instance === null) {
-			return;
-		}
-
-		// Check pending records, stop observer
-		checkMutations(instance.takeRecords());
+	if (instance && !paused) {
+		// Restart observer
 		instance.disconnect();
-	},
+		observe();
+		return;
+	}
 
-	/**
-	 * Resume observer
-	 */
-	resume: (): void => {
-		if (!paused) {
-			return;
+	setTimeout(() => {
+		const doc = document;
+		if (
+			doc.readyState === 'complete' ||
+			(doc.readyState !== 'loading' &&
+				!(doc.documentElement as OldIEElement).doScroll)
+		) {
+			startObserver();
+		} else {
+			doc.addEventListener('DOMContentLoaded', startObserver);
+			window.addEventListener('load', startObserver);
 		}
-		paused--;
+	});
+}
 
-		if (!paused && instance) {
-			observe();
-			if (scanPending) {
-				queueScan();
-			}
+/**
+ * Pause observer
+ */
+export function pauseObserver(): void {
+	paused++;
+	if (paused > 1 || instance === null) {
+		return;
+	}
+
+	// Check pending records, stop observer
+	checkMutations(instance.takeRecords());
+	instance.disconnect();
+}
+
+/**
+ * Resume observer
+ */
+export function resumeObserver(): void {
+	if (!paused) {
+		return;
+	}
+	paused--;
+
+	if (!paused && instance) {
+		observe();
+		if (scanPending) {
+			queueScan();
 		}
-	},
+	}
+}
 
-	/**
-	 * Check if observer is paused
-	 */
-	isPaused: (): boolean => paused > 0,
-};
+/**
+ * Check if observer is paused
+ */
+export function isObserverPaused(): boolean {
+	return paused > 0;
+}

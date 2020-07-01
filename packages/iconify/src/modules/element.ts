@@ -1,6 +1,6 @@
 import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
-import { IconifyFinder } from './interfaces/finder';
+import { IconifyFinder } from '../finders/interface';
 
 /**
  * Icon status

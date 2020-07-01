@@ -2,10 +2,11 @@ import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage';
 import { coreModules } from '@iconify/core/lib/modules';
 import { FullIconifyIcon } from '@iconify/core/lib/icon';
-import { findPlaceholders } from '../finder';
-import { browserModules, getRoot } from '../modules';
-import { IconifyElementData, elementDataProperty } from '../element';
-import { renderIcon } from '../renderer/render';
+import { findPlaceholders } from './finder';
+import { IconifyElementData, elementDataProperty } from './element';
+import { renderIcon } from './render';
+import { pauseObserver, resumeObserver } from './observer';
+import { getRoot } from './root';
 
 /**
  * Flag to avoid scanning DOM too often
@@ -93,8 +94,8 @@ export function scanDOM(root?: HTMLElement): void {
 		const storage = getStorage(provider, prefix);
 		if (storage.icons[name] !== void 0) {
 			// Icon exists - replace placeholder
-			if (browserModules.observer && !paused) {
-				browserModules.observer.pause();
+			if (!paused) {
+				pauseObserver();
 				paused = true;
 			}
 
@@ -169,7 +170,7 @@ export function scanDOM(root?: HTMLElement): void {
 		});
 	}
 
-	if (browserModules.observer && paused) {
-		browserModules.observer.resume();
+	if (paused) {
+		resumeObserver();
 	}
 }

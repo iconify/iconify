@@ -19,7 +19,8 @@
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
 		"build:api": "api-extractor run --local --verbose",
-		"build:api2": "api-extractor run --local --verbose --config api-extractor.without-api.json"
+		"build:api2": "api-extractor run --local --verbose --config api-extractor.without-api.json",
+		"build:api2min": "api-extractor run --local --config api-extractor.without-api.min.json"
 	},
 	"devDependencies": {
 		"@cyberalien/redundancy": "^1.0.0",

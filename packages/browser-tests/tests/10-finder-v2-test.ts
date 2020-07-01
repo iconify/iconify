@@ -2,8 +2,11 @@ import mocha from 'mocha';
 import chai from 'chai';
 
 import { getNode } from './node';
-import { addFinder, findPlaceholders } from '@iconify/iconify/lib/finder';
-import { IconifyFinder } from '@iconify/iconify/lib/interfaces/finder';
+import {
+	addFinder,
+	findPlaceholders,
+} from '@iconify/iconify/lib/modules/finder';
+import { IconifyFinder } from '@iconify/iconify/lib/finders/interface';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { IconifyIconName } from '@iconify/core/lib/icon/name';

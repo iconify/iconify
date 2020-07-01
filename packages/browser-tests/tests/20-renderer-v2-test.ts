@@ -2,13 +2,16 @@ import mocha from 'mocha';
 import chai from 'chai';
 
 import { getNode } from './node';
-import { addFinder, findPlaceholders } from '@iconify/iconify/lib/finder';
+import {
+	addFinder,
+	findPlaceholders,
+} from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet, getIcon } from '@iconify/core/lib/storage';
-import { renderIcon } from '@iconify/iconify/lib/render';
+import { renderIcon } from '@iconify/iconify/lib/modules/render';
 import { stringToIcon } from '@iconify/core/lib/icon/name';
-import { IconifyElement } from '@iconify/iconify/lib/element';
+import { IconifyElement } from '@iconify/iconify/lib/modules/element';
 
 const expect = chai.expect;
 

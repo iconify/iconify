@@ -2,12 +2,12 @@ import mocha from 'mocha';
 import chai from 'chai';
 
 import { getNode } from './node';
-import { addFinder } from '@iconify/iconify/lib/finder';
+import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet } from '@iconify/core/lib/storage';
-import { browserModules } from '@iconify/iconify/lib/modules';
-import { scanDOM } from '@iconify/iconify/lib/scanner/scan';
+import { setRoot } from '@iconify/iconify/lib/modules/root';
+import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 
 const expect = chai.expect;
 
@@ -56,7 +56,7 @@ describe('Scanning DOM', () => {
 			'</li>' +
 			'</ul></div>';
 
-		browserModules.root = node;
+		setRoot(node);
 		scanDOM();
 
 		// Find elements

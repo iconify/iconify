@@ -1,5 +1,5 @@
-import { IconifyFinder } from '../interfaces/finder';
-import { IconifyElement } from '../element';
+import { IconifyFinder } from './interface';
+import { IconifyElement } from '../modules/element';
 import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
 import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
 import {
@@ -134,7 +134,7 @@ const finder: IconifyFinder = {
 		}
 
 		// Boolean attributes
-		booleanAttributes.forEach(attr => {
+		booleanAttributes.forEach((attr) => {
 			if (hasAttribute(element, 'data-' + attr)) {
 				const value = getBooleanAttribute(element, 'data-' + attr);
 				if (typeof value === 'boolean') {
@@ -144,7 +144,7 @@ const finder: IconifyFinder = {
 		});
 
 		// String attributes
-		stringAttributes.forEach(attr => {
+		stringAttributes.forEach((attr) => {
 			if (hasAttribute(element, 'data-' + attr)) {
 				const value = getAttribute(element, 'data-' + attr);
 				if (value !== '') {
@@ -161,7 +161,7 @@ const finder: IconifyFinder = {
 	 */
 	classFilter: (classList: string[]): string[] => {
 		let result: string[] = [];
-		classList.forEach(className => {
+		classList.forEach((className) => {
 			if (
 				className !== 'iconify' &&
 				className !== '' &&

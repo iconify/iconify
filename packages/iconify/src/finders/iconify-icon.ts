@@ -1,5 +1,5 @@
-import { IconifyFinder } from '../interfaces/finder';
-import { IconifyElement } from '../element';
+import { IconifyFinder } from './interface';
+import { IconifyElement } from '../modules/element';
 import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
 import { finder as iconifyFinder } from './iconify';
 
