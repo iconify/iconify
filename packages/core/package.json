@@ -2,7 +2,7 @@
 	"name": "@iconify/core",
 	"description": "Reusable files used by multiple Iconify packages",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.0.0-beta.1",
+	"version": "1.0.0-beta.2",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -24,18 +24,18 @@
 	"devDependencies": {
 		"@types/chai": "^4.2.11",
 		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.12.42",
+		"@types/node": "^12.12.47",
 		"@types/request": "^2.48.5",
 		"@typescript-eslint/eslint-plugin": "^2.34.0",
 		"@typescript-eslint/parser": "^2.34.0",
 		"chai": "^4.2.0",
 		"eslint": "^6.8.0",
 		"mocha": "^6.2.3",
-		"typescript": "^3.9.3"
+		"typescript": "^3.9.6"
 	},
 	"dependencies": {
 		"@cyberalien/redundancy": "^1.0.0",
-		"@iconify/types": "^1.0.2"
+		"@iconify/types": "^1.0.3"
 	},
 	"optionalDependencies": {
 		"axios": "^0.19.2"
