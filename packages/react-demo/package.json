@@ -30,6 +30,6 @@
 	"devDependencies": {
 		"@iconify/icons-mdi-light": "^1.0.5",
 		"@iconify/icons-uil": "^1.0.13",
-		"@iconify/react": "^2.0.0-beta.1"
+		"@iconify/react": "^2.0.0-beta.2"
 	}
 }
