@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@iconify/icons-bx": "^1.0.3",
 		"@iconify/icons-dashicons": "^1.0.10",
-		"@iconify/svelte": "^1.0.0-beta.4",
+		"@iconify/svelte": "^1.0.0",
 		"@rollup/plugin-commonjs": "11.0.2",
 		"@rollup/plugin-node-resolve": "^7.0.0",
 		"rollup": "^1.20.0",
