@@ -20,7 +20,7 @@ export function flipFromString(
 	custom: IconifyIconCustomisations,
 	flip: string
 ): void {
-	flip.split(separator).forEach(str => {
+	flip.split(separator).forEach((str) => {
 		const value = str.trim();
 		switch (value) {
 			case 'horizontal':
@@ -41,7 +41,7 @@ export function alignmentFromString(
 	custom: IconifyIconCustomisations,
 	align: string
 ): void {
-	align.split(separator).forEach(str => {
+	align.split(separator).forEach((str) => {
 		const value = str.trim();
 		switch (value) {
 			case 'left':
@@ -57,6 +57,7 @@ export function alignmentFromString(
 				break;
 
 			case 'slice':
+			case 'crop':
 				custom.slice = true;
 				break;
 
