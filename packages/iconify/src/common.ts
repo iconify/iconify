@@ -360,9 +360,9 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		}
 	}
 
-	// Load observer
+	// Load observer and scan DOM on next tick
 	setTimeout(() => {
-		// Init on next tick when entire document has been parsed
+		scanDOM();
 		initObserver(scanDOM);
 	});
 }
