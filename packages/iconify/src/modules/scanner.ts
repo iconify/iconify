@@ -64,6 +64,9 @@ export function scanDOM(root?: HTMLElement): void {
 	if (!root) {
 		root = getRoot();
 	}
+	if (!root || !root.querySelectorAll) {
+		return;
+	}
 	findPlaceholders(root).forEach((item) => {
 		const element = item.element;
 		const iconName = item.name;
