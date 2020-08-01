@@ -63,4 +63,26 @@ describe('Scanning DOM', () => {
 		const elements = node.querySelectorAll('svg.iconify');
 		expect(elements.length).to.be.equal(4);
 	});
+
+	it('Scan DOM with unattached root', () => {
+		const node = document.createElement('div');
+		node.innerHTML = '<span class="iconify" data-icon="mdi:home"></span>';
+
+		scanDOM(node);
+
+		// Find elements
+		const elements = node.querySelectorAll('svg.iconify');
+		expect(elements.length).to.be.equal(1);
+	});
+
+	it('Scan DOM with icon as root', () => {
+		const node = document.createElement('span');
+		node.setAttribute('data-icon', 'mdi:home');
+
+		scanDOM(node);
+
+		// Check node
+		expect(node.tagName).to.be.equal('SPAN');
+		expect(node.innerHTML).to.be.equal('');
+	});
 });
