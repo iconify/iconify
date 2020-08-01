@@ -391,4 +391,57 @@ describe('Scanning DOM with API', () => {
 			done();
 		}, 700);
 	});
+
+	it('Unattached DOM node', (done) => {
+		const fakeRoot = getNode('scan-dom-unattached');
+		const provider = nextPrefix();
+		const prefix = nextPrefix();
+
+		// Set fake API hosts to make test reliable
+		setAPIConfig(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
+
+		// Load icons after 100ms
+		const data: FakeData = {
+			icons: ['home'],
+			delay: 100,
+			data: {
+				prefix,
+				icons: {
+					home: {
+						body:
+							'<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
+					},
+				},
+				width: 24,
+				height: 24,
+			},
+		};
+		setFakeData(provider, prefix, data);
+
+		const node = document.createElement('div');
+		node.innerHTML =
+			'Icon:' +
+			'   <span class="iconify" data-icon="@' +
+			provider +
+			':' +
+			prefix +
+			':home"></span>';
+
+		console.log('\nUnattached node test start');
+		setRoot(fakeRoot);
+		scanDOM(node);
+
+		// API response should have loaded
+		setTimeout(() => {
+			const elements = node.querySelectorAll('svg.iconify');
+			console.log('Unattached node test:', node.innerHTML);
+			expect(elements.length).to.be.equal(
+				1,
+				'Expected to find 1 rendered SVG element'
+			);
+			done();
+		}, 200);
+	});
 });
