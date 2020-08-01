@@ -145,7 +145,12 @@ export function initObserver(cb: ObserverCallback): void {
 /**
  * Pause observer
  */
-export function pauseObserver(): void {
+export function pauseObserver(root?: HTMLElement): void {
+	if (root && getRoot() !== root) {
+		// Invalid root node
+		return;
+	}
+
 	paused++;
 	if (paused > 1 || instance === null) {
 		return;
@@ -159,7 +164,12 @@ export function pauseObserver(): void {
 /**
  * Resume observer
  */
-export function resumeObserver(): void {
+export function resumeObserver(root?: HTMLElement): void {
+	if (root && getRoot() !== root) {
+		// Invalid root node
+		return;
+	}
+
 	if (!paused) {
 		return;
 	}

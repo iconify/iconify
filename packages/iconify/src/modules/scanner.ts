@@ -98,7 +98,7 @@ export function scanDOM(root?: HTMLElement): void {
 		if (storage.icons[name] !== void 0) {
 			// Icon exists - replace placeholder
 			if (!paused) {
-				pauseObserver();
+				pauseObserver(root);
 				paused = true;
 			}
 
@@ -174,6 +174,6 @@ export function scanDOM(root?: HTMLElement): void {
 	}
 
 	if (paused) {
-		resumeObserver();
+		resumeObserver(root);
 	}
 }
