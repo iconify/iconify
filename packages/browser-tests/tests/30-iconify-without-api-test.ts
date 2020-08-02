@@ -66,7 +66,6 @@ describe('Testing Iconify object (without API)', () => {
 		expect(node).to.not.be.equal(null);
 
 		const html = node.outerHTML;
-		console.log('Rendered SVG:', html);
 		expect(html.indexOf('<svg')).to.be.equal(0);
 
 		// Get HTML

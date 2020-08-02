@@ -6,7 +6,7 @@ import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet } from '@iconify/core/lib/storage';
-import { setRoot } from '@iconify/iconify/lib/modules/root';
+import { setRoot, getRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 
 const expect = chai.expect;
@@ -42,6 +42,9 @@ describe('Scanning DOM', () => {
 		height: 24,
 	});
 
+	// Sanity check before running tests
+	expect(getRootNodes()).to.be.eql([]);
+
 	it('Scan DOM with preloaded icons', () => {
 		const node = getNode('scan-dom');
 		node.innerHTML =
@@ -56,29 +59,46 @@ describe('Scanning DOM', () => {
 			'</li>' +
 			'</ul></div>';
 
+		// Scan node
 		setRoot(node);
 		scanDOM();
 
 		// Find elements
 		const elements = node.querySelectorAll('svg.iconify');
 		expect(elements.length).to.be.equal(4);
+
+		// Make sure tempoary node was not added as root, but new root node was
+		expect(getRootNodes()).to.be.eql([
+			{
+				node: node,
+				temporary: false,
+			},
+		]);
 	});
 
 	it('Scan DOM with unattached root', () => {
 		const node = document.createElement('div');
 		node.innerHTML = '<span class="iconify" data-icon="mdi:home"></span>';
 
+		// Get old root nodes. It should not be empty because of previous test(s)
+		const oldRoot = getRootNodes();
+
+		// Scan node
 		scanDOM(node);
 
 		// Find elements
 		const elements = node.querySelectorAll('svg.iconify');
 		expect(elements.length).to.be.equal(1);
+
+		// Make sure tempoary node was not added as root
+		expect(getRootNodes()).to.be.eql(oldRoot);
 	});
 
 	it('Scan DOM with icon as root', () => {
 		const node = document.createElement('span');
 		node.setAttribute('data-icon', 'mdi:home');
 
+		// Scan node
 		scanDOM(node);
 
 		// Check node

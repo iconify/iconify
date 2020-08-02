@@ -10,7 +10,7 @@ import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
-import { setRoot } from '@iconify/iconify/lib/modules/root';
+import { setRoot, getRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 
 const expect = chai.expect;
@@ -114,9 +114,17 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
+		// Scan DOM
 		setRoot(node);
-
 		scanDOM();
+
+		// Test getRootNodes
+		expect(getRootNodes()).to.be.eql([
+			{
+				node: node,
+				temporary: false,
+			},
+		]);
 
 		// First API response should have loaded
 		setTimeout(() => {
@@ -241,9 +249,17 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
+		// Scan DOM
 		setRoot(node);
-
 		scanDOM();
+
+		// Test getRootNodes
+		expect(getRootNodes()).to.be.eql([
+			{
+				node: node,
+				temporary: false,
+			},
+		]);
 
 		// Make sure no icons were rendered yet
 		const elements = node.querySelectorAll('svg.iconify');
@@ -369,8 +385,8 @@ describe('Scanning DOM with API', () => {
 			'</li>' +
 			'</ul></div>';
 
+		// Scan DOM
 		setRoot(node);
-
 		scanDOM();
 
 		// Change icon name
@@ -429,18 +445,47 @@ describe('Scanning DOM with API', () => {
 			prefix +
 			':home"></span>';
 
-		console.log('\nUnattached node test start');
+		// Set root node, test nodes list
 		setRoot(fakeRoot);
+		expect(getRootNodes()).to.be.eql([
+			{
+				node: fakeRoot,
+				temporary: false,
+			},
+		]);
+
+		// Scan different node
 		scanDOM(node);
+
+		// Test nodes list
+		expect(getRootNodes()).to.be.eql([
+			{
+				node: fakeRoot,
+				temporary: false,
+			},
+			{
+				node: node,
+				temporary: true,
+			},
+		]);
 
 		// API response should have loaded
 		setTimeout(() => {
 			const elements = node.querySelectorAll('svg.iconify');
-			console.log('Unattached node test:', node.innerHTML);
 			expect(elements.length).to.be.equal(
 				1,
 				'Expected to find 1 rendered SVG element'
 			);
+
+			// Test nodes list: temporary node should have been removed
+			expect(getRootNodes()).to.be.eql([
+				{
+					node: fakeRoot,
+					temporary: false,
+				},
+			]);
+
+			// Done
 			done();
 		}, 200);
 	});
