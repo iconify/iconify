@@ -20,6 +20,6 @@
 		"setup": "npm run clean && npm run bootstrap"
 	},
 	"devDependencies": {
-		"lerna": "^3.20.2"
+		"lerna": "^3.22.1"
 	}
 }
