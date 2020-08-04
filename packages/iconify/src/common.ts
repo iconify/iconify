@@ -25,13 +25,16 @@ import {
 	initObserver,
 	pauseObserver,
 	resumeObserver,
+	observeNode,
+	removeObservedNode,
 } from './modules/observer';
-import { scanDOM } from './modules/scanner';
+import { scanDOM, scanElement } from './modules/scanner';
 
 // Finders
 import { addFinder } from './modules/finder';
 import { finder as iconifyFinder } from './finders/iconify';
-import { setRoot } from './modules/root';
+import { findRootNode, addRootNode, addBodyNode } from './modules/root';
+import { onReady } from './modules/ready';
 // import { finder as iconifyIconFinder } from './finders/iconify-icon';
 
 /**
@@ -194,23 +197,28 @@ export interface IconifyGlobal {
 	/**
 	 * Scan DOM
 	 */
-	scanDOM: typeof scanDOM;
+	scan: (root?: HTMLElement) => void;
 
 	/**
-	 * Set root node
+	 * Add root node
 	 */
-	setRoot: (root: HTMLElement) => void;
+	observe: (root: HTMLElement) => void;
+
+	/**
+	 * Remove root node
+	 */
+	stopObserving: (root: HTMLElement) => void;
 
 	/* Observer */
 	/**
 	 * Pause observer
 	 */
-	pauseObserver: typeof pauseObserver;
+	pauseObserver: (root?: HTMLElement) => void;
 
 	/**
 	 * Resume observer
 	 */
-	resumeObserver: typeof resumeObserver;
+	resumeObserver: (root?: HTMLElement) => void;
 }
 
 /**
@@ -296,30 +304,56 @@ export const IconifyCommon: IconifyGlobal = {
 	replaceIDs,
 
 	// Scan DOM
-	scanDOM,
+	scan: (root?: HTMLElement) => {
+		if (root) {
+			scanElement(root);
+		} else {
+			scanDOM();
+		}
+	},
 
-	// Set root node
-	setRoot: (root: HTMLElement) => {
-		setRoot(root);
+	// Add root node
+	observe: (root: HTMLElement) => {
+		observeNode(root);
+	},
 
-		// Restart observer
-		initObserver(scanDOM);
-
-		// Scan DOM on next tick
-		setTimeout(scanDOM);
+	// Remove root node
+	stopObserving: (root: HTMLElement) => {
+		removeObservedNode(root);
 	},
 
 	// Pause observer
-	pauseObserver,
+	pauseObserver: (root?: HTMLElement) => {
+		if (root) {
+			const node = findRootNode(root);
+			if (node) {
+				pauseObserver(node);
+			}
+		} else {
+			pauseObserver();
+		}
+	},
 
 	// Resume observer
-	resumeObserver,
+	resumeObserver: (root?: HTMLElement) => {
+		if (root) {
+			const node = findRootNode(root);
+			if (node) {
+				resumeObserver(node);
+			}
+		} else {
+			resumeObserver();
+		}
+	},
 };
 
 /**
  * Initialise stuff
  */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+	// Add document.body node
+	addBodyNode();
+
 	// Add finder modules
 	// addFinder(iconifyIconFinder);
 	addFinder(iconifyFinder);
@@ -362,7 +396,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 
 	// Load observer and scan DOM on next tick
 	setTimeout(() => {
-		scanDOM();
 		initObserver(scanDOM);
+		scanDOM();
 	});
 }

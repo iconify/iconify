@@ -1,13 +1,14 @@
 import mocha from 'mocha';
 import chai from 'chai';
 
-import { getNode } from './node';
+import { getNode, setRoot } from './node';
 import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet } from '@iconify/core/lib/storage';
-import { setRoot, getRootNodes } from '@iconify/iconify/lib/modules/root';
-import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
+import { listRootNodes } from '@iconify/iconify/lib/modules/root';
+import { scanDOM, scanElement } from '@iconify/iconify/lib/modules/scanner';
+import { removeObservedNode } from '@iconify/iconify/lib/modules/observer';
 
 const expect = chai.expect;
 
@@ -43,10 +44,12 @@ describe('Scanning DOM', () => {
 	});
 
 	// Sanity check before running tests
-	expect(getRootNodes()).to.be.eql([]);
+	expect(listRootNodes()).to.be.eql([]);
 
 	it('Scan DOM with preloaded icons', () => {
 		const node = getNode('scan-dom');
+		setRoot(node);
+
 		node.innerHTML =
 			'<div><p>Testing scanning DOM</p><ul>' +
 			'<li>Valid icons:' +
@@ -60,49 +63,66 @@ describe('Scanning DOM', () => {
 			'</ul></div>';
 
 		// Scan node
-		setRoot(node);
 		scanDOM();
 
 		// Find elements
 		const elements = node.querySelectorAll('svg.iconify');
 		expect(elements.length).to.be.equal(4);
 
-		// Make sure tempoary node was not added as root, but new root node was
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: node,
-				temporary: false,
-			},
-		]);
+		// Check root nodes list
+		const nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(node);
 	});
 
 	it('Scan DOM with unattached root', () => {
+		const fakeNode = getNode('scan-dom');
+		setRoot(fakeNode);
+
 		const node = document.createElement('div');
+
 		node.innerHTML = '<span class="iconify" data-icon="mdi:home"></span>';
 
-		// Get old root nodes. It should not be empty because of previous test(s)
-		const oldRoot = getRootNodes();
+		// Check root nodes list
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(fakeNode);
 
 		// Scan node
-		scanDOM(node);
+		scanElement(node);
 
 		// Find elements
 		const elements = node.querySelectorAll('svg.iconify');
 		expect(elements.length).to.be.equal(1);
 
 		// Make sure tempoary node was not added as root
-		expect(getRootNodes()).to.be.eql(oldRoot);
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(fakeNode);
 	});
 
 	it('Scan DOM with icon as root', () => {
+		const fakeNode = getNode('scan-dom');
+		setRoot(fakeNode);
+
 		const node = document.createElement('span');
 		node.setAttribute('data-icon', 'mdi:home');
 
+		// Check root nodes list
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(fakeNode);
+
 		// Scan node
-		scanDOM(node);
+		scanElement(node);
 
 		// Check node
 		expect(node.tagName).to.be.equal('SPAN');
 		expect(node.innerHTML).to.be.equal('');
+
+		// Make sure tempoary node was not added as root
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(fakeNode);
 	});
 });

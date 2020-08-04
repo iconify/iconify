@@ -1,15 +1,17 @@
 import { elementFinderProperty, IconifyElement } from './element';
-import { getRoot } from './root';
-
-/**
- * MutationObserver instance, null until DOM is ready
- */
-let instance: MutationObserver | null = null;
+import { ObservedNode } from './observed-node';
+import {
+	listRootNodes,
+	addRootNode,
+	findRootNode,
+	removeRootNode,
+} from './root';
+import { onReady } from './ready';
 
 /**
  * Observer callback function
  */
-export type ObserverCallback = (root: HTMLElement) => void;
+export type ObserverCallback = (item: ObservedNode) => void;
 
 /**
  * Callback
@@ -26,31 +28,19 @@ const observerParams: MutationObserverInit = {
 };
 
 /**
- * Pause. Number instead of boolean to allow multiple pause/resume calls. Observer is resumed only when pause reaches 0
- */
-let paused = 0;
-
-/**
- * Scan is pending when observer is resumed
- */
-let scanPending = false;
-
-/**
- * Scan is already queued
- */
-let scanQueued = false;
-
-/**
  * Queue DOM scan
  */
-function queueScan(): void {
-	if (!scanQueued) {
-		scanQueued = true;
-		setTimeout(() => {
-			scanQueued = false;
-			scanPending = false;
+function queueScan(node: ObservedNode): void {
+	if (!node.observer) {
+		return;
+	}
+
+	const observer = node.observer;
+	if (!observer.pendingScan) {
+		observer.pendingScan = setTimeout(() => {
+			delete observer.pendingScan;
 			if (callback) {
-				callback(getRoot());
+				callback(node);
 			}
 		});
 	}
@@ -59,8 +49,13 @@ function queueScan(): void {
 /**
  * Check mutations for added nodes
  */
-function checkMutations(mutations: MutationRecord[]): void {
-	if (!scanPending) {
+function checkMutations(node: ObservedNode, mutations: MutationRecord[]): void {
+	if (!node.observer) {
+		return;
+	}
+
+	const observer = node.observer;
+	if (!observer.pendingScan) {
 		for (let i = 0; i < mutations.length; i++) {
 			const item = mutations[i];
 			if (
@@ -71,9 +66,8 @@ function checkMutations(mutations: MutationRecord[]): void {
 					(item.target as IconifyElement)[elementFinderProperty] !==
 						void 0)
 			) {
-				scanPending = true;
-				if (!paused) {
-					queueScan();
+				if (!observer.paused) {
+					queueScan(node);
 				}
 				return;
 			}
@@ -84,108 +78,173 @@ function checkMutations(mutations: MutationRecord[]): void {
 /**
  * Start/resume observer
  */
-function observe(): void {
-	if (instance) {
-		instance.observe(getRoot(), observerParams);
-	}
+function observe(node: ObservedNode, root: HTMLElement): void {
+	node.observer.instance.observe(root, observerParams);
 }
 
 /**
  * Start mutation observer
  */
-function startObserver(): void {
-	if (instance !== null) {
+function startObserver(node: ObservedNode): void {
+	let observer = node.observer;
+	if (observer && observer.instance) {
+		// Already started
 		return;
 	}
 
-	scanPending = true;
-	instance = new MutationObserver(checkMutations);
-	observe();
-	if (!paused) {
-		queueScan();
+	const root = typeof node.node === 'function' ? node.node() : node.node;
+	if (!root) {
+		// document.body is not available yet
+		return;
+	}
+
+	if (!observer) {
+		observer = {
+			paused: 0,
+		};
+		node.observer = observer;
+	}
+
+	// Create new instance, observe
+	observer.instance = new MutationObserver(checkMutations.bind(null, node));
+	observe(node, root);
+
+	// Scan immediately
+	if (!observer.paused) {
+		queueScan(node);
 	}
 }
 
-// Fake interface to test old IE properties
-interface OldIEElement extends HTMLElement {
-	doScroll?: boolean;
+/**
+ * Start all observers
+ */
+function startObservers(): void {
+	listRootNodes().forEach(startObserver);
 }
 
 /**
- * Export module
+ * Stop observer
  */
+function stopObserver(node: ObservedNode): void {
+	if (!node.observer) {
+		return;
+	}
+
+	const observer = node.observer;
+
+	// Stop scan
+	if (observer.pendingScan) {
+		clearTimeout(observer.pendingScan);
+		delete observer.pendingScan;
+	}
+
+	// Disconnect observer
+	if (observer.instance) {
+		observer.instance.disconnect();
+		delete observer.instance;
+	}
+}
+
 /**
  * Start observer when DOM is ready
  */
 export function initObserver(cb: ObserverCallback): void {
-	callback = cb;
+	let isRestart = callback !== void 0;
 
-	if (instance && !paused) {
-		// Restart observer
-		instance.disconnect();
-		observe();
+	if (callback !== cb) {
+		// Change callback and stop all pending observers
+		callback = cb;
+		if (isRestart) {
+			listRootNodes().forEach(stopObserver);
+		}
+	}
+
+	if (isRestart) {
+		// Restart instances
+		startObservers();
 		return;
 	}
 
-	setTimeout(() => {
-		const doc = document;
-		if (
-			doc.readyState === 'complete' ||
-			(doc.readyState !== 'loading' &&
-				!(doc.documentElement as OldIEElement).doScroll)
-		) {
-			startObserver();
-		} else {
-			doc.addEventListener('DOMContentLoaded', startObserver);
-			window.addEventListener('load', startObserver);
-		}
-	});
+	// Start observers when document is ready
+	onReady(startObservers);
 }
 
 /**
  * Pause observer
  */
-export function pauseObserver(root?: HTMLElement): void {
-	if (root && getRoot() !== root) {
-		// Invalid root node
-		return;
-	}
+export function pauseObserver(node?: ObservedNode): void {
+	(node ? [node] : listRootNodes()).forEach((node) => {
+		if (!node.observer) {
+			node.observer = {
+				paused: 1,
+			};
+			return;
+		}
 
-	paused++;
-	if (paused > 1 || instance === null) {
-		return;
-	}
+		const observer = node.observer;
+		observer.paused++;
+		if (observer.paused > 1 || !observer.instance) {
+			return;
+		}
 
-	// Check pending records, stop observer
-	checkMutations(instance.takeRecords());
-	instance.disconnect();
+		// Disconnect observer
+		const instance = observer.instance;
+		// checkMutations(node, instance.takeRecords());
+		instance.disconnect();
+	});
 }
 
 /**
  * Resume observer
  */
-export function resumeObserver(root?: HTMLElement): void {
-	if (root && getRoot() !== root) {
-		// Invalid root node
-		return;
-	}
-
-	if (!paused) {
-		return;
-	}
-	paused--;
-
-	if (!paused && instance) {
-		observe();
-		if (scanPending) {
-			queueScan();
+export function resumeObserver(observer?: ObservedNode): void {
+	(observer ? [observer] : listRootNodes()).forEach((node) => {
+		if (!node.observer) {
+			// Start observer
+			startObserver(node);
+			return;
 		}
-	}
+
+		const observer = node.observer;
+		if (observer.paused) {
+			observer.paused--;
+
+			if (!observer.paused) {
+				// Start / resume
+				const root =
+					typeof node.node === 'function' ? node.node() : node.node;
+
+				if (!root) {
+					return;
+				} else if (observer.instance) {
+					observe(node, root);
+				} else {
+					startObserver(node);
+				}
+			}
+		}
+	});
 }
 
 /**
- * Check if observer is paused
+ * Observe node
  */
-export function isObserverPaused(): boolean {
-	return paused > 0;
+export function observeNode(
+	root: HTMLElement,
+	autoRemove = false
+): ObservedNode {
+	const node = addRootNode(root, autoRemove);
+	startObserver(node);
+	return node;
+}
+
+/**
+ * Remove observed node
+ */
+export function removeObservedNode(root: HTMLElement): void {
+	const node = findRootNode(root);
+	if (node) {
+		stopObserver(node);
+		removeRootNode(root);
+	}
 }

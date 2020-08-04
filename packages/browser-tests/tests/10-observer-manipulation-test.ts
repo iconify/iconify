@@ -1,14 +1,12 @@
 import mocha from 'mocha';
 import chai from 'chai';
 
-import { getNode } from './node';
+import { getNode, setRoot } from './node';
 import { elementFinderProperty } from '@iconify/iconify/lib/modules/element';
-import { setRoot } from '@iconify/iconify/lib/modules/root';
 import {
 	initObserver,
 	pauseObserver,
 	resumeObserver,
-	isObserverPaused,
 } from '@iconify/iconify/lib/modules/observer';
 
 const expect = chai.expect;
@@ -24,7 +22,7 @@ describe('Testing observer with DOM manipulation', () => {
 		node.innerHTML =
 			'<div></div><ul><li>test</li><li>test2</li></ul><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg); vertical-align: -0.125em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi-home" data-inline="false" class="iconify"><path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"></path></svg>';
 		initObserver((root) => {
-			expect(root).to.be.equal(node);
+			expect(root.node).to.be.equal(node);
 			expect(waitingCallback).to.be.equal(true);
 
 			counter++;
@@ -108,7 +106,6 @@ describe('Testing observer with DOM manipulation', () => {
 		});
 
 		// Add few nodes to trigger observer
-		expect(isObserverPaused()).to.be.equal(false);
 		node.querySelector('div').innerHTML =
 			'<span class="test">Some text</span><i>!</i>';
 	});

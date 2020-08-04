@@ -1,80 +1,77 @@
-// Default root element
-let root: HTMLElement;
-
-// Interface for extra root nodes
-export interface ExtraRootNode {
-	node: HTMLElement;
-	temporary: boolean; // True if node should be removed when all placeholders have been replaced
-}
-
-// Additional root elements
-let customRoot: ExtraRootNode[] = [];
+import { ObservedNode } from './observed-node';
 
 /**
- * Get root element
+ * List of root nodes
  */
-export function getRoot(): HTMLElement {
-	return root ? root : (document.querySelector('body') as HTMLElement);
-}
+let nodes: ObservedNode[] = [];
 
 /**
- * Set root element
+ * Find node
  */
-export function setRoot(node: HTMLElement): void {
-	root = node;
+export function findRootNode(node: HTMLElement): ObservedNode | undefined {
+	for (let i = 0; i < nodes.length; i++) {
+		const item = nodes[i];
+		let root = typeof item.node === 'function' ? item.node() : item.node;
+		if (root === node) {
+			return item;
+		}
+	}
 }
 
 /**
  * Add extra root node
  */
-export function addRoot(node: HTMLElement, autoRemove = false): ExtraRootNode {
-	if (root === node) {
-		return {
-			node: root,
-			temporary: false,
-		};
-	}
-
-	for (let i = 0; i < customRoot.length; i++) {
-		const item = customRoot[i];
-		if (item.node === node) {
-			// Found matching node
-			if (!autoRemove && item.temporary) {
-				// Change to permanent
-				item.temporary = false;
-			}
-			return item;
+export function addRootNode(
+	root: HTMLElement,
+	autoRemove = false
+): ObservedNode {
+	let node = findRootNode(root);
+	if (node) {
+		// Node already exist: switch type if needed
+		if (node.temporary) {
+			node.temporary = autoRemove;
 		}
+		return node;
 	}
 
-	// Add item
-	const item = {
-		node,
+	// Create item, add it to list, start observer
+	node = {
+		node: root,
 		temporary: autoRemove,
 	};
-	customRoot.push(item);
+	nodes.push(node);
 
-	return item;
+	return node;
+}
+
+/**
+ * Add document.body node
+ */
+export function addBodyNode(): ObservedNode {
+	if (document.body) {
+		return addRootNode(document.body);
+	}
+	nodes.push({
+		node: () => {
+			return document.body;
+		},
+	});
 }
 
 /**
  * Remove root node
  */
-export function removeRoot(node: HTMLElement): void {
-	customRoot = customRoot.filter((item) => item.node !== node);
+export function removeRootNode(root: HTMLElement): void {
+	nodes = nodes.filter((node) => {
+		const element =
+			typeof node.node === 'function' ? node.node() : node.node;
+		return root !== element;
+	});
 }
 
 /**
- * Get all root nodes
+ * Get list of root nodes
  */
-export function getRootNodes(): ExtraRootNode[] {
-	return (root
-		? [
-				{
-					node: root,
-					temporary: false,
-				},
-		  ]
-		: []
-	).concat(customRoot);
+export function listRootNodes(): ObservedNode[] {
+	return nodes;
 }

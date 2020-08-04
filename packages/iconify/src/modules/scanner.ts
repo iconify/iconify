@@ -5,14 +5,14 @@ import { FullIconifyIcon } from '@iconify/core/lib/icon';
 import { findPlaceholders } from './finder';
 import { IconifyElementData, elementDataProperty } from './element';
 import { renderIcon } from './render';
-import { pauseObserver, resumeObserver } from './observer';
+import { ObservedNode } from './observed-node';
 import {
-	getRoot,
-	getRootNodes,
-	addRoot,
-	removeRoot,
-	ExtraRootNode,
-} from './root';
+	pauseObserver,
+	resumeObserver,
+	removeObservedNode,
+	observeNode,
+} from './observer';
+import { findRootNode, addRootNode, listRootNodes } from './root';
 
 /**
  * Flag to avoid scanning DOM too often
@@ -52,9 +52,28 @@ const compareIcons = (
 };
 
 /**
+ * Scan node for placeholders
+ */
+export function scanElement(root: HTMLElement): void {
+	// Add temporary node
+	let node = findRootNode(root);
+	if (!node) {
+		scanDOM(
+			{
+				node: root,
+				temporary: true,
+			},
+			true
+		);
+	} else {
+		scanDOM(node);
+	}
+}
+
+/**
  * Scan DOM for placeholders
  */
-export function scanDOM(customRoot?: HTMLElement): void {
+export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 	scanQueued = false;
 
 	// List of icons to load: [provider][prefix][name] = boolean
@@ -63,18 +82,9 @@ export function scanDOM(customRoot?: HTMLElement): void {
 		Record<string, Record<string, boolean>>
 	> = Object.create(null);
 
-	// Add temporary root node
-	let customRootItem: ExtraRootNode;
-	if (customRoot) {
-		customRootItem = addRoot(customRoot, true);
-	}
-
-	// Get root node and placeholders
-	const rootNodes: ExtraRootNode[] = customRoot
-		? [customRootItem]
-		: getRootNodes();
-	rootNodes.forEach((rootItem) => {
-		const root = rootItem.node;
+	// Get placeholders
+	(node ? [node] : listRootNodes()).forEach((node) => {
+		const root = typeof node.node === 'function' ? node.node() : node.node;
 
 		if (!root || !root.querySelectorAll) {
 			return;
@@ -121,9 +131,9 @@ export function scanDOM(customRoot?: HTMLElement): void {
 			// Check icon
 			const storage = getStorage(provider, prefix);
 			if (storage.icons[name] !== void 0) {
-				// Icon exists - replace placeholder
-				if (!paused && !rootItem.temporary) {
-					pauseObserver(root);
+				// Icon exists - pause observer before replacing placeholder
+				if (!paused && node.observer) {
+					pauseObserver(node);
 					paused = true;
 				}
 
@@ -178,13 +188,16 @@ export function scanDOM(customRoot?: HTMLElement): void {
 			hasPlaceholders = true;
 		});
 
-		// Remove temporay node
-		if (rootItem.temporary && !hasPlaceholders) {
-			removeRoot(root);
-		}
-
-		if (paused && !rootItem.temporary) {
-			resumeObserver(root);
+		// Node stuff
+		if (node.temporary && !hasPlaceholders) {
+			// Remove temporary node
+			removeObservedNode(root);
+		} else if (addTempNode && hasPlaceholders) {
+			// Add new temporary node
+			observeNode(root, true);
+		} else if (paused && node.observer) {
+			// Resume observer
+			resumeObserver(node);
 		}
 	});
 

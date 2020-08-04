@@ -9,10 +9,16 @@ const expect = chai.expect;
 const selector =
 	'span.iconify, i.iconify, span.iconify-inline, i.iconify-inline';
 
-const node = getNode('iconify-api');
-Iconify.setRoot(node);
+// Do not observe document.body!
+Iconify.stopObserving(document.body);
 
-node.innerHTML =
+// Create node to observe
+const observedNode = getNode('iconify-api');
+const ignoredNode = getNode('iconify-api');
+
+Iconify.observe(observedNode);
+
+observedNode.innerHTML =
 	'<div><p>Testing Iconify with API</p><ul>' +
 	'<li>Inline icons:' +
 	'   <span class="iconify-inline" data-icon="mdi:home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
@@ -24,13 +30,23 @@ node.innerHTML =
 	'</li>' +
 	'</ul></div>';
 
-describe('Testing Iconify object', () => {
+ignoredNode.innerHTML =
+	'<div>This node should not have icons! <span class="iconify-inline" data-icon="mdi:home" style="color: red; box-shadow: 0 0 2px black;"></span>';
+
+describe('Testing Iconify object with API', () => {
 	it('Rendering icons with API', () => {
 		// Icons should have been replaced by now
-		let list = node.querySelectorAll(selector);
+		let list = observedNode.querySelectorAll(selector);
 		expect(list.length).to.be.equal(0);
 
-		list = node.querySelectorAll('svg.iconify');
+		list = observedNode.querySelectorAll('svg.iconify');
 		expect(list.length).to.be.equal(4);
+
+		// Icons in ignored node should not have been replaced
+		list = ignoredNode.querySelectorAll(selector);
+		expect(list.length).to.be.equal(1);
+
+		list = ignoredNode.querySelectorAll('svg.iconify');
+		expect(list.length).to.be.equal(0);
 	});
 });

@@ -12,8 +12,11 @@ const selector =
 const node1 = getNode('iconify-basic');
 const node2 = getNode('iconify-basic');
 
+// Do not observe document.body!
+Iconify.stopObserving(document.body);
+
 // Set root node
-Iconify.setRoot(node1);
+Iconify.observe(node1);
 
 describe('Testing Iconify object', () => {
 	const prefix = 'invalid-' + Date.now();

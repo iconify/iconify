@@ -1,7 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
 
-import { getNode } from './node';
+import { getNode, setRoot } from './node';
 import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { API } from '@iconify/core/lib/api/';
@@ -10,8 +10,8 @@ import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { coreModules } from '@iconify/core/lib/modules';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
-import { setRoot, getRootNodes } from '@iconify/iconify/lib/modules/root';
-import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
+import { listRootNodes } from '@iconify/iconify/lib/modules/root';
+import { scanDOM, scanElement } from '@iconify/iconify/lib/modules/scanner';
 
 const expect = chai.expect;
 
@@ -86,6 +86,7 @@ describe('Scanning DOM with API', () => {
 		setFakeData(provider, prefix2, data2);
 
 		const node = getNode('scan-dom');
+
 		node.innerHTML =
 			'<div><p>Testing scanning DOM with API</p><ul>' +
 			'<li>Inline icons:' +
@@ -118,13 +119,11 @@ describe('Scanning DOM with API', () => {
 		setRoot(node);
 		scanDOM();
 
-		// Test getRootNodes
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: node,
-				temporary: false,
-			},
-		]);
+		// Test listRootNodes
+		const nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(node);
+		expect(nodes[0].temporary).to.be.equal(false);
 
 		// First API response should have loaded
 		setTimeout(() => {
@@ -253,13 +252,11 @@ describe('Scanning DOM with API', () => {
 		setRoot(node);
 		scanDOM();
 
-		// Test getRootNodes
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: node,
-				temporary: false,
-			},
-		]);
+		// Test listRootNodes
+		const nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(node);
+		expect(nodes[0].temporary).to.be.equal(false);
 
 		// Make sure no icons were rendered yet
 		const elements = node.querySelectorAll('svg.iconify');
@@ -447,27 +444,22 @@ describe('Scanning DOM with API', () => {
 
 		// Set root node, test nodes list
 		setRoot(fakeRoot);
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: fakeRoot,
-				temporary: false,
-			},
-		]);
+
+		// Test listRootNodes
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(fakeRoot);
+		expect(nodes[0].temporary).to.be.equal(false);
 
 		// Scan different node
-		scanDOM(node);
+		scanElement(node);
 
-		// Test nodes list
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: fakeRoot,
-				temporary: false,
-			},
-			{
-				node: node,
-				temporary: true,
-			},
-		]);
+		// Test listRootNodes
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(2);
+		expect(nodes[0].node).to.be.equal(fakeRoot);
+		expect(nodes[1].node).to.be.equal(node);
+		expect(nodes[1].temporary).to.be.equal(true);
 
 		// API response should have loaded
 		setTimeout(() => {
@@ -478,12 +470,9 @@ describe('Scanning DOM with API', () => {
 			);
 
 			// Test nodes list: temporary node should have been removed
-			expect(getRootNodes()).to.be.eql([
-				{
-					node: fakeRoot,
-					temporary: false,
-				},
-			]);
+			nodes = listRootNodes();
+			expect(nodes.length).to.be.equal(1);
+			expect(nodes[0].node).to.be.equal(fakeRoot);
 
 			// Done
 			done();

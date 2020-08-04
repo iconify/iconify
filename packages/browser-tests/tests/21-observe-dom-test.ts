@@ -1,14 +1,18 @@
 import mocha from 'mocha';
 import chai from 'chai';
 
-import { getNode } from './node';
+import { getNode, setRoot } from './node';
 import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { getStorage, addIconSet } from '@iconify/core/lib/storage';
-import { setRoot, getRootNodes } from '@iconify/iconify/lib/modules/root';
+import { listRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
-import { initObserver } from '@iconify/iconify/lib/modules/observer';
+import {
+	initObserver,
+	observeNode,
+	removeObservedNode,
+} from '@iconify/iconify/lib/modules/observer';
 
 const expect = chai.expect;
 
@@ -45,29 +49,37 @@ describe('Observe DOM', () => {
 
 	it('Basic test', (done) => {
 		const node = getNode('observe-dom');
+		const ignoredNode = getNode('observe-dom');
 
 		// Set root and init observer
 		setRoot(node);
 		initObserver(scanDOM);
 
-		// Test getRootNodes
-		expect(getRootNodes()).to.be.eql([
-			{
-				node: node,
-				temporary: false,
-			},
-		]);
+		// Test listRootNodes
+		const nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(node);
+		expect(nodes[0].temporary).to.be.equal(false);
 
 		// Set HTML
 		node.innerHTML =
 			'<p>Testing observing DOM</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
+		ignoredNode.innerHTML =
+			'<p>This node should be ignored</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Test nodes
 		setTimeout(() => {
 			// Find elements
-			const elements = node.querySelectorAll('svg.iconify');
+			let elements = node.querySelectorAll('svg.iconify');
 			expect(elements.length).to.be.equal(1);
+
+			elements = ignoredNode.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(
+				0,
+				'Looks like document.body is observed!'
+			);
 
 			// Test for "home" icon contents
 			expect(node.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(-1);
@@ -112,6 +124,114 @@ describe('Observe DOM', () => {
 
 				done();
 			}, 100);
+		}, 100);
+	});
+
+	it('Adding node to observe', (done) => {
+		const baseNode = getNode('observe-dom');
+		const node = getNode('observe-dom');
+
+		// Set root and init observer
+		setRoot(baseNode);
+		initObserver(scanDOM);
+
+		// Test listRootNodes
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(baseNode);
+		expect(nodes[0].temporary).to.be.equal(false);
+
+		// Observe another node
+		observeNode(node);
+
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(2);
+		expect(nodes[0].node).to.be.equal(baseNode);
+		expect(nodes[0].temporary).to.be.equal(false);
+		expect(nodes[1].node).to.be.equal(node);
+		expect(nodes[1].temporary).to.be.equal(false);
+
+		// Set HTML
+		baseNode.innerHTML =
+			'<p>Testing observing 2 nodes (1)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+		node.innerHTML =
+			'<p>Testing observing 2 nodes (2)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+
+		// Test nodes
+		setTimeout(() => {
+			// Find elements
+			let elements = node.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(1);
+
+			elements = baseNode.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(1);
+
+			// Test for "home" icon contents
+			expect(node.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(-1);
+			expect(baseNode.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(
+				-1
+			);
+
+			done();
+		}, 100);
+	});
+
+	it('Stop observing node', (done) => {
+		const baseNode = getNode('observe-dom');
+		const node = getNode('observe-dom');
+
+		// Set root and init observer
+		setRoot(baseNode);
+		initObserver(scanDOM);
+
+		// Test listRootNodes
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(baseNode);
+		expect(nodes[0].temporary).to.be.equal(false);
+
+		// Observe another node
+		observeNode(node);
+
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(2);
+		expect(nodes[0].node).to.be.equal(baseNode);
+		expect(nodes[0].temporary).to.be.equal(false);
+		expect(nodes[1].node).to.be.equal(node);
+		expect(nodes[1].temporary).to.be.equal(false);
+
+		// Stop observing baseNode
+		removeObservedNode(baseNode);
+
+		nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(node);
+		expect(nodes[0].temporary).to.be.equal(false);
+
+		// Set HTML
+		baseNode.innerHTML =
+			'<p>Testing observing 2 nodes (1)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+		node.innerHTML =
+			'<p>Testing observing 2 nodes (2)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+
+		// Test nodes
+		setTimeout(() => {
+			// Find elements
+			let elements = node.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(1);
+
+			elements = baseNode.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(0);
+
+			// Test for "home" icon contents
+			expect(node.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(-1);
+			expect(baseNode.innerHTML.indexOf('20v-6h4v6h5v')).to.be.equal(-1);
+
+			done();
 		}, 100);
 	});
 });
