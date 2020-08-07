@@ -149,7 +149,7 @@ function stopObserver(node: ObservedNode): void {
  * Start observer when DOM is ready
  */
 export function initObserver(cb: ObserverCallback): void {
-	let isRestart = callback !== void 0;
+	let isRestart = callback !== null;
 
 	if (callback !== cb) {
 		// Change callback and stop all pending observers

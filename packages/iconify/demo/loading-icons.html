@@ -59,6 +59,10 @@
 		</script>
 		<script src="../dist/iconify.min.js"></script>
 		<script>
+			// Disable cache
+			Iconify.enableCache('local', false);
+			Iconify.enableCache('session', false);
+
 			// Add icons without provider
 			Iconify.addCollection({
 				prefix: 'z123-add-collection',
@@ -98,6 +102,16 @@
 					'<g fill="currentColor"><path fill-rule="evenodd" d="M12.354 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path><path d="M6.25 8.043l-.896-.897a.5.5 0 1 0-.708.708l.897.896l.707-.707zm1 2.414l.896.897a.5.5 0 0 0 .708 0l7-7a.5.5 0 0 0-.708-.708L8.5 10.293l-.543-.543l-.707.707z"/></g>',
 				width: 16,
 				height: 16,
+			});
+
+			// Load after delay
+			[3, 5].forEach((delay) => {
+				setTimeout(() => {
+					document.getElementById('delay' + delay).innerHTML =
+						'Icon loaded after ' +
+						delay +
+						' seconds: <span class="iconify-inline" data-icon="bi:check-all"></span>';
+				}, delay * 1000);
 			});
 		</script>
 	</head>
@@ -151,6 +165,12 @@
 				class="iconify-inline"
 				data-icon="@test-provider:z234-preload:check2"
 			></span>
+		</p>
+		<p id="delay3">
+			Icon rendered after 3 seconds...
+		</p>
+		<p id="delay5">
+			Icon rendered after 5 seconds...
 		</p>
 	</body>
 </html>

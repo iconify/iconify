@@ -124,3 +124,21 @@ const next = () => {
 	}
 };
 next();
+
+// Update version number in package.json
+const packageJSON = JSON.parse(
+	fs.readFileSync(__dirname + '/package.json', 'utf8')
+);
+let iconifyVersion = packageJSON.devDependencies['@iconify/iconify'].replace(
+	/[\^~]/g,
+	''
+);
+if (packageJSON.version !== iconifyVersion) {
+	console.log('Updated package version to', iconifyVersion);
+	packageJSON.version = iconifyVersion;
+	fs.writeFileSync(
+		__dirname + '/package.json',
+		JSON.stringify(packageJSON, null, '\t') + '\n',
+		'utf8'
+	);
+}
