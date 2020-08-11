@@ -186,12 +186,15 @@ export interface IconifyGlobal {
 	/**
 	 * Get icon data
 	 */
-	renderIcon: typeof buildIcon;
+	renderIcon: (
+		name: string,
+		customisations: IconifyIconCustomisations
+	) => IconifyIconBuildResult | null;
 
 	/**
 	 * Replace IDs in icon body, should be used when parsing buildIcon() result
 	 */
-	replaceIDs: typeof replaceIDs;
+	replaceIDs: (body: string, prefix?: string | (() => string)) => string;
 
 	/* Scanner */
 	/**
