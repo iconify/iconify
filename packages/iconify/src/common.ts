@@ -170,6 +170,7 @@ export interface IconifyGlobal {
 	 */
 	addCollection: (data: IconifyJSON, provider?: string) => boolean;
 
+	/* Render icons */
 	/**
 	 * Render icons
 	 */
@@ -192,7 +193,7 @@ export interface IconifyGlobal {
 	) => IconifyIconBuildResult | null;
 
 	/**
-	 * Replace IDs in icon body, should be used when parsing buildIcon() result
+	 * Replace IDs in icon body, should be used when parsing renderIcon() result
 	 */
 	replaceIDs: (body: string, prefix?: string | (() => string)) => string;
 
@@ -202,6 +203,7 @@ export interface IconifyGlobal {
 	 */
 	scan: (root?: HTMLElement) => void;
 
+	/* Observer */
 	/**
 	 * Add root node
 	 */
@@ -212,7 +214,6 @@ export interface IconifyGlobal {
 	 */
 	stopObserving: (root: HTMLElement) => void;
 
-	/* Observer */
 	/**
 	 * Pause observer
 	 */
@@ -242,7 +243,7 @@ export const IconifyCommon: IconifyGlobal = {
 
 	// List icons
 	listIcons: (provider?: string, prefix?: string) => {
-		let icons = [];
+		let allIcons = [];
 
 		// Get providers
 		let providers: string[];
@@ -256,7 +257,7 @@ export const IconifyCommon: IconifyGlobal = {
 		providers.forEach((provider) => {
 			let prefixes: string[];
 
-			if (typeof prefix === 'string') {
+			if (typeof provider === 'string' && typeof prefix === 'string') {
 				prefixes = [prefix];
 			} else {
 				prefixes = listStoredPrefixes(provider);
@@ -264,18 +265,18 @@ export const IconifyCommon: IconifyGlobal = {
 
 			prefixes.forEach((prefix) => {
 				const storage = getStorage(provider, prefix);
-				let icons = Object.keys(storage.icons).map(
+				const icons = Object.keys(storage.icons).map(
 					(name) =>
 						(provider !== '' ? '@' + provider + ':' : '') +
 						prefix +
 						':' +
 						name
 				);
-				icons = icons.concat(icons);
+				allIcons = allIcons.concat(icons);
 			});
 		});
 
-		return icons;
+		return allIcons;
 	},
 
 	// Add icon

@@ -62,6 +62,16 @@ describe('Testing Iconify object', () => {
 		);
 	});
 
+	it('Check listIcons', () => {
+		expect(Iconify.listIcons('', prefix)).to.be.eql([
+			prefix + ':account-box',
+			prefix + ':account-cash',
+			prefix + ':account',
+			prefix + ':home',
+			prefix + ':id-test',
+		]);
+	});
+
 	it('Get SVG node', () => {
 		const node = Iconify.renderSVG(prefix + ':account', {
 			inline: true,
