@@ -178,6 +178,50 @@ describe('Observe DOM', () => {
 		}, 100);
 	});
 
+	it('Adding node to observe after setting content', (done) => {
+		const baseNode = getNode('observe-dom');
+		const node = getNode('observe-dom');
+
+		// Set root and init observer
+		setRoot(baseNode);
+		initObserver(scanDOM);
+
+		// Test listRootNodes
+		let nodes = listRootNodes();
+		expect(nodes.length).to.be.equal(1);
+		expect(nodes[0].node).to.be.equal(baseNode);
+		expect(nodes[0].temporary).to.be.equal(false);
+
+		// Set HTML
+		baseNode.innerHTML =
+			'<p>Testing observing 2 nodes (1)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+		node.innerHTML =
+			'<p>Testing observing 2 nodes (2)</p>' +
+			'<span class="iconify" data-icon="mdi:home"></span>';
+
+		// Observe node: should run scan on next tick
+		observeNode(node);
+
+		// Test nodes
+		setTimeout(() => {
+			// Find elements
+			let elements = node.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(1);
+
+			elements = baseNode.querySelectorAll('svg.iconify');
+			expect(elements.length).to.be.equal(1);
+
+			// Test for "home" icon contents
+			expect(node.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(-1);
+			expect(baseNode.innerHTML.indexOf('20v-6h4v6h5v')).to.not.be.equal(
+				-1
+			);
+
+			done();
+		}, 100);
+	});
+
 	it('Stop observing node', (done) => {
 		const baseNode = getNode('observe-dom');
 		const node = getNode('observe-dom');
