@@ -20,7 +20,8 @@ export interface IconifyAPI {
 	/**
 	 * Toggle local and session storage
 	 */
-	enableCache: (storage: IconifyCacheType, value: boolean) => void;
+	enableCache: (storage: IconifyCacheType, value?: boolean) => void;
+	disableCache: (storage: IconifyCacheType) => void;
 
 	/**
 	 * Load icons

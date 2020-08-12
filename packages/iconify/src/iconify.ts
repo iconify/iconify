@@ -112,6 +112,21 @@ export interface IconifyGlobal extends IconifyGlobal1, IconifyGlobal2 {}
 // Export dependencies
 export { IconifyGlobal as IconifyGlobalCommon, IconifyAPI };
 
+function toggleCache(storage: IconifyCacheType, value: boolean): void {
+	switch (storage) {
+		case 'local':
+		case 'session':
+			config[storage] = value;
+			break;
+
+		case 'all':
+			for (const key in config) {
+				config[key] = value;
+			}
+			break;
+	}
+}
+
 /**
  * Global variable
  */
@@ -122,20 +137,12 @@ const Iconify: IconifyGlobal = ({
 	// API providers
 	addAPIProvider: setAPIConfig,
 
-	// Allow storage
-	enableCache: (storage: IconifyCacheType, value: boolean) => {
-		switch (storage) {
-			case 'local':
-			case 'session':
-				config[storage] = value;
-				break;
-
-			case 'all':
-				for (const key in config) {
-					config[key] = value;
-				}
-				break;
-		}
+	// Toggle storage
+	enableCache: (storage: IconifyCacheType, value?: boolean) => {
+		toggleCache(storage, typeof value === 'boolean' ? value : true);
+	},
+	disableCache: (storage: IconifyCacheType) => {
+		toggleCache(storage, false);
 	},
 
 	// Exposed internal functions
