@@ -105,7 +105,7 @@ In addition to the properties mentioned above, the icon component accepts any ot
 
 ### Dimensions
 
-By default, icon height is "1em". With is dynamic, calculated using the icon's width to height ratio.
+By default, icon height is "1em". With is dynamic, calculated using the icon's width to height ratio. This makes it easy to change icon size by changing `font-size` in the stylesheet, just like icon fonts.
 
 There are several ways to change icon dimensions:
 

@@ -53,9 +53,20 @@ or this:
 
 &nbsp;&nbsp;&nbsp; ![Screenshot](https://iconify.design/assets/images/inline-sample.png)
 
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 50,000 premade icons to choose from, including FontAwesome, Material Design Icons, Entypo+, Box Icons, Unicons and even several emoji sets.
+That is it. Change `data-icon` value to the name of the icon you want to use. There are over 50,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
 
-Do you want to make your own icon sets? Tools for making custom icon sets are available on GitHub. See documentation.
+Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
+
+## Full documentation
+
+Below is a shortened version of documentation.
+
+Full documentation is available on Iconify website:
+
+-   [SVG framework documentation](https://docs.iconify.design/implementations/svg-framework/).
+-   [Iconify API documentation](https://docs.iconify.design/sources/api/).
+-   [Creating icon bundles](https://docs.iconify.design/sources/bundles/).
+-   [Iconify Tools documentation](https://docs.iconify.design/tools/node/).
 
 ## How does it work?
 
