@@ -5,7 +5,7 @@
 	"dependencies": {
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-scripts": "3.4.0"
+		"react-scripts": "^3.4.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",
@@ -30,6 +30,6 @@
 	"devDependencies": {
 		"@iconify/icons-mdi-light": "^1.0.5",
 		"@iconify/icons-uil": "^1.0.14",
-		"@iconify/react": "^2.0.0-beta.2"
+		"@iconify/react": "^2.0.0-beta.3"
 	}
 }
