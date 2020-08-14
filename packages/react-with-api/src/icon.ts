@@ -132,7 +132,7 @@ export type IconifyCacheType = 'local' | 'session' | 'all';
 /**
  * Toggle cache
  */
-export function enableCache(storage: IconifyCacheType, value: boolean): void {
+function toggleCache(storage: IconifyCacheType, value: boolean): void {
 	switch (storage) {
 		case 'local':
 		case 'session':
@@ -145,6 +145,14 @@ export function enableCache(storage: IconifyCacheType, value: boolean): void {
 			}
 			break;
 	}
+}
+
+export function enableCache(storage: IconifyCacheType, value?: boolean): void {
+	toggleCache(storage, typeof value === 'boolean' ? value : true);
+}
+
+export function disableCache(storage: IconifyCacheType): void {
+	toggleCache(storage, false);
 }
 
 /**
@@ -186,7 +194,7 @@ export const loadIcons: IconifyLoadIcons = API.loadIcons;
  * List available icons
  */
 export function listIcons(provider?: string, prefix?: string): string[] {
-	let icons = [];
+	let allIcons = [];
 
 	// Get providers
 	let providers: string[];
@@ -200,7 +208,7 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 	providers.forEach((provider) => {
 		let prefixes: string[];
 
-		if (typeof prefix === 'string') {
+		if (typeof provider === 'string' && typeof prefix === 'string') {
 			prefixes = [prefix];
 		} else {
 			prefixes = listStoredPrefixes(provider);
@@ -208,18 +216,18 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 
 		prefixes.forEach((prefix) => {
 			const storage = getStorage(provider, prefix);
-			let icons = Object.keys(storage.icons).map(
+			const icons = Object.keys(storage.icons).map(
 				(name) =>
 					(provider !== '' ? '@' + provider + ':' : '') +
 					prefix +
 					':' +
 					name
 			);
-			icons = icons.concat(icons);
+			allIcons = allIcons.concat(icons);
 		});
 	});
 
-	return icons;
+	return allIcons;
 }
 
 /**
