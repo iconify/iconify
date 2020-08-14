@@ -15,8 +15,7 @@ import {
 	getIcon,
 	addIcon,
 	addIconSet,
-	listStoredProviders,
-	listStoredPrefixes,
+	listIcons,
 } from '@iconify/core/lib/storage';
 import { iconToSVG, IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
@@ -33,8 +32,7 @@ import { scanDOM, scanElement } from './modules/scanner';
 // Finders
 import { addFinder } from './modules/finder';
 import { finder as iconifyFinder } from './finders/iconify';
-import { findRootNode, addRootNode, addBodyNode } from './modules/root';
-import { onReady } from './modules/ready';
+import { findRootNode, addBodyNode } from './modules/root';
 // import { finder as iconifyIconFinder } from './finders/iconify-icon';
 
 /**
@@ -242,42 +240,7 @@ export const IconifyCommon: IconifyGlobal = {
 	},
 
 	// List icons
-	listIcons: (provider?: string, prefix?: string) => {
-		let allIcons = [];
-
-		// Get providers
-		let providers: string[];
-		if (typeof provider === 'string') {
-			providers = [provider];
-		} else {
-			providers = listStoredProviders();
-		}
-
-		// Get all icons
-		providers.forEach((provider) => {
-			let prefixes: string[];
-
-			if (typeof provider === 'string' && typeof prefix === 'string') {
-				prefixes = [prefix];
-			} else {
-				prefixes = listStoredPrefixes(provider);
-			}
-
-			prefixes.forEach((prefix) => {
-				const storage = getStorage(provider, prefix);
-				const icons = Object.keys(storage.icons).map(
-					(name) =>
-						(provider !== '' ? '@' + provider + ':' : '') +
-						prefix +
-						':' +
-						name
-				);
-				allIcons = allIcons.concat(icons);
-			});
-		});
-
-		return allIcons;
-	},
+	listIcons,
 
 	// Add icon
 	addIcon: (name, data) => {

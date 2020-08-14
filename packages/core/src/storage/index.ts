@@ -64,20 +64,6 @@ export function getStorage(provider: string, prefix: string): IconStorage {
 }
 
 /**
- * Get all providers
- */
-export function listStoredProviders(): string[] {
-	return Object.keys(storage);
-}
-
-/**
- * Get all prefixes
- */
-export function listStoredPrefixes(provider: string): string[] {
-	return storage[provider] === void 0 ? [] : Object.keys(storage[provider]);
-}
-
-/**
  * Resolve alias
  */
 function resolveAlias(
@@ -231,4 +217,50 @@ export function getIcon(
 ): Readonly<FullIconifyIcon> | null {
 	const value = storage.icons[name];
 	return value === void 0 ? null : value;
+}
+
+/**
+ * List available icons
+ */
+export function listIcons(provider?: string, prefix?: string): string[] {
+	let allIcons: string[] = [];
+
+	// Get providers
+	let providers: string[];
+	if (typeof provider === 'string') {
+		providers = [provider];
+	} else {
+		providers = Object.keys(storage);
+	}
+	console.log('Listing icons for providers:', providers);
+
+	// Get all icons
+	providers.forEach((provider) => {
+		let prefixes: string[];
+
+		if (typeof provider === 'string' && typeof prefix === 'string') {
+			prefixes = [prefix];
+		} else {
+			prefixes =
+				storage[provider] === void 0
+					? []
+					: Object.keys(storage[provider]);
+		}
+		console.log('Listing icons for prefixes:', prefixes);
+
+		prefixes.forEach((prefix) => {
+			const storage = getStorage(provider, prefix);
+			const icons = Object.keys(storage.icons).map(
+				(name) =>
+					(provider !== '' ? '@' + provider + ':' : '') +
+					prefix +
+					':' +
+					name
+			);
+			console.log('Found some icons:', icons);
+			allIcons = allIcons.concat(icons);
+		});
+	});
+
+	return allIcons;
 }

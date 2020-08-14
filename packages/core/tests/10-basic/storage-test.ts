@@ -7,6 +7,8 @@ import {
 	iconExists,
 	getIcon,
 	addIconSet,
+	getStorage,
+	listIcons,
 } from '../../lib/storage';
 import { FullIconifyIcon, IconifyIcon } from '../../lib/icon';
 import { IconifyJSON } from '@iconify/types';
@@ -455,5 +457,72 @@ describe('Testing storage', () => {
 			rotate: 0,
 		};
 		expect(getIcon(storage, '16-chevron-right')).to.be.eql(expected);
+	});
+
+	it('List icons in a global storage', () => {
+		const provider = 'test-provider';
+		const prefix = 'global-storage-test';
+		const storage1 = getStorage('', prefix);
+		const storage2 = getStorage(provider, prefix);
+
+		// List icons
+		expect(listIcons('', prefix)).to.be.eql([]);
+		expect(listIcons(provider, prefix)).to.be.eql([]);
+
+		// Add one icon without provider
+		addIcon(storage1, 'test', {
+			body: '<path d="" />',
+			width: 20,
+			height: 16,
+		});
+
+		// List icons
+		expect(listIcons('', prefix)).to.be.eql([prefix + ':test']);
+		expect(listIcons(provider, prefix)).to.be.eql([]);
+
+		// Add icon set without provider
+		expect(
+			addIconSet(storage1, {
+				prefix,
+				icons: {
+					'16-chevron-left': {
+						body: '<path d="" />',
+					},
+				},
+				aliases: {
+					'16-chevron-right': {
+						parent: '16-chevron-left',
+						hFlip: true,
+					},
+				},
+				width: 128,
+				height: 128,
+			})
+		).to.be.equal(true);
+
+		// List icons
+		expect(listIcons('', prefix)).to.be.eql([
+			prefix + ':test',
+			prefix + ':16-chevron-left',
+			prefix + ':16-chevron-right',
+		]);
+		expect(listIcons(provider, prefix)).to.be.eql([]);
+
+		// Add one icon with provider
+		addIcon(storage2, 'test2', {
+			body: '<path d="" />',
+			width: 20,
+			height: 16,
+		});
+
+		// List icons
+		expect(listIcons('', prefix)).to.be.eql([
+			prefix + ':test',
+			prefix + ':16-chevron-left',
+			prefix + ':16-chevron-right',
+		]);
+		expect(listIcons(provider, prefix)).to.be.eql([
+			'@' + provider + ':' + prefix + ':test2',
+		]);
 	});
 });

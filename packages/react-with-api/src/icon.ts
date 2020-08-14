@@ -25,8 +25,7 @@ import {
 	getIcon,
 	addIcon as addIconToStorage,
 	addIconSet,
-	listStoredProviders,
-	listStoredPrefixes,
+	listIcons,
 } from '@iconify/core/lib/storage';
 import { calcSize } from '@iconify/core/lib/builder/calc-size';
 import { IconifyIcon, FullIconifyIcon } from '@iconify/core/lib/icon';
@@ -193,42 +192,7 @@ export const loadIcons: IconifyLoadIcons = API.loadIcons;
 /**
  * List available icons
  */
-export function listIcons(provider?: string, prefix?: string): string[] {
-	let allIcons = [];
-
-	// Get providers
-	let providers: string[];
-	if (typeof provider === 'string') {
-		providers = [provider];
-	} else {
-		providers = listStoredProviders();
-	}
-
-	// Get all icons
-	providers.forEach((provider) => {
-		let prefixes: string[];
-
-		if (typeof provider === 'string' && typeof prefix === 'string') {
-			prefixes = [prefix];
-		} else {
-			prefixes = listStoredPrefixes(provider);
-		}
-
-		prefixes.forEach((prefix) => {
-			const storage = getStorage(provider, prefix);
-			const icons = Object.keys(storage.icons).map(
-				(name) =>
-					(provider !== '' ? '@' + provider + ':' : '') +
-					prefix +
-					':' +
-					name
-			);
-			allIcons = allIcons.concat(icons);
-		});
-	});
-
-	return allIcons;
-}
+export { listIcons };
 
 /**
  * Add one icon

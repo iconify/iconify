@@ -3,7 +3,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import { RedundancyPendingItem } from '@cyberalien/redundancy';
-import { setAPIConfig, IconifyAPIConfig } from '../../lib/api/config';
+import { setAPIConfig } from '../../lib/api/config';
 import { setAPIModule, APIQueryParams } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 
