@@ -32,11 +32,9 @@ describe('Mounting component', () => {
 		expect(item.exists()).toBe(true);
 	});
 
-	test('without wrapper (deprecated)', () => {
+	test('without wrapper', () => {
 		const wrapper = mount(IconifyIcon, {});
-		// Should trigger deprecation notice, but test should pass. Remove this test when
-		// find() is gone. This is a problem with testing environment, not with component.
-		const item = wrapper.find(IconifyIcon);
+		const item = wrapper.findComponent(IconifyIcon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
 			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'

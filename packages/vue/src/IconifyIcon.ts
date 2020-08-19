@@ -126,7 +126,6 @@ const IconifyIcon = {
 				? storage[props.icon]
 				: fullIcon(props.icon);
 		if (!icon) {
-			console.log('Returning null');
 			return null;
 		}
 
