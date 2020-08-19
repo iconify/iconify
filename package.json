@@ -1,7 +1,7 @@
 {
   "name": "@iconify/iconify",
-  "description": "Unified SVG framework with over 50,000 icons to choose from",
-  "author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
+  "description": "Unified SVG framework with over 60,000 icons to choose from",
+  "author": "Iconify OÜ <cyberalien@gmail.com> (https://iconify.design)",
   "version": "1.0.7",
   "license": "(Apache-2.0 OR GPL-2.0)",
   "keywords": [
@@ -30,6 +30,6 @@
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "mocha": "^5.2.0",
-    "uglify-js": "^3.9.1"
+    "uglify-js": "^3.10.1"
   }
 }

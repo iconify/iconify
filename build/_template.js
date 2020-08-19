@@ -1,5 +1,5 @@
 /**
- * (c) Vjacheslav Trushkin <cyberalien@gmail.com>
+ * (c) Iconify OÜ <cyberalien@gmail.com>
  *
  * For the full copyright and license information, please view the license.txt or license.gpl.txt
  * files at https://github.com/iconify/iconify

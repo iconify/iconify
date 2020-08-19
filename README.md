@@ -6,7 +6,7 @@ Check out [Iconify master branch](https://github.com/iconify/iconify) for the la
 
 # What is Iconify?
 
-Iconify project makes it easy to add SVG icons to websites and offers over 50,000 icons to choose from.
+Iconify project makes it easy to add SVG icons to websites and offers over 60,000 icons to choose from.
 
 There are many fonts and SVG sets available, but they all have one thing in common: using any font or SVG set limits you
 to icons that are included in that set and forces browsers to load entire font or icons set. That limits developers to
@@ -47,7 +47,7 @@ Sample:
     
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/samples/icon2.png)
 
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 50,000 premade icons to choose from,
+That is it. Change `data-icon` value to the name of the icon you want to use. There are over 60,000 premade icons to choose from,
 including FontAwesome, Material Design Icons, Entypo+, Box Icons, Unicons and even several emoji sets.
 
 Do you want to make your own icon sets? Tools for making custom icon sets are available on GitHub. See documentation.
