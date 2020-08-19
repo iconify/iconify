@@ -2,7 +2,7 @@
 
 This is the repository for Iconify version 1.
 
-Check out [https://github.com/iconify/iconify](Iconify master branch) for the latest version.
+Check out [Iconify master branch](https://github.com/iconify/iconify) for the latest version.
 
 # What is Iconify?
 
@@ -129,7 +129,7 @@ Sample:
 ### Vertical alignment
 
 The trouble with using images in the text is they are aligned at baseline. Glyph fonts don't have that issue because
-they are rendered as fonts, vertically centred slightly below baseline so they look nicely aligned in text.
+they are rendered as fonts, vertically centred slightly below baseline, so they look nicely aligned in text.
 
 To solve that issue Iconify adds vertical alignment to all icons, placing them below baseline, so icons behave
 similar to glyph fonts, fitting perfectly into text.
@@ -336,4 +336,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license. 
 
-© 2016 - 2020 Vjacheslav Trushkin
+© 2016 - 2020 Iconify OÜ
