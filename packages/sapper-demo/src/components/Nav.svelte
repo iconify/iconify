@@ -1,8 +1,8 @@
 <script>
 	import IconifyIcon from '@iconify/svelte';
-	import homeIcon from '@iconify/icons-bi/house-door';
-	import blogIcon from '@iconify/icons-bi/file-text';
-	import aboutIcon from '@iconify/icons-bi/question-octagon';
+	import homeIcon from '@iconify-icons/bi/house-door';
+	import blogIcon from '@iconify-icons/bi/file-text';
+	import aboutIcon from '@iconify-icons/bi/question-octagon';
 
 	export let segment;
 </script>

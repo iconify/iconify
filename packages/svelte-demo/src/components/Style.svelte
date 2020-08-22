@@ -1,6 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import paperclipIcon from '@iconify/icons-dashicons/paperclip';
+	import paperclipIcon from '@iconify-icons/dashicons/paperclip';
 
 	const redIcon = 'color: red;';
 	const bigIcon = 'font-size: 40px;';

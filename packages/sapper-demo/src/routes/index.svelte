@@ -1,7 +1,7 @@
 <script>
 	// Render icon on server
 	import IconifyIcon from '@iconify/svelte';
-	import successIcon from '@iconify/icons-openmoji/artist-medium-light-skin-tone';
+	import successIcon from '@iconify-icons/openmoji/artist-medium-light-skin-tone';
 
 	// Dynamically load icon component, icon data and render it on client side
 	// Also replace <IconifyIcon /> with <svelte:component this={IconifyIcon} />
@@ -14,7 +14,7 @@
 	onMount(async () => {
 		let promises = [
 			import('@iconify/svelte'),
-			import('@iconify/icons-openmoji/artist-medium-light-skin-tone'),
+			import('@iconify-icons/openmoji/artist-medium-light-skin-tone'),
 		];
 		const results = await Promise.all(promises);
 		IconifyIcon = results[0].default;

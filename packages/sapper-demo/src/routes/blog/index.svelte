@@ -18,7 +18,7 @@
 	onMount(async () => {
 		const promises = [
 			import('@iconify/svelte'),
-			import('@iconify/icons-bi/link-45deg'),
+			import('@iconify-icons/bi/link-45deg'),
 		];
 		const results = await Promise.all(promises);
 		IconifyIcon = results[0].default;

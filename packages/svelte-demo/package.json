@@ -8,12 +8,12 @@
 		"start": "sirv public"
 	},
 	"devDependencies": {
-		"@iconify/icons-bx": "^1.0.3",
-		"@iconify/icons-dashicons": "^1.0.11",
-		"@iconify/svelte": "^1.0.1",
+		"@iconify-icons/bx": "^1.0.0",
+		"@iconify-icons/dashicons": "^1.0.0",
+		"@iconify/svelte": "^1.0.2",
 		"@rollup/plugin-commonjs": "11.0.2",
 		"@rollup/plugin-node-resolve": "^7.0.0",
-		"rollup": "^2.25.0",
+		"rollup": "^2.26.5",
 		"rollup-plugin-livereload": "^1.0.0",
 		"rollup-plugin-svelte": "^5.2.3",
 		"rollup-plugin-terser": "^7.0.0",

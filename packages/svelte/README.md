@@ -43,8 +43,8 @@ Install `@iconify/svelte` and packages for selected icon sets. Import component 
 
 ```js
 import IconifyIcon from '@iconify/svelte';
-import home from '@iconify/icons-mdi/home';
-import faceWithMonocle from '@iconify/icons-twemoji/face-with-monocle';
+import home from '@iconify-icons/mdi/home';
+import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
 ```
 
 Then use component with icon data as "icon" parameter:
@@ -170,7 +170,7 @@ Using Svelte scoped style:
 ```jsx
 <script>
 import IconifyIcon from '@iconify/svelte';
-import alertIcon from '@iconify/icons-mdi/alert';
+import alertIcon from '@iconify-icons/mdi/alert';
 </script>
 
 <style>
@@ -336,7 +336,7 @@ Example:
 	onMount(async () => {
 		const promises = [
 			import('@iconify/svelte'), // Component
-			import('@iconify/icons-bi/link-45deg'), // Icon #1
+			import('@iconify-icons/bi/link-45deg'), // Icon #1
 		];
 		const results = await Promise.all(promises);
 		IconifyIcon = results[0].default; // Component
@@ -368,20 +368,20 @@ You can find all available icons at https://iconify.design/icon-sets/
 
 Browse or search icons, click any icon and you will see a "Svelte" tab that will give you exact code for the Svelte component.
 
-Import format for each icon is "@iconify/icon-{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
+Import format for each icon is "@iconify-icons/{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
 
 Usage examples for a few popular icon sets:
 
 ### Bootstrap Icons
 
-Package: https://www.npmjs.com/package/@iconify/icons-bi
+Package: https://www.npmjs.com/package/@iconify-icons/bi
 
 Icons list: https://iconify.design/icon-sets/bi/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-bi
+npm install --save-dev @iconify-icons/bi
 ```
 
 Usage:
@@ -389,7 +389,7 @@ Usage:
 ```svelte
 <script>
 import IconifyIcon from '@iconify/svelte';
-import awardIcon from '@iconify/icons-bi/award';
+import awardIcon from '@iconify-icons/bi/award';
 
 function handleClick() {
 	alert('Award link clicked!');
@@ -406,14 +406,14 @@ function handleClick() {
 
 ### Remix Icons
 
-Package: https://www.npmjs.com/package/@iconify/icons-ri
+Package: https://www.npmjs.com/package/@iconify-icons/ri
 
 Icons list: https://iconify.design/icon-sets/ri/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-ri
+npm install --save-dev @iconify-icons/ri
 ```
 
 Usage:
@@ -421,7 +421,7 @@ Usage:
 ```html
 <script>
 	import IconifyIcon from '@iconify/svelte';
-	import alertLine from '@iconify/icons-ri/alert-line';
+	import alertLine from '@iconify-icons/ri/alert-line';
 </script>
 
 <style>
@@ -458,14 +458,14 @@ Usage:
 
 ### Simple Icons (big collection of logos)
 
-Package: https://www.npmjs.com/package/@iconify/icons-simple-icons
+Package: https://www.npmjs.com/package/@iconify-icons/simple-icons
 
 Icons list: https://iconify.design/icon-sets/simple-icons/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-simple-icons
+npm install --save-dev @iconify-icons/simple-icons
 ```
 
 Usage (in this example using string syntax):
@@ -473,7 +473,7 @@ Usage (in this example using string syntax):
 ```jsx
 <script>
 import IconifyIcon from '@iconify/svelte';
-import mozillafirefoxIcon from '@iconify/icons-simple-icons/mozillafirefox';
+import mozillafirefoxIcon from '@iconify-icons/simple-icons/mozillafirefox';
 </script>
 
 <p>
