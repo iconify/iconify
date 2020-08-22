@@ -9,13 +9,13 @@
 	},
 	"dependencies": {
 		"core-js": "^3.6.4",
-		"vue": "^2.6.11",
+		"vue": "^2.6.12",
 		"vue-class-component": "^7.2.5",
 		"vue-property-decorator": "^8.5.1"
 	},
 	"devDependencies": {
-		"@iconify/icons-bx": "^1.0.3",
-		"@iconify/icons-dashicons": "^1.0.11",
+		"@iconify-icons/bx": "^1.0.0",
+		"@iconify-icons/dashicons": "^1.0.0",
 		"@iconify/vue": "^1.0.3",
 		"@typescript-eslint/eslint-plugin": "^2.34.0",
 		"@typescript-eslint/parser": "^2.34.0",
@@ -31,6 +31,6 @@
 		"eslint-plugin-vue": "^6.1.2",
 		"prettier": "^1.19.1",
 		"typescript": "~3.7.5",
-		"vue-template-compiler": "^2.6.11"
+		"vue-template-compiler": "^2.6.12"
 	}
 }

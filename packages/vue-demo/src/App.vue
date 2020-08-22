@@ -38,10 +38,10 @@ import { Component, Vue } from 'vue-property-decorator';
 // import { PluginObject } from 'vue';
 
 import IconifyIcon from '@iconify/vue';
-import paperclipIcon from '@iconify/icons-dashicons/paperclip';
-import bxMinusCircle from '@iconify/icons-bx/bx-minus-circle';
-import bxError from '@iconify/icons-bx/bx-error';
-import bxUser from '@iconify/icons-bx/bx-user';
+import paperclipIcon from '@iconify-icons/dashicons/paperclip';
+import bxMinusCircle from '@iconify-icons/bx/bx-minus-circle';
+import bxError from '@iconify-icons/bx/bx-error';
+import bxUser from '@iconify-icons/bx/bx-user';
 
 import VueAttributes from './components/VueAttributes.vue';
 import InlineDemo from './components/Inline.vue';

@@ -15,15 +15,29 @@
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
-			<IconifyIcon icon="admin-users" style="vertical-align: .25em;" :inline="true" />
+			<IconifyIcon
+				icon="admin-users"
+				style="vertical-align: .25em;"
+				:inline="true"
+			/>
 		</div>
 		<div>
 			Inline icon with bound style as object (purple, 2em, no alignment):
-			<IconifyIcon icon="admin-users" v-bind:style="icon1StyleObj" :inline="true" color="green" />
+			<IconifyIcon
+				icon="admin-users"
+				v-bind:style="icon1StyleObj"
+				:inline="true"
+				color="green"
+			/>
 		</div>
 		<div>
 			Inline icon with bound style as string (purple, 2em, no alignment):
-			<IconifyIcon icon="admin-users" v-bind:style="icon1StyleStr" :inline="true" color="green" />
+			<IconifyIcon
+				icon="admin-users"
+				v-bind:style="icon1StyleStr"
+				:inline="true"
+				color="green"
+			/>
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
@@ -59,7 +73,11 @@
 		</div>
 		<div>
 			Reference:
-			<IconifyIcon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click to log)
+			<IconifyIcon
+				icon="admin-users"
+				ref="icon1"
+				@click="logReference"
+			/>&nbsp;(click to log)
 		</div>
 	</section>
 </template>
@@ -67,7 +85,7 @@
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import adminUsers from '@iconify/icons-dashicons/admin-users';
+import adminUsers from '@iconify-icons/dashicons/admin-users';
 
 IconifyIcon.addIcon('admin-users', adminUsers);
 

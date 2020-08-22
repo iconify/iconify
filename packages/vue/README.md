@@ -1,11 +1,11 @@
-# Iconify for Vue
+# Iconify for Vue 2
 
-Iconify for Vue is not yet another icon component! There are many of them already.
+Iconify for Vue 2 is not yet another icon component! There are many of them already.
 
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 60+ icon sets with 50,000 icons.
+-   Out of the box includes 80+ icon sets with 60,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -43,8 +43,8 @@ Install `@iconify/vue` and packages for selected icon sets. Import component fro
 
 ```js
 import IconifyIcon from '@iconify/vue';
-import home from '@iconify/icons-mdi/home';
-import faceWithMonocle from '@iconify/icons-twemoji/face-with-monocle';
+import home from '@iconify-icons/mdi/home';
+import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
 ```
 
 Then you need to add component and icon.
@@ -63,7 +63,7 @@ Object syntax passes icon data to the component.
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import areaChartOutlined from '@iconify/icons-ant-design/area-chart-outlined';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
 export default Vue.extend({
 	components: {
@@ -91,7 +91,7 @@ The same example without TypeScript:
 
 <script>
 import IconifyIcon from '@iconify/vue';
-import areaChartOutlined from '@iconify/icons-ant-design/area-chart-outlined';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
 export default {
 	components: {
@@ -122,7 +122,7 @@ With this method the icon needs to be added only once. That means if you have mu
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import areaChartOutlined from '@iconify/icons-ant-design/area-chart-outlined';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
 IconifyIcon.addIcon('chart', areaChartOutlined);
 
@@ -145,7 +145,7 @@ The same example without TypeScript:
 
 <script>
 import IconifyIcon from '@iconify/vue';
-import areaChartOutlined from '@iconify/icons-ant-design/area-chart-outlined';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
 IconifyIcon.addIcon('chart', areaChartOutlined);
 
@@ -444,20 +444,20 @@ You can find all available icons at https://iconify.design/icon-sets/
 
 Browse or search icons, click any icon and you will see a "Vue" tab that will give you exact code for the Vue component.
 
-Import format for each icon is "@iconify/icon-{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
+Import format for each icon is "@iconify-icons/{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
 
 Usage examples for a few popular icon sets:
 
 ### Material Design Icons
 
-Package: https://www.npmjs.com/package/@iconify/icons-mdi
+Package: https://www.npmjs.com/package/@iconify-icons/mdi
 
 Icons list: https://iconify.design/icon-sets/mdi/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-mdi
+npm install --save-dev @iconify-icons/mdi
 ```
 
 Usage (in this example using object syntax):
@@ -470,8 +470,8 @@ Usage (in this example using object syntax):
 
 <script>
 import IconifyIcon from '@iconify/vue';
-import homeIcon from '@iconify/icons-mdi/home';
-import accountIcon from '@iconify/icons-mdi/account';
+import homeIcon from '@iconify-icons/mdi/home';
+import accountIcon from '@iconify-icons/mdi/account';
 
 export default {
 	components: {
@@ -491,14 +491,14 @@ export default {
 
 ### Simple Icons (big collection of logos)
 
-Package: https://www.npmjs.com/package/@iconify/icons-simple-icons
+Package: https://www.npmjs.com/package/@iconify-icons/simple-icons
 
 Icons list: https://iconify.design/icon-sets/simple-icons/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-simple-icons
+npm install --save-dev @iconify-icons/simple-icons
 ```
 
 Usage (in this example using string syntax):
@@ -513,7 +513,7 @@ Usage (in this example using string syntax):
 
 <script>
 import IconifyIcon from '@iconify/vue';
-import mozillafirefoxIcon from '@iconify/icons-simple-icons/mozillafirefox';
+import mozillafirefoxIcon from '@iconify-icons/simple-icons/mozillafirefox';
 
 IconifyIcon.addIcon('firefox', mozillafirefoxIcon);
 
@@ -527,14 +527,14 @@ export default {
 
 ### DashIcons
 
-Package: https://www.npmjs.com/package/@iconify/icons-dashicons
+Package: https://www.npmjs.com/package/@iconify-icons/dashicons
 
 Icons list: https://iconify.design/icon-sets/dashicons/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-dashicons
+npm install --save-dev @iconify-icons/dashicons
 ```
 
 Usage (in this example using object syntax with TypeScript):
@@ -550,7 +550,7 @@ Usage (in this example using object syntax with TypeScript):
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import imageRotate from '@iconify/icons-dashicons/image-rotate';
+import imageRotate from '@iconify-icons/dashicons/image-rotate';
 
 export default Vue.extend({
 	components: {
@@ -580,14 +580,14 @@ svg {
 
 ### OpenMoji
 
-Package: https://www.npmjs.com/package/@iconify/icons-openmoji
+Package: https://www.npmjs.com/package/@iconify-icons/openmoji
 
 Icons list: https://iconify.design/icon-sets/openmoji/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-openmoji
+npm install --save-dev @iconify-icons/openmoji
 ```
 
 Usage:
@@ -604,8 +604,8 @@ Usage (in this example using string syntax with TypeScript):
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import autonomousCar from '@iconify/icons-openmoji/autonomous-car';
-import exhaustGasesCar from '@iconify/icons-openmoji/exhaust-gases-car';
+import autonomousCar from '@iconify-icons/openmoji/autonomous-car';
+import exhaustGasesCar from '@iconify-icons/openmoji/exhaust-gases-car';
 
 IconifyIcon.addIcon('autonomous-car', autonomousCar);
 IconifyIcon.addIcon('gas-car', exhaustGasesCar);

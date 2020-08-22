@@ -4,7 +4,7 @@
 
 <script>
 import IconifyIcon from '@iconify/vue';
-import adminCustomizer from '@iconify/icons-dashicons/admin-customizer';
+import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
 export default {
 	components: {

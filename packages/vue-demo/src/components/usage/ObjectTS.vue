@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IconifyIcon from '@iconify/vue';
-import adminCustomizer from '@iconify/icons-dashicons/admin-customizer';
+import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
 export default Vue.extend({
 	components: {
