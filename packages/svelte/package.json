@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://github.com/iconify/iconify",
@@ -11,7 +11,7 @@
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/svelte"
 	},
-	"svelte": "src/index.js",
+	"svelte": "dist/Icon.svelte",
 	"module": "dist/index.mjs",
 	"main": "dist/index.js",
 	"scripts": {
