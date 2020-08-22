@@ -1,11 +1,11 @@
 import React from 'react';
 import { Icon, InlineIcon, addIcon } from '@iconify/react';
-import accountIcon from '@iconify/icons-mdi-light/account';
-import alertIcon from '@iconify/icons-mdi-light/alert';
-import homeIcon from '@iconify/icons-mdi-light/home';
-import presentationPlay from '@iconify/icons-mdi-light/presentation-play';
-import checkedIcon from '@iconify/icons-uil/check-circle';
-import uncheckedIcon from '@iconify/icons-uil/circle';
+import accountIcon from '@iconify-icons/mdi-light/account';
+import alertIcon from '@iconify-icons/mdi-light/alert';
+import homeIcon from '@iconify-icons/mdi-light/home';
+import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
+import checkedIcon from '@iconify-icons/uil/check-circle';
+import uncheckedIcon from '@iconify-icons/uil/circle';
 
 import { Checkbox } from './components/Checkbox';
 import { InlineDemo } from './components/Inline';

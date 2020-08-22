@@ -43,8 +43,8 @@ Install `@iconify/react` and packages for selected icon sets. Import `Icon` and/
 
 ```typescript
 import { Icon, InlineIcon } from '@iconify/react';
-import home from '@iconify/icons-mdi-light/home';
-import faceWithMonocle from '@iconify/icons-twemoji/face-with-monocle';
+import home from '@iconify-icons/mdi-light/home';
+import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
 ```
 
 Then use `Icon` or `InlineIcon` component with icon data as "icon" parameter:
@@ -63,7 +63,7 @@ With this method the icon needs to be added only once. That means if you have mu
 ```jsx
 import React from 'react';
 import { Icon, InlineIcon, addIcon } from '@iconify/react';
-import homeIcon from '@iconify/icons-mdi-light/home';
+import homeIcon from '@iconify-icons/mdi-light/home';
 
 addIcon('home', homeIcon);
 
@@ -317,28 +317,28 @@ You can find all available icons at https://iconify.design/icon-sets/
 
 Browse or search icons, click any icon and you will see a "React" tab that will give you exact code for the React component.
 
-Import format for each icon is "@iconify/icon-{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
+Import format for each icon is "@iconify-icons/{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
 
 Usage examples for a few popular icon packages:
 
 ### Material Design Icons
 
-Package: https://www.npmjs.com/package/@iconify/icons-mdi
+Package: https://www.npmjs.com/package/@iconify-icons/mdi
 
 Icons list: https://iconify.design/icon-sets/mdi/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-mdi
+npm install --save-dev @iconify-icons/mdi
 ```
 
 Usage:
 
 ```js
 import { Icon, InlineIcon } from '@iconify/react';
-import home from '@iconify/icons-mdi/home';
-import accountCheck from '@iconify/icons-mdi/account-check';
+import home from '@iconify-icons/mdi/home';
+import accountCheck from '@iconify-icons/mdi/account-check';
 ```
 
 ```jsx
@@ -348,22 +348,22 @@ import accountCheck from '@iconify/icons-mdi/account-check';
 
 ### Simple Icons (big collection of logos)
 
-Package: https://www.npmjs.com/package/@iconify/icons-simple-icons
+Package: https://www.npmjs.com/package/@iconify-icons/simple-icons
 
 Icons list: https://iconify.design/icon-sets/simple-icons/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-simple-icons
+npm install --save-dev @iconify-icons/simple-icons
 ```
 
 Usage:
 
 ```js
 import { Icon, InlineIcon } from '@iconify/react';
-import behanceIcon from '@iconify/icons-simple-icons/behance';
-import mozillafirefoxIcon from '@iconify/icons-simple-icons/mozillafirefox';
+import behanceIcon from '@iconify-icons/simple-icons/behance';
+import mozillafirefoxIcon from '@iconify-icons/simple-icons/mozillafirefox';
 ```
 
 ```jsx
@@ -376,22 +376,22 @@ import mozillafirefoxIcon from '@iconify/icons-simple-icons/mozillafirefox';
 
 ### Font Awesome 5 Solid
 
-Package: https://www.npmjs.com/package/@iconify/icons-fa-solid
+Package: https://www.npmjs.com/package/@iconify-icons/fa-solid
 
 Icons list: https://iconify.design/icon-sets/fa-solid/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-fa-solid
+npm install --save-dev @iconify-icons/fa-solid
 ```
 
 Usage:
 
 ```js
 import { Icon, InlineIcon } from '@iconify/react';
-import toggleOn from '@iconify/icons-fa-solid/toggle-on';
-import chartBar from '@iconify/icons-fa-solid/chart-bar';
+import toggleOn from '@iconify-icons/fa-solid/toggle-on';
+import chartBar from '@iconify-icons/fa-solid/chart-bar';
 ```
 
 ```jsx
@@ -401,22 +401,22 @@ import chartBar from '@iconify/icons-fa-solid/chart-bar';
 
 ### Noto Emoji
 
-Package: https://www.npmjs.com/package/@iconify/icons-noto
+Package: https://www.npmjs.com/package/@iconify-icons/noto
 
 Icons list: https://iconify.design/icon-sets/noto/
 
 Installation:
 
 ```bash
-npm install --save-dev @iconify/icons-noto
+npm install --save-dev @iconify-icons/noto
 ```
 
 Usage:
 
 ```js
 import { Icon, InlineIcon } from '@iconify/react';
-import greenApple from '@iconify/icons-noto/green-apple';
-import huggingFace from '@iconify/icons-noto/hugging-face';
+import greenApple from '@iconify-icons/noto/green-apple';
+import huggingFace from '@iconify-icons/noto/hugging-face';
 ```
 
 ```jsx

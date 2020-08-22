@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, InlineIcon, enableCache } from '@iconify/react-with-api';
-import accountIcon from '@iconify/icons-mdi-light/account';
-import homeIcon from '@iconify/icons-mdi-light/home';
+import accountIcon from '@iconify-icons/mdi-light/account';
+import homeIcon from '@iconify-icons/mdi-light/home';
 
 import { Checkbox } from './components/Checkbox';
 import { InlineDemo } from './components/Inline';

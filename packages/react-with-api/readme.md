@@ -68,8 +68,8 @@ This component can behave like `@iconify/react` too. Instead of icon names you c
 
 ```typescript
 import { Icon, InlineIcon } from '@iconify/react-with-api';
-import home from '@iconify/icons-mdi-light/home';
-import faceWithMonocle from '@iconify/icons-twemoji/face-with-monocle';
+import home from '@iconify-icons/mdi-light/home';
+import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
 ```
 
 Then use `Icon` or `InlineIcon` component with icon data as "icon" parameter:

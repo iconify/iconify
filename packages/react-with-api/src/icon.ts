@@ -146,8 +146,8 @@ function toggleCache(storage: IconifyCacheType, value: boolean): void {
 	}
 }
 
-export function enableCache(storage: IconifyCacheType, value?: boolean): void {
-	toggleCache(storage, typeof value === 'boolean' ? value : true);
+export function enableCache(storage: IconifyCacheType): void {
+	toggleCache(storage, true);
 }
 
 export function disableCache(storage: IconifyCacheType): void {

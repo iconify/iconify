@@ -28,8 +28,8 @@
 		]
 	},
 	"devDependencies": {
-		"@iconify/icons-mdi-light": "^1.0.5",
-		"@iconify/icons-uil": "^1.0.14",
+		"@iconify-icons/mdi-light": "^1.0.0",
+		"@iconify-icons/uil": "^1.0.0",
 		"@iconify/react": "^2.0.0-beta.3"
 	}
 }
