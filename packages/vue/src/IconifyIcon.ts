@@ -1,5 +1,4 @@
-import _Vue, { PluginFunction, VueConstructor, VNode, VNodeData } from 'vue';
-import { FunctionalRenderContext } from 'vue/src/core';
+import { h, VNode } from 'vue';
 
 import { IconifyIcon as IconifyIconData } from '@iconify/types';
 import {
@@ -23,7 +22,7 @@ import { merge } from '@iconify/core/lib/misc/merge';
 /**
  * Export types that could be used in component
  */
-export {
+export type {
 	IconifyIconData,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
@@ -60,15 +59,6 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	verticalFlip?: boolean;
 }
 
-// Interface for functional component context that is missing in Vue types.
-// Missing some unused stuff: children, slots, scopedSlots, injections
-// interface FunctionalRenderContext {
-// 	props: { [key: string]: unknown };
-// 	data?: VNodeData;
-// 	parent?: VNode;
-// 	listeners?: object; // alias of data.on
-// }
-
 /**
  * Default SVG attributes
  */
@@ -84,12 +74,20 @@ const svgDefaults = {
  * Aliases for customisations.
  * In Vue 'v-' properties are reserved, so v-align and v-flip must be renamed
  */
-const customisationAliases = {
-	horizontalAlign: 'hAlign',
-	verticalAlign: 'vAlign',
-	horizontalFlip: 'hFlip',
-	verticalFlip: 'vFlip',
-};
+let customisationAliases = {};
+['horizontal', 'vertical'].forEach((prefix) => {
+	['Align', 'Flip'].forEach((suffix) => {
+		const attr = prefix.slice(0, 1) + suffix;
+		// vertical-align
+		customisationAliases[prefix + '-' + suffix.toLowerCase()] = attr;
+		// v-align
+		customisationAliases[
+			prefix.slice(0, 1) + '-' + suffix.toLowerCase()
+		] = attr;
+		// verticalAlign
+		customisationAliases[prefix + suffix] = attr;
+	});
+});
 
 /**
  * Storage for icons referred by name
@@ -97,222 +95,204 @@ const customisationAliases = {
 const storage: Record<string, Required<IconifyIconData>> = Object.create(null);
 
 /**
- * Interface for style variable
+ * Interface for inline style
  */
-type VNodeStyle = (string | Record<string, unknown>)[];
+type VStyleObject = Record<string, unknown>;
+interface VStyleAsString {
+	type: 'string';
+	style: string;
+}
+interface VStyleAsArray {
+	type: 'array';
+	style: VStyleObject[];
+}
+type VStyle = VStyleAsString | VStyleAsArray;
+
+/**
+ * TypeScript guard, never used
+ */
+function assertNever(value: never) {
+	// Do nothing
+}
 
 /**
  * IconifyIcon component
  */
-const IconifyIcon = {
-	name: 'IconifyIcon',
-	functional: true,
+const IconifyIcon = (
+	inline: boolean,
+	props: Record<string, unknown>,
+	context
+): VNode => {
+	const attribs = (props as unknown) as IconifyIconProps;
 
-	/**
-	 * Render icon
-	 *
-	 * @param createElement
-	 * @param context
-	 */
-	render(
-		createElement: typeof _Vue.prototype.$createElement,
-		context: FunctionalRenderContext
-	): VNode {
-		const props = context.props;
+	// Split properties
+	const icon =
+		typeof attribs.icon === 'string'
+			? storage[attribs.icon]
+			: fullIcon(attribs.icon);
+	if (!icon) {
+		return null;
+	}
 
-		// Split properties
-		const icon =
-			typeof props.icon === 'string'
-				? storage[props.icon]
-				: fullIcon(props.icon);
-		if (!icon) {
-			return null;
-		}
+	const customisations = merge(
+		defaults,
+		{ inline },
+		props as IconifyIconCustomisations
+	) as FullIconCustomisations;
+	const componentProps = merge(svgDefaults);
 
-		const customisations = merge(
-			defaults,
-			props as IconifyIconCustomisations
-		) as FullIconCustomisations;
-		const componentProps = merge(svgDefaults);
+	// Copy style
+	let style: VStyle;
+	let hasStyle = true;
+	if (typeof props.style === 'string') {
+		// String: copy it
+		style = {
+			type: 'string',
+			style: props.style,
+		};
+	} else if (
+		typeof props.style === 'object' &&
+		props.style instanceof Array
+	) {
+		// Array of objects
+		style = {
+			type: 'array',
+			style: props.style.slice(0),
+		};
+	} else if (typeof props.style === 'object' && props.style !== null) {
+		// Object
+		style = {
+			type: 'array',
+			style: [props.style as VStyleObject],
+		};
+	} else {
+		// No style
+		style = {
+			type: 'string',
+			style: '',
+		};
+		hasStyle = false;
+	}
 
-		// Copy style
-		let stylesList: VNodeStyle;
-		let styleString: string;
-		let isStyleString = false;
-		let hasStyle = true;
+	// Get element properties
+	let styleType: typeof style.type;
+	for (let key in props) {
+		const value = props[key];
+		switch (key) {
+			// Properties to ignore
+			case 'icon':
+			case 'style':
+				break;
 
-		function setStyle(value: unknown): boolean {
-			if (typeof value === 'string') {
-				// Style as string
-				styleString = value;
-				isStyleString = true;
-				return true;
-			}
-			if (typeof value !== 'object') {
-				// Unknown type ???
-				return false;
-			}
-
-			stylesList = value instanceof Array ? value.slice(0) : [value];
-			return true;
-		}
-
-		const contextData = context.data;
-		if (
-			!contextData ||
-			(!setStyle(contextData.staticStyle) && !setStyle(contextData.style))
-		) {
-			stylesList = [];
-			hasStyle = false;
-		}
-
-		// Get element properties
-		for (let key in props) {
-			const value = props[key];
-			switch (key) {
-				// Properties to ignore
-				case 'icon':
-				case 'style':
-					break;
-
-				// Flip as string: 'horizontal,vertical'
-				case 'flip':
+			// Flip as string: 'horizontal,vertical'
+			case 'flip':
+				if (typeof value === 'string') {
 					flipFromString(customisations, value);
-					break;
+				}
+				break;
 
-				// Alignment as string
-				case 'align':
+			// Alignment as string
+			case 'align':
+				if (typeof value === 'string') {
 					alignmentFromString(customisations, value);
-					break;
+				}
+				break;
 
-				// Color: copy to style
-				case 'color':
-					if (isStyleString) {
-						styleString = 'color: ' + value + '; ' + styleString;
-					} else {
-						stylesList.unshift({
+			// Color: copy to style
+			case 'color':
+				styleType = style.type;
+				switch (styleType) {
+					case 'string':
+						(style as VStyleAsString).style =
+							'color: ' + value + '; ' + style.style;
+						hasStyle = true;
+						break;
+
+					case 'array':
+						(style as VStyleAsArray).style.unshift({
 							color: value,
 						});
-					}
-					hasStyle = true;
-					break;
+						break;
 
-				// Rotation as string
-				case 'rotate':
-					if (typeof value !== 'number') {
-						customisations[key] = rotateFromString(value);
-					} else {
-						componentProps[key] = value;
-					}
-					break;
+					default:
+						assertNever(styleType);
+				}
+				break;
 
-				// Remove aria-hidden
-				case 'ariaHidden':
-				case 'aria-hidden':
-					// Vue transforms 'aria-hidden' property to 'ariaHidden'
-					if (value !== true && value !== 'true') {
-						delete componentProps['aria-hidden'];
-					}
-					break;
+			// Rotation as string
+			case 'rotate':
+				if (typeof value === 'string') {
+					customisations[key] = rotateFromString(value);
+				} else if (typeof value === 'number') {
+					componentProps[key] = value;
+				}
+				break;
 
-				default:
-					if (customisationAliases[key] !== void 0) {
-						// Aliases for customisations
-						customisations[customisationAliases[key]] = value;
-					} else if (defaults[key] === void 0) {
-						// Copy missing property if it does not exist in customisations
-						componentProps[key] = value;
-					}
-			}
+			// Remove aria-hidden
+			case 'ariaHidden':
+			case 'aria-hidden':
+				// Vue transforms 'aria-hidden' property to 'ariaHidden'
+				if (value !== true && value !== 'true') {
+					delete componentProps['aria-hidden'];
+				}
+				break;
+
+			default:
+				if (customisationAliases[key] !== void 0) {
+					// Aliases for customisations
+					customisations[customisationAliases[key]] = value;
+				} else if (defaults[key] === void 0) {
+					// Copy missing property if it does not exist in customisations
+					componentProps[key] = value;
+				}
 		}
+	}
 
-		// Generate icon
-		const item = iconToSVG(icon, customisations);
+	// Generate icon
+	const item = iconToSVG(icon, customisations);
 
-		// Add icon stuff
-		for (let key in item.attributes) {
-			componentProps[key] = item.attributes[key];
-		}
+	// Add icon stuff
+	for (let key in item.attributes) {
+		componentProps[key] = item.attributes[key];
+	}
 
-		if (item.inline) {
-			if (isStyleString) {
-				styleString = 'vertical-align: -0.125em; ' + styleString;
-			} else {
-				stylesList.unshift({
+	if (item.inline) {
+		styleType = style.type;
+		switch (styleType) {
+			case 'string':
+				(style as VStyleAsString).style =
+					'vertical-align: -0.125em; ' + style.style;
+				hasStyle = true;
+				break;
+
+			case 'array':
+				(style as VStyleAsArray).style.unshift({
 					verticalAlign: '-0.125em',
 				});
-			}
-			hasStyle = true;
+				break;
+
+			default:
+				assertNever(styleType);
 		}
+	}
 
-		// Generate node data
-		const data: VNodeData = {
-			attrs: componentProps,
-			domProps: {
-				innerHTML: replaceIDs(item.body),
-			},
-		};
-		if (hasStyle) {
-			data.style = isStyleString ? styleString : stylesList;
-		}
+	// Add innerHTML and style to props
+	componentProps['innerHTML'] = replaceIDs(item.body);
+	if (hasStyle) {
+		componentProps['style'] = style.style;
+	}
 
-		if (contextData) {
-			['on', 'ref'].forEach((attr) => {
-				if (contextData[attr] !== void 0) {
-					data[attr] = contextData[attr];
-				}
-			});
-			['staticClass', 'class'].forEach((attr) => {
-				if (contextData[attr] !== void 0) {
-					data.class = contextData[attr];
-				}
-			});
-		}
-
-		return createElement('svg', data);
-	},
-
-	/**
-	 * Add icon to storage that can later be used by name, for example: <iconify-icon icon="home" />
-	 */
-	addIcon: (name: string, data: IconifyIconData) => {
-		storage[name] = fullIcon(data);
-	},
+	// Render icon
+	return h('svg', componentProps);
 };
-
-// Install function
-interface InstallFunction extends PluginFunction<unknown> {
-	installed?: boolean;
-}
-interface InstallableComponent extends VueConstructor<_Vue> {
-	install: InstallFunction;
-}
-
-const install: InstallFunction = function installIconifyIcon(Vue: typeof _Vue) {
-	if (install.installed) return;
-	install.installed = true;
-	Vue.component('IconifyIcon', IconifyIcon);
-};
-
-// Create module definition for Vue.use()
-const plugin = {
-	install,
-};
-
-// Auto-install when vue is found (eg. in browser via <script> tag)
-let GlobalVue = null;
-if (typeof window !== 'undefined') {
-	GlobalVue = window.Vue;
-} else if (typeof global !== 'undefined') {
-	GlobalVue = ((global as unknown) as Record<string, unknown>).Vue;
-}
-if (GlobalVue) {
-	GlobalVue.use(plugin);
-}
-
-// Inject install function into component - allows component
-// to be registered via Vue.use() as well as Vue.component()
-((IconifyIcon as unknown) as InstallableComponent).install = install;
 
 // Export component
-export default IconifyIcon;
+export const Icon = IconifyIcon.bind(null, false);
+export const InlineIcon = IconifyIcon.bind(null, true);
+
+/**
+ * Add icon to storage
+ */
+export function addIcon(name: string, data: IconifyIconData) {
+	storage[name] = fullIcon(data);
+}

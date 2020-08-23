@@ -1,17 +1,16 @@
 <template>
-	<iconify-icon icon="customizer" height="20" :style="{ color: 'blue' }" />
+	<Icon icon="customizer" height="20" :style="{ color: 'blue' }" />
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon, addIcon } from '@iconify/vue';
 import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
-IconifyIcon.addIcon('customizer', adminCustomizer);
+addIcon('customizer', adminCustomizer);
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
-});
+};
 </script>

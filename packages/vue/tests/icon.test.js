@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import IconifyIcon from '../';
+import { Icon, addIcon } from '../';
 
 const iconData = {
 	body:
@@ -15,29 +15,30 @@ const iconDataWithID = {
 	height: 128,
 };
 
-// Spacing for HTML matches
-const spacing = (count) => {
-	return '\n' + '  '.repeat(count);
-};
+/*
+
+Note: findComponent() tests are temporarily disabled because it is bugged in current version of test-utils
+
+*/
 
 describe('Mounting component', () => {
 	test('with wrapper', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon />`,
+			components: { Icon },
+			template: `<Icon />`,
 		};
 
 		const wrapper = mount(Wrapper, {});
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 	});
 
 	test('without wrapper', () => {
-		const wrapper = mount(IconifyIcon, {});
-		const item = wrapper.findComponent(IconifyIcon);
+		const wrapper = mount(Icon, {});
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
 		);
 	});
 });
@@ -45,8 +46,8 @@ describe('Mounting component', () => {
 describe('Rendering icon', () => {
 	test('as object', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -55,24 +56,22 @@ describe('Rendering icon', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('as string', () => {
 		const iconName = 'test-string';
-		IconifyIcon.addIcon(iconName, iconData);
+		addIcon(iconName, iconData);
 
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' />`,
 			data() {
 				return {
 					icon: iconName,
@@ -81,21 +80,19 @@ describe('Rendering icon', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('replacing id', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' />`,
 			data() {
 				return {
 					icon: iconDataWithID,
@@ -104,7 +101,7 @@ describe('Rendering icon', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).not.toMatch('id="ssvg-id-1st-place-medala"');
 	});
@@ -113,8 +110,8 @@ describe('Rendering icon', () => {
 describe('Passing attributes', () => {
 	test('title', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' title='Icon!' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' title='Icon!' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -123,21 +120,19 @@ describe('Passing attributes', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" title="Icon!" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" title="Icon!" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('aria-hidden', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :aria-hidden='false' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :aria-hidden='false' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -146,21 +141,19 @@ describe('Passing attributes', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('ariaHidden', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :ariaHidden='false' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :ariaHidden='false' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -169,21 +162,19 @@ describe('Passing attributes', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('attributes that cannot change', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' viewBox='0 0 0 0' preserveAspectRatio='none' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' viewBox='0 0 0 0' preserveAspectRatio='none' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -192,14 +183,12 @@ describe('Passing attributes', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
 			// same values, but different order
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" width="1em" height="1em">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" width="1em" height="1em">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
@@ -208,8 +197,8 @@ describe('Passing attributes', () => {
 describe('Dimensions', () => {
 	test('height', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :height='height' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :height='height' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -219,21 +208,19 @@ describe('Dimensions', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('width and height', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :width='width' :height='height' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :width='width' :height='height' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -244,21 +231,19 @@ describe('Dimensions', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="32" height="48" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="32" height="48" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
 
 	test('auto', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :height='height' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :height='height' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -268,13 +253,11 @@ describe('Dimensions', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
-				spacing(1) +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
-				spacing(0) +
 				'</svg>'
 		);
 	});
@@ -283,8 +266,8 @@ describe('Dimensions', () => {
 describe('Rotation', () => {
 	test('number', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :rotate='rotate' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :rotate='rotate' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -294,15 +277,15 @@ describe('Rotation', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('rotate(90 ');
 	});
 
 	test('string', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' rotate='270deg' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' rotate='270deg' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -311,7 +294,7 @@ describe('Rotation', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('rotate(-90 ');
 	});
@@ -320,8 +303,8 @@ describe('Rotation', () => {
 describe('Flip', () => {
 	test('boolean', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :horizontalFlip='horizontalFlip' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :horizontalFlip='horizontalFlip' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -331,15 +314,15 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('scale(-1 1)');
 	});
 
 	test('string', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' flip='vertical' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' flip='vertical' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -348,15 +331,15 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('scale(1 -1)');
 	});
 
 	test('string and boolean', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' flip='horizontal' :verticalFlip='true' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' flip='horizontal' :verticalFlip='true' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -365,7 +348,7 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		// horizontal + vertical = 180deg rotation
 		expect(item.html()).toMatch('rotate(180 ');
@@ -373,8 +356,8 @@ describe('Flip', () => {
 
 	test('string for boolean attribute', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' horizontalFlip='true' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' horizontalFlip='true' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -383,7 +366,7 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('scale(-1 1)');
 	});
@@ -391,8 +374,8 @@ describe('Flip', () => {
 	test('shorthand and boolean', () => {
 		// 'flip' is processed after 'hFlip', overwriting value
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' flip='horizontal' :hFlip='false' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' flip='horizontal' :hFlip='false' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -401,15 +384,15 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('scale(-1 1)');
 	});
 
 	test('shorthand and boolean as string', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' flip='vertical' horizontalFlip='true' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' flip='vertical' horizontalFlip='true' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -418,7 +401,7 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		// horizontal + vertical = 180deg rotation
 		expect(item.html()).toMatch('rotate(180 ');
@@ -426,8 +409,8 @@ describe('Flip', () => {
 
 	test('wrong case', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' :verticalflip='verticalflip' :horizontalflip='true' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' :verticalflip='verticalflip' :horizontalflip='true' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -437,7 +420,7 @@ describe('Flip', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).not.toMatch('scale(');
 		expect(item.html()).not.toMatch('rotate(');
@@ -447,8 +430,8 @@ describe('Flip', () => {
 describe('Alignment and slice', () => {
 	test('vAlign and slice', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' vAlign='top' :slice='true' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' vAlign='top' :slice='true' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -457,15 +440,15 @@ describe('Alignment and slice', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('preserveAspectRatio="xMidYMin slice"');
 	});
 
 	test('string', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' align='left bottom' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' align='left bottom' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -474,15 +457,15 @@ describe('Alignment and slice', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('preserveAspectRatio="xMinYMax meet"');
 	});
 
 	test('Alignment aliases', () => {
 		const Wrapper = {
-			components: { IconifyIcon },
-			template: `<iconify-icon :icon='icon' verticalAlign='top' horizontalAlign='right' />`,
+			components: { Icon },
+			template: `<Icon :icon='icon' verticalAlign='top' horizontalAlign='right' />`,
 			data() {
 				return {
 					icon: iconData,
@@ -491,7 +474,7 @@ describe('Alignment and slice', () => {
 		};
 		const wrapper = mount(Wrapper, {});
 
-		const item = wrapper.findComponent(IconifyIcon);
+		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toMatch('preserveAspectRatio="xMaxYMin meet"');
 	});

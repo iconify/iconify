@@ -3,28 +3,27 @@
 		<h1>Class (components/Class.vue)</h1>
 		<div>
 			Default icon:
-			<iconify-icon icon="experiment" />
+			<Icon icon="experiment" />
 		</div>
 		<div>
 			Red color:
-			<iconify-icon icon="experiment" class="red-color" />
-			<iconify-icon icon="experiment" :class="redClass" />
+			<Icon icon="experiment" class="red-color" />
+			<Icon icon="experiment" :class="redClass" />
 		</div>
 		<div>
 			Red color and 20px:
-			<iconify-icon icon="experiment" class="red-color big-icon" />
-			<iconify-icon icon="experiment" :class="[redClass, bigIcon]" />
+			<Icon icon="experiment" class="red-color big-icon" />
+			<Icon icon="experiment" :class="[redClass, bigIcon]" />
 		</div>
 	</section>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data: () => {
 		return {
@@ -32,7 +31,7 @@ export default Vue.extend({
 			bigIcon: 'big-icon',
 		};
 	},
-});
+};
 </script>
 
 <style>

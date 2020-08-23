@@ -3,57 +3,53 @@
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
 			Icon with color (red):
-			<iconify-icon :icon="icon" color="red" :inline="true" />
+			<InlineIcon :icon="icon" color="red" />
 		</div>
 		<div>
 			Icon size (2em):
-			<IconifyIcon icon="admin-users" height="2em" />
+			<Icon icon="admin-users" height="2em" />
 		</div>
 		<div>
 			Icon style as string (red):
-			<IconifyIcon icon="admin-users" style="color: red;" />
+			<Icon icon="admin-users" style="color: red;" />
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
-			<IconifyIcon
+			<Icon
 				icon="admin-users"
-				style="vertical-align: .25em;"
+				style="vertical-align: 0.25em;"
 				:inline="true"
 			/>
 		</div>
 		<div>
 			Inline icon with bound style as object (purple, 2em, no alignment):
-			<IconifyIcon
+			<InlineIcon
 				icon="admin-users"
 				v-bind:style="icon1StyleObj"
-				:inline="true"
 				color="green"
 			/>
 		</div>
 		<div>
 			Inline icon with bound style as string (purple, 2em, no alignment):
-			<IconifyIcon
+			<InlineIcon
 				icon="admin-users"
 				v-bind:style="icon1StyleStr"
-				:inline="true"
 				color="green"
 			/>
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
-			<IconifyIcon
+			<InlineIcon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, fontSizeStyleObj2]"
-				:inline="true"
 				color="green"
 			/>
 		</div>
 		<div>
 			Dynamic style (red / green, shadow):
-			<IconifyIcon
+			<InlineIcon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
-				:inline="true"
 				v-on:click="
 					dynamicStyleObj.color =
 						dynamicStyleObj.color === 'red' ? 'green' : 'red'
@@ -62,18 +58,17 @@
 		</div>
 		<div>
 			Dynamic style (shadow / color):
-			<IconifyIcon
+			<InlineIcon
 				icon="admin-users"
 				v-bind:style="[
 					showShadow ? boxShadowStyleObj : dynamicStyleObj,
 				]"
-				:inline="true"
 				v-on:click="showShadow = !showShadow"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Reference:
-			<IconifyIcon
+			<Icon
 				icon="admin-users"
 				ref="icon1"
 				@click="logReference"
@@ -83,15 +78,15 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon, InlineIcon, addIcon } from '@iconify/vue';
 import adminUsers from '@iconify-icons/dashicons/admin-users';
 
-IconifyIcon.addIcon('admin-users', adminUsers);
+addIcon('admin-users', adminUsers);
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		Icon,
+		InlineIcon,
 	},
 	data: () => {
 		return {
@@ -124,9 +119,9 @@ export default Vue.extend({
 		};
 	},
 	methods: {
-		logReference: function() {
+		logReference: function () {
 			console.log('References:', this.$refs);
 		},
 	},
-});
+};
 </script>

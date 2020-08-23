@@ -67,10 +67,19 @@ Other packages:
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [React with API demo](./packages/react-demo-with-api/) - demo for React component that loads icons from Iconify API. Run `npm start` to start demo.
--   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm serve` to start demo.
+-   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
+
+### Legacy packages
+
+Unfortunately Lerna does not support several versions of the same package. Because of that, some packages were moved from "packages" to "archive". This applies only to packages that were replaced by newer packages that aren't backwards compatible (and packages that rely on those packages).
+
+Legacy packages:
+
+-   [Vue 2 component](./archive/vue2/) - Vue 2 component. It has been replaced by [Vue 3 component](./packages/vue/).
+-   [Vue 2 demo](./archive/vue2-demo/) - demo for Vue 2 component. Run `npm serve` to start demo.
 
 ## Installation
 

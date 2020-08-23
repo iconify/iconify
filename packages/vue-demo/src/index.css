@@ -1,0 +1,56 @@
+#app {
+	font-family: Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: left;
+	color: #2c3e50;
+	font-size: 16px;
+	line-height: 1.5;
+}
+section {
+	border-bottom: 1px dotted #ccc;
+	padding: 16px;
+}
+section:last-child {
+	border-bottom-width: 0;
+}
+section:after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+h1 {
+	margin: 0 0 16px;
+	padding: 0;
+	font-size: 24px;
+	font-weight: normal;
+}
+p {
+	margin: 12px 0 4px;
+	padding: 0;
+}
+
+/* Alert demo */
+.alert {
+	position: relative;
+	margin: 8px;
+	padding: 16px;
+	padding-left: 48px;
+	background: #ba3329;
+	color: #fff;
+	border-radius: 5px;
+	float: left;
+}
+
+.alert + div {
+	clear: both;
+}
+
+.alert svg {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	font-size: 24px;
+	line-height: 1em;
+	margin: -0.5em 0 0;
+}

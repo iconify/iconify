@@ -1,6 +1,6 @@
-# Iconify for Vue 2
+# Iconify for Vue
 
-Iconify for Vue 2 is not yet another icon component! There are many of them already.
+Iconify for Vue is not yet another icon component! There are many of them already.
 
 Iconify is the most versatile icon framework.
 
@@ -37,12 +37,20 @@ yarn add --dev @iconify/vue
 
 This package does not include icons. Icons are split into separate packages that available at NPM. See below.
 
+### Vue 2 compatibility
+
+This component is not backwards compatible with Vue 2.
+
+If you are using Vue 2, you need to install version 1.0 of Iconify component.
+
+See [Vue 2 component](https://github.com/iconify/iconify/tree/master/archive/vue2) for details.
+
 ## Usage
 
 Install `@iconify/vue` and packages for selected icon sets. Import component from `@iconify/vue` and icon data for the icon you want to use:
 
 ```js
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 import home from '@iconify-icons/mdi/home';
 import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
 ```
