@@ -639,7 +639,7 @@ svg {
 
 ### Other icon sets
 
-There are over 60 icon sets. This readme shows only a few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for a full list of available icon sets. Click any icon to see code.
+There are over 80 icon sets. This readme shows only a few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for a full list of available icon sets. Click any icon to see code.
 
 ## License
 

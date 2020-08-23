@@ -65,17 +65,16 @@ Object syntax passes icon data to the component.
 
 ```vue
 <template>
-	<iconify-icon :icon="icons.chart" height="24" />
+	<Icon :icon="icons.chart" height="24" />
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data() {
 		return {
@@ -84,7 +83,7 @@ export default Vue.extend({
 			},
 		};
 	},
-});
+};
 </script>
 ```
 
@@ -94,16 +93,16 @@ The same example without TypeScript:
 
 ```vue
 <template>
-	<iconify-icon :icon="icons.chart" height="24" :style="{ color: 'green' }" />
+	<Icon :icon="icons.chart" height="24" :style="{ color: 'green' }" />
 </template>
 
 <script>
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
 export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data() {
 		return {
@@ -124,7 +123,59 @@ With this method the icon needs to be added only once. That means if you have mu
 
 ```vue
 <template>
-	<iconify-icon icon="chart" height="24" />
+	<Icon icon="chart" height="24" />
+</template>
+
+<script lang="ts">
+import { Icon, addIcon } from '@iconify/vue';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
+
+addIcon('chart', areaChartOutlined);
+
+export default {
+	components: {
+		Icon,
+	},
+};
+</script>
+```
+
+The icon must be registered using `addIcon` function imported from `@iconify/vue`. You can assign any name to the icon.
+
+The same example without TypeScript:
+
+```vue
+<template>
+	<Icon icon="chart" height="24" />
+</template>
+
+<script>
+import { Icon, addIcon } from '@iconify/vue';
+import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
+
+addIcon('chart', areaChartOutlined);
+
+export default {
+	components: {
+		Icon,
+	},
+};
+</script>
+```
+
+## Migration from Vue 2
+
+If you are migrating from version 1 of this component, which was designed for Vue 2, there are some big differences in usage:
+
+-   Component was a default export. In new version `Icon` is a named export.
+-   `addIcon()` was property of component. In new version it is a separate named export.
+-   New `InlineIcon` component (see "inline" section below) for easier use inside text.
+
+Example code for Vue 2:
+
+```vue
+<template>
+	<IconifyIcon icon="chart" height="24" />
 </template>
 
 <script lang="ts">
@@ -142,49 +193,26 @@ export default Vue.extend({
 </script>
 ```
 
-The icon must be registered using `addIcon` function of the component. You can assign any name to the icon.
-
-The same example without TypeScript:
+The same code for Vue 3:
 
 ```vue
 <template>
-	<iconify-icon icon="chart" height="24" />
+	<Icon icon="chart" height="24" />
 </template>
 
-<script>
-import IconifyIcon from '@iconify/vue';
+<script lang="ts">
+import { Icon, addIcon } from '@iconify/vue';
 import areaChartOutlined from '@iconify-icons/ant-design/area-chart-outlined';
 
-IconifyIcon.addIcon('chart', areaChartOutlined);
+addIcon('chart', areaChartOutlined);
 
 export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 };
 </script>
 ```
-
-## Component installation
-
-You can install the icon component using `Vue.use()`, then you will no longer need to add it to every component that uses icons.
-
-```js
-import IconifyIcon from '@iconify/vue';
-
-Vue.use(IconifyIcon);
-```
-
-If you are using TypeScript with Vue, it becomes a bit more complex. You need to import type `PluginObject` from Vue and do some shenanigans with type casting:
-
-```ts
-import { PluginObject } from 'vue';
-import IconifyIcon from '@iconify/vue';
-
-Vue.use((IconifyIcon as unknown) as PluginObject<unknown>);
-```
-
-After installing the icon component, you no longer need to list `IconifyIcon` in components list every time you use it.
 
 ## Icon component properties
 
@@ -223,11 +251,11 @@ If you set only one dimension, another dimension will be calculated using the ic
 You can use numbers for `width` and `height`.
 
 ```html
-<iconify-icon icon="experiment" :height="24" />
+<Icon icon="experiment" :height="24" />
 ```
 
 ```html
-<iconify-icon icon="experiment" :width="16" :height="16" />
+<Icon icon="experiment" :width="16" :height="16" />
 ```
 
 Note ":" before attribute - in Vue it changes the value to expression, so "20" is a number, not a string.
@@ -239,11 +267,11 @@ Number values are treated as pixels. That means in examples above, values are id
 If you use strings without units, they are treated the same as numbers in an example above.
 
 ```html
-<iconify-icon icon="experiment" height="24" />
+<Icon icon="experiment" height="24" />
 ```
 
 ```html
-<iconify-icon icon="experiment" width="16" height="16" />
+<Icon icon="experiment" width="16" height="16" />
 ```
 
 #### Dimensions as strings with units
@@ -251,7 +279,7 @@ If you use strings without units, they are treated the same as numbers in an exa
 You can use units in width and height values:
 
 ```html
-<iconify-icon icon="experiment" height="2em" />
+<Icon icon="experiment" height="2em" />
 ```
 
 Be careful when using `calc`, view port based units or percentages. In SVG element they might not behave the way you expect them to behave and when using such units, you should consider settings both width and height.
@@ -261,7 +289,7 @@ Be careful when using `calc`, view port based units or percentages. In SVG eleme
 Keyword "auto" sets dimensions to the icon's `viewBox` dimensions. For example, for 24 x 24 icon using `height="auto"` sets height to 24 pixels.
 
 ```html
-<iconify-icon icon="experiment" height="auto" />
+<Icon icon="experiment" height="auto" />
 ```
 
 ### Icon colour
@@ -280,23 +308,22 @@ Examples:
 Using `color` property:
 
 ```html
-<iconify-icon icon="experiment" color="red" />
-<iconify-icon icon="experiment" color="#f00" />
+<Icon icon="experiment" color="red" /> <Icon icon="experiment" color="#f00" />
 ```
 
 Using inline style:
 
 ```html
-<iconify-icon icon="experiment" style="color: red;" />
-<iconify-icon icon="experiment" :style="{color: 'red'}" />
-<iconify-icon icon="experiment" :style="{color: '#f00'}" />
+<Icon icon="experiment" style="color: red;" />
+<Icon icon="experiment" :style="{color: 'red'}" />
+<Icon icon="experiment" :style="{color: '#f00'}" />
 ```
 
 Using stylesheet:
 
 ```vue
 <template>
-	<iconify-icon icon="experiment" class="red-icon" />
+	<Icon icon="experiment" class="red-icon" />
 </template>
 
 <style>
@@ -337,25 +364,25 @@ Examples:
 Flip an icon horizontally:
 
 ```html
-<iconify-icon icon="experiment" :h-flip="true" />
-<iconify-icon icon="experiment" :horizontal-flip="true" />
-<iconify-icon icon="experiment" flip="horizontal" />
+<Icon icon="experiment" :h-flip="true" />
+<Icon icon="experiment" :horizontal-flip="true" />
+<Icon icon="experiment" flip="horizontal" />
 ```
 
 Flip an icon vertically:
 
 ```html
-<iconify-icon icon="experiment" :v-flip="true" />
-<iconify-icon icon="experiment" :vertical-flip="true" />
-<iconify-icon icon="experiment" flip="vertical" />
+<Icon icon="experiment" :v-flip="true" />
+<Icon icon="experiment" :vertical-flip="true" />
+<Icon icon="experiment" flip="vertical" />
 ```
 
 Flip an icon horizontally and vertically (the same as 180 degrees rotation):
 
 ```html
-<iconify-icon icon="experiment" :h-flip="true" :v-flip="true" />
-<iconify-icon icon="experiment" :horizontal-flip="true" :vertical-flip="true" />
-<iconify-icon icon="experiment" flip="horizontal,vertical" />
+<Icon icon="experiment" :h-flip="true" :v-flip="true" />
+<Icon icon="experiment" :horizontal-flip="true" :vertical-flip="true" />
+<Icon icon="experiment" flip="horizontal,vertical" />
 ```
 
 Why are there multiple boolean properties for flipping an icon? See "Alignment" section below for the explanation.
@@ -371,9 +398,9 @@ Number values are 1 for 90 degrees, 2 for 180 degrees, 3 for 270 degrees.
 Examples of 90 degrees rotation:
 
 ```html
-<iconify-icon icon="experiment" :rotate="1" />
-<iconify-icon icon="experiment" rotate="90deg" />
-<iconify-icon icon="experiment" rotate="25%" />
+<Icon icon="experiment" :rotate="1" />
+<Icon icon="experiment" rotate="90deg" />
+<Icon icon="experiment" rotate="25%" />
 ```
 
 ### Alignment
@@ -404,7 +431,7 @@ Why are there aliases for `h-align` and `v-align` properties? Because in Vue pro
 Example of aligning an icon to the left if icon is not square:
 
 ```html
-<iconify-icon icon="experiment" width="1em" height="1em" h-align="left" />
+<Icon icon="experiment" width="1em" height="1em" h-align="left" />
 ```
 
 #### Slice
@@ -437,7 +464,7 @@ By adding `inline` property, icon behaves like text. In inline mode icon has ver
 Example:
 
 ```html
-<iconify-icon icon="experiment" :inline="true" />
+<Icon icon="experiment" :inline="true" />
 ```
 
 Value is boolean, therefore ":" must be added before property name, changing the value from string to expression.
@@ -445,6 +472,16 @@ Value is boolean, therefore ":" must be added before property name, changing the
 Visual example to show the difference between inline and block modes:
 
 ![Inline icon](https://iconify.design/assets/images/inline.png)
+
+You can also use `InlineIcon` component that is identical to `Icon` component, but with default value for `inline` property set to `true`:
+
+```js
+import { InlineIcon } from '@iconify/vue';
+```
+
+```html
+<InlineIcon icon="experiment" />
+```
 
 ## Icon Sets
 
@@ -472,18 +509,18 @@ Usage (in this example using object syntax):
 
 ```vue
 <template>
-	<iconify-icon :icon="icons.account" />
-	<iconify-icon :icon="icons.home" />
+	<Icon :icon="icons.account" />
+	<Icon :icon="icons.home" />
 </template>
 
 <script>
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 import homeIcon from '@iconify-icons/mdi/home';
 import accountIcon from '@iconify-icons/mdi/account';
 
 export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data() {
 		return {
@@ -513,21 +550,18 @@ Usage (in this example using string syntax):
 
 ```vue
 <template>
-	<p>
-		Mozilla Firefox <iconify-icon icon="firefox" :inline="true" /> is the
-		best browser!
-	</p>
+	<p>Mozilla Firefox <InlineIcon icon="firefox" /> is the best browser!</p>
 </template>
 
 <script>
-import IconifyIcon from '@iconify/vue';
+import { InlineIcon, addIcon } from '@iconify/vue';
 import mozillafirefoxIcon from '@iconify-icons/simple-icons/mozillafirefox';
 
-IconifyIcon.addIcon('firefox', mozillafirefoxIcon);
+addIcon('firefox', mozillafirefoxIcon);
 
 export default {
 	components: {
-		IconifyIcon,
+		InlineIcon,
 	},
 };
 </script>
@@ -550,19 +584,18 @@ Usage (in this example using object syntax with TypeScript):
 ```vue
 <template>
 	<p>
-		<iconify-icon :icon="icons.rotate" />
+		<Icon :icon="icons.rotate" />
 		Rotate!
 	</p>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 import imageRotate from '@iconify-icons/dashicons/image-rotate';
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data() {
 		return {
@@ -571,7 +604,7 @@ export default Vue.extend({
 			},
 		};
 	},
-});
+};
 </script>
 <style scoped>
 p {
@@ -604,25 +637,22 @@ Usage (in this example using string syntax with TypeScript):
 
 ```vue
 <template>
-	<p>
-		<iconify-icon icon="autonomous-car" /> Autonomous cars are the future!
-	</p>
+	<p><InlineIcon icon="autonomous-car" /> Autonomous cars are the future!</p>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { InlineIcon, addIcon } from '@iconify/vue';
 import autonomousCar from '@iconify-icons/openmoji/autonomous-car';
 import exhaustGasesCar from '@iconify-icons/openmoji/exhaust-gases-car';
 
-IconifyIcon.addIcon('autonomous-car', autonomousCar);
-IconifyIcon.addIcon('gas-car', exhaustGasesCar);
+addIcon('autonomous-car', autonomousCar);
+addIcon('gas-car', exhaustGasesCar);
 
-export default Vue.extend({
+export default {
 	components: {
-		IconifyIcon,
+		InlineIcon,
 	},
-});
+};
 </script>
 <style scoped>
 p {
@@ -639,7 +669,7 @@ svg {
 
 ### Other icon sets
 
-There are over 60 icon sets. This readme shows only a few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for a full list of available icon sets. Click any icon to see code.
+There are over 80 icon sets. This readme shows only a few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for a full list of available icon sets. Click any icon to see code.
 
 ## License
 
