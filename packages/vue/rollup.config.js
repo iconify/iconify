@@ -16,6 +16,7 @@ const config = [
 				exports: 'named',
 			},
 		],
+		external: ['vue'],
 		plugins: [resolve(), commonjs(), buble()],
 	},
 	// UMD Module
@@ -27,8 +28,12 @@ const config = [
 				format: 'umd',
 				name,
 				exports: 'named',
+				globals: {
+					vue: 'Vue',
+				},
 			},
 		],
+		external: ['vue'],
 		plugins: [resolve(), commonjs(), buble()],
 	},
 ];
