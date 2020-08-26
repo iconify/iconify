@@ -19,7 +19,7 @@
 		"build:dist": "rollup -c rollup.config.js"
 	},
 	"dependencies": {
-		"@iconify/core": "^1.0.0-beta.4",
+		"@iconify/core": "^1.0.0-beta.5",
 		"@iconify/types": "^1.0.3"
 	},
 	"devDependencies": {
