@@ -232,7 +232,6 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 	} else {
 		providers = Object.keys(storage);
 	}
-	console.log('Listing icons for providers:', providers);
 
 	// Get all icons
 	providers.forEach((provider) => {
@@ -246,7 +245,6 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 					? []
 					: Object.keys(storage[provider]);
 		}
-		console.log('Listing icons for prefixes:', prefixes);
 
 		prefixes.forEach((prefix) => {
 			const storage = getStorage(provider, prefix);
@@ -257,7 +255,6 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 					':' +
 					name
 			);
-			console.log('Found some icons:', icons);
 			allIcons = allIcons.concat(icons);
 		});
 	});

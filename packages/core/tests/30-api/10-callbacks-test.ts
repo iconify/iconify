@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars-experimental */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/camelcase */
 import 'mocha';
 import { expect } from 'chai';
 import {
