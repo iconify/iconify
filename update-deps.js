@@ -22,14 +22,17 @@ const ignorePeers = {
 	vue: ['vue'],
 };
 
-// Ignore bugged modules: due to bug in rollup 2.x, rollup and its modules cannot be updated.
+// Ignore bugged modules
 function canInstall(name) {
+	/*
+	// Due to a bug in rollup 2.x, rollup and its modules could not be updated. Fixed in 2.26.8!
 	if (name.split('-').shift() === 'rollup') {
 		return false;
 	}
 	if (name.split('/').shift() === '@rollup') {
 		return false;
 	}
+	*/
 	return true;
 }
 
