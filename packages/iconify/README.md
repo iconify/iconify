@@ -3,7 +3,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 60+ icon sets with 50,000 icons.
+-   Out of the box includes 80+ icon sets with more than 70,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -53,7 +53,7 @@ or this:
 
 &nbsp;&nbsp;&nbsp; ![Screenshot](https://iconify.design/assets/images/inline-sample.png)
 
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 50,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
+That is it. Change `data-icon` value to the name of the icon you want to use. There are over 70,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
 
@@ -280,7 +280,7 @@ Samples:
 
 ## Available icons
 
-There are over 50,000 icons to choose from.
+There are over 70,000 icons to choose from.
 
 General collections (monotone icons):
 

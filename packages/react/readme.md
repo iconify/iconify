@@ -5,7 +5,7 @@ Iconify for React is not yet another icon component! There are many of them alre
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 60+ icon sets with 50,000 icons.
+-   Out of the box includes 80+ icon sets with more than 70,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -311,7 +311,7 @@ Example showing the icon behaviour when `slice` is enabled with various alignmen
 
 ## Icon Packages
 
-As of version 1.1.0 this package no longer includes icons. There are over 40k icons, each in its own file. That takes a lot of disc space. Because of that icons were moved to multiple separate packages, one package per icon set.
+As of version 1.1.0 this package no longer includes icons. There are over 70k icons, each in its own file. That takes a lot of disc space. Because of that icons were moved to multiple separate packages, one package per icon set.
 
 You can find all available icons at https://iconify.design/icon-sets/
 
