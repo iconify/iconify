@@ -19,13 +19,13 @@
 		"build:dist": "rollup -c rollup.config.js"
 	},
 	"dependencies": {
-		"@iconify/core": "^1.0.0-beta.5",
+		"@iconify/core": "^1.0.0-rc.1",
 		"@iconify/types": "^1.0.3"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^15.0.0",
 		"@rollup/plugin-node-resolve": "^9.0.0",
-		"rollup": "^2.26.8",
+		"rollup": "^2.26.9",
 		"rollup-plugin-svelte": "^6.0.0",
 		"svelte": "^3.24.1"
 	}

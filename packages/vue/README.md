@@ -26,14 +26,16 @@ Iconify for Vue features:
 If you are using NPM:
 
 ```bash
-npm install --save-dev @iconify/vue
+npm install --save-dev @iconify/vue@beta
 ```
 
 If you are using Yarn:
 
 ```bash
-yarn add --dev @iconify/vue
+yarn add --dev @iconify/vue@beta
 ```
+
+Make sure you are installing `@iconify/vue@beta`, not `@iconify/vue` because `@iconify/vue` is for Vue 2. It will change when Vue 3.0.0 is published.
 
 This package does not include icons. Icons are split into separate packages that available at NPM. See below.
 
@@ -163,12 +165,42 @@ export default {
 </script>
 ```
 
+Instead of adding icons one by one using `addIcon` function, you can import an entire icon set using `addCollection` function:
+
+```vue
+<template>
+	<Icon icon="jam:home" height="24" />
+</template>
+
+<script>
+import { Icon, addCollection } from '@iconify/vue';
+
+// Import requires bundler that can import JSON files
+import jamIcons from '@iconify/json/json/jam.json';
+
+// Function automatically adds prefix from icon set, which in this case is 'jam', followed by ':', so
+// icon names added by function should be called with prefix, such as 'jam:home'
+addCollection(jamIcons);
+
+// Example without prefix, all icons will have names as is, such as 'home'
+// addCollection(jamIcons, false);
+
+export default {
+	components: {
+		Icon,
+	},
+};
+</script>
+```
+
+Example above imports an entire icon set. To learn how to create smaller bundles, check out Iconify documentation: https://docs.iconify.design/sources/bundles/
+
 ## Migration from Vue 2
 
 If you are migrating from version 1 of this component, which was designed for Vue 2, there are some big differences in usage:
 
 -   Component was a default export. In new version `Icon` is a named export.
--   `addIcon()` was property of component. In new version it is a separate named export.
+-   `addIcon()` and `addCollection()` were properties of component. In new version they are separate named exports.
 -   New `InlineIcon` component (see "inline" section below) for easier use inside text.
 
 Example code for Vue 2:
@@ -216,7 +248,7 @@ export default {
 
 ## Icon component properties
 
-`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon`, see instructions above) or an object containing the icon data.
+`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon` or `addCollection`, see instructions above) or an object containing the icon data.
 
 The icon component has the following optional properties:
 

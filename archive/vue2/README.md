@@ -5,7 +5,7 @@ Iconify for Vue 2 is not yet another icon component! There are many of them alre
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 80+ icon sets with 60,000 icons.
+-   Out of the box includes 80+ icon sets with more than 70,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -26,16 +26,16 @@ Iconify for Vue features:
 If you are using NPM:
 
 ```bash
-npm install --save-dev @iconify/vue@1
+npm install --save-dev @iconify/vue@^1
 ```
 
 If you are using Yarn:
 
 ```bash
-yarn add --dev @iconify/vue@1
+yarn add --dev @iconify/vue@^1
 ```
 
-If you are using Vue 2, it is important that you install `@iconify/vue@1`, not `@iconify/vue`, because `@iconify/vue` requires Vue 3.
+If you are using Vue 2, it is important that you install `@iconify/vue@^1`, not `@iconify/vue`, because `@iconify/vue` requires Vue 3.
 
 This package does not include icons. Icons are split into separate packages that available at NPM. See below.
 
@@ -165,6 +165,33 @@ export default {
 </script>
 ```
 
+Instead of adding icons one by one using `addIcon` function, you can import an entire icon set using `addCollection` function:
+
+```vue
+<template>
+	<iconify-icon icon="jam:home" />
+</template>
+
+<script>
+import IconifyIcon from '@iconify/vue';
+
+// Import requires bundler that can import JSON files
+import jamIcons from '@iconify/json/json/jam.json';
+
+// Function automatically adds prefix from icon set, which in this case is 'jam', followed by ':', so
+// icon names added by function should be called with prefix, such as 'jam:home'
+IconifyIcon.addCollection(jamIcons);
+
+export default {
+	components: {
+		IconifyIcon,
+	},
+};
+</script>
+```
+
+Example above imports an entire icon set. To learn how to create smaller bundles, check out Iconify documentation: https://docs.iconify.design/sources/bundles/
+
 ## Component installation
 
 You can install the icon component using `Vue.use()`, then you will no longer need to add it to every component that uses icons.
@@ -188,7 +215,7 @@ After installing the icon component, you no longer need to list `IconifyIcon` in
 
 ## Icon component properties
 
-`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon`, see instructions above) or an object containing the icon data.
+`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon` or `addCollection`, see instructions above) or an object containing the icon data.
 
 The icon component has the following optional properties:
 

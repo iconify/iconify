@@ -1,5 +1,5 @@
 import { HTMLProps, SVGProps, createElement } from 'react';
-import { IconifyIcon } from '@iconify/types';
+import { IconifyIcon, IconifyJSON } from '@iconify/types';
 import {
 	IconifyIconCustomisations as IconCustomisations,
 	FullIconCustomisations,
@@ -17,12 +17,14 @@ import { fullIcon } from '@iconify/core/lib/icon';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { merge } from '@iconify/core/lib/misc/merge';
+import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
 
 /**
  * Export types that could be used in component
  */
 export {
 	IconifyIcon,
+	IconifyJSON,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
@@ -203,4 +205,27 @@ export const InlineIcon = (props: IconProps) =>
  */
 export function addIcon(name: string, data: IconifyIcon): void {
 	storage[name] = fullIcon(data);
+}
+
+/**
+ * Add collection to storage, allowing to call icons by name
+ *
+ * @param data Icon set
+ * @param prefix Optional prefix to add to icon names, true if prefix from icon set should be used.
+ */
+export function addCollection(
+	data: IconifyJSON,
+	prefix?: string | boolean
+): void {
+	const iconPrefix: string =
+		typeof prefix === 'string'
+			? prefix
+			: prefix !== false && typeof data.prefix === 'string'
+			? data.prefix + ':'
+			: '';
+	parseIconSet(data, (name, icon) => {
+		if (icon !== null) {
+			storage[iconPrefix + name] = icon;
+		}
+	});
 }
