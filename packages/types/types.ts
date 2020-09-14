@@ -53,7 +53,12 @@ export interface IconifyTransformations {
  */
 export interface IconifyOptional
 	extends IconifyDimenisons,
-		IconifyTransformations {}
+		IconifyTransformations {
+	// True if icon is hidden.
+	// Used in icon sets to keep icons that no longer exist, but should still be accessible
+	// from API, preventing websites from breaking when icon is removed by developer.
+	hidden?: boolean;
+}
 
 /**
  * Alias.
