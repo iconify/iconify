@@ -161,9 +161,11 @@ export interface IconifyInfo {
 }
 
 /**
- * Optional themes.
+ * Optional themes, old format.
+ *
+ * Deprecated because format is unnecessary complicated. Key is meaningless, suffixes and prefixes are mixed together.
  */
-export interface IconifyThemes {
+export interface LegacyIconifyThemes {
 	// Key is unique string.
 	[index: string]: {
 		// Theme title.
@@ -207,8 +209,12 @@ export interface IconifyMetaData {
 	// Categories. Used for filtering icons.
 	categories?: IconifyCategories;
 
-	// Optional themes.
-	themes?: IconifyThemes;
+	// Optional themes (old format).
+	themes?: LegacyIconifyThemes;
+
+	// Optional themes (new format). Key is prefix or suffix, value is title.
+	prefixes?: Record<string, string>;
+	suffixes?: Record<string, string>;
 }
 
 /**
