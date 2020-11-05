@@ -2,7 +2,7 @@ import { IconifyIcon } from '@iconify/types';
 import { merge } from '../misc/merge';
 
 export { IconifyIcon };
-export type FullIconifyIcon = Omit<Required<IconifyIcon>, 'hidden'>;
+export type FullIconifyIcon = Required<IconifyIcon>;
 
 /**
  * Default values for IconifyIcon properties
