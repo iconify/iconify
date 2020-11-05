@@ -1,7 +1,7 @@
 {
 	"name": "@iconify/types",
 	"description": "Types for Iconify data",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"author": "Vjacheslav Trushkin",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"main": "./index.js",
@@ -16,6 +16,8 @@
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/types"
 	},
-	"devDependencies": {},
+	"devDependencies": {
+		"typescript": "^4.0.5"
+	},
 	"dependencies": {}
 }

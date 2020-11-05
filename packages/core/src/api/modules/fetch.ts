@@ -11,7 +11,7 @@ import { GetAPIConfig } from '../config';
 /**
  * Endpoint
  */
-let endPoint = '{prefix}.json?icons={icons}';
+const endPoint = '{prefix}.json?icons={icons}';
 
 /**
  * Cache
@@ -120,7 +120,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 		const iconsList = icons.join(',');
 
 		const cacheKey = provider + ':' + prefix;
-		let path =
+		const path =
 			pathCache[cacheKey] +
 			endPoint
 				.replace('{provider}', provider)
@@ -144,7 +144,9 @@ export const getAPIModule: GetIconifyAPIModule = (
 				// Store cache and complete
 				status.done(data);
 			})
-			.catch((err) => {});
+			.catch(() => {
+				//
+			});
 	};
 
 	// Return functions

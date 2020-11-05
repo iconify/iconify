@@ -2,7 +2,7 @@ import { IconifyIcon } from '@iconify/types';
 import { merge } from '../misc/merge';
 
 export { IconifyIcon };
-export type FullIconifyIcon = Required<IconifyIcon>;
+export type FullIconifyIcon = Omit<Required<IconifyIcon>, 'hidden'>;
 
 /**
  * Default values for IconifyIcon properties
@@ -22,5 +22,5 @@ export const iconDefaults: FullIconifyIcon = Object.freeze({
  * Create new icon with all properties
  */
 export function fullIcon(icon: IconifyIcon): FullIconifyIcon {
-	return merge(iconDefaults, icon) as FullIconifyIcon;
+	return merge(iconDefaults, icon as FullIconifyIcon) as FullIconifyIcon;
 }
