@@ -41,6 +41,9 @@ const specialTags = {
 	'vue': 'next',
 	'vue-jest': 'next',
 	'@vue/test-utils': 'next',
+	'react': '16',
+	'react-dom': '16',
+	'react-scripts': '3',
 };
 
 // Update modes

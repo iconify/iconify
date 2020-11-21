@@ -56,7 +56,7 @@
 		float: left;
 	}
 
-	.alert + div {
+	.alert :global(+ div) {
 		clear: both;
 	}
 

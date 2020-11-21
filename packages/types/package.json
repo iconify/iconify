@@ -17,7 +17,6 @@
 		"directory": "packages/types"
 	},
 	"devDependencies": {
-		"typescript": "^4.0.5"
-	},
-	"dependencies": {}
+		"typescript": "^4.1.2"
+	}
 }

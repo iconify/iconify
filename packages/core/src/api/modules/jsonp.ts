@@ -193,6 +193,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 		const cacheKey = provider + ':' + prefix;
 
 		// Create callback prefix
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const cbPrefix = prefix.split('-').shift()!.slice(0, 3);
 
 		const global = getGlobal();
@@ -206,7 +207,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 		}
 		const callbackName = cbPrefix + cbCounter;
 
-		let path =
+		const path =
 			pathCache[cacheKey] +
 			endPoint
 				.replace('{provider}', provider)
