@@ -22,7 +22,7 @@ import {
 } from '@iconify/core/lib/customisations';
 import {
 	getStorage,
-	getIcon,
+	getIcon as _getIcon,
 	addIcon as addIconToStorage,
 	addIconSet,
 	listIcons,
@@ -169,10 +169,10 @@ function _getIconName(name: string): IconifyIconName | null {
  * Get icon data
  */
 function _getIconData(icon: IconifyIconName): FullIconifyIcon | null {
-	return getIcon(getStorage(icon.provider, icon.prefix), icon.name);
+	return _getIcon(getStorage(icon.provider, icon.prefix), icon.name);
 }
 
-function getIconData(name: string): FullIconifyIcon | null {
+export function getIcon(name: string): Required<IconifyIcon> | null {
 	const icon = _getIconName(name);
 	return icon ? _getIconData(icon) : null;
 }
@@ -181,7 +181,7 @@ function getIconData(name: string): FullIconifyIcon | null {
  * Check if icon exists
  */
 export function iconExists(name: string): boolean {
-	return getIconData(name) !== null;
+	return getIcon(name) !== null;
 }
 
 /**

@@ -150,7 +150,7 @@ export interface IconifyGlobal {
 	/**
 	 * Get icon data with all properties
 	 */
-	getIcon: (name: string) => IconifyIcon | null;
+	getIcon: (name: string) => Required<IconifyIcon> | null;
 
 	/**
 	 * List all available icons
