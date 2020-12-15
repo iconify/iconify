@@ -1,5 +1,5 @@
 .DS_Store
-api-extractor.json
+api-extractor*.json
 tsconfig.json
 rollup.config.js
 build.js

@@ -3,7 +3,7 @@
 	"private": true,
 	"description": "Browser tests for @iconify/iconify package",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "2.0.0-rc.3",
+	"version": "2.0.0-rc.4",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -20,7 +20,7 @@
 	"devDependencies": {
 		"@cyberalien/redundancy": "^1.1.0",
 		"@iconify/core": "^1.0.0-rc.3",
-		"@iconify/iconify": "^2.0.0-rc.3",
+		"@iconify/iconify": "^2.0.0-rc.4",
 		"@iconify/types": "^1.0.6",
 		"@rollup/plugin-buble": "^0.21.3",
 		"@rollup/plugin-commonjs": "^16.0.0",
