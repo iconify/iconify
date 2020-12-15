@@ -19,8 +19,8 @@
 		"build:dist": "rollup -c rollup.config.js"
 	},
 	"dependencies": {
-		"@iconify/core": "^1.0.0-rc.2",
-		"@iconify/types": "^1.0.5"
+		"@iconify/core": "^1.0.0-rc.3",
+		"@iconify/types": "^1.0.6"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^16.0.0",
