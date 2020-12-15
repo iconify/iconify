@@ -1,7 +1,7 @@
 import {
 	Redundancy,
 	initRedundancy,
-	RedundancyQueryCallback,
+	QueryModuleCallback,
 } from '@cyberalien/redundancy';
 import { SortedIcons, sortIcons } from '../icon/sort';
 import {
@@ -194,7 +194,7 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 			params.forEach((item) => {
 				cachedReundancy.redundancy.query(
 					item,
-					api.send as RedundancyQueryCallback,
+					api.send as QueryModuleCallback,
 					(data) => {
 						// Add icons to storage
 						const storage = getStorage(provider, prefix);

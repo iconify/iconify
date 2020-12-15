@@ -42,17 +42,17 @@ function createConfig(
 		// Timeout before next host is used.
 		rotate: source.rotate ? source.rotate : 750,
 
-		// Timeout to retry same host.
+		// Timeout before failing query.
 		timeout: source.timeout ? source.timeout : 5000,
-
-		// Number of attempts for each host.
-		limit: source.limit ? source.limit : 2,
 
 		// Randomise default API end point.
 		random: source.random === true,
 
 		// Start index
 		index: source.index ? source.index : 0,
+
+		// Receive data after time out (used if time out kicks in first, then API module sends data anyway).
+		dataAfterTimeout: source.dataAfterTimeout !== false,
 	};
 
 	return result;

@@ -18,7 +18,7 @@
 		"build:dist": "rollup -c rollup.config.js"
 	},
 	"devDependencies": {
-		"@cyberalien/redundancy": "^1.0.0",
+		"@cyberalien/redundancy": "^1.1.0",
 		"@iconify/core": "^1.0.0-rc.2",
 		"@iconify/iconify": "^2.0.0-rc.2",
 		"@iconify/types": "^1.0.5",

@@ -1,4 +1,4 @@
-import { RedundancyPendingItem } from '@cyberalien/redundancy';
+import { PendingQueryItem } from '@cyberalien/redundancy';
 import { GetAPIConfig } from '../api/config';
 
 /**
@@ -22,7 +22,7 @@ export type IconifyAPIPrepareQuery = (
 export type IconifyAPISendQuery = (
 	host: string,
 	params: APIQueryParams,
-	status: RedundancyPendingItem
+	status: PendingQueryItem
 ) => void;
 
 /**

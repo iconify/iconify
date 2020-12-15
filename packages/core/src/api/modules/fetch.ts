@@ -1,4 +1,4 @@
-import { RedundancyPendingItem } from '@cyberalien/redundancy';
+import { PendingQueryItem } from '@cyberalien/redundancy';
 import {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,
@@ -41,7 +41,8 @@ export const getAPIModule: GetIconifyAPIModule = (
 			result = 0;
 		} else {
 			let maxHostLength = 0;
-			config.resources.forEach((host) => {
+			config.resources.forEach((item) => {
+				const host = item as string;
 				maxHostLength = Math.max(maxHostLength, host.length);
 			});
 
@@ -112,7 +113,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 	const send: IconifyAPISendQuery = (
 		host: string,
 		params: APIQueryParams,
-		status: RedundancyPendingItem
+		status: PendingQueryItem
 	): void => {
 		const provider = params.provider;
 		const prefix = params.prefix;
@@ -131,6 +132,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 		fetch(host + path)
 			.then((response) => {
 				if (response.status !== 200) {
+					status.done(void 0, response.status);
 					return;
 				}
 
@@ -144,8 +146,9 @@ export const getAPIModule: GetIconifyAPIModule = (
 				// Store cache and complete
 				status.done(data);
 			})
-			.catch(() => {
-				//
+			.catch((err) => {
+				// Error
+				status.done(void 0, err.errno);
 			});
 	};
 

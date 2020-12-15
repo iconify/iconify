@@ -23,7 +23,7 @@
 		"build:api2min": "api-extractor run --local --config api-extractor.without-api.min.json"
 	},
 	"devDependencies": {
-		"@cyberalien/redundancy": "^1.0.0",
+		"@cyberalien/redundancy": "^1.1.0",
 		"@iconify/core": "^1.0.0-rc.2",
 		"@iconify/types": "^1.0.5",
 		"@microsoft/api-extractor": "^7.12.0",
