@@ -51,7 +51,7 @@ describe('Scanning DOM', () => {
 		setRoot(node);
 
 		node.innerHTML =
-			'<div><p>Testing scanning DOM</p><ul>' +
+			'<div><p>Testing scanning DOM (should render SVG!)</p><ul>' +
 			'<li>Valid icons:' +
 			'   <span class="iconify" data-icon="mdi:home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
 			'   <i class="iconify test-icon iconify--mdi-account" data-icon="mdi:account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +

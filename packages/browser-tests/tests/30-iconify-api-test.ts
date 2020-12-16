@@ -19,7 +19,7 @@ const ignoredNode = getNode('iconify-api');
 Iconify.observe(observedNode);
 
 observedNode.innerHTML =
-	'<div><p>Testing Iconify with API</p><ul>' +
+	'<div><p>Testing Iconify with API (should render SVG!)</p><ul>' +
 	'<li>Inline icons:' +
 	'   <span class="iconify-inline" data-icon="mdi:home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
 	'   <i class="iconify iconify-inline test-icon iconify--mdi-account" data-icon="mdi:account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +

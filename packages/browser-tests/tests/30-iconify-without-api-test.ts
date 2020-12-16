@@ -80,7 +80,7 @@ describe('Testing Iconify object (without API)', () => {
 
 	it('Rendering icons without API', (done) => {
 		node1.innerHTML =
-			'<div><p>Testing Iconify without API</p>' +
+			'<div><p>Testing Iconify without API (should render SVG!)</p>' +
 			'   <span class="iconify-inline" data-icon="' +
 			prefix +
 			':home" style="color: red; box-shadow: 0 0 2px black;"></span>' +

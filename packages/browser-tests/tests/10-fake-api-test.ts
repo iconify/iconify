@@ -156,7 +156,6 @@ describe('Testing fake API', () => {
 			resources: ['https://api1.local', 'https://api2.local'],
 			rotate: 20,
 			timeout: 100,
-			limit: 1,
 		});
 		setFakeData(provider, prefix, data);
 

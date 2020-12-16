@@ -49,7 +49,7 @@ describe('Testing legacy renderer', () => {
 	it('Convert placeholders to SVG', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div><p>Testing renderer v1</p><ul>' +
+			'<div><p>Testing renderer v1 (should render SVG!)</p><ul>' +
 			'<li>Inline icons:<br />' +
 			'   Red icon with red border: <span class="iconify" data-icon="mdi:home" style="color: red; border: 1px solid red;"></span><br />' +
 			'   No vertical-align, green border: <i class="iconify test-icon iconify--mdi-account" data-icon="mdi:account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
@@ -629,7 +629,7 @@ describe('Testing legacy renderer', () => {
 	it('Empty icon name', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div>Testing empty icon name v1: <span class="iconify" data-icon="mdi:home" data-flip="horizontal" style="color: red; box-shadow: 0 0 2px black;"></span></div>';
+			'<div>Testing empty icon name v1 (should render SVG!): <span class="iconify" data-icon="mdi:home" data-flip="horizontal" style="color: red; box-shadow: 0 0 2px black;"></span></div>';
 
 		// Get items
 		const items = findPlaceholders(node);
@@ -676,7 +676,7 @@ describe('Testing legacy renderer', () => {
 	it('Change icon name', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div>Testing icon name v1: <span class="iconify" data-icon="mdi:home" data-flip="horizontal" style="color: red; box-shadow: 0 0 2px black;"></span></div>';
+			'<div>Testing icon name v1 (should render SVG!): <span class="iconify" data-icon="mdi:home" data-flip="horizontal" style="color: red; box-shadow: 0 0 2px black;"></span></div>';
 
 		// Get items
 		const items = findPlaceholders(node);
@@ -765,7 +765,7 @@ describe('Testing legacy renderer', () => {
 	it('Rotating icon', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div>Testing rotation v1: <span class="iconify-icon" data-icon="mdi:home"></span></div>';
+			'<div>Testing rotation v1 (should render SVG!): <span class="iconify-icon" data-icon="mdi:home"></span></div>';
 
 		// Get items
 		const items = findPlaceholders(node);
@@ -863,7 +863,7 @@ describe('Testing legacy renderer', () => {
 	it('Changing size', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div>Testing size v1: <span class="iconify" data-icon="mdi:home" style="box-shadow: 0 0 2px black;"></span></div>';
+			'<div>Testing size v1 (should render SVG!): <span class="iconify" data-icon="mdi:home" style="box-shadow: 0 0 2px black;"></span></div>';
 
 		// Get items
 		const items = findPlaceholders(node);
@@ -949,7 +949,7 @@ describe('Testing legacy renderer', () => {
 	it('Changing alignment', () => {
 		const node = getNode('renderer');
 		node.innerHTML =
-			'<div>Testing alignment v1: <span class="iconify" data-icon="mdi:home" data-width="48" data-height="24" style="box-shadow: 0 0 2px black;"></span></div>';
+			'<div>Testing alignment v1 (should render SVG!): <span class="iconify" data-icon="mdi:home" data-width="48" data-height="24" style="box-shadow: 0 0 2px black;"></span></div>';
 
 		// Get items
 		const items = findPlaceholders(node);

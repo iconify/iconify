@@ -1,4 +1,4 @@
-import { RedundancyPendingItem } from '@cyberalien/redundancy';
+import { PendingQueryItem } from '@cyberalien/redundancy';
 import {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,
@@ -90,7 +90,7 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 export const sendQuery: IconifyAPISendQuery = (
 	host: string,
 	params: APIQueryParams,
-	status: RedundancyPendingItem
+	item: PendingQueryItem
 ): void => {
 	const provider = params.provider;
 	const prefix = params.prefix;
@@ -101,7 +101,8 @@ export const sendQuery: IconifyAPISendQuery = (
 		throw new Error('Fake data is missing in query params');
 	}
 	if (typeof data.host === 'string' && data.host !== host) {
-		// Host mismatch - do nothing
+		// Host mismatch - send error (first parameter = undefined)
+		item.done();
 		return;
 	}
 
@@ -113,7 +114,7 @@ export const sendQuery: IconifyAPISendQuery = (
 				'", icons:',
 			icons
 		);
-		status.done(data.data);
+		item.done(data.data);
 	};
 
 	if (!data.delay) {

@@ -88,7 +88,7 @@ describe('Scanning DOM with API', () => {
 		const node = getNode('scan-dom');
 
 		node.innerHTML =
-			'<div><p>Testing scanning DOM with API</p><ul>' +
+			'<div><p>Testing scanning DOM with API (should render SVG!)</p><ul>' +
 			'<li>Inline icons:' +
 			'   <span class="iconify iconify-inline" data-icon="@' +
 			provider +
@@ -221,7 +221,7 @@ describe('Scanning DOM with API', () => {
 
 		const node = getNode('scan-dom');
 		node.innerHTML =
-			'<div><p>Testing scanning DOM with API: renamed icon</p><ul>' +
+			'<div><p>Testing scanning DOM with API: renamed icon (should render SVG!)</p><ul>' +
 			'<li>Default finder:' +
 			'   <span class="iconify-inline first-icon" data-icon="@' +
 			provider +
@@ -355,8 +355,8 @@ describe('Scanning DOM with API', () => {
 
 		const node = getNode('scan-dom');
 		node.innerHTML =
-			'<div><p>Testing scanning DOM with API: invalid name</p><ul>' +
-			'<li>Inline icons:' +
+			'<div><p>Testing scanning DOM with API: invalid name (should render 3 SVGs!)</p><ul>' +
+			'<li>Inline icons (2 valid):' +
 			'   <span class="iconify" data-icon="@' +
 			provider +
 			':' +
@@ -368,7 +368,7 @@ describe('Scanning DOM with API', () => {
 			prefix2 +
 			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
 			'</li>' +
-			'<li>Block icons:' +
+			'<li>Block icons (1 valid):' +
 			'   <iconify-icon data-icon="@' +
 			provider +
 			':' +

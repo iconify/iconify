@@ -63,7 +63,7 @@ describe('Observe DOM', () => {
 
 		// Set HTML
 		node.innerHTML =
-			'<p>Testing observing DOM</p>' +
+			'<p>Testing observing DOM (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 		ignoredNode.innerHTML =
 			'<p>This node should be ignored</p>' +
@@ -97,7 +97,7 @@ describe('Observe DOM', () => {
 
 		// Set HTML
 		node.innerHTML =
-			'<p>Testing observing DOM</p>' +
+			'<p>Testing observing DOM (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Test nodes
@@ -153,10 +153,10 @@ describe('Observe DOM', () => {
 
 		// Set HTML
 		baseNode.innerHTML =
-			'<p>Testing observing 2 nodes (1)</p>' +
+			'<p>Testing observing 2 nodes (1) (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 		node.innerHTML =
-			'<p>Testing observing 2 nodes (2)</p>' +
+			'<p>Testing observing 2 nodes (2) (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Test nodes
@@ -194,10 +194,10 @@ describe('Observe DOM', () => {
 
 		// Set HTML
 		baseNode.innerHTML =
-			'<p>Testing observing 2 nodes (1)</p>' +
+			'<p>Testing observing 2 nodes (1) (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 		node.innerHTML =
-			'<p>Testing observing 2 nodes (2)</p>' +
+			'<p>Testing observing 2 nodes (2) (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Observe node: should run scan on next tick
@@ -256,10 +256,10 @@ describe('Observe DOM', () => {
 
 		// Set HTML
 		baseNode.innerHTML =
-			'<p>Testing observing 2 nodes (1)</p>' +
+			'<p>Testing observing 2 nodes (1) (should NOT render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 		node.innerHTML =
-			'<p>Testing observing 2 nodes (2)</p>' +
+			'<p>Testing observing 2 nodes (2) (should render SVG!)</p>' +
 			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Test nodes

@@ -21,7 +21,7 @@ describe('Testing finder', () => {
 	it('Finding nodes', () => {
 		const node = getNode('finder');
 		node.innerHTML =
-			'<div><p>List of <span>icons</span></p><ul>' +
+			'<div><p>List of <span>icon</span> placeholders (this test does not render SVG)</p><ul>' +
 			'<li>Valid icons:' +
 			'   <span class="iconify" data-icon="mdi:home"></span>' +
 			'   <i class="iconify" data-icon="mdi:account"></i>' +

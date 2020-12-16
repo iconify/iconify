@@ -12,7 +12,7 @@ describe('Testing Iconify finder', () => {
 	it('Finding nodes and getting node name', () => {
 		const node = getNode('iconify-finder');
 		node.innerHTML =
-			'<div><p>List of <span>icons</span></p><ul>' +
+			'<div><p>Testing <span>icons</span> placeholders (not replaced with SVG)</p><ul>' +
 			'<li>Valid icons: <span class="iconify" data-icon="mdi:home"></span><i class="iconify-inline" data-icon="mdi:account"></i></li>' +
 			'<li>Icon without name: <span class="iconify"></span></li>' +
 			'<li>Icon with extra classes: <i class="iconify iconify--mdi" data-icon="mdi:home"></i></li>' +
@@ -80,7 +80,8 @@ describe('Testing Iconify finder', () => {
 	it('Transformations and inline/block', () => {
 		const node = getNode('iconify-finder');
 		node.innerHTML =
-			'Block icon:' +
+			'This test does not render SVG!<br />' +
+			'Block icons:' +
 			'    <span class="iconify-inline" data-icon="mdi:home" data-inline="false"></span>' +
 			'Inline rotated icons:' +
 			'    <span class="iconify-inline" data-icon="mdi:account" data-rotate="90deg"></span>' +
@@ -189,6 +190,7 @@ describe('Testing Iconify finder', () => {
 	it('Dimensions', () => {
 		const node = getNode('iconify-finder');
 		node.innerHTML =
+			'This test does not render SVG!<br />' +
 			'Block icon:' +
 			'    <span class="iconify iconify-inline" data-icon="mdi:home" data-inline="false"></span>' +
 			'Width and height:' +
@@ -273,6 +275,7 @@ describe('Testing Iconify finder', () => {
 	it('Alignment', () => {
 		const node = getNode('iconify-finder');
 		node.innerHTML =
+			'This test does not render SVG!<br />' +
 			'Inline icon:' +
 			'    <i class="iconify" data-icon="mdi:home" data-inline="true"></i>' +
 			'Alignment:' +
