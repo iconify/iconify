@@ -46,7 +46,7 @@ export function renderIcon(
 
 	// Generate SVG as string
 	const html =
-		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" class="' +
+		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="' +
 		className +
 		'">' +
 		replaceIDs(data.body) +
@@ -67,7 +67,6 @@ export function renderIcon(
 	});
 
 	// Add custom styles
-	svgStyle.transform = 'rotate(360deg)';
 	if (data.inline) {
 		svgStyle.verticalAlign = '-0.125em';
 	}
