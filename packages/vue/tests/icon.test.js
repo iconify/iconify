@@ -38,7 +38,7 @@ describe('Mounting component', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
 		);
 	});
 });
@@ -59,7 +59,7 @@ describe('Rendering icon', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -83,7 +83,7 @@ describe('Rendering icon', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -117,7 +117,7 @@ describe('Rendering icon', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M16 8.414l-4.5-4.5L4.414 11H6v8h3v-6h5v6h3v-8h1.586L17 9.414V6h-1v2.414zM2 12l9.5-9.5L15 6V5h3v4l3 3h-3v7.998h-5v-6h-3v6H5V12H2z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -151,7 +151,7 @@ describe('Rendering icon', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M8 13v-1h7v1H8zm7.5-6a5.5 5.5 0 1 1 0 11H13v-1h2.5a4.5 4.5 0 1 0 0-9H13V7h2.5zm-8 11a5.5 5.5 0 1 1 0-11H10v1H7.5a4.5 4.5 0 1 0 0 9H10v1H7.5z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -191,7 +191,7 @@ describe('Passing attributes', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" title="Icon!" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" title="Icon!" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -212,7 +212,7 @@ describe('Passing attributes', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -233,7 +233,7 @@ describe('Passing attributes', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -255,7 +255,7 @@ describe('Passing attributes', () => {
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
 			// same values, but different order
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" width="1em" height="1em">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" width="1em" height="1em">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -279,7 +279,7 @@ describe('Dimensions', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -302,7 +302,7 @@ describe('Dimensions', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="32" height="48" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="32" height="48" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);
@@ -324,7 +324,7 @@ describe('Dimensions', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).toStrictEqual(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">' +
 				'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path>' +
 				'</svg>'
 		);

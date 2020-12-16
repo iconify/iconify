@@ -71,7 +71,6 @@ const svgDefaults: IconifySVGProps = {
 	'xmlns': 'http://www.w3.org/2000/svg',
 	'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
-	'focusable': false,
 	'role': 'img',
 	'style': {}, // Include style if it isn't set to add verticalAlign later
 };

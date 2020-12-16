@@ -27,7 +27,6 @@ describe('Creating component', () => {
 				'xmlns': 'http://www.w3.org/2000/svg',
 				'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 				'aria-hidden': true,
-				'focusable': false,
 				'role': 'img',
 				'style': {},
 				'dangerouslySetInnerHTML': {
@@ -52,7 +51,6 @@ describe('Creating component', () => {
 				'xmlns': 'http://www.w3.org/2000/svg',
 				'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 				'aria-hidden': true,
-				'focusable': false,
 				'role': 'img',
 				'style': {
 					verticalAlign: '-0.125em',
@@ -80,7 +78,6 @@ describe('Creating component', () => {
 				'xmlns': 'http://www.w3.org/2000/svg',
 				'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 				'aria-hidden': true,
-				'focusable': false,
 				'role': 'img',
 				'style': {},
 				'dangerouslySetInnerHTML': {
@@ -122,7 +119,6 @@ describe('Creating component', () => {
 				'xmlns': 'http://www.w3.org/2000/svg',
 				'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 				'aria-hidden': true,
-				'focusable': false,
 				'role': 'img',
 				'style': {},
 				'dangerouslySetInnerHTML': {
@@ -164,7 +160,6 @@ describe('Creating component', () => {
 				'xmlns': 'http://www.w3.org/2000/svg',
 				'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 				'aria-hidden': true,
-				'focusable': false,
 				'role': 'img',
 				'style': {},
 				'dangerouslySetInnerHTML': {
