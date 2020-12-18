@@ -282,8 +282,15 @@ class DynamicComponent extends Component<StatefulProps, StatefulState> {
 			loaded: false,
 			data: null,
 		};
+	}
 
-		API.loadIcons([props.icon], this._loaded.bind(this));
+	/**
+	 * Load icon data on mount
+	 */
+	componentDidMount() {
+		if (!this._loaded()) {
+			API.loadIcons([this.props.icon], this._loaded.bind(this));
+		}
 	}
 
 	/**
@@ -309,7 +316,7 @@ class DynamicComponent extends Component<StatefulProps, StatefulState> {
 	/**
 	 * Loaded
 	 */
-	_loaded() {
+	_loaded(): boolean {
 		if (!this.state.loaded) {
 			const data = _getIconData(this.props.icon);
 			if (data) {
@@ -318,8 +325,11 @@ class DynamicComponent extends Component<StatefulProps, StatefulState> {
 					loaded: true,
 					data,
 				});
+				return true;
 			}
+			return false;
 		}
+		return true;
 	}
 
 	/**
