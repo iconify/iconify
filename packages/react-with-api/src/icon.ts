@@ -9,7 +9,7 @@ import {
 } from '@iconify/react/lib/icon';
 
 // Core
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	IconifyIconSize,
@@ -19,7 +19,6 @@ import {
 import {
 	storageFunctions,
 	getIconData,
-	getIconName,
 } from '@iconify/core/lib/storage/functions';
 import { calcSize } from '@iconify/core/lib/builder/calc-size';
 import { IconifyIcon } from '@iconify/core/lib/icon';
@@ -302,7 +301,7 @@ const component = (props: IconProps, func: typeof ReactIcon): JSX.Element => {
 
 	// Get icon data
 	if (typeof props.icon === 'string') {
-		const iconName = getIconName(props.icon);
+		const iconName = stringToIcon(props.icon, true);
 		if (!iconName) {
 			return null;
 		}

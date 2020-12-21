@@ -1,7 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { getIconName, storageFunctions } from '../../lib/storage/functions';
-import { IconifyIconName } from '../../lib/icon/name';
+import { storageFunctions } from '../../lib/storage/functions';
 
 describe('Testing IconifyStorageFunctions', () => {
 	let count = 0;
@@ -9,26 +8,6 @@ describe('Testing IconifyStorageFunctions', () => {
 	function nextProvider(): string {
 		return 'storage-test-' + count++;
 	}
-
-	it('Getting icon name', () => {
-		let expected: IconifyIconName;
-
-		expected = {
-			provider: '',
-			prefix: 'mdi',
-			name: 'home',
-		};
-		expect(getIconName('mdi:home')).to.be.eql(expected);
-
-		expected = {
-			provider: 'local-test',
-			prefix: 'mdi',
-			name: 'home',
-		};
-		expect(getIconName('@local-test:mdi:home')).to.be.eql(expected);
-
-		expect(getIconName('test')).to.be.equal(null);
-	});
 
 	it('Storage functions', () => {
 		const provider = nextProvider();

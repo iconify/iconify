@@ -36,23 +36,12 @@ export interface IconifyStorageFunctions {
 }
 
 /**
- * Get icon name
- */
-export function getIconName(name: string): IconifyIconName | null {
-	const icon = stringToIcon(name);
-	if (!validateIcon(icon)) {
-		return null;
-	}
-	return icon;
-}
-
-/**
  * Get icon data
  */
 export function getIconData(
 	name: string | IconifyIconName
 ): FullIconifyIcon | null {
-	const icon = typeof name === 'string' ? getIconName(name) : name;
+	const icon = typeof name === 'string' ? stringToIcon(name, true) : name;
 	return icon
 		? getIcon(getStorage(icon.provider, icon.prefix), icon.name)
 		: null;
@@ -102,7 +91,7 @@ export const storageFunctions: IconifyStorageFunctions = {
 
 	// Add icon
 	addIcon: (name, data) => {
-		const icon = getIconName(name);
+		const icon = stringToIcon(name, true);
 		if (!icon) {
 			return false;
 		}

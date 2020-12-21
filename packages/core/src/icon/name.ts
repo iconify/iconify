@@ -20,7 +20,10 @@ const match = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /**
  * Convert string to Icon object.
  */
-export const stringToIcon = (value: string): IconifyIconName | null => {
+export const stringToIcon = (
+	value: string,
+	validate?: boolean
+): IconifyIconName | null => {
 	let provider = '';
 	const colonSeparated = value.split(':');
 
@@ -42,22 +45,24 @@ export const stringToIcon = (value: string): IconifyIconName | null => {
 		// "prefix:name"
 		const name = colonSeparated.pop() as string;
 		const prefix = colonSeparated.pop() as string;
-		return {
+		const result: IconifyIconName = {
 			// Allow provider without '@': "provider:prefix:name"
 			provider: colonSeparated.length > 0 ? colonSeparated[0] : provider,
 			prefix,
 			name,
 		};
+		return validate && !validateIcon(result) ? null : result;
 	}
 
 	// Attempt to split by dash: "prefix-name"
 	const dashSeparated = colonSeparated[0].split('-');
 	if (dashSeparated.length > 1) {
-		return {
+		const result: IconifyIconName = {
 			provider: provider,
 			prefix: dashSeparated.shift() as string,
 			name: dashSeparated.join('-'),
 		};
+		return validate && !validateIcon(result) ? null : result;
 	}
 
 	return null;
