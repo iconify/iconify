@@ -13,12 +13,13 @@
 	},
 	"scripts": {
 		"clean": "rm -rf lib compiled-tests",
-		"lint": "npx eslint {src,tests}/**/*.ts",
+		"lint": "eslint {src,tests}/**/*.ts",
 		"prebuild": "npm run lint",
-		"build": "npx tsc -b",
+		"build": "tsc -b",
+		"build:src": "tsc --project src/tsconfig.json",
 		"prewatch": "npm run lint",
-		"watch": "npx tsc -b -w",
-		"test": "npx mocha tests-compiled/*/*-test.js",
+		"watch": "tsc -b -w",
+		"test": "mocha tests-compiled/*/*-test.js",
 		"pretest": "npm run build"
 	},
 	"devDependencies": {
