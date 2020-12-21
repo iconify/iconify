@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
-import { RedundancyPendingItem } from '@cyberalien/redundancy';
+import { PendingQueryItem } from '@cyberalien/redundancy';
 import {
 	setAPIConfig,
 	getAPIConfig,
@@ -40,7 +40,7 @@ describe('Testing API modules', () => {
 	const sendQuery = (
 		host: string,
 		params: APIQueryParams,
-		status: RedundancyPendingItem
+		item: PendingQueryItem
 	): void => {
 		throw new Error('Unexpected API call');
 	};

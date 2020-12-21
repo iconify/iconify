@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
 import {
@@ -8,8 +6,8 @@ import {
 	config,
 	emptyList,
 	StoredItem,
-} from '../../lib/cache/storage';
-import { getStorage, iconExists, getIcon } from '../../lib/storage';
+} from '../../lib/storage/browser';
+import { getStorage, iconExists } from '../../lib/storage/storage';
 import {
 	nextPrefix,
 	createCache,
@@ -21,7 +19,7 @@ import {
 	hour,
 	cacheExpiration,
 } from './fake_cache';
-import { IconifyIcon, IconifyJSON } from '@iconify/types';
+import { IconifyJSON } from '@iconify/types';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';

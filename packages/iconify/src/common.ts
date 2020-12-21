@@ -1,22 +1,13 @@
 import { IconifyJSON } from '@iconify/types';
-import { merge } from '@iconify/core/lib/misc/merge';
-import {
-	stringToIcon,
-	validateIcon,
-	IconifyIconName,
-} from '@iconify/core/lib/icon/name';
-import { IconifyIcon, FullIconifyIcon } from '@iconify/core/lib/icon';
+import { stringToIcon } from '@iconify/core/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	fullCustomisations,
 } from '@iconify/core/lib/customisations';
 import {
-	getStorage,
-	getIcon,
-	addIcon,
-	addIconSet,
-	listIcons,
-} from '@iconify/core/lib/storage';
+	storageFunctions,
+	getIconData,
+} from '@iconify/core/lib/storage/functions';
 import { iconToSVG, IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { renderIcon } from './modules/render';
@@ -34,27 +25,6 @@ import { addFinder } from './modules/finder';
 import { finder as iconifyFinder } from './finders/iconify';
 import { findRootNode, addBodyNode } from './modules/root';
 // import { finder as iconifyIconFinder } from './finders/iconify-icon';
-
-/**
- * Get icon name
- */
-function getIconName(name: string): IconifyIconName | null {
-	const icon = stringToIcon(name);
-	if (!validateIcon(icon)) {
-		return null;
-	}
-	return icon;
-}
-
-/**
- * Get icon data
- */
-function getIconData(name: string): FullIconifyIcon | null {
-	const icon = getIconName(name);
-	return icon
-		? getIcon(getStorage(icon.provider, icon.prefix), icon.name)
-		: null;
-}
 
 /**
  * Get SVG data
@@ -108,65 +78,14 @@ function generateIcon(
 }
 
 /**
- * Add icon set
- */
-export function addCollection(data: IconifyJSON, provider?: string) {
-	if (typeof provider !== 'string') {
-		provider = typeof data.provider === 'string' ? data.provider : '';
-	}
-
-	if (
-		typeof data !== 'object' ||
-		typeof data.prefix !== 'string' ||
-		!validateIcon({
-			provider,
-			prefix: data.prefix,
-			name: 'a',
-		})
-	) {
-		return false;
-	}
-
-	const storage = getStorage(provider, data.prefix);
-	return !!addIconSet(storage, data);
-}
-
-/**
  * Iconify interface
  */
-export interface IconifyGlobal {
+export interface IconifyCommonFunctions {
 	/* General section */
 	/**
 	 * Get version
 	 */
 	getVersion: () => string;
-
-	/* Getting icons */
-	/**
-	 * Check if icon exists
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
-	 * Get icon data with all properties
-	 */
-	getIcon: (name: string) => Required<IconifyIcon> | null;
-
-	/**
-	 * List all available icons
-	 */
-	listIcons: (provider?: string, prefix?: string) => string[];
-
-	/* Add icons */
-	/**
-	 * Add icon to storage
-	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
-
-	/**
-	 * Add icon set to storage
-	 */
-	addCollection: (data: IconifyJSON, provider?: string) => boolean;
 
 	/* Render icons */
 	/**
@@ -226,34 +145,9 @@ export interface IconifyGlobal {
 /**
  * Global variable
  */
-export const IconifyCommon: IconifyGlobal = {
+export const commonFunctions: IconifyCommonFunctions = {
 	// Version
 	getVersion: () => '__iconify_version__',
-
-	// Check if icon exists
-	iconExists: (name) => getIconData(name) !== null,
-
-	// Get raw icon data
-	getIcon: (name) => {
-		const result = getIconData(name);
-		return result ? merge(result) : null;
-	},
-
-	// List icons
-	listIcons,
-
-	// Add icon
-	addIcon: (name, data) => {
-		const icon = getIconName(name);
-		if (!icon) {
-			return false;
-		}
-		const storage = getStorage(icon.provider, icon.prefix);
-		return addIcon(storage, icon.name, data);
-	},
-
-	// Add icon set
-	addCollection,
 
 	// Render SVG
 	renderSVG: (name: string, customisations: IconifyIconCustomisations) => {
@@ -350,7 +244,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 						typeof item.icons !== 'object' ||
 						typeof item.prefix !== 'string' ||
 						// Add icon set
-						!addCollection(item)
+						!storageFunctions.addCollection(item)
 					) {
 						console.error(err);
 					}

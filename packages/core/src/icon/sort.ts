@@ -1,4 +1,4 @@
-import { getStorage, IconStorage } from '../storage';
+import { getStorage, IconStorage } from '../storage/storage';
 import { IconifyIconName } from './name';
 
 /**

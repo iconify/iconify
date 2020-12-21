@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
-import { count, config, loadCache } from '../../lib/cache/storage';
+import { count, config, loadCache } from '../../lib/storage/browser';
 import {
 	nextPrefix,
 	createCache,

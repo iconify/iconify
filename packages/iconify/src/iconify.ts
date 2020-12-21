@@ -10,12 +10,20 @@ import {
 } from '@iconify/core/lib/customisations';
 import { IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { calcSize } from '@iconify/core/lib/builder/calc-size';
+import {
+	IconifyStorageFunctions,
+	storageFunctions,
+} from '@iconify/core/lib/storage/functions';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
 
 // Cache
-import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
+import {
+	storeCache,
+	loadCache,
+	config,
+} from '@iconify/core/lib/storage/browser';
 
 // API
 import {
@@ -51,7 +59,7 @@ import {
 
 // Other
 import { IconifyExposedCommonInternals } from './internals';
-import { IconifyGlobal as IconifyGlobal1, IconifyCommon } from './common';
+import { IconifyCommonFunctions, commonFunctions } from './common';
 
 /**
  * Export required types
@@ -97,7 +105,7 @@ export interface IconifyExposedInternals
 /**
  * Exported functions
  */
-export interface IconifyGlobal2 extends IconifyAPI {
+export interface IconifyFunctions extends IconifyAPI {
 	/**
 	 * Expose internal functions
 	 */
@@ -107,7 +115,10 @@ export interface IconifyGlobal2 extends IconifyAPI {
 /**
  * Iconify interface
  */
-export interface IconifyGlobal extends IconifyGlobal1, IconifyGlobal2 {}
+export interface IconifyGlobal
+	extends IconifyStorageFunctions,
+		IconifyCommonFunctions,
+		IconifyFunctions {}
 
 // Export dependencies
 export { IconifyGlobal as IconifyGlobalCommon, IconifyAPI };
@@ -159,12 +170,14 @@ const Iconify: IconifyGlobal = ({
 		// Get API module
 		setAPIModule,
 	},
-} as IconifyGlobal2) as IconifyGlobal;
+} as IconifyFunctions) as IconifyGlobal;
 
 // Merge with common functions
-for (const key in IconifyCommon) {
-	Iconify[key] = IconifyCommon[key];
-}
+[storageFunctions, commonFunctions].forEach((list) => {
+	for (const key in list) {
+		Iconify[key] = list[key];
+	}
+});
 
 /**
  * Initialise stuff

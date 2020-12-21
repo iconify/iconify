@@ -8,7 +8,11 @@ import {
 } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify-v1';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-v1-icon';
-import { getStorage, addIconSet, getIcon } from '@iconify/core/lib/storage';
+import {
+	getStorage,
+	addIconSet,
+	getIcon,
+} from '@iconify/core/lib/storage/storage';
 import { renderIcon } from '@iconify/iconify/lib/modules/render';
 import { stringToIcon } from '@iconify/core/lib/icon/name';
 import { IconifyElement } from '@iconify/iconify/lib/modules/element';

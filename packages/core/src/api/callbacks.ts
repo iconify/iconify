@@ -2,7 +2,7 @@ import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '../interfaces/loader';
-import { getStorage } from '../storage';
+import { getStorage } from '../storage/storage';
 import { SortedIcons } from '../icon/sort';
 import { IconifyIconSource } from '../icon/name';
 

@@ -8,7 +8,7 @@ import {
 	storeCallback,
 } from '../../lib/api/callbacks';
 import { sortIcons } from '../../lib/icon/sort';
-import { getStorage, addIconSet } from '../../lib/storage';
+import { getStorage, addIconSet } from '../../lib/storage/storage';
 
 describe('Testing API callbacks', () => {
 	let prefixCounter = 0;

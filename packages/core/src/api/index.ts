@@ -13,7 +13,7 @@ import { IsPending, IconifyAPI } from '../interfaces/api';
 import { storeCallback, updateCallbacks } from './callbacks';
 import { getAPIModule } from './modules';
 import { getAPIConfig, IconifyAPIConfig } from './config';
-import { getStorage, addIconSet } from '../storage';
+import { getStorage, addIconSet } from '../storage/storage';
 import { coreModules } from '../modules';
 import { IconifyIconName, IconifyIconSource } from '../icon/name';
 import { listToIcons } from '../icon/list';

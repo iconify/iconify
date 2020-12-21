@@ -9,7 +9,7 @@ import {
 	addIconSet,
 	getStorage,
 	listIcons,
-} from '../../lib/storage';
+} from '../../lib/storage/storage';
 import { FullIconifyIcon, IconifyIcon } from '../../lib/icon';
 
 describe('Testing storage', () => {

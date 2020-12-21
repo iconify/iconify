@@ -9,11 +9,7 @@ import {
 } from '@iconify/react/lib/icon';
 
 // Core
-import {
-	stringToIcon,
-	validateIcon,
-	IconifyIconName,
-} from '@iconify/core/lib/icon/name';
+import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	IconifyIconSize,
@@ -21,14 +17,12 @@ import {
 	IconifyVerticalIconAlignment,
 } from '@iconify/core/lib/customisations';
 import {
-	getStorage,
-	getIcon as _getIcon,
-	addIcon as addIconToStorage,
-	addIconSet,
-	listIcons,
-} from '@iconify/core/lib/storage';
+	storageFunctions,
+	getIconData,
+	getIconName,
+} from '@iconify/core/lib/storage/functions';
 import { calcSize } from '@iconify/core/lib/builder/calc-size';
-import { IconifyIcon, FullIconifyIcon } from '@iconify/core/lib/icon';
+import { IconifyIcon } from '@iconify/core/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
@@ -62,7 +56,11 @@ import {
 } from '@iconify/core/lib/interfaces/loader';
 
 // Cache
-import { storeCache, loadCache, config } from '@iconify/core/lib/cache/storage';
+import {
+	storeCache,
+	loadCache,
+	config,
+} from '@iconify/core/lib/storage/browser';
 
 /**
  * Export required types
@@ -155,80 +153,34 @@ export function disableCache(storage: IconifyCacheType): void {
 }
 
 /**
- * Get icon name
+ * Check if icon exists
  */
-function _getIconName(name: string): IconifyIconName | null {
-	const icon = stringToIcon(name);
-	if (!validateIcon(icon)) {
-		return null;
-	}
-	return icon;
-}
+export const iconExists = storageFunctions.iconExists;
 
 /**
  * Get icon data
  */
-function _getIconData(icon: IconifyIconName): FullIconifyIcon | null {
-	return _getIcon(getStorage(icon.provider, icon.prefix), icon.name);
-}
-
-export function getIcon(name: string): Required<IconifyIcon> | null {
-	const icon = _getIconName(name);
-	return icon ? _getIconData(icon) : null;
-}
+export const getIcon = storageFunctions.getIcon;
 
 /**
- * Check if icon exists
+ * List available icons
  */
-export function iconExists(name: string): boolean {
-	return getIcon(name) !== null;
-}
+export const listIcons = storageFunctions.listIcons;
+
+/**
+ * Add one icon
+ */
+export const addIcon = storageFunctions.addIcon;
+
+/**
+ * Add icon set
+ */
+export const addCollection = storageFunctions.addCollection;
 
 /**
  * Load icons
  */
 export const loadIcons: IconifyLoadIcons = API.loadIcons;
-
-/**
- * List available icons
- */
-export { listIcons };
-
-/**
- * Add one icon
- */
-export function addIcon(name: string, data: IconifyIcon): boolean {
-	const icon = _getIconName(name);
-	if (!icon) {
-		return false;
-	}
-	const storage = getStorage(icon.provider, icon.prefix);
-	return addIconToStorage(storage, icon.name, data);
-}
-
-/**
- * Add icon set
- */
-export function addCollection(data: IconifyJSON, provider?: string) {
-	if (typeof provider !== 'string') {
-		provider = typeof data.provider === 'string' ? data.provider : '';
-	}
-
-	if (
-		typeof data !== 'object' ||
-		typeof data.prefix !== 'string' ||
-		!validateIcon({
-			provider,
-			prefix: data.prefix,
-			name: 'a',
-		})
-	) {
-		return false;
-	}
-
-	const storage = getStorage(provider, data.prefix);
-	return !!addIconSet(storage, data);
-}
 
 /**
  * Add API provider
@@ -318,7 +270,7 @@ class DynamicComponent extends Component<StatefulProps, StatefulState> {
 	 */
 	_loaded(): boolean {
 		if (!this.state.loaded) {
-			const data = _getIconData(this.props.icon);
+			const data = getIconData(this.props.icon);
 			if (data) {
 				this._abort = null;
 				this.setState({
@@ -350,12 +302,12 @@ const component = (props: IconProps, func: typeof ReactIcon): JSX.Element => {
 
 	// Get icon data
 	if (typeof props.icon === 'string') {
-		const iconName = _getIconName(props.icon);
+		const iconName = getIconName(props.icon);
 		if (!iconName) {
 			return null;
 		}
 
-		iconData = _getIconData(iconName);
+		iconData = getIconData(iconName);
 
 		if (iconData) {
 			let staticProps: IconProps = {} as IconProps;

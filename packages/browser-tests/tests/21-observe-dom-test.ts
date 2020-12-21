@@ -5,7 +5,7 @@ import { getNode, setRoot } from './node';
 import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
-import { getStorage, addIconSet } from '@iconify/core/lib/storage';
+import { getStorage, addIconSet } from '@iconify/core/lib/storage/storage';
 import { listRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 import {
