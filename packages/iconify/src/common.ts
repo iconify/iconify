@@ -9,7 +9,6 @@ import {
 	getIconData,
 } from '@iconify/core/lib/storage/functions';
 import { iconToSVG, IconifyIconBuildResult } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { renderIcon } from './modules/render';
 import {
 	initObserver,
@@ -109,11 +108,6 @@ export interface IconifyCommonFunctions {
 		customisations: IconifyIconCustomisations
 	) => IconifyIconBuildResult | null;
 
-	/**
-	 * Replace IDs in icon body, should be used when parsing renderIcon() result
-	 */
-	replaceIDs: (body: string, prefix?: string | (() => string)) => string;
-
 	/* Scanner */
 	/**
 	 * Scan DOM
@@ -160,9 +154,6 @@ export const commonFunctions: IconifyCommonFunctions = {
 
 	// Get rendered icon as object that can be used to create SVG (use replaceIDs on body)
 	renderIcon: buildIcon,
-
-	// Replace IDs in body
-	replaceIDs,
 
 	// Scan DOM
 	scan: (root?: HTMLElement) => {

@@ -6,7 +6,7 @@ import {
 	config,
 	emptyList,
 	StoredItem,
-} from '../../lib/storage/browser';
+} from '../../lib/browser-storage/';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import {
 	nextPrefix,

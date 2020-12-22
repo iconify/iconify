@@ -1,6 +1,6 @@
 import { FullIconifyIcon } from '../icon';
 import { FullIconCustomisations } from '../customisations';
-import { calcSize } from './calc-size';
+import { calculateSize } from './calc-size';
 
 /**
  * Get preserveAspectRatio value
@@ -165,7 +165,7 @@ export function iconToSVG(
 	if (customisations.width === null && customisations.height === null) {
 		// Set height to '1em', calculate width
 		height = '1em';
-		width = calcSize(height, box.width / box.height);
+		width = calculateSize(height, box.width / box.height);
 	} else if (
 		customisations.width !== null &&
 		customisations.height !== null
@@ -176,11 +176,11 @@ export function iconToSVG(
 	} else if (customisations.height !== null) {
 		// Height is set
 		height = customisations.height;
-		width = calcSize(height, box.width / box.height);
+		width = calculateSize(height, box.width / box.height);
 	} else {
 		// Width is set
 		width = customisations.width as number | string;
-		height = calcSize(width, box.height / box.width);
+		height = calculateSize(width, box.height / box.width);
 	}
 
 	// Check for 'auto'

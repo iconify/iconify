@@ -17,21 +17,27 @@ import {
 	IconifyVerticalIconAlignment,
 } from '@iconify/core/lib/customisations';
 import {
+	IconifyStorageFunctions,
 	storageFunctions,
 	getIconData,
 } from '@iconify/core/lib/storage/functions';
-import { calcSize } from '@iconify/core/lib/builder/calc-size';
+import {
+	IconifyBuilderFunctions,
+	builderFunctions,
+} from '@iconify/core/lib/builder/functions';
 import { IconifyIcon } from '@iconify/core/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
 
 // API
+import { API, IconifyAPIInternalStorage } from '@iconify/core/lib/api/';
 import {
-	API,
-	getRedundancyCache,
-	IconifyAPIInternalStorage,
-} from '@iconify/core/lib/api/';
+	IconifyAPIFunctions,
+	IconifyAPIInternalFunctions,
+	APIFunctions,
+	APIInternalFunctions,
+} from '@iconify/core/lib/api/functions';
 import {
 	setAPIModule,
 	IconifyAPIModule,
@@ -51,19 +57,28 @@ import {
 import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-	IconifyLoadIcons,
 } from '@iconify/core/lib/interfaces/loader';
 
 // Cache
+import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
 import {
-	storeCache,
-	loadCache,
-	config,
-} from '@iconify/core/lib/storage/browser';
+	IconifyBrowserCacheType,
+	IconifyBrowserCacheFunctions,
+	toggleBrowserCache,
+} from '@iconify/core/lib/browser-storage/functions';
 
 /**
  * Export required types
  */
+// Function sets
+export {
+	IconifyStorageFunctions,
+	IconifyBuilderFunctions,
+	IconifyBrowserCacheFunctions,
+	IconifyAPIFunctions,
+	IconifyAPIInternalFunctions,
+};
+
 // JSON stuff
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
@@ -87,70 +102,19 @@ export {
 	IconifyAPISendQuery,
 };
 
-/**
- * Exposed internal functions
- *
- * Used by plug-ins, such as Icon Finder
- *
- * Important: any changes published in a release must be backwards compatible.
- */
-export interface IconifyExposedInternals {
-	/**
-	 * Calculate width knowing height and width/height ratio (or vice versa)
-	 */
-	calculateSize: (
-		size: IconifyIconSize,
-		ratio: number,
-		precision?: number
-	) => IconifyIconSize;
-
-	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
-
-	/**
-	 * Get API config, used by custom modules
-	 */
-	getAPIConfig: GetAPIConfig;
-
-	/**
-	 * Set API module
-	 */
-	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
-}
+/* Browser cache */
+export { IconifyBrowserCacheType };
 
 /**
- * Cache types
+ * Enable and disable browser cache
  */
-export type IconifyCacheType = 'local' | 'session' | 'all';
+export const enableCache = (storage: IconifyBrowserCacheType) =>
+	toggleBrowserCache(storage, true);
 
-/**
- * Toggle cache
- */
-function toggleCache(storage: IconifyCacheType, value: boolean): void {
-	switch (storage) {
-		case 'local':
-		case 'session':
-			config[storage] = value;
-			break;
+export const disableCache = (storage: IconifyBrowserCacheType) =>
+	toggleBrowserCache(storage, false);
 
-		case 'all':
-			for (const key in config) {
-				config[key] = value;
-			}
-			break;
-	}
-}
-
-export function enableCache(storage: IconifyCacheType): void {
-	toggleCache(storage, true);
-}
-
-export function disableCache(storage: IconifyCacheType): void {
-	toggleCache(storage, false);
-}
-
+/* Storage functions */
 /**
  * Check if icon exists
  */
@@ -176,32 +140,32 @@ export const addIcon = storageFunctions.addIcon;
  */
 export const addCollection = storageFunctions.addCollection;
 
+/* Builder functions */
+/**
+ * Calculate icon size
+ */
+export const calculateSize = builderFunctions.calculateSize;
+
+/**
+ * Replace unique ids in content
+ */
+export const replaceIDs = builderFunctions.replaceIDs;
+
+/* API functions */
 /**
  * Load icons
  */
-export const loadIcons: IconifyLoadIcons = API.loadIcons;
+export const loadIcons = APIFunctions.loadIcons;
 
 /**
  * Add API provider
  */
-export { setAPIConfig as addAPIProvider };
+export const addAPIProvider = APIFunctions.addAPIProvider;
 
 /**
  * Export internal functions that can be used by third party implementations
  */
-export const internals: IconifyExposedInternals = {
-	// Calculate size
-	calculateSize: calcSize,
-
-	// Get API data
-	getAPI: getRedundancyCache,
-
-	// Get API config
-	getAPIConfig,
-
-	// Get API module
-	setAPIModule,
-};
+export const _api = APIInternalFunctions;
 
 /**
  * Stateful component

@@ -14,7 +14,7 @@ const unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
  * @param {number} [precision] Floating number precision in result to minimize output. Default = 2
  * @return {string|number} Another dimension
  */
-export function calcSize(
+export function calculateSize(
 	size: string | number,
 	ratio: number,
 	precision?: number

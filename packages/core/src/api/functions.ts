@@ -1,28 +1,22 @@
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { API, getRedundancyCache, IconifyAPIInternalStorage } from '.';
+import { IconifyIconName } from '../icon/name';
 import {
-	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-} from '@iconify/core/lib/interfaces/loader';
-import { IconifyAPIConfig, GetAPIConfig } from '@iconify/core/lib/api/config';
-import { IconifyAPIInternalStorage } from '@iconify/core/lib/api/';
-import { IconifyAPIModule } from '@iconify/core/lib/api/modules';
+	IconifyIconLoaderCallback,
+} from '../interfaces/loader';
+import {
+	getAPIConfig,
+	GetAPIConfig,
+	IconifyAPIConfig,
+	setAPIConfig,
+} from './config';
+import { IconifyAPIModule, setAPIModule } from './modules';
 
 /**
- * Cache types
+ * Iconify API functions
  */
-export type IconifyCacheType = 'local' | 'session' | 'all';
-
-/**
- * Iconify interface
- */
-export interface IconifyAPI {
+export interface IconifyAPIFunctions {
 	/* Scan DOM */
-	/**
-	 * Toggle local and session storage
-	 */
-	enableCache: (storage: IconifyCacheType, value?: boolean) => void;
-	disableCache: (storage: IconifyCacheType) => void;
-
 	/**
 	 * Load icons
 	 */
@@ -41,6 +35,11 @@ export interface IconifyAPI {
 	) => void;
 }
 
+export const APIFunctions: IconifyAPIFunctions = {
+	loadIcons: API.loadIcons,
+	addAPIProvider: setAPIConfig,
+};
+
 /**
  * Exposed internal functions
  *
@@ -48,7 +47,7 @@ export interface IconifyAPI {
  *
  * Important: any changes published in a release must be backwards compatible.
  */
-export interface IconifyExposedAPIInternals {
+export interface IconifyAPIInternalFunctions {
 	/**
 	 * Get internal API data, used by Icon Finder
 	 */
@@ -64,3 +63,9 @@ export interface IconifyExposedAPIInternals {
 	 */
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 }
+
+export const APIInternalFunctions: IconifyAPIInternalFunctions = {
+	getAPI: getRedundancyCache,
+	getAPIConfig,
+	setAPIModule,
+};

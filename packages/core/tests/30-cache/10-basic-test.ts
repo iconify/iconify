@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { count, config, loadCache } from '../../lib/storage/browser';
+import { count, config, loadCache } from '../../lib/browser-storage/';
 import {
 	nextPrefix,
 	createCache,
