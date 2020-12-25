@@ -1,6 +1,8 @@
-import { IconifyJSON, IconifyIcon } from '@iconify/types';
-import { FullIconifyIcon, fullIcon } from '../icon';
-import { AddIconSetTracking, parseIconSet } from '../icon/icon-set';
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
+import type { FullIconifyIcon } from '../icon';
+import { fullIcon } from '../icon';
+import type { AddIconSetTracking } from '../icon/icon-set';
+import { parseIconSet } from '../icon/icon-set';
 
 /**
  * List of icons

@@ -1,5 +1,5 @@
-import { FullIconifyIcon } from '../icon';
-import { FullIconCustomisations } from '../customisations';
+import type { FullIconifyIcon } from '../icon';
+import type { FullIconCustomisations } from '../customisations';
 import { calculateSize } from './calc-size';
 
 /**

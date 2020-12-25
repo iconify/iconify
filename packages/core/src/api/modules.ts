@@ -1,5 +1,5 @@
-import { PendingQueryItem } from '@cyberalien/redundancy';
-import { GetAPIConfig } from '../api/config';
+import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type { GetAPIConfig } from '../api/config';
 
 /**
  * Params for sendQuery()

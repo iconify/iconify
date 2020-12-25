@@ -1,6 +1,7 @@
-import { IconifyJSON } from '@iconify/types';
-import { FullIconifyIcon, IconifyIcon } from '../icon';
-import { IconifyIconName, stringToIcon, validateIcon } from '../icon/name';
+import type { IconifyJSON } from '@iconify/types';
+import type { FullIconifyIcon, IconifyIcon } from '../icon';
+import type { IconifyIconName } from '../icon/name';
+import { stringToIcon, validateIcon } from '../icon/name';
 import { merge } from '../misc/merge';
 import { getStorage, getIcon, listIcons, addIcon, addIconSet } from './storage';
 

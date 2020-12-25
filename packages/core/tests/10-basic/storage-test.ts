@@ -10,7 +10,7 @@ import {
 	getStorage,
 	listIcons,
 } from '../../lib/storage/storage';
-import { FullIconifyIcon, IconifyIcon } from '../../lib/icon';
+import type { FullIconifyIcon, IconifyIcon } from '../../lib/icon';
 
 describe('Testing storage', () => {
 	it('Adding icon', () => {

@@ -1,23 +1,22 @@
-import {
-	Redundancy,
-	initRedundancy,
-	QueryModuleCallback,
-} from '@cyberalien/redundancy';
-import { SortedIcons, sortIcons } from '../icon/sort';
-import {
+import type { Redundancy, QueryModuleCallback } from '@cyberalien/redundancy';
+import type { IconifyJSON } from '@iconify/types';
+import { initRedundancy } from '@cyberalien/redundancy';
+import type { SortedIcons } from '../icon/sort';
+import { sortIcons } from '../icon/sort';
+import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
 	IconifyLoadIcons,
 } from '../interfaces/loader';
-import { IsPending, IconifyAPI } from '../interfaces/api';
+import type { IsPending, IconifyAPI } from '../interfaces/api';
 import { storeCallback, updateCallbacks } from './callbacks';
 import { getAPIModule } from './modules';
-import { getAPIConfig, IconifyAPIConfig } from './config';
+import type { IconifyAPIConfig } from './config';
+import { getAPIConfig } from './config';
 import { getStorage, addIconSet } from '../storage/storage';
 import { coreModules } from '../modules';
-import { IconifyIconName, IconifyIconSource } from '../icon/name';
+import type { IconifyIconName, IconifyIconSource } from '../icon/name';
 import { listToIcons } from '../icon/list';
-import { IconifyJSON } from '@iconify/types';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {

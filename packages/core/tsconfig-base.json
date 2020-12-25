@@ -9,6 +9,7 @@
 		"strict": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error"
 	}
 }

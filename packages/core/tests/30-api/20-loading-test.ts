@@ -2,9 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
-import { PendingQueryItem } from '@cyberalien/redundancy';
+import type { PendingQueryItem } from '@cyberalien/redundancy';
 import { setAPIConfig } from '../../lib/api/config';
-import { setAPIModule, APIQueryParams } from '../../lib/api/modules';
+import type { APIQueryParams } from '../../lib/api/modules';
+import { setAPIModule } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 
 describe('Testing API loadIcons', () => {

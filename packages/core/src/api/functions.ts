@@ -1,16 +1,14 @@
-import { API, getRedundancyCache, IconifyAPIInternalStorage } from '.';
-import { IconifyIconName } from '../icon/name';
-import {
+import type { IconifyAPIInternalStorage } from '.';
+import { API, getRedundancyCache } from '.';
+import type { IconifyIconName } from '../icon/name';
+import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
 } from '../interfaces/loader';
-import {
-	getAPIConfig,
-	GetAPIConfig,
-	IconifyAPIConfig,
-	setAPIConfig,
-} from './config';
-import { IconifyAPIModule, setAPIModule } from './modules';
+import type { GetAPIConfig, IconifyAPIConfig } from './config';
+import { getAPIConfig, setAPIConfig } from './config';
+import type { IconifyAPIModule } from './modules';
+import { setAPIModule } from './modules';
 
 /**
  * Iconify API functions

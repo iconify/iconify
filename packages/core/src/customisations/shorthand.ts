@@ -1,4 +1,4 @@
-import { IconifyIconCustomisations } from '../customisations';
+import type { IconifyIconCustomisations } from '../customisations';
 
 const separator = /[\s,]+/;
 

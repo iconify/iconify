@@ -1,4 +1,5 @@
-import { IconifyIconName, stringToIcon, validateIcon } from './name';
+import type { IconifyIconName } from './name';
+import { stringToIcon, validateIcon } from './name';
 
 /**
  * Convert icons list from string/icon mix to icons and validate them

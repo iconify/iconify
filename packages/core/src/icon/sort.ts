@@ -1,5 +1,6 @@
-import { getStorage, IconStorage } from '../storage/storage';
-import { IconifyIconName } from './name';
+import type { IconStorage } from '../storage/storage';
+import { getStorage } from '../storage/storage';
+import type { IconifyIconName } from './name';
 
 /**
  * Sorted icons list

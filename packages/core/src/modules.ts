@@ -1,5 +1,5 @@
-import { CacheIcons } from './interfaces/cache';
-import { IconifyAPI } from './interfaces/api';
+import type { CacheIcons } from './interfaces/cache';
+import type { IconifyAPI } from './interfaces/api';
 
 /**
  * Dynamic modules.

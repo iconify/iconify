@@ -1,8 +1,8 @@
 import 'mocha';
 import { expect } from 'chai';
+import type { IconifyJSON } from '@iconify/types';
 import { parseIconSet } from '../../lib/icon/icon-set';
-import { FullIconifyIcon } from '../../lib/icon';
-import { IconifyJSON } from '@iconify/types';
+import type { FullIconifyIcon } from '../../lib/icon';
 
 describe('Testing parsing icon set', () => {
 	it('Simple icon set', () => {

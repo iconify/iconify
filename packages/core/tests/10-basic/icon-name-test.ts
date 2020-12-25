@@ -1,10 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
-import {
-	stringToIcon,
-	validateIcon,
-	IconifyIconName,
-} from '../../lib/icon/name';
+import type { IconifyIconName } from '../../lib/icon/name';
+import { stringToIcon, validateIcon } from '../../lib/icon/name';
 
 describe('Testing icon name', () => {
 	it('Simple icon names', () => {

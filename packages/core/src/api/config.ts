@@ -1,4 +1,4 @@
-import { RedundancyConfig } from '@cyberalien/redundancy';
+import type { RedundancyConfig } from '@cyberalien/redundancy';
 
 /**
  * API config

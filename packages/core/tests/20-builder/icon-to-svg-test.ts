@@ -1,12 +1,11 @@
 import 'mocha';
 import { expect } from 'chai';
-import { iconToSVG, IconifyIconBuildResult } from '../../lib/builder';
-import { FullIconifyIcon, iconDefaults, fullIcon } from '../../lib/icon';
-import {
-	FullIconCustomisations,
-	defaults,
-	fullCustomisations,
-} from '../../lib/customisations';
+import type { IconifyIconBuildResult } from '../../lib/builder';
+import { iconToSVG } from '../../lib/builder';
+import type { FullIconifyIcon } from '../../lib/icon';
+import { iconDefaults, fullIcon } from '../../lib/icon';
+import type { FullIconCustomisations } from '../../lib/customisations';
+import { defaults, fullCustomisations } from '../../lib/customisations';
 
 describe('Testing iconToSVG', () => {
 	it('Empty icon', () => {

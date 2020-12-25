@@ -1,4 +1,5 @@
-import { IconifyIcon, iconDefaults } from './';
+import type { IconifyIcon } from '.';
+import { iconDefaults } from '.';
 
 /**
  * Icon keys
@@ -15,7 +16,7 @@ export function mergeIcons(
 	icon2: IconifyIcon
 ): IconifyIcon {
 	const icon = Object.create(null);
-	iconKeys.forEach(key => {
+	iconKeys.forEach((key) => {
 		if (icon1[key] === void 0) {
 			if (icon2[key] !== void 0) {
 				icon[key] = icon2[key];

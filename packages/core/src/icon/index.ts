@@ -1,4 +1,4 @@
-import { IconifyIcon } from '@iconify/types';
+import type { IconifyIcon } from '@iconify/types';
 import { merge } from '../misc/merge';
 
 export { IconifyIcon };

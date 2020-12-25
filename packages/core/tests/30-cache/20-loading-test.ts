@@ -1,11 +1,12 @@
 import 'mocha';
 import { expect } from 'chai';
+import type { IconifyJSON } from '@iconify/types';
+import type { StoredItem } from '../../lib/browser-storage/';
 import {
 	loadCache,
 	count,
 	config,
 	emptyList,
-	StoredItem,
 } from '../../lib/browser-storage/';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import {
@@ -19,7 +20,6 @@ import {
 	hour,
 	cacheExpiration,
 } from './fake_cache';
-import { IconifyJSON } from '@iconify/types';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';

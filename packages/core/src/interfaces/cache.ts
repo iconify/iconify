@@ -1,4 +1,4 @@
-import { IconifyJSON } from '@iconify/types';
+import type { IconifyJSON } from '@iconify/types';
 
 /**
  * Function to cache loaded icons set

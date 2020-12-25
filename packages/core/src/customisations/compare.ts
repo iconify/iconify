@@ -1,4 +1,5 @@
-import { FullIconCustomisations, defaults } from '../customisations';
+import type { FullIconCustomisations } from '../customisations';
+import { defaults } from '../customisations';
 
 // Get all keys
 const allKeys: (keyof FullIconCustomisations)[] = Object.keys(
@@ -6,7 +7,9 @@ const allKeys: (keyof FullIconCustomisations)[] = Object.keys(
 ) as (keyof FullIconCustomisations)[];
 
 // All keys without width/height
-const filteredKeys = allKeys.filter(key => key !== 'width' && key !== 'height');
+const filteredKeys = allKeys.filter(
+	(key) => key !== 'width' && key !== 'height'
+);
 
 /**
  * Compare sets of cusotmisations, return false if they are different, true if the same

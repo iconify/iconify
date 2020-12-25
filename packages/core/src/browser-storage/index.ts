@@ -1,5 +1,5 @@
-import { IconifyJSON } from '@iconify/types';
-import { CacheIcons, LoadIconsCache } from '../interfaces/cache';
+import type { IconifyJSON } from '@iconify/types';
+import type { CacheIcons, LoadIconsCache } from '../interfaces/cache';
 import { getStorage, addIconSet } from '../storage/storage';
 
 interface StorageType<T> {

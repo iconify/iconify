@@ -1,4 +1,4 @@
-import {
+import type {
 	IconifyJSON,
 	IconifyIcon,
 	IconifyOptional,
@@ -6,7 +6,8 @@ import {
 	IconifyIcons,
 	IconifyAliases,
 } from '@iconify/types';
-import { iconDefaults, FullIconifyIcon } from '.';
+import type { FullIconifyIcon } from '.';
+import { iconDefaults } from '.';
 import { merge } from '../misc/merge';
 import { mergeIcons } from './merge';
 

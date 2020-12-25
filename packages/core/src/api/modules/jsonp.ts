@@ -1,12 +1,12 @@
-import { PendingQueryItem } from '@cyberalien/redundancy';
-import {
+import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
 } from '../modules';
-import { GetAPIConfig } from '../config';
+import type { GetAPIConfig } from '../config';
 
 /**
  * Global
