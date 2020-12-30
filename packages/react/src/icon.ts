@@ -127,12 +127,16 @@ const component = (
 
 			// Flip as string: 'horizontal,vertical'
 			case 'flip':
-				flipFromString(customisations, value);
+				if (typeof value === 'string') {
+					flipFromString(customisations, value);
+				}
 				break;
 
 			// Alignment as string
 			case 'align':
-				alignmentFromString(customisations, value);
+				if (typeof value === 'string') {
+					alignmentFromString(customisations, value);
+				}
 				break;
 
 			// Color: copy to style
@@ -142,9 +146,9 @@ const component = (
 
 			// Rotation as string
 			case 'rotate':
-				if (typeof value !== 'number') {
+				if (typeof value === 'string') {
 					customisations[key] = rotateFromString(value);
-				} else {
+				} else if (typeof value === 'number') {
 					componentProps[key] = value;
 				}
 				break;
