@@ -22,6 +22,14 @@ export function renderIcon(
 	iconData: FullIconifyIcon,
 	returnString?: boolean
 ): IconifyElement | string | null {
+	// Create placeholder. Why placeholder? IE11 doesn't support innerHTML method on SVG.
+	let span: HTMLSpanElement;
+	try {
+		span = document.createElement('span');
+	} catch (err) {
+		return returnString ? '' : null;
+	}
+
 	const data = iconToSVG(iconData, fullCustomisations(customisations));
 
 	// Placeholder properties
@@ -52,8 +60,7 @@ export function renderIcon(
 		replaceIDs(data.body) +
 		'</svg>';
 
-	// Create placeholder. Why placeholder? IE11 doesn't support innerHTML method on SVG.
-	const span = document.createElement('span');
+	// Set HTML for placeholder
 	span.innerHTML = html;
 
 	// Get SVG element

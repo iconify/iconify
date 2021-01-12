@@ -30,7 +30,7 @@ export interface IconifyAPIFunctions {
 	addAPIProvider: (
 		provider: string,
 		customConfig: Partial<IconifyAPIConfig>
-	) => void;
+	) => boolean;
 }
 
 export const APIFunctions: IconifyAPIFunctions = {

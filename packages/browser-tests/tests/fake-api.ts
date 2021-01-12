@@ -90,7 +90,7 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 export const sendQuery: IconifyAPISendQuery = (
 	host: string,
 	params: APIQueryParams,
-	item: PendingQueryItem
+	status: PendingQueryItem
 ): void => {
 	const provider = params.provider;
 	const prefix = params.prefix;
@@ -102,7 +102,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	}
 	if (typeof data.host === 'string' && data.host !== host) {
 		// Host mismatch - send error (first parameter = undefined)
-		item.done();
+		status.done(void 0, 404);
 		return;
 	}
 
@@ -114,7 +114,7 @@ export const sendQuery: IconifyAPISendQuery = (
 				'", icons:',
 			icons
 		);
-		item.done(data.data);
+		status.done(data.data);
 	};
 
 	if (!data.delay) {

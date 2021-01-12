@@ -88,7 +88,9 @@ names.forEach((name) => {
 				resolve({
 					browser: true,
 				}),
-				commonjs(),
+				commonjs({
+					ignore: ['cross-fetch'],
+				}),
 				replace(replacements),
 				buble(),
 			],

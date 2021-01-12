@@ -4,15 +4,22 @@ import commonjs from '@rollup/plugin-commonjs';
 import buble from '@rollup/plugin-buble';
 
 const match = '-test.ts';
-const files = fs
+
+// Find files
+let files = fs
 	.readdirSync('tests')
 	.sort()
-	.filter(file => file.slice(0 - match.length) === match)
-	.map(file => file.slice(0, file.length - match.length));
+	.filter((file) => file.slice(0 - match.length) === match);
+
+// Remove suffix
+files = files.map((file) => file.slice(0, file.length - match.length));
+
+// Debug one test
+// files = ['21-scan-dom-api'];
 
 // Get config files
 const tests = [];
-const config = files.map(file => {
+const config = files.map((file) => {
 	tests.push(file + '.js');
 	return {
 		input: 'lib/' + file + match.replace('.ts', '.js'),
@@ -30,7 +37,9 @@ const config = files.map(file => {
 				browser: true,
 				extensions: ['.js'],
 			}),
-			commonjs(),
+			commonjs({
+				ignore: ['cross-fetch'],
+			}),
 			buble(),
 		],
 	};
@@ -41,7 +50,7 @@ let content = fs.readFileSync(__dirname + '/tests/tests.html', 'utf8');
 content = content.replace(
 	'<!-- tests -->',
 	tests
-		.map(file => {
+		.map((file) => {
 			return '<script src="./' + file + '"></script>';
 		})
 		.join('')

@@ -52,7 +52,10 @@ import {
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
 import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
-import { getAPIModule as getFetchAPIModule } from '@iconify/core/lib/api/modules/fetch';
+import {
+	getAPIModule as getFetchAPIModule,
+	getFetch,
+} from '@iconify/core/lib/api/modules/fetch';
 import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
@@ -147,13 +150,16 @@ const Iconify = ({
 /**
  * Initialise stuff
  */
+// Check for Fetch API
+const fetchModule = getFetch();
+
 // Set API
 coreModules.api = API;
 
 let getAPIModule: GetIconifyAPIModule;
 try {
 	getAPIModule =
-		typeof fetch === 'function' && typeof Promise === 'function'
+		typeof fetchModule === 'function' && typeof Promise === 'function'
 			? getFetchAPIModule
 			: getJSONPAPIModule;
 } catch (err) {
