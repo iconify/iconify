@@ -157,6 +157,15 @@ function App() {
 						}}
 					/>
 				</p>
+				<p>
+					Testing reference by adding border to icon:{' '}
+					<Icon
+						icon="demo"
+						ref={(element) => {
+							element.style.border = '1px solid red';
+						}}
+					/>
+				</p>
 			</section>
 
 			<InlineDemo />

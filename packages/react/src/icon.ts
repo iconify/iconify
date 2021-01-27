@@ -1,13 +1,14 @@
-import { HTMLProps, SVGProps, createElement } from 'react';
-import { IconifyIcon, IconifyJSON } from '@iconify/types';
-import {
+import type { HTMLProps, SVGProps } from 'react';
+import React from 'react';
+import type { IconifyIcon, IconifyJSON } from '@iconify/types';
+import type {
 	IconifyIconCustomisations as IconCustomisations,
 	FullIconCustomisations,
-	defaults,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
 } from '@iconify/core/lib/customisations';
+import { defaults } from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
@@ -95,7 +96,8 @@ const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
  */
 const component = (
 	props: IconProps,
-	defaults: FullIconCustomisations
+	defaults: FullIconCustomisations,
+	ref
 ): JSX.Element => {
 	// Split properties
 	const icon =
@@ -111,6 +113,9 @@ const component = (
 		props as IconifyIconCustomisations
 	) as FullIconCustomisations;
 	const componentProps = merge(svgDefaults);
+
+	// Add reference
+	componentProps.ref = ref;
 
 	// Create style if missing
 	const style = typeof props.style === 'object' ? props.style : {};
@@ -182,7 +187,7 @@ const component = (
 		style.verticalAlign = '-0.125em';
 	}
 
-	return createElement('svg', componentProps);
+	return React.createElement('svg', componentProps);
 };
 
 /**
@@ -190,15 +195,18 @@ const component = (
  *
  * @param props - Component properties
  */
-export const Icon = (props: IconProps) => component(props, defaults);
+export const Icon = React.forwardRef((props: IconProps, ref) =>
+	component(props, defaults, ref)
+);
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon = (props: IconProps) =>
-	component(props, inlineDefaults);
+export const InlineIcon = React.forwardRef((props: IconProps, ref) =>
+	component(props, inlineDefaults, ref)
+);
 
 /**
  * Add icon to storage, allowing to call it by name
