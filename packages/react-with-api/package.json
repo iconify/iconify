@@ -2,7 +2,7 @@
 	"name": "@iconify/react-with-api",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.0.0-rc.5",
+	"version": "1.0.0-rc.6",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",

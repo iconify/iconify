@@ -1,4 +1,4 @@
-import { createElement, Component } from 'react';
+import React from 'react';
 import { IconifyJSON } from '@iconify/types';
 
 // Parent component
@@ -184,7 +184,7 @@ interface StatefulState {
 /**
  * Dynamic component
  */
-class DynamicComponent extends Component<StatefulProps, StatefulState> {
+class DynamicComponent extends React.Component<StatefulProps, StatefulState> {
 	protected _abort: IconifyIconLoaderAbort | null;
 
 	/**
@@ -215,17 +215,19 @@ class DynamicComponent extends Component<StatefulProps, StatefulState> {
 		const state = this.state;
 		if (!state.loaded) {
 			// Empty
-			return null;
+			return React.createElement('span');
 		}
 
 		// Replace icon in props with object
+		const props = this.props;
 		let newProps: IconProps = {} as IconProps;
-		Object.assign(newProps, this.props, {
+		Object.assign(newProps, props, {
 			icon: state.data,
 		});
 		delete newProps['func'];
+		delete newProps.ref;
 
-		return this.props.func(newProps);
+		return React.createElement(this.props.func, newProps);
 	}
 
 	/**
@@ -267,7 +269,7 @@ const component = (props: IconProps, func: typeof ReactIcon): JSX.Element => {
 	if (typeof props.icon === 'string') {
 		const iconName = stringToIcon(props.icon, true);
 		if (!iconName) {
-			return null;
+			return React.createElement('span');
 		}
 
 		iconData = getIconData(iconName);
@@ -276,7 +278,7 @@ const component = (props: IconProps, func: typeof ReactIcon): JSX.Element => {
 			let staticProps: IconProps = {} as IconProps;
 			Object.assign(staticProps, props);
 			staticProps.icon = iconData;
-			return func(staticProps);
+			return React.createElement(func, staticProps);
 		}
 
 		// Return dynamic component
@@ -285,9 +287,10 @@ const component = (props: IconProps, func: typeof ReactIcon): JSX.Element => {
 			icon: iconName,
 			func,
 		});
-		return createElement(DynamicComponent, dynamicProps);
+		return React.createElement(DynamicComponent, dynamicProps);
 	} else {
-		return func(props);
+		// Passed icon data as object: render @iconify/react component
+		return React.createElement(func, props);
 	}
 };
 

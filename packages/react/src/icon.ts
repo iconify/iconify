@@ -60,10 +60,14 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 type IconifyElementProps = HTMLProps<HTMLElement>;
 type IconifySVGProps = SVGProps<SVGElement>;
 
+interface ReactRefProp {
+	ref?: typeof React.createRef;
+}
+
 /**
  * Mix of icon properties and HTMLElement properties
  */
-export type IconProps = IconifyElementProps & IconifyIconProps;
+export type IconProps = IconifyElementProps & IconifyIconProps & ReactRefProp;
 
 /**
  * Default SVG attributes
@@ -105,7 +109,7 @@ const component = (
 			? storage[props.icon]
 			: fullIcon(props.icon);
 	if (!icon) {
-		return null;
+		return React.createElement('span');
 	}
 
 	const customisations = merge(
@@ -195,7 +199,7 @@ const component = (
  *
  * @param props - Component properties
  */
-export const Icon = React.forwardRef((props: IconProps, ref) =>
+export const Icon = React.forwardRef((props: IconProps, ref?) =>
 	component(props, defaults, ref)
 );
 
@@ -204,7 +208,7 @@ export const Icon = React.forwardRef((props: IconProps, ref) =>
  *
  * @param props - Component properties
  */
-export const InlineIcon = React.forwardRef((props: IconProps, ref) =>
+export const InlineIcon = React.forwardRef((props: IconProps, ref?) =>
 	component(props, inlineDefaults, ref)
 );
 

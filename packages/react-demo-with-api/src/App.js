@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, InlineIcon, enableCache } from '@iconify/react-with-api';
+import { Icon, InlineIcon, disableCache } from '@iconify/react-with-api';
 import accountIcon from '@iconify-icons/mdi-light/account';
 import homeIcon from '@iconify-icons/mdi-light/home';
 
@@ -9,8 +9,7 @@ import { InlineDemo } from './components/Inline';
 import './App.css';
 
 // Disable cache for test
-enableCache('local', false);
-enableCache('session', false);
+disableCache('all');
 
 class CheckboxIcon extends React.Component {
 	constructor(props) {
@@ -122,6 +121,26 @@ function App() {
 							fontSize: '1.5em',
 							color: 'purple',
 							marginLeft: '8px',
+						}}
+					/>
+				</p>
+				<p>
+					Testing reference by adding border to icon (unfortunately
+					should not work yet):{' '}
+					<Icon
+						icon="mdi-light:alert"
+						ref={(element) => {
+							if (element) {
+								element.style.border = '1px solid red';
+							}
+						}}
+					/>
+					<Icon
+						icon={accountIcon}
+						ref={(element) => {
+							if (element) {
+								element.style.border = '1px solid red';
+							}
 						}}
 					/>
 				</p>

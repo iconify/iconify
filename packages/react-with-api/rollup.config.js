@@ -33,7 +33,13 @@ const config = [
 			},
 		],
 		external: ['react', 'axios'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [
+			resolve(),
+			commonjs({
+				ignore: ['cross-fetch'],
+			}),
+			buble(),
+		],
 	},
 	// Dev build
 	{
@@ -45,7 +51,13 @@ const config = [
 			},
 		],
 		external: ['react', 'axios'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [
+			resolve(),
+			commonjs({
+				ignore: ['cross-fetch'],
+			}),
+			buble(),
+		],
 	},
 	// Production
 	{
@@ -57,7 +69,14 @@ const config = [
 			},
 		],
 		external: ['react', 'axios'],
-		plugins: [resolve(), commonjs(), buble(), terser()],
+		plugins: [
+			resolve(),
+			commonjs({
+				ignore: ['cross-fetch'],
+			}),
+			buble(),
+			terser(),
+		],
 	},
 ];
 
