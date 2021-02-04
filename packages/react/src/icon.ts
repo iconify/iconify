@@ -182,7 +182,9 @@ const component = (
 	const item = iconToSVG(icon, customisations);
 
 	// Add icon stuff
-	componentProps.dangerouslySetInnerHTML = { __html: replaceIDs(item.body) };
+	componentProps.dangerouslySetInnerHTML = {
+		__html: replaceIDs(item.body, 'iconify-react-id-'),
+	};
 	for (let key in item.attributes) {
 		componentProps[key] = item.attributes[key];
 	}

@@ -178,7 +178,11 @@ describe('Creating component', () => {
 		const component = renderer.create(<Icon icon="missing-icon" />);
 		const tree = component.toJSON();
 
-		expect(tree).toStrictEqual(null);
+		expect(tree).toMatchObject({
+			type: 'span',
+			props: {},
+			children: null,
+		});
 	});
 
 	test('replacing id', () => {
