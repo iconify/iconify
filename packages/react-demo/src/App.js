@@ -48,6 +48,7 @@ addCollection({
 	height: 24,
 });
 
+// Component
 class CheckboxIcon extends React.Component {
 	constructor(props) {
 		super();
@@ -175,8 +176,10 @@ function App() {
 					/>
 				</p>
 				<p>
-					Testing replacing ids in icons: <Icon icon="noto-robot" />
-					<Icon icon="noto-robot" hFlip={true} />
+					Testing replacing ids in icons: <Icon icon="noto-robot" />{' '}
+					<Icon icon="noto-robot" /> (default handler)
+					<Icon icon="noto-robot" id="test1" />{' '}
+					<Icon icon="noto-robot" id="test2" /> (string)
 				</p>
 			</section>
 

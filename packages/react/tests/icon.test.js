@@ -185,12 +185,49 @@ describe('Creating component', () => {
 		});
 	});
 
-	test('replacing id', () => {
+	test('replacing id (default behavior)', () => {
 		const component = renderer.create(<Icon icon={iconDataWithID} />);
 		const tree = component.toJSON();
 		const body = tree.props.dangerouslySetInnerHTML.__html;
 
 		expect(body).not.toStrictEqual(iconDataWithID.body);
+	});
+
+	test('replacing id (custom generator)', () => {
+		const component = renderer.create(
+			<Icon icon={iconDataWithID} id="test" />
+		);
+		const tree = component.toJSON();
+		const body = tree.props.dangerouslySetInnerHTML.__html;
+
+		// Generate expected body
+		let expected = iconDataWithID.body;
+		const replacements = {
+			'ssvg-id-1st-place-medala': 'test-0',
+			'ssvg-id-1st-place-medald': 'test-1',
+			'ssvg-id-1st-place-medalf': 'test-2',
+			'ssvg-id-1st-place-medalh': 'test-3',
+			'ssvg-id-1st-place-medalj': 'test-4',
+			'ssvg-id-1st-place-medalm': 'test-5',
+			'ssvg-id-1st-place-medalp': 'test-6',
+			'ssvg-id-1st-place-medalb': 'test-7',
+			'ssvg-id-1st-place-medalk': 'test-8',
+			'ssvg-id-1st-place-medalo': 'test-9',
+			'ssvg-id-1st-place-medalc': 'test-10',
+			'ssvg-id-1st-place-medale': 'test-11',
+			'ssvg-id-1st-place-medalg': 'test-12',
+			'ssvg-id-1st-place-medali': 'test-13',
+			'ssvg-id-1st-place-medall': 'test-14',
+			'ssvg-id-1st-place-medaln': 'test-15',
+		};
+		Object.keys(replacements).forEach((search) => {
+			expected = expected.replace(
+				new RegExp(search, 'g'),
+				replacements[search]
+			);
+		});
+
+		expect(body).toStrictEqual(expected);
 	});
 });
 

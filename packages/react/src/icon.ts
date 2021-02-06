@@ -52,6 +52,9 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Shorthand properties
 	flip?: string;
 	align?: string;
+
+	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
+	id?: string;
 }
 
 /**
@@ -182,8 +185,14 @@ const component = (
 	const item = iconToSVG(icon, customisations);
 
 	// Add icon stuff
+	let localCounter = 0;
+	const id = props.id;
+
 	componentProps.dangerouslySetInnerHTML = {
-		__html: replaceIDs(item.body, 'iconify-react-id-'),
+		__html: replaceIDs(
+			item.body,
+			id ? () => id + '-' + localCounter++ : 'iconify-react-'
+		),
 	};
 	for (let key in item.attributes) {
 		componentProps[key] = item.attributes[key];
