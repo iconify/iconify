@@ -2,7 +2,7 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.0-rc.7",
+	"version": "2.0.0-rc.8",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -22,24 +22,21 @@
 	"main": "dist/icon.js",
 	"module": "dist/icon.esm.js",
 	"types": "dist/icon.d.ts",
-	"peerDependencies": {
-		"react": "^16.0.0"
-	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.12.7",
-		"@babel/preset-react": "^7.12.7",
+		"@babel/preset-env": "^7.12.13",
+		"@babel/preset-react": "^7.12.13",
 		"@iconify/core": "^1.0.0-rc.4",
-		"@microsoft/api-extractor": "^7.12.0",
+		"@microsoft/api-extractor": "^7.13.1",
 		"@rollup/plugin-buble": "^0.21.3",
-		"@rollup/plugin-commonjs": "^16.0.0",
-		"@rollup/plugin-node-resolve": "^10.0.0",
-		"@types/react": "^16.9.55",
+		"@rollup/plugin-commonjs": "^17.1.0",
+		"@rollup/plugin-node-resolve": "^11.1.1",
+		"@types/react": "^17.0.1",
 		"babel-jest": "^26.6.3",
 		"jest": "^26.6.3",
-		"react": "^16.14.0",
-		"react-test-renderer": "^16.14.0",
-		"rollup": "^2.33.3",
+		"react": "^17.0.1",
+		"react-test-renderer": "^17.0.1",
+		"rollup": "^2.38.5",
 		"rollup-plugin-terser": "^7.0.2",
-		"typescript": "^4.1.2"
+		"typescript": "^4.1.3"
 	}
 }
