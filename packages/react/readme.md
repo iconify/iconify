@@ -103,6 +103,26 @@ export function MyComponent() {
 
 Example above imports an entire icon set. To learn how to create smaller bundles, check out Iconify documentation: https://docs.iconify.design/sources/bundles/
 
+### Next.js notice
+
+Code above will currently fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
+
+To switch to CommonJS package, replace this line in example above:
+
+```js
+import homeIcon from '@iconify-icons/mdi-light/home';
+```
+
+with
+
+```js
+import homeIcon from '@iconify/icons-mdi-light/home';
+```
+
+All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers.
+
+For more details, see "Icon packages" section below.
+
 ## Icon and InlineIcon
 
 Both components are the same, the only difference is `InlineIcon` has a negative vertical alignment, so it behaves like a glyph.
@@ -344,7 +364,7 @@ You can find all available icons at https://iconify.design/icon-sets/
 
 Browse or search icons, click any icon and you will see a "React" tab that will give you exact code for the React component.
 
-Import format for each icon is "@iconify-icons/{prefix}/{icon}" where {prefix} is collection prefix, and {icon} is the icon name.
+Import format for each icon is `@iconify-icons/{prefix}/{icon}` (for ES modules) or `@iconify/icons-{prefix}/{icon}` (for CommonJS modules), where `{prefix}` is collection prefix, and `{icon}` is the icon name.
 
 Usage examples for a few popular icon packages:
 
