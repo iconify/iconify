@@ -103,9 +103,16 @@ export function generateIcon(props) {
 		componentProps.style = style;
 	}
 
+	// Counter for ids based on "id" property to render icons consistently on server and client
+	let localCounter = 0;
+	const id = props.id;
+
 	// Generate HTML
 	return {
 		attributes: componentProps,
-		body: replaceIDs(item.body),
+		body: replaceIDs(
+			item.body,
+			id ? () => id + '-' + localCounter++ : 'iconify-svelte-'
+		),
 	};
 }

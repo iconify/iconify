@@ -157,7 +157,7 @@ describe('Rendering icon', () => {
 		);
 	});
 
-	test('replacing id', () => {
+	test('replacing id (default behavior)', () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon='icon' />`,
@@ -172,6 +172,59 @@ describe('Rendering icon', () => {
 		const item = wrapper; //.findComponent(Icon);
 		expect(item.exists()).toBe(true);
 		expect(item.html()).not.toMatch('id="ssvg-id-1st-place-medala"');
+	});
+
+	test('replacing id (custom generator)', () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon='icon' id='test' />`,
+			data() {
+				return {
+					icon: iconDataWithID,
+				};
+			},
+		};
+		const wrapper = mount(Wrapper, {});
+
+		const item = wrapper; //.findComponent(Icon);
+		let html = item.html();
+
+		// Generate expected body
+		let expected =
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" id="test" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 128 128">' +
+			iconDataWithID.body +
+			'</svg>';
+		const replacements = {
+			'ssvg-id-1st-place-medala': 'test-0',
+			'ssvg-id-1st-place-medald': 'test-1',
+			'ssvg-id-1st-place-medalf': 'test-2',
+			'ssvg-id-1st-place-medalh': 'test-3',
+			'ssvg-id-1st-place-medalj': 'test-4',
+			'ssvg-id-1st-place-medalm': 'test-5',
+			'ssvg-id-1st-place-medalp': 'test-6',
+			'ssvg-id-1st-place-medalb': 'test-7',
+			'ssvg-id-1st-place-medalk': 'test-8',
+			'ssvg-id-1st-place-medalo': 'test-9',
+			'ssvg-id-1st-place-medalc': 'test-10',
+			'ssvg-id-1st-place-medale': 'test-11',
+			'ssvg-id-1st-place-medalg': 'test-12',
+			'ssvg-id-1st-place-medali': 'test-13',
+			'ssvg-id-1st-place-medall': 'test-14',
+			'ssvg-id-1st-place-medaln': 'test-15',
+		};
+		Object.keys(replacements).forEach((search) => {
+			expected = expected.replace(
+				new RegExp(search, 'g'),
+				replacements[search]
+			);
+		});
+
+		['path', 'stop', 'use', 'circle'].forEach((tag) => {
+			// Replace <path ...></path> with <path />
+			html = html.replace(new RegExp('></' + tag, 'g'), '/');
+		});
+
+		expect(html).toStrictEqual(expected);
 	});
 });
 

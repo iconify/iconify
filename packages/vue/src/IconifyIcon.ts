@@ -277,8 +277,15 @@ const IconifyIcon = (
 		}
 	}
 
+	// Counter for ids based on "id" property to render icons consistently on server and client
+	let localCounter = 0;
+	const id = props.id;
+
 	// Add innerHTML and style to props
-	componentProps['innerHTML'] = replaceIDs(item.body);
+	componentProps['innerHTML'] = replaceIDs(
+		item.body,
+		id ? () => id + '-' + localCounter++ : 'iconify-vue-'
+	);
 	if (hasStyle) {
 		componentProps['style'] = style.style;
 	}

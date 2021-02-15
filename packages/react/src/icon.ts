@@ -184,10 +184,11 @@ const component = (
 	// Generate icon
 	const item = iconToSVG(icon, customisations);
 
-	// Add icon stuff
+	// Counter for ids based on "id" property to render icons consistently on server and client
 	let localCounter = 0;
 	const id = props.id;
 
+	// Add icon stuff
 	componentProps.dangerouslySetInnerHTML = {
 		__html: replaceIDs(
 			item.body,
