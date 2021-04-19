@@ -90,19 +90,19 @@ describe('Testing Iconify object', () => {
 
 	it('Rendering icons without API', (done) => {
 		node1.innerHTML =
-			'<div><p>Testing Iconify without API (should render SVG!)</p>' +
+			'<div><p>Testing Iconify without API (should render SVG!) and with titles</p>' +
 			'   <span class="iconify-inline" data-icon="' +
 			prefix +
-			':home" style="color: red; box-shadow: 0 0 2px black;"></span>' +
+			':home" style="color: red; box-shadow: 0 0 2px black;" title="Home Icon"></span>' +
 			'   <i class="iconify-inline test-icon iconify--mdi-account" data-icon="' +
 			prefix +
-			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false"></i>' +
+			':account" style="vertical-align: 0;" data-flip="horizontal" aria-hidden="false" title="Account Icon"></i>' +
 			'   <i class="iconify" data-icon="' +
 			prefix +
 			':account-cash" title="&lt;Cash&gt;!"></i>' +
 			'   <span class="iconify" data-icon="' +
 			prefix +
-			':account-box" data-inline="true" data-rotate="2" data-width="42"></span>' +
+			':account-box" data-inline="true" data-rotate="2" data-width="42" title="account-box"></span>' +
 			'   <span class="iconify" data-icon="' +
 			prefix +
 			':id-test"></span>' +
