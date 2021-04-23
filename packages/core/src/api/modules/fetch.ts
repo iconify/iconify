@@ -20,29 +20,16 @@ const maxLengthCache: Record<string, number> = Object.create(null);
 const pathCache: Record<string, string> = Object.create(null);
 
 /**
- * Get fetch module
+ * Fetch function
+ *
+ * Use this to set 'cross-fetch' in node.js environment if you are retrieving icons on server side.
+ * Not needed when using stuff like Next.js or SvelteKit because components use API only on client side.
  */
-export function getFetch(): typeof fetch | undefined {
-	let fetchModule: typeof fetch | undefined =
-		typeof fetch === 'function' ? fetch : void 0;
-	try {
-		if (
-			typeof document === 'undefined' &&
-			typeof module.exports === 'object' &&
-			typeof require === 'function'
-		) {
-			// Attempt to load cross-fetch.
-			// Should be added as dependency when using Iconify with Node.js
-			fetchModule = require('cross-fetch');
-		}
-	} catch (err) {
-		// Do nothing
-	}
-	return fetchModule;
-}
+let fetchModule = fetch;
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const fetchModule = getFetch()!;
+export function setFetch(fetch: typeof fetchModule): void {
+	fetchModule = fetch;
+}
 
 /**
  * Return API module
