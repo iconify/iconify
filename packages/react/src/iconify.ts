@@ -104,7 +104,7 @@ export function addIcon(name: string, data: IconifyIcon): void {
  * Add collection to storage, allowing to call icons by name
  *
  * @param data Icon set
- * @param prefix Optional prefix to add to icon names, true (default) if prefix from icon set should be used.
+ * @param prefix Optional prefix to add to icon names, true if prefix from icon set should be used.
  */
 export function addCollection(
 	data: IconifyJSON,

@@ -15,13 +15,14 @@
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose",
+		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"pretest": "npm run build",
 		"test": "jest"
 	},
-	"main": "dist/offline.js",
-	"module": "dist/offline.esm.js",
-	"types": "dist/offline.d.ts",
+	"main": "dist/iconify.js",
+	"module": "dist/iconify.esm.js",
+	"types": "dist/iconify.d.ts",
 	"devDependencies": {
 		"@babel/preset-env": "^7.13.15",
 		"@babel/preset-react": "^7.13.13",
@@ -36,7 +37,6 @@
 		"react": "^17.0.2",
 		"react-test-renderer": "^17.0.2",
 		"rollup": "^2.45.2",
-		"rollup-plugin-terser": "^7.0.2",
 		"typescript": "^4.2.4"
 	}
 }
