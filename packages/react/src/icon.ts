@@ -110,9 +110,19 @@ const component = (
 	const icon =
 		typeof props.icon === 'string'
 			? storage[props.icon]
-			: fullIcon(props.icon);
-	if (!icon) {
-		return React.createElement('span');
+			: typeof props.icon === 'object'
+			? fullIcon(props.icon)
+			: null;
+
+	// Validate icon object
+	if (
+		typeof icon !== 'object' ||
+		icon === null ||
+		typeof icon.body !== 'string'
+	) {
+		return props.children
+			? (props.children as JSX.Element)
+			: React.createElement('span', {});
 	}
 
 	const customisations = merge(

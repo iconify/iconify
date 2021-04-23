@@ -66,6 +66,41 @@ describe('Creating component', () => {
 			children: null,
 		});
 	});
+
+	test('empty icon', () => {
+		const component = renderer.create(<Icon />);
+		const tree = component.toJSON();
+
+		expect(tree).toMatchObject({
+			type: 'span',
+			props: {},
+			children: null,
+		});
+	});
+
+	test('empty icon with children', () => {
+		// Missing 'icon' property, should render children
+		const component = renderer.create(
+			<Icon>
+				<i class="fa fa-home" />
+			</Icon>
+		);
+		const tree = component.toJSON();
+
+		expect(tree).toMatchObject({
+			type: 'i',
+			props: {},
+			children: null,
+		});
+	});
+
+	test('empty icon with text children', () => {
+		// Missing 'icon' property, should render children
+		const component = renderer.create(<Icon>icon</Icon>);
+		const tree = component.toJSON();
+
+		expect(tree).toMatch('icon');
+	});
 });
 
 describe('Using storage', () => {

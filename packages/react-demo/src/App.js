@@ -80,6 +80,11 @@ class CheckboxIcon extends React.Component {
 }
 
 function App() {
+	// Debug logging for testing references, which cannot be reliably tested with unit tests
+	console.log('References that should be logged: valid icon');
+	console.log('References that might be logged: missing icon');
+	console.log('References that should not be logged: missing text icon');
+
 	return (
 		<div className="App">
 			<section className="icon-24">
@@ -120,6 +125,8 @@ function App() {
 				</div>
 			</section>
 
+			<InlineDemo />
+
 			<section>
 				<h1>Tests</h1>
 				<p>
@@ -134,6 +141,11 @@ function App() {
 					/>
 					Home icon! 24px icon in 16px text with 24px line height,
 					aligned using inline style.
+				</p>
+				<p>
+					Empty icon (span): <Icon />
+					<br />
+					Empty icon (emoji): <Icon>😀</Icon>
 				</p>
 				<p>
 					Clickable icon (testing events and style): <CheckboxIcon />
@@ -171,9 +183,28 @@ function App() {
 					<Icon
 						icon="demo"
 						ref={(element) => {
+							console.log('Ref: valid icon');
 							element.style.border = '1px solid red';
 						}}
 					/>
+					<br />
+					Reference to missing icon:{' '}
+					<Icon
+						ref={(element) => {
+							console.log('Ref: missing icon');
+							element.style.border = '1px solid red';
+						}}
+					/>
+					<br />
+					Reference to missing icon with fallback text:{' '}
+					<Icon
+						ref={(element) => {
+							console.log('Ref: missing text icon');
+							element.style.border = '1px solid red';
+						}}
+					>
+						😀
+					</Icon>
 				</p>
 				<p>
 					Testing replacing ids in icons: <Icon icon="noto-robot" />{' '}
@@ -182,8 +213,6 @@ function App() {
 					<Icon icon="noto-robot" id="test2" /> (string)
 				</p>
 			</section>
-
-			<InlineDemo />
 		</div>
 	);
 }
