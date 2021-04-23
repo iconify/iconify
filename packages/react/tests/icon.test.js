@@ -66,7 +66,9 @@ describe('Creating component', () => {
 			children: null,
 		});
 	});
+});
 
+describe('Using storage', () => {
 	test('using storage', () => {
 		addIcon('test-icon', iconData);
 		const component = renderer.create(<Icon icon="test-icon" />);
@@ -184,8 +186,10 @@ describe('Creating component', () => {
 			children: null,
 		});
 	});
+});
 
-	test('replacing id (default behavior)', () => {
+describe('Replacing IDs', () => {
+	test('default behavior', () => {
 		const component = renderer.create(<Icon icon={iconDataWithID} />);
 		const tree = component.toJSON();
 		const body = tree.props.dangerouslySetInnerHTML.__html;
@@ -193,7 +197,7 @@ describe('Creating component', () => {
 		expect(body).not.toStrictEqual(iconDataWithID.body);
 	});
 
-	test('replacing id (custom generator)', () => {
+	test('custom generator', () => {
 		const component = renderer.create(
 			<Icon icon={iconDataWithID} id="test" />
 		);
