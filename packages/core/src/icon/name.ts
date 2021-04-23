@@ -22,7 +22,8 @@ const match = /^[a-z0-9]+(-[a-z0-9]+)*$/;
  */
 export const stringToIcon = (
 	value: string,
-	validate?: boolean
+	validate?: boolean,
+	allowSimpleName?: boolean
 ): IconifyIconName | null => {
 	let provider = '';
 	const colonSeparated = value.split(':');
@@ -55,7 +56,8 @@ export const stringToIcon = (
 	}
 
 	// Attempt to split by dash: "prefix-name"
-	const dashSeparated = colonSeparated[0].split('-');
+	const name = colonSeparated[0];
+	const dashSeparated = name.split('-');
 	if (dashSeparated.length > 1) {
 		const result: IconifyIconName = {
 			provider: provider,
@@ -63,6 +65,18 @@ export const stringToIcon = (
 			name: dashSeparated.join('-'),
 		};
 		return validate && !validateIcon(result) ? null : result;
+	}
+
+	// If allowEmpty is set, allow empty provider and prefix, allowing names like "home"
+	if (allowSimpleName && provider === '') {
+		const result: IconifyIconName = {
+			provider: provider,
+			prefix: '',
+			name,
+		};
+		return validate && !validateIcon(result, allowSimpleName)
+			? null
+			: result;
 	}
 
 	return null;
@@ -73,14 +87,17 @@ export const stringToIcon = (
  *
  * This function is not part of stringToIcon because validation is not needed for most code.
  */
-export const validateIcon = (icon: IconifyIconName | null): boolean => {
+export const validateIcon = (
+	icon: IconifyIconName | null,
+	allowSimpleName?: boolean
+): boolean => {
 	if (!icon) {
 		return false;
 	}
 
 	return !!(
 		(icon.provider === '' || icon.provider.match(match)) &&
-		icon.prefix.match(match) &&
+		((allowSimpleName && icon.prefix === '') || icon.prefix.match(match)) &&
 		icon.name.match(match)
 	);
 };

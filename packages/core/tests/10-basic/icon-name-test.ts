@@ -34,15 +34,46 @@ describe('Testing icon name', () => {
 		});
 		expect(validateIcon(icon)).to.be.equal(true);
 
+		// Simple word without prefix
+		icon = stringToIcon('home');
+		expect(icon).to.be.eql(null);
+		expect(validateIcon(icon)).to.be.equal(false);
+
+		// Same as above, but with empty names enabled
+		icon = stringToIcon('home', false, true);
+		expect(icon).to.be.eql({
+			provider: '',
+			prefix: '',
+			name: 'home',
+		});
+		expect(validateIcon(icon)).to.be.equal(false);
+		expect(validateIcon(icon, true)).to.be.equal(true);
+
 		// Missing icon name
 		icon = stringToIcon('@iconify-home-icon');
 		expect(icon).to.be.eql(null);
 		expect(validateIcon(icon)).to.be.equal(false);
 
+		// Same as above, but with empty names enabled
+		icon = stringToIcon('@iconify-home-icon', false, true);
+		expect(icon).to.be.eql(null);
+		expect(validateIcon(icon)).to.be.equal(false);
+		expect(validateIcon(icon, true)).to.be.equal(false);
+
 		// Underscore is not an acceptable separator
 		icon = stringToIcon('fa_home');
 		expect(icon).to.be.eql(null);
 		expect(validateIcon(icon)).to.be.equal(false);
+
+		// Same as above, but with empty names enabled
+		icon = stringToIcon('fa_home', false, true);
+		expect(icon).to.be.eql({
+			provider: '',
+			prefix: '',
+			name: 'fa_home',
+		});
+		expect(validateIcon(icon)).to.be.equal(false);
+		expect(validateIcon(icon, true)).to.be.equal(false);
 
 		// Invalid character '_': fail validateIcon
 		icon = stringToIcon('fa:home_outline') as IconifyIconName;
@@ -133,6 +164,10 @@ describe('Testing icon name', () => {
 		icon = stringToIcon('@mdi:light:home:outline');
 		expect(icon).to.be.eql(null);
 		expect(validateIcon(icon)).to.be.equal(false);
+
+		// Same as above, empty names allowed
+		icon = stringToIcon('@mdi:light:home:outline', false, true);
+		expect(icon).to.be.eql(null);
 
 		// Upper case: fail validateIcon
 		icon = stringToIcon('@MD:home-outline') as IconifyIconName;
