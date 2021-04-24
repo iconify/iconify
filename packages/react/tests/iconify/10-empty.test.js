@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../../dist/offline';
+import { Icon } from '../../dist/iconify';
 import renderer from 'react-test-renderer';
 
 describe('Empty icon', () => {

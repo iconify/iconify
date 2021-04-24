@@ -45,17 +45,21 @@ p {
 	font-size: 16px;
 	line-height: 1.5;
 }
-.test-row > svg {
-	color: #afafaf;
+.test-row-icons {
+	padding-right: 4px;
 }
-.test-row > svg.success {
+.test-row-icons > svg {
+	color: #afafaf;
+	display: none;
+}
+.test-row-icons > svg.visible {
+	display: inline-block;
+}
+.test-row-icons > svg.success {
 	color: #327335;
 }
-.test-row > svg.fail {
+.test-row-icons > svg.failed {
 	color: #ba3329;
-}
-.test-row > span {
-	padding-left: 4px;
 }
 
 /* 24px icon */
