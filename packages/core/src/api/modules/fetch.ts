@@ -25,7 +25,12 @@ const pathCache: Record<string, string> = Object.create(null);
  * Use this to set 'cross-fetch' in node.js environment if you are retrieving icons on server side.
  * Not needed when using stuff like Next.js or SvelteKit because components use API only on client side.
  */
-let fetchModule = fetch;
+let fetchModule: typeof fetch | null = null;
+try {
+	fetchModule = fetch;
+} catch (err) {
+	//
+}
 
 export function setFetch(fetch: typeof fetchModule): void {
 	fetchModule = fetch;
@@ -139,6 +144,12 @@ export const getAPIModule: GetIconifyAPIModule = (
 				.replace('{provider}', provider)
 				.replace('{prefix}', prefix)
 				.replace('{icons}', iconsList);
+
+		if (!fetchModule) {
+			// Fail: return 424 Failed Dependency (its not meant to be used like that, but it is the best match)
+			status.done(void 0, 424);
+			return;
+		}
 
 		// console.log('API query:', host + path);
 		fetchModule(host + path)
