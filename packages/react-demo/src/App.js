@@ -5,15 +5,15 @@ import {
 	addIcon,
 	addCollection,
 } from '@iconify/react/dist/offline';
-import accountIcon from '@iconify-icons/mdi-light/account';
 import alertIcon from '@iconify-icons/mdi-light/alert';
-import homeIcon from '@iconify-icons/mdi-light/home';
 import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
 import checkedIcon from '@iconify-icons/uil/check-circle';
 import uncheckedIcon from '@iconify-icons/uil/circle';
 
 import { Checkbox } from './components/Checkbox';
 import { InlineDemo } from './components/Inline';
+import { OfflineUsageDemo } from './components/UsageOffline';
+import { TestsOffline } from './components/TestsOffline';
 
 import './App.css';
 
@@ -53,66 +53,10 @@ addCollection({
 	height: 24,
 });
 
-// Component
-class CheckboxIcon extends React.Component {
-	constructor(props) {
-		super();
-		this.state = {
-			checked: props.checked,
-		};
-		this._check = this._check.bind(this);
-	}
-
-	render() {
-		const checked = this.state.checked;
-		const icon = checked ? checkedIcon : uncheckedIcon;
-		const color = checked ? 'green' : 'red';
-		return (
-			<InlineIcon
-				icon={icon}
-				onClick={this._check}
-				style={{ cursor: 'pointer', color }}
-			/>
-		);
-	}
-
-	_check(event) {
-		event.preventDefault();
-		this.setState({
-			checked: !this.state.checked,
-		});
-	}
-}
-
 function App() {
-	// Debug logging for testing references, which cannot be reliably tested with unit tests
-	console.log('References that should be logged: valid icon');
-	console.log('References that might be logged: missing icon');
-	console.log('References that should not be logged: missing text icon');
-
 	return (
 		<div className="App">
-			<section className="icon-24">
-				<h1>Usage</h1>
-				<div>
-					Empty icon: <Icon />
-				</div>
-				<div>
-					Icon referenced by name: <Icon icon="demo" />
-				</div>
-				<div>
-					Icon referenced by object: <Icon icon={accountIcon} />
-				</div>
-				<div>
-					2 icons imported from icon set:{' '}
-					<Icon icon="mdi-light:account-alert" />
-					<Icon icon="mdi-light:link" />
-				</div>
-				<div className="alert">
-					<Icon icon={alertIcon} />
-					Important notice with alert icon!
-				</div>
-			</section>
+			<OfflineUsageDemo />
 
 			<section>
 				<h1>Checkbox</h1>
@@ -132,97 +76,7 @@ function App() {
 
 			<InlineDemo />
 
-			<section>
-				<h1>Tests</h1>
-				<p>
-					<Icon
-						icon={homeIcon}
-						style={{
-							color: '#1769aa',
-							fontSize: '24px',
-							lineHeight: '1em',
-							verticalAlign: '-0.25em',
-						}}
-					/>
-					Home icon! 24px icon in 16px text with 24px line height,
-					aligned using inline style.
-				</p>
-				<p>
-					Empty icon (span): <Icon />
-					<br />
-					Empty icon (emoji): <Icon>😀</Icon>
-					<br />
-					Empty icon (em and emoji):
-					<Icon>
-						<em> empty</em>😀
-					</Icon>
-				</p>
-				<p>
-					Clickable icon (testing events and style): <CheckboxIcon />
-				</p>
-				<p>
-					Colored icons (block, inline, block):
-					<InlineIcon
-						icon={alertIcon}
-						style={{
-							fontSize: '1.5em',
-							verticalAlign: 0,
-							marginLeft: '8px',
-						}}
-						color="green"
-					/>
-					<InlineIcon
-						icon={alertIcon}
-						style={{
-							fontSize: '1.5em',
-							color: 'red',
-							marginLeft: '8px',
-						}}
-					/>
-					<Icon
-						icon={alertIcon}
-						style={{
-							fontSize: '1.5em',
-							color: 'purple',
-							marginLeft: '8px',
-						}}
-					/>
-				</p>
-				<p>
-					Testing reference by adding border to icon:{' '}
-					<Icon
-						icon="demo"
-						ref={(element) => {
-							console.log('Ref: valid icon');
-							element.style.border = '1px solid red';
-						}}
-					/>
-					<br />
-					Reference to missing icon:{' '}
-					<Icon
-						ref={(element) => {
-							console.log('Ref: missing icon');
-							element.style.border = '1px solid red';
-						}}
-					/>
-					<br />
-					Reference to missing icon with fallback text:{' '}
-					<Icon
-						ref={(element) => {
-							console.log('Ref: missing text icon');
-							element.style.border = '1px solid red';
-						}}
-					>
-						😀
-					</Icon>
-				</p>
-				<p>
-					Testing replacing ids in icons: <Icon icon="noto-robot" />{' '}
-					<Icon icon="noto-robot" /> (default handler)
-					<Icon icon="noto-robot" id="test1" />{' '}
-					<Icon icon="noto-robot" id="test2" /> (string)
-				</p>
-			</section>
+			<TestsOffline />
 		</div>
 	);
 }

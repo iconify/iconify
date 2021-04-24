@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react/dist/offline';
 export function InlineDemo() {
 	return (
 		<section className="inline-demo">
-			<h1>Inline (components/Inline.jsx)</h1>
+			<h1>Inline demo</h1>
 			<div>
 				Block icon (behaving like image):
 				<Icon icon="experiment2" />

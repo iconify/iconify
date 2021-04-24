@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@iconify/react/dist/offline';
-import checkedIcon from '@iconify-icons/uil/check-circle';
-import uncheckedIcon from '@iconify-icons/uil/circle';
+import checkedIcon from '@iconify-icons/uil/check-square';
+import uncheckedIcon from '@iconify-icons/uil/square';
 
 export class Checkbox extends React.Component {
 	constructor(props) {

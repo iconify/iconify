@@ -21,15 +21,41 @@ section:after {
 	display: table;
 	clear: both;
 }
-h1 {
+h1,
+h2 {
 	margin: 0 0 16px;
 	padding: 0;
 	font-size: 24px;
 	font-weight: normal;
 }
+h2 {
+	margin: 16px 0;
+	font-size: 20px;
+}
+h1 + h2 {
+	margin-top: -8px;
+}
 p {
 	margin: 12px 0 4px;
 	padding: 0;
+}
+
+/* Tests */
+.test-row {
+	font-size: 16px;
+	line-height: 1.5;
+}
+.test-row > svg {
+	color: #afafaf;
+}
+.test-row > svg.success {
+	color: #327335;
+}
+.test-row > svg.fail {
+	color: #ba3329;
+}
+.test-row > span {
+	padding-left: 4px;
 }
 
 /* 24px icon */
