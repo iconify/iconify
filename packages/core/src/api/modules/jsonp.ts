@@ -13,7 +13,7 @@ import type { GetAPIConfig } from '../config';
  */
 type Callback = (data: unknown) => void;
 type JSONPRoot = Record<string, Callback>;
-let global: JSONPRoot | null = null;
+let rootVar: JSONPRoot | null = null;
 
 /**
  * Endpoint
@@ -48,7 +48,7 @@ function hash(str: string): number {
  */
 function getGlobal(): JSONPRoot {
 	// Create root
-	if (global === null) {
+	if (rootVar === null) {
 		// window
 		const globalRoot = (self as unknown) as Record<string, unknown>;
 
@@ -63,14 +63,14 @@ function getGlobal(): JSONPRoot {
 			if (globalRoot[prefix] === void 0) {
 				globalRoot[prefix] = Object.create(null);
 			}
-			global = globalRoot[prefix] as JSONPRoot;
+			rootVar = globalRoot[prefix] as JSONPRoot;
 		} else {
 			// Use 'Iconify.cb'
 			const iconifyRoot = globalRoot[prefix] as Record<string, JSONPRoot>;
 			if (iconifyRoot.cb === void 0) {
 				iconifyRoot.cb = Object.create(null);
 			}
-			global = iconifyRoot.cb;
+			rootVar = iconifyRoot.cb;
 		}
 
 		// Change end point
@@ -80,7 +80,7 @@ function getGlobal(): JSONPRoot {
 		);
 	}
 
-	return global;
+	return rootVar;
 }
 
 /**
