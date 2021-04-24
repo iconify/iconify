@@ -22,6 +22,11 @@ describe('Testing storage', () => {
 			width: 20,
 			height: 16,
 		});
+		addIcon(storage, 'not-really-missing', {
+			body: '<path d="" />',
+			width: 24,
+			height: 24,
+		});
 
 		// Add another icon with reserved keyword as name
 		addIcon(storage, 'constructor', {
@@ -31,17 +36,25 @@ describe('Testing storage', () => {
 			rotate: 1,
 		});
 
+		// Mark 'not-really-missing' as missing
+		storage.missing['not-really-missing'] = Date.now();
+
 		// Add invalid icon
 		addIcon(storage, 'invalid', ({} as unknown) as IconifyIcon);
 
 		// Should not include 'invalid'
-		expect(Object.keys(storage.icons)).to.be.eql(['test', 'constructor']);
+		expect(Object.keys(storage.icons)).to.be.eql([
+			'test',
+			'not-really-missing',
+			'constructor',
+		]);
 
 		// Test iconExists
 		expect(iconExists(storage, 'test')).to.be.equal(true);
 		expect(iconExists(storage, 'constructor')).to.be.equal(true);
 		expect(iconExists(storage, 'invalid')).to.be.equal(false);
 		expect(iconExists(storage, 'missing')).to.be.equal(false);
+		expect(iconExists(storage, 'not-really-missing')).to.be.equal(true);
 
 		// Test getIcon
 		let expected: FullIconifyIcon = {
@@ -56,16 +69,6 @@ describe('Testing storage', () => {
 		};
 		const icon = getIcon(storage, 'test');
 		expect(icon).to.be.eql(expected);
-		expected = {
-			body: '<g></g>',
-			width: 24,
-			height: 24,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
-			rotate: 1,
-		};
 
 		// Test icon mutation
 		let thrown = false;
@@ -77,7 +80,18 @@ describe('Testing storage', () => {
 		}
 		expect(thrown).to.be.equal(true);
 
+		expected = {
+			body: '<g></g>',
+			width: 24,
+			height: 24,
+			top: 0,
+			left: 0,
+			hFlip: false,
+			vFlip: false,
+			rotate: 1,
+		};
 		expect(getIcon(storage, 'constructor')).to.be.eql(expected);
+
 		expect(getIcon(storage, 'invalid')).to.be.equal(null);
 		expect(getIcon(storage, 'missing')).to.be.equal(null);
 	});

@@ -194,34 +194,49 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 				cachedReundancy.redundancy.query(
 					item,
 					api.send as QueryModuleCallback,
-					(data) => {
-						// Add icons to storage
+					(data, error) => {
 						const storage = getStorage(provider, prefix);
-						try {
-							const added = addIconSet(
-								storage,
-								data as IconifyJSON,
-								'all'
-							);
-							if (typeof added === 'boolean') {
+
+						// Check for error
+						if (typeof data !== 'object') {
+							if (error !== 404) {
+								// Do not handle error unless it is 404
 								return;
 							}
 
-							// Remove added icons from pending list
-							const pending = providerPendingIcons[prefix];
-							added.forEach((name) => {
-								delete pending[name];
+							// Not found: mark as missing
+							const t = Date.now();
+							item.icons.forEach((name) => {
+								storage.missing[name] = t;
 							});
-
-							// Cache API response
-							if (coreModules.cache) {
-								coreModules.cache(
-									provider,
-									data as IconifyJSON
+						} else {
+							// Add icons to storage
+							try {
+								const added = addIconSet(
+									storage,
+									data as IconifyJSON,
+									'all'
 								);
+								if (typeof added === 'boolean') {
+									return;
+								}
+
+								// Remove added icons from pending list
+								const pending = providerPendingIcons[prefix];
+								added.forEach((name) => {
+									delete pending[name];
+								});
+
+								// Cache API response
+								if (coreModules.cache) {
+									coreModules.cache(
+										provider,
+										data as IconifyJSON
+									);
+								}
+							} catch (err) {
+								console.error(err);
 							}
-						} catch (err) {
-							console.error(err);
 						}
 
 						// Trigger update on next tick
