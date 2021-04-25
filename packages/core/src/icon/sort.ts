@@ -68,7 +68,8 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		let list;
 		if (localStorage.icons[name] !== void 0) {
 			list = result.loaded;
-		} else if (localStorage.missing[name] !== void 0) {
+		} else if (prefix === '' || localStorage.missing[name] !== void 0) {
+			// Mark icons without prefix as missing because they cannot be loaded from API
 			list = result.missing;
 		} else {
 			list = result.pending;

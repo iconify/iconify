@@ -17,6 +17,7 @@ import { getStorage, addIconSet } from '../storage/storage';
 import { coreModules } from '../modules';
 import type { IconifyIconName, IconifyIconSource } from '../icon/name';
 import { listToIcons } from '../icon/list';
+import { allowSimpleNames } from '../storage/functions';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {
@@ -267,7 +268,7 @@ const loadIcons: IconifyLoadIcons = (
 	callback?: IconifyIconLoaderCallback
 ): IconifyIconLoaderAbort => {
 	// Clean up and copy icons list
-	const cleanedIcons = listToIcons(icons, true);
+	const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
 
 	// Sort icons by missing/loaded/pending
 	// Pending means icon is either being requsted or is about to be requested

@@ -6,16 +6,17 @@ import { stringToIcon, validateIcon } from './name';
  */
 export function listToIcons(
 	list: (string | IconifyIconName)[],
-	validate = true
+	validate = true,
+	simpleNames = false
 ): IconifyIconName[] {
 	const result: IconifyIconName[] = [];
 
 	list.forEach((item) => {
 		const icon: IconifyIconName =
 			typeof item === 'string'
-				? (stringToIcon(item) as IconifyIconName)
+				? (stringToIcon(item, false, simpleNames) as IconifyIconName)
 				: item;
-		if (!validate || validateIcon(icon)) {
+		if (!validate || validateIcon(icon, simpleNames)) {
 			result.push({
 				provider: icon.provider,
 				prefix: icon.prefix,
