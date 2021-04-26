@@ -186,19 +186,23 @@ allowSimpleNames(true);
 // Set API
 coreModules.api = API;
 
-let getAPIModule: GetIconifyAPIModule;
+// Use Fetch API by default
+let getAPIModule: GetIconifyAPIModule = getFetchAPIModule;
 try {
-	getAPIModule =
-		typeof fetch === 'function' && typeof Promise === 'function'
-			? getFetchAPIModule
-			: getJSONPAPIModule;
+	if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+		// If window and document exist, attempt to load whatever module is available, otherwise use Fetch API
+		getAPIModule =
+			typeof fetch === 'function' && typeof Promise === 'function'
+				? getFetchAPIModule
+				: getJSONPAPIModule;
+	}
 } catch (err) {
-	getAPIModule = getJSONPAPIModule;
+	//
 }
 setAPIModule('', getAPIModule(getAPIConfig));
 
 /**
- * Enable node-fetch for getting icons on server side
+ * Function to enable node-fetch for getting icons on server side
  */
 export function setNodeFetch(nodeFetch: typeof fetch) {
 	setFetch(nodeFetch);
@@ -287,10 +291,6 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 
 /**
  * Component
- */
-
-/**
- * Generate icon
  */
 function component(
 	props: IconProps,

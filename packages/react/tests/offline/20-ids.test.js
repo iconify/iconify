@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../../dist/offline';
+import { Icon } from '../../lib/offline';
 import renderer from 'react-test-renderer';
 
 const iconDataWithID = {

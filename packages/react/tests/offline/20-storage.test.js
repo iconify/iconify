@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, addIcon, addCollection } from '../../dist/offline';
+import { Icon, addIcon, addCollection } from '../../lib/offline';
 import renderer from 'react-test-renderer';
 
 const iconData = {
