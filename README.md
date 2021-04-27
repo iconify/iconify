@@ -65,6 +65,7 @@ Other packages:
 -   [Iconify types](./packages/types/) - TypeScript types used by various implementations.
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
+-   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
 -   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.

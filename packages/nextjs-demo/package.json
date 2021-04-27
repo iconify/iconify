@@ -1,0 +1,19 @@
+{
+	"name": "nextjs-demo",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start"
+	},
+	"dependencies": {
+		"@iconify/react": "^1.1.4",
+		"next": "^10.0.0",
+		"react": "17.0.1",
+		"react-dom": "17.0.1"
+	},
+	"devDependencies": {
+		"@iconify-icons/mdi-light": "^1.1.0"
+	}
+}
