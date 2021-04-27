@@ -56,8 +56,7 @@ There are several Iconify implementations included in this repository:
 | Implementation                                         | Usage         | with API | without API |
 | ------------------------------------------------------ | ------------- | :------: | :---------: |
 | [SVG Framework](./packages/iconify/)                   | HTML          |    +     |      +      |
-| [React component](./packages/react/)                   | React         |    -     |      +      |
-| [React component with API](./packages/react-with-api/) | React         |    +     |      +      |
+| [React component](./packages/react/)                   | React         |    +     |      +      |
 | [Vue component](./packages/vue/)                       | Vue           |    -     |      +      |
 | [Svelte component](./packages/svelte/)                 | Svelte/Sapper |    -     |      +      |
 
@@ -66,7 +65,6 @@ Other packages:
 -   [Iconify types](./packages/types/) - TypeScript types used by various implementations.
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
--   [React with API demo](./packages/react-demo-with-api/) - demo for React component that loads icons from Iconify API. Run `npm start` to start demo.
 -   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
@@ -80,6 +78,8 @@ Legacy packages:
 
 -   [Vue 2 component](./archive/vue2/) - Vue 2 component. It has been replaced by [Vue 3 component](./packages/vue/).
 -   [Vue 2 demo](./archive/vue2-demo/) - demo for Vue 2 component. Run `npm serve` to start demo.
+-   [React with API](./archive/react-with-api/) - React component with API support. It has been merged with [`react` package](./packages/react/) in newer version.
+-   [React with API demo](./archive/react-demo-with-api/) - demo for legacy `react-with-api` package. Run `npm start` to start demo.
 
 ## Installation
 
