@@ -54,7 +54,7 @@ import {
 import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
 	getAPIModule as getFetchAPIModule,
-	getFetch,
+	setFetch,
 } from '@iconify/core/lib/api/modules/fetch';
 import {
 	IconifyIconLoaderCallback,
@@ -113,6 +113,7 @@ export interface IconifyGlobal
 		IconifyBrowserCacheFunctions,
 		IconifyAPIFunctions {
 	_api: IconifyAPIInternalFunctions;
+	setNodeFetch: (nodeFetch: typeof fetch) => void;
 }
 
 /**
@@ -150,23 +151,38 @@ const Iconify = ({
 /**
  * Initialise stuff
  */
-// Check for Fetch API
-const fetchModule = getFetch();
-
 // Set API
 coreModules.api = API;
 
-let getAPIModule: GetIconifyAPIModule;
+// Check for Fetch API
+let getAPIModule: GetIconifyAPIModule = getFetchAPIModule;
 try {
-	getAPIModule =
-		typeof fetchModule === 'function' && typeof Promise === 'function'
-			? getFetchAPIModule
-			: getJSONPAPIModule;
+	if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+		// If window and document exist, attempt to load whatever module is available, otherwise use Fetch API
+		getAPIModule =
+			typeof fetch === 'function' && typeof Promise === 'function'
+				? getFetchAPIModule
+				: getJSONPAPIModule;
+	}
 } catch (err) {
-	getAPIModule = getJSONPAPIModule;
+	//
 }
 setAPIModule('', getAPIModule(getAPIConfig));
 
+/**
+ * Function to enable node-fetch for getting icons on server side
+ */
+Iconify.setNodeFetch = (nodeFetch: typeof fetch) => {
+	setFetch(nodeFetch);
+	if (getAPIModule !== getFetchAPIModule) {
+		getAPIModule = getFetchAPIModule;
+		setAPIModule('', getAPIModule(getAPIConfig));
+	}
+};
+
+/**
+ * Browser stuff
+ */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Set cache and load existing cache
 	coreModules.cache = storeCache;
