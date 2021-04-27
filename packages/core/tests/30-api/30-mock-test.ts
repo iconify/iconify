@@ -7,7 +7,7 @@ import { setAPIModule } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
 import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
-import { allowSimpleNames } from '../../lib/storage/functions';
+import { getStorage, iconExists } from '../../lib/storage/storage';
 
 describe('Testing mock API module', () => {
 	let prefixCounter = 0;
@@ -237,5 +237,47 @@ describe('Testing mock API module', () => {
 				}
 			}
 		);
+	});
+
+	// This is useful for testing component where loadIcons() cannot be accessed
+	it('Using timer in callback for second test', (done) => {
+		const prefix = nextPrefix();
+		const name = 'test1';
+
+		// Mock data
+		mockAPIData({
+			provider,
+			prefix,
+			response: {
+				prefix,
+				icons: {
+					[name]: {
+						body: '<g />',
+					},
+				},
+			},
+			delay: (next) => {
+				// Icon should not be loaded yet
+				const storage = getStorage(provider, prefix);
+				expect(iconExists(storage, name)).to.be.equal(false);
+
+				// Set data
+				next();
+
+				// Icon should be loaded now
+				expect(iconExists(storage, name)).to.be.equal(true);
+
+				done();
+			},
+		});
+
+		// Load icons
+		API.loadIcons([
+			{
+				provider,
+				prefix,
+				name,
+			},
+		]);
 	});
 });

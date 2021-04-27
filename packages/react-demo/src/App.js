@@ -6,6 +6,7 @@ import {
 import {
 	addIcon as addOnlineIcon,
 	addCollection as addOnlineCollection,
+	disableCache,
 } from '@iconify/react/dist/iconify';
 import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
 import playIcon from '@iconify-icons/mdi-light/play';
@@ -14,10 +15,15 @@ import { Checkbox } from './demo-components/Checkbox';
 import { InlineDemo } from './demo-components/Inline';
 import { OfflineUsageDemo } from './demo-components/UsageOffline';
 import { FullOfflineUsageDemo } from './demo-components/UsageFullOffline';
+import { FullUsageDemo } from './demo-components/UsageFull';
 import { TestsOffline } from './test-components/TestsOffline';
 import { TestsFullOffline } from './test-components/TestsFullOffline';
+import { TestsFull } from './test-components/TestsFull';
 
 import './App.css';
+
+// Disable cache
+disableCache('all');
 
 // Add 'mdi-light:presentation-play' as 'demo' for offline module
 addOfflineIcon('demo', presentationPlay);
@@ -76,6 +82,7 @@ function App() {
 		<div className="App">
 			<OfflineUsageDemo />
 			<FullOfflineUsageDemo />
+			<FullUsageDemo />
 
 			<section>
 				<h1>Checkbox</h1>
@@ -97,6 +104,7 @@ function App() {
 
 			<TestsOffline />
 			<TestsFullOffline />
+			<TestsFull />
 		</div>
 	);
 }

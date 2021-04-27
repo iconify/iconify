@@ -75,6 +75,9 @@ export const render = (
 			// Properties to ignore
 			case 'icon':
 			case 'style':
+			case 'children':
+			case '_ref':
+			case '_inline':
 				break;
 
 			// Flip as string: 'horizontal,vertical'
