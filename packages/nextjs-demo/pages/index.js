@@ -85,8 +85,7 @@ export default function Home() {
 				<section className="demo">
 					<h1>Iconify demo</h1>
 					<p>
-						Home icons (generated on client):{' '}
-						<InlineIcon icon="mdi:home" />
+						Home icons: <InlineIcon icon="mdi:home" />
 						<InlineIcon
 							icon="mdi:home-outline"
 							style={{ color: '#c40' }}
@@ -94,15 +93,9 @@ export default function Home() {
 						<InlineIcon icon="flat-color-icons:home" />
 					</p>
 					<p>
-						Icons to test unique ids (generated on server):{' '}
-						<InlineIcon icon={iconDataWithID} id="medal1" />
-						<InlineIcon icon={iconDataWithID} id="medal2" />
-						<small>
-							Due to Next.js behavior, icons that use IDs should
-							have "id" attribute or Next.js will warn that
-							content generated on server and client does not
-							match.
-						</small>
+						Icons to test unique ids:{' '}
+						<InlineIcon icon={iconDataWithID} />
+						<InlineIcon icon={iconDataWithID} />
 					</p>
 				</section>
 			</main>
