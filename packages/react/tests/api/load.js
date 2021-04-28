@@ -6,7 +6,7 @@ export const provider = 'mock-api';
 
 // Set API module for provider
 addAPIProvider(provider, {
-	resources: 'http://localhost',
+	resources: ['http://localhost'],
 });
 _api.setAPIModule(provider, mockAPIModule);
 
