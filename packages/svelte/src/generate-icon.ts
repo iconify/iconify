@@ -8,6 +8,7 @@ import { fullIcon } from '@iconify/core/lib/icon';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { merge } from '@iconify/core/lib/misc/merge';
+import type { IconProps } from './props';
 
 /**
  * Default SVG attributes
@@ -20,9 +21,17 @@ const svgDefaults = {
 };
 
 /**
+ * Result
+ */
+export interface GenerateIconResult {
+	attributes: Record<string, unknown>;
+	body: string;
+}
+
+/**
  * Generate icon from properties
  */
-export function generateIcon(props) {
+export function generateIcon(props: IconProps): GenerateIconResult {
 	let iconData = fullIcon(props.icon);
 	if (!iconData) {
 		return {
@@ -31,15 +40,15 @@ export function generateIcon(props) {
 		};
 	}
 
-	const customisations = merge(defaults, props);
-	const componentProps = merge(svgDefaults);
+	const customisations = merge(defaults, props as typeof defaults);
+	const componentProps = merge(svgDefaults) as Record<string, unknown>;
 
 	// Create style if missing
 	let style = typeof props.style === 'string' ? props.style : '';
 
 	// Get element properties
 	for (let key in props) {
-		const value = props[key];
+		const value = props[key as keyof typeof props] as unknown;
 		switch (key) {
 			// Properties to ignore
 			case 'icon':
@@ -48,12 +57,16 @@ export function generateIcon(props) {
 
 			// Flip as string: 'horizontal,vertical'
 			case 'flip':
-				flipFromString(customisations, value);
+				if (typeof value === 'string') {
+					flipFromString(customisations, value);
+				}
 				break;
 
 			// Alignment as string
 			case 'align':
-				alignmentFromString(customisations, value);
+				if (typeof value === 'string') {
+					alignmentFromString(customisations, value);
+				}
 				break;
 
 			// Color: copy to style
@@ -63,9 +76,9 @@ export function generateIcon(props) {
 
 			// Rotation as string
 			case 'rotate':
-				if (typeof value !== 'number') {
+				if (typeof value === 'string') {
 					customisations[key] = rotateFromString(value);
-				} else {
+				} else if (typeof value === 'number') {
 					componentProps[key] = value;
 				}
 				break;
@@ -80,7 +93,7 @@ export function generateIcon(props) {
 
 			// Copy missing property if it does not exist in customisations
 			default:
-				if (defaults[key] === void 0) {
+				if ((defaults as Record<string, unknown>)[key] === void 0) {
 					componentProps[key] = value;
 				}
 		}
@@ -91,7 +104,8 @@ export function generateIcon(props) {
 
 	// Add icon stuff
 	for (let key in item.attributes) {
-		componentProps[key] = item.attributes[key];
+		componentProps[key] =
+			item.attributes[key as keyof typeof item.attributes];
 	}
 
 	if (item.inline) {

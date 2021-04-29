@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"rootDir": "src",
+		"target": "es2017",
+		"module": "esnext",
+		"declaration": false,
+		"sourceMap": false,
+		"strict": true,
+		"types": ["node", "svelte"],
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error"
+	}
+}
