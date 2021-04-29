@@ -88,6 +88,10 @@
 			<Icon />
 		</div>
 		<div>
+			Empty icon with placeholder:
+			<Icon>😿</Icon>
+		</div>
+		<div>
 			Simple icon:
 			<Icon icon={bxUser} inline={true} />
 		</div>
