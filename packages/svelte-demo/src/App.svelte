@@ -1,5 +1,5 @@
 <script>
-	import Icon from '@iconify/svelte';
+	import { Icon } from '@iconify/svelte';
 	import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 	import bxUser from '@iconify-icons/bx/bx-user';
 	import bxError from '@iconify-icons/bx/bx-error';

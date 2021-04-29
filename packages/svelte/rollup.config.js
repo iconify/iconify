@@ -15,6 +15,12 @@ try {
 	);
 });
 
+// Create component.mjs
+fs.writeFileSync(
+	__dirname + '/dist/component.mjs',
+	fs.readFileSync(__dirname + '/src/index.js')
+);
+
 // Create bundle
 const name = pkg.name
 	.replace(/^(@\S+\/)?(svelte-)?(\S+)/, '$3')
