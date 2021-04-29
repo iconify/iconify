@@ -1,3 +1,4 @@
+import type { IconifyIcon } from '@iconify/types';
 import { defaults } from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
@@ -23,7 +24,7 @@ const svgDefaults = {
 /**
  * Result
  */
-export interface GenerateIconResult {
+export interface RenderResult {
 	attributes: Record<string, unknown>;
 	body: string;
 }
@@ -31,15 +32,12 @@ export interface GenerateIconResult {
 /**
  * Generate icon from properties
  */
-export function generateIcon(props: IconProps): GenerateIconResult {
-	let iconData = fullIcon(props.icon);
-	if (!iconData) {
-		return {
-			attributes: svgDefaults,
-			body: '',
-		};
-	}
-
+export function render(
+	// Icon must be validated before calling this function
+	icon: Required<IconifyIcon>,
+	// Properties
+	props: IconProps
+): RenderResult {
 	const customisations = merge(defaults, props as typeof defaults);
 	const componentProps = merge(svgDefaults) as Record<string, unknown>;
 
@@ -100,7 +98,7 @@ export function generateIcon(props: IconProps): GenerateIconResult {
 	}
 
 	// Generate icon
-	const item = iconToSVG(iconData, customisations);
+	const item = iconToSVG(icon, customisations);
 
 	// Add icon stuff
 	for (let key in item.attributes) {

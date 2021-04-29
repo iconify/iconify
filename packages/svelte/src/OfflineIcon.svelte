@@ -1,5 +1,5 @@
 <script>
-	import { generateIcon } from './generate-icon';
+	import { generateIcon } from './offline';
 
 	// Generated data
 	let data;
@@ -9,6 +9,10 @@
 	}
 </script>
 
+{#if data === null}
+	<slot />
+{:else}
 <svg {...data.attributes}>
 	{@html data.body}
 </svg>
+{/if}

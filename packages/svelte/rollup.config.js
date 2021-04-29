@@ -10,7 +10,7 @@ import pkg from './package.json';
 try {
 	fs.mkdirSync(__dirname + '/dist');
 } catch (err) {}
-['Icon.svelte'].forEach((file) => {
+['OfflineIcon.svelte'].forEach((file) => {
 	fs.writeFileSync(
 		__dirname + '/dist/' + file,
 		fs.readFileSync(__dirname + '/src/' + file)
@@ -48,12 +48,12 @@ export default [
 			commonjs(),
 		],
 	},
-	// Files included in Icon.svelte as bundles without dependencies
+	// Files included in OfflineIcon.svelte as bundles without dependencies
 	{
-		input: 'src/generate-icon.ts',
+		input: 'src/offline.ts',
 		output: [
 			{
-				file: 'dist/generate-icon.js',
+				file: 'dist/offline.js',
 				format: 'es',
 			},
 		],
