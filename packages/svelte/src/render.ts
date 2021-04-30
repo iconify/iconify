@@ -67,9 +67,16 @@ export function render(
 				}
 				break;
 
-			// Color: copy to style
+			// Color: copy to style, add extra ';' in case style is missing it
 			case 'color':
-				style = 'color: ' + value + '; ' + style;
+				style =
+					style +
+					(style.length > 0 && style.trim().slice(-1) !== ';'
+						? ';'
+						: '') +
+					'color: ' +
+					value +
+					'; ';
 				break;
 
 			// Rotation as string
@@ -107,6 +114,7 @@ export function render(
 	}
 
 	if (item.inline) {
+		// Style overrides it
 		style = 'vertical-align: -0.125em; ' + style;
 	}
 

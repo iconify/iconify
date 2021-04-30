@@ -19,18 +19,38 @@
 		"build:copy": "node copy",
 		"build:tsc": "tsc -b",
 		"build:bundles": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json"
+		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"pretest": "npm run build",
+		"test": "jest"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.14.0",
 		"@iconify/core": "^1.0.0-rc.3",
 		"@microsoft/api-extractor": "^7.15.0",
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@rollup/plugin-typescript": "^8.2.1",
+		"@testing-library/jest-dom": "^5.12.0",
+		"@testing-library/svelte": "^3.0.3",
 		"@tsconfig/svelte": "^1.0.10",
+		"babel-jest": "^26.6.3",
 		"rollup": "^2.33.3",
 		"rollup-plugin-svelte": "^6.1.1",
 		"svelte": "^3.29.7",
-		"svelte-preprocess": "^4.7.2"
+		"svelte-jester": "^1.5.0",
+		"svelte-preprocess": "^4.7.2",
+		"ts-jest": "^26.5.5"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.js$": "babel-jest",
+			"^.+\\.ts$": "ts-jest",
+			"^.+\\.svelte$": "svelte-jester"
+		},
+		"moduleFileExtensions": [
+			"js",
+			"ts",
+			"svelte"
+		]
 	}
 }
