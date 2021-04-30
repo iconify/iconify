@@ -1,5 +1,5 @@
 <script>
-	import { generateIcon } from './offline';
+	import { generateIcon } from './offline-functions';
 
 	// Generated data
 	let data;

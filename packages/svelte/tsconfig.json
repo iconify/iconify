@@ -1,9 +1,10 @@
 {
 	"compilerOptions": {
 		"rootDir": "src",
+		"outDir": "lib",
 		"target": "es2017",
 		"module": "esnext",
-		"declaration": false,
+		"declaration": true,
 		"sourceMap": false,
 		"strict": true,
 		"types": ["node", "svelte"],

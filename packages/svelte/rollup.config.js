@@ -4,38 +4,44 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import sveltePreprocess from 'svelte-preprocess';
-import pkg from './package.json';
 
-// Copy Icon.svelte
+// Directories
+const rootDir = __dirname + '/';
+const targetDir = 'dist';
+const sourceDir = 'src';
+const libDir = 'lib';
+
+// Create dist
 try {
-	fs.mkdirSync(__dirname + '/dist');
+	fs.mkdirSync(rootDir + targetDir);
 } catch (err) {}
+
+// Copy Svelte files
 ['OfflineIcon.svelte'].forEach((file) => {
 	fs.writeFileSync(
-		__dirname + '/dist/' + file,
-		fs.readFileSync(__dirname + '/src/' + file)
+		rootDir + targetDir + '/' + file,
+		fs.readFileSync(rootDir + sourceDir + '/' + file)
 	);
+	console.log('copied (original)', file);
 });
 
-// Create component.mjs
-fs.writeFileSync(
-	__dirname + '/dist/component.mjs',
-	fs.readFileSync(__dirname + '/src/index.ts')
-);
+// Copy compiled files (should not include anything that isn't bundled below)
+['offline.js'].forEach((file) => {
+	fs.writeFileSync(
+		rootDir + targetDir + '/' + file,
+		fs.readFileSync(rootDir + libDir + '/' + file)
+	);
+	console.log('copied (compiled)', file);
+});
 
 // Create bundle
-const name = pkg.name
-	.replace(/^(@\S+\/)?(svelte-)?(\S+)/, '$3')
-	.replace(/^\w/, (m) => m.toUpperCase())
-	.replace(/-\w/g, (m) => m[1].toUpperCase());
-
 export default [
 	// Bundle everything
 	{
-		input: 'src/index.ts',
+		input: sourceDir + '/offline.ts',
 		output: [
-			{ file: pkg.module, format: 'es' },
-			{ file: pkg.main, format: 'umd', name },
+			{ file: targetDir + '/offline-bundle.mjs', format: 'es' },
+			{ file: targetDir + '/offline-bundle.js', format: 'cjs' },
 		],
 		plugins: [
 			svelte({
@@ -48,12 +54,12 @@ export default [
 			commonjs(),
 		],
 	},
-	// Files included in OfflineIcon.svelte as bundles without dependencies
+	// Files included in OfflineIcon.svelte as bundle
 	{
-		input: 'src/offline.ts',
+		input: sourceDir + '/offline-functions.ts',
 		output: [
 			{
-				file: 'dist/offline.js',
+				file: targetDir + '/offline-functions.js',
 				format: 'es',
 			},
 		],

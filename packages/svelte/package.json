@@ -11,12 +11,13 @@
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/svelte"
 	},
-	"svelte": "dist/component.mjs",
-	"module": "dist/index.mjs",
-	"main": "dist/index.js",
+	"svelte": "dist/offline.js",
+	"module": "dist/offline-bundle.mjs",
+	"main": "dist/offline-bundle.js",
 	"scripts": {
 		"build": "node build",
-		"build:dist": "rollup -c rollup.config.js"
+		"build:tsc": "tsc -b",
+		"build:bundles": "rollup -c rollup.config.js"
 	},
 	"devDependencies": {
 		"@iconify/core": "^1.0.0-rc.3",

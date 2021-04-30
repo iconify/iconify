@@ -10,7 +10,8 @@ const commands = [];
 // Parse command line
 const compile = {
 	core: false,
-	dist: true,
+	tsc: true,
+	bundles: true,
 };
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {

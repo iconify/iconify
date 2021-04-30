@@ -1,3 +1,9 @@
 .DS_Store
 rollup.config.js
+tsconfig.json
+build.js
 node_modules
+build
+src
+lib
+tests

@@ -14,7 +14,7 @@ export type IconifyIconCustomisations = IconCustomisations & {
  */
 export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Icon object
-	icon: IconifyIcon;
+	icon: IconifyIcon | string;
 
 	// Style
 	color?: string;
