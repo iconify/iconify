@@ -1,23 +1,23 @@
 <script>
 	// Render icon on server
-	import IconifyIcon from '@iconify/svelte';
+	import { Icon } from '@iconify/svelte/dist/offline';
 	import successIcon from '@iconify-icons/openmoji/artist-medium-light-skin-tone';
 
 	// Dynamically load icon component, icon data and render it on client side
-	// Also replace <IconifyIcon /> with <svelte:component this={IconifyIcon} />
+	// Also replace <Icon /> with <svelte:component this={Icon} />
 	/*
 	import { onMount } from 'svelte';
 
-	let IconifyIcon;
+	let Icon;
 	let successIcon;
 
 	onMount(async () => {
 		let promises = [
-			import('@iconify/svelte'),
+			import('@iconify/svelte/dist/offline-bundle'),
 			import('@iconify-icons/openmoji/artist-medium-light-skin-tone'),
 		];
 		const results = await Promise.all(promises);
-		IconifyIcon = results[0].default;
+		Icon = results[0].Icon;
 		successIcon = results[1].default;
 	});
 	*/
@@ -68,8 +68,8 @@
 <h1>Great success!</h1>
 
 <figure>
-	<IconifyIcon icon={successIcon} />
-	<!-- <svelte:component this={IconifyIcon} icon={successIcon} /> -->
+	<Icon icon={successIcon} />
+	<!-- <svelte:component this={Icon} icon={successIcon} /> -->
 </figure>
 
 <p>Icon above and icons in navigation are rendered by Sapper on server side.</p>

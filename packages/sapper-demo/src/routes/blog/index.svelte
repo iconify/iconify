@@ -12,16 +12,16 @@
 	// Dynamically load icon component, icon data and render it on client side
 	import { onMount } from 'svelte';
 
-	let IconifyIcon;
+	let Icon;
 	let postIcon;
 
 	onMount(async () => {
 		const promises = [
-			import('@iconify/svelte'),
+			import('@iconify/svelte/dist/offline-bundle'),
 			import('@iconify-icons/bi/link-45deg'),
 		];
 		const results = await Promise.all(promises);
-		IconifyIcon = results[0].default;
+		Icon = results[0].Icon;
 		postIcon = results[1].default;
 	});
 
@@ -70,7 +70,7 @@
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
 		<li>
-			<svelte:component this={IconifyIcon} icon={postIcon} />
+			<svelte:component this={Icon} icon={postIcon} />
 			<a rel="prefetch" href="blog/{post.slug}">{post.title}</a>
 		</li>
 	{/each}

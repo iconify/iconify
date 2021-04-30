@@ -1,5 +1,5 @@
 <script>
-	import IconifyIcon from '@iconify/svelte';
+	import { Icon } from '@iconify/svelte/dist/offline';
 	import homeIcon from '@iconify-icons/bi/house-door';
 	import blogIcon from '@iconify-icons/bi/file-text';
 	import aboutIcon from '@iconify-icons/bi/question-octagon';
@@ -67,13 +67,13 @@
 	<ul>
 		<li>
 			<a aria-current={segment === undefined ? 'page' : undefined} href=".">
-				<IconifyIcon icon={homeIcon} />
+				<Icon icon={homeIcon} />
 				Home
 			</a>
 		</li>
 		<li>
 			<a aria-current={segment === 'about' ? 'page' : undefined} href="about">
-				<IconifyIcon icon={aboutIcon} />
+				<Icon icon={aboutIcon} />
 				About
 			</a>
 		</li>
@@ -85,7 +85,7 @@
 				rel="prefetch"
 				aria-current={segment === 'blog' ? 'page' : undefined}
 				href="blog">
-				<IconifyIcon icon={blogIcon} />
+				<Icon icon={blogIcon} />
 				Blog
 			</a>
 		</li>
