@@ -20,6 +20,7 @@ describe('Passing attributes', () => {
 	});
 
 	test('aria-hidden', () => {
+		// dashes, string value
 		const component = renderer.create(
 			<InlineIcon icon={iconData} aria-hidden="false" />
 		);
@@ -29,8 +30,9 @@ describe('Passing attributes', () => {
 	});
 
 	test('ariaHidden', () => {
+		// camelCase, boolean value
 		const component = renderer.create(
-			<InlineIcon icon={iconData} ariaHidden="false" />
+			<InlineIcon icon={iconData} ariaHidden={false} />
 		);
 		const tree = component.toJSON();
 

@@ -15,7 +15,8 @@ describe('Replacing IDs', () => {
 		const tree = component.toJSON();
 		const body = tree.props.dangerouslySetInnerHTML.__html;
 
-		expect(body).not.toStrictEqual(iconDataWithID.body);
+		// Check that default id doesn't exist
+		expect(body.indexOf('ssvg-id-1st-place-medala')).toEqual(-1);
 	});
 
 	test('custom generator', () => {
