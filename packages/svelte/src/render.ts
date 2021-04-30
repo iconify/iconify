@@ -5,7 +5,6 @@ import {
 	alignmentFromString,
 } from '@iconify/core/lib/customisations/shorthand';
 import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
-import { fullIcon } from '@iconify/core/lib/icon';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { merge } from '@iconify/core/lib/misc/merge';

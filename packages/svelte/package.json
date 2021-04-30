@@ -11,15 +11,17 @@
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/svelte"
 	},
-	"svelte": "dist/offline.js",
-	"module": "dist/offline-bundle.mjs",
-	"main": "dist/offline-bundle.js",
+	"svelte": "dist/iconify.js",
+	"module": "dist/bundle.mjs",
+	"main": "dist/bundle.js",
+	"types": "dist/iconify.d.ts",
 	"scripts": {
 		"build": "node build",
 		"build:copy": "node copy",
 		"build:tsc": "tsc -b",
 		"build:bundles": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"pretest": "npm run build",
 		"test": "jest"
 	},
