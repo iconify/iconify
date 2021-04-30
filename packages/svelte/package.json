@@ -16,11 +16,14 @@
 	"main": "dist/offline-bundle.js",
 	"scripts": {
 		"build": "node build",
+		"build:copy": "node copy",
 		"build:tsc": "tsc -b",
-		"build:bundles": "rollup -c rollup.config.js"
+		"build:bundles": "rollup -c rollup.config.js",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json"
 	},
 	"devDependencies": {
 		"@iconify/core": "^1.0.0-rc.3",
+		"@microsoft/api-extractor": "^7.15.0",
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@rollup/plugin-typescript": "^8.2.1",

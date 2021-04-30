@@ -12,6 +12,8 @@ const compile = {
 	core: false,
 	tsc: true,
 	bundles: true,
+	copy: true,
+	api: true,
 };
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
