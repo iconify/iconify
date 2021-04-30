@@ -22,15 +22,16 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Shorthand properties
 	flip?: string;
 	align?: string;
-
-	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
-	id?: string;
 }
 
 /**
- * Properties for element that are mentioned in generate-icon.ts
+ * Properties for element that are mentioned in render.ts
  */
 interface IconifyElementProps {
+	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
+	id?: string;
+
+	// Style
 	style?: string;
 }
 
