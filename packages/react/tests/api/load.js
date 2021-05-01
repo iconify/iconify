@@ -1,4 +1,4 @@
-import { _api, addAPIProvider } from '../../lib/iconify';
+import { _api, addAPIProvider } from '../../dist/iconify';
 import { mockAPIModule } from '@iconify/core/lib/api/modules/mock';
 
 // API provider for tests

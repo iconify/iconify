@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Icon, InlineIcon, loadIcons, iconExists } from '../../lib/iconify';
+import { Icon, InlineIcon, loadIcons, iconExists } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 

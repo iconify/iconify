@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../../lib/iconify';
+import { Icon } from '../../dist/iconify';
 import renderer from 'react-test-renderer';
 
 const iconDataWithID = {

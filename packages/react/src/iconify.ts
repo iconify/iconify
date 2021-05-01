@@ -2,7 +2,6 @@ import React from 'react';
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import { stringToIcon } from '@iconify/core/lib/icon/name';
 import type { IconifyIconName } from '@iconify/core/lib/icon/name';
 import type {
 	IconifyIconSize,
@@ -111,6 +110,7 @@ export {
 	GetAPIConfig,
 	IconifyAPIPrepareQuery,
 	IconifyAPISendQuery,
+	PartialIconifyAPIConfig,
 };
 
 /* Browser cache */
@@ -353,7 +353,11 @@ class IconComponent extends React.Component<
 		const icon = this.props.icon;
 
 		// Icon is an object
-		if (typeof icon === 'object' && typeof icon.body === 'string') {
+		if (
+			typeof icon === 'object' &&
+			icon !== null &&
+			typeof icon.body === 'string'
+		) {
 			// Stop loading
 			this._icon = '';
 			this._abortLoading();
