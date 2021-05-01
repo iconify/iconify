@@ -101,6 +101,7 @@ export {
 	IconifyAPIPrepareQuery,
 	IconifyAPISendQuery,
 	IconifyBrowserCacheType,
+	PartialIconifyAPIConfig,
 };
 
 /**
