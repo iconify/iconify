@@ -1,6 +1,7 @@
 <script>
 	import { Icon } from '@iconify/svelte';
-	import paperclipIcon from '@iconify-icons/dashicons/paperclip';
+
+	const paperclipIcon = 'dashicons:paperclip';
 </script>
 
 <style>
@@ -15,7 +16,7 @@
 </style>
 
 <section>
-	<h1>Alignment (components/Alignment.svelte)</h1>
+	<h1>Alignment (samples/Alignment.svelte)</h1>
 	<div>
 		<p>Icon with correct width/heigh ratio:</p>
 		<Icon icon={paperclipIcon} />

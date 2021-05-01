@@ -1,6 +1,7 @@
 <script>
 	import { Icon } from '@iconify/svelte';
-	import paperclipIcon from '@iconify-icons/dashicons/paperclip';
+
+const paperclipIcon = 'dashicons:paperclip';
 </script>
 
 <style>
@@ -11,7 +12,7 @@
 </style>
 
 <section>
-	<h1>Transformations (components/Transformations.svelte)</h1>
+	<h1>Transformations (samples/Transformations.svelte)</h1>
 	<div>
 		Default icon:
 		<Icon icon={paperclipIcon} />

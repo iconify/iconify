@@ -14,4 +14,16 @@ export type { IconifyIconCustomisations, IconProps } from './props';
 export { default as Icon } from './Icon.svelte';
 
 // Functions
-export { addIcon, addCollection } from './functions';
+export { enableCache, disableCache } from './functions';
+
+export {
+	iconExists,
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
+} from './functions';
+
+export { calculateSize, replaceIDs } from './functions';
+
+export { loadIcons, addAPIProvider, _api, setNodeFetch } from './functions';

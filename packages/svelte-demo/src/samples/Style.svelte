@@ -1,7 +1,7 @@
 <script>
 	import { Icon } from '@iconify/svelte';
-	import paperclipIcon from '@iconify-icons/dashicons/paperclip';
 
+	const paperclipIcon = 'dashicons:paperclip';
 	const redIcon = 'color: red;';
 	const bigIcon = 'font-size: 40px;';
 </script>
@@ -17,7 +17,7 @@
 </style>
 
 <section>
-	<h1>Style (components/Style.svelte)</h1>
+	<h1>Style (samples/Style.svelte)</h1>
 	<div>
 		Default icon:
 		<Icon icon={paperclipIcon} />

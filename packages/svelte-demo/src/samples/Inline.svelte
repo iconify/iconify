@@ -47,7 +47,7 @@
 </style>
 
 <section>
-	<h1>Inline (components/Inline.svelte)</h1>
+	<h1>Inline (samples/Inline.svelte)</h1>
 	<div>
 		Block icon (behaving like image):
 		<Icon icon={demoIcon} />

@@ -1,66 +1,162 @@
-html, body {
+main {
+	font-family: Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: left;
+	color: #2c3e50;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+/* Sections */
+section {
+	border-bottom: 1px dotted #ccc;
+	padding: 16px;
+}
+section:last-child {
+	border-bottom-width: 0;
+}
+section:after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+h1,
+h2 {
+	margin: 0 0 16px;
+	padding: 0;
+	font-size: 24px;
+	font-weight: normal;
+}
+h2 {
+	margin: 16px 0;
+	font-size: 20px;
+}
+h1 + h2 {
+	margin-top: -8px;
+}
+p {
+	margin: 12px 0 4px;
+	padding: 0;
+}
+
+/* Tests */
+.test-row {
+	font-size: 16px;
+	line-height: 1.5;
+}
+.test-row-icons {
+	padding-right: 4px;
+}
+.test-row-icons > svg {
+	color: #afafaf;
+	display: none;
+}
+.test-row-icons > svg.visible {
+	display: inline-block;
+}
+.test-row-icons > svg.success {
+	color: #327335;
+}
+.test-row-icons > svg.failed {
+	color: #ba3329;
+}
+
+/* 24px icon */
+.icon-24 svg {
+	font-size: 24px;
+	line-height: 1;
+	vertical-align: -0.25em;
+}
+
+/* Alert demo */
+.alert {
 	position: relative;
-	width: 100%;
-	height: 100%;
+	margin: 8px;
+	padding: 16px;
+	padding-left: 48px;
+	background: #ba3329;
+	color: #fff;
+	border-radius: 5px;
+	float: left;
 }
 
-body {
-	color: #333;
-	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+.alert + div {
+	clear: both;
 }
 
-a {
-	color: rgb(0,100,200);
+.alert svg {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	font-size: 24px;
+	line-height: 1em;
+	margin: -0.5em 0 0;
+}
+
+/* Checkbox component */
+.checkbox-container {
+	margin: 8px 0;
+}
+
+.checkbox {
+	cursor: pointer;
+	/* color: #1769aa; */
+	color: #626262;
 	text-decoration: none;
 }
-
-a:hover {
+.checkbox:hover {
+	color: #ba3329;
 	text-decoration: underline;
 }
 
-a:visited {
-	color: rgb(0,80,160);
+.checkbox svg {
+	margin-right: 4px;
+	color: #afafaf;
+	font-size: 24px;
+	line-height: 1em;
+	vertical-align: -0.25em;
+}
+.checkbox--checked svg {
+	color: #327335;
+}
+.checkbox:hover svg {
+	color: inherit;
 }
 
-label {
-	display: block;
+.checkbox-container small {
+	margin-left: 4px;
+	opacity: 0.7;
 }
 
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
+/* Inline demo */
+.inline-demo svg {
+	color: #06a;
+	margin: 0 8px;
+	position: relative;
+	z-index: 2;
+	background: #fff;
 }
-
-input:disabled {
-	color: #ccc;
+.inline-demo div {
+	position: relative;
+	font-size: 16px;
+	line-height: 1.5;
 }
-
-input[type="range"] {
+.inline-demo div:before,
+.inline-demo div:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
 	height: 0;
+	border-top: 1px dashed #506874;
+	opacity: 0.5;
+	z-index: -1;
 }
-
-button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
+.inline-demo div:before {
+	bottom: 5px;
 }
-
-button:disabled {
-	color: #999;
-}
-
-button:not(:disabled):active {
-	background-color: #ddd;
-}
-
-button:focus {
-	border-color: #666;
+.inline-demo div:after {
+	bottom: 7px;
+	border-top-color: #ba3329;
 }

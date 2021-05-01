@@ -1,12 +1,12 @@
 <script>
 	import { Icon } from '@iconify/svelte';
-	import adminUsers from '@iconify-icons/dashicons/admin-users';
 
-	let icon1Style = 'color: purple; vertical-align: 0; font-size: 2em;';
+	const adminUsers = 'dashicons:admin-users';
+	const icon1Style = 'color: purple; vertical-align: 0; font-size: 2em;';
 </script>
 
 <section>
-	<h1>Color and style (components/ColorStyle.svelte)</h1>
+	<h1>Color and style (samples/ColorStyle.svelte)</h1>
 	<div>
 		Icon with color (red):
 		<Icon icon={adminUsers} color="red" inline={true} />

@@ -8,8 +8,8 @@
 		"start": "sirv public"
 	},
 	"devDependencies": {
-		"@iconify-icons/bx": "^1.0.2",
-		"@iconify-icons/dashicons": "^1.0.0",
+		"@iconify-icons/mdi-light": "^1.1.0",
+		"@iconify-icons/uil": "^1.1.1",
 		"@iconify/svelte": "^1.0.3",
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
