@@ -149,6 +149,110 @@ describe('Rendering icon', () => {
 		});
 	});
 
+	test('changing icon property while loading', (done) => {
+		const prefix = nextPrefix();
+		const name = 'changing-prop';
+		const name2 = 'changing-prop2';
+		const iconName = `@${provider}:${prefix}:${name}`;
+		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		let isSync = true;
+
+		mockAPIData({
+			provider,
+			prefix,
+			response: {
+				prefix,
+				icons: {
+					[name]: iconData,
+				},
+			},
+			delay: (next) => {
+				// Should have been called asynchronously, which means icon name has changed
+				expect(isSync).toEqual(false);
+
+				// Send icon data
+				next();
+			},
+		});
+
+		mockAPIData({
+			provider,
+			prefix,
+			response: {
+				prefix,
+				icons: {
+					[name2]: iconData2,
+				},
+			},
+			delay: (next) => {
+				// Should have been called asynchronously
+				expect(isSync).toEqual(false);
+
+				// Icon should not have loaded yet
+				expect(iconExists(iconName2)).toEqual(false);
+
+				// Send icon data
+				next();
+
+				// Test it again
+				expect(iconExists(iconName2)).toEqual(true);
+
+				// Check if state was changed
+				// Wrapped in double setTimeout() because re-render takes 2 ticks
+				setTimeout(() => {
+					setTimeout(() => {
+						const tree = component.toJSON();
+
+						expect(tree).toMatchObject({
+							type: 'svg',
+							props: {
+								'xmlns': 'http://www.w3.org/2000/svg',
+								'xmlnsXlink': 'http://www.w3.org/1999/xlink',
+								'aria-hidden': true,
+								'role': 'img',
+								'style': {},
+								'dangerouslySetInnerHTML': {
+									__html: iconData2.body,
+								},
+								'width': '1em',
+								'height': '1em',
+								'preserveAspectRatio': 'xMidYMid meet',
+								'viewBox':
+									'0 0 ' +
+									iconData2.width +
+									' ' +
+									iconData2.height,
+							},
+							children: null,
+						});
+
+						done();
+					}, 0);
+				}, 0);
+			},
+		});
+
+		// Check if icon has been loaded
+		expect(iconExists(iconName)).toEqual(false);
+
+		// Render component
+		const component = renderer.create(<Icon icon={iconName} />);
+		const tree = component.toJSON();
+
+		// Should render placeholder
+		expect(tree).toMatchObject({
+			type: 'span',
+			props: {},
+			children: null,
+		});
+
+		// Change icon name
+		component.update(<Icon icon={iconName2} />);
+
+		// Async
+		isSync = false;
+	});
+
 	test('changing multiple properties', (done) => {
 		const prefix = nextPrefix();
 		const name = 'multiple-props';

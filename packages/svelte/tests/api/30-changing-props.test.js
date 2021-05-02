@@ -123,6 +123,102 @@ describe('Rendering icon', () => {
 		expect(html).toEqual('<div></div>');
 	});
 
+	test('changing icon property while loading', (done) => {
+		const prefix = nextPrefix();
+		const name = 'changing-prop';
+		const name2 = 'changing-prop2';
+		const iconName = `@${provider}:${prefix}:${name}`;
+		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		let isSync = true;
+		let triggerSwap;
+
+		mockAPIData({
+			provider,
+			prefix,
+			response: {
+				prefix,
+				icons: {
+					[name]: iconData,
+				},
+			},
+			delay: (next) => {
+				// Should have been called asynchronously
+				expect(isSync).toEqual(false);
+
+				// Icon should not have loaded yet
+				expect(iconExists(iconName)).toEqual(false);
+
+				// Send icon data
+				next();
+			},
+		});
+
+		mockAPIData({
+			provider,
+			prefix,
+			response: {
+				prefix,
+				icons: {
+					[name2]: iconData2,
+				},
+			},
+			delay: (next) => {
+				// Should have been called asynchronously
+				expect(isSync).toEqual(false);
+
+				// Icon should not have loaded yet
+				expect(iconExists(iconName2)).toEqual(false);
+
+				// Send icon data
+				next();
+
+				// Test it again
+				expect(iconExists(iconName2)).toEqual(true);
+
+				// Check if state was changed
+				// Wrapped in double setTimeout() because re-render takes 2 ticks
+				setTimeout(() => {
+					setTimeout(() => {
+						const node = component.container.querySelector('svg');
+						const html = node.parentNode.innerHTML;
+
+						// Check HTML
+						expect(html).toEqual(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+						);
+
+						done();
+					}, 0);
+				}, 0);
+			},
+		});
+
+		// Check if icon has been loaded
+		expect(iconExists(iconName)).toEqual(false);
+
+		// Render component
+		const component = render(ChangeIcon, {
+			icon1: iconName,
+			icon2: iconName2,
+			expose: (swap) => {
+				triggerSwap = swap;
+			},
+		});
+
+		// Should render empty icon
+		const html = component.container.innerHTML;
+		expect(html).toEqual('<div></div>');
+
+		// Fixture callback should have been called
+		expect(typeof triggerSwap).toEqual('function');
+
+		// Change property
+		triggerSwap();
+
+		// Async
+		isSync = false;
+	});
+
 	test('changing multiple properties', (done) => {
 		const prefix = nextPrefix();
 		const name = 'multiple-props';
