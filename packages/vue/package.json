@@ -1,8 +1,8 @@
 {
 	"name": "@iconify/vue",
-	"description": "Iconify icon component for Vue.",
+	"description": "Iconify icon component for Vue 3.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.0-rc.3",
+	"version": "3.0.0-dev",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -15,16 +15,13 @@
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"pretest": "npm run build",
 		"test": "jest"
 	},
-	"main": "dist/IconifyIcon.umd.js",
-	"module": "dist/IconifyIcon.esm.js",
-	"types": "dist/IconifyIcon.d.ts",
-	"peerDependencies": {
-		"vue": "^3.0.0"
-	},
+	"main": "dist/iconify.js",
+	"module": "dist/iconify.mjs",
+	"types": "dist/iconify.d.ts",
 	"devDependencies": {
 		"@iconify/core": "^1.0.0-rc.3",
 		"@microsoft/api-extractor": "^7.12.0",
@@ -32,7 +29,8 @@
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@types/jest": "^26.0.15",
-		"@vue/test-utils": "^2.0.0-beta.10",
+		"@vue/cli-plugin-unit-jest": "^4.5.12",
+		"@vue/test-utils": "^2.0.0-rc.6",
 		"babel-eslint": "^10.1.0",
 		"babel-jest": "^26.6.3",
 		"babel-preset-env": "^1.7.0",

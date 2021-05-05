@@ -2,31 +2,35 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import buble from '@rollup/plugin-buble';
 
-const name = 'IconifyIcon';
+const names = ['offline']; //, 'iconify'];
+const component = 'Icon';
 
-// Export configuration
-const config = [
-	// ES Module
-	{
+const config = [];
+
+// Write all packages
+names.forEach(name => {
+	// ES module
+	config.push({
 		input: `lib/${name}.js`,
 		output: [
 			{
-				file: `dist/${name}.esm.js`,
+				file: `dist/${name}.mjs`,
 				format: 'esm',
 				exports: 'named',
 			},
 		],
 		external: ['vue'],
 		plugins: [resolve(), commonjs(), buble()],
-	},
-	// UMD Module
-	{
+	});
+
+	// UMD module
+	config.push({
 		input: `lib/${name}.js`,
 		output: [
 			{
-				file: `dist/${name}.umd.js`,
+				file: `dist/${name}.js`,
 				format: 'umd',
-				name,
+				name: component,
 				exports: 'named',
 				globals: {
 					vue: 'Vue',
@@ -35,7 +39,7 @@ const config = [
 		],
 		external: ['vue'],
 		plugins: [resolve(), commonjs(), buble()],
-	},
-];
+	});
+});
 
 export default config;

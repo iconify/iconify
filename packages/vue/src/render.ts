@@ -1,70 +1,22 @@
-import { h, VNode } from 'vue';
-
-import { IconifyIcon as IconifyIconData, IconifyJSON } from '@iconify/types';
-import {
-	IconifyIconCustomisations as IconCustomisations,
-	FullIconCustomisations,
-	defaults,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
-} from '@iconify/core/lib/customisations';
+import type { VNode } from 'vue';
+import { h } from 'vue';
+import type { IconifyIcon } from '@iconify/types';
+import type { FullIconCustomisations } from '@iconify/core/lib/customisations';
+import { defaults } from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
 } from '@iconify/core/lib/customisations/shorthand';
 import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
-import { fullIcon } from '@iconify/core/lib/icon';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { merge } from '@iconify/core/lib/misc/merge';
-import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
-
-/**
- * Export types that could be used in component
- */
-export type {
-	IconifyIconData,
-	IconifyJSON,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
-};
-
-// Allow rotation to be string
-/**
- * Icon customisations
- */
-export type IconifyIconCustomisations = IconCustomisations & {
-	rotate?: string | number;
-};
-
-/**
- * Icon properties
- */
-export interface IconifyIconProps extends IconifyIconCustomisations {
-	icon: IconifyIconData;
-
-	// Style
-	color?: string;
-
-	// Shorthand properties
-	flip?: string;
-	align?: string;
-
-	// Aliases for alignment because "v-align" is treated like directive
-	horizontalAlign?: IconifyHorizontalIconAlignment;
-	verticalAlign?: IconifyVerticalIconAlignment;
-
-	// Aliases for flip because "v-flip" is treated like directive
-	horizontalFlip?: boolean;
-	verticalFlip?: boolean;
-}
+import type { IconifyIconCustomisations, IconProps } from './props';
 
 /**
  * Default SVG attributes
  */
-const svgDefaults = {
+const svgDefaults: Record<string, unknown> = {
 	'xmlns': 'http://www.w3.org/2000/svg',
 	'xmlns:xlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
@@ -91,11 +43,6 @@ let customisationAliases = {};
 });
 
 /**
- * Storage for icons referred by name
- */
-const storage: Record<string, Required<IconifyIconData>> = Object.create(null);
-
-/**
  * Interface for inline style
  */
 type VStyleObject = Record<string, unknown>;
@@ -117,27 +64,18 @@ function assertNever(value: never) {
 }
 
 /**
- * IconifyIcon component
+ * Render icon
  */
-const IconifyIcon = (
-	inline: boolean,
-	props: Record<string, unknown>,
-	context
+export const render = (
+	// Icon must be validated before calling this function
+	icon: Required<IconifyIcon>,
+
+	// Partial properties
+	props: IconProps
 ): VNode => {
-	const attribs = (props as unknown) as IconifyIconProps;
-
 	// Split properties
-	const icon =
-		typeof attribs.icon === 'string'
-			? storage[attribs.icon]
-			: fullIcon(attribs.icon);
-	if (!icon) {
-		return null;
-	}
-
 	const customisations = merge(
 		defaults,
-		{ inline },
 		props as IconifyIconCustomisations
 	) as FullIconCustomisations;
 	const componentProps = merge(svgDefaults);
@@ -177,6 +115,7 @@ const IconifyIcon = (
 
 	// Get element properties
 	let styleType: typeof style.type;
+	let styleString: string;
 	for (let key in props) {
 		const value = props[key];
 		switch (key) {
@@ -199,18 +138,25 @@ const IconifyIcon = (
 				}
 				break;
 
-			// Color: copy to style
+			// Color: append to style
 			case 'color':
 				styleType = style.type;
 				switch (styleType) {
 					case 'string':
+						styleString = (style as VStyleAsString).style;
 						(style as VStyleAsString).style =
-							'color: ' + value + '; ' + style.style;
+						styleString +
+						(styleString.length > 0 && styleString.trim().slice(-1) !== ';'
+							? ';'
+							: '') +
+						'color: ' +
+						value +
+						'; ';
 						hasStyle = true;
 						break;
 
 					case 'array':
-						(style as VStyleAsArray).style.unshift({
+						(style as VStyleAsArray).style.push({
 							color: value,
 						});
 						break;
@@ -293,37 +239,3 @@ const IconifyIcon = (
 	// Render icon
 	return h('svg', componentProps);
 };
-
-// Export component
-export const Icon = IconifyIcon.bind(null, false);
-export const InlineIcon = IconifyIcon.bind(null, true);
-
-/**
- * Add icon to storage
- */
-export function addIcon(name: string, data: IconifyIconData) {
-	storage[name] = fullIcon(data);
-}
-
-/**
- * Add collection to storage, allowing to call icons by name
- *
- * @param data Icon set
- * @param prefix Optional prefix to add to icon names, true if prefix from icon set should be used.
- */
-export function addCollection(
-	data: IconifyJSON,
-	prefix?: string | boolean
-): void {
-	const iconPrefix: string =
-		typeof prefix === 'string'
-			? prefix
-			: prefix !== false && typeof data.prefix === 'string'
-			? data.prefix + ':'
-			: '';
-	parseIconSet(data, (name, icon) => {
-		if (icon !== null) {
-			storage[iconPrefix + name] = icon;
-		}
-	});
-}
