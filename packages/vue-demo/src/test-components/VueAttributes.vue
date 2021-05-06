@@ -3,7 +3,7 @@
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
 			Icon with color (red):
-			<InlineIcon :icon="icon" color="red" />
+			<Icon :icon="icon" color="red" />
 		</div>
 		<div>
 			Icon size (2em):
@@ -11,19 +11,19 @@
 		</div>
 		<div>
 			Icon style as string (red):
-			<Icon icon="admin-users" style="color: red;" />
+			<Icon icon="admin-users" style="color: red" />
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
 			<Icon
 				icon="admin-users"
-				style="vertical-align: 0.25em;"
+				style="vertical-align: 0.25em"
 				:inline="true"
 			/>
 		</div>
 		<div>
 			Inline icon with bound style as object (purple, 2em, no alignment):
-			<InlineIcon
+			<Icon
 				icon="admin-users"
 				v-bind:style="icon1StyleObj"
 				color="green"
@@ -31,7 +31,7 @@
 		</div>
 		<div>
 			Inline icon with bound style as string (purple, 2em, no alignment):
-			<InlineIcon
+			<Icon
 				icon="admin-users"
 				v-bind:style="icon1StyleStr"
 				color="green"
@@ -39,7 +39,7 @@
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
-			<InlineIcon
+			<Icon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, fontSizeStyleObj2]"
 				color="green"
@@ -47,7 +47,7 @@
 		</div>
 		<div>
 			Dynamic style (red / green, shadow):
-			<InlineIcon
+			<Icon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
 				v-on:click="
@@ -58,7 +58,7 @@
 		</div>
 		<div>
 			Dynamic style (shadow / color):
-			<InlineIcon
+			<Icon
 				icon="admin-users"
 				v-bind:style="[
 					showShadow ? boxShadowStyleObj : dynamicStyleObj,
@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts">
-import { Icon, InlineIcon, addIcon } from '@iconify/vue';
+import { Icon, addIcon } from '@iconify/vue/dist/offline';
 import adminUsers from '@iconify-icons/dashicons/admin-users';
 
 addIcon('admin-users', adminUsers);
@@ -86,7 +86,6 @@ addIcon('admin-users', adminUsers);
 export default {
 	components: {
 		Icon,
-		InlineIcon,
 	},
 	data: () => {
 		return {

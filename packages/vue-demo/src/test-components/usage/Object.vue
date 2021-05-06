@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Icon } from '@iconify/vue';
+import { Icon } from '@iconify/vue/dist/offline';
 import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
 export default {

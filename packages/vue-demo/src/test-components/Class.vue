@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Icon } from '@iconify/vue';
+import { Icon } from '@iconify/vue/dist/offline';
 
 export default {
 	components: {

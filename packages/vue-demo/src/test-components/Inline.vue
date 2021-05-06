@@ -4,17 +4,14 @@
 		<div>
 			Block icons (behaving like image):
 			<Icon icon="experiment2" />
-			<InlineIcon icon="experiment2" :inline="false" />
 		</div>
 		<div>
 			Inline icons (behaving line text / icon font):
-			<InlineIcon icon="experiment2" />
 			<Icon icon="experiment2" :inline="true" />
 		</div>
 		<div>
 			Using "vertical-align: 0" to override inline attribute:
-			<inline-icon icon="experiment2" :style="{ verticalAlign: 0 }" />
-			<icon
+			<Icon
 				icon="experiment2"
 				:style="{ verticalAlign: 0 }"
 				:inline="true"
@@ -24,14 +21,11 @@
 </template>
 
 <script lang="ts">
-import { Icon, InlineIcon } from '@iconify/vue';
+import { Icon } from '@iconify/vue/dist/offline';
 
 export default {
 	components: {
-		// Component with inline="false" by default
 		Icon,
-		// Component with inline="true" by default
-		InlineIcon,
 	},
 };
 </script>

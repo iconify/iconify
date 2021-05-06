@@ -9,7 +9,7 @@
 			Red color:
 			<Icon icon="experiment" color="red" />
 			<Icon icon="experiment" :style="{ color: 'red' }" />
-			<Icon icon="experiment" style="color: red;" />
+			<Icon icon="experiment" style="color: red" />
 			<Icon icon="experiment" :style="redIcon" />
 		</div>
 		<div>
@@ -17,7 +17,7 @@
 			<Icon icon="experiment" height="40" />
 			<Icon icon="experiment" :width="40" />
 			<Icon icon="experiment" :style="{ fontSize: '40px' }" />
-			<Icon icon="experiment" style="font-size: 40px;" />
+			<Icon icon="experiment" style="font-size: 40px" />
 			<Icon icon="experiment" :style="bigIcon" />
 		</div>
 		<div>
@@ -28,14 +28,14 @@
 				icon="experiment"
 				:style="{ color: 'red', fontSize: '40px' }"
 			/>
-			<Icon icon="experiment" style="color: red; font-size: 40px;" />
+			<Icon icon="experiment" style="color: red; font-size: 40px" />
 			<Icon icon="experiment" :style="[bigIcon, redIcon]" />
 		</div>
 	</section>
 </template>
 
 <script lang="ts">
-import { Icon } from '@iconify/vue';
+import { Icon } from '@iconify/vue/dist/offline';
 
 export default {
 	components: {

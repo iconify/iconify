@@ -1,9 +1,9 @@
 <template>
-	<Icon icon="customizer" height="20" :style="{ color: 'purple' }" />
+	<Icon icon="customizer" height="20" :style="{ color: 'blue' }" />
 </template>
 
-<script>
-import { Icon, addIcon } from '@iconify/vue';
+<script lang="ts">
+import { Icon, addIcon } from '@iconify/vue/dist/offline';
 import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
 addIcon('customizer', adminCustomizer);
