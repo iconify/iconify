@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"rootDir": "./src",
 		"outDir": "./lib",
-		"target": "ES2019",
+		"target": "ESNext",
 		"module": "ESNext",
 		"declaration": true,
 		"sourceMap": false,

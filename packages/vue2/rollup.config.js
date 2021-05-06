@@ -1,78 +1,45 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import buble from '@rollup/plugin-buble';
-// import { terser } from 'rollup-plugin-terser';
 
-const name = 'IconifyIcon';
+const names = ['offline', 'iconify'];
+const component = 'Icon';
 
-// Module footer
-const footer = `
-// Export as ES module
-if (typeof exports === 'object') {
-	try {
-		exports.__esModule = true;
-		exports.default = ${name};
-	} catch (err) {
-	}
-}`;
+const config = [];
 
-// Export configuration
-const config = [
-	// ES Module
-	{
+// Write all packages
+names.forEach((name) => {
+	// ES module
+	config.push({
 		input: `lib/${name}.js`,
 		output: [
 			{
-				file: `dist/${name}.esm.js`,
+				file: `dist/${name}.mjs`,
 				format: 'esm',
 				exports: 'named',
 			},
 		],
+		external: ['vue'],
 		plugins: [resolve(), commonjs(), buble()],
-	},
-	// UMD Module
-	{
-		input: `lib/${name}.js`,
-		output: [
-			{
-				file: `dist/${name}.umd.js`,
-				format: 'umd',
-				name,
-				exports: 'named',
-			},
-		],
-		plugins: [resolve(), commonjs(), buble()],
-	},
-	/*
-	// Web and module
-	// 	"unpkg": "dist/IconifyIcon.min.js",
+	});
 
-	{
+	// UMD module
+	config.push({
 		input: `lib/${name}.js`,
 		output: [
 			{
 				file: `dist/${name}.js`,
-				name,
-				format: 'iife',
-				footer,
-			},
-		],
-		plugins: [resolve(), commonjs(), buble()],
-	},
-	// Web
-	{
-		input: `lib/${name}.js`,
-		output: [
-			{
-				file: `dist/${name}.min.js`,
-				name,
+				format: 'umd',
+				name: component,
 				exports: 'named',
-				format: 'iife',
+				globals: {
+					vue: 'Vue',
+				},
 			},
 		],
-		plugins: [resolve(), commonjs(), buble(), terser()],
-	},
-	*/
-];
+		external: ['vue'],
+		plugins: [resolve(), commonjs(), buble()],
+	});
+});
 
 export default config;

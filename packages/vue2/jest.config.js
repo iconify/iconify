@@ -6,4 +6,5 @@ module.exports = {
 		'^.+\\.js$': '<rootDir>/node_modules/babel-jest',
 	},
 	collectCoverage: false,
+	testMatch: ['**/tests/**/*.test.js'],
 };

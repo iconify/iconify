@@ -2,21 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 
-// const packagesDir = path.dirname(path.dirname(__dirname)) + '/packages';
+const packagesDir = path.dirname(__dirname);
 
 // List of commands to run
 const commands = [];
 
 // Parse command line
 const compile = {
-	// core: false,
+	core: false,
 	lib: true,
 	dist: true,
 	api: true,
 };
-
-// Disable compiling dependencies because project was moved to archive
-/*
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
 		return;
@@ -79,7 +76,6 @@ if (compile.core) {
 		cwd: packagesDir + '/core',
 	});
 }
-*/
 
 // Compile other packages
 Object.keys(compile).forEach((key) => {

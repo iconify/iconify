@@ -15,13 +15,14 @@
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose",
+		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"pretest": "npm run build",
 		"test": "jest"
 	},
-	"main": "dist/IconifyIcon.umd.js",
-	"module": "dist/IconifyIcon.esm.js",
-	"types": "dist/IconifyIcon.d.ts",
+	"main": "dist/iconify.js",
+	"module": "dist/iconify.mjs",
+	"types": "dist/iconify.d.ts",
 	"devDependencies": {
 		"@iconify/core": "^1.0.0-rc.3",
 		"@microsoft/api-extractor": "^7.15.1",
