@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon as OfflineIcon } from '@iconify/react/dist/offline';
-import { Icon as FullIcon } from '@iconify/react/dist/iconify';
+import { Icon as FullIcon } from '@iconify/react';
 
 export function InlineDemo() {
 	return (

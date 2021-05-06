@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@iconify/react/dist/iconify';
+import { Icon } from '@iconify/react';
 
 export function FullUsageDemo() {
 	return (

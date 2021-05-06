@@ -83,7 +83,7 @@ export function render(
 				if (typeof value === 'string') {
 					customisations[key] = rotateFromString(value);
 				} else if (typeof value === 'number') {
-					componentProps[key] = value;
+					customisations[key] = value;
 				}
 				break;
 

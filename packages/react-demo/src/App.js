@@ -7,7 +7,7 @@ import {
 	addIcon as addOnlineIcon,
 	addCollection as addOnlineCollection,
 	disableCache,
-} from '@iconify/react/dist/iconify';
+} from '@iconify/react';
 import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
 import playIcon from '@iconify-icons/mdi-light/play';
 
@@ -31,7 +31,7 @@ addOfflineIcon('demo', presentationPlay);
 // Add 'mdi-light:play' as 'demo' for full module
 addOnlineIcon('demo', playIcon);
 
-// Add custom icon as 'experiment'
+// Add different custom icons as 'experiment2' for offline and online modes
 addOfflineIcon('experiment2', {
 	width: 16,
 	height: 16,

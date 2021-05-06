@@ -1,5 +1,5 @@
 import React from 'react';
-import { InlineIcon } from '@iconify/react/dist/iconify';
+import { InlineIcon } from '@iconify/react';
 import { TestIcons, toggleTest } from './TestIcons';
 
 export function TestsFullOffline() {

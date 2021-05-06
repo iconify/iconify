@@ -4,7 +4,7 @@
 		addIcon as addOnlineIcon,
 		addCollection as addOnlineCollection,
 		disableCache,
-	} from '@iconify/svelte/dist/iconify';
+	} from '@iconify/svelte';
 
 	import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
 	import playIcon from '@iconify-icons/mdi-light/play';

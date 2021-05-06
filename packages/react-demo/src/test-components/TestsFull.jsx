@@ -1,5 +1,5 @@
 import React from 'react';
-import { InlineIcon, addAPIProvider, _api } from '@iconify/react/dist/iconify';
+import { InlineIcon, addAPIProvider, _api } from '@iconify/react';
 import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { TestIcons, toggleTest } from './TestIcons';
 import playIcon from '@iconify-icons/mdi-light/map-marker';

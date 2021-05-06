@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"declaration": true,
 		"declarationMap": true,
-		"sourceMap": true,
+		"sourceMap": false,
 		"composite": true,
 		"strict": true,
 		"moduleResolution": "node",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@iconify/react/dist/iconify';
+import { Icon } from '@iconify/react';
 import accountIcon from '@iconify-icons/mdi-light/account';
 import alertIcon from '@iconify-icons/mdi-light/alert';
 

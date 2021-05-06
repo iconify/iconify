@@ -288,22 +288,6 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	}
 }
 
-/*
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-*/
-
 /**
  * Function to get icon status
  */
