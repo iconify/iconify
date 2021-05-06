@@ -53,12 +53,12 @@ Iconify API provides icon data to Iconify SVG framework and other implementation
 
 There are several Iconify implementations included in this repository:
 
-| Implementation                                         | Usage         | with API | without API |
-| ------------------------------------------------------ | ------------- | :------: | :---------: |
-| [SVG Framework](./packages/iconify/)                   | HTML          |    +     |      +      |
-| [React component](./packages/react/)                   | React         |    +     |      +      |
-| [Vue component](./packages/vue/)                       | Vue           |    -     |      +      |
-| [Svelte component](./packages/svelte/)                 | Svelte/Sapper |    +     |      +      |
+| Implementation                         | Usage         | with API | without API |
+| -------------------------------------- | ------------- | :------: | :---------: |
+| [SVG Framework](./packages/iconify/)   | HTML          |    +     |      +      |
+| [React component](./packages/react/)   | React         |    +     |      +      |
+| [Vue component](./packages/vue/)       | Vue           |    +     |      +      |
+| [Svelte component](./packages/svelte/) | Svelte/Sapper |    +     |      +      |
 
 Other packages:
 
