@@ -23,7 +23,7 @@ const ignorePeers = {
 };
 
 // Ignore bugged modules
-function canInstall(name) {
+function canInstall(name, currentPackage) {
 	/*
 	// Due to a bug in rollup 2.x, rollup and its modules could not be updated. Fixed in 2.26.8!
 	if (name.split('-').shift() === 'rollup') {
@@ -36,12 +36,57 @@ function canInstall(name) {
 	return true;
 }
 
-// Special tags instead of @latest
-const specialTags = {
-	'vue': 'next',
-	'vue-jest': 'next',
-	'@vue/test-utils': 'next',
-};
+// Tag to use for installing package
+function getTag(name, currentPackage, currentVersion) {
+	const parts = currentPackage.split('-');
+	const currentPackage1 = parts.shift();
+
+	switch (name) {
+		case 'vue':
+			switch (currentPackage1) {
+				case '@iconify/vue':
+					return '@next';
+
+				case '@iconify/vue2':
+					return '@2';
+
+				default:
+					return null;
+			}
+
+		case 'vue-jest':
+			switch (currentPackage1) {
+				case '@iconify/vue':
+					return '@next';
+
+				case '@iconify/vue2':
+					return '@3';
+
+				default:
+					return null;
+			}
+
+		case '@vue/test-utils':
+			switch (currentPackage1) {
+				case '@iconify/vue':
+					return '@next';
+
+				case '@iconify/vue2':
+					return '@1';
+
+				default:
+					return null;
+			}
+	}
+
+	// Do not change major version for Vue 2 packages
+	if (currentPackage1 === '@iconify/vue2') {
+		const parts = currentVersion.split('.');
+		return '@' + parts.shift();
+	}
+
+	return '@latest';
+}
 
 // Update modes
 const modes = {
@@ -147,6 +192,7 @@ function next() {
 		const packageJSON = JSON.parse(
 			fs.readFileSync(packagesDir + '/' + dir + '/package.json', 'utf8')
 		);
+		const packageName = packageJSON.name;
 
 		// Get list of packages to ignore
 		let ignoreList = localPackages.slice(0);
@@ -169,7 +215,9 @@ function next() {
 			}
 
 			const packages = Object.keys(packageJSON[prop]).filter(
-				(item) => canInstall(item) && ignoreList.indexOf(item) === -1
+				(item) =>
+					canInstall(item, packageName) &&
+					ignoreList.indexOf(item) === -1
 			);
 			if (!packages.length) {
 				return;
@@ -181,12 +229,14 @@ function next() {
 				'npm',
 				['install', item.cmd].concat(
 					packages.map((item) => {
-						return (
-							item +
-							(specialTags[item] === void 0
-								? '@latest'
-								: '@' + specialTags[item])
-						);
+						const currentVersion = packageJSON[prop][item];
+						const tag = getTag(item, packageName, currentVersion);
+						if (typeof tag !== 'string') {
+							throw new Error(
+								`Cannot get tag for package "${item}" used in "${packageName}"`
+							);
+						}
+						return item + tag;
 					})
 				)
 			);
