@@ -1,5 +1,5 @@
-import type { IconifyIcon } from '@iconify/types';
-import type { IconifyIconCustomisations as IconCustomisations } from '@iconify/core/lib/customisations';
+import { IconifyIcon } from '@iconify/types';
+import { IconifyIconCustomisations as IconCustomisations } from '@iconify/core/lib/customisations';
 
 // Allow rotation to be string
 /**

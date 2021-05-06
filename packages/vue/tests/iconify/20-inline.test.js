@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { Icon } from '../../dist/offline';
+import { Icon } from '../../dist/iconify';
 
 const iconData = {
 	body:

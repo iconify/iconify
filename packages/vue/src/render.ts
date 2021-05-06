@@ -1,8 +1,9 @@
-import type { VNode } from 'vue';
-import { h } from 'vue';
-import type { IconifyIcon } from '@iconify/types';
-import type { FullIconCustomisations } from '@iconify/core/lib/customisations';
-import { defaults } from '@iconify/core/lib/customisations';
+import { h, VNode } from 'vue';
+import { IconifyIcon } from '@iconify/types';
+import {
+	FullIconCustomisations,
+	defaults,
+} from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
@@ -11,7 +12,7 @@ import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
 import { merge } from '@iconify/core/lib/misc/merge';
-import type { IconifyIconCustomisations, IconProps } from './props';
+import { IconifyIconCustomisations, IconProps } from './props';
 
 /**
  * Default SVG attributes
@@ -28,8 +29,8 @@ const svgDefaults: Record<string, unknown> = {
  * In Vue 'v-' properties are reserved, so v-align and v-flip must be renamed
  */
 let customisationAliases = {};
-['horizontal', 'vertical'].forEach((prefix) => {
-	['Align', 'Flip'].forEach((suffix) => {
+['horizontal', 'vertical'].forEach(prefix => {
+	['Align', 'Flip'].forEach(suffix => {
 		const attr = prefix.slice(0, 1) + suffix;
 		// vertical-align
 		customisationAliases[prefix + '-' + suffix.toLowerCase()] = attr;
@@ -44,24 +45,9 @@ let customisationAliases = {};
 
 /**
  * Interface for inline style
+ * Support for strings and arrays has been removed.
  */
-type VStyleObject = Record<string, unknown>;
-interface VStyleAsString {
-	type: 'string';
-	style: string;
-}
-interface VStyleAsArray {
-	type: 'array';
-	style: VStyleObject[];
-}
-type VStyle = VStyleAsString | VStyleAsArray;
-
-/**
- * TypeScript guard, never used
- */
-function assertNever(value: never) {
-	// Do nothing
-}
+type VStyle = Record<string, unknown>;
 
 /**
  * Render icon
@@ -81,41 +67,12 @@ export const render = (
 	const componentProps = merge(svgDefaults);
 
 	// Copy style
-	let style: VStyle;
-	let hasStyle = true;
-	if (typeof props.style === 'string') {
-		// String: copy it
-		style = {
-			type: 'string',
-			style: props.style,
-		};
-	} else if (
-		typeof props.style === 'object' &&
-		props.style instanceof Array
-	) {
-		// Array of objects
-		style = {
-			type: 'array',
-			style: props.style.slice(0),
-		};
-	} else if (typeof props.style === 'object' && props.style !== null) {
-		// Object
-		style = {
-			type: 'array',
-			style: [props.style as VStyleObject],
-		};
-	} else {
-		// No style
-		style = {
-			type: 'string',
-			style: '',
-		};
-		hasStyle = false;
-	}
+	let style: VStyle =
+		typeof props.style === 'object' && !(props.style instanceof Array)
+			? merge(props.style as VStyle)
+			: {};
 
 	// Get element properties
-	let styleType: typeof style.type;
-	let styleString: string;
 	for (let key in props) {
 		const value = props[key];
 		switch (key) {
@@ -138,32 +95,9 @@ export const render = (
 				}
 				break;
 
-			// Color: append to style
+			// Color: override style
 			case 'color':
-				styleType = style.type;
-				switch (styleType) {
-					case 'string':
-						styleString = (style as VStyleAsString).style;
-						(style as VStyleAsString).style =
-						styleString +
-						(styleString.length > 0 && styleString.trim().slice(-1) !== ';'
-							? ';'
-							: '') +
-						'color: ' +
-						value +
-						'; ';
-						hasStyle = true;
-						break;
-
-					case 'array':
-						(style as VStyleAsArray).style.push({
-							color: value,
-						});
-						break;
-
-					default:
-						assertNever(styleType);
-				}
+				style.color = value;
 				break;
 
 			// Rotation as string
@@ -171,7 +105,7 @@ export const render = (
 				if (typeof value === 'string') {
 					customisations[key] = rotateFromString(value);
 				} else if (typeof value === 'number') {
-					componentProps[key] = value;
+					customisations[key] = value;
 				}
 				break;
 
@@ -203,24 +137,12 @@ export const render = (
 		componentProps[key] = item.attributes[key];
 	}
 
-	if (item.inline) {
-		styleType = style.type;
-		switch (styleType) {
-			case 'string':
-				(style as VStyleAsString).style =
-					'vertical-align: -0.125em; ' + style.style;
-				hasStyle = true;
-				break;
-
-			case 'array':
-				(style as VStyleAsArray).style.unshift({
-					verticalAlign: '-0.125em',
-				});
-				break;
-
-			default:
-				assertNever(styleType);
-		}
+	if (
+		item.inline &&
+		style.verticalAlign === void 0 &&
+		style['vertical-align'] === void 0
+	) {
+		style.verticalAlign = '-0.125em';
 	}
 
 	// Counter for ids based on "id" property to render icons consistently on server and client
@@ -232,8 +154,8 @@ export const render = (
 		item.body,
 		id ? () => id + '-' + localCounter++ : 'iconify-vue-'
 	);
-	if (hasStyle) {
-		componentProps['style'] = style.style;
+	if (Object.keys(style).length > 0) {
+		componentProps['style'] = style;
 	}
 
 	// Render icon

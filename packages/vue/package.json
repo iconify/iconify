@@ -15,7 +15,8 @@
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
-		"build:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"pretest": "npm run build",
 		"test": "jest"
 	},

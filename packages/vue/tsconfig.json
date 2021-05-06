@@ -9,7 +9,6 @@
 		"strict": false,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"noLib": false
+		"forceConsistentCasingInFileNames": true
 	}
 }

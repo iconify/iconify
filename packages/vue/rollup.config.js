@@ -2,7 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import buble from '@rollup/plugin-buble';
 
-const names = ['offline']; //, 'iconify'];
+const names = ['offline', 'iconify'];
 const component = 'Icon';
 
 const config = [];
