@@ -14,7 +14,6 @@ import { setAPIModule } from './modules';
  * Iconify API functions
  */
 export interface IconifyAPIFunctions {
-	/* Scan DOM */
 	/**
 	 * Load icons
 	 */
@@ -23,7 +22,6 @@ export interface IconifyAPIFunctions {
 		callback?: IconifyIconLoaderCallback
 	) => IconifyIconLoaderAbort;
 
-	/* API stuff */
 	/**
 	 * Add API provider
 	 */
@@ -60,6 +58,13 @@ export interface IconifyAPIInternalFunctions {
 	 * Set API module
 	 */
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
+
+	/**
+	 * Optional setFetch (should be imported from ./modules/fetch if fetch is used)
+	 *
+	 * Used to set custom fetch function, such as one provided by cross-fetch, making fetch usable on server
+	 */
+	setFetch?: (item: typeof fetch) => void;
 }
 
 export const APIInternalFunctions: IconifyAPIInternalFunctions = {

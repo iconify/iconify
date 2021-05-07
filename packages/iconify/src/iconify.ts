@@ -114,7 +114,6 @@ export interface IconifyGlobal
 		IconifyBrowserCacheFunctions,
 		IconifyAPIFunctions {
 	_api: IconifyAPIInternalFunctions;
-	setNodeFetch: (nodeFetch: typeof fetch) => void;
 }
 
 /**
@@ -173,7 +172,7 @@ setAPIModule('', getAPIModule(getAPIConfig));
 /**
  * Function to enable node-fetch for getting icons on server side
  */
-Iconify.setNodeFetch = (nodeFetch: typeof fetch) => {
+Iconify._api.setFetch = (nodeFetch: typeof fetch) => {
 	setFetch(nodeFetch);
 	if (getAPIModule !== getFetchAPIModule) {
 		getAPIModule = getFetchAPIModule;
