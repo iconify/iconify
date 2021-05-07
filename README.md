@@ -57,7 +57,8 @@ There are several Iconify implementations included in this repository:
 | -------------------------------------- | ------------- | :------: | :---------: |
 | [SVG Framework](./packages/iconify/)   | HTML          |    +     |      +      |
 | [React component](./packages/react/)   | React         |    +     |      +      |
-| [Vue component](./packages/vue/)       | Vue           |    +     |      +      |
+| [Vue 3 component](./packages/vue/)     | Vue 3         |    +     |      +      |
+| [Vue 2 component](./packages/vue2/)    | Vue 2         |    +     |      +      |
 | [Svelte component](./packages/svelte/) | Svelte/Sapper |    +     |      +      |
 
 Other packages:
@@ -66,7 +67,8 @@ Other packages:
 -   [Iconify core](./packages/core/) - common files used by various implementations.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
--   [Vue demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Vue 3 demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Vue 2 demo](./packages/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
@@ -77,8 +79,6 @@ Unfortunately Lerna does not support several versions of the same package. Becau
 
 Legacy packages:
 
--   [Vue 2 component](./archive/vue2/) - Vue 2 component. It has been replaced by [Vue 3 component](./packages/vue/).
--   [Vue 2 demo](./archive/vue2-demo/) - demo for Vue 2 component. Run `npm serve` to start demo.
 -   [React with API](./archive/react-with-api/) - React component with API support. It has been merged with [`react` package](./packages/react/) in newer version.
 -   [React with API demo](./archive/react-demo-with-api/) - demo for legacy `react-with-api` package. Run `npm start` to start demo.
 
@@ -120,4 +120,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 licence. You may select, a
 This licence does not apply to icons. Icons are released under different licences, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free licence.
 
-© 2020 Iconify OÜ
+© 2020, 2021 Iconify OÜ
