@@ -204,13 +204,13 @@ setAPIModule('', getAPIModule(getAPIConfig));
 /**
  * Function to enable node-fetch for getting icons on server side
  */
-export function setNodeFetch(nodeFetch: typeof fetch) {
+_api.setFetch = (nodeFetch: typeof fetch) => {
 	setFetch(nodeFetch);
 	if (getAPIModule !== getFetchAPIModule) {
 		getAPIModule = getFetchAPIModule;
 		setAPIModule('', getAPIModule(getAPIConfig));
 	}
-}
+};
 
 /**
  * Browser stuff

@@ -24,7 +24,8 @@
 	"module": "dist/iconify.mjs",
 	"types": "dist/iconify.d.ts",
 	"devDependencies": {
-		"@iconify/core": "^1.0.0-rc.3",
+		"@iconify/core": "^1.0.0",
+		"@iconify/types": "^1.0.6",
 		"@microsoft/api-extractor": "^7.15.1",
 		"@rollup/plugin-buble": "^0.21.3",
 		"@rollup/plugin-commonjs": "^18.1.0",
@@ -41,5 +42,8 @@
 		"vue": "^2.6.12",
 		"vue-jest": "^3.0.7",
 		"vue-template-compiler": "^2.6.12"
+	},
+	"peerDependencies": {
+		"vue": "2.x"
 	}
 }

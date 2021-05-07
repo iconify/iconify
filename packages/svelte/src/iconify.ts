@@ -26,4 +26,4 @@ export {
 
 export { calculateSize, replaceIDs } from './functions';
 
-export { loadIcons, addAPIProvider, _api, setNodeFetch } from './functions';
+export { loadIcons, addAPIProvider, _api } from './functions';

@@ -28,6 +28,7 @@
 	"devDependencies": {
 		"@babel/preset-env": "^7.14.0",
 		"@iconify/core": "^1.0.0-rc.3",
+		"@iconify/types": "^1.0.6",
 		"@microsoft/api-extractor": "^7.15.0",
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
