@@ -140,4 +140,35 @@ describe('Passing attributes', () => {
 		expect(html).not.toContain('viewBox="0 0 0 0"');
 		expect(html).not.toContain('preserveAspectRatio="none"');
 	});
+
+	test('class', () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" class="test-icon" />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		expect(wrapper.html()).toContain('class="test-icon"');
+	});
+
+	test('class object', () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" :class="{active: isActive, iconify: true}" />`,
+			data() {
+				return {
+					icon: iconData,
+					isActive: true,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		expect(wrapper.html()).toContain('class="active iconify"');
+	});
 });
