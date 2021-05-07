@@ -3,16 +3,16 @@
 		<h1>Inline (components/Inline.vue)</h1>
 		<div>
 			Block icon (behaving like image):
-			<iconify-icon icon="experiment2" />
+			<Icon icon="experiment2" />
 		</div>
 		<div>
 			Inline icon (behaving line text / icon font):
-			<iconify-icon icon="experiment2" :inline="true" />
+			<Icon icon="experiment2" :inline="true" />
 		</div>
 		<div>
 			Using "vertical-align: 0" to override inline attribute:
-			<iconify-icon icon="experiment2" :style="{ verticalAlign: 0 }" />
-			<iconify-icon
+			<Icon icon="experiment2" :style="{ verticalAlign: 0 }" />
+			<Icon
 				icon="experiment2"
 				:style="{ verticalAlign: 0 }"
 				:inline="true"
@@ -23,11 +23,11 @@
 
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue2';
 
 export default Vue.extend({
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 });
 </script>

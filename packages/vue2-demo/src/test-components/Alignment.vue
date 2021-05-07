@@ -3,107 +3,72 @@
 		<h1>Alignment (components/Alignment.vue)</h1>
 		<div>
 			<p>Icon with correct width/heigh ratio:</p>
-			<iconify-icon icon="experiment" />
+			<Icon icon="experiment" />
 		</div>
 		<div>
 			<p>Bad width/height ratio, default alignment (slice = false):</p>
-			<iconify-icon icon="experiment" width="2em" height="1em" />
-			<iconify-icon icon="experiment" width="1em" height="2em" />
+			<Icon icon="experiment" width="2em" height="1em" />
+			<Icon icon="experiment" width="1em" height="2em" />
 		</div>
 		<div>
 			<p>Slice:</p>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				:slice="true"
-			/>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				align="slice"
-			/>
+			<Icon icon="experiment" width="2em" height="1em" :slice="true" />
+			<Icon icon="experiment" width="2em" height="1em" align="slice" />
 		</div>
 		<div>
 			<p>Slice:</p>
-			<iconify-icon
-				icon="experiment"
-				width="1em"
-				height="2em"
-				:slice="true"
-			/>
-			<iconify-icon
-				icon="experiment"
-				width="1em"
-				height="2em"
-				align="slice"
-			/>
+			<Icon icon="experiment" width="1em" height="2em" :slice="true" />
+			<Icon icon="experiment" width="1em" height="2em" align="slice" />
 		</div>
 		<div>
 			<p>Left:</p>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				hAlign="left"
-			/>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				h-align="left"
-			/>
-			<iconify-icon
+			<Icon icon="experiment" width="2em" height="1em" hAlign="left" />
+			<Icon icon="experiment" width="2em" height="1em" h-align="left" />
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				horizontalAlign="left"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				horizontal-align="left"
 			/>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				align="left"
-			/>
+			<Icon icon="experiment" width="2em" height="1em" align="left" />
 		</div>
 		<div>
 			<p>Left with slice:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				hAlign="left"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				h-align="left"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				horizontalAlign="left"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				horizontal-align="left"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
@@ -112,68 +77,53 @@
 		</div>
 		<div>
 			<p>Right:</p>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				hAlign="right"
-			/>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				h-align="right"
-			/>
-			<iconify-icon
+			<Icon icon="experiment" width="2em" height="1em" hAlign="right" />
+			<Icon icon="experiment" width="2em" height="1em" h-align="right" />
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				horizontalAlign="right"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				horizontal-align="right"
 			/>
-			<iconify-icon
-				icon="experiment"
-				width="2em"
-				height="1em"
-				align="right"
-			/>
+			<Icon icon="experiment" width="2em" height="1em" align="right" />
 		</div>
 		<div>
 			<p>Right with slice:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				hAlign="right"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				h-align="right"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				horizontalAlign="right"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				horizontal-align="right"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
@@ -182,55 +132,50 @@
 		</div>
 		<div>
 			<p>Top:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				verticalAlign="top"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				vertical-align="top"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				v-bind:v-align="'top'"
 			/>
-			<iconify-icon
-				icon="experiment"
-				width="1em"
-				height="2em"
-				align="top"
-			/>
+			<Icon icon="experiment" width="1em" height="2em" align="top" />
 		</div>
 		<div>
 			<p>Top with slice:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				verticalAlign="top"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				vertical-align="top"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				v-bind:v-align="'top'"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
@@ -240,55 +185,50 @@
 		</div>
 		<div>
 			<p>Bottom:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				verticalAlign="bottom"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				vertical-align="bottom"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="1em"
 				height="2em"
 				v-bind:v-align="'bottom'"
 			/>
-			<iconify-icon
-				icon="experiment"
-				width="1em"
-				height="2em"
-				align="bottom"
-			/>
+			<Icon icon="experiment" width="1em" height="2em" align="bottom" />
 		</div>
 		<div>
 			<p>Bottom with slice:</p>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				verticalAlign="bottom"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				vertical-align="bottom"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
 				v-bind:v-align="'bottom'"
 				:slice="true"
 			/>
-			<iconify-icon
+			<Icon
 				icon="experiment"
 				width="2em"
 				height="1em"
@@ -300,11 +240,11 @@
 
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue2';
 
 export default Vue.extend({
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 });
 </script>

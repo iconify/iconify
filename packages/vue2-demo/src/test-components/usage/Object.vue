@@ -1,14 +1,14 @@
 <template>
-	<iconify-icon :icon="icons.chart" height="20" :style="{ color: 'green' }" />
+	<Icon :icon="icons.chart" height="20" :style="{ color: 'green' }" />
 </template>
 
 <script>
-import IconifyIcon from '@iconify/vue';
+import { Icon } from '@iconify/vue2';
 import adminCustomizer from '@iconify-icons/dashicons/admin-customizer';
 
 export default {
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data() {
 		return {

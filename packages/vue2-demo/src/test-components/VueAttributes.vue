@@ -3,7 +3,7 @@
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
 			Icon with color (red):
-			<iconify-icon :icon="icon" color="red" :inline="true" />
+			<Icon :icon="icon" color="red" :inline="true" />
 		</div>
 		<div>
 			Icon size (2em):
@@ -11,13 +11,13 @@
 		</div>
 		<div>
 			Icon style as string (red):
-			<IconifyIcon icon="admin-users" style="color: red;" />
+			<IconifyIcon icon="admin-users" style="color: red" />
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
 			<IconifyIcon
 				icon="admin-users"
-				style="vertical-align: .25em;"
+				style="vertical-align: 0.25em"
 				:inline="true"
 			/>
 		</div>
@@ -84,14 +84,14 @@
 
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
-import IconifyIcon from '@iconify/vue';
+import { Icon, addIcon } from '@iconify/vue2';
 import adminUsers from '@iconify-icons/dashicons/admin-users';
 
-IconifyIcon.addIcon('admin-users', adminUsers);
+addIcon('admin-users', adminUsers);
 
 export default Vue.extend({
 	components: {
-		IconifyIcon,
+		Icon,
 	},
 	data: () => {
 		return {
@@ -124,7 +124,7 @@ export default Vue.extend({
 		};
 	},
 	methods: {
-		logReference: function() {
+		logReference: function () {
 			console.log('References:', this.$refs);
 		},
 	},
