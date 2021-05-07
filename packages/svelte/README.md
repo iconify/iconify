@@ -1,5 +1,7 @@
 # Iconify for Svelte
 
+Note: this documentation is for version 1.0. It has not been updated for 2.0 yet.
+
 Iconify for Svelte is not yet another icon component! There are many of them already.
 
 Iconify is the most versatile icon framework.

@@ -8,7 +8,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
-		"@iconify/react": "^1.1.4",
+		"@iconify/react": "^3.0.0-alpha.0",
 		"next": "^10.0.0",
 		"react": "17.0.1",
 		"react-dom": "17.0.1"

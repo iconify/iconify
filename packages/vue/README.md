@@ -1,5 +1,7 @@
 # Iconify for Vue
 
+Note: this documentation is for version 2.0. It has not been updated for 3.0 yet.
+
 Iconify for Vue is not yet another icon component! There are many of them already.
 
 Iconify is the most versatile icon framework.
