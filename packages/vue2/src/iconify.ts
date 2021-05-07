@@ -1,72 +1,292 @@
 import Vue, { CreateElement, VNode } from 'vue';
 import { ExtendedVue } from 'vue/types/vue';
-import { IconifyIcon, IconifyJSON } from '@iconify/types';
+import { IconifyJSON } from '@iconify/types';
+
+// Core
+import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import {
+	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-	IconifyIconSize,
 } from '@iconify/core/lib/customisations';
-import { fullIcon } from '@iconify/core/lib/icon';
-import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
 import {
+	IconifyStorageFunctions,
+	storageFunctions,
+	getIconData,
+	allowSimpleNames,
+} from '@iconify/core/lib/storage/functions';
+import {
+	IconifyBuilderFunctions,
+	builderFunctions,
+} from '@iconify/core/lib/builder/functions';
+import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
+
+// Modules
+import { coreModules } from '@iconify/core/lib/modules';
+
+// API
+import { API, IconifyAPIInternalStorage } from '@iconify/core/lib/api/';
+import {
+	IconifyAPIFunctions,
+	IconifyAPIInternalFunctions,
+	APIFunctions,
+	APIInternalFunctions,
+} from '@iconify/core/lib/api/functions';
+import {
+	setAPIModule,
+	IconifyAPIModule,
+	IconifyAPISendQuery,
+	IconifyAPIPrepareQuery,
+	GetIconifyAPIModule,
+} from '@iconify/core/lib/api/modules';
+import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
+import {
+	getAPIModule as getFetchAPIModule,
+	setFetch,
+} from '@iconify/core/lib/api/modules/fetch';
+import {
+	setAPIConfig,
+	PartialIconifyAPIConfig,
+	IconifyAPIConfig,
+	getAPIConfig,
+	GetAPIConfig,
+} from '@iconify/core/lib/api/config';
+import {
+	IconifyIconLoaderCallback,
+	IconifyIconLoaderAbort,
+} from '@iconify/core/lib/interfaces/loader';
+
+// Cache
+import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
+import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
+import {
+	IconifyBrowserCacheType,
+	IconifyBrowserCacheFunctions,
+} from '@iconify/core/lib/browser-storage/functions';
+
+// Properties
+import {
+	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
-	IconProps,
 } from './props';
+
+// Render SVG
 import { render } from './render';
 
 /**
- * Export stuff from props.ts
+ * Export required types
  */
-export { IconifyIconCustomisations, IconifyIconProps, IconProps };
-
-/**
- * Export types that could be used in component
- */
+// Function sets
 export {
-	IconifyIcon,
-	IconifyJSON,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
+	IconifyStorageFunctions,
+	IconifyBuilderFunctions,
+	IconifyBrowserCacheFunctions,
+	IconifyAPIFunctions,
+	IconifyAPIInternalFunctions,
 };
 
-/**
- * Storage for icons referred by name
- */
-const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
+// JSON stuff
+export { IconifyIcon, IconifyJSON, IconifyIconName };
+
+// Customisations
+export {
+	IconifyIconCustomisations,
+	IconifyIconSize,
+	IconifyHorizontalIconAlignment,
+	IconifyVerticalIconAlignment,
+	IconifyIconProps,
+	IconProps,
+};
+
+// API
+export {
+	IconifyAPIConfig,
+	IconifyIconLoaderCallback,
+	IconifyIconLoaderAbort,
+	IconifyAPIInternalStorage,
+	IconifyAPIModule,
+	GetAPIConfig,
+	IconifyAPIPrepareQuery,
+	IconifyAPISendQuery,
+	PartialIconifyAPIConfig,
+};
+
+/* Browser cache */
+export { IconifyBrowserCacheType };
 
 /**
- * Add icon to storage, allowing to call it by name
- *
- * @param name
- * @param data
+ * Enable and disable browser cache
  */
-export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = fullIcon(data);
+export const enableCache = (storage: IconifyBrowserCacheType) =>
+	toggleBrowserCache(storage, true);
+
+export const disableCache = (storage: IconifyBrowserCacheType) =>
+	toggleBrowserCache(storage, false);
+
+/* Storage functions */
+/**
+ * Check if icon exists
+ */
+export const iconExists = storageFunctions.iconExists;
+
+/**
+ * Get icon data
+ */
+export const getIcon = storageFunctions.getIcon;
+
+/**
+ * List available icons
+ */
+export const listIcons = storageFunctions.listIcons;
+
+/**
+ * Add one icon
+ */
+export const addIcon = storageFunctions.addIcon;
+
+/**
+ * Add icon set
+ */
+export const addCollection = storageFunctions.addCollection;
+
+/* Builder functions */
+/**
+ * Calculate icon size
+ */
+export const calculateSize = builderFunctions.calculateSize;
+
+/**
+ * Replace unique ids in content
+ */
+export const replaceIDs = builderFunctions.replaceIDs;
+
+/* API functions */
+/**
+ * Load icons
+ */
+export const loadIcons = APIFunctions.loadIcons;
+
+/**
+ * Add API provider
+ */
+export const addAPIProvider = APIFunctions.addAPIProvider;
+
+/**
+ * Export internal functions that can be used by third party implementations
+ */
+export const _api = APIInternalFunctions;
+
+/**
+ * Initialise stuff
+ */
+// Enable short names
+allowSimpleNames(true);
+
+// Set API
+coreModules.api = API;
+
+// Use Fetch API by default
+let getAPIModule: GetIconifyAPIModule = getFetchAPIModule;
+try {
+	if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+		// If window and document exist, attempt to load whatever module is available, otherwise use Fetch API
+		getAPIModule =
+			typeof fetch === 'function' && typeof Promise === 'function'
+				? getFetchAPIModule
+				: getJSONPAPIModule;
+	}
+} catch (err) {
+	//
+}
+setAPIModule('', getAPIModule(getAPIConfig));
+
+/**
+ * Function to enable node-fetch for getting icons on server side
+ */
+export function setNodeFetch(nodeFetch: typeof fetch) {
+	setFetch(nodeFetch);
+	if (getAPIModule !== getFetchAPIModule) {
+		getAPIModule = getFetchAPIModule;
+		setAPIModule('', getAPIModule(getAPIConfig));
+	}
 }
 
 /**
- * Add collection to storage, allowing to call icons by name
- *
- * @param data Icon set
- * @param prefix Optional prefix to add to icon names, true (default) if prefix from icon set should be used.
+ * Browser stuff
  */
-export function addCollection(
-	data: IconifyJSON,
-	prefix?: string | boolean
-): void {
-	const iconPrefix: string =
-		typeof prefix === 'string'
-			? prefix
-			: prefix !== false && typeof data.prefix === 'string'
-			? data.prefix + ':'
-			: '';
-	parseIconSet(data, (name, icon) => {
-		if (icon !== null) {
-			storage[iconPrefix + name] = icon;
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+	// Set cache and load existing cache
+	coreModules.cache = storeCache;
+	loadCache();
+
+	const _window = window;
+
+	// Load icons from global "IconifyPreload"
+	interface WindowWithIconifyPreload {
+		IconifyPreload: IconifyJSON[] | IconifyJSON;
+	}
+	if (
+		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
+		void 0
+	) {
+		const preload = ((_window as unknown) as WindowWithIconifyPreload)
+			.IconifyPreload;
+		const err = 'Invalid IconifyPreload syntax.';
+		if (typeof preload === 'object' && preload !== null) {
+			(preload instanceof Array ? preload : [preload]).forEach((item) => {
+				try {
+					if (
+						// Check if item is an object and not null/array
+						typeof item !== 'object' ||
+						item === null ||
+						item instanceof Array ||
+						// Check for 'icons' and 'prefix'
+						typeof item.icons !== 'object' ||
+						typeof item.prefix !== 'string' ||
+						// Add icon set
+						!addCollection(item)
+					) {
+						console.error(err);
+					}
+				} catch (e) {
+					console.error(err);
+				}
+			});
 		}
-	});
+	}
+
+	// Set API from global "IconifyProviders"
+	interface WindowWithIconifyProviders {
+		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
+	}
+	if (
+		((_window as unknown) as WindowWithIconifyProviders)
+			.IconifyProviders !== void 0
+	) {
+		const providers = ((_window as unknown) as WindowWithIconifyProviders)
+			.IconifyProviders;
+		if (typeof providers === 'object' && providers !== null) {
+			for (let key in providers) {
+				const err = 'IconifyProviders[' + key + '] is invalid.';
+				try {
+					const value = providers[key];
+					if (
+						typeof value !== 'object' ||
+						!value ||
+						value.resources === void 0
+					) {
+						continue;
+					}
+					if (!setAPIConfig(key, value)) {
+						console.error(err);
+					}
+				} catch (e) {
+					console.error(err);
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -77,27 +297,87 @@ export const Icon = Vue.extend({
 	// In Vue 2 style is still passed!
 	inheritAttrs: false,
 
+	// Set initial data
+	data() {
+		return {
+			// Mounted status
+			mounted: false,
+		};
+	},
+
+	beforeMount() {
+		// Current icon name
+		this._name = '';
+
+		// Loading
+		this._loadingIcon = null;
+
+		// Mark as mounted
+		this.mounted = true;
+	},
+
+	beforeDestroy() {
+		this.abortLoading();
+	},
+
+	methods: {
+		abortLoading() {
+			if (this._loadingIcon) {
+				this._loadingIcon.abort();
+				this._loadingIcon = null;
+			}
+		},
+		// Get data for icon to render or null
+		getIcon(icon) {
+			// Icon is an object
+			if (
+				typeof icon === 'object' &&
+				icon !== null &&
+				typeof icon.body === 'string'
+			) {
+				// Stop loading
+				this._name = '';
+				this.abortLoading();
+				return fullIcon(icon);
+			}
+
+			// Invalid icon?
+			if (typeof icon !== 'string') {
+				this.abortLoading();
+				return null;
+			}
+
+			// Load icon
+			const data = getIconData(icon);
+			if (data === null) {
+				// Icon needs to be loaded
+				if (!this._loadingIcon || this._loadingIcon.name !== icon) {
+					// New icon to load
+					this.abortLoading();
+					this._name = '';
+					this._loadingIcon = {
+						name: icon,
+						abort: API.loadIcons([icon], () => {
+							this.$forceUpdate();
+						}),
+					};
+				}
+				return null;
+			}
+
+			// Icon data is available
+			this._name = icon;
+			this.abortLoading();
+			return data;
+		},
+	},
+
 	// Render icon
 	render(createElement: CreateElement): VNode {
-		const props = this.$attrs;
-
-		// Check icon
-		const icon =
-			typeof props.icon === 'string'
-				? storage[props.icon]
-				: typeof props.icon === 'object'
-				? fullIcon(props.icon)
-				: null;
-
-		// Validate icon object
-		if (
-			icon === null ||
-			typeof icon !== 'object' ||
-			typeof icon.body !== 'string'
-		) {
+		function placeholder(slots): VNode {
 			// Render child nodes
-			if (this.$slots.default) {
-				const result = this.$slots.default;
+			if (slots.default) {
+				const result = slots.default;
 				if (result instanceof Array && result.length > 0) {
 					// If there are multiple child nodes, they must be wrapped in Vue 2
 					return result.length === 1
@@ -106,6 +386,19 @@ export const Icon = Vue.extend({
 				}
 			}
 			return (null as unknown) as VNode;
+		}
+		if (!this.mounted) {
+			return placeholder(this.$slots);
+		}
+
+		// Get icon data
+		const props = this.$attrs;
+		const icon = this.getIcon(props.icon);
+
+		// Validate icon object
+		if (!icon) {
+			// Render child nodes
+			return placeholder(this.$slots);
 		}
 
 		// Valid icon: render it
