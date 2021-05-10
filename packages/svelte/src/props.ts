@@ -1,11 +1,13 @@
 import type { IconifyIcon } from '@iconify/types';
-import type { IconifyIconCustomisations as IconCustomisations } from '@iconify/core/lib/customisations';
+import type { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/core/lib/customisations';
+
+export { RawIconCustomisations };
 
 // Allow rotation to be string
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisations = IconCustomisations & {
+export type IconifyIconCustomisations = RawIconCustomisations & {
 	rotate?: string | number;
 };
 

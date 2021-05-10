@@ -10,7 +10,13 @@ const iconData = {
 
 describe('Creating component', () => {
 	test('basic icon', () => {
-		const component = render(Icon, { icon: iconData });
+		const component = render(Icon, {
+			icon: iconData,
+			onLoad: () => {
+				// Should be called only for icons loaded from API
+				throw new Error('onLoad called for object!');
+			},
+		});
 		const node = component.container.querySelector('svg');
 		const html = node.parentNode.innerHTML;
 

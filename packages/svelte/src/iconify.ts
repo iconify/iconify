@@ -24,6 +24,6 @@ export {
 	addCollection,
 } from './functions';
 
-export { calculateSize, replaceIDs } from './functions';
+export { calculateSize, replaceIDs, buildIcon } from './functions';
 
 export { loadIcons, addAPIProvider, _api } from './functions';

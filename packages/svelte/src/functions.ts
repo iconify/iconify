@@ -17,6 +17,7 @@ import {
 	IconifyBuilderFunctions,
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
+import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
 
 // Modules
@@ -64,6 +65,7 @@ import type {
 
 // Properties
 import type {
+	RawIconCustomisations,
 	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -110,6 +112,9 @@ export {
 	IconifyAPISendQuery,
 	PartialIconifyAPIConfig,
 };
+
+// Builder functions
+export { RawIconCustomisations, IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
@@ -159,6 +164,11 @@ export const calculateSize = builderFunctions.calculateSize;
  * Replace unique ids in content
  */
 export const replaceIDs = builderFunctions.replaceIDs;
+
+/**
+ * Build SVG
+ */
+export const buildIcon = builderFunctions.buildIcon;
 
 /* API functions */
 /**
@@ -304,9 +314,17 @@ interface IconState {
 
 	// Loading status
 	loading: IconLoadingState | null;
+
+	// True when component has been destroyed
+	destroyed: boolean;
 }
 
 type IconStateCallback = () => void;
+
+/**
+ * Callback for when icon has been loaded (only triggered for icons loaded from API)
+ */
+export type IconifyIconOnLoad = (name: string) => void;
 
 /**
  * Check if component needs to be updated
@@ -314,7 +332,8 @@ type IconStateCallback = () => void;
 export function checkIconState(
 	icon: string | IconifyIcon,
 	state: IconState,
-	callback: IconStateCallback
+	callback: IconStateCallback,
+	onload?: IconifyIconOnLoad
 ): IconComponentData {
 	// Abort loading icon
 	function abortLoading() {
@@ -336,7 +355,7 @@ export function checkIconState(
 		return fullIcon(icon);
 	}
 
-	// Invalid icon?
+	// Invalid icon
 	if (typeof icon !== 'string') {
 		abortLoading();
 		return null;
@@ -359,7 +378,12 @@ export function checkIconState(
 	}
 
 	// Icon data is available
-	state.name = icon;
+	if (state.name !== icon) {
+		state.name = icon;
+		if (onload && !state.destroyed) {
+			onload(icon);
+		}
+	}
 	abortLoading();
 	return data;
 }

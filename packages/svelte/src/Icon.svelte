@@ -9,6 +9,9 @@
 
 		// Loading status
 		loading: null,
+
+		// Destroyed status
+		destroyed: false,
 	};
 
 	// Mounted status
@@ -23,7 +26,7 @@
 	// Generate data
 	$: {
 		counter;
-		data = mounted ? generateIcon(checkIconState($$props.icon, state, loaded), $$props) : null;
+		data = mounted ? generateIcon(checkIconState($$props.icon, state, loaded, $$props.onLoad), $$props) : null;
 	}
 
 	// Increase counter when loaded to force re-calculation of data
@@ -38,7 +41,7 @@
 
 	// Abort loading when component is destroyed
 	onDestroy(() => {
-		mounted = false;
+		state.destroyed = true;
 		if (state.loading) {
 			state.loading.abort();
 			state.loading = null;

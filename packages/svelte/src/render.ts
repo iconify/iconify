@@ -50,6 +50,7 @@ export function render(
 			// Properties to ignore
 			case 'icon':
 			case 'style':
+			case 'onLoad':
 				break;
 
 			// Flip as string: 'horizontal,vertical'

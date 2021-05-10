@@ -1,5 +1,10 @@
 import { replaceIDs } from './ids';
 import { calculateSize } from './calc-size';
+import { fullIcon, IconifyIcon } from '../icon';
+import { fullCustomisations } from '../customisations';
+import type { IconifyIconCustomisations } from '../customisations';
+import { iconToSVG } from '.';
+import type { IconifyIconBuildResult } from '.';
 
 /**
  * Interface for exported builder functions
@@ -11,6 +16,10 @@ export interface IconifyBuilderFunctions {
 		ratio: number,
 		precision?: number
 	) => string | number;
+	buildIcon: (
+		icon: IconifyIcon,
+		customisations: IconifyIconCustomisations
+	) => IconifyIconBuildResult;
 }
 
 /**
@@ -19,4 +28,7 @@ export interface IconifyBuilderFunctions {
 export const builderFunctions: IconifyBuilderFunctions = {
 	replaceIDs,
 	calculateSize,
+	buildIcon: (icon, customisations) => {
+		return iconToSVG(fullIcon(icon), fullCustomisations(customisations));
+	},
 };

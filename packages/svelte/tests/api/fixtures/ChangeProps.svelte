@@ -3,9 +3,11 @@
 
     export let icon;
     export let expose;
+    export let onLoad;
 
     const props = {
-        icon
+        icon,
+        onLoad
     };
 
     $: {

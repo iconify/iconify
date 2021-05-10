@@ -4,6 +4,7 @@
     export let icon1;
     export let icon2;
     export let expose;
+    export let onLoad;
 
     let icon = icon1;
 
@@ -15,4 +16,4 @@
         icon = icon2;
     }
 </script>
-<Icon icon={icon} />
+<Icon icon={icon} onLoad={onLoad} />
