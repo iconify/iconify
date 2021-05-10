@@ -13,7 +13,10 @@ export function merge<T>(item1: T, item2?: T, item3?: T): T {
 		const item = items[i];
 		if (typeof item === 'object' && item) {
 			for (const key in item) {
-				result[key] = (item as MergeObject)[key];
+				const value = (item as MergeObject)[key];
+				if (value !== void 0) {
+					result[key] = value;
+				}
 			}
 		}
 	}
