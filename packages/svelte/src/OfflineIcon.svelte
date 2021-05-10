@@ -9,9 +9,7 @@
 	}
 </script>
 
-{#if data === null}
-	<slot />
-{:else}
+{#if data !== null}
 <svg {...data.attributes}>
 	{@html data.body}
 </svg>
