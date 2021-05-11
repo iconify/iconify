@@ -1,7 +1,7 @@
 import { replaceIDs } from './ids';
 import { calculateSize } from './calc-size';
 import { fullIcon, IconifyIcon } from '../icon';
-import { fullCustomisations } from '../customisations';
+import { defaults, mergeCustomisations } from '../customisations';
 import type { IconifyIconCustomisations } from '../customisations';
 import { iconToSVG } from '.';
 import type { IconifyIconBuildResult } from '.';
@@ -29,6 +29,9 @@ export const builderFunctions: IconifyBuilderFunctions = {
 	replaceIDs,
 	calculateSize,
 	buildIcon: (icon, customisations) => {
-		return iconToSVG(fullIcon(icon), fullCustomisations(customisations));
+		return iconToSVG(
+			fullIcon(icon),
+			mergeCustomisations(defaults, customisations)
+		);
 	},
 };

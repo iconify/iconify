@@ -66,7 +66,7 @@ interface ViewBox {
  * Get SVG attributes and content from icon + customisations
  *
  * Does not generate style to make it compatible with frameworks that use objects for style, such as React.
- * Instead, it generates verticalAlign value that should be added to style.
+ * Instead, it generates 'inline' value. If true, rendering engine should add verticalAlign: -0.125em to icon.
  *
  * Customisations should be normalised by platform specific parser.
  * Result should be converted to <svg> by platform specific parser.
@@ -84,80 +84,102 @@ export function iconToSVG(
 		height: icon.height,
 	};
 
-	// Apply transformations
-	const transformations: string[] = [];
-	const hFlip = customisations.hFlip !== icon.hFlip;
-	const vFlip = customisations.vFlip !== icon.vFlip;
-	let rotation = customisations.rotate + icon.rotate;
+	// Body
+	let body = icon.body;
 
-	if (hFlip) {
-		if (vFlip) {
-			rotation += 2;
-		} else {
-			// Horizontal flip
+	// Apply transformations
+	[icon, customisations].forEach((props) => {
+		const transformations: string[] = [];
+		const hFlip = props.hFlip;
+		const vFlip = props.vFlip;
+		let rotation = props.rotate;
+
+		// Icon is flipped first, then rotated
+		if (hFlip) {
+			if (vFlip) {
+				rotation += 2;
+			} else {
+				// Horizontal flip
+				transformations.push(
+					'translate(' +
+						(box.width + box.left) +
+						' ' +
+						(0 - box.top) +
+						')'
+				);
+				transformations.push('scale(-1 1)');
+				box.top = box.left = 0;
+			}
+		} else if (vFlip) {
+			// Vertical flip
 			transformations.push(
 				'translate(' +
-					(box.width + box.left) +
+					(0 - box.left) +
 					' ' +
-					(0 - box.top) +
+					(box.height + box.top) +
 					')'
 			);
-			transformations.push('scale(-1 1)');
+			transformations.push('scale(1 -1)');
 			box.top = box.left = 0;
 		}
-	} else if (vFlip) {
-		// Vertical flip
-		transformations.push(
-			'translate(' + (0 - box.left) + ' ' + (box.height + box.top) + ')'
-		);
-		transformations.push('scale(1 -1)');
-		box.top = box.left = 0;
-	}
 
-	let tempValue: number;
-	rotation = rotation % 4;
-	switch (rotation) {
-		case 1:
-			// 90deg
-			tempValue = box.height / 2 + box.top;
-			transformations.unshift(
-				'rotate(90 ' + tempValue + ' ' + tempValue + ')'
-			);
-			break;
-
-		case 2:
-			// 180deg
-			transformations.unshift(
-				'rotate(180 ' +
-					(box.width / 2 + box.left) +
-					' ' +
-					(box.height / 2 + box.top) +
-					')'
-			);
-			break;
-
-		case 3:
-			// 270deg
-			tempValue = box.width / 2 + box.left;
-			transformations.unshift(
-				'rotate(-90 ' + tempValue + ' ' + tempValue + ')'
-			);
-			break;
-	}
-
-	if (rotation % 2 === 1) {
-		// Swap width/height and x/y for 90deg or 270deg rotation
-		if (box.left !== 0 || box.top !== 0) {
-			tempValue = box.left;
-			box.left = box.top;
-			box.top = tempValue;
+		let tempValue: number;
+		if (rotation < 0) {
+			rotation -= Math.floor(rotation / 4) * 4;
 		}
-		if (box.width !== box.height) {
-			tempValue = box.width;
-			box.width = box.height;
-			box.height = tempValue;
+		rotation = rotation % 4;
+		switch (rotation) {
+			case 1:
+				// 90deg
+				tempValue = box.height / 2 + box.top;
+				transformations.unshift(
+					'rotate(90 ' + tempValue + ' ' + tempValue + ')'
+				);
+				break;
+
+			case 2:
+				// 180deg
+				transformations.unshift(
+					'rotate(180 ' +
+						(box.width / 2 + box.left) +
+						' ' +
+						(box.height / 2 + box.top) +
+						')'
+				);
+				break;
+
+			case 3:
+				// 270deg
+				tempValue = box.width / 2 + box.left;
+				transformations.unshift(
+					'rotate(-90 ' + tempValue + ' ' + tempValue + ')'
+				);
+				break;
 		}
-	}
+
+		if (rotation % 2 === 1) {
+			// Swap width/height and x/y for 90deg or 270deg rotation
+			if (box.left !== 0 || box.top !== 0) {
+				tempValue = box.left;
+				box.left = box.top;
+				box.top = tempValue;
+			}
+			if (box.width !== box.height) {
+				tempValue = box.width;
+				box.width = box.height;
+				box.height = tempValue;
+			}
+		}
+
+		if (transformations.length) {
+			body =
+				'<g transform="' +
+				transformations.join(' ') +
+				'">' +
+				body +
+				'</g>';
+		}
+	});
 
 	// Calculate dimensions
 	let width, height;
@@ -194,13 +216,6 @@ export function iconToSVG(
 	// Convert to string
 	width = typeof width === 'string' ? width : width + '';
 	height = typeof height === 'string' ? height : height + '';
-
-	// Generate body
-	let body = icon.body;
-	if (transformations.length) {
-		body =
-			'<g transform="' + transformations.join(' ') + '">' + body + '</g>';
-	}
 
 	// Result
 	const result: IconifyIconBuildResult = {
