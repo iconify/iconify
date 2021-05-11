@@ -1,17 +1,50 @@
-// Types
-export type { IconifyJSON } from '@iconify/types';
-export type { IconifyIcon } from '@iconify/core/lib/icon';
-export type {
+/**
+ * Export required types
+ */
+// Function sets
+export {
+	IconifyStorageFunctions,
+	IconifyBuilderFunctions,
+	IconifyBrowserCacheFunctions,
+	IconifyAPIFunctions,
+	IconifyAPIInternalFunctions,
+} from './functions';
+
+// JSON stuff
+export { IconifyIcon, IconifyJSON, IconifyIconName } from './functions';
+
+// Customisations
+export {
+	IconifyIconCustomisations,
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-} from '@iconify/core/lib/customisations';
+	IconifyIconProps,
+	IconProps,
+} from './functions';
 
-// Types from props.ts
-export type { IconifyIconCustomisations, IconProps } from './props';
+// API
+export {
+	IconifyAPIConfig,
+	IconifyIconLoaderCallback,
+	IconifyIconLoaderAbort,
+	IconifyAPIInternalStorage,
+	IconifyAPIModule,
+	GetAPIConfig,
+	IconifyAPIPrepareQuery,
+	IconifyAPISendQuery,
+	PartialIconifyAPIConfig,
+} from './functions';
 
-// Component
+// Builder functions
+export { RawIconCustomisations, IconifyIconBuildResult } from './functions';
+
+// Browser cache
+export { IconifyBrowserCacheType } from './functions';
+
+// Component and params
 export { default as Icon } from './Icon.svelte';
+export { IconifyIconOnLoad } from './functions';
 
 // Functions
 export { enableCache, disableCache } from './functions';

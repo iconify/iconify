@@ -2,8 +2,7 @@ import { render } from '@testing-library/svelte';
 import { Icon } from '../../dist/iconify';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 32,
 };
@@ -86,11 +85,11 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
+		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
 		const component = render(Icon, {
 			icon: iconData,
-			flip: 'horizontal',
 			hFlip: false,
+			flip: 'horizontal',
 		});
 		const node = component.container.querySelector('svg');
 
@@ -103,7 +102,6 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean as string', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
 		const component = render(Icon, {
 			icon: iconData,
 			flip: 'vertical',
@@ -118,7 +116,6 @@ describe('Flip', () => {
 	});
 
 	test('wrong case', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
 		const component = render(Icon, {
 			icon: iconData,
 			vflip: true,

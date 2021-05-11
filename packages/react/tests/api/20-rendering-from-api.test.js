@@ -5,8 +5,7 @@ import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
@@ -16,6 +15,8 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'render-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		let onLoadCalled = false;
+
 		mockAPIData({
 			provider,
 			prefix,
@@ -45,7 +46,16 @@ describe('Rendering icon', () => {
 			expect(iconExists(iconName)).toEqual(true);
 
 			// Render component
-			const component = renderer.create(<Icon icon={iconName} />);
+			const component = renderer.create(
+				<Icon
+					icon={iconName}
+					onLoad={(name) => {
+						expect(name).toEqual(iconName);
+						expect(onLoadCalled).toEqual(false);
+						onLoadCalled = true;
+					}}
+				/>
+			);
 			const tree = component.toJSON();
 
 			expect(tree).toMatchObject({
@@ -67,6 +77,9 @@ describe('Rendering icon', () => {
 				children: null,
 			});
 
+			// Make sure onLoad has been called
+			expect(onLoadCalled).toEqual(true);
+
 			done();
 		});
 	});
@@ -75,6 +88,8 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		let onLoadCalled = false;
+
 		mockAPIData({
 			provider,
 			prefix,
@@ -87,6 +102,9 @@ describe('Rendering icon', () => {
 			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
+
+				// onLoad should not have been called yet
+				expect(onLoadCalled).toEqual(false);
 
 				// Send icon data
 				next();
@@ -123,6 +141,9 @@ describe('Rendering icon', () => {
 							children: null,
 						});
 
+						// onLoad should have been called
+						expect(onLoadCalled).toEqual(true);
+
 						done();
 					}, 0);
 				}, 0);
@@ -133,7 +154,16 @@ describe('Rendering icon', () => {
 		expect(iconExists(iconName)).toEqual(false);
 
 		// Render component
-		const component = renderer.create(<Icon icon={iconName} />);
+		const component = renderer.create(
+			<Icon
+				icon={iconName}
+				onLoad={(name) => {
+					expect(name).toEqual(iconName);
+					expect(onLoadCalled).toEqual(false);
+					onLoadCalled = true;
+				}}
+			/>
+		);
 		const tree = component.toJSON();
 
 		// Should render placeholder
@@ -142,6 +172,9 @@ describe('Rendering icon', () => {
 			props: {},
 			children: null,
 		});
+
+		// onLoad should not have been called yet
+		expect(onLoadCalled).toEqual(false);
 	});
 
 	test('missing icon', (done) => {
@@ -184,7 +217,14 @@ describe('Rendering icon', () => {
 		expect(iconExists(iconName)).toEqual(false);
 
 		// Render component
-		const component = renderer.create(<Icon icon={iconName}></Icon>);
+		const component = renderer.create(
+			<Icon
+				icon={iconName}
+				onLoad={() => {
+					throw new Error('onLoad called for empty icon!');
+				}}
+			></Icon>
+		);
 		const tree = component.toJSON();
 
 		// Should render placeholder

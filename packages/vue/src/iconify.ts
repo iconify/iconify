@@ -27,6 +27,7 @@ import {
 	IconifyBuilderFunctions,
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
+import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
 
 // Modules
@@ -74,6 +75,8 @@ import {
 
 // Properties
 import {
+	RawIconCustomisations,
+	IconifyIconOnLoad,
 	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -97,7 +100,7 @@ export {
 // JSON stuff
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
-// Customisations
+// Customisations and icon props
 export {
 	IconifyIconCustomisations,
 	IconifyIconSize,
@@ -105,6 +108,7 @@ export {
 	IconifyVerticalIconAlignment,
 	IconifyIconProps,
 	IconProps,
+	IconifyIconOnLoad,
 };
 
 // API
@@ -119,6 +123,9 @@ export {
 	IconifyAPISendQuery,
 	PartialIconifyAPIConfig,
 };
+
+// Builder functions
+export { RawIconCustomisations, IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
@@ -168,6 +175,11 @@ export const calculateSize = builderFunctions.calculateSize;
  * Replace unique ids in content
  */
 export const replaceIDs = builderFunctions.replaceIDs;
+
+/**
+ * Build SVG
+ */
+export const buildIcon = builderFunctions.buildIcon;
 
 /* API functions */
 /**
@@ -338,7 +350,7 @@ export const Icon = defineComponent({
 			}
 		},
 		// Get data for icon to render or null
-		getIcon(icon) {
+		getIcon(icon: IconifyIcon | string, onload?: IconifyIconOnLoad) {
 			// Icon is an object
 			if (
 				typeof icon === 'object' &&
@@ -376,8 +388,13 @@ export const Icon = defineComponent({
 			}
 
 			// Icon data is available
-			this._name = icon;
 			this.abortLoading();
+			if (this._name !== icon) {
+				this._name = icon;
+				if (onload) {
+					onload(icon);
+				}
+			}
 			return data;
 		},
 	},
@@ -393,7 +410,7 @@ export const Icon = defineComponent({
 
 		// Get icon data
 		const props = this.$attrs;
-		const icon = this.getIcon(props.icon);
+		const icon = this.getIcon(props.icon, props.onLoad);
 
 		// Validate icon object
 		if (!icon) {

@@ -37,4 +37,15 @@ describe('Dimensions', () => {
 		expect(node.getAttribute('height')).toEqual('24');
 		expect(node.getAttribute('width')).toEqual('24');
 	});
+
+	test('invalid values', () => {
+		const component = render(Icon, {
+			icon: iconData,
+			height: null,
+			width: void 0,
+		});
+		const node = component.container.querySelector('svg');
+		expect(node.getAttribute('height')).toEqual('1em');
+		expect(node.getAttribute('width')).toEqual('1em');
+	});
 });

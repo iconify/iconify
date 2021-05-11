@@ -2,7 +2,8 @@ import { IconifyJSON } from '@iconify/types';
 import { stringToIcon } from '@iconify/core/lib/icon/name';
 import {
 	IconifyIconCustomisations,
-	fullCustomisations,
+	defaults,
+	mergeCustomisations,
 } from '@iconify/core/lib/customisations';
 import {
 	storageFunctions,
@@ -39,7 +40,7 @@ function buildIcon(
 	}
 
 	// Clean up customisations
-	const changes = fullCustomisations(customisations);
+	const changes = mergeCustomisations(defaults, customisations);
 
 	// Get data
 	return iconToSVG(iconData, changes);
@@ -63,17 +64,17 @@ function generateIcon(
 	const iconName = stringToIcon(name);
 
 	// Clean up customisations
-	const changes = fullCustomisations(customisations);
+	const changes = mergeCustomisations(defaults, customisations);
 
 	// Get data
-	return (renderIcon(
+	return renderIcon(
 		{
 			name: iconName,
 		},
 		changes,
 		iconData,
 		returnString
-	) as unknown) as SVGElement | string | null;
+	) as unknown as SVGElement | string | null;
 }
 
 /**
@@ -217,10 +218,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		IconifyPreload: IconifyJSON[] | IconifyJSON;
 	}
 	if (
-		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
+		(_window as unknown as WindowWithIconifyPreload).IconifyPreload !==
 		void 0
 	) {
-		const preload = ((_window as unknown) as WindowWithIconifyPreload)
+		const preload = (_window as unknown as WindowWithIconifyPreload)
 			.IconifyPreload;
 		const err = 'Invalid IconifyPreload syntax.';
 		if (typeof preload === 'object' && preload !== null) {

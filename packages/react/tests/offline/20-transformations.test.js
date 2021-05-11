@@ -3,8 +3,7 @@ import { InlineIcon } from '../../dist/offline';
 import renderer from 'react-test-renderer';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 32,
 };
@@ -80,9 +79,9 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
+		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
 		const component = renderer.create(
-			<InlineIcon icon={iconData} flip="horizontal" hFlip={false} />
+			<InlineIcon icon={iconData} hFlip={false} flip="horizontal" />
 		);
 		const tree = component.toJSON();
 		const body = tree.props.dangerouslySetInnerHTML.__html;

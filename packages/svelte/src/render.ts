@@ -1,5 +1,8 @@
 import type { IconifyIcon } from '@iconify/types';
-import { defaults } from '@iconify/core/lib/customisations';
+import {
+	defaults,
+	mergeCustomisations,
+} from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
@@ -37,7 +40,10 @@ export function render(
 	// Properties
 	props: IconProps
 ): RenderResult {
-	const customisations = merge(defaults, props as typeof defaults);
+	const customisations = mergeCustomisations(
+		defaults,
+		props as typeof defaults
+	);
 	const componentProps = merge(svgDefaults) as Record<string, unknown>;
 
 	// Create style if missing
@@ -46,11 +52,22 @@ export function render(
 	// Get element properties
 	for (let key in props) {
 		const value = props[key as keyof typeof props] as unknown;
+		if (value === void 0) {
+			continue;
+		}
 		switch (key) {
 			// Properties to ignore
 			case 'icon':
 			case 'style':
 			case 'onLoad':
+				break;
+
+			// Boolean attributes
+			case 'inline':
+			case 'hFlip':
+			case 'vFlip':
+				customisations[key] =
+					value === true || value === 'true' || value === 1;
 				break;
 
 			// Flip as string: 'horizontal,vertical'

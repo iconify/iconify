@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils';
 import { Icon } from '../../dist/offline';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
@@ -25,7 +24,7 @@ describe('Inline attribute', () => {
 	});
 
 	test('false string', () => {
-		// "false" = true
+		// "false" should be ignored
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" inline="false" />`,
@@ -37,7 +36,9 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
+		expect(wrapper.html()).not.toContain(
+			'style="vertical-align: -0.125em;"'
+		);
 	});
 
 	test('true', () => {

@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.0-alpha.4",
+	"version": "2.0.0-alpha.6",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://github.com/iconify/iconify",
@@ -27,7 +27,7 @@
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.14.0",
-		"@iconify/core": "^1.0.0-rc.3",
+		"@iconify/core": "^1.0.1",
 		"@iconify/types": "^1.0.6",
 		"@microsoft/api-extractor": "^7.15.0",
 		"@rollup/plugin-commonjs": "^16.0.0",

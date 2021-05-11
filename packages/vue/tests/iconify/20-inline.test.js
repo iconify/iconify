@@ -25,7 +25,7 @@ describe('Inline attribute', () => {
 	});
 
 	test('false string', () => {
-		// "false" = true
+		// "false" should be ignored
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" inline="false" />`,
@@ -37,7 +37,9 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
+		expect(wrapper.html()).not.toContain(
+			'style="vertical-align: -0.125em;"'
+		);
 	});
 
 	test('true', () => {

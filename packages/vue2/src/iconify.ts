@@ -19,6 +19,7 @@ import {
 	IconifyBuilderFunctions,
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
+import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
 
 // Modules
@@ -66,6 +67,8 @@ import {
 
 // Properties
 import {
+	RawIconCustomisations,
+	IconifyIconOnLoad,
 	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -89,7 +92,7 @@ export {
 // JSON stuff
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
-// Customisations
+// Customisations and icon props
 export {
 	IconifyIconCustomisations,
 	IconifyIconSize,
@@ -97,6 +100,7 @@ export {
 	IconifyVerticalIconAlignment,
 	IconifyIconProps,
 	IconProps,
+	IconifyIconOnLoad,
 };
 
 // API
@@ -111,6 +115,9 @@ export {
 	IconifyAPISendQuery,
 	PartialIconifyAPIConfig,
 };
+
+// Builder functions
+export { RawIconCustomisations, IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
@@ -160,6 +167,11 @@ export const calculateSize = builderFunctions.calculateSize;
  * Replace unique ids in content
  */
 export const replaceIDs = builderFunctions.replaceIDs;
+
+/**
+ * Build SVG
+ */
+export const buildIcon = builderFunctions.buildIcon;
 
 /* API functions */
 /**
@@ -227,10 +239,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		IconifyPreload: IconifyJSON[] | IconifyJSON;
 	}
 	if (
-		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
+		(_window as unknown as WindowWithIconifyPreload).IconifyPreload !==
 		void 0
 	) {
-		const preload = ((_window as unknown) as WindowWithIconifyPreload)
+		const preload = (_window as unknown as WindowWithIconifyPreload)
 			.IconifyPreload;
 		const err = 'Invalid IconifyPreload syntax.';
 		if (typeof preload === 'object' && preload !== null) {
@@ -261,10 +273,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
 	}
 	if (
-		((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders !== void 0
+		(_window as unknown as WindowWithIconifyProviders).IconifyProviders !==
+		void 0
 	) {
-		const providers = ((_window as unknown) as WindowWithIconifyProviders)
+		const providers = (_window as unknown as WindowWithIconifyProviders)
 			.IconifyProviders;
 		if (typeof providers === 'object' && providers !== null) {
 			for (let key in providers) {
@@ -328,7 +340,7 @@ export const Icon = Vue.extend({
 			}
 		},
 		// Get data for icon to render or null
-		getIcon(icon) {
+		getIcon(icon: IconifyIcon | string, onload?: IconifyIconOnLoad) {
 			// Icon is an object
 			if (
 				typeof icon === 'object' &&
@@ -366,8 +378,13 @@ export const Icon = Vue.extend({
 			}
 
 			// Icon data is available
-			this._name = icon;
 			this.abortLoading();
+			if (this._name !== icon) {
+				this._name = icon;
+				if (onload) {
+					onload(icon);
+				}
+			}
 			return data;
 		},
 	},
@@ -385,7 +402,7 @@ export const Icon = Vue.extend({
 						: createElement('span', result);
 				}
 			}
-			return (null as unknown) as VNode;
+			return null as unknown as VNode;
 		}
 		if (!this.mounted) {
 			return placeholder(this.$slots);
@@ -393,7 +410,7 @@ export const Icon = Vue.extend({
 
 		// Get icon data
 		const props = this.$attrs;
-		const icon = this.getIcon(props.icon);
+		const icon = this.getIcon(props.icon, props.onLoad);
 
 		// Validate icon object
 		if (!icon) {

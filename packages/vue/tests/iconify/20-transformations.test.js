@@ -110,10 +110,10 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
+		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon :icon="icon" flip="horizontal" :hFlip="false" />`,
+			template: `<Icon :icon="icon" :hFlip="false" flip="horizontal" />`,
 			data() {
 				return {
 					icon: iconData,

@@ -3,6 +3,7 @@ import { IconifyIcon } from '@iconify/types';
 import {
 	FullIconCustomisations,
 	defaults,
+	mergeCustomisations,
 } from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
@@ -32,21 +33,20 @@ let customisationAliases = {};
 ['horizontal', 'vertical'].forEach((prefix) => {
 	['Align', 'Flip'].forEach((suffix) => {
 		const attr = prefix.slice(0, 1) + suffix;
+		const value = {
+			attr,
+			boolean: suffix === 'Flip',
+		};
+
 		// vertical-align
-		customisationAliases[prefix + '-' + suffix.toLowerCase()] = attr;
+		customisationAliases[prefix + '-' + suffix.toLowerCase()] = value;
 		// v-align
-		customisationAliases[
-			prefix.slice(0, 1) + '-' + suffix.toLowerCase()
-		] = attr;
+		customisationAliases[prefix.slice(0, 1) + '-' + suffix.toLowerCase()] =
+			value;
 		// verticalAlign
-		customisationAliases[prefix + suffix] = attr;
+		customisationAliases[prefix + suffix] = value;
 	});
 });
-
-/**
- * Interface for inline style
- */
-type VNodeStyle = (string | Record<string, unknown>)[];
 
 /**
  * Render icon
@@ -64,7 +64,7 @@ export const render = (
 	icon: Required<IconifyIcon>
 ): VNode => {
 	// Split properties
-	const customisations = merge(
+	const customisations = mergeCustomisations(
 		defaults,
 		props as IconifyIconCustomisations
 	) as FullIconCustomisations;
@@ -76,10 +76,22 @@ export const render = (
 	// Get element properties
 	for (let key in props) {
 		const value = props[key];
+		if (value === void 0) {
+			continue;
+		}
 		switch (key) {
 			// Properties to ignore
 			case 'icon':
 			case 'style':
+			case 'onLoad':
+				break;
+
+			// Boolean attributes
+			case 'inline':
+			case 'hFlip':
+			case 'vFlip':
+				customisations[key] =
+					value === true || value === 'true' || value === 1;
 				break;
 
 			// Flip as string: 'horizontal,vertical'
@@ -122,7 +134,20 @@ export const render = (
 			default:
 				if (customisationAliases[key] !== void 0) {
 					// Aliases for customisations
-					customisations[customisationAliases[key]] = value;
+					if (
+						customisationAliases[key].boolean &&
+						(value === true || value === 'true' || value === 1)
+					) {
+						// Check for boolean
+						customisations[customisationAliases[key].attr] = true;
+					} else if (
+						!customisationAliases[key].boolean &&
+						typeof value === 'string' &&
+						value !== ''
+					) {
+						// String
+						customisations[customisationAliases[key].attr] = value;
+					}
 				} else if (defaults[key] === void 0) {
 					// Copy missing property if it does not exist in customisations
 					componentProps[key] = value;

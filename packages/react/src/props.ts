@@ -1,14 +1,21 @@
 import type { HTMLProps, RefObject } from 'react';
 import type { IconifyIcon } from '@iconify/types';
-import type { IconifyIconCustomisations as IconCustomisations } from '@iconify/core/lib/customisations';
+import type { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/core/lib/customisations';
+
+export { RawIconCustomisations };
 
 // Allow rotation to be string
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisations = IconCustomisations & {
+export type IconifyIconCustomisations = RawIconCustomisations & {
 	rotate?: string | number;
 };
+
+/**
+ * Callback for when icon has been loaded (only triggered for icons loaded from API)
+ */
+export type IconifyIconOnLoad = (name: string) => void;
 
 /**
  * Icon properties
@@ -26,6 +33,9 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 
 	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
 	id?: string;
+
+	// Callback to call when icon data has been loaded. Used only for icons loaded from API
+	onLoad?: IconifyIconOnLoad;
 }
 
 /**

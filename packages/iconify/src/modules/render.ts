@@ -1,7 +1,8 @@
 import { FullIconifyIcon } from '@iconify/core/lib/icon';
 import {
 	IconifyIconCustomisations,
-	fullCustomisations,
+	mergeCustomisations,
+	defaults,
 } from '@iconify/core/lib/customisations';
 import { iconToSVG } from '@iconify/core/lib/builder';
 import { replaceIDs } from '@iconify/core/lib/builder/ids';
@@ -30,7 +31,10 @@ export function renderIcon(
 		return returnString ? '' : null;
 	}
 
-	const data = iconToSVG(iconData, fullCustomisations(customisations));
+	const data = iconToSVG(
+		iconData,
+		mergeCustomisations(defaults, customisations)
+	);
 
 	// Placeholder properties
 	const placeholderElement = placeholder.element;

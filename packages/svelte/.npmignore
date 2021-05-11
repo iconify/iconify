@@ -1,7 +1,9 @@
 .DS_Store
 rollup.config.js
 tsconfig.json
+api-extractor*.json
 build.js
+copy.js
 node_modules
 build
 src

@@ -30,6 +30,10 @@ describe('Creating component', () => {
 		const wrapper = mount(Icon, {
 			props: {
 				icon: iconData,
+				onLoad: () => {
+					// Should be called only for icons loaded from API
+					throw new Error('onLoad called for object!');
+				},
 			},
 		});
 

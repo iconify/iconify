@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils';
 import { Icon } from '../../dist/iconify';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
@@ -110,10 +109,10 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', () => {
-		// 'flip' is processed after 'hFlip', overwriting value
+		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon :icon="icon" flip="horizontal" :hFlip="false" />`,
+			template: `<Icon :icon="icon" :hFlip="false" flip="horizontal" />`,
 			data() {
 				return {
 					icon: iconData,

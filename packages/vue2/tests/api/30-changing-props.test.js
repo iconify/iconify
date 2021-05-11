@@ -4,15 +4,13 @@ import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
 
 const iconData2 = {
-	body:
-		'<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
+	body: '<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
 	width: 32,
 	height: 32,
 };
@@ -24,6 +22,26 @@ describe('Rendering icon', () => {
 		const name2 = 'changing-prop2';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		let onLoadCalled = ''; // Name of icon from last onLoad call
+
+		const onLoad = (name) => {
+			// onLoad should be called only once per icon
+			switch (name) {
+				// First onLoad call
+				case iconName:
+					expect(onLoadCalled).toEqual('');
+					break;
+
+				// Second onLoad call
+				case iconName2:
+					expect(onLoadCalled).toEqual(iconName);
+					break;
+
+				default:
+					throw new Error(`Unexpected onLoad('${name}') call`);
+			}
+			onLoadCalled = name;
+		};
 
 		mockAPIData({
 			provider,
@@ -38,6 +56,9 @@ describe('Rendering icon', () => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
 
+				// onLoad should not have been called yet
+				expect(onLoadCalled).toEqual('');
+
 				// Send icon data
 				next();
 
@@ -51,6 +72,9 @@ describe('Rendering icon', () => {
 						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual(
 							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
+
+						// onLoad should have been called
+						expect(onLoadCalled).toEqual(iconName);
 
 						wrapper.setProps({
 							icon: iconName2,
@@ -73,6 +97,9 @@ describe('Rendering icon', () => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName2)).toEqual(false);
 
+				// onLoad should have been called only once for previous icon
+				expect(onLoadCalled).toEqual(iconName);
+
 				// Send icon data
 				next();
 
@@ -87,6 +114,9 @@ describe('Rendering icon', () => {
 							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
 						);
 
+						// onLoad should have been called for second icon
+						expect(onLoadCalled).toEqual(iconName2);
+
 						done();
 					}, 0);
 				}, 0);
@@ -100,11 +130,15 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Icon, {
 			propsData: {
 				icon: iconName,
+				onLoad,
 			},
 		});
 
 		// Should render placeholder
 		expect(wrapper.html()).toEqual('');
+
+		// onLoad should not have been called yet
+		expect(onLoadCalled).toEqual('');
 	});
 
 	test('changing icon property while loading', (done) => {

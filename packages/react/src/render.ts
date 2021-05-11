@@ -2,7 +2,10 @@ import type { SVGProps } from 'react';
 import React from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import type { FullIconCustomisations } from '@iconify/core/lib/customisations';
-import { defaults } from '@iconify/core/lib/customisations';
+import {
+	defaults,
+	mergeCustomisations,
+} from '@iconify/core/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
@@ -51,7 +54,7 @@ export const render = (
 	const defaultProps = inline ? inlineDefaults : defaults;
 
 	// Get all customisations
-	const customisations = merge(
+	const customisations = mergeCustomisations(
 		defaultProps,
 		props as IconifyIconCustomisations
 	) as FullIconCustomisations;
@@ -71,13 +74,25 @@ export const render = (
 	// Get element properties
 	for (let key in props) {
 		const value = props[key];
+		if (value === void 0) {
+			continue;
+		}
 		switch (key) {
 			// Properties to ignore
 			case 'icon':
 			case 'style':
 			case 'children':
+			case 'onLoad':
 			case '_ref':
 			case '_inline':
+				break;
+
+			// Boolean attributes
+			case 'inline':
+			case 'hFlip':
+			case 'vFlip':
+				customisations[key] =
+					value === true || value === 'true' || value === 1;
 				break;
 
 			// Flip as string: 'horizontal,vertical'

@@ -236,10 +236,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		IconifyPreload: IconifyJSON[] | IconifyJSON;
 	}
 	if (
-		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
+		(_window as unknown as WindowWithIconifyPreload).IconifyPreload !==
 		void 0
 	) {
-		const preload = ((_window as unknown) as WindowWithIconifyPreload)
+		const preload = (_window as unknown as WindowWithIconifyPreload)
 			.IconifyPreload;
 		const err = 'Invalid IconifyPreload syntax.';
 		if (typeof preload === 'object' && preload !== null) {
@@ -270,10 +270,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
 	}
 	if (
-		((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders !== void 0
+		(_window as unknown as WindowWithIconifyProviders).IconifyProviders !==
+		void 0
 	) {
-		const providers = ((_window as unknown) as WindowWithIconifyProviders)
+		const providers = (_window as unknown as WindowWithIconifyProviders)
 			.IconifyProviders;
 		if (typeof providers === 'object' && providers !== null) {
 			for (let key in providers) {
@@ -378,13 +378,13 @@ export function checkIconState(
 	}
 
 	// Icon data is available
+	abortLoading();
 	if (state.name !== icon) {
 		state.name = icon;
 		if (onload && !state.destroyed) {
 			onload(icon);
 		}
 	}
-	abortLoading();
 	return data;
 }
 

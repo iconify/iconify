@@ -15,6 +15,8 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'render-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		let onLoadCalled = false;
+
 		mockAPIData({
 			provider,
 			prefix,
@@ -46,7 +48,14 @@ describe('Rendering icon', () => {
 			// Render component
 			const Wrapper = {
 				components: { Icon },
-				template: `<Icon icon="${iconName}" />`,
+				template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+				methods: {
+					onLoad(name) {
+						expect(name).toEqual(iconName);
+						expect(onLoadCalled).toEqual(false);
+						onLoadCalled = true;
+					},
+				},
 			};
 			const wrapper = mount(Wrapper, {});
 			const html = wrapper.html().replace(/\s*\n\s*/g, '');
@@ -56,6 +65,9 @@ describe('Rendering icon', () => {
 				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 			);
 
+			// Make sure onLoad has been called
+			expect(onLoadCalled).toEqual(true);
+
 			done();
 		});
 	});
@@ -64,6 +76,8 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		let onLoadCalled = false;
+
 		mockAPIData({
 			provider,
 			prefix,
@@ -76,6 +90,9 @@ describe('Rendering icon', () => {
 			delay: next => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
+
+				// onLoad should not have been called yet
+				expect(onLoadCalled).toEqual(false);
 
 				// Send icon data
 				next();
@@ -92,6 +109,9 @@ describe('Rendering icon', () => {
 							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
+						// onLoad should have been called
+						expect(onLoadCalled).toEqual(true);
+
 						done();
 					}, 0);
 				}, 0);
@@ -104,12 +124,22 @@ describe('Rendering icon', () => {
 		// Render component
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon icon="${iconName}" />`,
+			template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+			methods: {
+				onLoad(name) {
+					expect(name).toEqual(iconName);
+					expect(onLoadCalled).toEqual(false);
+					onLoadCalled = true;
+				},
+			},
 		};
 		const wrapper = mount(Wrapper, {});
 
 		// Should render empty icon
 		expect(wrapper.html()).toEqual('<!---->');
+
+		// onLoad should not have been called yet
+		expect(onLoadCalled).toEqual(false);
 	});
 
 	test('missing icon', done => {
@@ -148,7 +178,12 @@ describe('Rendering icon', () => {
 		// Render component
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon icon="${iconName}" />`,
+			template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+			methods: {
+				onLoad() {
+					throw new Error('onLoad called for empty icon!');
+				},
+			},
 		};
 		const wrapper = mount(Wrapper, {});
 
