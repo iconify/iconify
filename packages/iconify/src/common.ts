@@ -211,18 +211,14 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// addFinder(iconifyIconFinder);
 	addFinder(iconifyFinder);
 
-	const _window = window;
+	interface WindowWithIconifyStuff {
+		IconifyPreload?: IconifyJSON[] | IconifyJSON;
+	}
+	const _window = window as WindowWithIconifyStuff;
 
 	// Load icons from global "IconifyPreload"
-	interface WindowWithIconifyPreload {
-		IconifyPreload: IconifyJSON[] | IconifyJSON;
-	}
-	if (
-		(_window as unknown as WindowWithIconifyPreload).IconifyPreload !==
-		void 0
-	) {
-		const preload = (_window as unknown as WindowWithIconifyPreload)
-			.IconifyPreload;
+	if (_window.IconifyPreload !== void 0) {
+		const preload = _window.IconifyPreload;
 		const err = 'Invalid IconifyPreload syntax.';
 		if (typeof preload === 'object' && preload !== null) {
 			(preload instanceof Array ? preload : [preload]).forEach((item) => {

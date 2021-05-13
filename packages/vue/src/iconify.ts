@@ -241,18 +241,15 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	coreModules.cache = storeCache;
 	loadCache();
 
-	const _window = window;
+	interface WindowWithIconifyStuff {
+		IconifyPreload?: IconifyJSON[] | IconifyJSON;
+		IconifyProviders?: Record<string, PartialIconifyAPIConfig>;
+	}
+	const _window = window as WindowWithIconifyStuff;
 
 	// Load icons from global "IconifyPreload"
-	interface WindowWithIconifyPreload {
-		IconifyPreload: IconifyJSON[] | IconifyJSON;
-	}
-	if (
-		((_window as unknown) as WindowWithIconifyPreload).IconifyPreload !==
-		void 0
-	) {
-		const preload = ((_window as unknown) as WindowWithIconifyPreload)
-			.IconifyPreload;
+	if (_window.IconifyPreload !== void 0) {
+		const preload = _window.IconifyPreload;
 		const err = 'Invalid IconifyPreload syntax.';
 		if (typeof preload === 'object' && preload !== null) {
 			(preload instanceof Array ? preload : [preload]).forEach(item => {
@@ -278,15 +275,8 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	}
 
 	// Set API from global "IconifyProviders"
-	interface WindowWithIconifyProviders {
-		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
-	}
-	if (
-		((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders !== void 0
-	) {
-		const providers = ((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders;
+	if (_window.IconifyProviders !== void 0) {
+		const providers = _window.IconifyProviders;
 		if (typeof providers === 'object' && providers !== null) {
 			for (let key in providers) {
 				const err = 'IconifyProviders[' + key + '] is invalid.';

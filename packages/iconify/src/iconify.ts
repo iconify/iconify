@@ -130,10 +130,10 @@ const browserCacheFunctions: IconifyBrowserCacheFunctions = {
 /**
  * Global variable
  */
-const Iconify = ({
+const Iconify = {
 	// Exposed internal API functions
 	_api: APIInternalFunctions,
-} as unknown) as IconifyGlobal;
+} as unknown as IconifyGlobal;
 
 // Add functions
 [
@@ -188,18 +188,14 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	coreModules.cache = storeCache;
 	loadCache();
 
-	const _window = window;
+	interface WindowWithIconifyStuff {
+		IconifyProviders?: Record<string, PartialIconifyAPIConfig>;
+	}
+	const _window = window as WindowWithIconifyStuff;
 
 	// Set API from global "IconifyProviders"
-	interface WindowWithIconifyProviders {
-		IconifyProviders: Record<string, PartialIconifyAPIConfig>;
-	}
-	if (
-		((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders !== void 0
-	) {
-		const providers = ((_window as unknown) as WindowWithIconifyProviders)
-			.IconifyProviders;
+	if (_window.IconifyProviders !== void 0) {
+		const providers = _window.IconifyProviders;
 		if (typeof providers === 'object' && providers !== null) {
 			for (let key in providers) {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
