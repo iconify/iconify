@@ -6,15 +6,13 @@ import ChangeIcon from './fixtures/ChangeIcon.svelte';
 import ChangeProps from './fixtures/ChangeProps.svelte';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
 
 const iconData2 = {
-	body:
-		'<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
+	body: '<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
 	width: 32,
 	height: 32,
 };
@@ -26,6 +24,7 @@ describe('Rendering icon', () => {
 		const name2 = 'changing-prop2';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = ''; // Name of icon from last onLoad call
 		let triggerSwap;
 
@@ -63,7 +62,9 @@ describe('Rendering icon', () => {
 
 						// Check HTML
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called
@@ -107,7 +108,9 @@ describe('Rendering icon', () => {
 
 						// Check HTML
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+								className +
+								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called for second icon
@@ -163,6 +166,7 @@ describe('Rendering icon', () => {
 		const name2 = 'changing-prop2';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = ''; // Name of icon from last onLoad call
 		let isSync = true;
 		let triggerSwap;
@@ -219,7 +223,9 @@ describe('Rendering icon', () => {
 
 						// Check HTML
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+								className +
+								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called for second icon
@@ -269,6 +275,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'multiple-props';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = false;
 		let triggerSwap;
 
@@ -303,7 +310,9 @@ describe('Rendering icon', () => {
 
 						// Check HTML
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called
@@ -316,13 +325,14 @@ describe('Rendering icon', () => {
 						setTimeout(() => {
 							setTimeout(() => {
 								// Check HTML again
-								const node = component.container.querySelector(
-									'svg'
-								);
+								const node =
+									component.container.querySelector('svg');
 								const html = node.parentNode.innerHTML;
 
 								expect(html).toEqual(
-									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
+									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+										className +
+										'"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
 								);
 
 								done();

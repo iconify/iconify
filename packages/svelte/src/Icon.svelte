@@ -26,7 +26,12 @@
 	// Generate data
 	$: {
 		counter;
-		data = mounted ? generateIcon(checkIconState($$props.icon, state, loaded, $$props.onLoad), $$props) : null;
+		const iconData = checkIconState($$props.icon, state, loaded, $$props.onLoad);
+		data = mounted && iconData ? generateIcon(iconData.data, $$props) : null;
+		if (data && iconData.classes) {
+			// Add classes
+			data.attributes['class'] = (typeof $$props['class'] === 'string' ? $$props['class'] + ' ' : '') + iconData.classes.join(' ');
+		}
 	}
 
 	// Increase counter when loaded to force re-calculation of data

@@ -14,6 +14,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'render-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = false;
 
 		mockAPIData({
@@ -47,7 +48,8 @@ describe('Rendering icon', () => {
 			// Render component
 			const Wrapper = {
 				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+				// Also test class string
+				template: `<Icon icon="${iconName}" :onLoad="onLoad" class="test" />`,
 				methods: {
 					onLoad(name) {
 						expect(name).toEqual(iconName);
@@ -61,7 +63,9 @@ describe('Rendering icon', () => {
 
 			// Check HTML
 			expect(html).toEqual(
-				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="test ' +
+					className +
+					'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 			);
 
 			// Make sure onLoad has been called
@@ -75,6 +79,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = false;
 
 		mockAPIData({
@@ -105,7 +110,10 @@ describe('Rendering icon', () => {
 					setTimeout(() => {
 						// Check HTML
 						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								// 'foo' is appended because of weird Vue 2 behavior. Fixed in Vue 3
+								' foo"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called
@@ -123,13 +131,22 @@ describe('Rendering icon', () => {
 		// Render component
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+			template: `<Icon icon="${iconName}" :onLoad="onLoad" :class="testClass" />`,
 			methods: {
 				onLoad(name) {
 					expect(name).toEqual(iconName);
 					expect(onLoadCalled).toEqual(false);
 					onLoadCalled = true;
 				},
+			},
+			data() {
+				// Test dynamic class
+				return {
+					testClass: {
+						foo: true,
+						bar: false,
+					},
+				};
 			},
 		};
 		const wrapper = mount(Wrapper, {});
@@ -177,7 +194,7 @@ describe('Rendering icon', () => {
 		// Render component
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+			template: `<Icon icon="${iconName}" :onLoad="onLoad" />`,
 			methods: {
 				onLoad() {
 					throw new Error('onLoad called for empty icon!');

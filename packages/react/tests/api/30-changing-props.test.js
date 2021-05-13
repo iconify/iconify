@@ -23,6 +23,7 @@ describe('Rendering icon', () => {
 		const name2 = 'changing-prop2';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = ''; // Name of icon from last onLoad call
 
 		const onLoad = (name) => {
@@ -91,6 +92,7 @@ describe('Rendering icon', () => {
 									iconData.width +
 									' ' +
 									iconData.height,
+								className,
 							},
 							children: null,
 						});
@@ -151,6 +153,7 @@ describe('Rendering icon', () => {
 									iconData2.width +
 									' ' +
 									iconData2.height,
+								className,
 							},
 							children: null,
 						});
@@ -190,6 +193,7 @@ describe('Rendering icon', () => {
 		const name2 = 'changing-prop2';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let isSync = true;
 
 		mockAPIData({
@@ -257,6 +261,7 @@ describe('Rendering icon', () => {
 									iconData2.width +
 									' ' +
 									iconData2.height,
+								className,
 							},
 							children: null,
 						});
@@ -292,6 +297,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'multiple-props';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 
 		mockAPIData({
 			provider,
@@ -336,6 +342,7 @@ describe('Rendering icon', () => {
 									iconData.width +
 									' ' +
 									iconData.height,
+								className,
 							},
 							children: null,
 						});
@@ -371,6 +378,7 @@ describe('Rendering icon', () => {
 									iconData.width +
 									' ' +
 									iconData.height,
+								className,
 							},
 							children: null,
 						});

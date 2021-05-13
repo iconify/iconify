@@ -1,7 +1,7 @@
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import type { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
 import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
@@ -327,6 +327,14 @@ type IconStateCallback = () => void;
 export type IconifyIconOnLoad = (name: string) => void;
 
 /**
+ * checkIconState result
+ */
+export interface CheckIconStateResult {
+	data: IconComponentData;
+	classes?: string[];
+}
+
+/**
  * Check if component needs to be updated
  */
 export function checkIconState(
@@ -334,7 +342,7 @@ export function checkIconState(
 	state: IconState,
 	callback: IconStateCallback,
 	onload?: IconifyIconOnLoad
-): IconComponentData {
+): CheckIconStateResult | null {
 	// Abort loading icon
 	function abortLoading() {
 		if (state.loading) {
@@ -352,17 +360,21 @@ export function checkIconState(
 		// Stop loading
 		state.name = '';
 		abortLoading();
-		return fullIcon(icon);
+		return { data: fullIcon(icon) };
 	}
 
-	// Invalid icon
-	if (typeof icon !== 'string') {
+	// Invalid icon?
+	let iconName: IconifyIconName | null;
+	if (
+		typeof icon !== 'string' ||
+		(iconName = stringToIcon(icon, false, true)) === null
+	) {
 		abortLoading();
 		return null;
 	}
 
 	// Load icon
-	const data = getIconData(icon);
+	const data = getIconData(iconName);
 	if (data === null) {
 		// Icon needs to be loaded
 		if (!state.loading || state.loading.name !== icon) {
@@ -371,7 +383,7 @@ export function checkIconState(
 			state.name = '';
 			state.loading = {
 				name: icon,
-				abort: API.loadIcons([icon], callback),
+				abort: API.loadIcons([iconName], callback),
 			};
 		}
 		return null;
@@ -385,7 +397,17 @@ export function checkIconState(
 			onload(icon);
 		}
 	}
-	return data;
+
+	// Add classes
+	const classes: string[] = ['iconify'];
+	if (iconName.prefix !== '') {
+		classes.push('iconify--' + iconName.prefix);
+	}
+	if (iconName.provider !== '') {
+		classes.push('iconify--' + iconName.provider);
+	}
+
+	return { data, classes };
 }
 
 /**

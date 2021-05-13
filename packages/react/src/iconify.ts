@@ -2,7 +2,7 @@ import React from 'react';
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import type { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
 import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
@@ -310,10 +310,13 @@ interface InternalIconProps extends IconProps {
 	_inline: boolean;
 }
 
-type IconComponentData = Required<IconifyIcon> | null;
+interface IconComponentData {
+	data: Required<IconifyIcon>;
+	classes?: string[];
+}
 
 interface IconComponentState {
-	data: IconComponentData;
+	icon: IconComponentData | null;
 }
 
 interface ComponentAbortData {
@@ -332,7 +335,7 @@ class IconComponent extends React.Component<
 		super(props);
 		this.state = {
 			// Render placeholder before component is mounted
-			data: null,
+			icon: null,
 		};
 	}
 
@@ -349,10 +352,10 @@ class IconComponent extends React.Component<
 	/**
 	 * Update state
 	 */
-	_setData(data: IconComponentData) {
-		if (this.state.data !== data) {
+	_setData(icon: IconComponentData | null) {
+		if (this.state.icon !== icon) {
 			this.setState({
-				data,
+				icon,
 			});
 		}
 	}
@@ -374,22 +377,28 @@ class IconComponent extends React.Component<
 			this._icon = '';
 			this._abortLoading();
 
-			if (changed || state.data === null) {
+			if (changed || state.icon === null) {
 				// Set data if it was changed
-				this._setData(fullIcon(icon));
+				this._setData({
+					data: fullIcon(icon),
+				});
 			}
 			return;
 		}
 
 		// Invalid icon?
-		if (typeof icon !== 'string') {
+		let iconName: IconifyIconName | null;
+		if (
+			typeof icon !== 'string' ||
+			(iconName = stringToIcon(icon, false, true)) === null
+		) {
 			this._abortLoading();
 			this._setData(null);
 			return;
 		}
 
 		// Load icon
-		const data = getIconData(icon);
+		const data = getIconData(iconName);
 		if (data === null) {
 			// Icon needs to be loaded
 			if (!this._loading || this._loading.name !== icon) {
@@ -400,7 +409,7 @@ class IconComponent extends React.Component<
 				this._loading = {
 					name: icon,
 					abort: API.loadIcons(
-						[icon],
+						[iconName],
 						this._checkIcon.bind(this, false)
 					),
 				};
@@ -409,11 +418,25 @@ class IconComponent extends React.Component<
 		}
 
 		// Icon data is available
-		if (this._icon !== icon || state.data === null) {
+		if (this._icon !== icon || state.icon === null) {
 			// New icon or icon has been loaded
 			this._abortLoading();
 			this._icon = icon;
-			this._setData(data);
+
+			// Add classes
+			const classes: string[] = ['iconify'];
+			if (iconName.prefix !== '') {
+				classes.push('iconify--' + iconName.prefix);
+			}
+			if (iconName.provider !== '') {
+				classes.push('iconify--' + iconName.provider);
+			}
+
+			// Set data
+			this._setData({
+				data,
+				classes,
+			});
 			if (this.props.onLoad) {
 				this.props.onLoad(icon);
 			}
@@ -448,17 +471,28 @@ class IconComponent extends React.Component<
 	 */
 	render() {
 		const props = this.props;
-		const data = this.state.data;
+		const icon = this.state.icon;
 
-		if (data === null) {
+		if (icon === null) {
 			// Render placeholder
 			return props.children
 				? (props.children as JSX.Element)
 				: React.createElement('span', {});
 		}
 
+		// Add classes
+		let newProps = props;
+		if (icon.classes) {
+			newProps = merge(props, {
+				className:
+					(typeof props.className === 'string'
+						? props.className + ' '
+						: '') + icon.classes.join(' '),
+			} as typeof props);
+		}
+
 		// Render icon
-		return render(data, props, props._inline, props._ref);
+		return render(icon.data, newProps, props._inline, props._ref);
 	}
 }
 

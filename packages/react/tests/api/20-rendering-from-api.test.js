@@ -15,6 +15,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'render-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = false;
 
 		mockAPIData({
@@ -73,6 +74,7 @@ describe('Rendering icon', () => {
 					'height': '1em',
 					'preserveAspectRatio': 'xMidYMid meet',
 					'viewBox': '0 0 ' + iconData.width + ' ' + iconData.height,
+					className,
 				},
 				children: null,
 			});
@@ -88,6 +90,7 @@ describe('Rendering icon', () => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
+		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = false;
 
 		mockAPIData({
@@ -137,6 +140,7 @@ describe('Rendering icon', () => {
 									iconData.width +
 									' ' +
 									iconData.height,
+								'className': 'test ' + className,
 							},
 							children: null,
 						});
@@ -157,6 +161,7 @@ describe('Rendering icon', () => {
 		const component = renderer.create(
 			<Icon
 				icon={iconName}
+				className="test"
 				onLoad={(name) => {
 					expect(name).toEqual(iconName);
 					expect(onLoadCalled).toEqual(false);

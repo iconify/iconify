@@ -11,7 +11,7 @@ import {
 import { IconifyJSON } from '@iconify/types';
 
 // Core
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
 import {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
@@ -27,8 +27,9 @@ import {
 	IconifyBuilderFunctions,
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
-import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
+import { IconifyIconBuildResult } from '@iconify/core/lib/builder';
 import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
+import { merge } from '@iconify/core/lib/misc/merge';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
@@ -312,6 +313,11 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 /**
  * Component
  */
+interface IconComponentData {
+	data: Required<IconifyIcon>;
+	classes?: string[];
+}
+
 export const Icon = defineComponent({
 	// Do not inherit other attributes: it is handled by render()
 	inheritAttrs: false,
@@ -350,7 +356,10 @@ export const Icon = defineComponent({
 			}
 		},
 		// Get data for icon to render or null
-		getIcon(icon: IconifyIcon | string, onload?: IconifyIconOnLoad) {
+		getIcon(
+			icon: IconifyIcon | string,
+			onload?: IconifyIconOnLoad
+		): IconComponentData | null {
 			// Icon is an object
 			if (
 				typeof icon === 'object' &&
@@ -360,17 +369,23 @@ export const Icon = defineComponent({
 				// Stop loading
 				this._name = '';
 				this.abortLoading();
-				return fullIcon(icon);
+				return {
+					data: fullIcon(icon),
+				};
 			}
 
 			// Invalid icon?
-			if (typeof icon !== 'string') {
+			let iconName: IconifyIconName | null;
+			if (
+				typeof icon !== 'string' ||
+				(iconName = stringToIcon(icon, false, true)) === null
+			) {
 				this.abortLoading();
 				return null;
 			}
 
 			// Load icon
-			const data = getIconData(icon);
+			const data = getIconData(iconName);
 			if (data === null) {
 				// Icon needs to be loaded
 				if (!this._loadingIcon || this._loadingIcon.name !== icon) {
@@ -379,7 +394,7 @@ export const Icon = defineComponent({
 					this._name = '';
 					this._loadingIcon = {
 						name: icon,
-						abort: API.loadIcons([icon], () => {
+						abort: API.loadIcons([iconName], () => {
 							this.counter++;
 						}),
 					};
@@ -395,7 +410,17 @@ export const Icon = defineComponent({
 					onload(icon);
 				}
 			}
-			return data;
+
+			// Add classes
+			const classes: string[] = ['iconify'];
+			if (iconName.prefix !== '') {
+				classes.push('iconify--' + iconName.prefix);
+			}
+			if (iconName.provider !== '') {
+				classes.push('iconify--' + iconName.provider);
+			}
+
+			return { data, classes };
 		},
 	},
 
@@ -410,14 +435,28 @@ export const Icon = defineComponent({
 
 		// Get icon data
 		const props = this.$attrs;
-		const icon = this.getIcon(props.icon, props.onLoad);
+		const icon: IconComponentData | null = this.getIcon(
+			props.icon,
+			props.onLoad
+		);
 
 		// Validate icon object
 		if (!icon) {
 			return this.$slots.default ? this.$slots.default() : null;
 		}
 
-		// Valid icon: render it
-		return render(icon, props);
+		// Add classes
+		let newProps = props;
+		if (icon.classes) {
+			newProps = merge(props, {
+				class:
+					(typeof props['class'] === 'string'
+						? props['class'] + ' '
+						: '') + icon.classes.join(' '),
+			});
+		}
+
+		// Render icon
+		return render(icon.data, newProps);
 	},
 });
