@@ -1,7 +1,7 @@
 <script>
-	import { Icon } from '@iconify/svelte';
+	import Icon from '@iconify/svelte';
 
-const paperclipIcon = 'dashicons:paperclip';
+	const paperclipIcon = 'dashicons:paperclip';
 </script>
 
 <style>

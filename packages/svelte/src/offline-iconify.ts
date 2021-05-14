@@ -10,8 +10,6 @@ export type {
 // Types from props.ts
 export type { IconifyIconCustomisations, IconProps } from './props';
 
-// Component
-export { default as Icon } from './OfflineIcon.svelte';
-
 // Functions
+// Important: duplicate of global exports in OfflineIcon.svelte. When changing exports, they must be changed in both files.
 export { addIcon, addCollection } from './offline-functions';

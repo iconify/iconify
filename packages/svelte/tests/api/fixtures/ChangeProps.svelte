@@ -1,5 +1,5 @@
 <script>
-    import { Icon } from '../../../dist/iconify';
+    import Icon from '../../../dist/';
 
     export let icon;
     export let expose;

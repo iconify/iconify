@@ -1,5 +1,5 @@
 <script>
-    import { Icon } from '@iconify/svelte/dist/offline';
+    import Icon from '@iconify/svelte/dist/offline';
     import checkedIcon from '@iconify-icons/uil/check-square';
     import uncheckedIcon from '@iconify-icons/uil/square';
 

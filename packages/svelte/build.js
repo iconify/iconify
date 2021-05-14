@@ -7,13 +7,17 @@ const packagesDir = path.dirname(__dirname);
 // List of commands to run
 const commands = [];
 
+// api-extractor command line
+const extractor = (name) =>
+	`api-extractor run --local --verbose --config api-extractor.${name}.json`;
+
 // Parse command line
 const compile = {
 	core: false,
 	tsc: true,
 	bundles: true,
-	copy: true,
 	api: true,
+	finish: true,
 };
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
@@ -72,21 +76,64 @@ if (compile.core) {
 
 // Compile other packages
 Object.keys(compile).forEach((key) => {
-	if (key !== 'core' && compile[key]) {
-		commands.push({
-			cmd: 'npm',
-			args: ['run', 'build:' + key],
-		});
+	if (!compile[key]) {
+		return;
+	}
+	switch (key) {
+		case 'core':
+			break;
+
+		case 'api':
+			apiFiles().forEach((name) => {
+				const cmd = extractor(name).split(' ');
+				commands.push({
+					cmd: cmd.shift(),
+					args: cmd,
+				});
+			});
+			break;
+
+		case 'finish':
+			commands.push(cleanup);
+			break;
+
+		default:
+			commands.push({
+				cmd: 'npm',
+				args: ['run', 'build:' + key],
+			});
 	}
 });
 
 /**
+ * Get all api-extractor.*.json files
+ */
+function apiFiles() {
+	return fs
+		.readdirSync(__dirname)
+		.map((item) => {
+			const parts = item.split('.');
+			if (parts.pop() !== 'json' || parts.shift() !== 'api-extractor') {
+				return '';
+			}
+			return parts.length === 1 ? parts[0] : '';
+		})
+		.filter((item) => item !== '');
+}
+
+/**
  * Run next command
  */
-const next = () => {
+function next() {
 	const item = commands.shift();
 	if (item === void 0) {
 		process.exit(0);
+	}
+
+	if (typeof item === 'function') {
+		item();
+		process.nextTick(next);
+		return;
 	}
 
 	if (item.cwd === void 0) {
@@ -103,5 +150,73 @@ const next = () => {
 	} else {
 		process.exit(result.status);
 	}
-};
+}
 next();
+
+/**
+ * Cleanup
+ */
+function cleanup() {
+	// Merge TypeScript files
+	const sourceDir = __dirname + '/src/';
+	const distDir = __dirname + '/dist/';
+
+	function createTypes() {
+		// Get Svelte file, split it. Import and content should be separated by empty line
+		const svelteParts = fs
+			.readFileSync(sourceDir + 'svelte.d.ts', 'utf8')
+			.trim()
+			.replace(/\r/g, '')
+			.split('\n\n');
+		if (svelteParts.lenght < 2) {
+			throw new Error(
+				'Error parsing svelte.d.ts. Imports and content should be separated by 2 new lines'
+			);
+		}
+		const svelteImport = svelteParts.shift() + '\n\n';
+		const svelteContent = '\n\n' + svelteParts.join('\n\n');
+
+		// Merge files
+		[
+			// Full component
+			{
+				source: 'iconify.d.ts',
+				target: 'index.d.ts',
+			},
+			{
+				source: 'iconify.d.ts',
+				target: 'Icon.svelte.d.ts',
+			},
+			// Offline component
+			{
+				source: 'offline-iconify.d.ts',
+				target: 'offline.d.ts',
+			},
+			{
+				source: 'offline-iconify.d.ts',
+				target: 'OfflineIcon.svelte.d.ts',
+			},
+		].forEach((item) => {
+			const content =
+				svelteImport +
+				fs
+					.readFileSync(distDir + item.source, 'utf8')
+					.replace('export { }', '')
+					.trim() +
+				svelteContent;
+			fs.writeFileSync(distDir + item.target, content, 'utf8');
+			console.log(`Created dist/${item.target}`);
+		});
+	}
+
+	function copyComponents() {
+		['Icon.svelte', 'OfflineIcon.svelte'].forEach((name) => {
+			const content = fs.readFileSync(sourceDir + name, 'utf8');
+			fs.writeFileSync(distDir + name, content, 'utf8');
+			console.log(`Copied dist/${name}`);
+		});
+	}
+
+	createTypes();
+	copyComponents();
+}

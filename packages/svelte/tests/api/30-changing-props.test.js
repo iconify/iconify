@@ -1,5 +1,5 @@
 import { render } from '@testing-library/svelte';
-import { iconExists } from '../../dist/iconify';
+import { iconExists } from '../../dist/';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import ChangeIcon from './fixtures/ChangeIcon.svelte';

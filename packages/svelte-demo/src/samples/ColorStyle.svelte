@@ -1,5 +1,5 @@
 <script>
-	import { Icon } from '@iconify/svelte';
+	import Icon from '@iconify/svelte';
 
 	const adminUsers = 'dashicons:admin-users';
 	const icon1Style = 'color: purple; vertical-align: 0; font-size: 2em;';

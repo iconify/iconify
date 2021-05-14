@@ -1,3 +1,40 @@
+<script context="module">
+
+// Export stuff.
+// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
+import { 
+	enableCache,
+	disableCache, 
+	iconExists,
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
+	calculateSize,
+	replaceIDs,
+	buildIcon,
+	loadIcons,
+	addAPIProvider,
+	_api
+} from './functions';
+
+export { 
+	enableCache,
+	disableCache, 
+	iconExists,
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
+	calculateSize,
+	replaceIDs,
+	buildIcon,
+	loadIcons,
+	addAPIProvider,
+	_api
+}
+
+</script>
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { checkIconState, generateIcon } from './functions';

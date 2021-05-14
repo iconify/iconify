@@ -1,6 +1,6 @@
 <script>
-    import { Icon as OfflineIcon } from '@iconify/svelte/dist/offline';
-    import { Icon as FullIcon } from '@iconify/svelte';
+    import OfflineIcon from '@iconify/svelte/dist/offline';
+    import FullIcon from '@iconify/svelte';
 </script>
 
 <section class="inline-demo">

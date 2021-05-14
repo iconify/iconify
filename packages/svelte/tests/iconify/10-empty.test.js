@@ -1,5 +1,5 @@
 import { render } from '@testing-library/svelte';
-import { Icon } from '../../dist/iconify';
+import Icon from '../../dist/';
 
 describe('Empty icon', () => {
 	test('basic test', () => {

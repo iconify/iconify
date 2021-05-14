@@ -17,11 +17,11 @@
 
 	onMount(async () => {
 		const promises = [
-			import('@iconify/svelte/dist/offline-bundle'),
+			import('@iconify/svelte'),
 			import('@iconify-icons/bi/link-45deg'),
 		];
 		const results = await Promise.all(promises);
-		Icon = results[0].Icon;
+		Icon = results[0].default;
 		postIcon = results[1].default;
 	});
 

@@ -1,4 +1,4 @@
-import { loadIcons, iconExists } from '../../dist/iconify';
+import { loadIcons, iconExists } from '../../dist/';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 

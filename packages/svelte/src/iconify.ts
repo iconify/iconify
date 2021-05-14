@@ -42,11 +42,11 @@ export { RawIconCustomisations, IconifyIconBuildResult } from './functions';
 // Browser cache
 export { IconifyBrowserCacheType } from './functions';
 
-// Component and params
-export { default as Icon } from './Icon.svelte';
+// Component params
 export { IconifyIconOnLoad } from './functions';
 
 // Functions
+// Important: duplicate of global exports in Icon.svelte. When changing exports, they must be changed in both files.
 export { enableCache, disableCache } from './functions';
 
 export {

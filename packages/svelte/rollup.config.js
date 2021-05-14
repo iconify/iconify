@@ -12,10 +12,10 @@ const sourceDir = 'src';
 export default [
 	// Bundle everything
 	{
-		input: sourceDir + '/iconify.ts',
+		input: sourceDir + '/Icon.svelte',
 		output: [
-			{ file: targetDir + '/bundle.mjs', format: 'es' },
-			{ file: targetDir + '/bundle.js', format: 'cjs' },
+			{ file: targetDir + '/index.mjs', format: 'es' },
+			{ file: targetDir + '/index.js', format: 'cjs' },
 		],
 		plugins: [
 			svelte({
@@ -29,10 +29,10 @@ export default [
 		],
 	},
 	{
-		input: sourceDir + '/offline.ts',
+		input: sourceDir + '/OfflineIcon.svelte',
 		output: [
-			{ file: targetDir + '/offline-bundle.mjs', format: 'es' },
-			{ file: targetDir + '/offline-bundle.js', format: 'cjs' },
+			{ file: targetDir + '/offline.mjs', format: 'es' },
+			{ file: targetDir + '/offline.js', format: 'cjs' },
 		],
 		plugins: [
 			svelte({
@@ -45,6 +45,7 @@ export default [
 			commonjs(),
 		],
 	},
+
 	// Files included in Icon.svelte as bundle
 	{
 		input: sourceDir + '/functions.ts',

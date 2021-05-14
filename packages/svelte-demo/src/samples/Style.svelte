@@ -1,5 +1,5 @@
 <script>
-	import { Icon } from '@iconify/svelte';
+	import Icon from '@iconify/svelte';
 
 	const paperclipIcon = 'dashicons:paperclip';
 	const redIcon = 'color: red;';

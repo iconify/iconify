@@ -1,5 +1,5 @@
 <script>
-	import { Icon } from '@iconify/svelte';
+	import Icon from '@iconify/svelte';
     import accountIcon from '@iconify-icons/mdi-light/account';
     import alertIcon from '@iconify-icons/mdi-light/alert';
 </script>
