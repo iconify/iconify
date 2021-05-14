@@ -330,6 +330,7 @@ export interface CheckIconStateResult {
 export function checkIconState(
 	icon: string | IconifyIcon,
 	state: IconState,
+	mounted: boolean,
 	callback: IconStateCallback,
 	onload?: IconifyIconOnLoad
 ): CheckIconStateResult | null {
@@ -367,7 +368,8 @@ export function checkIconState(
 	const data = getIconData(iconName);
 	if (data === null) {
 		// Icon needs to be loaded
-		if (!state.loading || state.loading.name !== icon) {
+		// Do not load icon until component is mounted
+		if (mounted && (!state.loading || state.loading.name !== icon)) {
 			// New icon to load
 			abortLoading();
 			state.name = '';

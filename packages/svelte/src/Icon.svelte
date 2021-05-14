@@ -63,8 +63,8 @@ export {
 	// Generate data
 	$: {
 		counter;
-		const iconData = checkIconState($$props.icon, state, loaded, $$props.onLoad);
-		data = mounted && iconData ? generateIcon(iconData.data, $$props) : null;
+		const iconData = checkIconState($$props.icon, state, mounted, loaded, $$props.onLoad);
+		data = iconData ? generateIcon(iconData.data, $$props) : null;
 		if (data && iconData.classes) {
 			// Add classes
 			data.attributes['class'] = (typeof $$props['class'] === 'string' ? $$props['class'] + ' ' : '') + iconData.classes.join(' ');
