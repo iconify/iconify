@@ -1,6 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import buble from '@rollup/plugin-buble';
 
 const names = ['offline', 'iconify'];
 
@@ -18,7 +17,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [resolve(), commonjs()],
 	});
 
 	// CommonJS module
@@ -31,7 +30,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [resolve(), commonjs()],
 	});
 });
 

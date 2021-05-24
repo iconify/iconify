@@ -8,7 +8,7 @@ import {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	IconifyStorageFunctions,
 	storageFunctions,
@@ -20,8 +20,7 @@ import {
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
 import { IconifyIconBuildResult } from '@iconify/core/lib/builder';
-import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
@@ -439,12 +438,13 @@ export const Icon = Vue.extend({
 		// Add classes
 		let context = this.$data;
 		if (icon.classes) {
-			context = merge(context, {
+			context = {
+				...context,
 				class:
 					(typeof context['class'] === 'string'
 						? context['class'] + ' '
 						: '') + icon.classes.join(' '),
-			});
+			};
 		}
 
 		// Render icon

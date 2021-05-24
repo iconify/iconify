@@ -10,7 +10,7 @@ import {
 	getStorage,
 	listIcons,
 } from '../../lib/storage/storage';
-import type { FullIconifyIcon, IconifyIcon } from '../../lib/icon';
+import type { IconifyIcon, FullIconifyIcon } from '@iconify/utils/lib/icon';
 
 describe('Testing storage', () => {
 	it('Adding icon', () => {
@@ -40,7 +40,7 @@ describe('Testing storage', () => {
 		storage.missing['not-really-missing'] = Date.now();
 
 		// Add invalid icon
-		addIcon(storage, 'invalid', ({} as unknown) as IconifyIcon);
+		addIcon(storage, 'invalid', {} as unknown as IconifyIcon);
 
 		// Should not include 'invalid'
 		expect(Object.keys(storage.icons)).to.be.eql([

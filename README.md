@@ -64,7 +64,8 @@ There are several Iconify implementations included in this repository:
 Other packages:
 
 -   [Iconify types](./packages/types/) - TypeScript types used by various implementations.
--   [Iconify core](./packages/core/) - common files used by various implementations.
+-   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
+-   [Iconify core](./packages/core/) - common files used by various implementations (code specific to components and SVG framework).
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
 -   [Vue 3 demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.

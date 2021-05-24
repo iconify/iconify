@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 
-const packagesDir = path.dirname(__dirname);
+const packagesDir = path.dirname(path.dirname(__dirname)) + '/packages';
 
 // List of commands to run
 const commands = [];

@@ -92,7 +92,9 @@ names.forEach((name) => {
 					ignore: ['cross-fetch'],
 				}),
 				replace(replacements),
-				buble(),
+				buble({
+					objectAssign: 'Object.assign',
+				}),
 			],
 		};
 		if (compress) {

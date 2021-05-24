@@ -1,7 +1,6 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 
 const name = 'icon';
@@ -38,7 +37,6 @@ const config = [
 			commonjs({
 				ignore: ['cross-fetch'],
 			}),
-			buble(),
 		],
 	},
 	// Dev build
@@ -56,7 +54,6 @@ const config = [
 			commonjs({
 				ignore: ['cross-fetch'],
 			}),
-			buble(),
 		],
 	},
 	// Production
@@ -74,7 +71,6 @@ const config = [
 			commonjs({
 				ignore: ['cross-fetch'],
 			}),
-			buble(),
 			terser(),
 		],
 	},

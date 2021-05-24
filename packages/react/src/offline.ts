@@ -4,8 +4,8 @@ import type {
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
-} from '@iconify/core/lib/customisations';
-import { fullIcon } from '@iconify/core/lib/icon';
+} from '@iconify/utils/lib/customisations';
+import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
 import type {
 	IconifyIconCustomisations,

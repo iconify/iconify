@@ -4,7 +4,7 @@ import {
 	IconifyIconCustomisations,
 	defaults,
 	mergeCustomisations,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	storageFunctions,
 	getIconData,

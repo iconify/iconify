@@ -1,6 +1,6 @@
 import { IconifyFinder } from './interface';
 import { IconifyElement } from '../modules/element';
-import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
+import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { finder as iconifyFinder } from './iconify';
 
 const selector = 'iconify-icon';

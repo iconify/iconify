@@ -16,7 +16,7 @@ import {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	IconifyStorageFunctions,
 	storageFunctions,
@@ -28,8 +28,7 @@ import {
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
 import { IconifyIconBuildResult } from '@iconify/core/lib/builder';
-import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
@@ -438,12 +437,13 @@ export const Icon = defineComponent({
 		// Add classes
 		let newProps = props;
 		if (icon.classes) {
-			newProps = merge(props, {
+			newProps = {
+				...props,
 				class:
 					(typeof props['class'] === 'string'
 						? props['class'] + ' '
 						: '') + icon.classes.join(' '),
-			});
+			};
 		}
 
 		// Render icon

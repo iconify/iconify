@@ -1,5 +1,5 @@
 import { IconifyIconName } from '@iconify/core/lib/icon/name';
-import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
+import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { IconifyFinder } from '../finders/interface';
 
 /**
@@ -35,8 +35,8 @@ export interface IconifyElement
 /**
  * Names of properties to add to nodes
  */
-export const elementFinderProperty: keyof IconifyElementStoredFinder = ('iconifyFinder' +
-	Date.now()) as keyof IconifyElementStoredFinder;
+export const elementFinderProperty: keyof IconifyElementStoredFinder =
+	('iconifyFinder' + Date.now()) as keyof IconifyElementStoredFinder;
 
-export const elementDataProperty: keyof IconifyElementStoredData = ('iconifyData' +
-	Date.now()) as keyof IconifyElementStoredData;
+export const elementDataProperty: keyof IconifyElementStoredData =
+	('iconifyData' + Date.now()) as keyof IconifyElementStoredData;

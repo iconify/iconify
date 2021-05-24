@@ -4,15 +4,14 @@ import {
 	FullIconCustomisations,
 	defaults,
 	mergeCustomisations,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
+} from '@iconify/utils/lib/customisations/shorthand';
+import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { IconifyIconCustomisations, IconProps } from './props';
 
 /**
@@ -70,12 +69,12 @@ export const render = (
 		defaults,
 		props as IconifyIconCustomisations
 	) as FullIconCustomisations;
-	const componentProps = merge(svgDefaults);
+	const componentProps = { ...svgDefaults };
 
 	// Copy style
 	let style: VStyle =
 		typeof props.style === 'object' && !(props.style instanceof Array)
-			? merge(props.style as VStyle)
+			? { ...props.style }
 			: {};
 
 	// Get element properties

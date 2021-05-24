@@ -2,15 +2,14 @@ import type { IconifyIcon } from '@iconify/types';
 import {
 	defaults,
 	mergeCustomisations,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
+} from '@iconify/utils/lib/customisations/shorthand';
+import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type { IconProps } from './props';
 
 /**
@@ -44,7 +43,7 @@ export function render(
 		defaults,
 		props as typeof defaults
 	);
-	const componentProps = merge(svgDefaults) as Record<string, unknown>;
+	const componentProps = { ...svgDefaults } as Record<string, unknown>;
 
 	// Create style if missing
 	let style = typeof props.style === 'string' ? props.style : '';

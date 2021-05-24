@@ -4,6 +4,7 @@
 	"bundledPackages": [
 		"@iconify/types",
 		"@iconify/core",
+		"@iconify/utils",
 		"@cyberalien/redundancy"
 	],
 	"compiler": {},

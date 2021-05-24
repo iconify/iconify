@@ -4,7 +4,7 @@ import {
 	storageFunctions,
 	allowSimpleNames,
 } from '../../lib/storage/functions';
-import { fullIcon } from '../../lib/icon';
+import { fullIcon } from '@iconify/utils/lib/icon';
 
 describe('Testing IconifyStorageFunctions', () => {
 	let count = 0;

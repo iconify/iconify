@@ -54,7 +54,7 @@ export function replaceIDs(
 	}
 
 	// Replace with unique ids
-	ids.forEach(id => {
+	ids.forEach((id) => {
 		const newID =
 			typeof prefix === 'function' ? prefix() : prefix + counter++;
 		body = strReplace('="' + id + '"', '="' + newID + '"', body);

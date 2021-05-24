@@ -1,0 +1,33 @@
+{
+	"name": "@iconify/utils",
+	"description": "Common functions for working with Iconify icon sets used by various packages.",
+	"author": "Vjacheslav Trushkin",
+	"version": "1.0.0",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "packages/utils"
+	},
+	"scripts": {
+		"cleanup": "rm -rf lib compiled-tests",
+		"lint": "npx eslint {src,tests}/**/*.ts",
+		"build": "npx tsc -b",
+		"build:src": "npx tsc --project src/tsconfig.json",
+		"test": "npx mocha tests-compiled/*-test.js",
+		"pretest": "npm run build"
+	},
+	"dependencies": {
+		"@iconify/types": "^1.0.6"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.2.18",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "^15.3.0",
+		"chai": "^4.3.4",
+		"mocha": "^8.4.0",
+		"typescript": "^4.2.4"
+	}
+}

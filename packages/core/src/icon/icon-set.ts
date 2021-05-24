@@ -6,10 +6,9 @@ import type {
 	IconifyIcons,
 	IconifyAliases,
 } from '@iconify/types';
-import type { FullIconifyIcon } from '.';
-import { iconDefaults } from '.';
-import { merge } from '../misc/merge';
-import { mergeIcons } from './merge';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import { iconDefaults } from '@iconify/utils/lib/icon';
+import { mergeIconData } from '@iconify/utils/lib/icon/merge';
 
 /**
  * What to track when adding icon set:
@@ -46,7 +45,7 @@ function resolveAlias(
 ): IconifyIcon | null {
 	const parent = alias.parent;
 	if (icons[parent] !== void 0) {
-		return mergeIcons(icons[parent], (alias as unknown) as IconifyIcon);
+		return mergeIconData(icons[parent], alias);
 	}
 	if (aliases[parent] !== void 0) {
 		if (level > 2) {
@@ -55,7 +54,7 @@ function resolveAlias(
 		}
 		const icon = resolveAlias(aliases[parent], icons, aliases, level + 1);
 		if (icon) {
-			return mergeIcons(icon, (alias as unknown) as IconifyIcon);
+			return mergeIconData(icon, alias);
 		}
 	}
 
@@ -109,7 +108,10 @@ export function parseIconSet(
 		}
 
 		// Freeze icon to make sure it will not be modified
-		callback(name, Object.freeze(merge(iconDefaults, defaults, icon)));
+		callback(
+			name,
+			Object.freeze({ ...iconDefaults, ...defaults, ...icon })
+		);
 		added.push(name);
 	});
 
@@ -122,7 +124,7 @@ export function parseIconSet(
 				// Freeze icon to make sure it will not be modified
 				callback(
 					name,
-					Object.freeze(merge(iconDefaults, defaults, icon))
+					Object.freeze({ ...iconDefaults, ...defaults, ...icon })
 				);
 				added.push(name);
 			}

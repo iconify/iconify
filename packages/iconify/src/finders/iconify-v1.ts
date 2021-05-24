@@ -1,11 +1,11 @@
 import { IconifyFinder } from './interface';
 import { IconifyElement } from '../modules/element';
-import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
+import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
+import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import {
 	flipFromString,
 	alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
+} from '@iconify/utils/lib/customisations/shorthand';
 
 /**
  * Check if attribute exists

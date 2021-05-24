@@ -8,7 +8,7 @@ import {
 	stringToIcon,
 	validateIcon,
 } from '@iconify/core/lib/icon/name';
-import { IconifyIconCustomisations } from '@iconify/core/lib/customisations';
+import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { IconifyFinder } from '../finders/interface';
 
 /**

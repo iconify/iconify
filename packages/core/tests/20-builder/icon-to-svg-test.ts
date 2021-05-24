@@ -2,15 +2,18 @@ import 'mocha';
 import { expect } from 'chai';
 import type { IconifyIconBuildResult } from '../../lib/builder';
 import { iconToSVG } from '../../lib/builder';
-import type { FullIconifyIcon } from '../../lib/icon';
-import { iconDefaults, fullIcon } from '../../lib/icon';
-import type { FullIconCustomisations } from '../../lib/customisations';
-import { defaults, mergeCustomisations } from '../../lib/customisations';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import { fullIcon, iconDefaults } from '@iconify/utils/lib/icon';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
+import {
+	defaults,
+	mergeCustomisations,
+} from '@iconify/utils/lib/customisations';
 
 describe('Testing iconToSVG', () => {
 	it('Empty icon', () => {
 		const custom: FullIconCustomisations = defaults;
-		const icon: FullIconifyIcon = iconDefaults;
+		const icon: FullIconifyIcon = { ...iconDefaults, body: '' };
 		const expected: IconifyIconBuildResult = {
 			attributes: {
 				width: '1em',

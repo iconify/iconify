@@ -1,6 +1,6 @@
-import type { FullIconifyIcon } from '../icon';
-import type { FullIconCustomisations } from '../customisations';
-import { calculateSize } from './calc-size';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 /**
  * Get preserveAspectRatio value

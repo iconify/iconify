@@ -1,8 +1,12 @@
-import { replaceIDs } from './ids';
-import { calculateSize } from './calc-size';
-import { fullIcon, IconifyIcon } from '../icon';
-import { defaults, mergeCustomisations } from '../customisations';
-import type { IconifyIconCustomisations } from '../customisations';
+import type { IconifyIcon } from '@iconify/types';
+import { fullIcon } from '@iconify/utils/lib/icon';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
+import {
+	defaults,
+	mergeCustomisations,
+} from '@iconify/utils/lib/customisations';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { iconToSVG } from '.';
 import type { IconifyIconBuildResult } from '.';
 

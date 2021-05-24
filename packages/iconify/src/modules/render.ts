@@ -1,11 +1,11 @@
-import { FullIconifyIcon } from '@iconify/core/lib/icon';
+import { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import {
 	IconifyIconCustomisations,
 	mergeCustomisations,
 	defaults,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { PlaceholderElement } from './finder';
 import {
 	IconifyElement,

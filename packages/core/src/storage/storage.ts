@@ -1,6 +1,6 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
-import type { FullIconifyIcon } from '../icon';
-import { fullIcon } from '../icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import { fullIcon } from '@iconify/utils/lib/icon';
 import type { AddIconSetTracking } from '../icon/icon-set';
 import { parseIconSet } from '../icon/icon-set';
 
@@ -22,9 +22,8 @@ export interface IconStorage {
 /**
  * Storage by provider and prefix
  */
-const storage: Record<string, Record<string, IconStorage>> = Object.create(
-	null
-);
+const storage: Record<string, Record<string, IconStorage>> =
+	Object.create(null);
 
 /**
  * Create new storage

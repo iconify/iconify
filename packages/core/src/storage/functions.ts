@@ -1,9 +1,8 @@
-import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon, IconifyIcon } from '../icon';
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '../icon/icon-set';
 import type { IconifyIconName } from '../icon/name';
 import { stringToIcon, validateIcon } from '../icon/name';
-import { merge } from '../misc/merge';
 import {
 	getStorage,
 	getIcon,
@@ -136,7 +135,7 @@ export const storageFunctions: IconifyStorageFunctions = {
 	// Get raw icon data
 	getIcon: (name) => {
 		const result = getIconData(name);
-		return result ? merge(result) : null;
+		return result ? { ...result } : null;
 	},
 
 	// List icons

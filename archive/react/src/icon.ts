@@ -8,16 +8,15 @@ import type {
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
 } from '@iconify/core/lib/customisations';
-import { defaults } from '@iconify/core/lib/customisations';
+import { defaults } from '@iconify/utils/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
-import { fullIcon } from '@iconify/core/lib/icon';
+} from '@iconify/utils/lib/customisations/shorthand';
+import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
+import { fullIcon } from '@iconify/utils/lib/icon';
 import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
 
 /**
@@ -86,9 +85,7 @@ const svgDefaults: IconifySVGProps = {
 /**
  * Default values for customisations for inline icon
  */
-const inlineDefaults = merge(defaults, {
-	inline: true,
-} as IconifyIconCustomisations) as FullIconCustomisations;
+const inlineDefaults = { ...defaults, inline: true } as FullIconCustomisations;
 
 /**
  * Storage for icons referred by name
@@ -125,11 +122,8 @@ const component = (
 			: React.createElement('span', {});
 	}
 
-	const customisations = merge(
-		defaults,
-		props as IconifyIconCustomisations
-	) as FullIconCustomisations;
-	const componentProps = merge(svgDefaults);
+	const customisations = { ...defaults, props };
+	const componentProps = { ...svgDefaults };
 
 	// Add reference
 	componentProps.ref = ref;

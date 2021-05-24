@@ -1,19 +1,18 @@
 import type { SVGProps } from 'react';
 import React from 'react';
 import type { IconifyIcon } from '@iconify/types';
-import type { FullIconCustomisations } from '@iconify/core/lib/customisations';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
 	defaults,
 	mergeCustomisations,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	flipFromString,
 	alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
+} from '@iconify/utils/lib/customisations/shorthand';
+import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
-import { merge } from '@iconify/core/lib/misc/merge';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type { IconifyIconCustomisations, IconProps, IconRef } from './props';
 
 /**
@@ -30,9 +29,7 @@ const svgDefaults: SVGProps<SVGElement> = {
 /**
  * Default values for customisations for inline icon
  */
-const inlineDefaults = merge(defaults, {
-	inline: true,
-} as IconifyIconCustomisations) as FullIconCustomisations;
+const inlineDefaults = { ...defaults, inline: true } as FullIconCustomisations;
 
 /**
  * Render icon
@@ -66,10 +63,7 @@ export const render = (
 			: {};
 
 	// Create SVG component properties
-	const componentProps = merge(svgDefaults, {
-		ref,
-		style,
-	});
+	const componentProps = { ...svgDefaults, ref, style };
 
 	// Get element properties
 	for (let key in props) {

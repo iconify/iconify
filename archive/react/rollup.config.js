@@ -1,7 +1,6 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 
 const name = 'icon';
@@ -33,7 +32,7 @@ const config = [
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [resolve(), commonjs()],
 	},
 	// Dev build
 	{
@@ -45,7 +44,7 @@ const config = [
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs(), buble()],
+		plugins: [resolve(), commonjs()],
 	},
 	// Production
 	{
@@ -57,7 +56,7 @@ const config = [
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs(), buble(), terser()],
+		plugins: [resolve(), commonjs(), terser()],
 	},
 ];
 

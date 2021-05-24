@@ -6,7 +6,7 @@ import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	IconifyStorageFunctions,
 	storageFunctions,
@@ -18,7 +18,7 @@ import {
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
 import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
-import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
+import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';

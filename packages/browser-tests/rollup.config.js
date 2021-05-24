@@ -40,7 +40,9 @@ const config = files.map((file) => {
 			commonjs({
 				ignore: ['cross-fetch'],
 			}),
-			buble(),
+			buble({
+				objectAssign: 'Object.assign',
+			}),
 		],
 	};
 });

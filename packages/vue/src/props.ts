@@ -1,5 +1,5 @@
 import { IconifyIcon } from '@iconify/types';
-import { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/core/lib/customisations';
+import { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/utils/lib/customisations';
 
 export { RawIconCustomisations };
 

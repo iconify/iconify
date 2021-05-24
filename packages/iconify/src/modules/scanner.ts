@@ -1,7 +1,7 @@
 import { IconifyIconName } from '@iconify/core/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage/storage';
 import { coreModules } from '@iconify/core/lib/modules';
-import { FullIconifyIcon } from '@iconify/core/lib/icon';
+import { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { findPlaceholders } from './finder';
 import { IconifyElementData, elementDataProperty } from './element';
 import { renderIcon } from './render';
@@ -77,10 +77,8 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 	scanQueued = false;
 
 	// List of icons to load: [provider][prefix][name] = boolean
-	const loadIcons: Record<
-		string,
-		Record<string, Record<string, boolean>>
-	> = Object.create(null);
+	const loadIcons: Record<string, Record<string, Record<string, boolean>>> =
+		Object.create(null);
 
 	// Get placeholders
 	(node ? [node] : listRootNodes()).forEach((node) => {

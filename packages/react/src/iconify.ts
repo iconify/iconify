@@ -1,5 +1,5 @@
 import React from 'react';
-import type { IconifyJSON } from '@iconify/types';
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
 import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
@@ -7,7 +7,7 @@ import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import {
 	IconifyStorageFunctions,
 	storageFunctions,
@@ -19,7 +19,7 @@ import {
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
 import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
-import { fullIcon, IconifyIcon } from '@iconify/core/lib/icon';
+import { fullIcon } from '@iconify/utils/lib/icon';
 
 // Modules
 import { coreModules } from '@iconify/core/lib/modules';
@@ -76,7 +76,6 @@ import type {
 
 // Render SVG
 import { render } from './render';
-import { merge } from '@iconify/core/lib/misc/merge';
 
 /**
  * Export required types
@@ -473,12 +472,13 @@ class IconComponent extends React.Component<
 		// Add classes
 		let newProps = props;
 		if (icon.classes) {
-			newProps = merge(props, {
+			newProps = {
+				...props,
 				className:
 					(typeof props.className === 'string'
 						? props.className + ' '
 						: '') + icon.classes.join(' '),
-			} as typeof props);
+			};
 		}
 
 		// Render icon
@@ -498,10 +498,11 @@ export type Component = (props: IconProps) => JSX.Element;
  */
 export const Icon: Component = React.forwardRef(
 	(props: IconProps, ref?: IconRef) => {
-		const newProps = merge(props as Partial<InternalIconProps>, {
+		const newProps = {
+			...props,
 			_ref: ref,
 			_inline: false,
-		}) as InternalIconProps;
+		};
 		return React.createElement(IconComponent, newProps);
 	}
 );
@@ -513,10 +514,7 @@ export const Icon: Component = React.forwardRef(
  */
 export const InlineIcon: Component = React.forwardRef(
 	(props: IconProps, ref?: IconRef) => {
-		const newProps = merge(props as Partial<InternalIconProps>, {
-			_ref: ref,
-			_inline: true,
-		}) as InternalIconProps;
+		const newProps = { ...props, _ref: ref, _inline: true };
 		return React.createElement(IconComponent, newProps);
 	}
 );

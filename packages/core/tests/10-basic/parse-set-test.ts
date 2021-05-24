@@ -2,7 +2,7 @@ import 'mocha';
 import { expect } from 'chai';
 import type { IconifyJSON } from '@iconify/types';
 import { parseIconSet } from '../../lib/icon/icon-set';
-import type { FullIconifyIcon } from '../../lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 
 describe('Testing parsing icon set', () => {
 	it('Simple icon set', () => {
@@ -349,7 +349,7 @@ describe('Testing parsing icon set', () => {
 			},
 		};
 
-		const iconSet: IconifyJSON = ({
+		const iconSet: IconifyJSON = {
 			icons: {
 				icon1: {
 					body: '<path d="icon1" />',
@@ -372,7 +372,7 @@ describe('Testing parsing icon set', () => {
 				foo: 1,
 			},
 			hFlip: null,
-		} as unknown) as IconifyJSON;
+		} as unknown as IconifyJSON;
 
 		// Do stuff
 		expect(

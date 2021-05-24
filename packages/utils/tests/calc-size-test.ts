@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { calculateSize } from '../../lib/builder/calc-size';
+import { calculateSize } from '../lib/svg/size';
 
 describe('Testing calcSize', () => {
 	it('Simple size', () => {
