@@ -1,4 +1,4 @@
-import type { IconifyIconName } from '../icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 
 /**
  * Function to abort loading (usually just removes callback because loading is already in progress)

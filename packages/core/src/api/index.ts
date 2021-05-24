@@ -15,7 +15,10 @@ import type { IconifyAPIConfig } from './config';
 import { getAPIConfig } from './config';
 import { getStorage, addIconSet } from '../storage/storage';
 import { coreModules } from '../modules';
-import type { IconifyIconName, IconifyIconSource } from '../icon/name';
+import type {
+	IconifyIconName,
+	IconifyIconSource,
+} from '@iconify/utils/lib/icon/name';
 import { listToIcons } from '../icon/list';
 import { allowSimpleNames } from '../storage/functions';
 
@@ -35,10 +38,8 @@ function emptyCallback(): void {
  * [provider][prefix][icon] = time when icon was added to queue
  */
 type PendingIcons = Record<string, number>;
-const pendingIcons: Record<
-	string,
-	Record<string, PendingIcons>
-> = Object.create(null);
+const pendingIcons: Record<string, Record<string, PendingIcons>> =
+	Object.create(null);
 
 /**
  * List of icons that are waiting to be loaded.
@@ -50,14 +51,12 @@ const pendingIcons: Record<
  *
  * [provider][prefix] = array of icon names
  */
-const iconsToLoad: Record<string, Record<string, string[]>> = Object.create(
-	null
-);
+const iconsToLoad: Record<string, Record<string, string[]>> =
+	Object.create(null);
 
 // Flags to merge multiple synchronous icon requests in one asynchronous request
-const loaderFlags: Record<string, Record<string, boolean>> = Object.create(
-	null
-);
+const loaderFlags: Record<string, Record<string, boolean>> =
+	Object.create(null);
 const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
 
 // Redundancy instances cache, sorted by provider
@@ -65,10 +64,8 @@ export interface IconifyAPIInternalStorage {
 	config: IconifyAPIConfig;
 	redundancy: Redundancy;
 }
-const redundancyCache: Record<
-	string,
-	IconifyAPIInternalStorage
-> = Object.create(null);
+const redundancyCache: Record<string, IconifyAPIInternalStorage> =
+	Object.create(null);
 
 /**
  * Get Redundancy instance for provider
@@ -296,9 +293,8 @@ const loadIcons: IconifyLoadIcons = (
 	}
 
 	// Get all sources for pending icons
-	const newIcons: Record<string, Record<string, string[]>> = Object.create(
-		null
-	);
+	const newIcons: Record<string, Record<string, string[]>> =
+		Object.create(null);
 	const sources: IconifyIconSource[] = [];
 	let lastProvider: string, lastPrefix: string;
 

@@ -1,6 +1,6 @@
 import type { IconifyAPIInternalStorage } from '.';
 import { API, getRedundancyCache } from '.';
-import type { IconifyIconName } from '../icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,

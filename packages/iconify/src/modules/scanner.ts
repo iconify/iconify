@@ -1,4 +1,4 @@
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage/storage';
 import { coreModules } from '@iconify/core/lib/modules';
 import { FullIconifyIcon } from '@iconify/utils/lib/icon';

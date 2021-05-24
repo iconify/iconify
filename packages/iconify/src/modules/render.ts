@@ -4,7 +4,7 @@ import {
 	mergeCustomisations,
 	defaults,
 } from '@iconify/utils/lib/customisations';
-import { iconToSVG } from '@iconify/core/lib/builder';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { PlaceholderElement } from './finder';
 import {

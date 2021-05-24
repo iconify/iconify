@@ -7,8 +7,8 @@ import {
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
 import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
-import { iconToSVG } from '.';
-import type { IconifyIconBuildResult } from '.';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
+import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 
 /**
  * Interface for exported builder functions

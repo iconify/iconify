@@ -7,7 +7,7 @@ import type {
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
-} from '@iconify/core/lib/customisations';
+} from '@iconify/utils/lib/customisations';
 import { defaults } from '@iconify/utils/lib/customisations';
 import {
 	flipFromString,
@@ -15,7 +15,7 @@ import {
 } from '@iconify/utils/lib/customisations/shorthand';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { fullIcon } from '@iconify/utils/lib/icon';
-import { iconToSVG } from '@iconify/core/lib/builder';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
 

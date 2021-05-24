@@ -1,7 +1,7 @@
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
@@ -17,7 +17,7 @@ import {
 	IconifyBuilderFunctions,
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
-import type { IconifyIconBuildResult } from '@iconify/core/lib/builder';
+import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
 
 // Modules

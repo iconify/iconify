@@ -1,5 +1,5 @@
-import type { IconifyIconName } from './name';
-import { stringToIcon, validateIcon } from './name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
 
 /**
  * Convert icons list from string/icon mix to icons and validate them

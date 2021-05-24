@@ -11,7 +11,7 @@ import {
 	alignmentFromString,
 } from '@iconify/utils/lib/customisations/shorthand';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
-import { iconToSVG } from '@iconify/core/lib/builder';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type { IconifyIconCustomisations, IconProps, IconRef } from './props';
 

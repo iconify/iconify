@@ -1,5 +1,5 @@
 import { IconifyJSON } from '@iconify/types';
-import { stringToIcon } from '@iconify/core/lib/icon/name';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	defaults,
@@ -9,7 +9,10 @@ import {
 	storageFunctions,
 	getIconData,
 } from '@iconify/core/lib/storage/functions';
-import { iconToSVG, IconifyIconBuildResult } from '@iconify/core/lib/builder';
+import {
+	iconToSVG,
+	IconifyIconBuildResult,
+} from '@iconify/utils/lib/svg/build';
 import { renderIcon } from './modules/render';
 import {
 	initObserver,

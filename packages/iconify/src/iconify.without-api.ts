@@ -1,13 +1,13 @@
 // Core
 import { IconifyJSON, IconifyIcon } from '@iconify/types';
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 } from '@iconify/utils/lib/customisations';
-import { IconifyIconBuildResult } from '@iconify/core/lib/builder';
+import { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import {
 	IconifyStorageFunctions,
 	storageFunctions,

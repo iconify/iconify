@@ -9,7 +9,7 @@ import {
 } from '@iconify/react/lib/icon';
 
 // Core
-import { IconifyIconName, stringToIcon } from '@iconify/core/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
 import {
 	IconifyIconCustomisations,
 	IconifyIconSize,

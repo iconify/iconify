@@ -1,5 +1,5 @@
 import type { IconifyLoadIcons } from './loader';
-import type { IconifyIconName } from '../icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 
 /**
  * Function to check if icon is pending

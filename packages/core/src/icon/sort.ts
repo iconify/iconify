@@ -1,6 +1,6 @@
 import type { IconStorage } from '../storage/storage';
 import { getStorage } from '../storage/storage';
-import type { IconifyIconName } from './name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 
 /**
  * Sorted icons list
@@ -20,9 +20,8 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		missing: [],
 		pending: [],
 	};
-	const storage: Record<string, Record<string, IconStorage>> = Object.create(
-		null
-	);
+	const storage: Record<string, Record<string, IconStorage>> =
+		Object.create(null);
 
 	// Sort icons alphabetically to prevent duplicates and make sure they are sorted in API queries
 	icons.sort((a, b) => {

@@ -1,4 +1,4 @@
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { IconifyFinder } from '../finders/interface';
 
