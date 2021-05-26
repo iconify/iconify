@@ -25,12 +25,12 @@
 	"module": "dist/iconify.mjs",
 	"types": "dist/iconify.d.ts",
 	"devDependencies": {
-		"@iconify/core": "^1.1.0",
+		"@iconify/core": "^1.1.1",
 		"@iconify/types": "^1.0.6",
-		"@iconify/utils": "^1.0.0",
-		"@microsoft/api-extractor": "^7.12.0",
-		"@rollup/plugin-commonjs": "^16.0.0",
-		"@rollup/plugin-node-resolve": "^10.0.0",
+		"@iconify/utils": "^1.0.2",
+		"@microsoft/api-extractor": "^7.15.2",
+		"@rollup/plugin-commonjs": "^19.0.0",
+		"@rollup/plugin-node-resolve": "^13.0.0",
 		"@types/jest": "^26.0.15",
 		"@vue/cli-plugin-unit-jest": "^4.5.13",
 		"@vue/test-utils": "^2.0.0-rc.6",
@@ -40,7 +40,7 @@
 		"jest": "^24.9.0",
 		"rollup": "^2.33.3",
 		"typescript": "^4.1.2",
-		"vue": "3.0.11",
+		"vue": "3",
 		"vue-jest": "^5.0.0-alpha.9"
 	},
 	"peerDependencies": {

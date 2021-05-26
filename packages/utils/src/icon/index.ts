@@ -28,13 +28,6 @@ export const minifyProps: (keyof IconifyDimenisons)[] = [
 ];
 
 /**
- * Optional properties that must be copied when copying icon set
- */
-export const propsToCopy: (keyof IconifyJSON)[] = (
-	minifyProps as (keyof IconifyJSON)[]
-).concat(['provider']);
-
-/**
  * Default values for all optional IconifyIcon properties
  */
 export const iconDefaults: Required<IconifyOptional> = Object.freeze({

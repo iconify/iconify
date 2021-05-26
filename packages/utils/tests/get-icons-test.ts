@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { getIcons } from '../lib/icon-set';
+import { getIcons } from '../lib/icon-set/get-icons';
 import type { IconifyJSON } from '@iconify/types';
 
 describe('Testing retrieving icons from icon set', () => {

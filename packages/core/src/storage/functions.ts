@@ -1,6 +1,6 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { parseIconSet } from '../icon/icon-set';
+import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
 import {

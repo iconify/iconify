@@ -7,7 +7,7 @@ import {
 	IconifyIconSize,
 } from '@iconify/utils/lib/customisations';
 import { fullIcon } from '@iconify/utils/lib/icon';
-import { parseIconSet } from '@iconify/core/lib/icon/icon-set';
+import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import {
 	IconifyIconCustomisations,
 	IconifyIconProps,

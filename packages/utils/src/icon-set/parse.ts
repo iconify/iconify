@@ -6,9 +6,9 @@ import type {
 	IconifyIcons,
 	IconifyAliases,
 } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { iconDefaults } from '@iconify/utils/lib/icon';
-import { mergeIconData } from '@iconify/utils/lib/icon/merge';
+import type { FullIconifyIcon } from '../icon';
+import { iconDefaults } from '../icon';
+import { mergeIconData } from '../icon/merge';
 
 /**
  * What to track when adding icon set:

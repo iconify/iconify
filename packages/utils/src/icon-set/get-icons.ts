@@ -1,6 +1,12 @@
-import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import { propsToCopy, fullIcon } from '../icon';
-import { mergeIconData } from '../icon/merge';
+import type { IconifyJSON } from '@iconify/types';
+import { minifyProps } from '../icon';
+
+/**
+ * Optional properties that must be copied when copying icon set
+ */
+export const propsToCopy: (keyof IconifyJSON)[] = (
+	minifyProps as (keyof IconifyJSON)[]
+).concat(['provider']);
 
 /**
  * Extract icons from icon set
@@ -80,45 +86,4 @@ export function getIcons(
 	});
 
 	return empty && not_found !== true ? null : result;
-}
-
-/**
- * Get data for icon
- */
-export function getIconData(
-	data: IconifyJSON,
-	name: string,
-	full = false
-): IconifyIcon | null {
-	function getIcon(name: string, iteration: number): IconifyIcon | null {
-		if (data.icons[name] !== void 0) {
-			// Return icon
-			return Object.assign({}, data.icons[name]);
-		}
-
-		// Check loop
-		if (iteration > 5) {
-			return null;
-		}
-
-		// Check if alias exists
-		if (data.aliases?.[name] !== void 0) {
-			const item = data.aliases?.[name];
-			const result = getIcon(item.parent, iteration + 1);
-			if (result) {
-				mergeIconData(result, item);
-			}
-			return result;
-		}
-
-		// Check if character exists
-		if (iteration === 0 && data.chars?.[name] !== void 0) {
-			return getIcon(data.chars?.[name], iteration + 1);
-		}
-
-		return null;
-	}
-
-	const result = getIcon(name, 0);
-	return result && full ? fullIcon(result) : result;
 }

@@ -2,7 +2,7 @@
 	"name": "@iconify/core",
 	"description": "Reusable files used by multiple Iconify packages",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"@cyberalien/redundancy": "^1.1.0",
-		"@iconify/utils": "^1.0.0",
-		"@iconify/types": "^1.0.6"
+		"@iconify/types": "^1.0.6",
+		"@iconify/utils": "^1.0.2"
 	}
 }

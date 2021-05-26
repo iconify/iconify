@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { getIconData } from '../lib/icon-set';
+import { getIconData } from '../lib/icon-set/get-icon';
 
 describe('Testing getting icon data', () => {
 	it('Simple icon', () => {
