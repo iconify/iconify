@@ -20,9 +20,9 @@ export type IconifyIconSource = Omit<IconifyIconName, 'name'>;
 export const stringToIcon = (
 	value: string,
 	validate?: boolean,
-	allowSimpleName?: boolean
+	allowSimpleName?: boolean,
+	provider = ''
 ): IconifyIconName | null => {
-	let provider = '';
 	const colonSeparated = value.split(':');
 
 	// Check for provider with correct '@' at start
