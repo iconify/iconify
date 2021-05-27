@@ -1,5 +1,5 @@
-import type { IconifyJSON } from '@iconify/types';
-import { fullIcon, IconifyIcon, FullIconifyIcon } from '../icon';
+import type { IconifyJSON, IconifyOptional } from '@iconify/types';
+import { fullIcon, IconifyIcon, FullIconifyIcon, iconDefaults } from '../icon';
 import { mergeIconData } from '../icon/merge';
 
 /**
@@ -50,5 +50,20 @@ export function getIconData(
 	}
 
 	const result = getIcon(name, 0);
+
+	// Add default properties
+	if (result) {
+		for (const key in iconDefaults) {
+			if (
+				result[key as keyof IconifyOptional] === void 0 &&
+				data[key as keyof IconifyOptional] !== void 0
+			) {
+				(result as unknown as Record<string, unknown>)[key] =
+					data[key as keyof IconifyOptional];
+			}
+		}
+	}
+
+	// Return icon
 	return result && full ? fullIcon(result) : result;
 }
