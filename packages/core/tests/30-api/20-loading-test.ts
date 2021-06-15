@@ -213,6 +213,8 @@ describe('Testing API loadIcons', () => {
 			item.done({
 				prefix,
 				icons,
+				// Test mismatched provider: should be ignored because provider name is not affected by actual API response
+				provider: nextPrefix(),
 			});
 		};
 
