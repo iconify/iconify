@@ -9,7 +9,7 @@ import {
 import { IconifyFinder } from '@iconify/iconify/lib/finders/interface';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify-v1';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-v1-icon';
-import { IconifyIconName } from '@iconify/core/lib/icon/name';
+import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 
 const expect = chai.expect;
 

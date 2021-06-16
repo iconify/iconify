@@ -10,7 +10,7 @@ const selector =
 	'span.iconify, i.iconify, span.iconify-inline, i.iconify-inline';
 
 // Do not observe document.body!
-Iconify.stopObserving(document.body);
+Iconify.stopObserving(document.documentElement);
 
 // Create node to observe
 const observedNode = getNode('iconify-api');

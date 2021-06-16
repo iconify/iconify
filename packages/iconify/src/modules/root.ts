@@ -48,12 +48,12 @@ export function addRootNode(
  * Add document.body node
  */
 export function addBodyNode(): ObservedNode {
-	if (document.body) {
-		return addRootNode(document.body);
+	if (document.documentElement) {
+		return addRootNode(document.documentElement);
 	}
 	nodes.push({
 		node: () => {
-			return document.body;
+			return document.documentElement;
 		},
 	});
 }
