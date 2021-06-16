@@ -1,27 +1,23 @@
 # Iconify for React
 
-Note: this documentation is for version 2.0. It has not been updated for 3.0 yet.
-
 Iconify for React is not yet another icon component! There are many of them already.
 
-Iconify is the most versatile icon framework.
+What you get with other components:
 
--   Unified icon framework that can be used with any icon library.
--   Out of the box includes 80+ icon sets with more than 70,000 icons.
--   Embed icons in HTML with SVG framework or components for front-end frameworks.
--   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
--   Add icon search to your applications with Iconify Icon Finder.
+-   Limited set of icons.
+-   Large bundle size because all icons are bundled.
 
-For more information visit [https://iconify.design/](https://iconify.design/).
+Iconify icon component is nothing like that. Component does not include any icon data, it is not tied to any specific icon set. Instead, all data is retrieved from public API on demand.
 
-Iconify for React is a part of Iconify framework that makes it easy to use many icon libraries with React.
+That means:
 
-Iconify for React features:
+-   One syntax for over 80,000 icons from 90+ icon sets.
+-   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
+-   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
 
--   Easy to use.
--   Bundles only icons that you need.
--   Change icon size and colour by changing font size and colour.
--   Renders pixel-perfect SVG.
+For more information about Iconify project visit [https://iconify.design/](https://iconify.design/).
+
+For extended documentation visit [Iconify for React documentation](https://docs.iconify.design/icon-components/react/).
 
 ## Installation
 
@@ -37,99 +33,139 @@ If you are using Yarn:
 yarn add --dev @iconify/react
 ```
 
-This package does not include icons. Icons are split into separate packages that available at NPM. See below.
+## Usage with API
 
-## Usage
-
-Install `@iconify/react` and packages for selected icon sets. Import `Icon` and/or `InlineIcon` from `@iconify/react` and icon data for icon you want to use:
+Install `@iconify/react` and import `Icon` from it:
 
 ```typescript
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
+```
+
+Then use `Icon` component with icon name or data as "icon" parameter:
+
+```jsx
+<Icon icon="mdi-light:home" />
+```
+
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 80,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+
+## Offline Usage
+
+Retrieving icon data from Iconify API requires visitor to be online. What if you want to use component offline or on local network?
+
+If you want to use icon component without relying on public Iconify API, there are several options:
+
+1. You can import icon data from Iconify Icons packages.
+2. You can create custom icon bundles (more efficient, but requires more coding).
+3. You can host your own Iconify API instead of relying on third party service.
+
+See [Iconify for React offline use documentation](https://docs.iconify.design/icon-components/react/offline.html) or [Iconify API documentation](https://docs.iconify.design/sources/api/).
+
+## Icon Names
+
+Icon name is a string. Few examples:
+
+-   `@api-provider:icon-set-prefix:icon-name`
+-   `mdi-light:home` (in this example API provider is empty, so it is skipped)
+
+It has 3 parts, separated by ":":
+
+-   provider points to API source. Starts with "@", can be empty (empty value is used for public Iconify API).
+-   prefix is name of icon set.
+-   name is name of icon.
+
+See [Iconify for React icon names documentation](https://docs.iconify.design/icon-components/react/icon-name.html) for more detailed explanation.
+
+## Using icon data
+
+Instead of icon name, you can pass icon data to component:
+
+```jsx
+import { Icon } from '@iconify/react';
 import home from '@iconify-icons/mdi-light/home';
-import faceWithMonocle from '@iconify-icons/twemoji/face-with-monocle';
-```
 
-Then use `Icon` or `InlineIcon` component with icon data as "icon" parameter:
-
-```jsx
-<Icon icon={home} />
-<p>This is some text with <InlineIcon icon={faceWithMonocle} /></p>
-```
-
-### String syntax
-
-String syntax passes icon name to the component.
-
-With this method the icon needs to be added only once. That means if you have multiple components using 'home' icon, you can add it only in your main component. This makes it easy to swap icons for an entire application.
-
-```jsx
-import React from 'react';
-import { Icon, addIcon } from '@iconify/react';
-import homeIcon from '@iconify-icons/mdi-light/home';
-
-addIcon('home', homeIcon);
-
-export function MyComponent() {
-	return (
-		<div>
-			<Icon icon="home" />
-		</div>
-	);
+function renderHomeIcon() {
+	return <Icon icon={home} />;
 }
 ```
 
-Instead of adding icons one by one using `addIcon` function, you can import an entire icon set using `addCollection` function:
-
-```jsx
-import React from 'react';
-import { Icon, addCollection } from '@iconify/react';
-
-// Import requires bundler that can import JSON files
-import jamIcons from '@iconify/json/json/jam.json';
-
-// Function automatically adds prefix from icon set, which in this case is 'jam', followed by ':', so
-// icon names added by function should be called with prefix, such as 'jam:home'
-addCollection(jamIcons);
-
-// Example without prefix, all icons will have names as is, such as 'home'
-// addCollection(jamIcons, false);
-
-export function MyComponent() {
-	return (
-		<div>
-			<Icon icon="jam:home" />
-		</div>
-	);
-}
-```
-
-Example above imports an entire icon set. To learn how to create smaller bundles, check out Iconify documentation: https://docs.iconify.design/sources/bundles/
+See [icon packages documentation](https://docs.iconify.design/sources/npm/) for more details.
 
 ### Next.js notice
 
-Code above will currently fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
+Example above will currently fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
 
 To switch to CommonJS package, replace this line in example above:
 
 ```js
-import homeIcon from '@iconify-icons/mdi-light/home';
+import home from '@iconify-icons/mdi-light/home';
 ```
 
 with
 
 ```js
-import homeIcon from '@iconify/icons-mdi-light/home';
+import home from '@iconify/icons-mdi-light/home';
 ```
 
-All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers.
+All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers. ES modules use format `@iconify-icons/{prefix}`, CommonJS modules use `@iconify/icons-{prefix}`.
 
-For more details, see "Icon packages" section below.
+For more details, see "Offline icon packages" section below.
 
-## Icon and InlineIcon
+## Inline icon
 
-Both components are the same, the only difference is `InlineIcon` has a negative vertical alignment, so it behaves like a glyph.
+Icons have 2 modes: inline and block. Difference between modes is `vertical-align` that is added to inline icons.
 
-Use `Icon` for decorations, `InlineIcon` if you are migrating from glyph font.
+Inline icons are aligned slightly below baseline, so they look centred compared to text, like glyph fonts.
+
+Block icons do not have alignment, like images, which aligns them to baseline by default.
+
+Alignment option was added to make icons look like continuation of text, behaving like glyph fonts. This should make migration from glyph fonts easier.
+
+```jsx
+import React from 'react';
+import { Icon, InlineIcon } from '@iconify/react';
+
+export function inlineDemo() {
+	return (
+		<div>
+			<p>
+				Block:
+				<Icon icon="line-md:image-twotone" />
+				<Icon icon="mdi:account-box-outline" />
+			</p>
+			<p>
+				Inline:
+				<InlineIcon icon="line-md:image-twotone" />
+				<InlineIcon icon="mdi:account-box-outline" />
+			</p>
+		</div>
+	);
+}
+```
+
+To toggle between block and inline modes, you can either use `InlineIcon` or use boolean `inline` property:
+
+```jsx
+import React from 'react';
+import { Icon } from '@iconify/react';
+
+export function inlineDemo() {
+	return (
+		<div>
+			<p>
+				Block:
+				<Icon icon="line-md:image-twotone" />
+				<Icon icon="mdi:account-box-outline" />
+			</p>
+			<p>
+				Inline:
+				<Icon icon="line-md:image-twotone" inline={true} />
+				<Icon icon="mdi:account-box-outline" inline={true} />
+			</p>
+		</div>
+	);
+}
+```
 
 Visual example to show the difference between inline and block modes:
 
@@ -137,11 +173,11 @@ Visual example to show the difference between inline and block modes:
 
 ## Icon component properties
 
-`icon` property is mandatory. It tells component what icon to render. If the property value is invalid, the component will render an empty icon. The value can be a string containing the icon name (icon must be registered before use by calling `addIcon` or `addCollection`, see instructions above) or an object containing the icon data.
+`icon` property is mandatory. It tells component what icon to render. The value can be a string containing the icon name or an object containing the icon data.
 
 The icon component has the following optional properties:
 
--   `inline`. Changes icon behaviour to match icon fonts. See "Icon and InlineIcon" section above.
+-   `inline`. Changes icon behaviour to match icon fonts. See "Inline icon" section above.
 -   `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
 -   `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
 -   `flip`, `hFlip`, `vFlip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
@@ -174,7 +210,7 @@ You can use numbers for `width` and `height`.
 ```
 
 ```jsx
-<Icon icon="experiment" width={16} height={16} />
+<Icon icon="mdi-light:home" width={16} height={16} />
 ```
 
 Number values are treated as pixels. That means in examples above, values are identical to "24px" and "16px".
@@ -188,7 +224,7 @@ If you use strings without units, they are treated the same as numbers in an exa
 ```
 
 ```jsx
-<Icon icon="experiment" width="16" height={'16'} />
+<Icon icon="mdi-light:home" width="16" height={'16'} />
 ```
 
 #### Dimensions as strings with units
@@ -196,7 +232,7 @@ If you use strings without units, they are treated the same as numbers in an exa
 You can use units in width and height values:
 
 ```jsx
-<Icon icon={homeIcon} height="2em" />
+<Icon icon="mdi-light:home" height="2em" />
 ```
 
 Be careful when using `calc`, view port based units or percentages. In SVG element they might not behave the way you expect them to behave and when using such units, you should consider settings both width and height.
@@ -206,7 +242,7 @@ Be careful when using `calc`, view port based units or percentages. In SVG eleme
 Keyword "auto" sets dimensions to the icon's `viewBox` dimensions. For example, for 24 x 24 icon using `height="auto"` sets height to 24 pixels.
 
 ```jsx
-<Icon icon={homeIcon} height="auto" />
+<Icon icon="mdi-light:home" height="auto" />
 ```
 
 ### Icon colour
@@ -225,21 +261,21 @@ Examples:
 Using `color` property:
 
 ```jsx
-<Icon icon={alertIcon} color="red" />
-<Icon icon={alertIcon} color="#f00" />
+<Icon icon="eva:alert-triangle-fill" color="red" />
+<Icon icon="eva:alert-triangle-fill" color="#f00" />
 ```
 
 Using inline style:
 
 ```jsx
-<Icon icon={alertIcon} style={{color: 'red'}} />
-<Icon icon={alertIcon} style={{color: '#f00'}} />
+<Icon icon="eva:alert-triangle-fill" style={{color: 'red'}} />
+<Icon icon="eva:alert-triangle-fill" style={{color: '#f00'}} />
 ```
 
 Using stylesheet:
 
 ```jsx
-<Icon icon={alertIcon} className="red-icon" />
+<Icon icon="eva:alert-triangle-fill" className="red-icon" />
 ```
 
 ```css
@@ -264,7 +300,7 @@ Rotating 16x24 icon by 90 degrees results in:
 -   CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
 -   Icon transformation changes bounding box to 24x16, rotating content inside an icon.
 
-_TODO: show visual example_
+See [icon transformations documentation](https://docs.iconify.design/icon-components/react/transform.html) for more details.
 
 #### Flipping an icon
 
@@ -279,22 +315,22 @@ Examples:
 Flip an icon horizontally:
 
 ```jsx
-<Icon icon={alertIcon} hFlip={true} />
-<Icon icon={alertIcon} flip="horizontal" />
+<Icon icon="eva:alert-triangle-fill" hFlip={true} />
+<Icon icon="eva:alert-triangle-fill" flip="horizontal" />
 ```
 
 Flip an icon vertically:
 
 ```jsx
-<Icon icon={alertIcon} vFlip={true} />
-<Icon icon={alertIcon} flip="vertical" />
+<Icon icon="eva:alert-triangle-fill" vFlip={true} />
+<Icon icon="eva:alert-triangle-fill" flip="vertical" />
 ```
 
 Flip an icon horizontally and vertically (the same as 180 degrees rotation):
 
 ```jsx
-<Icon icon={alertIcon} hFlip={true} vFlip={true} />
-<Icon icon={alertIcon} flip="horizontal,vertical" />
+<Icon icon="eva:alert-triangle-fill" hFlip={true} vFlip={true} />
+<Icon icon="eva:alert-triangle-fill" flip="horizontal,vertical" />
 ```
 
 #### Rotating an icon
@@ -308,179 +344,19 @@ Number values are 1 for 90 degrees, 2 for 180 degrees, 3 for 270 degrees.
 Examples of 90 degrees rotation:
 
 ```jsx
-<Icon icon={alertIcon} rotate={1} />
-<Icon icon={alertIcon} rotate="90deg" />
-<Icon icon={alertIcon} rotate="25%" />
+<Icon icon="eva:alert-triangle-fill" rotate={1} />
+<Icon icon="eva:alert-triangle-fill" rotate="90deg" />
+<Icon icon="eva:alert-triangle-fill" rotate="25%" />
 ```
 
-### Alignment
+## Full documentation
 
-Alignment matters only if you set the icon's width and height properties that do not match the viewBox with and height.
-
-For example, if the icon is 24x24 and you set the width to 32 and height to 24. You must set both `width` and `height` properties for this to happen or use stylesheet to set both icon's width and height.
-
-#### Stretching SVG
-
-When you use incorrect width/height ratio for other images, browser stretches those images.
-
-Unlike other images, SVG elements do not stretch. Instead, browser either adds space on sides of the icon (this is the default behaviour) or crops part of the icon.
-
-![Stretching image and SVG](https://iconify.design/assets/images/align-img.svg)
-
-#### Alignment properties
-
-You can control the behaviour of SVG when using incorrect width/height ratio by setting alignment properties:
-
--   `hAlign`: string property to set horizontal alignment. Possible values are "left", "center" and "right".
--   `vAlign`: string property to set vertical alignment. Possible values are "top", "middle" and "bottom".
--   `slice`: boolean property. See below.
--   `align`: shorthand string property. Value is the combination of vertical alignment values, horizontal alignment values, "meet" (same as `slice={false}`) and "slice" (same as `slice={true}`) separated by comma.
-
-Example of aligning an icon to the left if icon is not square:
-
-```jsx
-<Icon icon="experiment" width="1em" height="1em" hAlign="left" />
-```
-
-#### Slice
-
-Slice property tells the browser how to deal with extra space.
-
-By default, `slice` is disabled. The browser will scale the icon to fit the bounding box.
-
-Example showing the icon behaviour when `slice` is disabled with various alignment values:
-
-![SVG alignment](https://iconify.design/assets/images/align-meet.svg)
-
-If `slice` is enabled, the browser will scale the icon to fill the bounding box and hide parts that do not fit.
-
-Example showing the icon behaviour when `slice` is enabled with various alignment values:
-
-![SVG alignment](https://iconify.design/assets/images/align-slice.svg)
-
-## Icon Packages
-
-As of version 1.1.0 this package no longer includes icons. There are over 70k icons, each in its own file. That takes a lot of disc space. Because of that icons were moved to multiple separate packages, one package per icon set.
-
-You can find all available icons at https://iconify.design/icon-sets/
-
-Browse or search icons, click any icon and you will see a "React" tab that will give you exact code for the React component.
-
-Import format for each icon is `@iconify-icons/{prefix}/{icon}` (for ES modules) or `@iconify/icons-{prefix}/{icon}` (for CommonJS modules), where `{prefix}` is collection prefix, and `{icon}` is the icon name.
-
-Usage examples for a few popular icon packages:
-
-### Material Design Icons
-
-Package: https://www.npmjs.com/package/@iconify-icons/mdi
-
-Icons list: https://iconify.design/icon-sets/mdi/
-
-Installation:
-
-```bash
-npm install --save-dev @iconify-icons/mdi
-```
-
-Usage:
-
-```js
-import { Icon, InlineIcon } from '@iconify/react';
-import home from '@iconify-icons/mdi/home';
-import accountCheck from '@iconify-icons/mdi/account-check';
-```
-
-```jsx
-<Icon icon={home} />
-<p>This is some text with <InlineIcon icon={accountCheck} /></p>
-```
-
-### Simple Icons (big collection of logos)
-
-Package: https://www.npmjs.com/package/@iconify-icons/simple-icons
-
-Icons list: https://iconify.design/icon-sets/simple-icons/
-
-Installation:
-
-```bash
-npm install --save-dev @iconify-icons/simple-icons
-```
-
-Usage:
-
-```js
-import { Icon, InlineIcon } from '@iconify/react';
-import behanceIcon from '@iconify-icons/simple-icons/behance';
-import mozillafirefoxIcon from '@iconify-icons/simple-icons/mozillafirefox';
-```
-
-```jsx
-<Icon icon={behanceIcon} />
-<p>
-	Mozilla Firefox <InlineIcon icon={mozillafirefoxIcon} /> is the best
-	browser!
-</p>
-```
-
-### Font Awesome 5 Solid
-
-Package: https://www.npmjs.com/package/@iconify-icons/fa-solid
-
-Icons list: https://iconify.design/icon-sets/fa-solid/
-
-Installation:
-
-```bash
-npm install --save-dev @iconify-icons/fa-solid
-```
-
-Usage:
-
-```js
-import { Icon, InlineIcon } from '@iconify/react';
-import toggleOn from '@iconify-icons/fa-solid/toggle-on';
-import chartBar from '@iconify-icons/fa-solid/chart-bar';
-```
-
-```jsx
-<Icon icon={chartBar} />
-<p><InlineIcon icon={toggleOn} /> Click to toggle</p>
-```
-
-### Noto Emoji
-
-Package: https://www.npmjs.com/package/@iconify-icons/noto
-
-Icons list: https://iconify.design/icon-sets/noto/
-
-Installation:
-
-```bash
-npm install --save-dev @iconify-icons/noto
-```
-
-Usage:
-
-```js
-import { Icon, InlineIcon } from '@iconify/react';
-import greenApple from '@iconify-icons/noto/green-apple';
-import huggingFace from '@iconify-icons/noto/hugging-face';
-```
-
-```jsx
-<Icon icon={greenApple} />
-<p>Its time for hugs <InlineIcon icon={huggingFace} />!</p>
-```
-
-### Other icon sets
-
-There are over 50 icon sets. This readme shows only a few examples. See [Iconify icon sets](http://iconify.design/icon-sets/) for a full list of available icon sets. Click any icon to see code.
+For extended documentation visit [Iconify for React documentation](https://docs.iconify.design/icon-components/react/).
 
 ## License
 
 React component is released with MIT license.
 
-© 2020 Iconify OÜ
+© 2020, 2021 Iconify OÜ
 
 See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of collections and their licenses.
