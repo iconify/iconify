@@ -41,7 +41,9 @@ if (typeof exports === 'object') {
 }`;
 
 // Get replacements
-const replacements = {};
+const replacements = {
+	preventAssignment: true,
+};
 const packageJSON = JSON.parse(readFileSync('package.json', 'utf8'));
 replacements['__iconify_version__'] = packageJSON.version;
 

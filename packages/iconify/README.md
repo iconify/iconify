@@ -3,7 +3,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 80+ icon sets with more than 70,000 icons.
+-   Out of the box includes 90+ icon sets with more than 80,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -21,13 +21,13 @@ Iconify SVG framework is designed to be as easy to use as possible.
 Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/2/2.0.1/iconify.min.js"></script>
+<script src="https://code.iconify.design/2/2.0.2/iconify.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@2.0.1/dist/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@2.0.2/dist/iconify.min.js"></script>
 ```
 
 or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `@iconify/iconify` as a dependency and importing it in your project:
@@ -53,7 +53,7 @@ or this:
 
 &nbsp;&nbsp;&nbsp; ![Screenshot](https://iconify.design/assets/images/inline-sample.png)
 
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 70,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
+That is it. Change `data-icon` value to the name of the icon you want to use. There are over 80,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
 
@@ -139,7 +139,7 @@ Relying on a third party service is often not an option. Many companies and deve
 
 Iconify API and icon sets are all [available on GitHub](https://github.com/iconify), making it easy to host API on your own server.
 
-For more details see [Iconify API documentation](https://iconify.design/docs/api-hosting/).
+For more details see [Iconify API documentation](https://docs.iconify.design/sources/api/).
 
 You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://iconify.design/docs/api-custom-hosting/).
 
@@ -338,4 +338,4 @@ Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, a
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2020 Iconify OÜ
+© 2020, 2021 Iconify OÜ
