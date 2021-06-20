@@ -109,7 +109,7 @@ import home from '@iconify/icons-mdi-light/home';
 
 All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers. ES modules use format `@iconify-icons/{prefix}`, CommonJS modules use `@iconify/icons-{prefix}`.
 
-For more details, see "Offline icon packages" section below.
+For more details, see [icon packages documentation](https://docs.iconify.design/sources/npm/).
 
 ## Inline icon
 
@@ -183,6 +183,7 @@ The icon component has the following optional properties:
 -   `flip`, `hFlip`, `vFlip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
 -   `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
 -   `align`, `vAlign`, `hAlign`, `slice`. Icon alignment. See "Alignment" section below.
+-   `onLoad`. Callback function that is called when icon data has been loaded. See "onLoad" section below.
 
 ### Other properties and events
 
@@ -348,6 +349,20 @@ Examples of 90 degrees rotation:
 <Icon icon="eva:alert-triangle-fill" rotate="90deg" />
 <Icon icon="eva:alert-triangle-fill" rotate="25%" />
 ```
+
+### onLoad
+
+`onLoad` property is an optional callback function. It is called when icon data has been loaded.
+
+It is not an event, such as `onClick` event for links, it is a simple callback function.
+
+When `onLoad` is called:
+
+-   If value of icon property is an object, `onLoad` is not called.
+-   If value of icon property is a string and icon data is available, `onLoad` is called on first render.
+-   If value of icon property is a string and icon data is not available, `onLoad` is called on first re-render after icon data is retrieved from API.
+
+What is the purpose of `onLoad`? To let you know when Icon component renders an icon and when it does not render anything. This allows you to do things like adding class name for parent element, such as "container--with-icon" that modify layout if icon is being displayed.
 
 ## Full documentation
 

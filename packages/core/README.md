@@ -3,7 +3,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 80+ icon sets with 70,000 icons.
+-   Out of the box includes 90+ icon sets with 80,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -17,6 +17,8 @@ Iconify Core contains code shared among various Iconify implementations.
 Documentation is currently not available because there is no demand for it.
 
 If anyone would like to create custom Iconify implementation and needs documentation for Iconify Core, please create an issue on Iconify repository on GitHub.
+
+You can browse [icon components documentation](https://docs.iconify.design/icon-components/), which explains how most functions exported by core package work. Components mostly just re-export functions from this package.
 
 ## License
 
