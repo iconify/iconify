@@ -4,6 +4,18 @@
 const regex = /\sid="(\S+)"/g;
 
 /**
+ * Match for allowed characters before and after id in replacement, including () for group
+ */
+const replaceValue = '([^A-Za-z0-9_-])';
+
+/**
+ * Escape value for 'new RegExp()'
+ */
+function escapeRegExp(str: string) {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
  * New random-ish prefix for ids
  */
 const randomPrefix =
@@ -17,23 +29,6 @@ const randomPrefix =
  * Counter for ids, increasing with every replacement
  */
 let counter = 0;
-
-/**
- * Replace multiple occurance of same string
- */
-function strReplace(search: string, replace: string, subject: string): string {
-	let pos = 0;
-
-	while ((pos = subject.indexOf(search, pos)) !== -1) {
-		subject =
-			subject.slice(0, pos) +
-			replace +
-			subject.slice(pos + search.length);
-		pos += replace.length;
-	}
-
-	return subject;
-}
 
 /**
  * Replace IDs in SVG output with unique IDs
@@ -57,9 +52,14 @@ export function replaceIDs(
 	ids.forEach((id) => {
 		const newID =
 			typeof prefix === 'function' ? prefix() : prefix + counter++;
-		body = strReplace('="' + id + '"', '="' + newID + '"', body);
-		body = strReplace('="#' + id + '"', '="#' + newID + '"', body);
-		body = strReplace('(#' + id + ')', '(#' + newID + ')', body);
+
+		body = body.replace(
+			new RegExp(
+				replaceValue + '(' + escapeRegExp(id) + ')' + replaceValue,
+				'g'
+			),
+			'$1' + newID + '$3'
+		);
 	});
 
 	return body;
