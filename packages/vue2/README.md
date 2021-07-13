@@ -145,7 +145,7 @@ Block icons do not have alignment, like images, which aligns them to baseline by
 
 Alignment option was added to make icons look like continuation of text, behaving like glyph fonts. This should make migration from glyph fonts easier.
 
-To toggle between block and inline modes, you can either use `InlineIcon` or use boolean `inline` property:
+To toggle between block and inline modes, you can use boolean `inline` property:
 
 ```vue
 <template>
