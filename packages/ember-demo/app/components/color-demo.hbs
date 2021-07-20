@@ -1,0 +1,32 @@
+<section class='color-demo'>
+  <h1>Color and style (components/color-demo.hbs)</h1>
+  <div>
+    Icon with @color (red):
+    <IconifyIcon @icon='dashicons:admin-users' @color='red' @inline={{true}} />
+  </div>
+  <div>
+    Icon size (2em):
+    <IconifyIcon @icon='dashicons:admin-users' @height='2em' @inline={{true}} />
+  </div>
+  <div>
+    Icon style (red):
+    <IconifyIcon @icon='dashicons:admin-users' style='color: red;' />
+  </div>
+  <div>
+    Inline icon with vertical-align style (aligned to top):
+    <IconifyIcon
+      @icon='dashicons:admin-users'
+      style='vertical-align: .25em;'
+      @inline={{true}}
+    />
+  </div>
+  <div>
+    Inline icon with variable style (purple, 2em, no alignment):
+    <IconifyIcon
+      @icon='dashicons:admin-users'
+      style='color: purple; vertical-align: 0; font-size: 2em;'
+      @inline={{true}}
+      @color='green'
+    />
+  </div>
+</section>

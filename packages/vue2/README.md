@@ -11,7 +11,7 @@ Iconify icon component is nothing like that. Component does not include any icon
 
 That means:
 
--   One syntax for over 80,000 icons from 90+ icon sets.
+-   One syntax for over 100,000 icons from 100+ icon sets.
 -   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
 -   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
 
@@ -41,7 +41,7 @@ If you are using Vue 3, you need to install `@iconify/vue` component. It is almo
 
 See [Iconify for Vue 3 documentation](https://docs.iconify.design/icon-components/vue/).
 
-## Usage with aPI
+## Usage with API
 
 Install `@iconify/vue2` and import `Icon` from it:
 
@@ -55,7 +55,7 @@ Then use `Icon` component in template with icon name or data as "icon" parameter
 <Icon icon="mdi-light:home" />
 ```
 
-Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 80,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 100,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
 
 ## Offline Usage
 
@@ -355,7 +355,11 @@ Flip an icon horizontally and vertically (the same as 180 degrees rotation):
 <Icon icon="eva:alert-triangle-fill" flip="horizontal,vertical" />
 ```
 
-Why are there multiple boolean properties for flipping an icon? See "Alignment" section below for the explanation.
+Why are there multiple boolean properties for flipping an icon?
+
+In components for other frameworks, properties for flipping an icon are `hFlip` and `vFlip`. Vue has special treatment for properties that start with v-, so `vFlip` (same applies to `vAlign` attribute) attribute is not available without using tricky syntax.
+
+Because of that, Vue component uses longer property names: `verticalFlip` instead of `vFlip` and `horizontalFlip` instead of `hFlip` for consistency.
 
 #### Rotating an icon
 

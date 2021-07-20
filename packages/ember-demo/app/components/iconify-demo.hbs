@@ -1,0 +1,32 @@
+<div>
+  <section class='icon-24'>
+    <h1>Usage</h1>
+    <div>
+      Icon referenced by name:
+      <IconifyIcon @icon='mdi:home' />
+    </div>
+    <div>
+      Icon referenced by object:
+      <IconifyIcon @icon={{iconData}} />
+    </div>
+    <div class='alert'>
+      <IconifyIcon @icon='mdi-light:alert' />
+      Important notice with alert icon!
+    </div>
+  </section>
+
+  <section class='inline-demo'>
+    <h1>Inline demo</h1>
+    <div>
+      Block icon (behaving like image):
+      <IconifyIcon @icon='experiment2' />
+    </div>
+    <div>
+      Inline icon (behaving line text / icon font):
+      <IconifyIcon @icon='experiment2' @inline={{true}} />
+    </div>
+  </section>
+
+  {{! <AlignmentDemo /> }}
+  {{! <ColorDemo /> }}
+</div>
