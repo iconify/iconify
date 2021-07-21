@@ -411,4 +411,4 @@ The Svelte component is released with MIT license.
 
 © 2020, 2021 Iconify OÜ
 
-See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of collections and their licenses.
+See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.

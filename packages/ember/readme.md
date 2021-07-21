@@ -68,7 +68,7 @@ It has 3 parts, separated by ":":
 -   prefix is name of icon set.
 -   name is name of icon.
 
-See [Iconify for Vue icon names documentation](https://docs.iconify.design/icon-components/ember/icon-name.html) for more detailed explanation.
+See [Iconify for Ember icon names documentation](https://docs.iconify.design/icon-components/ember/icon-name.html) for more detailed explanation.
 
 ## Using icon data
 
@@ -317,12 +317,12 @@ What is the purpose of `onLoad`? To let you know when Icon component renders an 
 
 ## Full documentation
 
-For extended documentation visit [Iconify for Vue documentation](https://docs.iconify.design/icon-components/ember/).
+For extended documentation visit [Iconify for Ember documentation](https://docs.iconify.design/icon-components/ember/).
 
 ## License
 
-Vue component is released with MIT license.
+Ember component is released with MIT license.
 
 © 2021 Iconify OÜ
 
-See [Iconify icon sets page](https://iconify.design/icon-sets/) for list of collections and their licenses.
+See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.

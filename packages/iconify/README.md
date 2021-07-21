@@ -284,30 +284,30 @@ There are over 100,000 icons to choose from.
 
 General collections (monotone icons):
 
--   [Material Design Icons](https://iconify.design/icon-sets/mdi/) (5000+ icons)
--   [Unicons](https://iconify.design/icon-sets/uil/) (1000+ icons)
--   [Jam Icons](https://iconify.design/icon-sets/jam/) (900 icons)
--   [IonIcons](https://iconify.design/icon-sets/ion/) (1200+ icons)
--   [FontAwesome 4](https://iconify.design/icon-sets/fa/) and [FontAwesome 5](https://iconify.design/icon-sets/fa-solid/) (2000+ icons)
--   [Vaadin Icons](https://iconify.design/icon-sets/vaadin/) (600+ icons)
--   [Bootstrap Icons](https://iconify.design/icon-sets/bi/) (500+ icons)
--   [Feather Icons](https://iconify.design/icon-sets/feather/) and [Feather Icon](https://iconify.design/icon-sets/fe/) (500+ icons)
--   [IcoMoon Free](https://iconify.design/icon-sets/icomoon-free/) (400+ icons)
--   [Dashicons](https://iconify.design/icon-sets/dashicons/) (300 icons)
+-   [Material Design Icons](https://icon-sets.iconify.design/mdi/) (5000+ icons)
+-   [Unicons](https://icon-sets.iconify.design/uil/) (1000+ icons)
+-   [Jam Icons](https://icon-sets.iconify.design/jam/) (900 icons)
+-   [IonIcons](https://icon-sets.iconify.design/ion/) (1200+ icons)
+-   [FontAwesome 4](https://icon-sets.iconify.design/fa/) and [FontAwesome 5](https://icon-sets.iconify.design/fa-solid/) (2000+ icons)
+-   [Vaadin Icons](https://icon-sets.iconify.design/vaadin/) (600+ icons)
+-   [Bootstrap Icons](https://icon-sets.iconify.design/bi/) (500+ icons)
+-   [Feather Icons](https://icon-sets.iconify.design/feather/) and [Feather Icon](https://icon-sets.iconify.design/fe/) (500+ icons)
+-   [IcoMoon Free](https://icon-sets.iconify.design/icomoon-free/) (400+ icons)
+-   [Dashicons](https://icon-sets.iconify.design/dashicons/) (300 icons)
 
 and many others.
 
 Emoji collections (mostly colored icons):
 
--   [Emoji One](https://iconify.design/icon-sets/emojione/) (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
--   [OpenMoji](https://iconify.design/icon-sets/openmoji/) (3500+ icons)
--   [Noto Emoji](https://iconify.design/icon-sets/noto/) (2000+ icons for version 2, 2000+ icons for version 1)
--   [Twitter Emoji](https://iconify.design/icon-sets/twemoji/) (2000+ icons)
--   [Firefox OS Emoji](https://iconify.design/icon-sets/fxemoji/) (1000+ icons)
+-   [Emoji One](https://icon-sets.iconify.design/emojione/) (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
+-   [OpenMoji](https://icon-sets.iconify.design/openmoji/) (3500+ icons)
+-   [Noto Emoji](https://icon-sets.iconify.design/noto/) (2000+ icons for version 2, 2000+ icons for version 1)
+-   [Twitter Emoji](https://icon-sets.iconify.design/twemoji/) (2000+ icons)
+-   [Firefox OS Emoji](https://icon-sets.iconify.design/fxemoji/) (1000+ icons)
 
 Also, there are several thematic collections, such as weather icons, map icons, etc.
 
-You can use browse or search available icons on the Iconify website: https://iconify.design/icon-sets/
+You can use browse or search available icons on the Iconify website: https://icon-sets.iconify.design/
 
 Click an icon to get HTML code.
 
