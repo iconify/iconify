@@ -37,4 +37,8 @@ export interface APIProviderRawData {
 
 	// NPM packages for icons, used when showing code samples
 	npm?: APIProviderRawDataNPM;
+
+	// SVG generator URL, including full host name, {prefix} and {name} variables
+	// Example: 'https://api.iconify.design/{prefix}/{name}.svg'
+	svg?: string;
 }
