@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@iconify-icons/bx": "^1.1.0",
 		"@iconify-icons/dashicons": "^1.1.0",
-		"@iconify/vue2": "^1.0.0-alpha.0",
+		"@iconify/vue2": "^1.0.0",
 		"@typescript-eslint/eslint-plugin": "^4.22.1",
 		"@typescript-eslint/parser": "^4.22.1",
 		"@vue/cli-plugin-babel": "^4.5.12",
