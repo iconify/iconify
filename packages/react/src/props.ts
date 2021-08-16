@@ -1,4 +1,4 @@
-import type { HTMLProps, RefObject } from 'react';
+import type { SVGProps, RefAttributes } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import type { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/utils/lib/customisations';
 
@@ -8,7 +8,10 @@ export { RawIconCustomisations };
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisations = RawIconCustomisations & {
+export type IconifyIconCustomisations = Omit<
+	RawIconCustomisations,
+	'rotate'
+> & {
 	rotate?: string | number;
 };
 
@@ -41,15 +44,15 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 /**
  * React component properties: generic element for Icon component, SVG for generated component
  */
-type IconifyElementProps = HTMLProps<HTMLElement>;
+type IconifyElementProps = SVGProps<SVGSVGElement>;
 
-export type IconRef = RefObject<SVGElement>;
+export type IconRef = RefAttributes<SVGSVGElement>;
 
 export interface ReactRefProp {
 	ref?: IconRef;
 }
 
 /**
- * Mix of icon properties and HTMLElement properties
+ * Mix of icon properties and SVGSVGElement properties
  */
 export type IconProps = IconifyElementProps & IconifyIconProps & ReactRefProp;
