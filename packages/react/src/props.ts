@@ -8,7 +8,7 @@ export { RawIconCustomisations };
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisations = RawIconCustomisations & {
+export type IconifyIconCustomisations = Omit<RawIconCustomisations, "rotate"> & {
 	rotate?: string | number;
 };
 
