@@ -1,5 +1,5 @@
-import type { SVGProps } from 'react';
 import React from 'react';
+import type { SVGProps } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
@@ -13,12 +13,12 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import type { IconifyIconCustomisations, IconProps, IconRef } from './props';
+import type { IconProps, IconRef } from './props';
 
 /**
  * Default SVG attributes
  */
-const svgDefaults: SVGProps<SVGElement> = {
+const svgDefaults: SVGProps<SVGSVGElement> = {
 	'xmlns': 'http://www.w3.org/2000/svg',
 	'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
@@ -29,7 +29,7 @@ const svgDefaults: SVGProps<SVGElement> = {
 /**
  * Default values for customisations for inline icon
  */
-const inlineDefaults = { ...defaults, inline: true } as FullIconCustomisations;
+const inlineDefaults: FullIconCustomisations = { ...defaults, inline: true };
 
 /**
  * Render icon
@@ -53,8 +53,8 @@ export const render = (
 	// Get all customisations
 	const customisations = mergeCustomisations(
 		defaultProps,
-		props as IconifyIconCustomisations
-	) as FullIconCustomisations;
+		props as unknown // TODO: Fix me
+	);
 
 	// Create style
 	const style =

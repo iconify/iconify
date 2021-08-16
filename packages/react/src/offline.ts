@@ -42,7 +42,7 @@ const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
 function component(
 	props: IconProps,
 	inline: boolean,
-	ref?: IconRef
+	ref?: React.ForwardedRef<IconRef>
 ): JSX.Element {
 	// Split properties
 	const icon =
@@ -64,30 +64,30 @@ function component(
 	}
 
 	// Valid icon: render it
-	return render(icon, props, inline, ref);
+	return render(icon, props, inline, ref as IconRef);
 }
-
-/**
- * Type for exported components
- */
-export type Component = (props: IconProps) => JSX.Element;
 
 /**
  * Block icon
  *
  * @param props - Component properties
  */
-export const Icon: Component = React.forwardRef(
-	(props: IconProps, ref?: IconRef) => component(props, false, ref)
-);
+export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
+	props,
+	ref
+) {
+	return component(props, false, ref);
+});
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon: Component = React.forwardRef(
-	(props: IconProps, ref?: IconRef) => component(props, true, ref)
+export const InlineIcon = React.forwardRef<IconRef, IconProps>(
+	function InlineIcon(props, ref) {
+		return component(props, true, ref);
+	}
 );
 
 /**

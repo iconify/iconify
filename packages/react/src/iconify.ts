@@ -487,33 +487,29 @@ class IconComponent extends React.Component<
 }
 
 /**
- * Type for exported components
- */
-export type Component = (props: IconProps) => JSX.Element;
-
-/**
  * Block icon
  *
  * @param props - Component properties
  */
-export const Icon: Component = React.forwardRef(
-	(props: IconProps, ref?: IconRef) => {
-		const newProps = {
-			...props,
-			_ref: ref,
-			_inline: false,
-		};
-		return React.createElement(IconComponent, newProps);
-	}
-);
+export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
+	props,
+	ref
+) {
+	const newProps = {
+		...props,
+		_ref: ref,
+		_inline: false,
+	};
+	return React.createElement(IconComponent, newProps);
+});
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon: Component = React.forwardRef(
-	(props: IconProps, ref?: IconRef) => {
+export const InlineIcon = React.forwardRef<IconRef, IconProps>(
+	function InlineIcon(props, ref) {
 		const newProps = { ...props, _ref: ref, _inline: true };
 		return React.createElement(IconComponent, newProps);
 	}
