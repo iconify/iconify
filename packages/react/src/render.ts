@@ -53,7 +53,7 @@ export const render = (
 	// Get all customisations
 	const customisations = mergeCustomisations(
 		defaultProps,
-		props as unknown // TODO: Fix me
+		props as FullIconCustomisations
 	);
 
 	// Create style
