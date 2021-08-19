@@ -81,6 +81,11 @@ describe('Testing Iconify object', () => {
 			inline: true,
 		});
 		expect(html2).to.be.equal(html);
+
+		// Make sure inline attribute was applied
+		expect(html2.indexOf('vertical-align: -0.125em;') === -1).to.be.equal(
+			false
+		);
 	});
 
 	it('Rendering icons without API', (done) => {

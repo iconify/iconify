@@ -34,7 +34,7 @@ import { findRootNode, addBodyNode } from './modules/root';
  */
 function buildIcon(
 	name: string,
-	customisations: IconifyIconCustomisations
+	customisations?: IconifyIconCustomisations
 ): IconifyIconBuildResult | null {
 	// Get icon data
 	const iconData = getIconData(name);
@@ -43,7 +43,10 @@ function buildIcon(
 	}
 
 	// Clean up customisations
-	const changes = mergeCustomisations(defaults, customisations);
+	const changes = mergeCustomisations(
+		defaults,
+		typeof customisations === 'object' ? customisations : {}
+	);
 
 	// Get data
 	return iconToSVG(iconData, changes);
@@ -54,8 +57,8 @@ function buildIcon(
  */
 function generateIcon(
 	name: string,
-	customisations: IconifyIconCustomisations,
-	returnString: boolean
+	customisations?: IconifyIconCustomisations,
+	returnString?: boolean
 ): SVGElement | string | null {
 	// Get icon data
 	const iconData = getIconData(name);
@@ -67,7 +70,10 @@ function generateIcon(
 	const iconName = stringToIcon(name);
 
 	// Clean up customisations
-	const changes = mergeCustomisations(defaults, customisations);
+	const changes = mergeCustomisations(
+		defaults,
+		typeof customisations === 'object' ? customisations : {}
+	);
 
 	// Get data
 	return renderIcon(
@@ -96,12 +102,12 @@ export interface IconifyCommonFunctions {
 	 */
 	renderSVG: (
 		name: string,
-		customisations: IconifyIconCustomisations
+		customisations?: IconifyIconCustomisations
 	) => SVGElement | null;
 
 	renderHTML: (
 		name: string,
-		customisations: IconifyIconCustomisations
+		customisations?: IconifyIconCustomisations
 	) => string | null;
 
 	/**
@@ -109,7 +115,7 @@ export interface IconifyCommonFunctions {
 	 */
 	renderIcon: (
 		name: string,
-		customisations: IconifyIconCustomisations
+		customisations?: IconifyIconCustomisations
 	) => IconifyIconBuildResult | null;
 
 	/* Scanner */
@@ -148,11 +154,11 @@ export const commonFunctions: IconifyCommonFunctions = {
 	getVersion: () => '__iconify_version__',
 
 	// Render SVG
-	renderSVG: (name: string, customisations: IconifyIconCustomisations) => {
+	renderSVG: (name: string, customisations?: IconifyIconCustomisations) => {
 		return generateIcon(name, customisations, false) as SVGElement | null;
 	},
 
-	renderHTML: (name: string, customisations: IconifyIconCustomisations) => {
+	renderHTML: (name: string, customisations?: IconifyIconCustomisations) => {
 		return generateIcon(name, customisations, true) as string | null;
 	},
 
