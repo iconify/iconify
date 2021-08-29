@@ -20,20 +20,57 @@ const maxLengthCache: Record<string, number> = Object.create(null);
 const pathCache: Record<string, string> = Object.create(null);
 
 /**
- * Fetch function
- *
- * Use this to set 'cross-fetch' in node.js environment if you are retrieving icons on server side.
- * Not needed when using stuff like Next.js or SvelteKit because components use API only on client side.
+ * Get fetch function
  */
-let fetchModule: typeof fetch | null = null;
-try {
-	fetchModule = fetch;
-} catch (err) {
-	//
+type FetchType = typeof fetch;
+const detectFetch = (): FetchType | null => {
+	let callback;
+
+	// Try global fetch
+	try {
+		callback = fetch;
+		if (typeof callback === 'function') {
+			return callback;
+		}
+	} catch (err) {
+		//
+	}
+
+	// Try cross-fetch
+	try {
+		// Obfuscate require() to avoid cross-fetch being bundled by Webpack
+		const chunk = String.fromCharCode(114) + String.fromCharCode(101);
+		const req = (this as unknown as Record<string, FetchType>)[
+			chunk + 'qui' + chunk
+		];
+		callback = req('cross-fetch');
+		if (typeof callback === 'function') {
+			return callback;
+		}
+	} catch (err) {
+		//
+	}
+
+	return null;
+};
+
+/**
+ * Fetch function
+ */
+let fetchModule: FetchType | null = detectFetch();
+
+/**
+ * Set custom fetch() function
+ */
+export function setFetch(fetch: unknown): void {
+	fetchModule = fetch as FetchType;
 }
 
-export function setFetch(fetch: typeof fetchModule): void {
-	fetchModule = fetch;
+/**
+ * Get fetch() function. Used by Icon Finder Core
+ */
+export function getFetch(): typeof fetchModule {
+	return fetchModule;
 }
 
 /**

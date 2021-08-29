@@ -60,11 +60,10 @@ export interface IconifyAPIInternalFunctions {
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 
 	/**
-	 * Optional setFetch (should be imported from ./modules/fetch if fetch is used)
-	 *
-	 * Used to set custom fetch function, such as one provided by cross-fetch, making fetch usable on server
+	 * Optional setFetch and getFetch (should be imported from ./modules/fetch if fetch is used)
 	 */
 	setFetch?: (item: typeof fetch) => void;
+	getFetch?: () => typeof fetch | null;
 }
 
 export const APIInternalFunctions: IconifyAPIInternalFunctions = {

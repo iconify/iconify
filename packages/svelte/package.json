@@ -44,6 +44,9 @@
 		"svelte-preprocess": "^4.7.2",
 		"ts-jest": "^26.5.5"
 	},
+	"dependencies": {
+		"cross-fetch": "^3.1.4"
+	},
 	"jest": {
 		"transform": {
 			"^.+\\.js$": "babel-jest",
