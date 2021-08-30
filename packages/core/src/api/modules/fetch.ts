@@ -1,10 +1,11 @@
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type {
 	APIQueryParams,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
+	APIIconsQueryParams,
 } from '../modules';
 import type { GetAPIConfig } from '../config';
 
@@ -121,12 +122,12 @@ export const getAPIModule: GetIconifyAPIModule = (
 	/**
 	 * Prepare params
 	 */
-	const prepare: IconifyAPIPrepareQuery = (
+	const prepare: IconifyAPIPrepareIconsQuery = (
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIQueryParams[] => {
-		const results: APIQueryParams[] = [];
+	): APIIconsQueryParams[] => {
+		const results: APIIconsQueryParams[] = [];
 
 		// Get maximum icons list length
 		let maxLength = maxLengthCache[prefix];
@@ -135,7 +136,9 @@ export const getAPIModule: GetIconifyAPIModule = (
 		}
 
 		// Split icons
-		let item: APIQueryParams = {
+		const type = 'icons';
+		let item: APIIconsQueryParams = {
+			type,
 			provider,
 			prefix,
 			icons: [],
@@ -147,6 +150,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 				// Next set
 				results.push(item);
 				item = {
+					type,
 					provider,
 					prefix,
 					icons: [],
@@ -170,17 +174,35 @@ export const getAPIModule: GetIconifyAPIModule = (
 		status: PendingQueryItem
 	): void => {
 		const provider = params.provider;
-		const prefix = params.prefix;
-		const icons = params.icons;
-		const iconsList = icons.join(',');
+		let path: string;
 
-		const cacheKey = provider + ':' + prefix;
-		const path =
-			pathCache[cacheKey] +
-			endPoint
-				.replace('{provider}', provider)
-				.replace('{prefix}', prefix)
-				.replace('{icons}', iconsList);
+		switch (params.type) {
+			case 'icons': {
+				const prefix = params.prefix;
+				const icons = params.icons;
+				const iconsList = icons.join(',');
+
+				const cacheKey = provider + ':' + prefix;
+				path =
+					pathCache[cacheKey] +
+					endPoint
+						.replace('{provider}', provider)
+						.replace('{prefix}', prefix)
+						.replace('{icons}', iconsList);
+				break;
+			}
+
+			case 'custom': {
+				const uri = params.uri;
+				path = uri.slice(0, 1) === '/' ? uri.slice(1) : uri;
+				break;
+			}
+
+			default:
+				// Fail: return 400 Bad Request
+				status.done(void 0, 400);
+				return;
+		}
 
 		if (!fetchModule) {
 			// Fail: return 424 Failed Dependency (its not meant to be used like that, but it is the best match)

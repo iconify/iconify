@@ -24,6 +24,7 @@ describe('Testing simple names with API module', () => {
 
 	it('Loading icons without prefix', (done) => {
 		mockAPIData({
+			type: 'icons',
 			provider: '',
 			prefix: '',
 			response: {
@@ -39,6 +40,7 @@ describe('Testing simple names with API module', () => {
 			},
 		});
 		mockAPIData({
+			type: 'icons',
 			provider: '',
 			prefix: 'test200',
 			response: {

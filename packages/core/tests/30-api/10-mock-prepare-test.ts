@@ -8,7 +8,6 @@ import {
 	mockAPIData,
 	storage,
 } from '../../lib/api/modules/mock';
-import type { GetAPIConfig } from '../../lib/api/config';
 
 describe('Testing mock API module prepare function', () => {
 	let prefixCounter = 0;
@@ -28,6 +27,7 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
@@ -42,6 +42,7 @@ describe('Testing mock API module prepare function', () => {
 		const result = prepare(provider, prefix, ['foo', 'bar', 'baz']);
 		expect(result).to.be.eql([
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo', 'bar', 'baz'],
@@ -55,18 +56,21 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item1: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
 			icons: ['foo', 'bar'],
 		};
 		const item2: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
 			icons: 'baz',
 		};
 		const item3: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -98,23 +102,27 @@ describe('Testing mock API module prepare function', () => {
 		expect(result).to.be.eql([
 			// Unknown icons first
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['test1', 'test2'],
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo', 'bar'],
 				index: 0,
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['baz'],
 				index: 1,
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['test10'],
@@ -128,6 +136,7 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
@@ -144,11 +153,13 @@ describe('Testing mock API module prepare function', () => {
 		expect(result).to.be.eql([
 			// Missing icons first
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['bar', 'baz'],
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo'],

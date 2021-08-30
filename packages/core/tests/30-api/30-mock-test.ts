@@ -28,6 +28,7 @@ describe('Testing mock API module', () => {
 		const prefix = nextPrefix();
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			icons: ['test1', 'test2'],
@@ -66,6 +67,7 @@ describe('Testing mock API module', () => {
 		const prefix = nextPrefix();
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -81,6 +83,7 @@ describe('Testing mock API module', () => {
 			},
 		});
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -140,6 +143,7 @@ describe('Testing mock API module', () => {
 		let next: IconifyMockAPIDelayDoneCallback | undefined;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -155,6 +159,7 @@ describe('Testing mock API module', () => {
 			},
 		});
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -246,6 +251,7 @@ describe('Testing mock API module', () => {
 
 		// Mock data
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {

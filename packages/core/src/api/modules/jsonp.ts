@@ -1,10 +1,11 @@
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type {
 	APIQueryParams,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
+	APIIconsQueryParams,
 } from '../modules';
 import type { GetAPIConfig } from '../config';
 
@@ -50,7 +51,7 @@ function getGlobal(): JSONPRoot {
 	// Create root
 	if (rootVar === null) {
 		// window
-		const globalRoot = (self as unknown) as Record<string, unknown>;
+		const globalRoot = self as unknown as Record<string, unknown>;
 
 		// Test for window.Iconify. If missing, create 'IconifyJSONP'
 		let prefix = 'Iconify';
@@ -138,12 +139,12 @@ export const getAPIModule: GetIconifyAPIModule = (
 	/**
 	 * Prepare params
 	 */
-	const prepare: IconifyAPIPrepareQuery = (
+	const prepare: IconifyAPIPrepareIconsQuery = (
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIQueryParams[] => {
-		const results: APIQueryParams[] = [];
+	): APIIconsQueryParams[] => {
+		const results: APIIconsQueryParams[] = [];
 
 		// Get maximum icons list length
 		const cacheKey = provider + ':' + prefix;
@@ -153,7 +154,9 @@ export const getAPIModule: GetIconifyAPIModule = (
 		}
 
 		// Split icons
-		let item: APIQueryParams = {
+		const type = 'icons';
+		let item: APIIconsQueryParams = {
+			type,
 			provider,
 			prefix,
 			icons: [],
@@ -165,6 +168,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 				// Next set
 				results.push(item);
 				item = {
+					type,
 					provider,
 					prefix,
 					icons: [],
@@ -187,6 +191,12 @@ export const getAPIModule: GetIconifyAPIModule = (
 		params: APIQueryParams,
 		status: PendingQueryItem
 	): void => {
+		if (params.type !== 'icons') {
+			// JSONP supports only icons
+			status.done(void 0, 400);
+			return;
+		}
+
 		const provider = params.provider;
 		const prefix = params.prefix;
 		const icons = params.icons;

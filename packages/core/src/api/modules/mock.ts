@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars-experimental */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PendingQueryItem } from '@cyberalien/redundancy';
-import type { APIQueryParams, IconifyAPIModule } from '../modules';
+import type {
+	APIIconsQueryParams,
+	APIQueryParams,
+	IconifyAPIModule,
+} from '../modules';
 import type { IconifyJSON } from '@iconify/types';
 
 /**
@@ -15,9 +19,21 @@ export type IconifyMockAPIDelayCallback = (
 /**
  * Fake API result
  */
-export interface IconifyMockAPI {
-	// Request parameters
+interface IconifyMockAPIBase {
 	provider: string;
+
+	// Response
+	// Number if error should be sent, JSON on success
+	response: number | IconifyJSON | Record<string, unknown>;
+
+	// Delay for response: in milliseconds or callback
+	delay?: number | IconifyMockAPIDelayCallback;
+}
+
+export interface IconifyMockIconsAPI extends IconifyMockAPIBase {
+	type: 'icons';
+
+	// Request parameters
 	prefix: string;
 
 	// If icons list is missing, applies to all requests
@@ -27,10 +43,9 @@ export interface IconifyMockAPI {
 	// Response
 	// Number if error should be sent, JSON on success
 	response: number | IconifyJSON;
-
-	// Delay for response: in milliseconds or callback
-	delay?: number | IconifyMockAPIDelayCallback;
 }
+
+export type IconifyMockAPI = IconifyMockIconsAPI;
 
 /**
  * Fake API storage
@@ -60,7 +75,7 @@ export function mockAPIData(data: IconifyMockAPI): void {
 	storage[provider][prefix].push(data);
 }
 
-interface MockAPIQueryParams extends APIQueryParams {
+interface MockAPIIconsQueryParams extends APIIconsQueryParams {
 	index: number;
 }
 
@@ -71,7 +86,13 @@ export const mockAPIModule: IconifyAPIModule = {
 	/**
 	 * Prepare params
 	 */
-	prepare: (provider: string, prefix: string, icons: string[]) => {
+	prepare: (
+		provider: string,
+		prefix: string,
+		icons: string[]
+	): APIIconsQueryParams[] => {
+		const type = 'icons';
+
 		if (
 			storage[provider] === void 0 ||
 			storage[provider][prefix] === void 0
@@ -79,6 +100,7 @@ export const mockAPIModule: IconifyAPIModule = {
 			// No mock data: bundle all icons in one request that will return 404
 			return [
 				{
+					type,
 					provider,
 					prefix,
 					icons,
@@ -135,9 +157,10 @@ export const mockAPIModule: IconifyAPIModule = {
 		});
 
 		// Sort results
-		const results: APIQueryParams[] = [];
+		const results: APIIconsQueryParams[] = [];
 		if (noMatch.length > 0) {
 			results.push({
+				type,
 				provider,
 				prefix,
 				icons: noMatch,
@@ -146,11 +169,12 @@ export const mockAPIModule: IconifyAPIModule = {
 		Object.keys(matches).forEach((key) => {
 			const index = parseInt(key);
 			results.push({
+				type,
 				provider,
 				prefix,
 				icons: matches[index],
 				index,
-			} as APIQueryParams);
+			} as APIIconsQueryParams);
 		});
 
 		return results;
@@ -161,21 +185,33 @@ export const mockAPIModule: IconifyAPIModule = {
 	 */
 	send: (host: string, params: APIQueryParams, status: PendingQueryItem) => {
 		const provider = params.provider;
-		const prefix = params.prefix;
-		const index = (params as MockAPIQueryParams).index;
+		let data: IconifyMockAPI;
 
-		// Get item
-		if (
-			storage[provider] === void 0 ||
-			storage[provider][prefix] === void 0 ||
-			storage[provider][prefix][index] === void 0
-		) {
-			// No entry
-			status.done(void 0, 404);
-			return;
+		switch (params.type) {
+			case 'icons': {
+				const prefix = params.prefix;
+				const index = (params as MockAPIIconsQueryParams).index;
+
+				// Get item
+				if (
+					storage[provider] === void 0 ||
+					storage[provider][prefix] === void 0 ||
+					storage[provider][prefix][index] === void 0
+				) {
+					// No entry
+					status.done(void 0, 404);
+					return;
+				}
+
+				data = storage[provider][prefix][index];
+				break;
+			}
+
+			default:
+				// Fail: return 400 Bad Request
+				status.done(void 0, 400);
+				return;
 		}
-
-		const data = storage[provider][prefix][index];
 
 		// Get delay
 		const delay = data.delay;

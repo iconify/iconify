@@ -4,7 +4,10 @@ import 'mocha';
 import { expect } from 'chai';
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import { setAPIConfig } from '../../lib/api/config';
-import type { APIQueryParams } from '../../lib/api/modules';
+import type {
+	APIIconsQueryParams,
+	APIQueryParams,
+} from '../../lib/api/modules';
 import { setAPIModule } from '../../lib/api/modules';
 import { API } from '../../lib/api/';
 
@@ -32,8 +35,9 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIQueryParams[] => {
-			const item: APIQueryParams = {
+		): APIIconsQueryParams[] => {
+			const item: APIIconsQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons,
@@ -44,7 +48,8 @@ describe('Testing API loadIcons', () => {
 			asyncCounter++;
 
 			// Test input and return as one item
-			const expected: APIQueryParams = {
+			const expected: APIIconsQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
@@ -63,9 +68,12 @@ describe('Testing API loadIcons', () => {
 			expect(asyncCounter).to.be.equal(2);
 			asyncCounter++;
 
+			expect(params.type).to.be.equal('icons');
+
 			// Test input
 			expect(host).to.be.equal('https://api1.local');
 			const expected: APIQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
@@ -168,11 +176,12 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIQueryParams[] => {
+		): APIIconsQueryParams[] => {
 			// Split all icons in multiple queries, one icon per query
-			const results: APIQueryParams[] = [];
+			const results: APIIconsQueryParams[] = [];
 			icons.forEach((icon) => {
-				const item: APIQueryParams = {
+				const item: APIIconsQueryParams = {
+					type: 'icons',
 					provider,
 					prefix,
 					icons: [icon],
@@ -194,9 +203,15 @@ describe('Testing API loadIcons', () => {
 			// Test input
 			expect(host).to.be.equal('https://api1.local');
 
+			expect(params.type).to.be.equal('icons');
+			if (params.type !== 'icons') {
+				return;
+			}
+
 			// Icon names should match queryCounter: 'icon1' on first run, 'icon2' on second run
 			queryCounter++;
 			const expected: APIQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon' + queryCounter],
@@ -270,8 +285,9 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIQueryParams[] => {
-			const item: APIQueryParams = {
+		): APIIconsQueryParams[] => {
+			const item: APIIconsQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons,
@@ -372,8 +388,9 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIQueryParams[] => {
-			const item: APIQueryParams = {
+		): APIIconsQueryParams[] => {
+			const item: APIIconsQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons,
@@ -388,6 +405,12 @@ describe('Testing API loadIcons', () => {
 			item: PendingQueryItem
 		): void => {
 			queryCounter++;
+
+			expect(params.type).to.be.equal('icons');
+			if (params.type !== 'icons') {
+				return;
+			}
+
 			switch (queryCounter) {
 				case 1:
 					// First call on api1
@@ -528,8 +551,9 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIQueryParams[] => {
-			const item: APIQueryParams = {
+		): APIIconsQueryParams[] => {
+			const item: APIIconsQueryParams = {
+				type: 'icons',
 				provider,
 				prefix,
 				icons,
@@ -544,6 +568,12 @@ describe('Testing API loadIcons', () => {
 			item: PendingQueryItem
 		): void => {
 			queryCounter++;
+
+			expect(params.type).to.be.equal('icons');
+			if (params.type !== 'icons') {
+				return;
+			}
+
 			switch (queryCounter) {
 				case 1:
 					// First call on api1
