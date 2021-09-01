@@ -4,19 +4,21 @@ import type { GetAPIConfig } from '../api/config';
 /**
  * Params for sendQuery()
  */
-export interface APIIconsQueryParams {
+export interface IconifyAPIIconsQueryParams {
 	type: 'icons';
 	provider: string;
 	prefix: string;
 	icons: string[];
 }
-export interface APICustomQueryParams {
+export interface IconifyAPICustomQueryParams {
 	type: 'custom';
 	provider: string;
 	uri: string;
 }
 
-export type APIQueryParams = APIIconsQueryParams | APICustomQueryParams;
+export type IconifyAPIQueryParams =
+	| IconifyAPIIconsQueryParams
+	| IconifyAPICustomQueryParams;
 
 /**
  * Functions to implement in module
@@ -25,11 +27,11 @@ export type IconifyAPIPrepareIconsQuery = (
 	provider: string,
 	prefix: string,
 	icons: string[]
-) => APIIconsQueryParams[];
+) => IconifyAPIIconsQueryParams[];
 
 export type IconifyAPISendQuery = (
 	host: string,
-	params: APIQueryParams,
+	params: IconifyAPIQueryParams,
 	status: PendingQueryItem
 ) => void;
 

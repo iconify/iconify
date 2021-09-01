@@ -1,5 +1,4 @@
-import type { IconifyAPIInternalStorage } from '.';
-import { API, getRedundancyCache } from '.';
+import { API } from '.';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconLoaderAbort,
@@ -7,8 +6,14 @@ import type {
 } from '../interfaces/loader';
 import type { GetAPIConfig, IconifyAPIConfig } from './config';
 import { getAPIConfig, setAPIConfig } from './config';
-import type { IconifyAPIModule } from './modules';
-import { setAPIModule } from './modules';
+import type {
+	IconifyAPIModule,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+} from './modules';
+import { setAPIModule, getAPIModule } from './modules';
+import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
+import { mergeParams } from './params';
 
 /**
  * Iconify API functions
@@ -45,11 +50,6 @@ export const APIFunctions: IconifyAPIFunctions = {
  */
 export interface IconifyAPIInternalFunctions {
 	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
-
-	/**
 	 * Get API config, used by custom modules
 	 */
 	getAPIConfig: GetAPIConfig;
@@ -60,14 +60,34 @@ export interface IconifyAPIInternalFunctions {
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 
 	/**
+	 * Get API module
+	 */
+	getAPIModule: (provider: string) => IconifyAPIModule | undefined;
+
+	/**
 	 * Optional setFetch and getFetch (should be imported from ./modules/fetch if fetch is used)
 	 */
 	setFetch?: (item: typeof fetch) => void;
 	getFetch?: () => typeof fetch | null;
+
+	/**
+	 * Merge parameters
+	 */
+	mergeParams: MergeParams;
 }
 
 export const APIInternalFunctions: IconifyAPIInternalFunctions = {
-	getAPI: getRedundancyCache,
 	getAPIConfig,
 	setAPIModule,
+	getAPIModule,
+	mergeParams,
+};
+
+/**
+ * Types needed for internal functions
+ */
+export type {
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 };

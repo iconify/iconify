@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type {
-	APIQueryParams,
+	IconifyAPIQueryParams,
 	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
-	APIIconsQueryParams,
+	IconifyAPIIconsQueryParams,
 } from '../modules';
 import type { GetAPIConfig } from '../config';
+import { mergeParams } from '../params';
 
 /**
  * Global
@@ -15,11 +17,7 @@ import type { GetAPIConfig } from '../config';
 type Callback = (data: unknown) => void;
 type JSONPRoot = Record<string, Callback>;
 let rootVar: JSONPRoot | null = null;
-
-/**
- * Endpoint
- */
-let endPoint = '{prefix}.js?icons={icons}&callback={callback}';
+let rootVarName: string | null = null;
 
 /**
  * Cache: provider:prefix = value
@@ -75,10 +73,7 @@ function getGlobal(): JSONPRoot {
 		}
 
 		// Change end point
-		endPoint = endPoint.replace(
-			'{callback}',
-			prefix + extraPrefix + '.{cb}'
-		);
+		rootVarName = prefix + extraPrefix + '.{cb}';
 	}
 
 	return rootVar;
@@ -114,19 +109,13 @@ export const getAPIModule: GetIconifyAPIModule = (
 			// Make sure global is set
 			getGlobal();
 
-			// Extra width: prefix (3) + counter (4) - '{cb}' (4)
-			const extraLength = 3;
-
 			// Get available length
+			const url = mergeParams(prefix + '.js', {
+				icons: '',
+				callback: rootVarName!,
+			});
 			result =
-				config.maxURL -
-				maxHostLength -
-				config.path.length -
-				endPoint
-					.replace('{provider}', provider)
-					.replace('{prefix}', prefix)
-					.replace('{icons}', '').length -
-				extraLength;
+				config.maxURL - maxHostLength - config.path.length - url.length;
 		}
 
 		// Cache stuff and return result
@@ -143,8 +132,8 @@ export const getAPIModule: GetIconifyAPIModule = (
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIIconsQueryParams[] => {
-		const results: APIIconsQueryParams[] = [];
+	): IconifyAPIIconsQueryParams[] => {
+		const results: IconifyAPIIconsQueryParams[] = [];
 
 		// Get maximum icons list length
 		const cacheKey = provider + ':' + prefix;
@@ -155,7 +144,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 
 		// Split icons
 		const type = 'icons';
-		let item: APIIconsQueryParams = {
+		let item: IconifyAPIIconsQueryParams = {
 			type,
 			provider,
 			prefix,
@@ -188,7 +177,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 	 */
 	const send: IconifyAPISendQuery = (
 		host: string,
-		params: APIQueryParams,
+		params: IconifyAPIQueryParams,
 		status: PendingQueryItem
 	): void => {
 		if (params.type !== 'icons') {
@@ -218,13 +207,11 @@ export const getAPIModule: GetIconifyAPIModule = (
 		}
 		const callbackName = cbPrefix + cbCounter;
 
-		const path =
-			pathCache[cacheKey] +
-			endPoint
-				.replace('{provider}', provider)
-				.replace('{prefix}', prefix)
-				.replace('{icons}', iconsList)
-				.replace('{cb}', callbackName);
+		const url = mergeParams(prefix + '.js', {
+			icons: iconsList,
+			callback: rootVarName!.replace('{cb}', callbackName),
+		});
+		const path = pathCache[cacheKey] + url;
 
 		global[callbackName] = (data: unknown): void => {
 			// Remove callback and complete query

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type {
-	APIIconsQueryParams,
-	APIQueryParams,
+	IconifyAPIIconsQueryParams,
+	IconifyAPIQueryParams,
 	IconifyAPIModule,
 } from '../modules';
 import type { IconifyJSON } from '@iconify/types';
@@ -45,16 +45,37 @@ export interface IconifyMockIconsAPI extends IconifyMockAPIBase {
 	response: number | IconifyJSON;
 }
 
-export type IconifyMockAPI = IconifyMockIconsAPI;
+export interface IconifyMockCustomAPI extends IconifyMockAPIBase {
+	type: 'custom';
+
+	// Request parameters
+	uri: string;
+
+	// Response
+	// Number if error should be sent, JSON on success
+	response: number | Record<string, unknown>;
+}
+
+export type IconifyMockAPI = IconifyMockIconsAPI | IconifyMockCustomAPI;
 
 /**
- * Fake API storage
+ * Fake API storage for icons
  *
  * [provider][prefix] = list of entries
  */
-export const storage: Record<
+export const iconsStorage: Record<
 	string,
-	Record<string, IconifyMockAPI[]>
+	Record<string, IconifyMockIconsAPI[]>
+> = Object.create(null);
+
+/**
+ * Fake API storage for custom queries
+ *
+ * [provider][uri] = response
+ */
+export const customStorage: Record<
+	string,
+	Record<string, IconifyMockCustomAPI>
 > = Object.create(null);
 
 /**
@@ -62,20 +83,33 @@ export const storage: Record<
  */
 export function mockAPIData(data: IconifyMockAPI): void {
 	const provider = data.provider;
-	if (storage[provider] === void 0) {
-		storage[provider] = Object.create(null);
-	}
-	const providerStorage = storage[provider];
+	switch (data.type) {
+		case 'icons': {
+			if (iconsStorage[provider] === void 0) {
+				iconsStorage[provider] = Object.create(null);
+			}
+			const providerStorage = iconsStorage[provider];
 
-	const prefix = data.prefix;
-	if (providerStorage[prefix] === void 0) {
-		providerStorage[prefix] = [];
-	}
+			const prefix = data.prefix;
+			if (providerStorage[prefix] === void 0) {
+				providerStorage[prefix] = [];
+			}
 
-	storage[provider][prefix].push(data);
+			iconsStorage[provider][prefix].push(data);
+			break;
+		}
+
+		case 'custom': {
+			if (customStorage[provider] === void 0) {
+				customStorage[provider] = Object.create(null);
+			}
+			customStorage[provider][data.uri] = data;
+			break;
+		}
+	}
 }
 
-interface MockAPIIconsQueryParams extends APIIconsQueryParams {
+interface MockAPIIconsQueryParams extends IconifyAPIIconsQueryParams {
 	index: number;
 }
 
@@ -90,12 +124,12 @@ export const mockAPIModule: IconifyAPIModule = {
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIIconsQueryParams[] => {
+	): IconifyAPIIconsQueryParams[] => {
 		const type = 'icons';
 
 		if (
-			storage[provider] === void 0 ||
-			storage[provider][prefix] === void 0
+			iconsStorage[provider] === void 0 ||
+			iconsStorage[provider][prefix] === void 0
 		) {
 			// No mock data: bundle all icons in one request that will return 404
 			return [
@@ -107,7 +141,7 @@ export const mockAPIModule: IconifyAPIModule = {
 				},
 			];
 		}
-		const mockData = storage[provider][prefix];
+		const mockData = iconsStorage[provider][prefix];
 
 		// Find catch all entry with error
 		const catchAllIndex = mockData.findIndex(
@@ -157,7 +191,7 @@ export const mockAPIModule: IconifyAPIModule = {
 		});
 
 		// Sort results
-		const results: APIIconsQueryParams[] = [];
+		const results: IconifyAPIIconsQueryParams[] = [];
 		if (noMatch.length > 0) {
 			results.push({
 				type,
@@ -174,7 +208,7 @@ export const mockAPIModule: IconifyAPIModule = {
 				prefix,
 				icons: matches[index],
 				index,
-			} as APIIconsQueryParams);
+			} as IconifyAPIIconsQueryParams);
 		});
 
 		return results;
@@ -183,27 +217,23 @@ export const mockAPIModule: IconifyAPIModule = {
 	/**
 	 * Load icons
 	 */
-	send: (host: string, params: APIQueryParams, status: PendingQueryItem) => {
+	send: (
+		host: string,
+		params: IconifyAPIQueryParams,
+		status: PendingQueryItem
+	) => {
 		const provider = params.provider;
 		let data: IconifyMockAPI;
 
 		switch (params.type) {
 			case 'icons': {
-				const prefix = params.prefix;
 				const index = (params as MockAPIIconsQueryParams).index;
+				data = iconsStorage[provider]?.[params.prefix]?.[index];
+				break;
+			}
 
-				// Get item
-				if (
-					storage[provider] === void 0 ||
-					storage[provider][prefix] === void 0 ||
-					storage[provider][prefix][index] === void 0
-				) {
-					// No entry
-					status.done(void 0, 404);
-					return;
-				}
-
-				data = storage[provider][prefix][index];
+			case 'custom': {
+				data = customStorage[provider]?.[params.uri];
 				break;
 			}
 
@@ -211,6 +241,11 @@ export const mockAPIModule: IconifyAPIModule = {
 				// Fail: return 400 Bad Request
 				status.done(void 0, 400);
 				return;
+		}
+
+		if (data === void 0) {
+			status.done(void 0, 404);
+			return;
 		}
 
 		// Get delay

@@ -129,3 +129,7 @@ export type GetAPIConfig = (provider: string) => IconifyAPIConfig | undefined;
 export const getAPIConfig: GetAPIConfig = (
 	provider: string
 ): IconifyAPIConfig | undefined => configStorage[provider];
+
+/**
+ * List API providers
+ */

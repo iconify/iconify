@@ -34,18 +34,21 @@ import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
 import { coreModules } from '@iconify/core/lib/modules';
 
 // API
-import { API, IconifyAPIInternalStorage } from '@iconify/core/lib/api/';
+import { API } from '@iconify/core/lib/api/';
 import {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 	APIFunctions,
 	APIInternalFunctions,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
 import {
 	setAPIModule,
 	IconifyAPIModule,
 	IconifyAPISendQuery,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	GetIconifyAPIModule,
 } from '@iconify/core/lib/api/modules';
 import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
@@ -116,12 +119,14 @@ export {
 	IconifyAPIConfig,
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-	IconifyAPIInternalStorage,
 	IconifyAPIModule,
 	GetAPIConfig,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	PartialIconifyAPIConfig,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 };
 
 // Builder functions

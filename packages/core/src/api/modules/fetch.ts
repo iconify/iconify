@@ -1,18 +1,14 @@
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type {
-	APIQueryParams,
+	IconifyAPIQueryParams,
 	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	IconifyAPIModule,
 	GetIconifyAPIModule,
-	APIIconsQueryParams,
+	IconifyAPIIconsQueryParams,
 } from '../modules';
 import type { GetAPIConfig } from '../config';
-
-/**
- * Endpoint
- */
-const endPoint = '{prefix}.json?icons={icons}';
+import { mergeParams } from '../params';
 
 /**
  * Cache
@@ -41,7 +37,7 @@ const detectFetch = (): FetchType | null => {
 	try {
 		// Obfuscate require() to avoid cross-fetch being bundled by Webpack
 		const chunk = String.fromCharCode(114) + String.fromCharCode(101);
-		const req = (this as unknown as Record<string, FetchType>)[
+		const req = (global as unknown as Record<string, FetchType>)[
 			chunk + 'qui' + chunk
 		];
 		callback = req('cross-fetch');
@@ -102,19 +98,17 @@ export const getAPIModule: GetIconifyAPIModule = (
 			});
 
 			// Get available length
+			const url = mergeParams(prefix + '.json', {
+				icons: '',
+			});
+
 			result =
-				config.maxURL -
-				maxHostLength -
-				config.path.length -
-				endPoint
-					.replace('{provider}', provider)
-					.replace('{prefix}', prefix)
-					.replace('{icons}', '').length;
+				config.maxURL - maxHostLength - config.path.length - url.length;
 		}
 
 		// Cache stuff and return result
 		const cacheKey = provider + ':' + prefix;
-		pathCache[cacheKey] = config.path;
+		pathCache[provider] = config.path;
 		maxLengthCache[cacheKey] = result;
 		return result;
 	}
@@ -126,8 +120,8 @@ export const getAPIModule: GetIconifyAPIModule = (
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIIconsQueryParams[] => {
-		const results: APIIconsQueryParams[] = [];
+	): IconifyAPIIconsQueryParams[] => {
+		const results: IconifyAPIIconsQueryParams[] = [];
 
 		// Get maximum icons list length
 		let maxLength = maxLengthCache[prefix];
@@ -137,7 +131,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 
 		// Split icons
 		const type = 'icons';
-		let item: APIIconsQueryParams = {
+		let item: IconifyAPIIconsQueryParams = {
 			type,
 			provider,
 			prefix,
@@ -170,7 +164,7 @@ export const getAPIModule: GetIconifyAPIModule = (
 	 */
 	const send: IconifyAPISendQuery = (
 		host: string,
-		params: APIQueryParams,
+		params: IconifyAPIQueryParams,
 		status: PendingQueryItem
 	): void => {
 		const provider = params.provider;
@@ -182,19 +176,19 @@ export const getAPIModule: GetIconifyAPIModule = (
 				const icons = params.icons;
 				const iconsList = icons.join(',');
 
-				const cacheKey = provider + ':' + prefix;
 				path =
-					pathCache[cacheKey] +
-					endPoint
-						.replace('{provider}', provider)
-						.replace('{prefix}', prefix)
-						.replace('{icons}', iconsList);
+					pathCache[provider] +
+					mergeParams(prefix + '.json', {
+						icons: iconsList,
+					});
 				break;
 			}
 
 			case 'custom': {
 				const uri = params.uri;
-				path = uri.slice(0, 1) === '/' ? uri.slice(1) : uri;
+				path =
+					pathCache[provider] +
+					(uri.slice(0, 1) === '/' ? uri.slice(1) : uri);
 				break;
 			}
 

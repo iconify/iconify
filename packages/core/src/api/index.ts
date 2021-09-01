@@ -38,8 +38,10 @@ function emptyCallback(): void {
  * [provider][prefix][icon] = time when icon was added to queue
  */
 type PendingIcons = Record<string, number>;
-const pendingIcons: Record<string, Record<string, PendingIcons>> =
-	Object.create(null);
+const pendingIcons: Record<
+	string,
+	Record<string, PendingIcons>
+> = Object.create(null);
 
 /**
  * List of icons that are waiting to be loaded.
@@ -51,16 +53,18 @@ const pendingIcons: Record<string, Record<string, PendingIcons>> =
  *
  * [provider][prefix] = array of icon names
  */
-const iconsToLoad: Record<string, Record<string, string[]>> =
-	Object.create(null);
+const iconsToLoad: Record<string, Record<string, string[]>> = Object.create(
+	null
+);
 
 // Flags to merge multiple synchronous icon requests in one asynchronous request
-const loaderFlags: Record<string, Record<string, boolean>> =
-	Object.create(null);
+const loaderFlags: Record<string, Record<string, boolean>> = Object.create(
+	null
+);
 const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
 
 // Redundancy instances cache, sorted by provider
-export interface IconifyAPIInternalStorage {
+interface IconifyAPIInternalStorage {
 	config: IconifyAPIConfig;
 	redundancy: Redundancy;
 }
@@ -70,7 +74,7 @@ const redundancyCache: Record<string, IconifyAPIInternalStorage> =
 /**
  * Get Redundancy instance for provider
  */
-export function getRedundancyCache(
+function getRedundancyCache(
 	provider: string
 ): IconifyAPIInternalStorage | undefined {
 	if (redundancyCache[provider] === void 0) {
@@ -293,8 +297,9 @@ const loadIcons: IconifyLoadIcons = (
 	}
 
 	// Get all sources for pending icons
-	const newIcons: Record<string, Record<string, string[]>> =
-		Object.create(null);
+	const newIcons: Record<string, Record<string, string[]>> = Object.create(
+		null
+	);
 	const sources: IconifyIconSource[] = [];
 	let lastProvider: string, lastPrefix: string;
 
