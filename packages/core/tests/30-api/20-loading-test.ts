@@ -5,11 +5,11 @@ import { expect } from 'chai';
 import type { PendingQueryItem } from '@cyberalien/redundancy';
 import { setAPIConfig } from '../../lib/api/config';
 import type {
-	APIIconsQueryParams,
-	APIQueryParams,
+	IconifyAPIIconsQueryParams,
+	IconifyAPIQueryParams,
 } from '../../lib/api/modules';
 import { setAPIModule } from '../../lib/api/modules';
-import { API } from '../../lib/api/';
+import { loadIcons, isPending } from '../../lib/api/icons';
 
 describe('Testing API loadIcons', () => {
 	let prefixCounter = 0;
@@ -35,8 +35,8 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIIconsQueryParams[] => {
-			const item: APIIconsQueryParams = {
+		): IconifyAPIIconsQueryParams[] => {
+			const item: IconifyAPIIconsQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -48,7 +48,7 @@ describe('Testing API loadIcons', () => {
 			asyncCounter++;
 
 			// Test input and return as one item
-			const expected: APIIconsQueryParams = {
+			const expected: IconifyAPIIconsQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -61,7 +61,7 @@ describe('Testing API loadIcons', () => {
 
 		const sendQuery = (
 			host: string,
-			params: APIQueryParams,
+			params: IconifyAPIQueryParams,
 			item: PendingQueryItem
 		): void => {
 			// This callback should be called after prepareQuery
@@ -72,7 +72,7 @@ describe('Testing API loadIcons', () => {
 
 			// Test input
 			expect(host).to.be.equal('https://api1.local');
-			const expected: APIQueryParams = {
+			const expected: IconifyAPIQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -103,7 +103,7 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Load icons
-		API.loadIcons(
+		loadIcons(
 			[
 				// as icon
 				{
@@ -135,14 +135,14 @@ describe('Testing API loadIcons', () => {
 				expect(pending).to.be.eql([]);
 
 				expect(
-					API.isPending({
+					isPending({
 						provider,
 						prefix,
 						name: 'icon1',
 					})
 				).to.be.equal(false);
 				expect(
-					API.isPending({ provider, prefix, name: 'icon3' })
+					isPending({ provider, prefix, name: 'icon3' })
 				).to.be.equal(false);
 
 				done();
@@ -150,10 +150,10 @@ describe('Testing API loadIcons', () => {
 		);
 
 		// Test isPending
-		expect(API.isPending({ provider, prefix, name: 'icon1' })).to.be.equal(
+		expect(isPending({ provider, prefix, name: 'icon1' })).to.be.equal(
 			true
 		);
-		expect(API.isPending({ provider, prefix, name: 'icon3' })).to.be.equal(
+		expect(isPending({ provider, prefix, name: 'icon3' })).to.be.equal(
 			false
 		);
 
@@ -176,11 +176,11 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIIconsQueryParams[] => {
+		): IconifyAPIIconsQueryParams[] => {
 			// Split all icons in multiple queries, one icon per query
-			const results: APIIconsQueryParams[] = [];
+			const results: IconifyAPIIconsQueryParams[] = [];
 			icons.forEach((icon) => {
-				const item: APIIconsQueryParams = {
+				const item: IconifyAPIIconsQueryParams = {
 					type: 'icons',
 					provider,
 					prefix,
@@ -197,7 +197,7 @@ describe('Testing API loadIcons', () => {
 		let queryCounter = 0;
 		const sendQuery = (
 			host: string,
-			params: APIQueryParams,
+			params: IconifyAPIQueryParams,
 			item: PendingQueryItem
 		): void => {
 			// Test input
@@ -210,7 +210,7 @@ describe('Testing API loadIcons', () => {
 
 			// Icon names should match queryCounter: 'icon1' on first run, 'icon2' on second run
 			queryCounter++;
-			const expected: APIQueryParams = {
+			const expected: IconifyAPIQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -240,7 +240,7 @@ describe('Testing API loadIcons', () => {
 
 		// Load icons
 		let callbackCalled = false;
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
@@ -285,8 +285,8 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIIconsQueryParams[] => {
-			const item: APIIconsQueryParams = {
+		): IconifyAPIIconsQueryParams[] => {
+			const item: IconifyAPIIconsQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -298,7 +298,7 @@ describe('Testing API loadIcons', () => {
 		let queryCounter = 0;
 		const sendQuery = (
 			host: string,
-			params: APIQueryParams,
+			params: IconifyAPIQueryParams,
 			item: PendingQueryItem
 		): void => {
 			queryCounter++;
@@ -342,7 +342,7 @@ describe('Testing API loadIcons', () => {
 
 		// Load icons
 		let callbackCalled = false;
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
@@ -388,8 +388,8 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIIconsQueryParams[] => {
-			const item: APIIconsQueryParams = {
+		): IconifyAPIIconsQueryParams[] => {
+			const item: IconifyAPIIconsQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -401,7 +401,7 @@ describe('Testing API loadIcons', () => {
 		let queryCounter = 0;
 		const sendQuery = (
 			host: string,
-			params: APIQueryParams,
+			params: IconifyAPIQueryParams,
 			item: PendingQueryItem
 		): void => {
 			queryCounter++;
@@ -472,7 +472,7 @@ describe('Testing API loadIcons', () => {
 
 		// Load icons
 		let callbackCalled = false;
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
@@ -501,7 +501,7 @@ describe('Testing API loadIcons', () => {
 				// Send another query on next tick
 				setTimeout(() => {
 					let callbackCalled = false;
-					API.loadIcons(
+					loadIcons(
 						[
 							provider + ':' + prefix + ':icon3',
 							provider + ':' + prefix + ':icon4',
@@ -551,8 +551,8 @@ describe('Testing API loadIcons', () => {
 			provider: string,
 			prefix: string,
 			icons: string[]
-		): APIIconsQueryParams[] => {
-			const item: APIIconsQueryParams = {
+		): IconifyAPIIconsQueryParams[] => {
+			const item: IconifyAPIIconsQueryParams = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -564,7 +564,7 @@ describe('Testing API loadIcons', () => {
 		let queryCounter = 0;
 		const sendQuery = (
 			host: string,
-			params: APIQueryParams,
+			params: IconifyAPIQueryParams,
 			item: PendingQueryItem
 		): void => {
 			queryCounter++;
@@ -638,7 +638,7 @@ describe('Testing API loadIcons', () => {
 
 		// Load icons
 		let callbackCalled = false;
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
@@ -667,7 +667,7 @@ describe('Testing API loadIcons', () => {
 				// Send another query on next tick for different prefix that shares configuration
 				setTimeout(() => {
 					let callbackCalled = false;
-					API.loadIcons(
+					loadIcons(
 						[
 							provider + ':' + prefix2 + ':icon2',
 							provider + ':' + prefix2 + ':icon4',

@@ -1,7 +1,7 @@
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-} from '../interfaces/loader';
+} from './icons';
 import { getStorage } from '../storage/storage';
 import type { SortedIcons } from '../icon/sort';
 import type { IconifyIconSource } from '@iconify/utils/lib/icon/name';
@@ -25,10 +25,13 @@ interface CallbackItem {
 
 // Records sorted by provider and prefix
 // This export is only for unit testing, should not be used
-export const callbacks: Record<string, Record<string, CallbackItem[]>> =
-	Object.create(null);
-const pendingUpdates: Record<string, Record<string, boolean>> =
-	Object.create(null);
+export const callbacks: Record<
+	string,
+	Record<string, CallbackItem[]>
+> = Object.create(null);
+const pendingUpdates: Record<string, Record<string, boolean>> = Object.create(
+	null
+);
 
 /**
  * Remove callback

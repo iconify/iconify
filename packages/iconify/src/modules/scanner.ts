@@ -1,6 +1,6 @@
 import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage/storage';
-import { coreModules } from '@iconify/core/lib/modules';
+import { isPending, loadIcons } from '@iconify/core/lib/api/icons';
 import { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { findPlaceholders } from './finder';
 import { IconifyElementData, elementDataProperty } from './element';
@@ -12,7 +12,7 @@ import {
 	removeObservedNode,
 	observeNode,
 } from './observer';
-import { findRootNode, addRootNode, listRootNodes } from './root';
+import { findRootNode, listRootNodes } from './root';
 
 /**
  * Flag to avoid scanning DOM too often
@@ -77,8 +77,10 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 	scanQueued = false;
 
 	// List of icons to load: [provider][prefix][name] = boolean
-	const loadIcons: Record<string, Record<string, Record<string, boolean>>> =
-		Object.create(null);
+	const iconsToLoad: Record<
+		string,
+		Record<string, Record<string, boolean>>
+	> = Object.create(null);
 
 	// Get placeholders
 	(node ? [node] : listRootNodes()).forEach((node) => {
@@ -112,8 +114,7 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 
 					case 'loading':
 						if (
-							coreModules.api &&
-							coreModules.api.isPending({
+							isPending({
 								provider,
 								prefix,
 								name,
@@ -162,18 +163,16 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 				return;
 			}
 
-			if (coreModules.api) {
-				if (!coreModules.api.isPending({ provider, prefix, name })) {
-					// Add icon to loading queue
-					if (loadIcons[provider] === void 0) {
-						loadIcons[provider] = Object.create(null);
-					}
-					const providerLoadIcons = loadIcons[provider];
-					if (providerLoadIcons[prefix] === void 0) {
-						providerLoadIcons[prefix] = Object.create(null);
-					}
-					providerLoadIcons[prefix][name] = true;
+			if (!isPending({ provider, prefix, name })) {
+				// Add icon to loading queue
+				if (iconsToLoad[provider] === void 0) {
+					iconsToLoad[provider] = Object.create(null);
 				}
+				const providerIconsToLoad = iconsToLoad[provider];
+				if (providerIconsToLoad[prefix] === void 0) {
+					providerIconsToLoad[prefix] = Object.create(null);
+				}
+				providerIconsToLoad[prefix][name] = true;
 			}
 
 			// Mark as loading
@@ -200,23 +199,20 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 	});
 
 	// Load icons
-	if (coreModules.api) {
-		const api = coreModules.api;
-		Object.keys(loadIcons).forEach((provider) => {
-			const providerLoadIcons = loadIcons[provider];
-			Object.keys(providerLoadIcons).forEach((prefix) => {
-				api.loadIcons(
-					Object.keys(providerLoadIcons[prefix]).map((name) => {
-						const icon: IconifyIconName = {
-							provider,
-							prefix,
-							name,
-						};
-						return icon;
-					}),
-					checkPendingIcons
-				);
-			});
+	Object.keys(iconsToLoad).forEach((provider) => {
+		const providerIconsToLoad = iconsToLoad[provider];
+		Object.keys(providerIconsToLoad).forEach((prefix) => {
+			loadIcons(
+				Object.keys(providerIconsToLoad[prefix]).map((name) => {
+					const icon: IconifyIconName = {
+						provider,
+						prefix,
+						name,
+					};
+					return icon;
+				}),
+				checkPendingIcons
+			);
 		});
-	}
+	});
 }

@@ -21,11 +21,7 @@ import {
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import { fullIcon } from '@iconify/utils/lib/icon';
 
-// Modules
-import { coreModules } from '@iconify/core/lib/modules';
-
 // API
-import { API } from '@iconify/core/lib/api/';
 import {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
@@ -40,26 +36,26 @@ import {
 	IconifyAPIModule,
 	IconifyAPISendQuery,
 	IconifyAPIPrepareIconsQuery,
-	GetIconifyAPIModule,
 } from '@iconify/core/lib/api/modules';
-import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
+import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
-	getAPIModule as getFetchAPIModule,
+	fetchAPIModule,
+	getFetch,
 	setFetch,
 } from '@iconify/core/lib/api/modules/fetch';
 import {
 	setAPIConfig,
 	PartialIconifyAPIConfig,
 	IconifyAPIConfig,
-	getAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-} from '@iconify/core/lib/interfaces/loader';
+} from '@iconify/core/lib/api/icons';
 
 // Cache
+import { cache } from '@iconify/core/lib/cache';
 import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
 import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
 import type {
@@ -200,33 +196,15 @@ export const _api = APIInternalFunctions;
 // Enable short names
 allowSimpleNames(true);
 
-// Set API
-coreModules.api = API;
-
-// Use Fetch API by default
-let getAPIModule: GetIconifyAPIModule = getFetchAPIModule;
-try {
-	if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-		// If window and document exist, attempt to load whatever module is available, otherwise use Fetch API
-		getAPIModule =
-			typeof fetch === 'function' && typeof Promise === 'function'
-				? getFetchAPIModule
-				: getJSONPAPIModule;
-	}
-} catch (err) {
-	//
-}
-setAPIModule('', getAPIModule(getAPIConfig));
+// Set API module
+setAPIModule('', getFetch() ? fetchAPIModule : jsonpAPIModule);
 
 /**
  * Function to enable node-fetch for getting icons on server side
  */
 _api.setFetch = (nodeFetch: typeof fetch) => {
 	setFetch(nodeFetch);
-	if (getAPIModule !== getFetchAPIModule) {
-		getAPIModule = getFetchAPIModule;
-		setAPIModule('', getAPIModule(getAPIConfig));
-	}
+	setAPIModule('', fetchAPIModule);
 };
 
 /**
@@ -234,7 +212,7 @@ _api.setFetch = (nodeFetch: typeof fetch) => {
  */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Set cache and load existing cache
-	coreModules.cache = storeCache;
+	cache.store = storeCache;
 	loadCache();
 
 	interface WindowWithIconifyStuff {
@@ -402,7 +380,7 @@ class IconComponent extends React.Component<
 				this._setData(null);
 				this._loading = {
 					name: icon,
-					abort: API.loadIcons(
+					abort: loadIcons(
 						[iconName],
 						this._checkIcon.bind(this, false)
 					),

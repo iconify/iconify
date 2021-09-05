@@ -8,6 +8,7 @@ describe('Testing fake API', () => {
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {

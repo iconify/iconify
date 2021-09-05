@@ -47,6 +47,7 @@ describe('Rendering icon', () => {
 		};
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -90,6 +91,7 @@ describe('Rendering icon', () => {
 		});
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -160,6 +162,7 @@ describe('Rendering icon', () => {
 		let isSync = true;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -178,6 +181,7 @@ describe('Rendering icon', () => {
 		});
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -245,6 +249,7 @@ describe('Rendering icon', () => {
 		const className = `iconify iconify--${prefix} iconify--${provider}`;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {

@@ -3,11 +3,12 @@ import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 describe('Testing fake API', () => {
-	test('using fake API to load icon', done => {
+	test('using fake API to load icon', (done) => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {

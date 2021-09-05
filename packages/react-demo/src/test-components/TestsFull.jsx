@@ -10,7 +10,7 @@ const prefix = 'demo';
 
 // Set API module for provider
 addAPIProvider(provider, {
-	resources: 'http://localhost',
+	resources: ['http://localhost'],
 	rotate: 10000,
 	timeout: 10000,
 });
@@ -18,6 +18,7 @@ _api.setAPIModule(provider, mockAPIModule);
 
 // Set mock data
 mockAPIData({
+	type: 'icons',
 	provider,
 	prefix,
 	response: {

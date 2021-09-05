@@ -13,11 +13,13 @@ import { IconifyIconName } from '@iconify/utils/lib/icon/name';
 
 const expect = chai.expect;
 
-// Add finders
-addFinder(iconifyFinder);
-addFinder(iconifyIconFinder);
-
 describe('Testing legacy finder', () => {
+	before(() => {
+		// Add finders
+		addFinder(iconifyFinder);
+		addFinder(iconifyIconFinder);
+	});
+
 	it('Finding nodes', () => {
 		const node = getNode('finder');
 		node.innerHTML =

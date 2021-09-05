@@ -16,7 +16,7 @@ export type PartialIconifyAPIConfig = Partial<IconifyAPIConfig>;
 /**
  * Create full API configuration from partial data
  */
-function createConfig(
+export function createAPIConfig(
 	source: PartialIconifyAPIConfig
 ): IconifyAPIConfig | null {
 	let resources;
@@ -99,7 +99,7 @@ while (fallBackAPISources.length > 0) {
 }
 
 // Add default API
-configStorage[''] = createConfig({
+configStorage[''] = createAPIConfig({
 	resources: ['https://api.iconify.design'].concat(fallBackAPI),
 }) as IconifyAPIConfig;
 
@@ -110,7 +110,7 @@ export function setAPIConfig(
 	provider: string,
 	customConfig: PartialIconifyAPIConfig
 ): boolean {
-	const config = createConfig(customConfig);
+	const config = createAPIConfig(customConfig);
 	if (config === null) {
 		return false;
 	}
@@ -126,9 +126,9 @@ export type GetAPIConfig = (provider: string) => IconifyAPIConfig | undefined;
 /**
  * Get API configuration
  */
-export const getAPIConfig: GetAPIConfig = (
-	provider: string
-): IconifyAPIConfig | undefined => configStorage[provider];
+export function getAPIConfig(provider: string): IconifyAPIConfig | undefined {
+	return configStorage[provider];
+}
 
 /**
  * List API providers

@@ -6,8 +6,8 @@ import type { PendingQueryItem } from '@cyberalien/redundancy';
 import type { IconifyAPIConfig } from '../../lib/api/config';
 import { setAPIConfig, getAPIConfig } from '../../lib/api/config';
 import type {
-	APIIconsQueryParams,
-	APIQueryParams,
+	IconifyAPIIconsQueryParams,
+	IconifyAPIQueryParams,
 	IconifyAPIModule,
 } from '../../lib/api/modules';
 import { setAPIModule, getAPIModule } from '../../lib/api/modules';
@@ -25,8 +25,8 @@ describe('Testing API modules', () => {
 		provider: string,
 		prefix: string,
 		icons: string[]
-	): APIIconsQueryParams[] => {
-		const item: APIIconsQueryParams = {
+	): IconifyAPIIconsQueryParams[] => {
+		const item: IconifyAPIIconsQueryParams = {
 			type: 'icons',
 			provider,
 			prefix,
@@ -37,7 +37,7 @@ describe('Testing API modules', () => {
 
 	const sendQuery = (
 		host: string,
-		params: APIQueryParams,
+		params: IconifyAPIQueryParams,
 		item: PendingQueryItem
 	): void => {
 		throw new Error('Unexpected API call');

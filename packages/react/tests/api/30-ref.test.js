@@ -17,6 +17,7 @@ describe('Testing references', () => {
 		const iconName = `@${provider}:${prefix}:${name}`;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -81,6 +82,7 @@ describe('Testing references', () => {
 		let gotRef = false;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -139,6 +141,7 @@ describe('Testing references', () => {
 		let gotRef = false;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,

@@ -2,18 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
-import { setAPIConfig } from '../../lib/api/config';
 import { setAPIModule } from '../../lib/api/modules';
-import { API } from '../../lib/api/';
+import { loadIcons } from '../../lib/api/icons';
 import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
 import { allowSimpleNames } from '../../lib/storage/functions';
 
 describe('Testing simple names with API module', () => {
 	// Set API config and allow simple names
 	before(() => {
-		setAPIConfig('', {
-			resources: ['https://api1.local'],
-		});
 		allowSimpleNames(true);
 		setAPIModule('', mockAPIModule);
 	});
@@ -56,7 +52,7 @@ describe('Testing simple names with API module', () => {
 			},
 		});
 
-		API.loadIcons(
+		loadIcons(
 			[
 				{
 					provider: '',

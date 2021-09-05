@@ -127,10 +127,7 @@ export const mockAPIModule: IconifyAPIModule = {
 	): IconifyAPIIconsQueryParams[] => {
 		const type = 'icons';
 
-		if (
-			iconsStorage[provider] === void 0 ||
-			iconsStorage[provider][prefix] === void 0
-		) {
+		if (!iconsStorage[provider] || !iconsStorage[provider][prefix]) {
 			// No mock data: bundle all icons in one request that will return 404
 			return [
 				{
@@ -223,6 +220,12 @@ export const mockAPIModule: IconifyAPIModule = {
 		status: PendingQueryItem
 	) => {
 		const provider = params.provider;
+		if (provider === void 0) {
+			// Fail: return 400 Bad Request
+			status.done(void 0, 400);
+			return;
+		}
+
 		let data: IconifyMockAPI;
 
 		switch (params.type) {

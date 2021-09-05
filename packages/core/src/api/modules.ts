@@ -1,5 +1,4 @@
 import type { PendingQueryItem } from '@cyberalien/redundancy';
-import type { GetAPIConfig } from '../api/config';
 
 /**
  * Params for sendQuery()
@@ -12,7 +11,7 @@ export interface IconifyAPIIconsQueryParams {
 }
 export interface IconifyAPICustomQueryParams {
 	type: 'custom';
-	provider: string;
+	provider?: string; // Provider is optional. If missing, temporary config is created based on host
 	uri: string;
 }
 
@@ -59,12 +58,5 @@ export function setAPIModule(provider: string, item: IconifyAPIModule): void {
  * Get API module
  */
 export function getAPIModule(provider: string): IconifyAPIModule | undefined {
-	return storage[provider] === void 0 ? storage[''] : storage[provider];
+	return storage[provider] || storage[''];
 }
-
-/**
- * Function to return API interface
- */
-export type GetIconifyAPIModule = (
-	getAPIConfig: GetAPIConfig
-) => IconifyAPIModule;

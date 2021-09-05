@@ -7,8 +7,7 @@ import { getIconData } from '@iconify/core/lib/storage/functions';
 import { fullIcon, FullIconifyIcon } from '@iconify/utils/lib/icon';
 
 // API
-import { API } from '@iconify/core/lib/api/';
-import type { IconifyIconLoaderAbort } from '@iconify/core/lib/interfaces/loader';
+import { loadIcons, IconifyIconLoaderAbort } from '@iconify/core/lib/api/icons';
 
 // Component stuff
 import type { IconifyIconProps } from './props';
@@ -127,7 +126,7 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 				this._icon = {
 					name: icon,
 					className,
-					abort: API.loadIcons([iconName], () => {
+					abort: loadIcons([iconName], () => {
 						if (!this.isDestroyed && this._icon?.name === icon) {
 							// Loaded
 							const data = getIconData(iconName);

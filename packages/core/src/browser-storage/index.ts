@@ -1,5 +1,5 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { CacheIcons, LoadIconsCache } from '../interfaces/cache';
+import type { CacheIcons, LoadIconsCache } from '../cache';
 import { getStorage, addIconSet } from '../storage/storage';
 
 interface StorageType<T> {
@@ -68,7 +68,7 @@ export const emptyList: StorageEmptyList = {
 type FakeWindow = Record<string, typeof localStorage>;
 
 let _window: FakeWindow =
-	typeof window === 'undefined' ? {} : ((window as unknown) as FakeWindow);
+	typeof window === 'undefined' ? {} : (window as unknown as FakeWindow);
 export function mock(fakeWindow: FakeWindow): void {
 	loaded = false;
 	_window = fakeWindow;

@@ -1,19 +1,28 @@
-import { API } from '.';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { sendAPIQuery } from './query';
+import { loadIcons } from './icons';
 import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
-} from '../interfaces/loader';
-import type { GetAPIConfig, IconifyAPIConfig } from './config';
+} from './icons';
+import type {
+	GetAPIConfig,
+	IconifyAPIConfig,
+	PartialIconifyAPIConfig,
+} from './config';
 import { getAPIConfig, setAPIConfig } from './config';
 import type {
 	IconifyAPIModule,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
 } from './modules';
-import { setAPIModule, getAPIModule } from './modules';
+import { setAPIModule } from './modules';
 import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
 import { mergeParams } from './params';
+import type {
+	QueryAbortCallback,
+	QueryDoneCallback,
+} from '@cyberalien/redundancy';
 
 /**
  * Iconify API functions
@@ -37,7 +46,7 @@ export interface IconifyAPIFunctions {
 }
 
 export const APIFunctions: IconifyAPIFunctions = {
-	loadIcons: API.loadIcons,
+	loadIcons,
 	addAPIProvider: setAPIConfig,
 };
 
@@ -55,14 +64,18 @@ export interface IconifyAPIInternalFunctions {
 	getAPIConfig: GetAPIConfig;
 
 	/**
-	 * Set API module
+	 * Set custom API module
 	 */
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 
 	/**
-	 * Get API module
+	 * Send API query
 	 */
-	getAPIModule: (provider: string) => IconifyAPIModule | undefined;
+	sendAPIQuery: (
+		target: string | PartialIconifyAPIConfig,
+		query: IconifyAPIQueryParams,
+		callback: QueryDoneCallback
+	) => QueryAbortCallback;
 
 	/**
 	 * Optional setFetch and getFetch (should be imported from ./modules/fetch if fetch is used)
@@ -79,7 +92,7 @@ export interface IconifyAPIInternalFunctions {
 export const APIInternalFunctions: IconifyAPIInternalFunctions = {
 	getAPIConfig,
 	setAPIModule,
-	getAPIModule,
+	sendAPIQuery,
 	mergeParams,
 };
 

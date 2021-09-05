@@ -4,7 +4,7 @@ import 'mocha';
 import { expect } from 'chai';
 import { setAPIConfig } from '../../lib/api/config';
 import { setAPIModule } from '../../lib/api/modules';
-import { API } from '../../lib/api/';
+import { loadIcons } from '../../lib/api/icons';
 import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
 import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
 import { getStorage, iconExists } from '../../lib/storage/storage';
@@ -37,7 +37,7 @@ describe('Testing mock API module', () => {
 
 		let isSync = true;
 
-		API.loadIcons(
+		loadIcons(
 			[
 				{
 					provider,
@@ -101,7 +101,7 @@ describe('Testing mock API module', () => {
 
 		let isSync = true;
 
-		API.loadIcons(
+		loadIcons(
 			[
 				{
 					provider,
@@ -180,7 +180,7 @@ describe('Testing mock API module', () => {
 
 		let callbackCounter = 0;
 
-		API.loadIcons(
+		loadIcons(
 			[
 				{
 					provider,
@@ -278,7 +278,7 @@ describe('Testing mock API module', () => {
 		});
 
 		// Load icons
-		API.loadIcons([
+		loadIcons([
 			{
 				provider,
 				prefix,

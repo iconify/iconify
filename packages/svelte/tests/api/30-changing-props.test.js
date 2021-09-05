@@ -29,6 +29,7 @@ describe('Rendering icon', () => {
 		let triggerSwap;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -78,6 +79,7 @@ describe('Rendering icon', () => {
 		});
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -172,6 +174,7 @@ describe('Rendering icon', () => {
 		let triggerSwap;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -193,6 +196,7 @@ describe('Rendering icon', () => {
 		});
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -280,6 +284,7 @@ describe('Rendering icon', () => {
 		let triggerSwap;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
