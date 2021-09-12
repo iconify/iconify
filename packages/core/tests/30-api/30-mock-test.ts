@@ -8,6 +8,7 @@ import { loadIcons } from '../../lib/api/icons';
 import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
 import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
 import { getStorage, iconExists } from '../../lib/storage/storage';
+import { sendAPIQuery } from '../../lib/api/query';
 
 describe('Testing mock API module', () => {
 	let prefixCounter = 0;
@@ -18,10 +19,13 @@ describe('Testing mock API module', () => {
 
 	// Set API module for provider
 	const provider = nextPrefix();
-	setAPIConfig(provider, {
-		resources: ['https://api1.local'],
+
+	before(() => {
+		setAPIConfig(provider, {
+			resources: ['https://api1.local'],
+		});
+		setAPIModule(provider, mockAPIModule);
 	});
-	setAPIModule(provider, mockAPIModule);
 
 	// Tests
 	it('404 response', (done) => {
@@ -285,5 +289,72 @@ describe('Testing mock API module', () => {
 				name,
 			},
 		]);
+	});
+
+	it('Custom query', (done) => {
+		mockAPIData({
+			type: 'custom',
+			provider,
+			uri: '/test',
+			response: {
+				foo: true,
+			},
+		});
+
+		let isSync = true;
+
+		sendAPIQuery(
+			provider,
+			{
+				type: 'custom',
+				provider,
+				uri: '/test',
+			},
+			(data, error) => {
+				expect(error).to.be.equal(void 0);
+				expect(data).to.be.eql({
+					foo: true,
+				});
+				expect(isSync).to.be.equal(false);
+				done();
+			}
+		);
+
+		isSync = false;
+	});
+
+	it('Custom query with host', (done) => {
+		const host = 'http://' + nextPrefix();
+		setAPIModule(host, mockAPIModule);
+		mockAPIData({
+			type: 'host',
+			host,
+			uri: '/test',
+			response: {
+				foo: 2,
+			},
+		});
+
+		let isSync = true;
+
+		sendAPIQuery(
+			{
+				resources: [host],
+			},
+			{
+				type: 'custom',
+				uri: '/test',
+			},
+			(data, error) => {
+				expect(error).to.be.equal(void 0);
+				expect(data).to.be.eql({
+					foo: 2,
+				});
+				expect(isSync).to.be.equal(false);
+				done();
+			}
+		);
+
+		isSync = false;
 	});
 });

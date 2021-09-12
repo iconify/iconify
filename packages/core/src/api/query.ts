@@ -86,8 +86,11 @@ export function sendAPIQuery(
 		if (config) {
 			redundancy = initRedundancy(config);
 
-			// Use default API provider
-			const api = getAPIModule('');
+			// Use host instead of API provider (defaults to '')
+			const moduleKey = target.resources
+				? (target.resources[0] as string)
+				: '';
+			const api = getAPIModule(moduleKey);
 			if (api) {
 				send = api.send;
 			}
