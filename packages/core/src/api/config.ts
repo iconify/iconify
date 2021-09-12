@@ -133,3 +133,6 @@ export function getAPIConfig(provider: string): IconifyAPIConfig | undefined {
 /**
  * List API providers
  */
+export function listAPIProviders(): string[] {
+	return Object.keys(configStorage);
+}

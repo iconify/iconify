@@ -10,7 +10,7 @@ import type {
 	IconifyAPIConfig,
 	PartialIconifyAPIConfig,
 } from './config';
-import { getAPIConfig, setAPIConfig } from './config';
+import { getAPIConfig, setAPIConfig, listAPIProviders } from './config';
 import type {
 	IconifyAPIModule,
 	IconifyAPIQueryParams,
@@ -84,6 +84,11 @@ export interface IconifyAPIInternalFunctions {
 	getFetch?: () => typeof fetch | null;
 
 	/**
+	 * List all API providers (from config)
+	 */
+	listAPIProviders: () => string[];
+
+	/**
 	 * Merge parameters
 	 */
 	mergeParams: MergeParams;
@@ -93,6 +98,7 @@ export const APIInternalFunctions: IconifyAPIInternalFunctions = {
 	getAPIConfig,
 	setAPIModule,
 	sendAPIQuery,
+	listAPIProviders,
 	mergeParams,
 };
 
