@@ -1,4 +1,4 @@
-import { matchName } from '.';
+import { matchName } from './index';
 
 /**
  * Icon name

@@ -12,31 +12,117 @@
 		"directory": "packages/core"
 	},
 	"scripts": {
-		"clean": "rm -rf lib compiled-tests",
+		"clean": "rimraf lib tests-compiled",
 		"lint": "eslint {src,tests}/**/*.ts",
-		"prebuild": "npm run lint",
-		"build": "tsc -b",
-		"build:src": "tsc --project src/tsconfig.json",
-		"prewatch": "npm run lint",
-		"watch": "tsc -b -w",
+		"prebuild": "npm run lint && npm run clean",
+		"build": "node build",
+		"build:dts": "tsc --project src/tsconfig.json",
+		"build:tests": "tsc --project tests/tsconfig.json",
 		"test": "mocha tests-compiled/*/*-test.js",
-		"pretest": "npm run build"
+		"pretest": "npm run build && npm run build:tests"
 	},
-	"devDependencies": {
-		"@types/chai": "^4.2.16",
-		"@types/mocha": "^8.2.2",
-		"@types/node": "^14.14.41",
-		"@types/request": "^2.48.5",
-		"@typescript-eslint/eslint-plugin": "^4.22.0",
-		"@typescript-eslint/parser": "^4.22.0",
-		"chai": "^4.3.4",
-		"eslint": "^7.24.0",
-		"mocha": "^8.3.2",
-		"typescript": "^4.2.4"
+	"exports": {
+		"./lib/api/callbacks": {
+			"require": "./lib/api/callbacks.js",
+			"import": "./lib/api/callbacks.mjs"
+		},
+		"./lib/api/config": {
+			"require": "./lib/api/config.js",
+			"import": "./lib/api/config.mjs"
+		},
+		"./lib/api/functions": {
+			"require": "./lib/api/functions.js",
+			"import": "./lib/api/functions.mjs"
+		},
+		"./lib/api/": {
+			"require": "./lib/api/index.js",
+			"import": "./lib/api/index.mjs"
+		},
+		"./lib/api/index": {
+			"require": "./lib/api/index.js",
+			"import": "./lib/api/index.mjs"
+		},
+		"./lib/api/modules": {
+			"require": "./lib/api/modules.js",
+			"import": "./lib/api/modules.mjs"
+		},
+		"./lib/api/modules/fetch": {
+			"require": "./lib/api/modules/fetch.js",
+			"import": "./lib/api/modules/fetch.mjs"
+		},
+		"./lib/api/modules/jsonp": {
+			"require": "./lib/api/modules/jsonp.js",
+			"import": "./lib/api/modules/jsonp.mjs"
+		},
+		"./lib/api/modules/mock": {
+			"require": "./lib/api/modules/mock.js",
+			"import": "./lib/api/modules/mock.mjs"
+		},
+		"./lib/browser-storage/functions": {
+			"require": "./lib/browser-storage/functions.js",
+			"import": "./lib/browser-storage/functions.mjs"
+		},
+		"./lib/browser-storage/": {
+			"require": "./lib/browser-storage/index.js",
+			"import": "./lib/browser-storage/index.mjs"
+		},
+		"./lib/browser-storage/index": {
+			"require": "./lib/browser-storage/index.js",
+			"import": "./lib/browser-storage/index.mjs"
+		},
+		"./lib/builder/functions": {
+			"require": "./lib/builder/functions.js",
+			"import": "./lib/builder/functions.mjs"
+		},
+		"./lib/icon/list": {
+			"require": "./lib/icon/list.js",
+			"import": "./lib/icon/list.mjs"
+		},
+		"./lib/icon/sort": {
+			"require": "./lib/icon/sort.js",
+			"import": "./lib/icon/sort.mjs"
+		},
+		"./lib/interfaces/api": {
+			"require": "./lib/interfaces/api.js",
+			"import": "./lib/interfaces/api.mjs"
+		},
+		"./lib/interfaces/cache": {
+			"require": "./lib/interfaces/cache.js",
+			"import": "./lib/interfaces/cache.mjs"
+		},
+		"./lib/interfaces/loader": {
+			"require": "./lib/interfaces/loader.js",
+			"import": "./lib/interfaces/loader.mjs"
+		},
+		"./lib/modules": {
+			"require": "./lib/modules.js",
+			"import": "./lib/modules.mjs"
+		},
+		"./lib/storage/functions": {
+			"require": "./lib/storage/functions.js",
+			"import": "./lib/storage/functions.mjs"
+		},
+		"./lib/storage/storage": {
+			"require": "./lib/storage/storage.js",
+			"import": "./lib/storage/storage.mjs"
+		}
 	},
 	"dependencies": {
 		"@cyberalien/redundancy": "^1.1.0",
 		"@iconify/types": "^1.0.6",
 		"@iconify/utils": "^1.0.6"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.2.18",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "^15.3.0",
+		"@types/request": "^2.48.5",
+		"@typescript-eslint/eslint-plugin": "^4.31.1",
+		"chai": "^4.3.4",
+		"esbuild": "^0.12.28",
+		"eslint": "^7.32.0",
+		"mocha": "^8.3.2",
+		"rimraf": "^3.0.2",
+		"typescript": "^4.4.3"
 	}
 }

@@ -49,8 +49,7 @@ function validateIconProps(item: IconifyOptional, fix: boolean): string | null {
 			case 'left':
 			case 'top':
 			case 'rotate':
-			// Legacy properties
-			case 'inlineHeight':
+			case 'inlineHeight': // Legacy properties
 			case 'inlineTop':
 			case 'verticalAlign':
 				if (type !== 'number') {
@@ -194,6 +193,7 @@ export function validateIconSet(
 		const validatedAliases: Set<string> = new Set();
 		const failedAliases: Set<string> = new Set();
 
+		// eslint-disable-next-line no-inner-declarations
 		function validateAlias(name: string, iteration: number): boolean {
 			// Check if alias has already been validated
 			if (validatedAliases.has(name)) {

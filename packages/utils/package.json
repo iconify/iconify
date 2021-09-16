@@ -12,12 +12,92 @@
 		"directory": "packages/utils"
 	},
 	"scripts": {
-		"cleanup": "rm -rf lib compiled-tests",
-		"lint": "npx eslint {src,tests}/**/*.ts",
-		"build": "npx tsc -b",
-		"build:src": "npx tsc --project src/tsconfig.json",
-		"test": "npx mocha tests-compiled/*-test.js",
-		"pretest": "npm run build"
+		"clean": "rimraf lib tests-compiled",
+		"lint": "eslint {src,tests}/**/*.ts",
+		"prebuild": "npm run lint && npm run clean",
+		"build": "node build",
+		"build:dts": "tsc --project src/tsconfig.json",
+		"build:tests": "tsc --project tests/tsconfig.json",
+		"test": "mocha tests-compiled/*-test.js",
+		"pretest": "npm run build && npm run build:tests"
+	},
+	"exports": {
+		"./lib/customisations/bool": {
+			"require": "./lib/customisations/bool.js",
+			"import": "./lib/customisations/bool.mjs"
+		},
+		"./lib/customisations/compare": {
+			"require": "./lib/customisations/compare.js",
+			"import": "./lib/customisations/compare.mjs"
+		},
+		"./lib/customisations/": {
+			"require": "./lib/customisations/index.js",
+			"import": "./lib/customisations/index.mjs"
+		},
+		"./lib/customisations/index": {
+			"require": "./lib/customisations/index.js",
+			"import": "./lib/customisations/index.mjs"
+		},
+		"./lib/customisations/rotate": {
+			"require": "./lib/customisations/rotate.js",
+			"import": "./lib/customisations/rotate.mjs"
+		},
+		"./lib/customisations/shorthand": {
+			"require": "./lib/customisations/shorthand.js",
+			"import": "./lib/customisations/shorthand.mjs"
+		},
+		"./lib/icon-set/expand": {
+			"require": "./lib/icon-set/expand.js",
+			"import": "./lib/icon-set/expand.mjs"
+		},
+		"./lib/icon-set/get-icon": {
+			"require": "./lib/icon-set/get-icon.js",
+			"import": "./lib/icon-set/get-icon.mjs"
+		},
+		"./lib/icon-set/get-icons": {
+			"require": "./lib/icon-set/get-icons.js",
+			"import": "./lib/icon-set/get-icons.mjs"
+		},
+		"./lib/icon-set/minify": {
+			"require": "./lib/icon-set/minify.js",
+			"import": "./lib/icon-set/minify.mjs"
+		},
+		"./lib/icon-set/parse": {
+			"require": "./lib/icon-set/parse.js",
+			"import": "./lib/icon-set/parse.mjs"
+		},
+		"./lib/icon-set/validate": {
+			"require": "./lib/icon-set/validate.js",
+			"import": "./lib/icon-set/validate.mjs"
+		},
+		"./lib/icon/": {
+			"require": "./lib/icon/index.js",
+			"import": "./lib/icon/index.mjs"
+		},
+		"./lib/icon/index": {
+			"require": "./lib/icon/index.js",
+			"import": "./lib/icon/index.mjs"
+		},
+		"./lib/icon/merge": {
+			"require": "./lib/icon/merge.js",
+			"import": "./lib/icon/merge.mjs"
+		},
+		"./lib/icon/name": {
+			"require": "./lib/icon/name.js",
+			"import": "./lib/icon/name.mjs"
+		},
+		"./lib/svg/build": {
+			"require": "./lib/svg/build.js",
+			"import": "./lib/svg/build.mjs"
+		},
+		"./lib/svg/id": {
+			"require": "./lib/svg/id.js",
+			"import": "./lib/svg/id.mjs"
+		},
+		"./lib/svg/size": {
+			"require": "./lib/svg/size.js",
+			"import": "./lib/svg/size.mjs"
+		}
 	},
 	"dependencies": {
 		"@iconify/types": "^1.0.6"
@@ -26,8 +106,12 @@
 		"@types/chai": "^4.2.18",
 		"@types/mocha": "^8.2.2",
 		"@types/node": "^15.3.0",
+		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"chai": "^4.3.4",
+		"esbuild": "^0.12.28",
+		"eslint": "^7.32.0",
 		"mocha": "^8.4.0",
+		"rimraf": "^3.0.2",
 		"typescript": "^4.2.4"
 	}
 }

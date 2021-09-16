@@ -1,5 +1,5 @@
-import type { FullIconCustomisations } from '../customisations';
-import { defaults } from '../customisations';
+import type { FullIconCustomisations } from './index';
+import { defaults } from './index';
 
 // Get all keys
 const allKeys: (keyof FullIconCustomisations)[] = Object.keys(

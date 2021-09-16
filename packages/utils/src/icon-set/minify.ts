@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { IconifyJSON } from '@iconify/types';
 import { minifyProps, iconDefaults } from '../icon';
 
@@ -55,12 +56,12 @@ export function minifyIconSet(data: IconifyJSON): void {
 		const hasMinifiedDefault = typeof data[prop] === 'number';
 
 		// Find value that is used by most icons
-		let maxCount = 0,
-			maxValue: number | null = null,
-			counters: Map<number, number> = new Map();
+		let maxCount = 0;
+		let maxValue: number | null = null;
+		const counters: Map<number, number> = new Map();
 
 		for (let i = 0; i < icons.length; i++) {
-			let item = data.icons[icons[i]];
+			const item = data.icons[icons[i]];
 
 			let value: number;
 			if (typeof item[prop] === 'number') {

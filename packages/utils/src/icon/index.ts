@@ -1,6 +1,5 @@
 import type {
 	IconifyOptional,
-	IconifyJSON,
 	IconifyDimenisons,
 	IconifyIcon,
 } from '@iconify/types';

@@ -1,6 +1,6 @@
 import type { IconifyOptional } from '@iconify/types';
-import type { FullIconifyIcon, IconifyIcon } from '.';
-import { iconDefaults } from '.';
+import type { FullIconifyIcon, IconifyIcon } from './index';
+import { iconDefaults } from './index';
 
 /**
  * Merge icon and alias
