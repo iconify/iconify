@@ -5,7 +5,7 @@ import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
 } from '../interfaces/loader';
-import type { GetAPIConfig, IconifyAPIConfig } from './config';
+import type { GetAPIConfig, PartialIconifyAPIConfig } from './config';
 import { getAPIConfig, setAPIConfig } from './config';
 import type { IconifyAPIModule } from './modules';
 import { setAPIModule } from './modules';
@@ -27,7 +27,7 @@ export interface IconifyAPIFunctions {
 	 */
 	addAPIProvider: (
 		provider: string,
-		customConfig: Partial<IconifyAPIConfig>
+		customConfig: PartialIconifyAPIConfig
 	) => boolean;
 }
 

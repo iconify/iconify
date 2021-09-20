@@ -11,7 +11,8 @@ export interface IconifyAPIConfig extends RedundancyConfig {
 	maxURL: number;
 }
 
-export type PartialIconifyAPIConfig = Partial<IconifyAPIConfig>;
+export type PartialIconifyAPIConfig = Partial<IconifyAPIConfig> &
+	Pick<IconifyAPIConfig, 'resources'>;
 
 /**
  * Create full API configuration from partial data
