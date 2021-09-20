@@ -1,7 +1,7 @@
-import { validateIconSet } from '../lib/icon-set/validate';
+import { validateIconSet } from '@iconify/utils/lib/icon-set/validate';
 
 describe('Testing validation', () => {
-	test('Not object', (done) => {
+	it('Not object', (done) => {
 		try {
 			validateIconSet(void 0);
 			done('Expected to throw error on undefined');
@@ -33,7 +33,7 @@ describe('Testing validation', () => {
 		done();
 	});
 
-	test('Valid set', () => {
+	it('Valid set', () => {
 		expect(
 			validateIconSet({
 				prefix: 'foo',
@@ -53,7 +53,7 @@ describe('Testing validation', () => {
 		});
 	});
 
-	test('Missing stuff', (done) => {
+	it('Missing stuff', (done) => {
 		try {
 			validateIconSet({
 				prefix: 'foo',
@@ -83,7 +83,7 @@ describe('Testing validation', () => {
 		done();
 	});
 
-	test('Characters', (done) => {
+	it('Characters', (done) => {
 		// Correct icon set
 		expect(
 			validateIconSet({

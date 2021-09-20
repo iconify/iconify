@@ -1,7 +1,7 @@
-import { calculateSize } from '../lib/svg/size';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 describe('Testing calcSize', () => {
-	test('Simple size', () => {
+	it('Simple size', () => {
 		const width = 36;
 		const height = 48;
 
@@ -13,7 +13,7 @@ describe('Testing calcSize', () => {
 		expect(calculateSize(36, height / width)).toEqual(48);
 	});
 
-	test('Numbers', () => {
+	it('Numbers', () => {
 		const width = 36;
 		const height = 48;
 
@@ -28,7 +28,7 @@ describe('Testing calcSize', () => {
 		expect(calculateSize(11.1111111, width / height, 1000)).toEqual(8.334);
 	});
 
-	test('Strings', () => {
+	it('Strings', () => {
 		const width = 36;
 		const height = 48;
 

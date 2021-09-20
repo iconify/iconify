@@ -1,9 +1,8 @@
-import type { IconifyJSON } from '@iconify/types';
-import { getIcons } from '../lib/icon-set/get-icons';
+import { getIcons } from '@iconify/utils/lib/icon-set/get-icons';
 
 describe('Testing retrieving icons from icon set', () => {
-	test('Simple icon set', () => {
-		const data: IconifyJSON = {
+	it('Simple icon set', () => {
+		const data = {
 			prefix: 'foo',
 			icons: {
 				bar: {
@@ -61,8 +60,8 @@ describe('Testing retrieving icons from icon set', () => {
 		});
 	});
 
-	test('Aliases and characters', () => {
-		const data: IconifyJSON = {
+	it('Aliases and characters', () => {
+		const data = {
 			prefix: 'foo',
 			icons: {
 				bar: {

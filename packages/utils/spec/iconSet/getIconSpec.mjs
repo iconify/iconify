@@ -1,7 +1,7 @@
-import { getIconData } from '../lib/icon-set/get-icon';
+import { getIconData } from '@iconify/utils/lib/icon-set/get-icon';
 
 describe('Testing getting icon data', () => {
-	test('Simple icon', () => {
+	it('Simple icon', () => {
 		// Short icon
 		const result1 = getIconData(
 			{
@@ -47,7 +47,7 @@ describe('Testing getting icon data', () => {
 		});
 	});
 
-	test('Minified icon set', () => {
+	it('Minified icon set', () => {
 		// Short icon
 		const result1 = getIconData(
 			{

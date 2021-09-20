@@ -1,9 +1,8 @@
-import type { IconifyJSON } from '@iconify/types';
-import { minifyIconSet } from '../lib/icon-set/minify';
+import { minifyIconSet } from '@iconify/utils/lib/icon-set/minify';
 
 describe('Testing minifying icon set', () => {
-	test('Nothing to minify', () => {
-		const item: IconifyJSON = {
+	it('Nothing to minify', () => {
+		const item = {
 			prefix: 'foo',
 			icons: {
 				foo: {
@@ -13,7 +12,7 @@ describe('Testing minifying icon set', () => {
 				},
 			},
 		};
-		const expected: IconifyJSON = {
+		const expected = {
 			prefix: 'foo',
 			icons: {
 				foo: {
@@ -27,8 +26,8 @@ describe('Testing minifying icon set', () => {
 		expect(item).toEqual(expected);
 	});
 
-	test('No common values', () => {
-		const item: IconifyJSON = {
+	it('No common values', () => {
+		const item = {
 			prefix: 'foo',
 			icons: {
 				'foo-24': {
@@ -43,7 +42,7 @@ describe('Testing minifying icon set', () => {
 				},
 			},
 		};
-		const expected: IconifyJSON = {
+		const expected = {
 			prefix: 'foo',
 			icons: {
 				'foo-24': {
@@ -62,8 +61,8 @@ describe('Testing minifying icon set', () => {
 		expect(item).toEqual(expected);
 	});
 
-	test('Default values', () => {
-		const item: IconifyJSON = {
+	it('Default values', () => {
+		const item = {
 			prefix: 'foo',
 			icons: {
 				foo: {
@@ -80,7 +79,7 @@ describe('Testing minifying icon set', () => {
 				},
 			},
 		};
-		const expected: IconifyJSON = {
+		const expected = {
 			prefix: 'foo',
 			icons: {
 				foo: {
@@ -97,8 +96,8 @@ describe('Testing minifying icon set', () => {
 		expect(item).toEqual(expected);
 	});
 
-	test('Common value', () => {
-		const item: IconifyJSON = {
+	it('Common value', () => {
+		const item = {
 			prefix: 'foo',
 			icons: {
 				// 2 icons have the same height, 2 icons have the same width
@@ -124,7 +123,7 @@ describe('Testing minifying icon set', () => {
 				},
 			},
 		};
-		const expected: IconifyJSON = {
+		const expected = {
 			prefix: 'foo',
 			icons: {
 				'foo-wide': {
@@ -151,8 +150,8 @@ describe('Testing minifying icon set', () => {
 		expect(item).toEqual(expected);
 	});
 
-	test('Common value that matches default', () => {
-		const item: IconifyJSON = {
+	it('Common value that matches default', () => {
+		const item = {
 			prefix: 'foo',
 			icons: {
 				// 2 icons have the same height of 16, which is default value
@@ -173,7 +172,7 @@ describe('Testing minifying icon set', () => {
 				},
 			},
 		};
-		const expected: IconifyJSON = {
+		const expected = {
 			prefix: 'foo',
 			icons: {
 				'foo-wide': {

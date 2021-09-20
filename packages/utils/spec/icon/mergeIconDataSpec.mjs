@@ -1,13 +1,12 @@
-import type { IconifyIcon } from '@iconify/types';
-import { mergeIconData } from '../lib/icon/merge';
+import { mergeIconData } from '@iconify/utils/lib/icon/merge';
 
 describe('Testing merging icon data', () => {
-	test('Test', () => {
+	it('Test', () => {
 		// Nothing to merge
-		const icon: IconifyIcon = {
+		const icon = {
 			body: '<g />',
 		};
-		const expected: IconifyIcon = {
+		const expected = {
 			body: '<g />',
 		};
 		// Check hint manually: supposed to be IconifyIcon
@@ -15,7 +14,7 @@ describe('Testing merging icon data', () => {
 		expect(result).toEqual(expected);
 
 		// TypeScript full icon test
-		const icon2: Required<IconifyIcon> = {
+		const icon2 = {
 			body: '<g />',
 			width: 24,
 			height: 24,
@@ -25,7 +24,7 @@ describe('Testing merging icon data', () => {
 			hFlip: false,
 			vFlip: false,
 		};
-		const expected2: Required<IconifyIcon> = {
+		const expected2 = {
 			body: '<g />',
 			width: 24,
 			height: 24,

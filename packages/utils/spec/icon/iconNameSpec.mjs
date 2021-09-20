@@ -1,12 +1,11 @@
-import type { IconifyIconName } from '../lib/icon/name';
-import { stringToIcon, validateIcon } from '../lib/icon/name';
+import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
 
 describe('Testing icon name', () => {
-	test('Simple icon names', () => {
+	it('Simple icon names', () => {
 		let icon;
 
 		// Simple prefix-name
-		icon = stringToIcon('fa-home') as IconifyIconName;
+		icon = stringToIcon('fa-home');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'fa',
@@ -15,7 +14,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Simple prefix:name
-		icon = stringToIcon('fa:arrow-left') as IconifyIconName;
+		icon = stringToIcon('fa:arrow-left');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'fa',
@@ -24,7 +23,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Longer prefix:name
-		icon = stringToIcon('mdi-light:home-outline') as IconifyIconName;
+		icon = stringToIcon('mdi-light:home-outline');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'mdi-light',
@@ -74,7 +73,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon, true)).toBe(false);
 
 		// Invalid character '_': fail validateIcon
-		icon = stringToIcon('fa:home_outline') as IconifyIconName;
+		icon = stringToIcon('fa:home_outline');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'fa',
@@ -88,7 +87,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(false);
 
 		// Upper case: fail validateIcon
-		icon = stringToIcon('MD:Home') as IconifyIconName;
+		icon = stringToIcon('MD:Home');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'MD',
@@ -97,7 +96,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(false);
 
 		// Numbers: pass
-		icon = stringToIcon('1:foo') as IconifyIconName;
+		icon = stringToIcon('1:foo');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: '1',
@@ -106,7 +105,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Accented letters: fail validateIcon
-		icon = stringToIcon('md-fõö') as IconifyIconName;
+		icon = stringToIcon('md-fõö');
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'md',
@@ -119,7 +118,7 @@ describe('Testing icon name', () => {
 		let icon;
 
 		// Simple @provider:prefix-name
-		icon = stringToIcon('@iconify:fa-home') as IconifyIconName;
+		icon = stringToIcon('@iconify:fa-home');
 		expect(icon).toEqual({
 			provider: 'iconify',
 			prefix: 'fa',
@@ -128,7 +127,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Simple @provider:prefix:name
-		icon = stringToIcon('@iconify:fa:arrow-left') as IconifyIconName;
+		icon = stringToIcon('@iconify:fa:arrow-left');
 		expect(icon).toEqual({
 			provider: 'iconify',
 			prefix: 'fa',
@@ -137,9 +136,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Longer @provider:prefix:name
-		icon = stringToIcon(
-			'@iconify-backup:mdi-light:home-outline'
-		) as IconifyIconName;
+		icon = stringToIcon('@iconify-backup:mdi-light:home-outline');
 		expect(icon).toEqual({
 			provider: 'iconify-backup',
 			prefix: 'mdi-light',
@@ -148,9 +145,7 @@ describe('Testing icon name', () => {
 		expect(validateIcon(icon)).toBe(true);
 
 		// Missing @ for provider
-		icon = stringToIcon(
-			'iconify-backup:mdi-light:home-outline'
-		) as IconifyIconName;
+		icon = stringToIcon('iconify-backup:mdi-light:home-outline');
 		expect(icon).toEqual({
 			provider: 'iconify-backup',
 			prefix: 'mdi-light',
@@ -168,7 +163,7 @@ describe('Testing icon name', () => {
 		expect(icon).toEqual(null);
 
 		// Upper case: fail validateIcon
-		icon = stringToIcon('@MD:home-outline') as IconifyIconName;
+		icon = stringToIcon('@MD:home-outline');
 		expect(icon).toEqual({
 			provider: 'MD',
 			prefix: 'home',

@@ -116,7 +116,7 @@ export function mergeCustomisations(
 					(typeof value === 'number' && value) ||
 					value === null
 				) {
-					result[attr] = value;
+					result[attr] = value as IconifyIconSize;
 				}
 				break;
 

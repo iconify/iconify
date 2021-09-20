@@ -1,15 +1,15 @@
-import type { IconifyIconBuildResult } from '../lib/svg/build';
-import { iconToSVG } from '../lib/svg/build';
-import type { FullIconifyIcon } from '../lib/icon';
-import { fullIcon, iconDefaults } from '../lib/icon';
-import type { FullIconCustomisations } from '../lib/customisations';
-import { defaults, mergeCustomisations } from '../lib/customisations';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
+import { fullIcon, iconDefaults } from '@iconify/utils/lib/icon';
+import {
+	defaults,
+	mergeCustomisations,
+} from '@iconify/utils/lib/customisations';
 
 describe('Testing iconToSVG', () => {
-	test('Empty icon', () => {
-		const custom: FullIconCustomisations = defaults;
-		const icon: FullIconifyIcon = { ...iconDefaults, body: '' };
-		const expected: IconifyIconBuildResult = {
+	it('Empty icon', () => {
+		const custom = { ...defaults };
+		const icon = { ...iconDefaults, body: '' };
+		const expected = {
 			attributes: {
 				width: '1em',
 				height: '1em',
@@ -23,15 +23,15 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Auto size, inline, body', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Auto size, inline, body', () => {
+		const custom = mergeCustomisations(defaults, {
 			inline: true,
 			height: 'auto',
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			body: '<path d="" />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '16',
 				height: '16',
@@ -46,15 +46,15 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Auto size, inline, body', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Auto size, inline, body', () => {
+		const custom = mergeCustomisations(defaults, {
 			inline: true,
 			height: 'auto',
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			body: '<path d="" />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '16',
 				height: '16',
@@ -69,18 +69,18 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Custom size, alignment', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Custom size, alignment', () => {
+		const custom = mergeCustomisations(defaults, {
 			height: 'auto',
 			hAlign: 'left',
 			slice: true,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '20',
 				height: '16',
@@ -94,18 +94,18 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Rotation, alignment', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Rotation, alignment', () => {
+		const custom = mergeCustomisations(defaults, {
 			height: '40px',
 			vAlign: 'bottom',
 			rotate: 1,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '32px',
 				height: '40px',
@@ -119,17 +119,17 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Negative rotation', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Negative rotation', () => {
+		const custom = mergeCustomisations(defaults, {
 			height: '40px',
 			rotate: -1,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '32px',
 				height: '40px',
@@ -143,19 +143,19 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip, alignment', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Flip, alignment', () => {
+		const custom = mergeCustomisations(defaults, {
 			height: '32',
 			vAlign: 'top',
 			hAlign: 'right',
 			hFlip: true,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '40',
 				height: '32',
@@ -169,17 +169,17 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip, rotation', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Flip, rotation', () => {
+		const custom = mergeCustomisations(defaults, {
 			hFlip: true,
 			rotate: 1,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '0.8em',
 				height: '1em',
@@ -193,11 +193,11 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip icon that is rotated by default', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Flip icon that is rotated by default', () => {
+		const custom = mergeCustomisations(defaults, {
 			hFlip: true,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -206,7 +206,7 @@ describe('Testing iconToSVG', () => {
 
 		// Horizontally flipping icon that has 90 or 270 degrees rotation will result in vertical flip.
 		// Therefore result should be rotation + vertical flip to visually match horizontal flip on normal icon.
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '0.8em',
 				height: '1em',
@@ -220,20 +220,20 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip and rotation canceling eachother', () => {
-		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
+	it('Flip and rotation canceling eachother', () => {
+		const custom = mergeCustomisations(defaults, {
 			width: '1em',
 			height: 'auto',
 			hFlip: true,
 			vFlip: true,
 			rotate: 2,
 		});
-		const icon: FullIconifyIcon = fullIcon({
+		const icon = fullIcon({
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '1em',
 				height: '16',
@@ -247,21 +247,18 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip with real icon', () => {
+	it('Flip with real icon', () => {
 		const iconBody =
 			'<g stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" fill-rule="evenodd"><path d="M40 64l48-48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/><path d="M40 64l48 48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/></g>';
 
-		const custom: FullIconCustomisations = mergeCustomisations(
-			defaults,
-			{}
-		);
-		const icon: FullIconifyIcon = fullIcon({
+		const custom = mergeCustomisations(defaults, {});
+		const icon = fullIcon({
 			body: iconBody,
 			width: 128,
 			height: 128,
 			hFlip: true,
 		});
-		const expected: IconifyIconBuildResult = {
+		const expected = {
 			attributes: {
 				width: '1em',
 				height: '1em',

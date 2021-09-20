@@ -1,7 +1,7 @@
-import { validateIconSet } from '../lib/icon-set/validate';
+import { validateIconSet } from '@iconify/utils/lib/icon-set/validate';
 
 describe('Testing validating alias', () => {
-	test('Empty', () => {
+	it('Empty', () => {
 		expect(
 			validateIconSet({
 				prefix: 'foo',
@@ -46,7 +46,7 @@ describe('Testing validating alias', () => {
 		});
 	});
 
-	test('Null', (done) => {
+	it('Null', (done) => {
 		try {
 			validateIconSet({
 				prefix: 'foo',
@@ -88,7 +88,7 @@ describe('Testing validating alias', () => {
 		done();
 	});
 
-	test('Invalid parent', (done) => {
+	it('Invalid parent', (done) => {
 		try {
 			const result = validateIconSet({
 				prefix: 'foo',
@@ -141,7 +141,7 @@ describe('Testing validating alias', () => {
 		done();
 	});
 
-	test('Invalid parent, 2 levels', (done) => {
+	it('Invalid parent, 2 levels', (done) => {
 		try {
 			const result = validateIconSet({
 				prefix: 'foo',
@@ -200,7 +200,7 @@ describe('Testing validating alias', () => {
 		done();
 	});
 
-	test('Invalid parent, 2 levels, reverse order', (done) => {
+	it('Invalid parent, 2 levels, reverse order', (done) => {
 		try {
 			const result = validateIconSet({
 				prefix: 'foo',
@@ -259,7 +259,7 @@ describe('Testing validating alias', () => {
 		done();
 	});
 
-	test('Parent loop', (done) => {
+	it('Parent loop', (done) => {
 		try {
 			const result = validateIconSet({
 				prefix: 'foo',

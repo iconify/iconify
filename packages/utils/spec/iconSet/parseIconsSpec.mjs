@@ -1,14 +1,12 @@
-import type { IconifyJSON } from '@iconify/types';
-import { parseIconSet } from '../lib/icon-set/parse';
-import type { FullIconifyIcon } from '../lib/icon';
+import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 
 describe('Testing parsing icon set', () => {
-	test('Simple icon set', () => {
+	it('Simple icon set', () => {
 		// Names list
-		const names: string[] = ['missing', 'icon1', 'icon2'];
+		const names = ['missing', 'icon1', 'icon2'];
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
@@ -65,13 +63,13 @@ describe('Testing parsing icon set', () => {
 		expect(names).toEqual([]);
 	});
 
-	test('Aliases', () => {
+	it('Aliases', () => {
 		// Names list
-		const names: string[] = ['icon1', 'icon2', 'alias1', 'alias2'];
+		const names = ['icon1', 'icon2', 'alias1', 'alias2'];
 		const namesCopy = names.slice(0);
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
@@ -159,9 +157,9 @@ describe('Testing parsing icon set', () => {
 		expect(names).toEqual([]);
 	});
 
-	test('Nested aliases', () => {
+	it('Nested aliases', () => {
 		// Names list
-		const names: string[] = [
+		const names = [
 			'icon1',
 			'icon2',
 			'alias2a',
@@ -172,7 +170,7 @@ describe('Testing parsing icon set', () => {
 		const namesCopy = names.slice(0);
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
@@ -309,13 +307,13 @@ describe('Testing parsing icon set', () => {
 		expect(names).toEqual([]);
 	});
 
-	test('Invalid default values', () => {
+	it('Invalid default values', () => {
 		// Names list
-		const names: string[] = ['icon1', 'icon2'];
+		const names = ['icon1', 'icon2'];
 		const namesCopy = names.slice(0);
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
@@ -338,7 +336,7 @@ describe('Testing parsing icon set', () => {
 			},
 		};
 
-		const iconSet: IconifyJSON = {
+		const iconSet = {
 			icons: {
 				icon1: {
 					body: '<path d="icon1" />',
@@ -361,7 +359,7 @@ describe('Testing parsing icon set', () => {
 				foo: 1,
 			},
 			hFlip: null,
-		} as unknown as IconifyJSON;
+		};
 
 		// Do stuff
 		expect(

@@ -1,4 +1,4 @@
-import { validateIconSet } from '../lib/icon-set/validate';
+import { validateIconSet } from '@iconify/utils/lib/icon-set/validate';
 
 describe('Testing validating icon', () => {
 	// Add various types for testing
@@ -47,7 +47,7 @@ describe('Testing validating icon', () => {
 	});
 
 	// Required string
-	test('body', (done) => {
+	it('body', (done) => {
 		// Missing body
 		try {
 			validateIconSet({
@@ -191,7 +191,7 @@ describe('Testing validating icon', () => {
 
 	// Numbers
 	['width', 'height', 'left', 'top', 'rotate'].forEach((prop) => {
-		test(prop, (done) => {
+		it(prop, (done) => {
 			// Validate without fixing
 			validationValues.forEach((item, value) => {
 				try {
@@ -265,7 +265,7 @@ describe('Testing validating icon', () => {
 
 	// Boolean
 	['hFlip', 'vFlip', 'hidden'].forEach((prop) => {
-		test(prop, (done) => {
+		it(prop, (done) => {
 			validationValues.forEach((item, value) => {
 				// Validate
 				try {
@@ -338,7 +338,7 @@ describe('Testing validating icon', () => {
 	});
 
 	// Unexpected field
-	test('foo', (done) => {
+	it('foo', (done) => {
 		validationValues.forEach((item, value) => {
 			// Validate
 			try {
