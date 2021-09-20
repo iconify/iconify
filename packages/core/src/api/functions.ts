@@ -1,14 +1,27 @@
-import type { IconifyAPIInternalStorage } from '.';
-import { API, getRedundancyCache } from '.';
+import type {
+	QueryAbortCallback,
+	QueryDoneCallback,
+} from '@iconify/api-redundancy';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { sendAPIQuery } from './query';
+import { loadIcons } from './icons';
 import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
-} from '../interfaces/loader';
-import type { GetAPIConfig, PartialIconifyAPIConfig } from './config';
-import { getAPIConfig, setAPIConfig } from './config';
-import type { IconifyAPIModule } from './modules';
+} from './icons';
+import type {
+	GetAPIConfig,
+	PartialIconifyAPIConfig,
+} from './config';
+import { getAPIConfig, setAPIConfig, listAPIProviders } from './config';
+import type {
+	IconifyAPIModule,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+} from './modules';
 import { setAPIModule } from './modules';
+import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
+import { mergeParams } from './params';
 
 /**
  * Iconify API functions
@@ -32,7 +45,7 @@ export interface IconifyAPIFunctions {
 }
 
 export const APIFunctions: IconifyAPIFunctions = {
-	loadIcons: API.loadIcons,
+	loadIcons,
 	addAPIProvider: setAPIConfig,
 };
 
@@ -45,30 +58,54 @@ export const APIFunctions: IconifyAPIFunctions = {
  */
 export interface IconifyAPIInternalFunctions {
 	/**
-	 * Get internal API data, used by Icon Finder
-	 */
-	getAPI: (provider: string) => IconifyAPIInternalStorage | undefined;
-
-	/**
 	 * Get API config, used by custom modules
 	 */
 	getAPIConfig: GetAPIConfig;
 
 	/**
-	 * Set API module
+	 * Set custom API module
 	 */
 	setAPIModule: (provider: string, item: IconifyAPIModule) => void;
 
 	/**
-	 * Optional setFetch (should be imported from ./modules/fetch if fetch is used)
-	 *
-	 * Used to set custom fetch function, such as one provided by cross-fetch, making fetch usable on server
+	 * Send API query
+	 */
+	sendAPIQuery: (
+		target: string | PartialIconifyAPIConfig,
+		query: IconifyAPIQueryParams,
+		callback: QueryDoneCallback
+	) => QueryAbortCallback;
+
+	/**
+	 * Optional setFetch and getFetch (should be imported from ./modules/fetch if fetch is used)
 	 */
 	setFetch?: (item: typeof fetch) => void;
+	getFetch?: () => typeof fetch | null;
+
+	/**
+	 * List all API providers (from config)
+	 */
+	listAPIProviders: () => string[];
+
+	/**
+	 * Merge parameters
+	 */
+	mergeParams: MergeParams;
 }
 
 export const APIInternalFunctions: IconifyAPIInternalFunctions = {
-	getAPI: getRedundancyCache,
 	getAPIConfig,
 	setAPIModule,
+	sendAPIQuery,
+	listAPIProviders,
+	mergeParams,
+};
+
+/**
+ * Types needed for internal functions
+ */
+export type {
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 };

@@ -1,19 +1,12 @@
 import mocha from 'mocha';
 import chai from 'chai';
+
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
-import { API } from '@iconify/core/lib/api/';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { setAPIConfig } from '@iconify/core/lib/api/config';
-import { coreModules } from '@iconify/core/lib/modules';
+import { loadIcons } from '@iconify/core/lib/api/icons';
 
 const expect = chai.expect;
-
-// Set API
-setAPIModule('', {
-	prepare: prepareQuery,
-	send: sendQuery,
-});
-coreModules.api = API;
 
 let prefixCounter = 0;
 function nextPrefix(): string {
@@ -21,6 +14,13 @@ function nextPrefix(): string {
 }
 
 describe('Testing fake API', () => {
+	before(() => {
+		setAPIModule('', {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
+	});
+
 	it('Loading results', (done) => {
 		const provider = nextPrefix();
 		const prefix = nextPrefix();
@@ -30,12 +30,10 @@ describe('Testing fake API', () => {
 				prefix,
 				icons: {
 					icon1: {
-						body:
-							'<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
+						body: '<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
 					},
 					icon2: {
-						body:
-							'<path d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" fill="currentColor"/>',
+						body: '<path d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" fill="currentColor"/>',
 					},
 				},
 				width: 24,
@@ -48,7 +46,7 @@ describe('Testing fake API', () => {
 		setFakeData(provider, prefix, data);
 
 		// Attempt to load icons
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
@@ -81,12 +79,10 @@ describe('Testing fake API', () => {
 				prefix,
 				icons: {
 					icon1: {
-						body:
-							'<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
+						body: '<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
 					},
 					icon2: {
-						body:
-							'<path d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" fill="currentColor"/>',
+						body: '<path d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" fill="currentColor"/>',
 					},
 				},
 				width: 24,
@@ -100,7 +96,7 @@ describe('Testing fake API', () => {
 
 		// Attempt to load icons
 		const start = Date.now();
-		API.loadIcons(
+		loadIcons(
 			[
 				{
 					provider,
@@ -144,8 +140,7 @@ describe('Testing fake API', () => {
 				prefix,
 				icons: {
 					icon1: {
-						body:
-							'<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
+						body: '<path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z" fill="currentColor"/>',
 					},
 				},
 				width: 24,
@@ -161,7 +156,7 @@ describe('Testing fake API', () => {
 
 		// Attempt to load icons
 		let counter = 0;
-		API.loadIcons(
+		loadIcons(
 			[
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',

@@ -18,6 +18,7 @@ describe('Rendering icon', () => {
 		let onLoadCalled = false;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -83,6 +84,7 @@ describe('Rendering icon', () => {
 		let onLoadCalled = false;
 
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -163,6 +165,7 @@ describe('Rendering icon', () => {
 		const name = 'missing-icon';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		mockAPIData({
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,

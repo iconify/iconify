@@ -17,11 +17,9 @@ import {
 	builderFunctions,
 } from '@iconify/core/lib/builder/functions';
 
-// Modules
-import { coreModules } from '@iconify/core/lib/modules';
-
 // Cache
 import { storeCache, loadCache } from '@iconify/core/lib/browser-storage/';
+import { cache } from '@iconify/core/lib/cache';
 import {
 	IconifyBrowserCacheFunctions,
 	IconifyBrowserCacheType,
@@ -34,31 +32,32 @@ import {
 	IconifyAPIInternalFunctions,
 	APIFunctions,
 	APIInternalFunctions,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
-import { API, IconifyAPIInternalStorage } from '@iconify/core/lib/api/';
 import {
 	setAPIModule,
 	IconifyAPIModule,
 	IconifyAPISendQuery,
-	IconifyAPIPrepareQuery,
-	GetIconifyAPIModule,
+	IconifyAPIPrepareIconsQuery,
 } from '@iconify/core/lib/api/modules';
 import {
 	setAPIConfig,
 	PartialIconifyAPIConfig,
 	IconifyAPIConfig,
-	getAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import { getAPIModule as getJSONPAPIModule } from '@iconify/core/lib/api/modules/jsonp';
+import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
-	getAPIModule as getFetchAPIModule,
+	fetchAPIModule,
+	getFetch,
 	setFetch,
 } from '@iconify/core/lib/api/modules/fetch';
 import {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-} from '@iconify/core/lib/interfaces/loader';
+} from '@iconify/core/lib/api/icons';
 
 // Other
 import { IconifyCommonFunctions, commonFunctions } from './common';
@@ -94,14 +93,18 @@ export {
 	IconifyAPIConfig,
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-	IconifyAPIInternalStorage,
 	IconifyAPIModule,
 	GetAPIConfig,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
-	IconifyBrowserCacheType,
 	PartialIconifyAPIConfig,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 };
+
+// Cache
+export { IconifyBrowserCacheType };
 
 /**
  * Iconify interface
@@ -150,33 +153,15 @@ const Iconify = {
 /**
  * Initialise stuff
  */
-// Set API
-coreModules.api = API;
-
-// Check for Fetch API
-let getAPIModule: GetIconifyAPIModule = getFetchAPIModule;
-try {
-	if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-		// If window and document exist, attempt to load whatever module is available, otherwise use Fetch API
-		getAPIModule =
-			typeof fetch === 'function' && typeof Promise === 'function'
-				? getFetchAPIModule
-				: getJSONPAPIModule;
-	}
-} catch (err) {
-	//
-}
-setAPIModule('', getAPIModule(getAPIConfig));
+// Set API module
+setAPIModule('', getFetch() ? fetchAPIModule : jsonpAPIModule);
 
 /**
  * Function to enable node-fetch for getting icons on server side
  */
 Iconify._api.setFetch = (nodeFetch: typeof fetch) => {
 	setFetch(nodeFetch);
-	if (getAPIModule !== getFetchAPIModule) {
-		getAPIModule = getFetchAPIModule;
-		setAPIModule('', getAPIModule(getAPIConfig));
-	}
+	setAPIModule('', fetchAPIModule);
 };
 
 /**
@@ -184,7 +169,7 @@ Iconify._api.setFetch = (nodeFetch: typeof fetch) => {
  */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Set cache and load existing cache
-	coreModules.cache = storeCache;
+	cache.store = storeCache;
 	loadCache();
 
 	interface WindowWithIconifyStuff {

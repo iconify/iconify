@@ -2,7 +2,7 @@
 	"name": "@iconify/utils",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -111,7 +111,7 @@
 		"@iconify/types": "^1.0.6"
 	},
 	"devDependencies": {
-		"@iconify/library-builder": "^1.0.0",
+		"@iconify/library-builder": "^1.0.2",
 		"@types/chai": "^4.2.18",
 		"@types/mocha": "^8.2.2",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",

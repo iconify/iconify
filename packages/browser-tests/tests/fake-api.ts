@@ -1,7 +1,8 @@
 import { PendingQueryItem } from '@iconify/api-redundancy';
 import {
-	APIQueryParams,
-	IconifyAPIPrepareQuery,
+	IconifyAPIIconsQueryParams,
+	IconifyAPIQueryParams,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 } from '@iconify/core/lib/api/modules';
 import { IconifyJSON } from '@iconify/types';
@@ -38,20 +39,20 @@ export function setFakeData(
 	providerFakeData[prefix].push(item);
 }
 
-interface FakeAPIQueryParams extends APIQueryParams {
+interface FakeAPIQueryParams extends IconifyAPIIconsQueryParams {
 	data: FakeData;
 }
 
 /**
  * Prepare params
  */
-export const prepareQuery: IconifyAPIPrepareQuery = (
+export const prepareQuery: IconifyAPIPrepareIconsQuery = (
 	provider: string,
 	prefix: string,
 	icons: string[]
-): APIQueryParams[] => {
+): IconifyAPIIconsQueryParams[] => {
 	// Find items that have query
-	const items: APIQueryParams[] = [];
+	const items: IconifyAPIIconsQueryParams[] = [];
 	let missing = icons.slice(0);
 
 	if (fakeData[provider] === void 0) {
@@ -59,6 +60,7 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 	}
 	const providerFakeData = fakeData[provider];
 
+	const type = 'icons';
 	if (providerFakeData[prefix] !== void 0) {
 		providerFakeData[prefix].forEach((item) => {
 			const matches = item.icons.filter(
@@ -72,6 +74,7 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
 			// Contains at least one matching icon
 			missing = missing.filter((icon) => matches.indexOf(icon) === -1);
 			const query: FakeAPIQueryParams = {
+				type,
 				provider,
 				prefix,
 				icons: matches,
@@ -89,9 +92,15 @@ export const prepareQuery: IconifyAPIPrepareQuery = (
  */
 export const sendQuery: IconifyAPISendQuery = (
 	host: string,
-	params: APIQueryParams,
+	params: IconifyAPIQueryParams,
 	status: PendingQueryItem
 ): void => {
+	if (params.type !== 'icons') {
+		// Fake API supports only icons
+		status.done(void 0, 400);
+		return;
+	}
+
 	const provider = params.provider;
 	const prefix = params.prefix;
 	const icons = params.icons;

@@ -6,7 +6,7 @@ interface OldIEElement extends HTMLElement {
 /**
  * Execute function when DOM is ready
  */
-export function onReady(callback): void {
+export function onReady(callback: () => void): void {
 	const doc = document;
 	if (
 		doc.readyState === 'complete' ||

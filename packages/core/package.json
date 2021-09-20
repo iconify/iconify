@@ -2,7 +2,7 @@
 	"name": "@iconify/core",
 	"description": "Reusable files used by multiple Iconify packages",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.1.3",
+	"version": "1.2.0-beta.2",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -34,17 +34,9 @@
 			"require": "./lib/api/functions.js",
 			"import": "./lib/api/functions.mjs"
 		},
-		"./lib/api/": {
-			"require": "./lib/api/index.js",
-			"import": "./lib/api/index.mjs"
-		},
-		"./lib/api": {
-			"require": "./lib/api/index.js",
-			"import": "./lib/api/index.mjs"
-		},
-		"./lib/api/index": {
-			"require": "./lib/api/index.js",
-			"import": "./lib/api/index.mjs"
+		"./lib/api/icons": {
+			"require": "./lib/api/icons.js",
+			"import": "./lib/api/icons.mjs"
 		},
 		"./lib/api/modules": {
 			"require": "./lib/api/modules.js",
@@ -61,6 +53,14 @@
 		"./lib/api/modules/mock": {
 			"require": "./lib/api/modules/mock.js",
 			"import": "./lib/api/modules/mock.mjs"
+		},
+		"./lib/api/params": {
+			"require": "./lib/api/params.js",
+			"import": "./lib/api/params.mjs"
+		},
+		"./lib/api/query": {
+			"require": "./lib/api/query.js",
+			"import": "./lib/api/query.mjs"
 		},
 		"./lib/browser-storage/functions": {
 			"require": "./lib/browser-storage/functions.js",
@@ -82,6 +82,10 @@
 			"require": "./lib/builder/functions.js",
 			"import": "./lib/builder/functions.mjs"
 		},
+		"./lib/cache": {
+			"require": "./lib/cache.js",
+			"import": "./lib/cache.mjs"
+		},
 		"./lib/icon/list": {
 			"require": "./lib/icon/list.js",
 			"import": "./lib/icon/list.mjs"
@@ -89,22 +93,6 @@
 		"./lib/icon/sort": {
 			"require": "./lib/icon/sort.js",
 			"import": "./lib/icon/sort.mjs"
-		},
-		"./lib/interfaces/api": {
-			"require": "./lib/interfaces/api.js",
-			"import": "./lib/interfaces/api.mjs"
-		},
-		"./lib/interfaces/cache": {
-			"require": "./lib/interfaces/cache.js",
-			"import": "./lib/interfaces/cache.mjs"
-		},
-		"./lib/interfaces/loader": {
-			"require": "./lib/interfaces/loader.js",
-			"import": "./lib/interfaces/loader.mjs"
-		},
-		"./lib/modules": {
-			"require": "./lib/modules.js",
-			"import": "./lib/modules.mjs"
 		},
 		"./lib/storage/functions": {
 			"require": "./lib/storage/functions.js",
@@ -118,10 +106,11 @@
 	"dependencies": {
 		"@iconify/api-redundancy": "^1.0.0",
 		"@iconify/types": "^1.0.6",
-		"@iconify/utils": "^1.0.6"
+		"@iconify/utils": "^1.0.6",
+		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {
-		"@iconify/library-builder": "^1.0.0",
+		"@iconify/library-builder": "^1.0.2",
 		"@types/chai": "^4.2.18",
 		"@types/mocha": "^8.2.2",
 		"@types/node": "^15.3.0",

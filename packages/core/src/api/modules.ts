@@ -1,27 +1,36 @@
 import type { PendingQueryItem } from '@iconify/api-redundancy';
-import type { GetAPIConfig } from '../api/config';
 
 /**
  * Params for sendQuery()
  */
-export interface APIQueryParams {
+export interface IconifyAPIIconsQueryParams {
+	type: 'icons';
 	provider: string;
 	prefix: string;
 	icons: string[];
 }
+export interface IconifyAPICustomQueryParams {
+	type: 'custom';
+	provider?: string; // Provider is optional. If missing, temporary config is created based on host
+	uri: string;
+}
+
+export type IconifyAPIQueryParams =
+	| IconifyAPIIconsQueryParams
+	| IconifyAPICustomQueryParams;
 
 /**
  * Functions to implement in module
  */
-export type IconifyAPIPrepareQuery = (
+export type IconifyAPIPrepareIconsQuery = (
 	provider: string,
 	prefix: string,
 	icons: string[]
-) => APIQueryParams[];
+) => IconifyAPIIconsQueryParams[];
 
 export type IconifyAPISendQuery = (
 	host: string,
-	params: APIQueryParams,
+	params: IconifyAPIQueryParams,
 	status: PendingQueryItem
 ) => void;
 
@@ -29,7 +38,7 @@ export type IconifyAPISendQuery = (
  * API modules
  */
 export interface IconifyAPIModule {
-	prepare: IconifyAPIPrepareQuery;
+	prepare: IconifyAPIPrepareIconsQuery;
 	send: IconifyAPISendQuery;
 }
 
@@ -49,12 +58,5 @@ export function setAPIModule(provider: string, item: IconifyAPIModule): void {
  * Get API module
  */
 export function getAPIModule(provider: string): IconifyAPIModule | undefined {
-	return storage[provider] === void 0 ? storage[''] : storage[provider];
+	return storage[provider] || storage[''];
 }
-
-/**
- * Function to return API interface
- */
-export type GetIconifyAPIModule = (
-	getAPIConfig: GetAPIConfig
-) => IconifyAPIModule;

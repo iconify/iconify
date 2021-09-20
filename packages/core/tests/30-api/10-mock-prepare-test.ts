@@ -6,7 +6,7 @@ import type { IconifyMockAPI } from '../../lib/api/modules/mock';
 import {
 	mockAPIModule,
 	mockAPIData,
-	storage,
+	iconsStorage,
 } from '../../lib/api/modules/mock';
 
 describe('Testing mock API module prepare function', () => {
@@ -27,6 +27,7 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
@@ -34,13 +35,14 @@ describe('Testing mock API module prepare function', () => {
 		mockAPIData(item);
 
 		// Make sure item is stored correctly
-		expect(typeof storage[provider]).to.be.equal('object');
-		expect(storage[provider][prefix]).to.be.eql([item]);
+		expect(typeof iconsStorage[provider]).to.be.equal('object');
+		expect(iconsStorage[provider][prefix]).to.be.eql([item]);
 
 		// Find item for icons
 		const result = prepare(provider, prefix, ['foo', 'bar', 'baz']);
 		expect(result).to.be.eql([
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo', 'bar', 'baz'],
@@ -54,18 +56,21 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item1: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
 			icons: ['foo', 'bar'],
 		};
 		const item2: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
 			icons: 'baz',
 		};
 		const item3: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: {
@@ -82,8 +87,8 @@ describe('Testing mock API module prepare function', () => {
 		mockAPIData(item3);
 
 		// Make sure item is stored correctly
-		expect(typeof storage[provider]).to.be.equal('object');
-		expect(storage[provider][prefix]).to.be.eql([item1, item2, item3]);
+		expect(typeof iconsStorage[provider]).to.be.equal('object');
+		expect(iconsStorage[provider][prefix]).to.be.eql([item1, item2, item3]);
 
 		// Find items for icons
 		const result = prepare(provider, prefix, [
@@ -97,23 +102,27 @@ describe('Testing mock API module prepare function', () => {
 		expect(result).to.be.eql([
 			// Unknown icons first
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['test1', 'test2'],
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo', 'bar'],
 				index: 0,
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['baz'],
 				index: 1,
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['test10'],
@@ -127,6 +136,7 @@ describe('Testing mock API module prepare function', () => {
 		const prefix = nextPrefix();
 
 		const item: IconifyMockAPI = {
+			type: 'icons',
 			provider,
 			prefix,
 			response: 404,
@@ -135,19 +145,21 @@ describe('Testing mock API module prepare function', () => {
 		mockAPIData(item);
 
 		// Make sure item is stored correctly
-		expect(typeof storage[provider]).to.be.equal('object');
-		expect(storage[provider][prefix]).to.be.eql([item]);
+		expect(typeof iconsStorage[provider]).to.be.equal('object');
+		expect(iconsStorage[provider][prefix]).to.be.eql([item]);
 
 		// Find item for icons
 		const result = prepare(provider, prefix, ['foo', 'bar', 'baz']);
 		expect(result).to.be.eql([
 			// Missing icons first
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['bar', 'baz'],
 			},
 			{
+				type: 'icons',
 				provider,
 				prefix,
 				icons: ['foo'],

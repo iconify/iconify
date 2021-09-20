@@ -28,12 +28,14 @@ export {
 	IconifyAPIConfig,
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
-	IconifyAPIInternalStorage,
 	IconifyAPIModule,
 	GetAPIConfig,
-	IconifyAPIPrepareQuery,
+	IconifyAPIPrepareIconsQuery,
 	IconifyAPISendQuery,
 	PartialIconifyAPIConfig,
+	IconifyAPIQueryParams,
+	IconifyAPICustomQueryParams,
+	IconifyAPIMergeQueryParams,
 } from './functions';
 
 // Builder functions
