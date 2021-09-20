@@ -3,7 +3,7 @@ module.exports = {
 		browser: true,
 		es6: true,
 		node: true,
-		mocha: true,
+		jasmine: true,
 	},
 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
 	globals: {
@@ -11,13 +11,10 @@ module.exports = {
 		SharedArrayBuffer: 'readonly',
 	},
 	parser: '@typescript-eslint/parser',
-	parserOptions: {
-		ecmaVersion: 2018,
-		sourceType: 'module',
-		project: __dirname + '/tsconfig.json',
-	},
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'jasmine'],
 	rules: {
 		'no-mixed-spaces-and-tabs': ['off'],
+		'no-unused-vars': ['off'],
+		'@typescript-eslint/no-unused-vars-experimental': ['error'],
 	},
 };

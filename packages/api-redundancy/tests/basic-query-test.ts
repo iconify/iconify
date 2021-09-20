@@ -2,7 +2,7 @@ import type { RedundancyConfig } from '../src/config';
 import { sendQuery } from '../src/query';
 
 describe('Basic queries', () => {
-	test('Empty query', (done) => {
+	it('Empty query', (done) => {
 		const payload = {};
 		const config: RedundancyConfig = {
 			resources: [],
