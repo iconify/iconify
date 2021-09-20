@@ -16,7 +16,7 @@
 		"lint": "eslint {src,tests}/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
 		"build": "node build",
-		"build:dts": "tsc --project src/tsconfig.json",
+		"build:source": "tsc --project src/tsconfig.json",
 		"build:tests": "tsc --project tests/tsconfig.json",
 		"test": "mocha tests-compiled/*-test.js",
 		"pretest": "npm run build && npm run build:tests"
@@ -31,6 +31,10 @@
 			"import": "./lib/customisations/compare.mjs"
 		},
 		"./lib/customisations/": {
+			"require": "./lib/customisations/index.js",
+			"import": "./lib/customisations/index.mjs"
+		},
+		"./lib/customisations": {
 			"require": "./lib/customisations/index.js",
 			"import": "./lib/customisations/index.mjs"
 		},
@@ -74,6 +78,10 @@
 			"require": "./lib/icon/index.js",
 			"import": "./lib/icon/index.mjs"
 		},
+		"./lib/icon": {
+			"require": "./lib/icon/index.js",
+			"import": "./lib/icon/index.mjs"
+		},
 		"./lib/icon/index": {
 			"require": "./lib/icon/index.js",
 			"import": "./lib/icon/index.mjs"
@@ -103,15 +111,14 @@
 		"@iconify/types": "^1.0.6"
 	},
 	"devDependencies": {
+		"@iconify/library-builder": "^1.0.0",
 		"@types/chai": "^4.2.18",
 		"@types/mocha": "^8.2.2",
-		"@types/node": "^15.3.0",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"chai": "^4.3.4",
-		"esbuild": "^0.12.28",
 		"eslint": "^7.32.0",
 		"mocha": "^8.4.0",
 		"rimraf": "^3.0.2",
-		"typescript": "^4.2.4"
+		"typescript": "^4.4.3"
 	}
 }

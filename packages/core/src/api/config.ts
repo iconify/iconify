@@ -1,4 +1,4 @@
-import type { RedundancyConfig } from '@cyberalien/redundancy';
+import type { RedundancyConfig } from '@iconify/api-redundancy';
 
 /**
  * API config

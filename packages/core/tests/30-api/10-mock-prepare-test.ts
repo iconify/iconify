@@ -8,7 +8,6 @@ import {
 	mockAPIData,
 	storage,
 } from '../../lib/api/modules/mock';
-import type { GetAPIConfig } from '../../lib/api/config';
 
 describe('Testing mock API module prepare function', () => {
 	let prefixCounter = 0;

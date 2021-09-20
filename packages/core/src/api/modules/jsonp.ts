@@ -1,4 +1,4 @@
-import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type { PendingQueryItem } from '@iconify/api-redundancy';
 import type {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,
@@ -50,7 +50,7 @@ function getGlobal(): JSONPRoot {
 	// Create root
 	if (rootVar === null) {
 		// window
-		const globalRoot = (self as unknown) as Record<string, unknown>;
+		const globalRoot = self as unknown as Record<string, unknown>;
 
 		// Test for window.Iconify. If missing, create 'IconifyJSONP'
 		let prefix = 'Iconify';

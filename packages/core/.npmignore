@@ -1,6 +1,8 @@
 .DS_Store
 tsconfig.json
 node_modules
+imports-test.mjs
+tsconfig.tsbuildinfo
 tests
 tests-compiled
 src

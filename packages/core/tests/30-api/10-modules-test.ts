@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'mocha';
 import { expect } from 'chai';
-import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type { PendingQueryItem } from '@iconify/api-redundancy';
 import type { IconifyAPIConfig } from '../../lib/api/config';
 import { setAPIConfig, getAPIConfig } from '../../lib/api/config';
 import type { APIQueryParams, IconifyAPIModule } from '../../lib/api/modules';

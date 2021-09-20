@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars-experimental */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type { PendingQueryItem } from '@iconify/api-redundancy';
 import type { APIQueryParams, IconifyAPIModule } from '../modules';
 import type { IconifyJSON } from '@iconify/types';
 

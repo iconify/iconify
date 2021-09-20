@@ -1,0 +1,7 @@
+.idea
+.vscode
+.DS_Store
+node_modules
+src
+tests
+tests-compiled

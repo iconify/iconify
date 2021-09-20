@@ -1,4 +1,4 @@
-import { PendingQueryItem } from '@cyberalien/redundancy';
+import { PendingQueryItem } from '@iconify/api-redundancy';
 import {
 	APIQueryParams,
 	IconifyAPIPrepareQuery,

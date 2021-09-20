@@ -16,7 +16,7 @@
 		"lint": "eslint {src,tests}/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
 		"build": "node build",
-		"build:dts": "tsc --project src/tsconfig.json",
+		"build:source": "tsc --project src/tsconfig.json",
 		"build:tests": "tsc --project tests/tsconfig.json",
 		"test": "mocha tests-compiled/*/*-test.js",
 		"pretest": "npm run build && npm run build:tests"
@@ -35,6 +35,10 @@
 			"import": "./lib/api/functions.mjs"
 		},
 		"./lib/api/": {
+			"require": "./lib/api/index.js",
+			"import": "./lib/api/index.mjs"
+		},
+		"./lib/api": {
 			"require": "./lib/api/index.js",
 			"import": "./lib/api/index.mjs"
 		},
@@ -63,6 +67,10 @@
 			"import": "./lib/browser-storage/functions.mjs"
 		},
 		"./lib/browser-storage/": {
+			"require": "./lib/browser-storage/index.js",
+			"import": "./lib/browser-storage/index.mjs"
+		},
+		"./lib/browser-storage": {
 			"require": "./lib/browser-storage/index.js",
 			"import": "./lib/browser-storage/index.mjs"
 		},
@@ -108,18 +116,18 @@
 		}
 	},
 	"dependencies": {
-		"@cyberalien/redundancy": "^1.1.0",
+		"@iconify/api-redundancy": "^1.0.0",
 		"@iconify/types": "^1.0.6",
 		"@iconify/utils": "^1.0.6"
 	},
 	"devDependencies": {
+		"@iconify/library-builder": "^1.0.0",
 		"@types/chai": "^4.2.18",
 		"@types/mocha": "^8.2.2",
 		"@types/node": "^15.3.0",
 		"@types/request": "^2.48.5",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"chai": "^4.3.4",
-		"esbuild": "^0.12.28",
 		"eslint": "^7.32.0",
 		"mocha": "^8.3.2",
 		"rimraf": "^3.0.2",

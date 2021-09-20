@@ -1,4 +1,4 @@
-import type { PendingQueryItem } from '@cyberalien/redundancy';
+import type { PendingQueryItem } from '@iconify/api-redundancy';
 import type { GetAPIConfig } from '../api/config';
 
 /**
