@@ -1,12 +1,8 @@
 {
-	"files": [],
-	"include": [],
-	"references": [
-		{
-			"path": "./src/tsconfig.json"
-		},
-		{
-			"path": "./tests/tsconfig.json"
-		}
-	]
+	"extends": "./tsconfig-base.json",
+	"include": ["src/**/*.ts", ".eslintrc.js"],
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib"
+	}
 }

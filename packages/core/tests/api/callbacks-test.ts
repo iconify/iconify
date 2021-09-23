@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
 import {
 	callbacks,
 	updateCallbacks,
@@ -25,36 +21,34 @@ describe('Testing API callbacks', () => {
 		const storage = getStorage(provider, prefix);
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
-				expect(unsubscribe).to.be.equal(abort);
+				expect(unsubscribe).toBe(abort);
 
 				counter++;
 				switch (counter) {
 					case 1:
 						// First run - icon1 should be loaded, icon3 should be missing
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider,
 								prefix,
 								name: 'icon1',
 							},
 						]);
-						expect(missing).to.be.eql([
+						expect(missing).toEqual([
 							{
 								provider,
 								prefix,
 								name: 'icon3',
 							},
 						]);
-						expect(pending).to.be.eql([
+						expect(pending).toEqual([
 							{
 								provider,
 								prefix,
 								name: 'icon2',
 							},
 						]);
-						expect(callbacks[provider][prefix].length).to.be.equal(
-							1
-						);
+						expect(callbacks[provider][prefix].length).toBe(1);
 
 						// Add icon2 and trigger update
 						addIconSet(storage, {
@@ -71,7 +65,7 @@ describe('Testing API callbacks', () => {
 
 					case 2:
 						// Second run - icon2 should be added, completing callback
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider,
 								prefix,
@@ -83,17 +77,15 @@ describe('Testing API callbacks', () => {
 								name: 'icon2',
 							},
 						]);
-						expect(missing).to.be.eql([
+						expect(missing).toEqual([
 							{
 								provider,
 								prefix,
 								name: 'icon3',
 							},
 						]);
-						expect(pending).to.be.eql([]);
-						expect(callbacks[provider][prefix].length).to.be.equal(
-							0
-						);
+						expect(pending).toEqual([]);
+						expect(callbacks[provider][prefix].length).toBe(0);
 						done();
 				}
 			},
@@ -123,7 +115,7 @@ describe('Testing API callbacks', () => {
 		);
 
 		// Test callbacks
-		expect(callbacks[provider][prefix].length).to.be.equal(1);
+		expect(callbacks[provider][prefix].length).toBe(1);
 
 		// Test update - should do nothing
 		updateCallbacks(provider, prefix);
@@ -131,7 +123,7 @@ describe('Testing API callbacks', () => {
 		// Wait for tick because updateCallbacks will use one
 		setTimeout(() => {
 			// Callback should not have been called yet
-			expect(counter).to.be.equal(0);
+			expect(counter).toBe(0);
 
 			// Add few icons and run updateCallbacks
 			addIconSet(storage, {
@@ -166,7 +158,7 @@ describe('Testing API callbacks', () => {
 		});
 
 		storeCallback(
-			(loaded, missing, pending, unsubscribe) => {
+			() => {
 				throw new Error('This code should not be executed!');
 			},
 			sortIcons([
@@ -195,7 +187,7 @@ describe('Testing API callbacks', () => {
 		);
 
 		// callbacks should not have been initialised
-		expect(callbacks[prefix]).to.be.equal(void 0);
+		expect(callbacks[prefix]).toBeUndefined();
 	});
 
 	it('Cancel callback', (done) => {
@@ -206,34 +198,34 @@ describe('Testing API callbacks', () => {
 		const storage = getStorage(provider, prefix);
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
-				expect(unsubscribe).to.be.equal(abort);
+				expect(unsubscribe).toBe(abort);
 
 				counter++;
-				expect(counter).to.be.equal(1);
+				expect(counter).toBe(1);
 
 				// First run - icon1 should be loaded, icon3 should be missing
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
 						name: 'icon1',
 					},
 				]);
-				expect(missing).to.be.eql([
+				expect(missing).toEqual([
 					{
 						provider,
 						prefix,
 						name: 'icon3',
 					},
 				]);
-				expect(pending).to.be.eql([
+				expect(pending).toEqual([
 					{
 						provider,
 						prefix,
 						name: 'icon2',
 					},
 				]);
-				expect(callbacks[provider][prefix].length).to.be.equal(1);
+				expect(callbacks[provider][prefix].length).toBe(1);
 
 				// Add icon2 and trigger update
 				addIconSet(storage, {
@@ -249,7 +241,7 @@ describe('Testing API callbacks', () => {
 
 				// Unsubscribe and set timer to call done()
 				unsubscribe();
-				expect(callbacks[provider][prefix].length).to.be.equal(0);
+				expect(callbacks[provider][prefix].length).toBe(0);
 				setTimeout(done);
 			},
 			sortIcons([
@@ -278,7 +270,7 @@ describe('Testing API callbacks', () => {
 		);
 
 		// Test callbacks
-		expect(callbacks[provider][prefix].length).to.be.equal(1);
+		expect(callbacks[provider][prefix].length).toBe(1);
 
 		// Test update - should do nothing
 		updateCallbacks(provider, prefix);
@@ -286,7 +278,7 @@ describe('Testing API callbacks', () => {
 		// Wait for tick because updateCallbacks will use one
 		setTimeout(() => {
 			// Callback should not have been called yet
-			expect(counter).to.be.equal(0);
+			expect(counter).toBe(0);
 
 			// Add few icons and run updateCallbacks
 			addIconSet(storage, {
@@ -313,39 +305,35 @@ describe('Testing API callbacks', () => {
 
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
-				expect(unsubscribe).to.be.equal(abort);
+				expect(unsubscribe).toBe(abort);
 
 				counter++;
 				switch (counter) {
 					case 1:
 						// First run - icon1 should be loaded, icon3 should be missing
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider,
 								prefix: prefix1,
 								name: 'icon1',
 							},
 						]);
-						expect(missing).to.be.eql([
+						expect(missing).toEqual([
 							{
 								provider,
 								prefix: prefix1,
 								name: 'icon3',
 							},
 						]);
-						expect(pending).to.be.eql([
+						expect(pending).toEqual([
 							{
 								provider,
 								prefix: prefix2,
 								name: 'icon2',
 							},
 						]);
-						expect(callbacks[provider][prefix1].length).to.be.equal(
-							0
-						);
-						expect(callbacks[provider][prefix2].length).to.be.equal(
-							1
-						);
+						expect(callbacks[provider][prefix1].length).toBe(0);
+						expect(callbacks[provider][prefix2].length).toBe(1);
 
 						// Add icon2 and trigger update
 						addIconSet(storage2, {
@@ -362,12 +350,8 @@ describe('Testing API callbacks', () => {
 
 					case 2:
 						// Second run - icon2 should be loaded
-						expect(callbacks[provider][prefix1].length).to.be.equal(
-							0
-						);
-						expect(callbacks[provider][prefix2].length).to.be.equal(
-							0
-						);
+						expect(callbacks[provider][prefix1].length).toBe(0);
+						expect(callbacks[provider][prefix2].length).toBe(0);
 						done();
 						break;
 
@@ -399,8 +383,8 @@ describe('Testing API callbacks', () => {
 		);
 
 		// Test callbacks
-		expect(callbacks[provider][prefix1].length).to.be.equal(1);
-		expect(callbacks[provider][prefix2].length).to.be.equal(1);
+		expect(callbacks[provider][prefix1].length).toBe(1);
+		expect(callbacks[provider][prefix2].length).toBe(1);
 
 		// Test update - should do nothing
 		updateCallbacks(provider, prefix1);
@@ -408,7 +392,7 @@ describe('Testing API callbacks', () => {
 		// Wait for tick because updateCallbacks will use one
 		setTimeout(() => {
 			// Callback should not have been called yet
-			expect(counter).to.be.equal(0);
+			expect(counter).toBe(0);
 
 			// Add few icons and run updateCallbacks
 			addIconSet(storage1, {
@@ -436,47 +420,39 @@ describe('Testing API callbacks', () => {
 
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
-				expect(unsubscribe).to.be.equal(abort);
+				expect(unsubscribe).toBe(abort);
 
 				counter++;
 				switch (counter) {
 					case 1:
 						// First run - icon1 should be loaded, icon3 should be missing
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider: provider1,
 								prefix: prefix1,
 								name: 'icon1',
 							},
 						]);
-						expect(missing).to.be.eql([
+						expect(missing).toEqual([
 							{
 								provider: provider1,
 								prefix: prefix1,
 								name: 'icon3',
 							},
 						]);
-						expect(pending).to.be.eql([
+						expect(pending).toEqual([
 							{
 								provider: provider2,
 								prefix: prefix2,
 								name: 'icon2',
 							},
 						]);
-						expect(
-							callbacks[provider1][prefix1].length
-						).to.be.equal(0);
-						expect(
-							callbacks[provider2][prefix2].length
-						).to.be.equal(1);
+						expect(callbacks[provider1][prefix1].length).toBe(0);
+						expect(callbacks[provider2][prefix2].length).toBe(1);
 
 						// Make sure providers/prefixes aren't mixed
-						expect(callbacks[provider1][prefix2]).to.be.equal(
-							void 0
-						);
-						expect(callbacks[provider2][prefix1]).to.be.equal(
-							void 0
-						);
+						expect(callbacks[provider1][prefix2]).toBeUndefined();
+						expect(callbacks[provider2][prefix1]).toBeUndefined();
 
 						// Add icon2 and trigger update
 						addIconSet(storage2, {
@@ -493,20 +469,12 @@ describe('Testing API callbacks', () => {
 
 					case 2:
 						// Second run - icon2 should be loaded
-						expect(
-							callbacks[provider1][prefix1].length
-						).to.be.equal(0);
-						expect(
-							callbacks[provider2][prefix2].length
-						).to.be.equal(0);
+						expect(callbacks[provider1][prefix1].length).toBe(0);
+						expect(callbacks[provider2][prefix2].length).toBe(0);
 
 						// Make sure providers/prefixes aren't mixed
-						expect(callbacks[provider1][prefix2]).to.be.equal(
-							void 0
-						);
-						expect(callbacks[provider2][prefix1]).to.be.equal(
-							void 0
-						);
+						expect(callbacks[provider1][prefix2]).toBeUndefined();
+						expect(callbacks[provider2][prefix1]).toBeUndefined();
 
 						done();
 						break;
@@ -539,11 +507,11 @@ describe('Testing API callbacks', () => {
 		);
 
 		// Test callbacks
-		expect(callbacks[provider1][prefix1].length).to.be.equal(1);
-		expect(callbacks[provider2][prefix2].length).to.be.equal(1);
+		expect(callbacks[provider1][prefix1].length).toBe(1);
+		expect(callbacks[provider2][prefix2].length).toBe(1);
 
-		expect(callbacks[provider1][prefix2]).to.be.equal(void 0);
-		expect(callbacks[provider2][prefix1]).to.be.equal(void 0);
+		expect(callbacks[provider1][prefix2]).toBeUndefined();
+		expect(callbacks[provider2][prefix1]).toBeUndefined();
 
 		// Test update - should do nothing
 		updateCallbacks(provider1, prefix1);
@@ -551,7 +519,7 @@ describe('Testing API callbacks', () => {
 		// Wait for tick because updateCallbacks will use one
 		setTimeout(() => {
 			// Callback should not have been called yet
-			expect(counter).to.be.equal(0);
+			expect(counter).toBe(0);
 
 			// Add few icons and run updateCallbacks
 			addIconSet(storage1, {

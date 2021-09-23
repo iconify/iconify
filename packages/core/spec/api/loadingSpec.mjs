@@ -1,19 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
-import type { PendingQueryItem } from '@iconify/api-redundancy';
-import { setAPIConfig } from '../../lib/api/config';
-import type {
-	IconifyAPIIconsQueryParams,
-	IconifyAPIQueryParams,
-} from '../../lib/api/modules';
-import { setAPIModule } from '../../lib/api/modules';
-import { loadIcons, isPending } from '../../lib/api/icons';
+import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { loadIcons, isPending } from '@iconify/core/lib/api/icons';
 
 describe('Testing API loadIcons', () => {
 	let prefixCounter = 0;
-	function nextPrefix(): string {
+	function nextPrefix() {
 		prefixCounter++;
 		return (
 			'api-load-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter
@@ -31,12 +22,8 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Icon loader
-		const prepareQuery = (
-			provider: string,
-			prefix: string,
-			icons: string[]
-		): IconifyAPIIconsQueryParams[] => {
-			const item: IconifyAPIIconsQueryParams = {
+		const prepareQuery = (provider, prefix, icons) => {
+			const item = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -44,41 +31,37 @@ describe('Testing API loadIcons', () => {
 			};
 
 			// This callback should be called first
-			expect(asyncCounter).to.be.equal(1);
+			expect(asyncCounter).toBe(1);
 			asyncCounter++;
 
 			// Test input and return as one item
-			const expected: IconifyAPIIconsQueryParams = {
+			const expected = {
 				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
 			};
-			expect(item).to.be.eql(expected);
+			expect(item).toEqual(expected);
 
 			return [item];
 		};
 
-		const sendQuery = (
-			host: string,
-			params: IconifyAPIQueryParams,
-			item: PendingQueryItem
-		): void => {
+		const sendQuery = (host, params, item) => {
 			// This callback should be called after prepareQuery
-			expect(asyncCounter).to.be.equal(2);
+			expect(asyncCounter).toBe(2);
 			asyncCounter++;
 
-			expect(params.type).to.be.equal('icons');
+			expect(params.type).toBe('icons');
 
 			// Test input
-			expect(host).to.be.equal('https://api1.local');
-			const expected: IconifyAPIQueryParams = {
+			expect(host).toBe('https://api1.local');
+			const expected = {
 				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon1', 'icon2'],
 			};
-			expect(params).to.be.eql(expected);
+			expect(params).toEqual(expected);
 
 			// Send data
 			item.done({
@@ -94,7 +77,7 @@ describe('Testing API loadIcons', () => {
 			});
 
 			// Counter should not have increased after status.done() call becuse parsing result should be done on next tick
-			expect(asyncCounter).to.be.equal(3);
+			expect(asyncCounter).toBe(3);
 		};
 
 		setAPIModule(provider, {
@@ -114,12 +97,12 @@ describe('Testing API loadIcons', () => {
 				// as string
 				provider + ':' + prefix + ':icon2',
 			],
-			(loaded, missing, pending, unsubscribe) => {
+			(loaded, missing, pending) => {
 				// This callback should be called last
-				expect(asyncCounter).to.be.equal(3);
+				expect(asyncCounter).toBe(3);
 				asyncCounter++;
 
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -131,8 +114,8 @@ describe('Testing API loadIcons', () => {
 						name: 'icon2',
 					},
 				]);
-				expect(missing).to.be.eql([]);
-				expect(pending).to.be.eql([]);
+				expect(missing).toEqual([]);
+				expect(pending).toEqual([]);
 
 				expect(
 					isPending({
@@ -140,25 +123,21 @@ describe('Testing API loadIcons', () => {
 						prefix,
 						name: 'icon1',
 					})
-				).to.be.equal(false);
-				expect(
-					isPending({ provider, prefix, name: 'icon3' })
-				).to.be.equal(false);
+				).toBe(false);
+				expect(isPending({ provider, prefix, name: 'icon3' })).toBe(
+					false
+				);
 
 				done();
 			}
 		);
 
 		// Test isPending
-		expect(isPending({ provider, prefix, name: 'icon1' })).to.be.equal(
-			true
-		);
-		expect(isPending({ provider, prefix, name: 'icon3' })).to.be.equal(
-			false
-		);
+		expect(isPending({ provider, prefix, name: 'icon1' })).toBe(true);
+		expect(isPending({ provider, prefix, name: 'icon3' })).toBe(false);
 
 		// Make sure asyncCounter wasn't increased because loading shoud happen on next tick
-		expect(asyncCounter).to.be.equal(0);
+		expect(asyncCounter).toBe(0);
 		asyncCounter++;
 	});
 
@@ -172,15 +151,11 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Icon loader
-		const prepareQuery = (
-			provider: string,
-			prefix: string,
-			icons: string[]
-		): IconifyAPIIconsQueryParams[] => {
+		const prepareQuery = (provider, prefix, icons) => {
 			// Split all icons in multiple queries, one icon per query
-			const results: IconifyAPIIconsQueryParams[] = [];
+			const results = [];
 			icons.forEach((icon) => {
-				const item: IconifyAPIIconsQueryParams = {
+				const item = {
 					type: 'icons',
 					provider,
 					prefix,
@@ -189,34 +164,30 @@ describe('Testing API loadIcons', () => {
 				results.push(item);
 			});
 
-			expect(results.length).to.be.equal(2);
+			expect(results.length).toBe(2);
 
 			return results;
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (
-			host: string,
-			params: IconifyAPIQueryParams,
-			item: PendingQueryItem
-		): void => {
+		const sendQuery = (host, params, item) => {
 			// Test input
-			expect(host).to.be.equal('https://api1.local');
+			expect(host).toBe('https://api1.local');
 
-			expect(params.type).to.be.equal('icons');
+			expect(params.type).toBe('icons');
 			if (params.type !== 'icons') {
 				return;
 			}
 
 			// Icon names should match queryCounter: 'icon1' on first run, 'icon2' on second run
 			queryCounter++;
-			const expected: IconifyAPIQueryParams = {
+			const expected = {
 				type: 'icons',
 				provider,
 				prefix,
 				icons: ['icon' + queryCounter],
 			};
-			expect(params).to.be.eql(expected);
+			expect(params).toEqual(expected);
 
 			// Send only requested icons
 			const icons = Object.create(null);
@@ -245,13 +216,13 @@ describe('Testing API loadIcons', () => {
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
 			],
-			(loaded, missing, pending, unsubscribe) => {
+			(loaded, missing, pending) => {
 				// Callback should be called only once because results should be sent in same tick
-				expect(callbackCalled).to.be.equal(false);
+				expect(callbackCalled).toBe(false);
 				callbackCalled = true;
 
 				// Test data
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -263,8 +234,8 @@ describe('Testing API loadIcons', () => {
 						name: 'icon2',
 					},
 				]);
-				expect(missing).to.be.eql([]);
-				expect(pending).to.be.eql([]);
+				expect(missing).toEqual([]);
+				expect(pending).toEqual([]);
 				done();
 			}
 		);
@@ -281,12 +252,8 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Icon loader
-		const prepareQuery = (
-			provider: string,
-			prefix: string,
-			icons: string[]
-		): IconifyAPIIconsQueryParams[] => {
-			const item: IconifyAPIIconsQueryParams = {
+		const prepareQuery = (provider, prefix, icons) => {
+			const item = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -296,23 +263,20 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (
-			host: string,
-			params: IconifyAPIQueryParams,
-			item: PendingQueryItem
-		): void => {
+		const sendQuery = (host, params, item) => {
 			queryCounter++;
+			params;
 			switch (queryCounter) {
 				case 1:
 					// First call on api1
-					expect(host).to.be.equal('https://api1.local');
+					expect(host).toBe('https://api1.local');
 
 					// Do nothing - fake failed response
 					break;
 
 				case 2:
 					// First call on api2
-					expect(host).to.be.equal('https://api2.local');
+					expect(host).toBe('https://api2.local');
 
 					// Return result
 					item.done({
@@ -347,13 +311,13 @@ describe('Testing API loadIcons', () => {
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
 			],
-			(loaded, missing, pending, unsubscribe) => {
+			(loaded, missing, pending) => {
 				// Callback should be called only once
-				expect(callbackCalled).to.be.equal(false);
+				expect(callbackCalled).toBe(false);
 				callbackCalled = true;
 
 				// Test data
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -365,8 +329,8 @@ describe('Testing API loadIcons', () => {
 						name: 'icon2',
 					},
 				]);
-				expect(missing).to.be.eql([]);
-				expect(pending).to.be.eql([]);
+				expect(missing).toEqual([]);
+				expect(pending).toEqual([]);
 
 				done();
 			}
@@ -384,12 +348,8 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Icon loader
-		const prepareQuery = (
-			provider: string,
-			prefix: string,
-			icons: string[]
-		): IconifyAPIIconsQueryParams[] => {
-			const item: IconifyAPIIconsQueryParams = {
+		const prepareQuery = (provider, prefix, icons) => {
+			const item = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -399,14 +359,10 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (
-			host: string,
-			params: IconifyAPIQueryParams,
-			item: PendingQueryItem
-		): void => {
+		const sendQuery = (host, params, item) => {
 			queryCounter++;
 
-			expect(params.type).to.be.equal('icons');
+			expect(params.type).toBe('icons');
 			if (params.type !== 'icons') {
 				return;
 			}
@@ -414,16 +370,16 @@ describe('Testing API loadIcons', () => {
 			switch (queryCounter) {
 				case 1:
 					// First call on api1
-					expect(params.icons).to.be.eql(['icon1', 'icon2']);
-					expect(host).to.be.equal('https://api1.local');
+					expect(params.icons).toEqual(['icon1', 'icon2']);
+					expect(host).toBe('https://api1.local');
 
 					// Do nothing - fake failed response
 					break;
 
 				case 2:
 					// First call on api2
-					expect(params.icons).to.be.eql(['icon1', 'icon2']);
-					expect(host).to.be.equal('https://api2.local');
+					expect(params.icons).toEqual(['icon1', 'icon2']);
+					expect(host).toBe('https://api2.local');
 
 					// Return result
 					item.done({
@@ -441,8 +397,8 @@ describe('Testing API loadIcons', () => {
 
 				case 3:
 					// Second call, should have api2 as default
-					expect(params.icons).to.be.eql(['icon3', 'icon4']);
-					expect(host).to.be.equal('https://api2.local');
+					expect(params.icons).toEqual(['icon3', 'icon4']);
+					expect(host).toBe('https://api2.local');
 
 					// Return result
 					item.done({
@@ -477,13 +433,13 @@ describe('Testing API loadIcons', () => {
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
 			],
-			(loaded, missing, pending, unsubscribe) => {
+			(loaded, missing, pending) => {
 				// Callback should be called only once
-				expect(callbackCalled).to.be.equal(false);
+				expect(callbackCalled).toBe(false);
 				callbackCalled = true;
 
 				// Test data
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -495,8 +451,8 @@ describe('Testing API loadIcons', () => {
 						name: 'icon2',
 					},
 				]);
-				expect(missing).to.be.eql([]);
-				expect(pending).to.be.eql([]);
+				expect(missing).toEqual([]);
+				expect(pending).toEqual([]);
 
 				// Send another query on next tick
 				setTimeout(() => {
@@ -506,13 +462,13 @@ describe('Testing API loadIcons', () => {
 							provider + ':' + prefix + ':icon3',
 							provider + ':' + prefix + ':icon4',
 						],
-						(loaded, missing, pending, unsubscribe) => {
+						(loaded, missing, pending) => {
 							// Callback should be called only once
-							expect(callbackCalled).to.be.equal(false);
+							expect(callbackCalled).toBe(false);
 							callbackCalled = true;
 
 							// Test data
-							expect(loaded).to.be.eql([
+							expect(loaded).toEqual([
 								{
 									provider,
 									prefix,
@@ -524,8 +480,8 @@ describe('Testing API loadIcons', () => {
 									name: 'icon4',
 								},
 							]);
-							expect(missing).to.be.eql([]);
-							expect(pending).to.be.eql([]);
+							expect(missing).toEqual([]);
+							expect(pending).toEqual([]);
 
 							done();
 						}
@@ -547,12 +503,8 @@ describe('Testing API loadIcons', () => {
 		});
 
 		// Icon loader
-		const prepareQuery = (
-			provider: string,
-			prefix: string,
-			icons: string[]
-		): IconifyAPIIconsQueryParams[] => {
-			const item: IconifyAPIIconsQueryParams = {
+		const prepareQuery = (provider, prefix, icons) => {
+			const item = {
 				type: 'icons',
 				provider,
 				prefix,
@@ -562,14 +514,10 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (
-			host: string,
-			params: IconifyAPIQueryParams,
-			item: PendingQueryItem
-		): void => {
+		const sendQuery = (host, params, item) => {
 			queryCounter++;
 
-			expect(params.type).to.be.equal('icons');
+			expect(params.type).toBe('icons');
 			if (params.type !== 'icons') {
 				return;
 			}
@@ -577,18 +525,18 @@ describe('Testing API loadIcons', () => {
 			switch (queryCounter) {
 				case 1:
 					// First call on api1
-					expect(params.prefix).to.be.equal(prefix);
-					expect(params.icons).to.be.eql(['icon1', 'icon2']);
-					expect(host).to.be.equal('https://api1.local');
+					expect(params.prefix).toBe(prefix);
+					expect(params.icons).toEqual(['icon1', 'icon2']);
+					expect(host).toBe('https://api1.local');
 
 					// Do nothing - fake failed response
 					break;
 
 				case 2:
 					// First call on api2
-					expect(params.prefix).to.be.equal(prefix);
-					expect(params.icons).to.be.eql(['icon1', 'icon2']);
-					expect(host).to.be.equal('https://api2.local');
+					expect(params.prefix).toBe(prefix);
+					expect(params.icons).toEqual(['icon1', 'icon2']);
+					expect(host).toBe('https://api2.local');
 
 					// Return result
 					item.done({
@@ -606,9 +554,9 @@ describe('Testing API loadIcons', () => {
 
 				case 3:
 					// Second call, should have api2 as default
-					expect(params.prefix).to.be.equal(prefix2);
-					expect(params.icons).to.be.eql(['icon2', 'icon4']);
-					expect(host).to.be.equal('https://api2.local');
+					expect(params.prefix).toBe(prefix2);
+					expect(params.icons).toEqual(['icon2', 'icon4']);
+					expect(host).toBe('https://api2.local');
 
 					// Return result
 					item.done({
@@ -643,13 +591,13 @@ describe('Testing API loadIcons', () => {
 				provider + ':' + prefix + ':icon1',
 				provider + ':' + prefix + ':icon2',
 			],
-			(loaded, missing, pending, unsubscribe) => {
+			(loaded, missing, pending) => {
 				// Callback should be called only once
-				expect(callbackCalled).to.be.equal(false);
+				expect(callbackCalled).toBe(false);
 				callbackCalled = true;
 
 				// Test data
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -661,8 +609,8 @@ describe('Testing API loadIcons', () => {
 						name: 'icon2',
 					},
 				]);
-				expect(missing).to.be.eql([]);
-				expect(pending).to.be.eql([]);
+				expect(missing).toEqual([]);
+				expect(pending).toEqual([]);
 
 				// Send another query on next tick for different prefix that shares configuration
 				setTimeout(() => {
@@ -672,13 +620,13 @@ describe('Testing API loadIcons', () => {
 							provider + ':' + prefix2 + ':icon2',
 							provider + ':' + prefix2 + ':icon4',
 						],
-						(loaded, missing, pending, unsubscribe) => {
+						(loaded, missing, pending) => {
 							// Callback should be called only once
-							expect(callbackCalled).to.be.equal(false);
+							expect(callbackCalled).toBe(false);
 							callbackCalled = true;
 
 							// Test data
-							expect(loaded).to.be.eql([
+							expect(loaded).toEqual([
 								{
 									provider,
 									prefix: prefix2,
@@ -690,8 +638,8 @@ describe('Testing API loadIcons', () => {
 									name: 'icon4',
 								},
 							]);
-							expect(missing).to.be.eql([]);
-							expect(pending).to.be.eql([]);
+							expect(missing).toEqual([]);
+							expect(pending).toEqual([]);
 
 							done();
 						}

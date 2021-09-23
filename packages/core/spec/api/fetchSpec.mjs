@@ -1,29 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
 import crossFetch from 'cross-fetch';
-import { sendAPIQuery } from '../../lib/api/query';
-import { setAPIModule } from '../../lib/api/modules';
-import { fetchAPIModule, setFetch } from '../../lib/api/modules/fetch';
-import { setAPIConfig } from '../../lib/api/config';
-import { mockAPIModule } from '../../lib/api/modules/mock';
+import { sendAPIQuery } from '@iconify/core/lib/api/query';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { fetchAPIModule, setFetch } from '@iconify/core/lib/api/modules/fetch';
+import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { mockAPIModule } from '@iconify/core/lib/api/modules/mock';
 
 describe('Testing live API with fetch', () => {
 	let counter = 0;
-	function nextProvider(): string {
+	function nextProvider() {
 		return 'fetch-' + counter++;
 	}
 
 	const host = 'https://api.iconify.design';
 
 	// Set fetch module
-	before(() => {
+	beforeEach(() => {
 		setFetch(crossFetch);
 		setAPIModule('', fetchAPIModule);
 	});
 
-	after(() => {
+	afterAll(() => {
 		setAPIModule('', mockAPIModule);
 	});
 
@@ -37,8 +33,8 @@ describe('Testing live API with fetch', () => {
 				uri: '/collections',
 			},
 			(data, error) => {
-				expect(error).to.be.equal(424);
-				expect(data).to.be.equal(void 0);
+				expect(error).toBe(424);
+				expect(data).toBeUndefined();
 				done();
 			}
 		);
@@ -50,7 +46,7 @@ describe('Testing live API with fetch', () => {
 			setAPIConfig(provider, {
 				resources: [host],
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
 		sendAPIQuery(
 			provider,
@@ -60,8 +56,8 @@ describe('Testing live API with fetch', () => {
 				uri: '/collections',
 			},
 			(data, error) => {
-				expect(error).to.be.equal(void 0);
-				expect(typeof data).to.be.equal('object');
+				expect(error).toBeUndefined();
+				expect(typeof data).toBe('object');
 				done();
 			}
 		);
@@ -77,8 +73,8 @@ describe('Testing live API with fetch', () => {
 				uri: '/collections',
 			},
 			(data, error) => {
-				expect(error).to.be.equal(void 0);
-				expect(typeof data).to.be.equal('object');
+				expect(error).toBeUndefined();
+				expect(typeof data).toBe('object');
 				done();
 			}
 		);

@@ -1,20 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
-import { setAPIModule } from '../../lib/api/modules';
-import { loadIcons } from '../../lib/api/icons';
-import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
-import { allowSimpleNames } from '../../lib/storage/functions';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { loadIcons } from '@iconify/core/lib/api/icons';
+import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
+import { allowSimpleNames } from '@iconify/core/lib/storage/functions';
 
 describe('Testing simple names with API module', () => {
 	// Set API config and allow simple names
-	before(() => {
+	beforeEach(() => {
 		allowSimpleNames(true);
 		setAPIModule('', mockAPIModule);
 	});
 
-	after(() => {
+	afterAll(() => {
 		allowSimpleNames(false);
 	});
 
@@ -67,15 +63,15 @@ describe('Testing simple names with API module', () => {
 			],
 			(loaded, missing, pending) => {
 				// 'test100' should be missing because it does not have a prefix
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider: '',
 						prefix: 'test200',
 						name: 'foo',
 					},
 				]);
-				expect(pending).to.be.eql([]);
-				expect(missing).to.be.eql([
+				expect(pending).toEqual([]);
+				expect(missing).toEqual([
 					{
 						provider: '',
 						prefix: '',

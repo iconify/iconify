@@ -1,13 +1,6 @@
-import 'mocha';
-import { expect } from 'chai';
 import type { IconifyJSON } from '@iconify/types';
-import type { StoredItem } from '../../lib/browser-storage/';
-import {
-	loadCache,
-	count,
-	config,
-	emptyList,
-} from '../../lib/browser-storage/';
+import type { StoredItem } from '../../lib/browser-storage';
+import { loadCache, count, config, emptyList } from '../../lib/browser-storage';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import {
 	nextPrefix,
@@ -53,24 +46,24 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should exist now
-		expect(iconExists(icons, 'foo')).to.be.equal(true);
+		expect(iconExists(icons, 'foo')).toBe(true);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -106,29 +99,29 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check default provider
 		const icons2 = getStorage('', prefix);
-		expect(iconExists(icons2, 'foo')).to.be.equal(false);
+		expect(iconExists(icons2, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should exist now
-		expect(iconExists(icons, 'foo')).to.be.equal(true);
-		expect(iconExists(icons2, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(true);
+		expect(iconExists(icons2, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -164,24 +157,24 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -218,24 +211,24 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -270,24 +263,24 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -322,24 +315,24 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icon should exist now
-		expect(iconExists(icons, 'foo')).to.be.equal(true);
+		expect(iconExists(icons, 'foo')).toBe(true);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -389,26 +382,26 @@ describe('Testing loading from localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo1')).to.be.equal(false);
-		expect(iconExists(icons, 'foo4')).to.be.equal(false);
+		expect(iconExists(icons, 'foo1')).toBe(false);
+		expect(iconExists(icons, 'foo4')).toBe(false);
 
 		// Load localStorage
 		loadCache();
 
 		// Icons should exist now
-		expect(iconExists(icons, 'foo1')).to.be.equal(true);
-		expect(iconExists(icons, 'foo4')).to.be.equal(true);
+		expect(iconExists(icons, 'foo1')).toBe(true);
+		expect(iconExists(icons, 'foo4')).toBe(true);
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 5,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [3, 2, 0], // reserse order
 			session: [],
 		});
@@ -467,10 +460,7 @@ describe('Testing loading from localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
-				false,
-				`Icon ${i} should not exist yet`
-			);
+			expect(iconExists(iconsStorage, 'foo' + i)).toBe(false);
 		}
 
 		// Load localStorage
@@ -478,22 +468,19 @@ describe('Testing loading from localStorage', () => {
 
 		// Icons should exist now, except for number 4
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
-				i !== 4,
-				`Icon ${i} failed loading test`
-			);
+			expect(iconExists(iconsStorage, 'foo' + i)).toBe(i !== 4);
 		}
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 6,
 			session: 3,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [4, 2, 0],
 			session: [1],
 		});

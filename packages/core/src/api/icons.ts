@@ -1,13 +1,13 @@
 import type { IconifyJSON } from '@iconify/types';
+import type {
+	IconifyIconName,
+	IconifyIconSource,
+} from '@iconify/utils/lib/icon/name';
 import type { SortedIcons } from '../icon/sort';
 import { sortIcons } from '../icon/sort';
 import { storeCallback, updateCallbacks } from './callbacks';
 import { getAPIModule } from './modules';
 import { getStorage, addIconSet } from '../storage/storage';
-import type {
-	IconifyIconName,
-	IconifyIconSource,
-} from '@iconify/utils/lib/icon/name';
 import { listToIcons } from '../icon/list';
 import { allowSimpleNames } from '../storage/functions';
 import { sendAPIQuery } from './query';

@@ -1,14 +1,12 @@
-import 'mocha';
-import { expect } from 'chai';
 import type { IconifyJSON } from '@iconify/types';
-import type { StoredItem } from '../../lib/browser-storage/';
+import type { StoredItem } from '../../lib/browser-storage';
 import {
 	loadCache,
 	storeCache,
 	count,
 	config,
 	emptyList,
-} from '../../lib/browser-storage/';
+} from '../../lib/browser-storage';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import {
 	nextPrefix,
@@ -51,35 +49,33 @@ describe('Testing saving to localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Save item
 		storeCache(provider, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).to.be.equal(
-			JSON.stringify(item)
-		);
-		expect(cache.getItem(countKey)).to.be.equal('1');
-		expect(cache.getItem(versionKey)).to.be.equal(cacheVersion);
+		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item));
+		expect(cache.getItem(countKey)).toBe('1');
+		expect(cache.getItem(versionKey)).toBe(cacheVersion);
 	});
 
 	it('Multiple icon sets', () => {
@@ -125,28 +121,24 @@ describe('Testing saving to localStorage', () => {
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).to.be.equal(
-			JSON.stringify(item0)
-		);
-		expect(cache.getItem(cachePrefix + '1')).to.be.equal(
-			JSON.stringify(item1)
-		);
-		expect(cache.getItem(countKey)).to.be.equal('2');
-		expect(cache.getItem(versionKey)).to.be.equal(cacheVersion);
+		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item0));
+		expect(cache.getItem(cachePrefix + '1')).toBe(JSON.stringify(item1));
+		expect(cache.getItem(countKey)).toBe('2');
+		expect(cache.getItem(versionKey)).toBe(cacheVersion);
 	});
 
 	it('Adding icon set on unused spot', () => {
@@ -195,15 +187,15 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [0],
 			session: [],
 		});
@@ -212,24 +204,20 @@ describe('Testing saving to localStorage', () => {
 		storeCache(provider, icon0);
 
 		// Check data
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).to.be.equal(
-			JSON.stringify(item0)
-		);
-		expect(cache.getItem(cachePrefix + '1')).to.be.equal(
-			JSON.stringify(item1)
-		);
-		expect(cache.getItem(countKey)).to.be.equal('2');
-		expect(cache.getItem(versionKey)).to.be.equal(cacheVersion);
+		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item0));
+		expect(cache.getItem(cachePrefix + '1')).toBe(JSON.stringify(item1));
+		expect(cache.getItem(countKey)).toBe('2');
+		expect(cache.getItem(versionKey)).toBe(cacheVersion);
 	});
 
 	it('Adding multiple icon sets to existing data', () => {
@@ -285,90 +273,86 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: false,
 			session: true,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 9, // item 9 was missing
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			// mix of expired and skipped items
 			// reverse order, 9 should not be there because it is last item
 			session: [5, 4, 2, 1],
 		});
-		expect(cache.getItem(countKey)).to.be.equal('9');
+		expect(cache.getItem(countKey)).toBe('9');
 
 		// Check cached items
 		[0, 3, 6, 7, 8].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index)).to.be.equal(
-				JSON.stringify(items[index]),
-				`Checking item ${index}`
+			expect(cache.getItem(cachePrefix + index)).toBe(
+				JSON.stringify(items[index])
 			);
 		});
 
 		// Check expired items - should have been deleted
 		// Also check items that weren't supposed to be added
 		[2, 4, 1, 5, 9, 10, 11, 12, 13].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index)).to.be.equal(
-				null,
-				`Checking item ${index}`
-			);
+			expect(cache.getItem(cachePrefix + index)).toBeNull();
 		});
 
 		// Add item 5
 		storeCache(provider, icons[5]);
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 9,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [4, 2, 1],
 		});
-		expect(cache.getItem(countKey)).to.be.equal('9');
+		expect(cache.getItem(countKey)).toBe('9');
 
 		// Add items 4, 2, 1
 		const list = [4, 2, 1];
 		list.slice(0).forEach((index) => {
-			expect(list.shift()).to.be.equal(index);
+			expect(list.shift()).toBe(index);
 			storeCache(provider, icons[index]);
-			expect(count).to.be.eql({
+			expect(count).toEqual({
 				local: 0,
 				session: 9,
 			});
-			expect(emptyList).to.be.eql({
+			expect(emptyList).toEqual({
 				local: [],
 				session: list,
 			});
-			expect(cache.getItem(countKey)).to.be.equal('9');
+			expect(cache.getItem(countKey)).toBe('9');
 		});
 
 		// Add item 10
 		storeCache(provider, icons[10]);
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 10,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
-		expect(cache.getItem(countKey)).to.be.equal('10');
+		expect(cache.getItem(countKey)).toBe('10');
 
 		// Add item 11
 		storeCache(provider, icons[11]);
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 11,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
-		expect(cache.getItem(countKey)).to.be.equal('11');
+		expect(cache.getItem(countKey)).toBe('11');
 	});
 
 	it('Overwrite outdated data', () => {
@@ -399,20 +383,20 @@ describe('Testing saving to localStorage', () => {
 
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo1')).to.be.equal(false);
+		expect(iconExists(icons, 'foo1')).toBe(false);
 
 		// Load cache
 		loadCache();
 
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -436,29 +420,27 @@ describe('Testing saving to localStorage', () => {
 		storeCache(provider, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(icons, 'foo')).to.be.equal(false);
+		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).to.be.equal(
-			JSON.stringify(item)
-		);
-		expect(cache.getItem(countKey)).to.be.equal('1');
-		expect(cache.getItem(versionKey)).to.be.equal(cacheVersion);
+		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item));
+		expect(cache.getItem(countKey)).toBe('1');
+		expect(cache.getItem(versionKey)).toBe(cacheVersion);
 	});
 
 	it('Using both storage options', () => {
@@ -516,15 +498,15 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 3,
 			session: 4,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -532,16 +514,10 @@ describe('Testing saving to localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
-				true,
-				`Icon foo${i} should have loaded`
-			);
+			expect(iconExists(iconsStorage, 'foo' + i)).toBe(true);
 		}
 		for (let i = 0; i < count.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i)).to.be.equal(
-				true,
-				`Icon bar${i} should have loaded`
-			);
+			expect(iconExists(iconsStorage, 'bar' + i)).toBe(true);
 		}
 
 		// Add new item to localStorage
@@ -561,19 +537,17 @@ describe('Testing saving to localStorage', () => {
 		storeCache(provider, icon);
 
 		// Check data
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 4, // +1
 			session: 4,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache1.getItem(cachePrefix + '3')).to.be.equal(
-			JSON.stringify(item)
-		);
+		expect(cache1.getItem(cachePrefix + '3')).toBe(JSON.stringify(item));
 	});
 
 	it('Using both storage options, but localStorage is read only', () => {
@@ -631,15 +605,15 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).to.be.eql({
+		expect(config).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 3,
 			session: 4,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
@@ -647,16 +621,10 @@ describe('Testing saving to localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).to.be.equal(
-				true,
-				`Icon foo${i} should have loaded`
-			);
+			expect(iconExists(iconsStorage, 'foo' + i)).toBe(true);
 		}
 		for (let i = 0; i < count.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i)).to.be.equal(
-				true,
-				`Icon bar${i} should have loaded`
-			);
+			expect(iconExists(iconsStorage, 'bar' + i)).toBe(true);
 		}
 
 		// Set localStorage to read-only
@@ -679,18 +647,16 @@ describe('Testing saving to localStorage', () => {
 		storeCache(provider, icon);
 
 		// Check data
-		expect(count).to.be.eql({
+		expect(count).toEqual({
 			local: 3,
 			session: 5,
 		});
-		expect(emptyList).to.be.eql({
+		expect(emptyList).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check cache
-		expect(cache2.getItem(cachePrefix + '4')).to.be.equal(
-			JSON.stringify(item)
-		);
+		expect(cache2.getItem(cachePrefix + '4')).toBe(JSON.stringify(item));
 	});
 });

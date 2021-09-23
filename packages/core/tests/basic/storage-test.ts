@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import 'mocha';
-import { expect } from 'chai';
 import {
 	newStorage,
 	addIcon,
@@ -43,18 +41,18 @@ describe('Testing storage', () => {
 		addIcon(storage, 'invalid', {} as unknown as IconifyIcon);
 
 		// Should not include 'invalid'
-		expect(Object.keys(storage.icons)).to.be.eql([
+		expect(Object.keys(storage.icons)).toEqual([
 			'test',
 			'not-really-missing',
 			'constructor',
 		]);
 
 		// Test iconExists
-		expect(iconExists(storage, 'test')).to.be.equal(true);
-		expect(iconExists(storage, 'constructor')).to.be.equal(true);
-		expect(iconExists(storage, 'invalid')).to.be.equal(false);
-		expect(iconExists(storage, 'missing')).to.be.equal(false);
-		expect(iconExists(storage, 'not-really-missing')).to.be.equal(true);
+		expect(iconExists(storage, 'test')).toBe(true);
+		expect(iconExists(storage, 'constructor')).toBe(true);
+		expect(iconExists(storage, 'invalid')).toBe(false);
+		expect(iconExists(storage, 'missing')).toBe(false);
+		expect(iconExists(storage, 'not-really-missing')).toBe(true);
 
 		// Test getIcon
 		let expected: FullIconifyIcon = {
@@ -68,7 +66,7 @@ describe('Testing storage', () => {
 			rotate: 0,
 		};
 		const icon = getIcon(storage, 'test');
-		expect(icon).to.be.eql(expected);
+		expect(icon).toEqual(expected);
 
 		// Test icon mutation
 		let thrown = false;
@@ -78,7 +76,7 @@ describe('Testing storage', () => {
 		} catch (err) {
 			thrown = true;
 		}
-		expect(thrown).to.be.equal(true);
+		expect(thrown).toBe(true);
 
 		expected = {
 			body: '<g></g>',
@@ -90,10 +88,10 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 1,
 		};
-		expect(getIcon(storage, 'constructor')).to.be.eql(expected);
+		expect(getIcon(storage, 'constructor')).toEqual(expected);
 
-		expect(getIcon(storage, 'invalid')).to.be.equal(null);
-		expect(getIcon(storage, 'missing')).to.be.equal(null);
+		expect(getIcon(storage, 'invalid')).toBeNull();
+		expect(getIcon(storage, 'missing')).toBeNull();
 	});
 
 	it('Adding simple icon set', () => {
@@ -115,15 +113,15 @@ describe('Testing storage', () => {
 				},
 				height: 24,
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
-		expect(Object.keys(storage.icons)).to.be.eql(['icon1', 'icon2']);
+		expect(Object.keys(storage.icons)).toEqual(['icon1', 'icon2']);
 
 		// Test iconExists
-		expect(iconExists(storage, 'icon1')).to.be.equal(true);
-		expect(iconExists(storage, 'icon2')).to.be.equal(true);
-		expect(iconExists(storage, 'invalid')).to.be.equal(false);
-		expect(iconExists(storage, 'missing')).to.be.equal(false);
+		expect(iconExists(storage, 'icon1')).toBe(true);
+		expect(iconExists(storage, 'icon2')).toBe(true);
+		expect(iconExists(storage, 'invalid')).toBe(false);
+		expect(iconExists(storage, 'missing')).toBe(false);
 
 		// Test getIcon
 		let expected: FullIconifyIcon = {
@@ -136,7 +134,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, 'icon1')).to.be.eql(expected);
+		expect(getIcon(storage, 'icon1')).toEqual(expected);
 		expected = {
 			body: '<path d="icon2" />',
 			width: 24,
@@ -147,9 +145,9 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, 'icon2')).to.be.eql(expected);
-		expect(getIcon(storage, 'invalid')).to.be.equal(null);
-		expect(getIcon(storage, 'missing')).to.be.equal(null);
+		expect(getIcon(storage, 'icon2')).toEqual(expected);
+		expect(getIcon(storage, 'invalid')).toBeNull();
+		expect(getIcon(storage, 'missing')).toBeNull();
 	});
 
 	it('Icon set with aliases that use transformations', () => {
@@ -174,9 +172,9 @@ describe('Testing storage', () => {
 				width: 128,
 				height: 128,
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
-		expect(Object.keys(storage.icons)).to.be.eql([
+		expect(Object.keys(storage.icons)).toEqual([
 			'16-chevron-left',
 			'16-chevron-right',
 		]);
@@ -192,7 +190,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, '16-chevron-left')).to.be.eql(expected);
+		expect(getIcon(storage, '16-chevron-left')).toEqual(expected);
 
 		// Test alias
 		expected = {
@@ -205,7 +203,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, '16-chevron-right')).to.be.eql(expected);
+		expect(getIcon(storage, '16-chevron-right')).toEqual(expected);
 	});
 
 	it('List icons in a global storage', () => {
@@ -215,8 +213,8 @@ describe('Testing storage', () => {
 		const storage2 = getStorage(provider, prefix);
 
 		// List icons
-		expect(listIcons('', prefix)).to.be.eql([]);
-		expect(listIcons(provider, prefix)).to.be.eql([]);
+		expect(listIcons('', prefix)).toEqual([]);
+		expect(listIcons(provider, prefix)).toEqual([]);
 
 		// Add one icon without provider
 		addIcon(storage1, 'test', {
@@ -226,8 +224,8 @@ describe('Testing storage', () => {
 		});
 
 		// List icons
-		expect(listIcons('', prefix)).to.be.eql([prefix + ':test']);
-		expect(listIcons(provider, prefix)).to.be.eql([]);
+		expect(listIcons('', prefix)).toEqual([prefix + ':test']);
+		expect(listIcons(provider, prefix)).toEqual([]);
 
 		// Add icon set without provider
 		expect(
@@ -247,15 +245,15 @@ describe('Testing storage', () => {
 				width: 128,
 				height: 128,
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
 		// List icons
-		expect(listIcons('', prefix)).to.be.eql([
+		expect(listIcons('', prefix)).toEqual([
 			prefix + ':test',
 			prefix + ':16-chevron-left',
 			prefix + ':16-chevron-right',
 		]);
-		expect(listIcons(provider, prefix)).to.be.eql([]);
+		expect(listIcons(provider, prefix)).toEqual([]);
 
 		// Add one icon with provider
 		addIcon(storage2, 'test2', {
@@ -265,12 +263,12 @@ describe('Testing storage', () => {
 		});
 
 		// List icons
-		expect(listIcons('', prefix)).to.be.eql([
+		expect(listIcons('', prefix)).toEqual([
 			prefix + ':test',
 			prefix + ':16-chevron-left',
 			prefix + ':16-chevron-right',
 		]);
-		expect(listIcons(provider, prefix)).to.be.eql([
+		expect(listIcons(provider, prefix)).toEqual([
 			'@' + provider + ':' + prefix + ':test2',
 		]);
 	});

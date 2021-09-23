@@ -1,13 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
-import type { PendingQueryItem } from '@iconify/api-redundancy';
 import type { IconifyAPIConfig } from '../../lib/api/config';
 import { setAPIConfig, getAPIConfig } from '../../lib/api/config';
 import type {
 	IconifyAPIIconsQueryParams,
-	IconifyAPIQueryParams,
 	IconifyAPIModule,
 } from '../../lib/api/modules';
 import { setAPIModule, getAPIModule } from '../../lib/api/modules';
@@ -35,11 +29,7 @@ describe('Testing API modules', () => {
 		return [item];
 	};
 
-	const sendQuery = (
-		host: string,
-		params: IconifyAPIQueryParams,
-		item: PendingQueryItem
-	): void => {
+	const sendQuery = (): void => {
 		throw new Error('Unexpected API call');
 	};
 
@@ -60,20 +50,20 @@ describe('Testing API modules', () => {
 
 		// Get config
 		const config = getAPIConfig(provider) as IconifyAPIConfig;
-		expect(config).to.not.be.equal(void 0);
+		expect(config).not.toBeUndefined();
 
 		// Check setAPIConfig
-		expect(config.resources).to.be.eql(['https://localhost:3000']);
+		expect(config.resources).toEqual(['https://localhost:3000']);
 
 		// Check getAPIModule()
 		const item = getAPIModule(provider) as IconifyAPIModule;
-		expect(item).to.not.be.equal(void 0);
-		expect(item.prepare).to.be.equal(prepareQuery);
-		expect(item.send).to.be.equal(sendQuery);
+		expect(item).not.toBeUndefined();
+		expect(item.prepare).toBe(prepareQuery);
+		expect(item.send).toBe(sendQuery);
 
-		// Get module for different provider to make sure it is empty
+		// Get module for different provider to make sure it is different
 		const provider2 = nextPrefix();
 		const item2 = getAPIModule(provider2);
-		expect(item2).to.be.equal(void 0);
+		expect(item2).not.toBe(item);
 	});
 });

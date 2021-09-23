@@ -1,10 +1,15 @@
-import { mock, count, config, emptyList } from '../../lib/browser-storage/';
+import {
+	mock,
+	count,
+	config,
+	emptyList,
+} from '@iconify/core/lib/browser-storage';
 
 /**
  * Get next icon set prefix for testing
  */
 let prefixCounter = 0;
-export function nextPrefix(): string {
+export function nextPrefix() {
 	return 'fake-storage-' + prefixCounter++;
 }
 
@@ -28,12 +33,12 @@ export const cacheExpiration = 168; // In hours
 export class Storage {
 	canRead = true;
 	canWrite = true;
-	items: Record<string, string> = Object.create(null);
+	items = Object.create(null);
 
 	/**
 	 * Get number of items
 	 */
-	get length(): number {
+	get length() {
 		if (!this.canRead) {
 			throw new Error('Restricted storage');
 		}
@@ -45,7 +50,7 @@ export class Storage {
 	 *
 	 * @param name
 	 */
-	getItem(name: string): string | null {
+	getItem(name) {
 		if (!this.canRead) {
 			throw new Error('Restricted storage');
 		}
@@ -58,7 +63,7 @@ export class Storage {
 	 * @param name
 	 * @param value
 	 */
-	setItem(name: string, value: string): void {
+	setItem(name, value) {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
@@ -70,7 +75,7 @@ export class Storage {
 	 *
 	 * @param name
 	 */
-	removeItem(name: string): void {
+	removeItem(name) {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
@@ -80,7 +85,7 @@ export class Storage {
 	/**
 	 * Clear everything
 	 */
-	clear(): void {
+	clear() {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
@@ -91,8 +96,8 @@ export class Storage {
 /**
  * Create fake storage, assign localStorage type
  */
-export function createCache(): typeof localStorage {
-	return (new Storage() as unknown) as typeof localStorage;
+export function createCache() {
+	return new Storage();
 }
 
 /**
@@ -100,13 +105,13 @@ export function createCache(): typeof localStorage {
  *
  * @param fakeWindow
  */
-export function reset(fakeWindow: Record<string, typeof localStorage>): void {
+export function reset(fakeWindow) {
 	// Replace window
 	mock(fakeWindow);
 
 	// Reset all data
 	for (const key in config) {
-		const attr = (key as unknown) as keyof typeof config;
+		const attr = key;
 		config[attr] = true;
 		count[attr] = 0;
 		emptyList[attr] = [];

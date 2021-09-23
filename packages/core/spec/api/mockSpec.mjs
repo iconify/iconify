@@ -1,18 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'mocha';
-import { expect } from 'chai';
-import { setAPIConfig } from '../../lib/api/config';
-import { setAPIModule } from '../../lib/api/modules';
-import { loadIcons } from '../../lib/api/icons';
-import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
-import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
-import { getStorage, iconExists } from '../../lib/storage/storage';
-import { sendAPIQuery } from '../../lib/api/query';
+import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import { loadIcons } from '@iconify/core/lib/api/icons';
+import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
+import { getStorage, iconExists } from '@iconify/core/lib/storage/storage';
+import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 describe('Testing mock API module', () => {
 	let prefixCounter = 0;
-	function nextPrefix(): string {
+	function nextPrefix() {
 		prefixCounter++;
 		return 'api-mock-' + (prefixCounter < 10 ? '0' : '') + prefixCounter;
 	}
@@ -20,7 +15,7 @@ describe('Testing mock API module', () => {
 	// Set API module for provider
 	const provider = nextPrefix();
 
-	before(() => {
+	beforeEach(() => {
 		setAPIConfig(provider, {
 			resources: ['https://api1.local'],
 		});
@@ -50,10 +45,10 @@ describe('Testing mock API module', () => {
 				},
 			],
 			(loaded, missing, pending) => {
-				expect(isSync).to.be.equal(false);
-				expect(loaded).to.be.eql([]);
-				expect(pending).to.be.eql([]);
-				expect(missing).to.be.eql([
+				expect(isSync).toBe(false);
+				expect(loaded).toEqual([]);
+				expect(pending).toEqual([]);
+				expect(missing).toEqual([
 					{
 						provider,
 						prefix,
@@ -119,9 +114,9 @@ describe('Testing mock API module', () => {
 				},
 			],
 			(loaded, missing, pending) => {
-				expect(isSync).to.be.equal(false);
+				expect(isSync).toBe(false);
 				// All icons should have been loaded because API waits one tick before sending response, during which both queries are processed
-				expect(loaded).to.be.eql([
+				expect(loaded).toEqual([
 					{
 						provider,
 						prefix,
@@ -133,8 +128,8 @@ describe('Testing mock API module', () => {
 						name: 'test20',
 					},
 				]);
-				expect(pending).to.be.eql([]);
-				expect(missing).to.be.eql([]);
+				expect(pending).toEqual([]);
+				expect(missing).toEqual([]);
 				done();
 			}
 		);
@@ -144,7 +139,7 @@ describe('Testing mock API module', () => {
 
 	it('Load in batches and testing delay', (done) => {
 		const prefix = nextPrefix();
-		let next: IconifyMockAPIDelayDoneCallback | undefined;
+		let next;
 
 		mockAPIData({
 			type: 'icons',
@@ -202,14 +197,14 @@ describe('Testing mock API module', () => {
 				switch (callbackCounter) {
 					case 1:
 						// First load: only 'test10'
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider,
 								prefix,
 								name: 'test10',
 							},
 						]);
-						expect(pending).to.be.eql([
+						expect(pending).toEqual([
 							{
 								provider,
 								prefix,
@@ -218,14 +213,13 @@ describe('Testing mock API module', () => {
 						]);
 
 						// Send second response
-						expect(typeof next).to.be.equal('function');
-						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-						next!();
+						expect(typeof next).toBe('function');
+						next();
 						break;
 
 					case 2:
 						// All icons should have been loaded
-						expect(loaded).to.be.eql([
+						expect(loaded).toEqual([
 							{
 								provider,
 								prefix,
@@ -237,7 +231,7 @@ describe('Testing mock API module', () => {
 								name: 'test20',
 							},
 						]);
-						expect(missing).to.be.eql([]);
+						expect(missing).toEqual([]);
 						done();
 						break;
 
@@ -269,13 +263,13 @@ describe('Testing mock API module', () => {
 			delay: (next) => {
 				// Icon should not be loaded yet
 				const storage = getStorage(provider, prefix);
-				expect(iconExists(storage, name)).to.be.equal(false);
+				expect(iconExists(storage, name)).toBe(false);
 
 				// Set data
 				next();
 
 				// Icon should be loaded now
-				expect(iconExists(storage, name)).to.be.equal(true);
+				expect(iconExists(storage, name)).toBe(true);
 
 				done();
 			},
@@ -311,11 +305,11 @@ describe('Testing mock API module', () => {
 				uri: '/test',
 			},
 			(data, error) => {
-				expect(error).to.be.equal(void 0);
-				expect(data).to.be.eql({
+				expect(error).toBeUndefined();
+				expect(data).toEqual({
 					foo: true,
 				});
-				expect(isSync).to.be.equal(false);
+				expect(isSync).toBe(false);
 				done();
 			}
 		);
@@ -346,11 +340,11 @@ describe('Testing mock API module', () => {
 				uri: '/test',
 			},
 			(data, error) => {
-				expect(error).to.be.equal(void 0);
-				expect(data).to.be.eql({
+				expect(error).toBeUndefined();
+				expect(data).toEqual({
 					foo: 2,
 				});
-				expect(isSync).to.be.equal(false);
+				expect(isSync).toBe(false);
 				done();
 			}
 		);
