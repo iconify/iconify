@@ -25,7 +25,9 @@ export async function updatePackageJSON(
 	);
 
 	// Get all exports
-	const data: Record<string, ExportRecord> = {};
+	const data: Record<string, ExportRecord | string> = {
+		'./*': './*',
+	};
 	if (packageData.main && packageData.module) {
 		data['./'] = {
 			require: formatExport(packageData.main),
@@ -44,11 +46,7 @@ export async function updatePackageJSON(
 			const dirKey = parts.join('/');
 			dirKeys.add(dirKey);
 
-			// Add entries for './foo' and './foo/' in addition to './foo/index' added below
-			data[dirKey + '/'] = {
-				require: key + '.js',
-				import: key + '.mjs',
-			};
+			// Add entry for './foo' in addition to './foo/index' added below
 			if (!data[dirKey]) {
 				// Do not overwrite entry added as file
 				data[dirKey] = {
