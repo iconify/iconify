@@ -2,6 +2,11 @@
 .vscode
 .DS_Store
 node_modules
+imports-test.mjs
+npm-debug.log
+yarn.lock
+tsconfig.tsbuildinfo
 src
+spec
 tests
 tests-compiled
