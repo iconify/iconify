@@ -21,6 +21,7 @@
 		"test": "npm run test:jest && npm run test:jasmine"
 	},
 	"exports": {
+		"./*": "./*",
 		"./lib/customisations/bool": {
 			"require": "./lib/customisations/bool.js",
 			"import": "./lib/customisations/bool.mjs"
@@ -28,10 +29,6 @@
 		"./lib/customisations/compare": {
 			"require": "./lib/customisations/compare.js",
 			"import": "./lib/customisations/compare.mjs"
-		},
-		"./lib/customisations/": {
-			"require": "./lib/customisations/index.js",
-			"import": "./lib/customisations/index.mjs"
 		},
 		"./lib/customisations": {
 			"require": "./lib/customisations/index.js",
@@ -72,10 +69,6 @@
 		"./lib/icon-set/validate": {
 			"require": "./lib/icon-set/validate.js",
 			"import": "./lib/icon-set/validate.mjs"
-		},
-		"./lib/icon/": {
-			"require": "./lib/icon/index.js",
-			"import": "./lib/icon/index.mjs"
 		},
 		"./lib/icon": {
 			"require": "./lib/icon/index.js",
