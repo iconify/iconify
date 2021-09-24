@@ -1,66 +1,65 @@
 // Core
-import { IconifyJSON, IconifyIcon } from '@iconify/types';
-import { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import {
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import type {
 	IconifyIconCustomisations,
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 } from '@iconify/utils/lib/customisations';
-import { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import {
-	IconifyStorageFunctions,
-	storageFunctions,
-} from '@iconify/core/lib/storage/functions';
-import {
-	IconifyBuilderFunctions,
-	builderFunctions,
-} from '@iconify/core/lib/builder/functions';
+import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
+import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
+import { storageFunctions } from '@iconify/core/lib/storage/functions';
+import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
+import { builderFunctions } from '@iconify/core/lib/builder/functions';
 
 // Cache
 import { storeCache, loadCache } from '@iconify/core/lib/browser-storage/';
 import { cache } from '@iconify/core/lib/cache';
-import {
+import type {
 	IconifyBrowserCacheFunctions,
 	IconifyBrowserCacheType,
-	toggleBrowserCache,
 } from '@iconify/core/lib/browser-storage/functions';
+import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
 
 // API
-import {
+import type {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
-	APIFunctions,
-	APIInternalFunctions,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
 	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
 import {
-	setAPIModule,
+	APIFunctions,
+	APIInternalFunctions,
+} from '@iconify/core/lib/api/functions';
+import type {
 	IconifyAPIModule,
 	IconifyAPISendQuery,
 	IconifyAPIPrepareIconsQuery,
 } from '@iconify/core/lib/api/modules';
-import {
-	setAPIConfig,
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import type {
 	PartialIconifyAPIConfig,
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
+import { setAPIConfig } from '@iconify/core/lib/api/config';
 import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
 	fetchAPIModule,
 	getFetch,
 	setFetch,
 } from '@iconify/core/lib/api/modules/fetch';
-import {
+import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 
 // Other
-import { IconifyCommonFunctions, commonFunctions } from './common';
+import type { IconifyCommonFunctions } from './common';
+import { commonFunctions } from './common';
 
 /**
  * Export required types
@@ -181,7 +180,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	if (_window.IconifyProviders !== void 0) {
 		const providers = _window.IconifyProviders;
 		if (typeof providers === 'object' && providers !== null) {
-			for (let key in providers) {
+			for (const key in providers) {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
 				try {
 					const value = providers[key];

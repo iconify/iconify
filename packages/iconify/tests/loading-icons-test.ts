@@ -1,5 +1,3 @@
-import 'mocha';
-import { expect } from 'chai';
 import Iconify, { IconifyIconName } from '../dist/iconify';
 import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
 
@@ -38,16 +36,16 @@ describe('Testing loadIcons() with Node.js', () => {
 
 		Iconify.loadIcons([fullName], (loaded, missing) => {
 			// Check callback data
-			expect(missing).to.be.eql([]);
+			expect(missing).toEqual([]);
 			const icon: IconifyIconName = {
 				provider,
 				prefix,
 				name,
 			};
-			expect(loaded).to.be.eql([icon]);
+			expect(loaded).toEqual([icon]);
 
 			// Check if icon exists
-			expect(Iconify.iconExists(fullName)).to.be.equal(true);
+			expect(Iconify.iconExists(fullName)).toBe(true);
 
 			done();
 		});

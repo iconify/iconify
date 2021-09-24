@@ -1,6 +1,6 @@
-import { IconifyFinder } from './interface';
-import { IconifyElement } from '../modules/element';
-import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
+import type { IconifyFinder } from './interface';
+import type { IconifyElement } from '../modules/element';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import {
 	flipFromString,
@@ -160,7 +160,7 @@ const finder: IconifyFinder = {
 	 * Filter classes
 	 */
 	classFilter: (classList: string[]): string[] => {
-		let result: string[] = [];
+		const result: string[] = [];
 		classList.forEach((className) => {
 			if (
 				className !== 'iconify' &&

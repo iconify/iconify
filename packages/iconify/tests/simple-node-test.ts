@@ -1,27 +1,25 @@
-import 'mocha';
-import { expect } from 'chai';
 import { readFileSync } from 'fs';
 import { dirname } from 'path';
 import Iconify, { IconifyIcon } from '../dist/iconify';
 
 describe('Testing Iconify with Node.js', () => {
 	it('Basic functions', () => {
-		expect(typeof Iconify).to.be.equal('object');
+		expect(typeof Iconify).toBe('object');
 
 		// Placeholder value should have been replaced during compilation
 		const version = JSON.parse(
 			readFileSync(dirname(__dirname) + '/package.json', 'utf8')
 		).version;
-		expect(Iconify.getVersion()).to.be.equal(version);
+		expect(Iconify.getVersion()).toBe(version);
 	});
 
 	it('Builder functions', () => {
 		// calculateSize() should work in Node.js
-		expect(Iconify.calculateSize('24px', 2)).to.be.equal('48px');
+		expect(Iconify.calculateSize('24px', 2)).toBe('48px');
 
 		// replaceIDs() should work in Node.js
 		const test = '<div id="foo" />';
-		expect(Iconify.replaceIDs(test)).to.not.be.equal(test);
+		expect(Iconify.replaceIDs(test)).not.toBe(test);
 	});
 
 	it('Storage functions', () => {
@@ -29,9 +27,9 @@ describe('Testing Iconify with Node.js', () => {
 		const name = prefix + ':bar';
 
 		// Empty results
-		expect(Iconify.iconExists(name)).to.be.equal(false);
-		expect(Iconify.getIcon(name)).to.be.eql(null);
-		expect(Iconify.listIcons('', prefix)).to.be.eql([]);
+		expect(Iconify.iconExists(name)).toBe(false);
+		expect(Iconify.getIcon(name)).toBeNull();
+		expect(Iconify.listIcons('', prefix)).toEqual([]);
 
 		// Test addIcon()
 		expect(
@@ -40,9 +38,9 @@ describe('Testing Iconify with Node.js', () => {
 				width: 24,
 				height: 24,
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
-		expect(Iconify.iconExists(name)).to.be.equal(true);
+		expect(Iconify.iconExists(name)).toBe(true);
 		const expected: Required<IconifyIcon> = {
 			body: '<g />',
 			width: 24,
@@ -53,8 +51,8 @@ describe('Testing Iconify with Node.js', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(Iconify.getIcon(name)).to.be.eql(expected);
-		expect(Iconify.listIcons('', prefix)).to.be.eql([name]);
+		expect(Iconify.getIcon(name)).toEqual(expected);
+		expect(Iconify.listIcons('', prefix)).toEqual([name]);
 
 		// Test addCollection()
 		expect(
@@ -68,8 +66,8 @@ describe('Testing Iconify with Node.js', () => {
 				width: 24,
 				height: 24,
 			})
-		).to.be.equal(true);
-		expect(Iconify.listIcons('', prefix)).to.be.eql([
+		).toBe(true);
+		expect(Iconify.listIcons('', prefix)).toEqual([
 			name,
 			prefix + ':test1',
 		]);

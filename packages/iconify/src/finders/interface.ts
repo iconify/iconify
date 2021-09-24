@@ -1,6 +1,6 @@
-import { IconifyElement } from '../modules/element';
-import { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
+import type { IconifyElement } from '../modules/element';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 
 /**
  * find - find elements that match plugin within root element

@@ -1,5 +1,6 @@
-import { elementFinderProperty, IconifyElement } from './element';
-import { ObservedNode } from './observed-node';
+import type { IconifyElement } from './element';
+import { elementFinderProperty } from './element';
+import type { ObservedNode } from './observed-node';
 import {
 	listRootNodes,
 	addRootNode,
@@ -149,7 +150,7 @@ function stopObserver(node: ObservedNode): void {
  * Start observer when DOM is ready
  */
 export function initObserver(cb: ObserverCallback): void {
-	let isRestart = callback !== null;
+	const isRestart = callback !== null;
 
 	if (callback !== cb) {
 		// Change callback and stop all pending observers

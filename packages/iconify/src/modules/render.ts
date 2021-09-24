@@ -1,18 +1,14 @@
-import { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
-	IconifyIconCustomisations,
 	mergeCustomisations,
 	defaults,
 } from '@iconify/utils/lib/customisations';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import { PlaceholderElement } from './finder';
-import {
-	IconifyElement,
-	IconifyElementData,
-	elementDataProperty,
-	elementFinderProperty,
-} from './element';
+import type { PlaceholderElement } from './finder';
+import type { IconifyElement, IconifyElementData } from './element';
+import { elementDataProperty, elementFinderProperty } from './element';
 
 /**
  * Replace element with SVG
@@ -97,7 +93,9 @@ export function renderIcon(
 				) {
 					try {
 						svg.setAttribute(name, item.value);
-					} catch (err) {}
+					} catch (err) {
+						//
+					}
 				}
 			}
 		}

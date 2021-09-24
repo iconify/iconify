@@ -3,6 +3,9 @@ api-extractor*.json
 tsconfig*.json
 rollup.config.js
 build.js
+npm-debug.log
+yarn.lock
+tsconfig.tsbuildinfo
 node_modules
 src
 lib

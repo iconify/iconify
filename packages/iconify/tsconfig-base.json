@@ -1,12 +1,15 @@
 {
 	"compilerOptions": {
-		"target": "ES2019",
+		"target": "ESNext",
 		"module": "ESNext",
 		"declaration": true,
+		"declarationMap": false,
 		"sourceMap": false,
+		"composite": true,
 		"strict": false,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error"
 	}
 }

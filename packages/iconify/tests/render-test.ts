@@ -1,5 +1,3 @@
-import 'mocha';
-import { expect } from 'chai';
 import Iconify, { IconifyIconBuildResult } from '../dist/iconify';
 
 describe('Testing Iconify render functions with Node.js', () => {
@@ -14,7 +12,7 @@ describe('Testing Iconify render functions with Node.js', () => {
 				width: 24,
 				height: 24,
 			})
-		).to.be.equal(true);
+		).toBe(true);
 
 		// renderIcon() should work
 		const expected: IconifyIconBuildResult = {
@@ -26,10 +24,10 @@ describe('Testing Iconify render functions with Node.js', () => {
 			},
 			body: '<g />',
 		};
-		expect(Iconify.renderIcon(name, {})).to.be.eql(expected);
+		expect(Iconify.renderIcon(name, {})).toEqual(expected);
 
 		// renderHTML() and renderSVG() should fail because document.createElement does not exist
-		expect(Iconify.renderHTML(name, {})).to.be.equal('');
-		expect(Iconify.renderSVG(name, {})).to.be.eql(null);
+		expect(Iconify.renderHTML(name, {})).toBe('');
+		expect(Iconify.renderSVG(name, {})).toBeNull();
 	});
 });

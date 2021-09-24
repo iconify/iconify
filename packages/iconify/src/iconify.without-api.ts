@@ -1,24 +1,21 @@
 // Core
-import { IconifyJSON, IconifyIcon } from '@iconify/types';
-import { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import {
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import type {
 	IconifyIconCustomisations,
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 } from '@iconify/utils/lib/customisations';
-import { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import {
-	IconifyStorageFunctions,
-	storageFunctions,
-} from '@iconify/core/lib/storage/functions';
-import {
-	IconifyBuilderFunctions,
-	builderFunctions,
-} from '@iconify/core/lib/builder/functions';
+import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
+import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
+import { storageFunctions } from '@iconify/core/lib/storage/functions';
+import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
+import { builderFunctions } from '@iconify/core/lib/builder/functions';
 
 // Local code
-import { IconifyCommonFunctions, commonFunctions } from './common';
+import type { IconifyCommonFunctions } from './common';
+import { commonFunctions } from './common';
 
 /**
  * Export required types

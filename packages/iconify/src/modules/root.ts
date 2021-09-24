@@ -1,4 +1,4 @@
-import { ObservedNode } from './observed-node';
+import type { ObservedNode } from './observed-node';
 
 /**
  * List of root nodes
@@ -11,7 +11,7 @@ let nodes: ObservedNode[] = [];
 export function findRootNode(node: HTMLElement): ObservedNode | undefined {
 	for (let i = 0; i < nodes.length; i++) {
 		const item = nodes[i];
-		let root = typeof item.node === 'function' ? item.node() : item.node;
+		const root = typeof item.node === 'function' ? item.node() : item.node;
 		if (root === node) {
 			return item;
 		}

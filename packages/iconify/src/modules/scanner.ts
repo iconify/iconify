@@ -1,11 +1,12 @@
-import { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { getStorage, getIcon } from '@iconify/core/lib/storage/storage';
 import { isPending, loadIcons } from '@iconify/core/lib/api/icons';
-import { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { findPlaceholders } from './finder';
-import { IconifyElementData, elementDataProperty } from './element';
+import type { IconifyElementData } from './element';
+import { elementDataProperty } from './element';
 import { renderIcon } from './render';
-import { ObservedNode } from './observed-node';
+import type { ObservedNode } from './observed-node';
 import {
 	pauseObserver,
 	resumeObserver,
@@ -56,7 +57,7 @@ const compareIcons = (
  */
 export function scanElement(root: HTMLElement): void {
 	// Add temporary node
-	let node = findRootNode(root);
+	const node = findRootNode(root);
 	if (!node) {
 		scanDOM(
 			{

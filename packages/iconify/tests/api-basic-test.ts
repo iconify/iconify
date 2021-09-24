@@ -1,12 +1,10 @@
-import 'mocha';
-import { expect } from 'chai';
 import Iconify from '../dist/iconify';
 
 describe('Testing Iconify API functions with Node.js', () => {
 	it('Cache functions', () => {
 		// All functions should fail, not without throwing exceptions
-		expect(Iconify.disableCache('all')).to.be.equal(void 0);
-		expect(Iconify.enableCache('all')).to.be.equal(void 0);
+		expect(Iconify.disableCache('all')).toBeUndefined();
+		expect(Iconify.enableCache('all')).toBeUndefined();
 	});
 
 	it('Adding API provider', () => {
@@ -15,6 +13,6 @@ describe('Testing Iconify API functions with Node.js', () => {
 			Iconify.addAPIProvider('test', {
 				resources: ['http://localhost'],
 			})
-		).to.be.equal(true);
+		).toBe(true);
 	});
 });

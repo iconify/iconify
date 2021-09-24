@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
@@ -20,9 +19,10 @@ const header = `/**
 *
 * @license Apache 2.0
 * @license GPL 2.0
+* @version __iconify_version__
 */`;
 
-const footer = `
+const footerJS = `
 // Export to window or web worker
 try {
 	if (self.Iconify === void 0) {
@@ -31,13 +31,22 @@ try {
 } catch (err) {
 }
 
-// Export as ES module
+// Export as module
 if (typeof exports === 'object') {
 	try {
 		exports.__esModule = true;
 		exports.default = Iconify;
 	} catch (err) {
 	}
+}`;
+
+const footerMJS = `
+// Export to window or web worker
+try {
+	if (self.Iconify === void 0) {
+		self.Iconify = Iconify;
+	}
+} catch (err) {
 }`;
 
 // Get replacements
@@ -74,35 +83,61 @@ if (readme !== oldReadme) {
 // Export configuration
 const config = [];
 names.forEach((name) => {
-	[false, true].forEach((compress) => {
-		const item = {
-			input: `lib/${name}.js`,
-			output: [
-				{
-					file: `dist/${name}${compress ? '.min' : ''}.js`,
-					format: 'iife',
-					name: global,
-					banner: header,
-					footer,
-				},
-			],
-			plugins: [
-				resolve({
-					browser: true,
-				}),
-				commonjs({
-					ignore: ['cross-fetch'],
-				}),
-				replace(replacements),
-				buble({
-					objectAssign: 'Object.assign',
-				}),
-			],
-		};
-		if (compress) {
-			item.plugins.push(terser());
-		}
-		config.push(item);
+	// Full and minified
+	[false, true].forEach((minify) => {
+		// Parse all formats
+		['js', 'cjs', 'mjs'].forEach((ext) => {
+			if (minify && ext !== 'js') {
+				// Minify only .js files
+				return;
+			}
+
+			let format = ext;
+			switch (ext) {
+				case 'js':
+					format = 'iife';
+					break;
+
+				case 'mjs':
+					format = 'es';
+			}
+			const item = {
+				input: `lib/${name}.js`,
+				output: [
+					{
+						file: `dist/${name}${minify ? '.min' : ''}.${ext}`,
+						format,
+						name: global,
+						banner: header,
+						footer: ext === 'js' ? footerJS : footerMJS,
+					},
+				],
+				plugins: [
+					resolve({
+						browser: true,
+					}),
+					replace(replacements),
+				],
+			};
+
+			if (ext === 'js') {
+				// Support old browsers only in .js files.
+				// Other files are for modern browsers that don't need it or
+				// for bundlers that should handle old browser support themselves.
+				item.plugins.push(
+					buble({
+						objectAssign: 'Object.assign',
+					})
+				);
+			}
+
+			if (minify) {
+				item.plugins.push(terser());
+			}
+
+			config.push(item);
+		});
 	});
 });
+
 export default config;

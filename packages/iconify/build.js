@@ -64,7 +64,7 @@ if (compile.api && !fileExists(packagesDir + '/iconify/lib/iconify.d.ts')) {
 	compile.lib = true;
 }
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
 	compile.core = true;
 }
 

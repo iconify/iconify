@@ -1,8 +1,8 @@
 {
 	"extends": "../tsconfig-base.json",
 	"compilerOptions": {
-		"outDir": "../tests-compiled",
+		"types": ["node", "jest"],
 		"rootDir": ".",
-		"module": "commonjs"
+		"outDir": "../tests-compiled"
 	}
 }
