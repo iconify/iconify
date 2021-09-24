@@ -22,32 +22,29 @@ const header = `/**
 * @version __iconify_version__
 */`;
 
-const footerJS = `
+const defaultFooter = `
 // Export to window or web worker
 try {
 	if (self.Iconify === void 0) {
 		self.Iconify = Iconify;
 	}
 } catch (err) {
-}
+}`;
 
-// Export as module
+const iifeFooter = `
+// Export as ES module
 if (typeof exports === 'object') {
 	try {
 		exports.__esModule = true;
 		exports.default = Iconify;
+		for (var key in Iconify) {
+			exports[key] = Iconify[key];
+		}
 	} catch (err) {
 	}
-}`;
+}
 
-const footerMJS = `
-// Export to window or web worker
-try {
-	if (self.Iconify === void 0) {
-		self.Iconify = Iconify;
-	}
-} catch (err) {
-}`;
+${defaultFooter}`;
 
 // Get replacements
 const replacements = {
@@ -92,24 +89,30 @@ names.forEach((name) => {
 				return;
 			}
 
+			// Get export format and footer
 			let format = ext;
+			let footer = defaultFooter;
 			switch (ext) {
 				case 'js':
 					format = 'iife';
+					footer = iifeFooter;
 					break;
 
 				case 'mjs':
 					format = 'es';
+					break;
 			}
+
 			const item = {
 				input: `lib/${name}.js`,
 				output: [
 					{
 						file: `dist/${name}${minify ? '.min' : ''}.${ext}`,
 						format,
+						exports: 'named',
 						name: global,
 						banner: header,
-						footer: ext === 'js' ? footerJS : footerMJS,
+						footer,
 					},
 				],
 				plugins: [

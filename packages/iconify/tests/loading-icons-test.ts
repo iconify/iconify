@@ -1,4 +1,4 @@
-import Iconify, { IconifyIconName } from '../dist/iconify';
+import Iconify, { IconifyIconName } from '../';
 import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
 
 // API provider and prefix for test

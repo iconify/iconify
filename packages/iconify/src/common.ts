@@ -6,49 +6,20 @@ import {
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
 import {
-	storageFunctions,
 	getIconData,
+	addCollection,
 } from '@iconify/core/lib/storage/functions';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
-import { renderIcon } from './modules/render';
-import {
-	initObserver,
-	pauseObserver,
-	resumeObserver,
-	observeNode,
-	removeObservedNode,
-} from './modules/observer';
+import { renderIconInPlaceholder } from './modules/render';
+import { initObserver } from './modules/observer';
 import { scanDOM, scanElement } from './modules/scanner';
 
 // Finders
 import { addFinder } from './modules/finder';
 import { finder as iconifyFinder } from './finders/iconify';
-import { findRootNode, addBodyNode } from './modules/root';
+import { addBodyNode } from './modules/root';
 // import { finder as iconifyIconFinder } from './finders/iconify-icon';
-
-/**
- * Get SVG data
- */
-function buildIcon(
-	name: string,
-	customisations?: IconifyIconCustomisations
-): IconifyIconBuildResult | null {
-	// Get icon data
-	const iconData = getIconData(name);
-	if (!iconData) {
-		return null;
-	}
-
-	// Clean up customisations
-	const changes = mergeCustomisations(
-		defaults,
-		typeof customisations === 'object' ? customisations : {}
-	);
-
-	// Get data
-	return iconToSVG(iconData, changes);
-}
 
 /**
  * Generate icon
@@ -74,7 +45,7 @@ function generateIcon(
 	);
 
 	// Get data
-	return renderIcon(
+	return renderIconInPlaceholder(
 		{
 			name: iconName,
 		},
@@ -145,67 +116,65 @@ export interface IconifyCommonFunctions {
 }
 
 /**
- * Global variable
+ * Get version
  */
-export const commonFunctions: IconifyCommonFunctions = {
-	// Version
-	getVersion: () => '__iconify_version__',
+export function getVersion(): string {
+	return '__iconify_version__';
+}
 
-	// Render SVG
-	renderSVG: (name: string, customisations?: IconifyIconCustomisations) => {
-		return generateIcon(name, customisations, false) as SVGElement | null;
-	},
+/**
+ * Generate SVG element
+ */
+export function renderSVG(
+	name: string,
+	customisations?: IconifyIconCustomisations
+): SVGElement | null {
+	return generateIcon(name, customisations, false) as SVGElement | null;
+}
 
-	renderHTML: (name: string, customisations?: IconifyIconCustomisations) => {
-		return generateIcon(name, customisations, true) as string | null;
-	},
+/**
+ * Generate SVG as string
+ */
+export function renderHTML(
+	name: string,
+	customisations?: IconifyIconCustomisations
+): string | null {
+	return generateIcon(name, customisations, true) as string | null;
+}
 
-	// Get rendered icon as object that can be used to create SVG (use replaceIDs on body)
-	renderIcon: buildIcon,
+/**
+ * Get rendered icon as object that can be used to create SVG (use replaceIDs on body)
+ */
+export function renderIcon(
+	name: string,
+	customisations?: IconifyIconCustomisations
+): IconifyIconBuildResult | null {
+	// Get icon data
+	const iconData = getIconData(name);
+	if (!iconData) {
+		return null;
+	}
 
-	// Scan DOM
-	scan: (root?: HTMLElement) => {
-		if (root) {
-			scanElement(root);
-		} else {
-			scanDOM();
-		}
-	},
+	// Clean up customisations
+	const changes = mergeCustomisations(
+		defaults,
+		typeof customisations === 'object' ? customisations : {}
+	);
 
-	// Add root node
-	observe: (root: HTMLElement) => {
-		observeNode(root);
-	},
+	// Get data
+	return iconToSVG(iconData, changes);
+}
 
-	// Remove root node
-	stopObserving: (root: HTMLElement) => {
-		removeObservedNode(root);
-	},
-
-	// Pause observer
-	pauseObserver: (root?: HTMLElement) => {
-		if (root) {
-			const node = findRootNode(root);
-			if (node) {
-				pauseObserver(node);
-			}
-		} else {
-			pauseObserver();
-		}
-	},
-
-	// Resume observer
-	resumeObserver: (root?: HTMLElement) => {
-		if (root) {
-			const node = findRootNode(root);
-			if (node) {
-				resumeObserver(node);
-			}
-		} else {
-			resumeObserver();
-		}
-	},
-};
+/**
+ * Scan DOM
+ */
+export function scan(root?: HTMLElement): void {
+	if (root) {
+		scanElement(root);
+	} else {
+		scanDOM();
+	}
+}
 
 /**
  * Initialise stuff
@@ -239,7 +208,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 						typeof item.icons !== 'object' ||
 						typeof item.prefix !== 'string' ||
 						// Add icon set
-						!storageFunctions.addCollection(item)
+						!addCollection(item)
 					) {
 						console.error(err);
 					}

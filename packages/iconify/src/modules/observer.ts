@@ -79,7 +79,7 @@ function checkMutations(node: ObservedNode, mutations: MutationRecord[]): void {
 /**
  * Start/resume observer
  */
-function observe(node: ObservedNode, root: HTMLElement): void {
+function continueObserving(node: ObservedNode, root: HTMLElement): void {
 	node.observer.instance.observe(root, observerParams);
 }
 
@@ -108,7 +108,7 @@ function startObserver(node: ObservedNode): void {
 
 	// Create new instance, observe
 	observer.instance = new MutationObserver(checkMutations.bind(null, node));
-	observe(node, root);
+	continueObserving(node, root);
 
 	// Scan immediately
 	if (!observer.paused) {
@@ -171,9 +171,9 @@ export function initObserver(cb: ObserverCallback): void {
 }
 
 /**
- * Pause observer
+ * Pause observing node
  */
-export function pauseObserver(node?: ObservedNode): void {
+export function pauseObservingNode(node?: ObservedNode): void {
 	(node ? [node] : listRootNodes()).forEach((node) => {
 		if (!node.observer) {
 			node.observer = {
@@ -196,9 +196,23 @@ export function pauseObserver(node?: ObservedNode): void {
 }
 
 /**
+ * Pause observer
+ */
+export function pauseObserver(root?: HTMLElement): void {
+	if (root) {
+		const node = findRootNode(root);
+		if (node) {
+			pauseObservingNode(node);
+		}
+	} else {
+		pauseObservingNode();
+	}
+}
+
+/**
  * Resume observer
  */
-export function resumeObserver(observer?: ObservedNode): void {
+export function resumeObservingNode(observer?: ObservedNode): void {
 	(observer ? [observer] : listRootNodes()).forEach((node) => {
 		if (!node.observer) {
 			// Start observer
@@ -218,7 +232,7 @@ export function resumeObserver(observer?: ObservedNode): void {
 				if (!root) {
 					return;
 				} else if (observer.instance) {
-					observe(node, root);
+					continueObserving(node, root);
 				} else {
 					startObserver(node);
 				}
@@ -228,12 +242,23 @@ export function resumeObserver(observer?: ObservedNode): void {
 }
 
 /**
+ * Resume observer
+ */
+export function resumeObserver(root?: HTMLElement): void {
+	if (root) {
+		const node = findRootNode(root);
+		if (node) {
+			resumeObservingNode(node);
+		}
+	} else {
+		resumeObservingNode();
+	}
+}
+
+/**
  * Observe node
  */
-export function observeNode(
-	root: HTMLElement,
-	autoRemove = false
-): ObservedNode {
+export function observe(root: HTMLElement, autoRemove = false): ObservedNode {
 	const node = addRootNode(root, autoRemove);
 	startObserver(node);
 	return node;
@@ -242,7 +267,7 @@ export function observeNode(
 /**
  * Remove observed node
  */
-export function removeObservedNode(root: HTMLElement): void {
+export function stopObserving(root: HTMLElement): void {
 	const node = findRootNode(root);
 	if (node) {
 		stopObserver(node);

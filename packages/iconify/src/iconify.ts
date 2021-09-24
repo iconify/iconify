@@ -9,9 +9,17 @@ import type {
 } from '@iconify/utils/lib/customisations';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
-import { storageFunctions } from '@iconify/core/lib/storage/functions';
+import {
+	iconExists,
+	getIcon,
+	addIcon,
+	addCollection,
+} from '@iconify/core/lib/storage/functions';
+import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
-import { builderFunctions } from '@iconify/core/lib/builder/functions';
+import { buildIcon } from '@iconify/core/lib/builder/functions';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 // Cache
 import { storeCache, loadCache } from '@iconify/core/lib/browser-storage/';
@@ -30,10 +38,6 @@ import type {
 	IconifyAPICustomQueryParams,
 	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
-import {
-	APIFunctions,
-	APIInternalFunctions,
-} from '@iconify/core/lib/api/functions';
 import type {
 	IconifyAPIModule,
 	IconifyAPISendQuery,
@@ -45,21 +49,34 @@ import type {
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import { setAPIConfig } from '@iconify/core/lib/api/config';
+import {
+	addAPIProvider,
+	getAPIConfig,
+	listAPIProviders,
+} from '@iconify/core/lib/api/config';
 import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
 	fetchAPIModule,
 	getFetch,
-	setFetch,
+	setFetch as setFetchFunction,
 } from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
+import { loadIcons } from '@iconify/core/lib/api/icons';
+import { sendAPIQuery } from '@iconify/core/lib/api/query';
+import { mergeParams } from '@iconify/core/lib/api/params';
 
 // Other
 import type { IconifyCommonFunctions } from './common';
-import { commonFunctions } from './common';
+import { getVersion, renderSVG, renderHTML, renderIcon, scan } from './common';
+import {
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+} from './modules/observer';
 
 /**
  * Export required types
@@ -118,36 +135,18 @@ export interface IconifyGlobal
 }
 
 /**
- * Browser cache functions
+ * Enable cache
  */
-const browserCacheFunctions: IconifyBrowserCacheFunctions = {
-	// enableCache() has optional second parameter for backwards compatibility
-	enableCache: (storage: IconifyBrowserCacheType, enable?: boolean) =>
-		toggleBrowserCache(storage, enable !== false),
-	disableCache: (storage: IconifyBrowserCacheType) =>
-		toggleBrowserCache(storage, true),
-};
+function enableCache(storage: IconifyBrowserCacheType, enable?: boolean): void {
+	toggleBrowserCache(storage, enable !== false);
+}
 
 /**
- * Global variable
+ * Disable cache
  */
-const Iconify = {
-	// Exposed internal API functions
-	_api: APIInternalFunctions,
-} as unknown as IconifyGlobal;
-
-// Add functions
-[
-	storageFunctions,
-	builderFunctions,
-	commonFunctions,
-	browserCacheFunctions,
-	APIFunctions,
-].forEach((list) => {
-	for (const key in list) {
-		Iconify[key] = list[key];
-	}
-});
+function disableCache(storage: IconifyBrowserCacheType): void {
+	toggleBrowserCache(storage, true);
+}
 
 /**
  * Initialise stuff
@@ -158,10 +157,10 @@ setAPIModule('', getFetch() ? fetchAPIModule : jsonpAPIModule);
 /**
  * Function to enable node-fetch for getting icons on server side
  */
-Iconify._api.setFetch = (nodeFetch: typeof fetch) => {
-	setFetch(nodeFetch);
+function setFetch(nodeFetch: typeof fetch): void {
+	setFetchFunction(nodeFetch);
 	setAPIModule('', fetchAPIModule);
-};
+}
 
 /**
  * Browser stuff
@@ -191,7 +190,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 					) {
 						continue;
 					}
-					if (!setAPIConfig(key, value)) {
+					if (!addAPIProvider(key, value)) {
 						console.error(err);
 					}
 				} catch (e) {
@@ -202,4 +201,89 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	}
 }
 
+/**
+ * Internal API
+ */
+const _api: IconifyAPIInternalFunctions = {
+	getAPIConfig,
+	setAPIModule,
+	sendAPIQuery,
+	setFetch,
+	listAPIProviders,
+	mergeParams,
+};
+
+/**
+ * Global variable
+ */
+const Iconify: IconifyGlobal = {
+	// IconifyAPIInternalFunctions
+	_api,
+
+	// IconifyAPIFunctions
+	addAPIProvider,
+	loadIcons,
+
+	// IconifyStorageFunctions
+	iconExists,
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
+
+	// IconifyBuilderFunctions
+	replaceIDs,
+	calculateSize,
+	buildIcon,
+
+	// IconifyCommonFunctions
+	getVersion,
+	renderSVG,
+	renderHTML,
+	renderIcon,
+	scan,
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+
+	// IconifyBrowserCacheFunctions
+	enableCache,
+	disableCache,
+};
+
+/**
+ * Default export
+ */
 export default Iconify;
+
+/**
+ * Named exports
+ */
+// IconifyAPIInternalFunctions
+export { _api };
+
+// IconifyAPIFunctions
+export { addAPIProvider, loadIcons };
+
+// IconifyStorageFunctions
+export { iconExists, getIcon, listIcons, addIcon, addCollection };
+
+// IconifyBuilderFunctions
+export { replaceIDs, calculateSize, buildIcon };
+
+// IconifyCommonFunctions
+export {
+	getVersion,
+	renderSVG,
+	renderHTML,
+	renderIcon,
+	scan,
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+};
+
+// IconifyBrowserCacheFunctions
+export { enableCache, disableCache };

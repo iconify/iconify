@@ -1,4 +1,4 @@
-import Iconify from '../dist/iconify';
+import Iconify from '../';
 
 describe('Testing Iconify API functions with Node.js', () => {
 	it('Cache functions', () => {

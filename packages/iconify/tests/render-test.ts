@@ -1,4 +1,4 @@
-import Iconify, { IconifyIconBuildResult } from '../dist/iconify';
+import Iconify, { IconifyIconBuildResult } from '../';
 
 describe('Testing Iconify render functions with Node.js', () => {
 	const prefix = 'node-test-render';

@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { dirname } from 'path';
-import Iconify, { IconifyIcon } from '../dist/iconify';
+import Iconify, { IconifyIcon } from '../';
 
 describe('Testing Iconify with Node.js', () => {
 	it('Basic functions', () => {

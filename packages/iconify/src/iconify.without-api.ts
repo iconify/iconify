@@ -9,13 +9,27 @@ import type {
 } from '@iconify/utils/lib/customisations';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
-import { storageFunctions } from '@iconify/core/lib/storage/functions';
+import {
+	iconExists,
+	getIcon,
+	addIcon,
+	addCollection,
+} from '@iconify/core/lib/storage/functions';
+import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
-import { builderFunctions } from '@iconify/core/lib/builder/functions';
+import { buildIcon } from '@iconify/core/lib/builder/functions';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 // Local code
 import type { IconifyCommonFunctions } from './common';
-import { commonFunctions } from './common';
+import { getVersion, renderSVG, renderHTML, renderIcon, scan } from './common';
+import {
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+} from './modules/observer';
 
 /**
  * Export required types
@@ -45,19 +59,57 @@ export interface IconifyGlobal
 		IconifyBuilderFunctions,
 		IconifyCommonFunctions {}
 
-// Export dependencies
-export { IconifyGlobal as IconifyGlobalCommon };
-
 /**
  * Global variable
  */
-const Iconify: IconifyGlobal = {} as IconifyGlobal;
+const Iconify: IconifyGlobal = {
+	// IconifyStorageFunctions
+	iconExists,
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
 
-// Merge with common functions
-[storageFunctions, builderFunctions, commonFunctions].forEach((list) => {
-	for (const key in list) {
-		Iconify[key] = list[key];
-	}
-});
+	// IconifyBuilderFunctions
+	replaceIDs,
+	calculateSize,
+	buildIcon,
 
+	// IconifyCommonFunctions
+	getVersion,
+	renderSVG,
+	renderHTML,
+	renderIcon,
+	scan,
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+};
+
+/**
+ * Default export
+ */
 export default Iconify;
+
+/**
+ * Named exports
+ */
+// IconifyStorageFunctions
+export { iconExists, getIcon, listIcons, addIcon, addCollection };
+
+// IconifyBuilderFunctions
+export { replaceIDs, calculateSize, buildIcon };
+
+// IconifyCommonFunctions
+export {
+	getVersion,
+	renderSVG,
+	renderHTML,
+	renderIcon,
+	scan,
+	observe,
+	stopObserving,
+	pauseObserver,
+	resumeObserver,
+};

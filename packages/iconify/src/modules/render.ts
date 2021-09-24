@@ -13,7 +13,7 @@ import { elementDataProperty, elementFinderProperty } from './element';
 /**
  * Replace element with SVG
  */
-export function renderIcon(
+export function renderIconInPlaceholder(
 	placeholder: PlaceholderElement,
 	customisations: IconifyIconCustomisations,
 	iconData: FullIconifyIcon,

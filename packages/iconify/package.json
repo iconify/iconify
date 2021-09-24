@@ -26,7 +26,9 @@
 		"build:api": "api-extractor run --local --verbose",
 		"build:api2": "api-extractor run --local --verbose --config api-extractor.without-api.json",
 		"build:api2min": "api-extractor run --local --config api-extractor.without-api.min.json",
-		"test": "jest --runInBand"
+		"test:jest": "jest --runInBand",
+		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
+		"test": "npm run test:jest && npm run test:mjs"
 	},
 	"exports": {
 		"./*": "./*",
@@ -34,7 +36,15 @@
 			"require": "./dist/iconify.cjs",
 			"import": "./dist/iconify.mjs"
 		},
+		"./dist/iconify": {
+			"require": "./dist/iconify.cjs",
+			"import": "./dist/iconify.mjs"
+		},
 		"./offline": {
+			"require": "./dist/iconify.without-api.cjs",
+			"import": "./dist/iconify.without-api.mjs"
+		},
+		"./dist/iconify.without-api": {
 			"require": "./dist/iconify.without-api.cjs",
 			"import": "./dist/iconify.without-api.mjs"
 		}
@@ -54,6 +64,7 @@
 		"@types/jest": "^27.0.2",
 		"@types/node": "^10.17.13",
 		"@typescript-eslint/eslint-plugin": "^4.31.2",
+		"cross-env": "^7.0.3",
 		"eslint": "^7.32.0",
 		"jest": "^27.2.1",
 		"rimraf": "^3.0.2",

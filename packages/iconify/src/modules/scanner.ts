@@ -1,17 +1,20 @@
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { getStorage, getIcon } from '@iconify/core/lib/storage/storage';
+import {
+	getStorage,
+	getIconFromStorage,
+} from '@iconify/core/lib/storage/storage';
 import { isPending, loadIcons } from '@iconify/core/lib/api/icons';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { findPlaceholders } from './finder';
 import type { IconifyElementData } from './element';
 import { elementDataProperty } from './element';
-import { renderIcon } from './render';
+import { renderIconInPlaceholder } from './render';
 import type { ObservedNode } from './observed-node';
 import {
-	pauseObserver,
-	resumeObserver,
-	removeObservedNode,
-	observeNode,
+	pauseObservingNode,
+	resumeObservingNode,
+	stopObserving,
+	observe,
 } from './observer';
 import { findRootNode, listRootNodes } from './root';
 
@@ -133,7 +136,7 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 			if (storage.icons[name] !== void 0) {
 				// Icon exists - pause observer before replacing placeholder
 				if (!paused && node.observer) {
-					pauseObserver(node);
+					pauseObservingNode(node);
 					paused = true;
 				}
 
@@ -144,10 +147,10 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 						: item.finder.customisations(element);
 
 				// Render icon
-				renderIcon(
+				renderIconInPlaceholder(
 					item,
 					customisations,
-					getIcon(storage, name) as FullIconifyIcon
+					getIconFromStorage(storage, name) as FullIconifyIcon
 				);
 
 				return;
@@ -189,13 +192,13 @@ export function scanDOM(node?: ObservedNode, addTempNode = false): void {
 		// Node stuff
 		if (node.temporary && !hasPlaceholders) {
 			// Remove temporary node
-			removeObservedNode(root);
+			stopObserving(root);
 		} else if (addTempNode && hasPlaceholders) {
 			// Add new temporary node
-			observeNode(root, true);
+			observe(root, true);
 		} else if (paused && node.observer) {
 			// Resume observer
-			resumeObserver(node);
+			resumeObservingNode(node);
 		}
 	});
 
