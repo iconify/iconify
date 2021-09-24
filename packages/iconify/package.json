@@ -25,7 +25,6 @@
 		"build:dist": "rollup -c rollup.config.js",
 		"build:api": "api-extractor run --local --verbose",
 		"build:api2": "api-extractor run --local --verbose --config api-extractor.without-api.json",
-		"build:api2min": "api-extractor run --local --config api-extractor.without-api.min.json",
 		"test:jest": "jest --runInBand",
 		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
 		"test": "npm run test:jest && npm run test:mjs"
@@ -34,19 +33,39 @@
 		"./*": "./*",
 		".": {
 			"require": "./dist/iconify.cjs",
-			"import": "./dist/iconify.mjs"
+			"import": "./dist/iconify.mjs",
+			"default": "./dist/iconify.min.js",
+			"types": "./dist/iconify.d.ts"
 		},
 		"./dist/iconify": {
 			"require": "./dist/iconify.cjs",
-			"import": "./dist/iconify.mjs"
+			"import": "./dist/iconify.mjs",
+			"default": "./dist/iconify.min.js",
+			"types": "./dist/iconify.d.ts"
 		},
-		"./offline": {
-			"require": "./dist/iconify.without-api.cjs",
-			"import": "./dist/iconify.without-api.mjs"
+		"./dist/iconify.min": {
+			"require": "./dist/iconify.cjs",
+			"import": "./dist/iconify.mjs",
+			"default": "./dist/iconify.min.js",
+			"types": "./dist/iconify.d.ts"
 		},
 		"./dist/iconify.without-api": {
 			"require": "./dist/iconify.without-api.cjs",
-			"import": "./dist/iconify.without-api.mjs"
+			"import": "./dist/iconify.without-api.mjs",
+			"default": "./dist/iconify.without-api.min.js",
+			"types": "./dist/iconify.without-api.d.ts"
+		},
+		"./dist/iconify.without-api.min": {
+			"require": "./dist/iconify.without-api.cjs",
+			"import": "./dist/iconify.without-api.mjs",
+			"default": "./dist/iconify.without-api.min.js",
+			"types": "./dist/iconify.without-api.d.ts"
+		},
+		"./offline": {
+			"require": "./dist/iconify.without-api.cjs",
+			"import": "./dist/iconify.without-api.mjs",
+			"default": "./dist/iconify.without-api.min.js",
+			"types": "./dist/iconify.without-api.d.ts"
 		}
 	},
 	"dependencies": {

@@ -1,0 +1,16 @@
+{
+	"name": "@iconify/iconify/offline",
+	"main": "../dist/iconify.without-api.min.js",
+	"types": "../dist/iconify.without-api.d.ts",
+	"browser": "../dist/iconify.without-api.min.js",
+	"module": "../dist/iconify.without-api.mjs",
+	"exports": {
+		"./*": "./*",
+		".": {
+			"require": "../dist/iconify.without-api.cjs",
+			"import": "../dist/iconify.without-api.mjs",
+			"default": "../dist/iconify.without-api.min.js",
+			"types": "../dist/iconify.without-api.d.ts"
+		}
+	}
+}
