@@ -6,13 +6,6 @@ const unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
 
 /**
  * Calculate second dimension when only 1 dimension is set
- *
- * @param {string|number} size One dimension (such as width)
- * @param {number} ratio Width/height ratio.
- *      If size is width, ratio = height/width
- *      If size is height, ratio = width/height
- * @param {number} [precision] Floating number precision in result to minimize output. Default = 2
- * @return {string|number} Another dimension
  */
 export function calculateSize(
 	size: string | number,
