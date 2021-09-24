@@ -2,7 +2,7 @@ import crossFetch from 'cross-fetch';
 import { sendAPIQuery } from '../../lib/api/query';
 import { setAPIModule } from '../../lib/api/modules';
 import { fetchAPIModule, setFetch } from '../../lib/api/modules/fetch';
-import { setAPIConfig } from '../../lib/api/config';
+import { addAPIProvider } from '../../lib/api/config';
 import { mockAPIModule } from '../../lib/api/modules/mock';
 
 describe('Testing live API with fetch', () => {
@@ -43,7 +43,7 @@ describe('Testing live API with fetch', () => {
 	it('Custom request with provider', (done) => {
 		const provider = nextProvider();
 		expect(
-			setAPIConfig(provider, {
+			addAPIProvider(provider, {
 				resources: [host],
 			})
 		).toBe(true);

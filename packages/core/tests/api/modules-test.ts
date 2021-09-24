@@ -1,5 +1,5 @@
 import type { IconifyAPIConfig } from '../../lib/api/config';
-import { setAPIConfig, getAPIConfig } from '../../lib/api/config';
+import { addAPIProvider, getAPIConfig } from '../../lib/api/config';
 import type {
 	IconifyAPIIconsQueryParams,
 	IconifyAPIModule,
@@ -37,7 +37,7 @@ describe('Testing API modules', () => {
 		const provider = nextPrefix();
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://localhost:3000'],
 			maxURL: 500,
 		});

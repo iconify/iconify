@@ -1,4 +1,4 @@
-import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { loadIcons } from '@iconify/core/lib/api/icons';
 import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
@@ -16,7 +16,7 @@ describe('Testing mock API module', () => {
 	const provider = nextPrefix();
 
 	beforeEach(() => {
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local'],
 		});
 		setAPIModule(provider, mockAPIModule);

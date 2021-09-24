@@ -1,4 +1,4 @@
-import { setAPIConfig } from '../../lib/api/config';
+import { addAPIProvider } from '../../lib/api/config';
 import { setAPIModule } from '../../lib/api/modules';
 import { loadIcons } from '../../lib/api/icons';
 import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
@@ -17,7 +17,7 @@ describe('Testing mock API module', () => {
 	const provider = nextPrefix();
 
 	beforeEach(() => {
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local'],
 		});
 		setAPIModule(provider, mockAPIModule);

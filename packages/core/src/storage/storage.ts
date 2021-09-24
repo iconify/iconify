@@ -22,8 +22,9 @@ export interface IconStorage {
 /**
  * Storage by provider and prefix
  */
-const storage: Record<string, Record<string, IconStorage>> =
-	Object.create(null);
+const storage: Record<string, Record<string, IconStorage>> = Object.create(
+	null
+);
 
 /**
  * Create new storage
@@ -78,7 +79,7 @@ export function addIconSet(
 /**
  * Add icon to storage
  */
-export function addIcon(
+export function addIconToStorage(
 	storage: IconStorage,
 	name: string,
 	icon: IconifyIcon
@@ -105,7 +106,7 @@ export function iconExists(storage: IconStorage, name: string): boolean {
 /**
  * Get icon data
  */
-export function getIcon(
+export function getIconFromStorage(
 	storage: IconStorage,
 	name: string
 ): Readonly<FullIconifyIcon> | null {

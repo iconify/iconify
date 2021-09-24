@@ -1,4 +1,4 @@
-import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { loadIcons, isPending } from '@iconify/core/lib/api/icons';
 
@@ -17,7 +17,7 @@ describe('Testing API loadIcons', () => {
 		let asyncCounter = 0;
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 
@@ -146,7 +146,7 @@ describe('Testing API loadIcons', () => {
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 
@@ -246,7 +246,7 @@ describe('Testing API loadIcons', () => {
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 			rotate: 100, // 100ms to speed up test
 		});
@@ -342,7 +342,7 @@ describe('Testing API loadIcons', () => {
 		const prefix = nextPrefix();
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 			rotate: 100, // 100ms to speed up test
 		});
@@ -497,7 +497,7 @@ describe('Testing API loadIcons', () => {
 		const prefix2 = nextPrefix();
 
 		// Set config
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 			rotate: 100, // 100ms to speed up test
 		});

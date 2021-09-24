@@ -1,7 +1,5 @@
 import type { IconifyIcon } from '@iconify/types';
 import { fullIcon } from '@iconify/utils/lib/icon';
-import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import { calculateSize } from '@iconify/utils/lib/svg/size';
 import {
 	defaults,
 	mergeCustomisations,
@@ -27,15 +25,16 @@ export interface IconifyBuilderFunctions {
 }
 
 /**
- * Exported builder functions
+ * Build icon
  */
-export const builderFunctions: IconifyBuilderFunctions = {
-	replaceIDs,
-	calculateSize,
-	buildIcon: (icon, customisations) => {
-		return iconToSVG(
-			fullIcon(icon),
-			mergeCustomisations(defaults, customisations)
-		);
-	},
-};
+export function buildIcon(
+	icon: IconifyIcon,
+	customisations: IconifyIconCustomisations
+): IconifyIconBuildResult {
+	return iconToSVG(
+		fullIcon(icon),
+		customisations
+			? mergeCustomisations(defaults, customisations)
+			: defaults
+	);
+}

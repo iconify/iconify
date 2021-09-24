@@ -107,7 +107,7 @@ configStorage[''] = createAPIConfig({
 /**
  * Add custom config for provider
  */
-export function setAPIConfig(
+export function addAPIProvider(
 	provider: string,
 	customConfig: PartialIconifyAPIConfig
 ): boolean {

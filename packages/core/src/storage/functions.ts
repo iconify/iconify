@@ -5,9 +5,8 @@ import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
 import {
 	getStorage,
-	getIcon,
-	listIcons,
-	addIcon as storeIcon,
+	getIconFromStorage,
+	addIconToStorage,
 	addIconSet,
 } from './storage';
 // import { parseIconSet } from '../icon';
@@ -64,7 +63,7 @@ export function getIconData(
 	const icon =
 		typeof name === 'string' ? stringToIcon(name, true, simpleNames) : name;
 	return icon
-		? getIcon(getStorage(icon.provider, icon.prefix), icon.name)
+		? getIconFromStorage(getStorage(icon.provider, icon.prefix), icon.name)
 		: null;
 }
 
@@ -77,7 +76,7 @@ export function addIcon(name: string, data: IconifyIcon): boolean {
 		return false;
 	}
 	const storage = getStorage(icon.provider, icon.prefix);
-	return storeIcon(storage, icon.name, data);
+	return addIconToStorage(storage, icon.name, data);
 }
 
 /**
@@ -126,24 +125,16 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 }
 
 /**
- * Export
+ * Check if icon exists
  */
-export const storageFunctions: IconifyStorageFunctions = {
-	// Check if icon exists
-	iconExists: (name) => getIconData(name) !== null,
+export function iconExists(name: string): boolean {
+	return getIconData(name) !== null;
+}
 
-	// Get raw icon data
-	getIcon: (name) => {
-		const result = getIconData(name);
-		return result ? { ...result } : null;
-	},
-
-	// List icons
-	listIcons,
-
-	// Add icon
-	addIcon,
-
-	// Add icon set
-	addCollection,
-};
+/**
+ * Get icon
+ */
+export function getIcon(name: string): Required<IconifyIcon> | null {
+	const result = getIconData(name);
+	return result ? { ...result } : null;
+}

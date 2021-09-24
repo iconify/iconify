@@ -3,25 +3,17 @@ import type {
 	QueryDoneCallback,
 } from '@iconify/api-redundancy';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { sendAPIQuery } from './query';
-import { loadIcons } from './icons';
 import type {
 	IconifyIconLoaderAbort,
 	IconifyIconLoaderCallback,
 } from './icons';
-import type {
-	GetAPIConfig,
-	PartialIconifyAPIConfig,
-} from './config';
-import { getAPIConfig, setAPIConfig, listAPIProviders } from './config';
+import type { GetAPIConfig, PartialIconifyAPIConfig } from './config';
 import type {
 	IconifyAPIModule,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
 } from './modules';
-import { setAPIModule } from './modules';
 import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
-import { mergeParams } from './params';
 
 /**
  * Iconify API functions
@@ -43,11 +35,6 @@ export interface IconifyAPIFunctions {
 		customConfig: PartialIconifyAPIConfig
 	) => boolean;
 }
-
-export const APIFunctions: IconifyAPIFunctions = {
-	loadIcons,
-	addAPIProvider: setAPIConfig,
-};
 
 /**
  * Exposed internal functions
@@ -92,14 +79,6 @@ export interface IconifyAPIInternalFunctions {
 	 */
 	mergeParams: MergeParams;
 }
-
-export const APIInternalFunctions: IconifyAPIInternalFunctions = {
-	getAPIConfig,
-	setAPIModule,
-	sendAPIQuery,
-	listAPIProviders,
-	mergeParams,
-};
 
 /**
  * Types needed for internal functions

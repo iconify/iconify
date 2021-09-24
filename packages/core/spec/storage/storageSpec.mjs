@@ -1,33 +1,31 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
 	newStorage,
-	addIcon,
+	addIconToStorage,
 	iconExists,
-	getIcon,
+	getIconFromStorage,
 	addIconSet,
 	getStorage,
 	listIcons,
-} from '../../lib/storage/storage';
-import type { IconifyIcon, FullIconifyIcon } from '@iconify/utils/lib/icon';
+} from '@iconify/core/lib/storage/storage';
 
 describe('Testing storage', () => {
 	it('Adding icon', () => {
 		const storage = newStorage('', 'foo');
 
 		// Add one icon
-		addIcon(storage, 'test', {
+		addIconToStorage(storage, 'test', {
 			body: '<path d="" />',
 			width: 20,
 			height: 16,
 		});
-		addIcon(storage, 'not-really-missing', {
+		addIconToStorage(storage, 'not-really-missing', {
 			body: '<path d="" />',
 			width: 24,
 			height: 24,
 		});
 
 		// Add another icon with reserved keyword as name
-		addIcon(storage, 'constructor', {
+		addIconToStorage(storage, 'constructor', {
 			body: '<g></g>',
 			width: 24,
 			height: 24,
@@ -38,7 +36,7 @@ describe('Testing storage', () => {
 		storage.missing['not-really-missing'] = Date.now();
 
 		// Add invalid icon
-		addIcon(storage, 'invalid', {} as unknown as IconifyIcon);
+		addIconToStorage(storage, 'invalid', {});
 
 		// Should not include 'invalid'
 		expect(Object.keys(storage.icons)).toEqual([
@@ -55,7 +53,7 @@ describe('Testing storage', () => {
 		expect(iconExists(storage, 'not-really-missing')).toBe(true);
 
 		// Test getIcon
-		let expected: FullIconifyIcon = {
+		let expected = {
 			body: '<path d="" />',
 			width: 20,
 			height: 16,
@@ -65,13 +63,12 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		const icon = getIcon(storage, 'test');
+		const icon = getIconFromStorage(storage, 'test');
 		expect(icon).toEqual(expected);
 
 		// Test icon mutation
 		let thrown = false;
 		try {
-			// @ts-ignore
 			icon.width = 12;
 		} catch (err) {
 			thrown = true;
@@ -88,10 +85,10 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 1,
 		};
-		expect(getIcon(storage, 'constructor')).toEqual(expected);
+		expect(getIconFromStorage(storage, 'constructor')).toEqual(expected);
 
-		expect(getIcon(storage, 'invalid')).toBeNull();
-		expect(getIcon(storage, 'missing')).toBeNull();
+		expect(getIconFromStorage(storage, 'invalid')).toBeNull();
+		expect(getIconFromStorage(storage, 'missing')).toBeNull();
 	});
 
 	it('Adding simple icon set', () => {
@@ -124,7 +121,7 @@ describe('Testing storage', () => {
 		expect(iconExists(storage, 'missing')).toBe(false);
 
 		// Test getIcon
-		let expected: FullIconifyIcon = {
+		let expected = {
 			body: '<path d="icon1" />',
 			width: 20,
 			height: 24,
@@ -134,7 +131,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, 'icon1')).toEqual(expected);
+		expect(getIconFromStorage(storage, 'icon1')).toEqual(expected);
 		expected = {
 			body: '<path d="icon2" />',
 			width: 24,
@@ -145,9 +142,9 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, 'icon2')).toEqual(expected);
-		expect(getIcon(storage, 'invalid')).toBeNull();
-		expect(getIcon(storage, 'missing')).toBeNull();
+		expect(getIconFromStorage(storage, 'icon2')).toEqual(expected);
+		expect(getIconFromStorage(storage, 'invalid')).toBeNull();
+		expect(getIconFromStorage(storage, 'missing')).toBeNull();
 	});
 
 	it('Icon set with aliases that use transformations', () => {
@@ -180,7 +177,7 @@ describe('Testing storage', () => {
 		]);
 
 		// Test icon
-		let expected: FullIconifyIcon = {
+		let expected = {
 			body: iconBody,
 			width: 128,
 			height: 128,
@@ -190,7 +187,9 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, '16-chevron-left')).toEqual(expected);
+		expect(getIconFromStorage(storage, '16-chevron-left')).toEqual(
+			expected
+		);
 
 		// Test alias
 		expected = {
@@ -203,7 +202,9 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIcon(storage, '16-chevron-right')).toEqual(expected);
+		expect(getIconFromStorage(storage, '16-chevron-right')).toEqual(
+			expected
+		);
 	});
 
 	it('List icons in a global storage', () => {
@@ -217,7 +218,7 @@ describe('Testing storage', () => {
 		expect(listIcons(provider, prefix)).toEqual([]);
 
 		// Add one icon without provider
-		addIcon(storage1, 'test', {
+		addIconToStorage(storage1, 'test', {
 			body: '<path d="" />',
 			width: 20,
 			height: 16,
@@ -256,7 +257,7 @@ describe('Testing storage', () => {
 		expect(listIcons(provider, prefix)).toEqual([]);
 
 		// Add one icon with provider
-		addIcon(storage2, 'test2', {
+		addIconToStorage(storage2, 'test2', {
 			body: '<path d="" />',
 			width: 20,
 			height: 16,
