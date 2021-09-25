@@ -1,0 +1,14 @@
+{
+	"name": "@iconify/react/offline",
+	"main": "../dist/offline.js",
+	"types": "../dist/offline.d.ts",
+	"module": "../dist/offline.mjs",
+	"exports": {
+		"./*": "./*",
+		".": {
+			"import": "../dist/offline.mjs",
+			"types": "../dist/offline.d.ts",
+			"default": "../dist/offline.js"
+		}
+	}
+}

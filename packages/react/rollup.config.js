@@ -11,7 +11,7 @@ names.forEach((name) => {
 		input: `lib/${name}.js`,
 		output: [
 			{
-				file: `dist/${name}.esm.js`,
+				file: `dist/${name}.mjs`,
 				format: 'esm',
 			},
 		],

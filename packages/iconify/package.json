@@ -34,8 +34,8 @@
 		".": {
 			"require": "./dist/iconify.cjs",
 			"import": "./dist/iconify.mjs",
-			"default": "./dist/iconify.min.js",
-			"types": "./dist/iconify.d.ts"
+			"types": "./dist/iconify.d.ts",
+			"default": "./dist/iconify.min.js"
 		},
 		"./dist/iconify": {
 			"require": "./dist/iconify.cjs",
@@ -46,26 +46,26 @@
 		"./dist/iconify.min": {
 			"require": "./dist/iconify.cjs",
 			"import": "./dist/iconify.mjs",
-			"default": "./dist/iconify.min.js",
-			"types": "./dist/iconify.d.ts"
+			"types": "./dist/iconify.d.ts",
+			"default": "./dist/iconify.min.js"
 		},
 		"./dist/iconify.without-api": {
 			"require": "./dist/iconify.without-api.cjs",
 			"import": "./dist/iconify.without-api.mjs",
-			"default": "./dist/iconify.without-api.min.js",
-			"types": "./dist/iconify.without-api.d.ts"
+			"types": "./dist/iconify.without-api.d.ts",
+			"default": "./dist/iconify.without-api.min.js"
 		},
 		"./dist/iconify.without-api.min": {
 			"require": "./dist/iconify.without-api.cjs",
 			"import": "./dist/iconify.without-api.mjs",
-			"default": "./dist/iconify.without-api.min.js",
-			"types": "./dist/iconify.without-api.d.ts"
+			"types": "./dist/iconify.without-api.d.ts",
+			"default": "./dist/iconify.without-api.min.js"
 		},
 		"./offline": {
 			"require": "./dist/iconify.without-api.cjs",
 			"import": "./dist/iconify.without-api.mjs",
-			"default": "./dist/iconify.without-api.min.js",
-			"types": "./dist/iconify.without-api.d.ts"
+			"types": "./dist/iconify.without-api.d.ts",
+			"default": "./dist/iconify.without-api.min.js"
 		}
 	},
 	"dependencies": {
