@@ -2,7 +2,7 @@
 	"name": "@iconify/library-builder",
 	"description": "Build script to compile TypeScript files to both ES and CommonJS modules.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",

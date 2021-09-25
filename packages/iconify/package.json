@@ -2,7 +2,7 @@
 	"name": "@iconify/iconify",
 	"description": "Unified SVG framework with over 100,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "2.1.0-beta.2",
+	"version": "2.1.0-beta.3",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"main": "./dist/iconify.min.js",
 	"types": "./dist/iconify.d.ts",
@@ -72,9 +72,9 @@
 		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {
-		"@iconify/core": "^1.2.0-beta.2",
-		"@iconify/types": "^1.0.6",
-		"@iconify/utils": "^1.0.7",
+		"@iconify/core": "^1.2.0-beta.3",
+		"@iconify/types": "^1.0.7",
+		"@iconify/utils": "^1.0.9",
 		"@microsoft/api-extractor": "^7.12.0",
 		"@rollup/plugin-buble": "^0.21.3",
 		"@rollup/plugin-node-resolve": "^10.0.0",
@@ -89,6 +89,6 @@
 		"rollup": "^2.33.3",
 		"rollup-plugin-terser": "^7.0.2",
 		"ts-jest": "^27.0.5",
-		"typescript": "^4.1.2"
+		"typescript": "^4.4.3"
 	}
 }
