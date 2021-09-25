@@ -1,7 +1,7 @@
 {
 	"name": "@iconify/types",
 	"description": "Types for Iconify data",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"author": "Vjacheslav Trushkin",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"main": "./index.js",
