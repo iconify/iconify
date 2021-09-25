@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
@@ -64,7 +65,7 @@ if (compile.api && !fileExists(packagesDir + '/react/lib/icon.d.ts')) {
 	compile.lib = true;
 }
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
 	compile.core = true;
 }
 

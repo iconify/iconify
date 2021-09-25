@@ -5,7 +5,8 @@
 		"@iconify/types",
 		"@iconify/core",
 		"@iconify/utils",
-		"@cyberalien/redundancy"
+		"@cyberalien/redundancy",
+		"@iconify/api-redundancy"
 	],
 	"compiler": {},
 	"apiReport": {

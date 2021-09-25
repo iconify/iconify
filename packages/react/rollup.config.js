@@ -1,5 +1,4 @@
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 
 const names = ['offline', 'iconify'];
 
@@ -17,7 +16,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs()],
+		plugins: [resolve()],
 	});
 
 	// CommonJS module
@@ -30,7 +29,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['react'],
-		plugins: [resolve(), commonjs()],
+		plugins: [resolve()],
 	});
 });
 
