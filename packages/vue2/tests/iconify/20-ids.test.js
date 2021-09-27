@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
-import { Icon } from '../../dist/iconify';
+import { Icon } from '../../';
 
 const iconDataWithID = {
 	body:

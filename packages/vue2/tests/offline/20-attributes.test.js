@@ -1,4 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
+// Link to file
 import { Icon } from '../../dist/offline';
 
 const iconData = {

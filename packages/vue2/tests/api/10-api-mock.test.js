@@ -1,9 +1,12 @@
-import { loadIcons, iconExists } from '../../dist/iconify';
+/**
+ * @jest-environment jsdom
+ */
+import { loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 describe('Testing fake API', () => {
-	test('using fake API to load icon', (done) => {
+	test('using fake API to load icon', done => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
@@ -22,7 +25,7 @@ describe('Testing fake API', () => {
 		});
 
 		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
+		expect(iconExists(iconName)).toBe(false);
 
 		// Load icon
 		loadIcons([iconName], (loaded, missing, pending) => {

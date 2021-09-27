@@ -1,5 +1,4 @@
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 
 const names = ['offline', 'iconify'];
 const component = 'Icon';
@@ -19,7 +18,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['vue'],
-		plugins: [resolve(), commonjs()],
+		plugins: [resolve()],
 	});
 
 	// UMD module
@@ -37,7 +36,7 @@ names.forEach((name) => {
 			},
 		],
 		external: ['vue'],
-		plugins: [resolve(), commonjs()],
+		plugins: [resolve()],
 	});
 });
 

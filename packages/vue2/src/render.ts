@@ -1,7 +1,8 @@
-import _Vue, { VNode, VNodeData, RenderContext } from 'vue';
-import { IconifyIcon } from '@iconify/types';
+import type _Vue from 'vue';
+import type { VNode, VNodeData, RenderContext } from 'vue';
+import type { IconifyIcon } from '@iconify/types';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
-	FullIconCustomisations,
 	defaults,
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
@@ -12,7 +13,7 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import { IconifyIconCustomisations, IconProps } from './props';
+import type { IconifyIconCustomisations, IconProps } from './props';
 
 /**
  * Default SVG attributes

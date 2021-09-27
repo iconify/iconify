@@ -1,5 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
-import { Icon } from '../../dist/offline';
+// Link to alias
+import { Icon } from '../../offline';
 
 describe('Empty icon', () => {
 	test('basic test', () => {
@@ -7,7 +11,7 @@ describe('Empty icon', () => {
 			propsData: {},
 		});
 
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual('');
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('');
 	});
 
 	test('with child node', () => {
@@ -17,7 +21,7 @@ describe('Empty icon', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual(
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
 			'<i class="fa fa-home"></i>'
 		);
 	});
@@ -29,7 +33,7 @@ describe('Empty icon', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.text()).toEqual('icon');
+		expect(wrapper.text()).toBe('icon');
 	});
 
 	test('with multiple childen', () => {
@@ -39,7 +43,7 @@ describe('Empty icon', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual(
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
 			'<span><i class="fa fa-home"></i> Home icon</span>'
 		);
 	});

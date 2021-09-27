@@ -1,71 +1,77 @@
-import Vue, { CreateElement, VNode } from 'vue';
-import { ExtendedVue } from 'vue/types/vue';
-import { IconifyJSON } from '@iconify/types';
+import Vue from 'vue';
+import type { CreateElement, VNode } from 'vue';
+import type { ExtendedVue } from 'vue/types/vue';
+import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
-import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
-import {
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
+import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 } from '@iconify/utils/lib/customisations';
+import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
-	IconifyStorageFunctions,
-	storageFunctions,
+	iconExists,
+	getIcon,
+	addIcon,
+	addCollection,
 	getIconData,
 	allowSimpleNames,
 } from '@iconify/core/lib/storage/functions';
-import {
-	IconifyBuilderFunctions,
-	builderFunctions,
-} from '@iconify/core/lib/builder/functions';
-import { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import { fullIcon, IconifyIcon } from '@iconify/utils/lib/icon';
+import { listIcons } from '@iconify/core/lib/storage/storage';
+import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
+import { buildIcon } from '@iconify/core/lib/builder/functions';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
+import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
+import { fullIcon } from '@iconify/utils/lib/icon';
 
 // API
-import {
+import type {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
-	APIFunctions,
-	APIInternalFunctions,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
 	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
-import {
-	setAPIModule,
+import type {
 	IconifyAPIModule,
 	IconifyAPISendQuery,
 	IconifyAPIPrepareIconsQuery,
 } from '@iconify/core/lib/api/modules';
-import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
-import {
-	fetchAPIModule,
-	getFetch,
-	setFetch,
-} from '@iconify/core/lib/api/modules/fetch';
-import {
-	setAPIConfig,
+import { setAPIModule } from '@iconify/core/lib/api/modules';
+import type {
 	PartialIconifyAPIConfig,
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
 import {
+	addAPIProvider,
+	getAPIConfig,
+	listAPIProviders,
+} from '@iconify/core/lib/api/config';
+import { fetchAPIModule, setFetch } from '@iconify/core/lib/api/modules/fetch';
+import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
+import { loadIcons } from '@iconify/core/lib/api/icons';
+import { sendAPIQuery } from '@iconify/core/lib/api/query';
+import { mergeParams } from '@iconify/core/lib/api/params';
 
 // Cache
 import { cache } from '@iconify/core/lib/cache';
 import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
 import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
-import {
+import type {
 	IconifyBrowserCacheType,
 	IconifyBrowserCacheFunctions,
 } from '@iconify/core/lib/browser-storage/functions';
 
 // Properties
-import {
+import type {
 	RawIconCustomisations,
 	IconifyIconOnLoad,
 	IconProps,
@@ -124,71 +130,18 @@ export { RawIconCustomisations, IconifyIconBuildResult };
 export { IconifyBrowserCacheType };
 
 /**
- * Enable and disable browser cache
+ * Enable cache
  */
-export const enableCache = (storage: IconifyBrowserCacheType) =>
+function enableCache(storage: IconifyBrowserCacheType): void {
 	toggleBrowserCache(storage, true);
+}
 
-export const disableCache = (storage: IconifyBrowserCacheType) =>
+/**
+ * Disable cache
+ */
+function disableCache(storage: IconifyBrowserCacheType): void {
 	toggleBrowserCache(storage, false);
-
-/* Storage functions */
-/**
- * Check if icon exists
- */
-export const iconExists = storageFunctions.iconExists;
-
-/**
- * Get icon data
- */
-export const getIcon = storageFunctions.getIcon;
-
-/**
- * List available icons
- */
-export const listIcons = storageFunctions.listIcons;
-
-/**
- * Add one icon
- */
-export const addIcon = storageFunctions.addIcon;
-
-/**
- * Add icon set
- */
-export const addCollection = storageFunctions.addCollection;
-
-/* Builder functions */
-/**
- * Calculate icon size
- */
-export const calculateSize = builderFunctions.calculateSize;
-
-/**
- * Replace unique ids in content
- */
-export const replaceIDs = builderFunctions.replaceIDs;
-
-/**
- * Build SVG
- */
-export const buildIcon = builderFunctions.buildIcon;
-
-/* API functions */
-/**
- * Load icons
- */
-export const loadIcons = APIFunctions.loadIcons;
-
-/**
- * Add API provider
- */
-export const addAPIProvider = APIFunctions.addAPIProvider;
-
-/**
- * Export internal functions that can be used by third party implementations
- */
-export const _api = APIInternalFunctions;
+}
 
 /**
  * Initialise stuff
@@ -197,15 +150,7 @@ export const _api = APIInternalFunctions;
 allowSimpleNames(true);
 
 // Set API module
-setAPIModule('', getFetch() ? fetchAPIModule : jsonpAPIModule);
-
-/**
- * Function to enable node-fetch for getting icons on server side
- */
-_api.setFetch = (nodeFetch: typeof fetch) => {
-	setFetch(nodeFetch);
-	setAPIModule('', fetchAPIModule);
-};
+setAPIModule('', fetchAPIModule);
 
 /**
  * Browser stuff
@@ -263,7 +208,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 					) {
 						continue;
 					}
-					if (!setAPIConfig(key, value)) {
+					if (!addAPIProvider(key, value)) {
 						console.error(err);
 					}
 				} catch (e) {
@@ -434,3 +379,33 @@ export const Icon = Vue.extend({
 		return render(createElement, props, context, icon.data);
 	},
 });
+
+/**
+ * Internal API
+ */
+const _api: IconifyAPIInternalFunctions = {
+	getAPIConfig,
+	setAPIModule,
+	sendAPIQuery,
+	setFetch,
+	listAPIProviders,
+	mergeParams,
+};
+
+/**
+ * Export functions
+ */
+// IconifyAPIInternalFunctions
+export { _api };
+
+// IconifyAPIFunctions
+export { addAPIProvider, loadIcons };
+
+// IconifyStorageFunctions
+export { iconExists, getIcon, listIcons, addIcon, addCollection };
+
+// IconifyBuilderFunctions
+export { replaceIDs, calculateSize, buildIcon };
+
+// IconifyBrowserCacheFunctions
+export { enableCache, disableCache };
