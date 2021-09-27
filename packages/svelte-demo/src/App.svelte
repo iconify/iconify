@@ -1,5 +1,5 @@
 <script>
-	import { addIcon as addOfflineIcon, addCollection as addOfflineCollection } from '@iconify/svelte/dist/offline';
+	import { addIcon as addOfflineIcon, addCollection as addOfflineCollection } from '@iconify/svelte/offline';
 	import {
 		addIcon as addOnlineIcon,
 		addCollection as addOnlineCollection,

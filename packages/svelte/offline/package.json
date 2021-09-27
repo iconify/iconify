@@ -3,14 +3,5 @@
 	"svelte": "../dist/OfflineIcon.svelte",
 	"module": "../dist/offline.mjs",
 	"main": "../dist/offline.js",
-	"types": "../dist/offline.d.ts",
-	"exports": {
-		"./*": "./*",
-		".": {
-			"import": "../dist/offline.mjs",
-			"types": "../dist/offline.d.ts",
-			"svelte": "../dist/OfflineIcon.svelte",
-			"default": "../dist/offline.js"
-		}
-	}
+	"types": "../dist/offline.d.ts"
 }
