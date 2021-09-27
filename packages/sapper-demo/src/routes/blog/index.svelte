@@ -13,16 +13,13 @@
 	import { onMount } from 'svelte';
 
 	let Icon;
-	let postIcon;
 
 	onMount(async () => {
 		const promises = [
 			import('@iconify/svelte'),
-			import('@iconify-icons/bi/link-45deg'),
 		];
 		const results = await Promise.all(promises);
 		Icon = results[0].default;
-		postIcon = results[1].default;
 	});
 
 	export let posts;
@@ -70,7 +67,7 @@
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
 		<li>
-			<svelte:component this={Icon} icon={postIcon} />
+			<svelte:component this={Icon} icon=bi:link-45deg />
 			<a rel="prefetch" href="blog/{post.slug}">{post.title}</a>
 		</li>
 	{/each}

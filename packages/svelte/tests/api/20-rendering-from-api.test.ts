@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { render } from '@testing-library/svelte';
-import Icon, { loadIcons, iconExists } from '../../dist/';
+import Icon, { loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
@@ -30,7 +33,7 @@ describe('Rendering icon', () => {
 		});
 
 		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
+		expect(iconExists(iconName)).toBe(false);
 
 		// Load icon
 		loadIcons([iconName], (loaded, missing, pending) => {
@@ -44,29 +47,29 @@ describe('Rendering icon', () => {
 			]);
 			expect(missing).toMatchObject([]);
 			expect(pending).toMatchObject([]);
-			expect(iconExists(iconName)).toEqual(true);
+			expect(iconExists(iconName)).toBe(true);
 
 			// Render component
 			const component = render(Icon, {
 				icon: iconName,
-				onLoad: (name) => {
-					expect(name).toEqual(iconName);
-					expect(onLoadCalled).toEqual(false);
+				onLoad: (name: string) => {
+					expect(name).toBe(iconName);
+					expect(onLoadCalled).toBe(false);
 					onLoadCalled = true;
 				},
 			});
-			const node = component.container.querySelector('svg');
-			const html = node.parentNode.innerHTML;
+			const node = component.container.querySelector('svg')!;
+			const html = (node.parentNode as HTMLDivElement).innerHTML;
 
 			// Check HTML
-			expect(html).toEqual(
+			expect(html).toBe(
 				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
 					className +
 					'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 			);
 
 			// Make sure onLoad has been called
-			expect(onLoadCalled).toEqual(true);
+			expect(onLoadCalled).toBe(true);
 
 			done();
 		});
@@ -91,33 +94,34 @@ describe('Rendering icon', () => {
 			},
 			delay: (next) => {
 				// Icon should not have loaded yet
-				expect(iconExists(iconName)).toEqual(false);
+				expect(iconExists(iconName)).toBe(false);
 
 				// onLoad should not have been called yet
-				expect(onLoadCalled).toEqual(false);
+				expect(onLoadCalled).toBe(false);
 
 				// Send icon data
 				next();
 
 				// Test it again
-				expect(iconExists(iconName)).toEqual(true);
+				expect(iconExists(iconName)).toBe(true);
 
 				// Check if state was changed
 				// Wrapped in double setTimeout() because re-render takes 2 ticks
 				setTimeout(() => {
 					setTimeout(() => {
-						const node = component.container.querySelector('svg');
-						const html = node.parentNode.innerHTML;
+						const node = component.container.querySelector('svg')!;
+						const html = (node.parentNode as HTMLDivElement)
+							.innerHTML;
 
 						// Check HTML
-						expect(html).toEqual(
+						expect(html).toBe(
 							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
 								className +
 								'" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
 						// onLoad should have been called
-						expect(onLoadCalled).toEqual(true);
+						expect(onLoadCalled).toBe(true);
 
 						done();
 					}, 0);
@@ -126,26 +130,26 @@ describe('Rendering icon', () => {
 		});
 
 		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
+		expect(iconExists(iconName)).toBe(false);
 
 		// Render component
 		const component = render(Icon, {
 			icon: iconName,
 			// Also testing simple class
 			class: 'test',
-			onLoad: (name) => {
-				expect(name).toEqual(iconName);
-				expect(onLoadCalled).toEqual(false);
+			onLoad: (name: string) => {
+				expect(name).toBe(iconName);
+				expect(onLoadCalled).toBe(false);
 				onLoadCalled = true;
 			},
 		});
 
 		// Should render empty icon
 		const html = component.container.innerHTML;
-		expect(html).toEqual('<div></div>');
+		expect(html).toBe('<div></div>');
 
 		// onLoad should not have been called yet
-		expect(onLoadCalled).toEqual(false);
+		expect(onLoadCalled).toBe(false);
 	});
 
 	test('missing icon', (done) => {
@@ -160,20 +164,20 @@ describe('Rendering icon', () => {
 			response: 404,
 			delay: (next) => {
 				// Icon should not have loaded yet
-				expect(iconExists(iconName)).toEqual(false);
+				expect(iconExists(iconName)).toBe(false);
 
 				// Send icon data
 				next();
 
 				// Test it again
-				expect(iconExists(iconName)).toEqual(false);
+				expect(iconExists(iconName)).toBe(false);
 
 				// Check if state was changed
 				// Wrapped in double setTimeout() because re-render takes 2 ticks
 				setTimeout(() => {
 					setTimeout(() => {
 						const html = component.container.innerHTML;
-						expect(html).toEqual('<div></div>');
+						expect(html).toBe('<div></div>');
 
 						done();
 					}, 0);
@@ -182,7 +186,7 @@ describe('Rendering icon', () => {
 		});
 
 		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
+		expect(iconExists(iconName)).toBe(false);
 
 		// Render component
 		const component = render(Icon, {
@@ -194,6 +198,6 @@ describe('Rendering icon', () => {
 
 		// Should render empty icon
 		const html = component.container.innerHTML;
-		expect(html).toEqual('<div></div>');
+		expect(html).toBe('<div></div>');
 	});
 });

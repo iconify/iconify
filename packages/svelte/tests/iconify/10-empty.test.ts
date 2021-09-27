@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { render } from '@testing-library/svelte';
-import Icon from '../../dist/offline';
+import Icon from '../../';
 
 describe('Empty icon', () => {
 	test('basic test', () => {
@@ -7,6 +10,6 @@ describe('Empty icon', () => {
 		const html = component.container.innerHTML;
 
 		// Empty container div
-		expect(html).toEqual('<div></div>');
+		expect(html).toBe('<div></div>');
 	});
 });

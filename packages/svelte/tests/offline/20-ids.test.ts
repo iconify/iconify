@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { render } from '@testing-library/svelte';
 import Icon from '../../dist/offline';
 
@@ -10,7 +13,7 @@ const iconDataWithID = {
 describe('Replacing IDs', () => {
 	test('default behavior', () => {
 		const component = render(Icon, { icon: iconDataWithID });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Check that default id doesn't exist
 		const path = node.getElementById('ssvg-id-1st-place-medala');
@@ -19,7 +22,7 @@ describe('Replacing IDs', () => {
 
 	test('custom generator', () => {
 		const component = render(Icon, { icon: iconDataWithID, id: 'test' });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Check that ID 'testa' exists
 		const path = node.getElementById('test-0');

@@ -1,6 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import sveltePreprocess from 'svelte-preprocess';
 
@@ -22,10 +21,11 @@ export default [
 				preprocess: sveltePreprocess(),
 			}),
 			resolve({
-				extensions: ['.ts', '.js', '.svelte'],
+				browser: true,
+				extensions: ['.ts', '.mjs', '.js', '.svelte'],
+				dedupe: ['svelte'],
 			}),
 			typescript(),
-			commonjs(),
 		],
 	},
 	{
@@ -39,10 +39,11 @@ export default [
 				preprocess: sveltePreprocess(),
 			}),
 			resolve({
-				extensions: ['.ts', '.js', '.svelte'],
+				browser: true,
+				extensions: ['.ts', '.mjs', '.js', '.svelte'],
+				dedupe: ['svelte'],
 			}),
 			typescript(),
-			commonjs(),
 		],
 	},
 
@@ -57,10 +58,10 @@ export default [
 		],
 		plugins: [
 			resolve({
-				extensions: ['.ts', '.js', '.svelte'],
+				extensions: ['.ts', '.mjs', '.js', '.svelte'],
+				dedupe: ['svelte'],
 			}),
 			typescript(),
-			commonjs(),
 		],
 	},
 	// Files included in OfflineIcon.svelte as bundle
@@ -74,10 +75,10 @@ export default [
 		],
 		plugins: [
 			resolve({
-				extensions: ['.ts', '.js', '.svelte'],
+				extensions: ['.ts', '.mjs', '.js', '.svelte'],
+				dedupe: ['svelte'],
 			}),
 			typescript(),
-			commonjs(),
 		],
 	},
 ];

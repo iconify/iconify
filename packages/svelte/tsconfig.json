@@ -1,17 +1,8 @@
 {
+	"extends": "./tsconfig-base.json",
+	"include": ["src/**/*.ts", ".eslintrc.js"],
 	"compilerOptions": {
-		"rootDir": "src",
-		"outDir": "lib",
-		"target": "es2017",
-		"module": "esnext",
-		"declaration": true,
-		"sourceMap": false,
-		"strict": true,
-		"types": ["node", "svelte"],
-		"moduleResolution": "node",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"importsNotUsedAsValues": "error"
+		"rootDir": "./src",
+		"outDir": "./lib"
 	}
 }

@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { render } from '@testing-library/svelte';
-import Icon from '../../dist/';
+import Icon from '../../dist/offline';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -10,46 +13,46 @@ const iconData = {
 describe('Rotation', () => {
 	test('number', () => {
 		const component = render(Icon, { icon: iconData, rotate: 1 });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual('rotate(90 16 16)');
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe('rotate(90 16 16)');
 	});
 
 	test('string', () => {
 		const component = render(Icon, { icon: iconData, rotate: '180deg' });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual('rotate(180 12 16)');
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe('rotate(180 12 16)');
 	});
 });
 
 describe('Flip', () => {
 	test('boolean', () => {
 		const component = render(Icon, { icon: iconData, hFlip: true });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual(
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe(
 			'translate(24 0) scale(-1 1)'
 		);
 	});
 
 	test('string', () => {
 		const component = render(Icon, { icon: iconData, flip: 'vertical' });
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual(
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe(
 			'translate(0 32) scale(1 -1)'
 		);
 	});
@@ -60,13 +63,13 @@ describe('Flip', () => {
 			flip: 'horizontal',
 			vFlip: true,
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
 		// horizontal + vertical = 180deg rotation
-		expect(child.getAttribute('transform')).toEqual('rotate(180 12 16)');
+		expect(child.getAttribute('transform')).toBe('rotate(180 12 16)');
 	});
 
 	test('string for boolean attribute', () => {
@@ -74,12 +77,12 @@ describe('Flip', () => {
 			icon: iconData,
 			hFlip: 'true',
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual(
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe(
 			'translate(24 0) scale(-1 1)'
 		);
 	});
@@ -91,12 +94,12 @@ describe('Flip', () => {
 			hFlip: false,
 			flip: 'horizontal',
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual(
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe(
 			'translate(24 0) scale(-1 1)'
 		);
 	});
@@ -107,12 +110,12 @@ describe('Flip', () => {
 			flip: 'vertical',
 			hFlip: true,
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('g');
-		expect(child.getAttribute('transform')).toEqual('rotate(180 12 16)');
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe('rotate(180 12 16)');
 	});
 
 	test('wrong case', () => {
@@ -120,11 +123,11 @@ describe('Flip', () => {
 			icon: iconData,
 			vflip: true,
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
-		const child = node.childNodes[0];
-		expect(child.tagName).toEqual('path');
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('path');
 	});
 });
 
@@ -135,11 +138,9 @@ describe('Alignment and slice', () => {
 			vAlign: 'top',
 			slice: true,
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
-		expect(node.getAttribute('preserveAspectRatio')).toEqual(
-			'xMidYMin slice'
-		);
+		expect(node.getAttribute('preserveAspectRatio')).toBe('xMidYMin slice');
 	});
 
 	test('string', () => {
@@ -147,10 +148,8 @@ describe('Alignment and slice', () => {
 			icon: iconData,
 			align: 'left bottom',
 		});
-		const node = component.container.querySelector('svg');
+		const node = component.container.querySelector('svg')!;
 
-		expect(node.getAttribute('preserveAspectRatio')).toEqual(
-			'xMinYMax meet'
-		);
+		expect(node.getAttribute('preserveAspectRatio')).toBe('xMinYMax meet');
 	});
 });

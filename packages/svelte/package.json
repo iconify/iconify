@@ -16,47 +16,46 @@
 	"module": "dist/index.mjs",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"exports": {
+		"./*": "./*",
+		".": {
+			"import": "./dist/index.mjs",
+			"svelte": "./dist/Icon.svelte",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./offline": {
+			"import": "./dist/offline.mjs",
+			"svelte": "./dist/OfflineIcon.svelte",
+			"types": "./dist/offline.d.ts",
+			"default": "./dist/offline.js"
+		}
+	},
 	"scripts": {
 		"build": "node build",
 		"build:tsc": "tsc -b",
 		"build:bundles": "rollup -c rollup.config.js",
 		"build:api": "node build --only-api",
-		"pretest": "npm run build",
 		"test": "jest"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.14.2",
-		"@iconify/core": "^1.2.0-beta.2",
-		"@iconify/types": "^1.0.6",
-		"@iconify/utils": "^1.0.7",
+		"@iconify/core": "^1.2.0-beta.3",
+		"@iconify/utils": "^1.0.9",
 		"@microsoft/api-extractor": "^7.15.0",
-		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@rollup/plugin-typescript": "^8.2.1",
-		"@testing-library/jest-dom": "^5.12.0",
+		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/svelte": "^3.0.3",
 		"@tsconfig/svelte": "^1.0.10",
-		"babel-jest": "^26.6.3",
+		"@types/jest": "^27.0.2",
 		"rollup": "^2.33.3",
 		"rollup-plugin-svelte": "^6.1.1",
-		"svelte": "^3.38.2",
-		"svelte-jester": "^1.5.0",
-		"svelte-preprocess": "^4.7.2",
-		"ts-jest": "^26.5.5"
+		"svelte": "^3.43.0",
+		"svelte-jester": "^2.1.5",
+		"svelte-preprocess": "^4.9.5",
+		"ts-jest": "^27.0.5"
 	},
 	"dependencies": {
 		"cross-fetch": "^3.1.4"
-	},
-	"jest": {
-		"transform": {
-			"^.+\\.js$": "babel-jest",
-			"^.+\\.ts$": "ts-jest",
-			"^.+\\.svelte$": "svelte-jester"
-		},
-		"moduleFileExtensions": [
-			"js",
-			"ts",
-			"svelte"
-		]
 	}
 }

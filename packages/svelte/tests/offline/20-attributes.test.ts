@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { render } from '@testing-library/svelte';
-import Icon from '../../dist/';
+import Icon from '../../dist/offline';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -10,8 +13,8 @@ const iconData = {
 describe('Padding attributes', () => {
 	test('title', () => {
 		const component = render(Icon, { icon: iconData, title: 'Icon!' });
-		const node = component.container.querySelector('svg');
-		expect(node.getAttribute('title')).toEqual('Icon!');
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('title')).toBe('Icon!');
 	});
 
 	test('aria-hidden', () => {
@@ -20,8 +23,8 @@ describe('Padding attributes', () => {
 			'icon': iconData,
 			'aria-hidden': 'false',
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.getAttribute('aria-hidden')).toEqual(null);
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('aria-hidden')).toBeNull();
 	});
 
 	test('ariaHidden', () => {
@@ -30,8 +33,8 @@ describe('Padding attributes', () => {
 			icon: iconData,
 			ariaHidden: false,
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.getAttribute('aria-hidden')).toEqual(null);
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('aria-hidden')).toBeNull();
 	});
 
 	test('style', () => {
@@ -39,9 +42,9 @@ describe('Padding attributes', () => {
 			icon: iconData,
 			style: 'vertical-align: 0; color: red;',
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.style.verticalAlign).toEqual('0');
-		expect(node.style.color).toEqual('red');
+		const node = component.container.querySelector('svg')!;
+		expect(node.style.verticalAlign).toBe('0');
+		expect(node.style.color).toBe('red');
 	});
 
 	test('color', () => {
@@ -49,8 +52,8 @@ describe('Padding attributes', () => {
 			icon: iconData,
 			color: 'red',
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.style.color).toEqual('red');
+		const node = component.container.querySelector('svg')!;
+		expect(node.style.color).toBe('red');
 	});
 
 	test('color with style', () => {
@@ -59,8 +62,8 @@ describe('Padding attributes', () => {
 			color: 'red',
 			style: 'color: green;',
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.style.color).toEqual('red');
+		const node = component.container.querySelector('svg')!;
+		expect(node.style.color).toBe('red');
 	});
 
 	test('attributes that cannot change', () => {
@@ -69,10 +72,8 @@ describe('Padding attributes', () => {
 			viewBox: '0 0 0 0',
 			preserveAspectRatio: 'none',
 		});
-		const node = component.container.querySelector('svg');
-		expect(node.getAttribute('viewBox')).toEqual('0 0 24 24');
-		expect(node.getAttribute('preserveAspectRatio')).toEqual(
-			'xMidYMid meet'
-		);
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('viewBox')).toBe('0 0 24 24');
+		expect(node.getAttribute('preserveAspectRatio')).toBe('xMidYMid meet');
 	});
 });
