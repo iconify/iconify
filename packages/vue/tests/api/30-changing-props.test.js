@@ -1,24 +1,25 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
-import { Icon, iconExists } from '../../dist/iconify';
+import { Icon, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
 
 const iconData2 = {
-	body:
-		'<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
+	body: '<path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"/>',
 	width: 32,
 	height: 32,
 };
 
 describe('Rendering icon', () => {
-	test('changing icon property', done => {
+	test('changing icon property', (done) => {
 		const prefix = nextPrefix();
 		const name = 'changing-prop';
 		const name2 = 'changing-prop2';
@@ -27,7 +28,7 @@ describe('Rendering icon', () => {
 		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let onLoadCalled = ''; // Name of icon from last onLoad call
 
-		const onLoad = name => {
+		const onLoad = (name) => {
 			// onLoad should be called only once per icon
 			switch (name) {
 				// First onLoad call
@@ -56,7 +57,7 @@ describe('Rendering icon', () => {
 					[name]: iconData,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
 
@@ -100,7 +101,7 @@ describe('Rendering icon', () => {
 					[name2]: iconData2,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName2)).toEqual(false);
 
@@ -152,7 +153,7 @@ describe('Rendering icon', () => {
 		expect(onLoadCalled).toEqual('');
 	});
 
-	test('changing icon property while loading', done => {
+	test('changing icon property while loading', (done) => {
 		const prefix = nextPrefix();
 		const name = 'changing-prop';
 		const name2 = 'changing-prop2';
@@ -171,7 +172,7 @@ describe('Rendering icon', () => {
 					[name]: iconData,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Should have been called asynchronously, which means icon name has changed
 				expect(isSync).toEqual(false);
 
@@ -190,7 +191,7 @@ describe('Rendering icon', () => {
 					[name2]: iconData2,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Should have been called asynchronously
 				expect(isSync).toEqual(false);
 
@@ -242,7 +243,7 @@ describe('Rendering icon', () => {
 		isSync = false;
 	});
 
-	test('changing multiple properties', done => {
+	test('changing multiple properties', (done) => {
 		const prefix = nextPrefix();
 		const name = 'multiple-props';
 		const iconName = `@${provider}:${prefix}:${name}`;
@@ -258,7 +259,7 @@ describe('Rendering icon', () => {
 					[name]: iconData,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
 

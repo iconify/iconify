@@ -1,7 +1,8 @@
-import { h, VNode } from 'vue';
-import { IconifyIcon } from '@iconify/types';
+import { h } from 'vue';
+import type { VNode } from 'vue';
+import type { IconifyIcon } from '@iconify/types';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
-	FullIconCustomisations,
 	defaults,
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
@@ -12,7 +13,7 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import { IconifyIconCustomisations, IconProps } from './props';
+import type { IconifyIconCustomisations, IconProps } from './props';
 
 /**
  * Default SVG attributes
@@ -29,8 +30,8 @@ const svgDefaults: Record<string, unknown> = {
  * In Vue 'v-' properties are reserved, so v-align and v-flip must be renamed
  */
 let customisationAliases = {};
-['horizontal', 'vertical'].forEach(prefix => {
-	['Align', 'Flip'].forEach(suffix => {
+['horizontal', 'vertical'].forEach((prefix) => {
+	['Align', 'Flip'].forEach((suffix) => {
 		const attr = prefix.slice(0, 1) + suffix;
 		const value = {
 			attr,
@@ -40,9 +41,8 @@ let customisationAliases = {};
 		// vertical-align
 		customisationAliases[prefix + '-' + suffix.toLowerCase()] = value;
 		// v-align
-		customisationAliases[
-			prefix.slice(0, 1) + '-' + suffix.toLowerCase()
-		] = value;
+		customisationAliases[prefix.slice(0, 1) + '-' + suffix.toLowerCase()] =
+			value;
 		// verticalAlign
 		customisationAliases[prefix + suffix] = value;
 	});

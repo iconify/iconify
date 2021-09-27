@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import {
+import type {
 	VNode,
 	DefineComponent,
 	ComponentOptionsMixin,
@@ -8,15 +8,15 @@ import {
 	AllowedComponentProps,
 	ComponentCustomProps,
 } from 'vue';
-import { IconifyIcon, IconifyJSON } from '@iconify/types';
-import {
+import type { IconifyIcon, IconifyJSON } from '@iconify/types';
+import type {
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
 } from '@iconify/utils/lib/customisations';
 import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
-import {
+import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
 	IconProps,

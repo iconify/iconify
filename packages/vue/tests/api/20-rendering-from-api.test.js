@@ -1,17 +1,19 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
-import { Icon, loadIcons, iconExists } from '../../dist/iconify';
+import { Icon, loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
 const iconData = {
-	body:
-		'<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
+	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
 	width: 24,
 	height: 24,
 };
 
 describe('Rendering icon', () => {
-	test('rendering icon after loading it', done => {
+	test('rendering icon after loading it', (done) => {
 		const prefix = nextPrefix();
 		const name = 'render-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
@@ -77,7 +79,7 @@ describe('Rendering icon', () => {
 		});
 	});
 
-	test('rendering icon before loading it', done => {
+	test('rendering icon before loading it', (done) => {
 		const prefix = nextPrefix();
 		const name = 'mock-test';
 		const iconName = `@${provider}:${prefix}:${name}`;
@@ -94,7 +96,7 @@ describe('Rendering icon', () => {
 					[name]: iconData,
 				},
 			},
-			delay: next => {
+			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
 
@@ -160,7 +162,7 @@ describe('Rendering icon', () => {
 		expect(onLoadCalled).toEqual(false);
 	});
 
-	test('missing icon', done => {
+	test('missing icon', (done) => {
 		const prefix = nextPrefix();
 		const name = 'missing-icon';
 		const iconName = `@${provider}:${prefix}:${name}`;
@@ -169,7 +171,7 @@ describe('Rendering icon', () => {
 			provider,
 			prefix,
 			response: 404,
-			delay: next => {
+			delay: (next) => {
 				// Icon should not have loaded yet
 				expect(iconExists(iconName)).toEqual(false);
 
