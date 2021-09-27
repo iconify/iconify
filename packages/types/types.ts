@@ -220,7 +220,7 @@ export interface IconifyMetaData {
 /**
  * JSON structure, contains only icon data
  */
-export interface IconifyJSONIconsData {
+export interface IconifyJSONIconsData extends IconifyOptional {
 	// Prefix for icons in JSON file, required.
 	prefix: string;
 
@@ -232,6 +232,10 @@ export interface IconifyJSONIconsData {
 
 	// Optional aliases.
 	aliases?: IconifyAliases;
+
+	// IconifyOptional properties that are used as default values for icons when icon is missing value.
+	// If property exists in both icon and root, use value from icon.
+	// This is used to reduce duplication.
 }
 
 /**
@@ -239,16 +243,9 @@ export interface IconifyJSONIconsData {
  *
  * All optional values can exist in root of JSON file, used as defaults.
  */
-export interface IconifyJSON
-	extends IconifyJSONIconsData,
-		IconifyOptional,
-		IconifyMetaData {
+export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData {
 	// Optional list of missing icons. Returned by Iconify API when querying for icons that do not exist.
 	not_found?: string[];
-
-	// IconifyOptional properties that are used as default values for icons when icon is missing value.
-	// If property exists in both icon and root, use value from icon.
-	// This is used to reduce duplication.
 }
 
 /**
