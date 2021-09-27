@@ -2,12 +2,15 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 // Core
-import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import { getIconData } from '@iconify/core/lib/storage/functions';
-import { fullIcon, FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import { fullIcon } from '@iconify/utils/lib/icon';
 
 // API
-import { loadIcons, IconifyIconLoaderAbort } from '@iconify/core/lib/api/icons';
+import type { IconifyIconLoaderAbort } from '@iconify/core/lib/api/icons';
+import { loadIcons } from '@iconify/core/lib/api/icons';
 
 // Component stuff
 import type { IconifyIconProps } from './props';

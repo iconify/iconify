@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
@@ -57,7 +58,7 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
 	compile.core = true;
 }
 

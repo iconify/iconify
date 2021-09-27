@@ -1,6 +1,36 @@
 const fs = require('fs');
 
 /**
+ * Fix default export syntax
+ */
+function fixDefaultExport(filename) {
+	const source = __dirname + '/' + filename;
+	const data = fs.readFileSync(source, 'utf8');
+	const search = 'IconifyIconComponent as default';
+	if (data.indexOf(search) === -1) {
+		console.log(`Exports are fine in ${filename}`);
+		return;
+	}
+
+	let foundMatch = 0;
+	const lines = data.split(',').filter((line) => {
+		if (line.trim() === search) {
+			foundMatch++;
+			return false;
+		}
+		return true;
+	});
+	if (foundMatch !== 1) {
+		throw new Error(`Error fixing exports in ${filename}`);
+	}
+	const newCode =
+		lines.join(',') + '\nexport default IconifyIconComponent;\n';
+
+	fs.writeFileSync(source, newCode, 'utf8');
+	console.log(`Fixed default export in ${filename}`);
+}
+
+/**
  * Restore decorator in component
  */
 function restoreDecorator(filename) {
@@ -128,5 +158,6 @@ function copyFile(source, target) {
 }
 
 restoreDecorator('lib/component.js');
+fixDefaultExport('addon/components/iconify-icon.js');
 restoreDecorator('addon/components/iconify-icon.js');
 copyFile('src/iconify-icon.hbs', 'addon/components/iconify-icon.hbs');

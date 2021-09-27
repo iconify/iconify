@@ -1,5 +1,4 @@
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 
 // Write all packages
@@ -13,7 +12,13 @@ const config = [
 			},
 		],
 		external: ['@glimmer/component', '@glimmer/tracking'],
-		plugins: [resolve(), commonjs(), typescript()],
+		plugins: [
+			resolve({
+				browser: true,
+				extensions: ['.ts', '.mjs', '.js'],
+			}),
+			typescript(),
+		],
 	},
 ];
 

@@ -1,1 +1,2 @@
-export { default } from '@iconify/ember/components/iconify-icon';
+import Icon from '@iconify/ember/components/iconify-icon';
+export default Icon;
