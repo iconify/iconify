@@ -1,5 +1,5 @@
 <script>
-    import OfflineIcon from '@iconify/svelte/offline';
+    import OfflineIcon from '@iconify/svelte/dist/OfflineIcon.svelte';
     import FullIcon from '@iconify/svelte';
 </script>
 

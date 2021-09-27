@@ -1,5 +1,5 @@
 <script>
-	import Icon from '@iconify/svelte/offline';
+	import Icon from '@iconify/svelte/dist/OfflineIcon.svelte';
     import accountIcon from '@iconify-icons/mdi-light/account';
     import alertIcon from '@iconify-icons/mdi-light/alert';
 </script>
