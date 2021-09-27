@@ -11,9 +11,9 @@ import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconif
 import {
 	getStorage,
 	addIconSet,
-	getIcon,
+	getIconFromStorage,
 } from '@iconify/core/lib/storage/storage';
-import { renderIcon } from '@iconify/iconify/lib/modules/render';
+import { renderIconInPlaceholder } from '@iconify/iconify/lib/modules/render';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import { IconifyElement } from '@iconify/iconify/lib/modules/element';
 
@@ -101,11 +101,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -146,11 +146,15 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -190,11 +194,15 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -236,11 +244,15 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -278,11 +290,15 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -329,11 +345,15 @@ describe('Testing renderer', () => {
 		element.element.style.border = '1px solid green';
 
 		// Get icon data
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 
 		// Test SVG
 		expect(svg.tagName.toUpperCase()).to.be.equal('SVG');
@@ -400,11 +420,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -456,10 +476,14 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test attributes, compare them with last SVG
@@ -521,10 +545,14 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test changed attributes
@@ -568,10 +596,14 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test changed attributes
@@ -614,11 +646,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -663,11 +695,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -710,7 +742,7 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 		expect(iconData.body.indexOf('M6 17c0-2')).to.be.equal(
 			-1,
@@ -718,7 +750,7 @@ describe('Testing renderer', () => {
 		);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -752,7 +784,7 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Test icon body to make sure icon was changed
@@ -761,7 +793,11 @@ describe('Testing renderer', () => {
 			'Wrong icon body: ' + iconData.body
 		);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Test finder
@@ -798,16 +834,16 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
 		) as IconifyElement;
-		let html = renderIcon(
+		let html = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData,
@@ -848,13 +884,22 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
-		html = renderIcon(element, customisations, iconData, true) as string;
+		html = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData,
+			true
+		) as string;
 
 		// Test icon body to make sure icon was changed
 		expect(html.indexOf('transform="')).to.not.be.equal(
@@ -896,11 +941,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -938,10 +983,14 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Check dimensions
@@ -984,11 +1033,11 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data
-		let iconData = getIcon(storage, element.name.name);
+		let iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
 		// Render icon
-		let svg = renderIcon(
+		let svg = renderIconInPlaceholder(
 			element,
 			customisations,
 			iconData
@@ -1032,10 +1081,14 @@ describe('Testing renderer', () => {
 		});
 
 		// Get icon data and render SVG
-		iconData = getIcon(storage, element.name.name);
+		iconData = getIconFromStorage(storage, element.name.name);
 		expect(iconData).to.not.be.equal(null);
 
-		svg = renderIcon(element, customisations, iconData) as IconifyElement;
+		svg = renderIconInPlaceholder(
+			element,
+			customisations,
+			iconData
+		) as IconifyElement;
 		expect(svg).to.not.be.eql(lastSVG);
 
 		// Check dimensions and alignment

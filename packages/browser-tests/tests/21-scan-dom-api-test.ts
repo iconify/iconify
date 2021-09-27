@@ -5,7 +5,7 @@ import { getNode, setRoot } from './node';
 import { addFinder } from '@iconify/iconify/lib/modules/finder';
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
-import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { finder as iconifyFinder } from '@iconify/iconify/lib/finders/iconify';
 import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconify-icon';
 import { listRootNodes } from '@iconify/iconify/lib/modules/root';
@@ -37,7 +37,7 @@ describe('Scanning DOM with API', () => {
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 
@@ -146,7 +146,7 @@ describe('Scanning DOM with API', () => {
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 
@@ -295,7 +295,7 @@ describe('Scanning DOM with API', () => {
 		const prefix2 = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 
@@ -396,7 +396,7 @@ describe('Scanning DOM with API', () => {
 		const prefix = nextPrefix();
 
 		// Set fake API hosts to make test reliable
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 

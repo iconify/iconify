@@ -10,8 +10,8 @@ import { listRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM } from '@iconify/iconify/lib/modules/scanner';
 import {
 	initObserver,
-	observeNode,
-	removeObservedNode,
+	observe,
+	stopObserving,
 } from '@iconify/iconify/lib/modules/observer';
 
 const expect = chai.expect;
@@ -141,7 +141,7 @@ describe('Observe DOM', () => {
 		expect(nodes[0].temporary).to.be.equal(false);
 
 		// Observe another node
-		observeNode(node);
+		observe(node);
 
 		nodes = listRootNodes();
 		expect(nodes.length).to.be.equal(2);
@@ -200,7 +200,7 @@ describe('Observe DOM', () => {
 			'<span class="iconify" data-icon="mdi:home"></span>';
 
 		// Observe node: should run scan on next tick
-		observeNode(node);
+		observe(node);
 
 		// Test nodes
 		setTimeout(() => {
@@ -236,7 +236,7 @@ describe('Observe DOM', () => {
 		expect(nodes[0].temporary).to.be.equal(false);
 
 		// Observe another node
-		observeNode(node);
+		observe(node);
 
 		nodes = listRootNodes();
 		expect(nodes.length).to.be.equal(2);
@@ -246,7 +246,7 @@ describe('Observe DOM', () => {
 		expect(nodes[1].temporary).to.be.equal(false);
 
 		// Stop observing baseNode
-		removeObservedNode(baseNode);
+		stopObserving(baseNode);
 
 		nodes = listRootNodes();
 		expect(nodes.length).to.be.equal(1);

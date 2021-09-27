@@ -1,5 +1,5 @@
 import { addRootNode, listRootNodes } from '@iconify/iconify/lib/modules/root';
-import { removeObservedNode } from '@iconify/iconify/lib/modules/observer';
+import { stopObserving } from '@iconify/iconify/lib/modules/observer';
 import { ObservedNode } from '@iconify/iconify/lib/modules/observed-node';
 
 let counter = 0;
@@ -23,7 +23,7 @@ export function getNode(prefix = 'test') {
 export function setRoot(node: HTMLElement): ObservedNode {
 	listRootNodes().forEach((node) => {
 		if (typeof node.node !== 'function') {
-			removeObservedNode(node.node);
+			stopObserving(node.node);
 		}
 	});
 	return addRootNode(node);

@@ -3,7 +3,7 @@ import chai from 'chai';
 
 import { FakeData, setFakeData, prepareQuery, sendQuery } from './fake-api';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
-import { setAPIConfig } from '@iconify/core/lib/api/config';
+import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { loadIcons } from '@iconify/core/lib/api/icons';
 
 const expect = chai.expect;
@@ -40,7 +40,7 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 		setFakeData(provider, prefix, data);
@@ -89,7 +89,7 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 		});
 		setFakeData(provider, prefix, data);
@@ -147,7 +147,7 @@ describe('Testing fake API', () => {
 				height: 24,
 			},
 		};
-		setAPIConfig(provider, {
+		addAPIProvider(provider, {
 			resources: ['https://api1.local', 'https://api2.local'],
 			rotate: 20,
 			timeout: 100,

@@ -8,7 +8,6 @@ import { finder as iconifyIconFinder } from '@iconify/iconify/lib/finders/iconif
 import { getStorage, addIconSet } from '@iconify/core/lib/storage/storage';
 import { listRootNodes } from '@iconify/iconify/lib/modules/root';
 import { scanDOM, scanElement } from '@iconify/iconify/lib/modules/scanner';
-import { removeObservedNode } from '@iconify/iconify/lib/modules/observer';
 
 const expect = chai.expect;
 
