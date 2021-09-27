@@ -2,7 +2,7 @@
 	"name": "@iconify/vue",
 	"description": "Iconify icon component for Vue 3.",
 	"author": "Vjacheslav Trushkin",
-	"version": "3.1.0-beta.2",
+	"version": "3.1.0-beta.4",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -51,7 +51,7 @@
 		"vue": "3"
 	},
 	"peerDependencies": {
-		"vue": "^3.0.0"
+		"vue": "3.x"
 	},
 	"dependencies": {
 		"cross-fetch": "^3.1.4"

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
@@ -14,7 +15,7 @@ const compile = {
 	dist: true,
 	api: true,
 };
-process.argv.slice(2).forEach((cmd) => {
+process.argv.slice(2).forEach(cmd => {
 	if (cmd.slice(0, 2) !== '--') {
 		return;
 	}
@@ -38,7 +39,7 @@ process.argv.slice(2).forEach((cmd) => {
 
 			case 'only':
 				// disable other modules
-				Object.keys(compile).forEach((key2) => {
+				Object.keys(compile).forEach(key2 => {
 					compile[key2] = key2 === key;
 				});
 				break;
@@ -47,7 +48,7 @@ process.argv.slice(2).forEach((cmd) => {
 });
 
 // Check if required modules in same monorepo are available
-const fileExists = (file) => {
+const fileExists = file => {
 	try {
 		fs.statSync(file);
 	} catch (e) {
@@ -64,7 +65,7 @@ if (compile.api && !fileExists(packagesDir + '/vue/lib/IconifyIcon.d.ts')) {
 	compile.lib = true;
 }
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
 	compile.core = true;
 }
 
@@ -78,7 +79,7 @@ if (compile.core) {
 }
 
 // Compile other packages
-Object.keys(compile).forEach((key) => {
+Object.keys(compile).forEach(key => {
 	if (key !== 'core' && compile[key]) {
 		commands.push({
 			cmd: 'npm',
