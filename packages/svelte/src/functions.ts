@@ -1,7 +1,8 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
-import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
