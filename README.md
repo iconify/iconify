@@ -54,23 +54,18 @@ Other packages:
 -   [Iconify types](./packages/types/) - TypeScript types.
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
 -   [Iconify core](./packages/core/) - common files used by various components.
+-   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
+-   [Library builder](./packages/library-builder/) - build scripts for packages that do not require bundling, similar to `tsup`, but without bundler. Used by Utils, Core and API Redundancy packages. Builds ES and CommonJS modules, type definition files and updates exports in `package.json`.
 -   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
 -   [Vue 3 demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Vue 2 demo](./packages/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
 -   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
--   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
+-   [Svelte demo with Vite](./packages/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
+-   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
+-   [SvelteKit demo](./packages/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./packages/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
 -   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
-
-### Legacy packages
-
-Unfortunately Lerna does not support several versions of the same package. Because of that, some packages were moved from "packages" to "archive". This applies only to packages that were replaced by newer packages that aren't backwards compatible (and packages that rely on those packages).
-
-Legacy packages:
-
--   [React with API](./archive/react-with-api/) - React component with API support. It has been merged with [`react` package](./packages/react/) in newer version.
--   [React](./archive/react/) - React component without API support. Component without API support does not make sense, there are plenty of other icon components already, so this component has been archived and replaced with new component that supports Iconify API.
 
 ## Installation
 
