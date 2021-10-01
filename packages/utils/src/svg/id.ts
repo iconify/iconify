@@ -1,19 +1,21 @@
 /**
+ * IDs usage:
+ *
+ * id="{id}"
+ * xlink:href="#{id}"
+ * url(#{id})
+ *
+ * From SVG animations:
+ *
+ * begin="0;{id}.end"
+ * begin="{id}.end"
+ * begin="{id}.click"
+ */
+
+/**
  * Regular expression for finding ids
  */
 const regex = /\sid="(\S+)"/g;
-
-/**
- * Match for allowed characters before and after id in replacement, including () for group
- */
-const replaceValue = '([^A-Za-z0-9_-])';
-
-/**
- * Escape value for 'new RegExp()'
- */
-function escapeRegExp(str: string) {
-	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
 
 /**
  * New random-ish prefix for ids
@@ -29,6 +31,13 @@ const randomPrefix =
  * Counter for ids, increasing with every replacement
  */
 let counter = 0;
+
+/**
+ * Check if character is a quote
+ */
+function isQuote(char: string): boolean {
+	return char === '"' || char === "'";
+}
 
 /**
  * Replace IDs in SVG output with unique IDs
@@ -48,18 +57,52 @@ export function replaceIDs(
 		return body;
 	}
 
+	// Sort ids by length
+	ids.sort((a, b) => b.length - a.length);
+
 	// Replace with unique ids
 	ids.forEach((id) => {
 		const newID =
 			typeof prefix === 'function' ? prefix() : prefix + counter++;
 
-		body = body.replace(
-			new RegExp(
-				replaceValue + '(' + escapeRegExp(id) + ')' + replaceValue,
-				'g'
-			),
-			'$1' + newID + '$3'
-		);
+		const parts = body.split(id);
+		let lastPart = parts.shift() as string;
+		body = lastPart;
+
+		parts.forEach((part) => {
+			if (!part.length) {
+				// Two ids in a row? Not possible
+				body += id + part;
+				lastPart += id + part;
+				return;
+			}
+
+			const lastChar = lastPart.slice(lastPart.length - 1);
+			const nextChar = part.slice(0, 1);
+
+			// Test if characters around ID are
+			function test(): boolean {
+				if (lastChar === '#') {
+					// xlink:href="#{id}"
+					// url(#{id})
+					return isQuote(nextChar) || nextChar === ')';
+				}
+
+				const isAnimationDot =
+					nextChar === '.' && !!part.slice(1, 2).match(/\w/);
+				if (isQuote(lastChar) || lastChar === ';') {
+					// id="{id}"
+					// begin="0;{id}.end" (coverts all animations)
+					return isQuote(nextChar) || isAnimationDot;
+				}
+
+				return false;
+			}
+
+			const success = test();
+			body += (success ? newID : id) + part;
+			lastPart = part;
+		});
 	});
 
 	return body;
