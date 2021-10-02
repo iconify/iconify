@@ -45,20 +45,23 @@ describe('Testing replaceIDs', () => {
 	});
 
 	test('Matching parts', () => {
-		let body =
+		const body =
 			'<defs><path id="test1"><path id="test"></defs><use fill="#FFA000" xlink:href="#test1"/><use fill="#00f" xlink:href="#test"/>';
 		const expected =
 			'<defs><path id="callback-0"><path id="callback-1"></defs><use fill="#FFA000" xlink:href="#callback-0"/><use fill="#00f" xlink:href="#callback-1"/>';
 
-		let counter = 0;
-		expect(replaceIDs(body, () => 'callback-' + counter++)).toBe(expected);
-
-		// Reverse order
-		body =
-			'<defs><path id="test"><path id="test1"></defs><use fill="#FFA000" xlink:href="#test"/><use fill="#00f" xlink:href="#test1"/>';
-
-		counter = 1;
-		expect(replaceIDs(body, () => 'callback-' + counter--)).toBe(expected);
+		expect(
+			replaceIDs(body, (id: string) => {
+				switch (id) {
+					case 'test1':
+						return 'callback-0';
+					case 'test':
+						return 'callback-1';
+					default:
+						throw new Error(`Unexpected id "${id}""`);
+				}
+			})
+		).toBe(expected);
 	});
 
 	test('With animation', () => {
@@ -84,8 +87,21 @@ describe('Testing replaceIDs', () => {
 		const expected =
 			'<path d="M12 10.9c1.1zM12 8.M12" fill="currentColor"><animateTransform id="callback-2" attributeName="transform" begin="0;callback-1.end"/><animateTransform id="callback-0" attributeName="transform" attributeType="XML" type="rotate" from="0 12 12" to="-90 12 12" dur="1s" begin="callback-2.end"/><animateTransform id="callback-1" attributeName="transform" attributeType="XML" type="rotate" from="-90 12 12" to="270 12 12" dur="1s" begin="callback-0.end"/></path>';
 
-		// To avoid messing up counter, using custom callback
-		let counter = 0;
-		expect(replaceIDs(body, () => 'callback-' + counter++)).toBe(expected);
+		// Using custom callback for reliable results
+		expect(
+			replaceIDs(body, (id: string) => {
+				switch (id) {
+					case 'path':
+						return 'callback-0';
+					case 'M12':
+						return 'callback-1';
+					case 'd':
+						return 'callback-2';
+
+					default:
+						throw new Error(`Unexpected id: ${id}`);
+				}
+			})
+		).toBe(expected);
 	});
 });

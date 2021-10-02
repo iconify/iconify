@@ -1,12 +1,16 @@
 .idea
 .vscode
 .DS_Store
+.eslintrc.js
 *.map
 node_modules
 imports-test.mjs
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
+tsconfig*.json
+build.js
+jest.config.js
 src
 spec
 tests
