@@ -31,6 +31,7 @@ export interface LegacyIconifyInfo {
 	// Icon grid
 	height?: number | number[];
 	displayHeight?: number;
+	samplesHeight?: number;
 
 	// Category
 	category?: string;
@@ -178,20 +179,20 @@ export function convertIconSetInfo(
 		}
 	}
 
-	if (
-		typeof source.displayHeight === 'number' ||
-		typeof source.displayHeight === 'string'
-	) {
-		// Convert from source.displayHeight
-		const num = parseInt(source.displayHeight as string);
-		if (
-			num >= minDisplayHeight &&
-			num <= maxDisplayHeight &&
-			Math.round(num) === num
-		) {
-			result.displayHeight = num;
+	['samplesHeight', 'displayHeight'].forEach((prop) => {
+		const value = source[prop];
+		if (typeof value === 'number' || typeof value === 'string') {
+			// Convert from source.displayHeight or source.samplesHeight
+			const num = parseInt(value as string);
+			if (
+				num >= minDisplayHeight &&
+				num <= maxDisplayHeight &&
+				Math.round(num) === num
+			) {
+				result.displayHeight = num;
+			}
 		}
-	}
+	});
 
 	// Convert palette from string value
 	if (typeof source.palette === 'string') {

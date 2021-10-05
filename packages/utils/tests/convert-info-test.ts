@@ -239,6 +239,50 @@ describe('Testing convertIconSetInfo', () => {
 		expect(result).toEqual(expected);
 	});
 
+	test('Testing CodIcon', () => {
+		// Test "info" field from mixed codicon.json
+		const raw = {
+			name: 'Codicons',
+			total: 383,
+			author: {
+				name: 'Microsoft Corporation',
+				url: 'https://github.com/microsoft/vscode-codicons',
+			},
+			license: {
+				title: 'CC BY 4.0',
+				spdx: 'CC-BY-4.0',
+				url: 'https://raw.githubusercontent.com/microsoft/vscode-codicons/master/LICENSE',
+			},
+			version: '0.0.23',
+			samples: ['account', 'bell-dot', 'new-file'],
+			samplesHeight: 16,
+			height: [16, 24],
+			category: 'General',
+			palette: false,
+		};
+		const result = convertIconSetInfo(raw);
+		const expected: IconifyInfo = {
+			name: 'Codicons',
+			total: 383,
+			author: {
+				name: 'Microsoft Corporation',
+				url: 'https://github.com/microsoft/vscode-codicons',
+			},
+			license: {
+				title: 'CC BY 4.0',
+				spdx: 'CC-BY-4.0',
+				url: 'https://raw.githubusercontent.com/microsoft/vscode-codicons/master/LICENSE',
+			},
+			version: '0.0.23',
+			samples: ['account', 'bell-dot', 'new-file'],
+			displayHeight: 16,
+			height: [16, 24],
+			category: 'General',
+			palette: false,
+		};
+		expect(result).toEqual(expected);
+	});
+
 	test('Already converted item', () => {
 		const item: IconifyInfo = {
 			name: 'Font Awesome 4',
