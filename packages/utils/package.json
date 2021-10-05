@@ -2,7 +2,7 @@
 	"name": "@iconify/utils",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.10",
+	"version": "1.0.11",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -45,6 +45,10 @@
 		"./lib/customisations/shorthand": {
 			"require": "./lib/customisations/shorthand.js",
 			"import": "./lib/customisations/shorthand.mjs"
+		},
+		"./lib/icon-set/convert-info": {
+			"require": "./lib/icon-set/convert-info.js",
+			"import": "./lib/icon-set/convert-info.mjs"
 		},
 		"./lib/icon-set/expand": {
 			"require": "./lib/icon-set/expand.js",
