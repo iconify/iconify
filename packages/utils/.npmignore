@@ -9,7 +9,6 @@ npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
 tsconfig*.json
-build.js
 jest.config.js
 src
 spec
