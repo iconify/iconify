@@ -2,6 +2,7 @@ import type { IconifyInfo } from '@iconify/types';
 
 const minDisplayHeight = 16;
 const maxDisplayHeight = 24;
+const maxSamplesCount = 3;
 
 /**
  * Item provided by API or loaded from collections.json, slightly different from IconifyInfo
@@ -36,6 +37,24 @@ export interface LegacyIconifyInfo {
 	// Category
 	category?: string;
 	palette?: 'Colorless' | 'Colorful';
+}
+
+/**
+ * Check if displayHeight value is valid, returns 0 on failure
+ */
+function validateDisplayHeight(value: number): number {
+	while (value < minDisplayHeight) {
+		value *= 2;
+	}
+	while (value > maxDisplayHeight) {
+		value /= 2;
+	}
+
+	return value === Math.round(value) &&
+		value >= minDisplayHeight &&
+		value <= maxDisplayHeight
+		? value
+		: 0;
 }
 
 /**
@@ -83,48 +102,75 @@ export function convertIconSetInfo(
 		return null;
 	}
 
-	// Generate data
-	const result: IconifyInfo = {
-		name: name,
-		total: typeof source.total === 'number' ? source.total : 0,
-		version: typeof source.version === 'string' ? source.version : '',
-		author: {
-			name: getSourceNestedString(
-				'author',
-				'name',
-				typeof source.author === 'string' ? source.author : 'Unknown'
-			),
-			url: getSourceNestedString('author', 'url', ''),
-		},
-		license: {
-			title: getSourceNestedString(
-				'license',
-				'title',
-				typeof source.license === 'string' ? source.license : 'Unknown'
-			),
-			spdx: getSourceNestedString('license', 'spdx', ''),
-			url: getSourceNestedString('license', 'url', ''),
-		},
-		samples: [],
-		category: typeof source.category === 'string' ? source.category : '',
-		palette: typeof source.palette === 'boolean' ? source.palette : false,
-	};
+	// Generate basic info
+	const info = {
+		name,
+	} as IconifyInfo;
 
-	// Total as string
-	if (typeof source.total === 'string') {
-		const num = parseInt(source.total);
-		if (num > 0) {
-			result.total = num;
+	// Number of icons
+	switch (typeof source.total) {
+		case 'number':
+			info.total = source.total;
+			break;
+
+		case 'string': {
+			const num = parseInt(source.total);
+			if (num > 0) {
+				info.total = num;
+			}
+			break;
 		}
 	}
 
-	// Add samples
+	// Version
+	if (typeof source.version === 'string') {
+		info.version = source.version;
+	}
+
+	// Author
+	info.author = {
+		name: getSourceNestedString(
+			'author',
+			'name',
+			typeof source.author === 'string' ? source.author : ''
+		),
+	};
+	if (typeof source.author === 'object') {
+		const sourceAuthor = source.author as Record<string, string>;
+		if (typeof sourceAuthor.url === 'string') {
+			info.author.url = sourceAuthor.url;
+		}
+	}
+
+	// License
+	info.license = {
+		title: getSourceNestedString(
+			'license',
+			'title',
+			typeof source.license === 'string' ? source.license : ''
+		),
+	};
+	if (typeof source.license === 'object') {
+		const sourceLicense = source.license as Record<string, string>;
+		if (typeof sourceLicense.spdx === 'string') {
+			info.license.spdx = sourceLicense.spdx;
+		}
+		if (typeof sourceLicense.url === 'string') {
+			info.license.url = sourceLicense.url;
+		}
+	}
+
+	// Samples
 	if (source.samples instanceof Array) {
+		const samples: string[] = [];
 		source.samples.forEach((item) => {
-			if (result.samples.length < 3 && typeof item === 'string') {
-				result.samples.push(item);
+			if (typeof item === 'string' && samples.length < maxSamplesCount) {
+				samples.push(item);
 			}
 		});
+		if (samples.length) {
+			info.samples = samples;
+		}
 	}
 
 	// Add height
@@ -134,7 +180,7 @@ export function convertIconSetInfo(
 	) {
 		const num = parseInt(source.height as string);
 		if (num > 0) {
-			result.height = num;
+			info.height = num;
 		}
 	}
 
@@ -142,40 +188,29 @@ export function convertIconSetInfo(
 		source.height.forEach((item) => {
 			const num = parseInt(item);
 			if (num > 0) {
-				if (!(result.height instanceof Array)) {
-					result.height = [];
+				if (!(info.height instanceof Array)) {
+					info.height = [];
 				}
-				result.height.push(num);
+				info.height.push(num);
 			}
 		});
 
-		switch ((result.height as number[]).length) {
+		switch ((info.height as number[]).length) {
 			case 0:
-				delete result.height;
+				delete info.height;
 				break;
 
 			case 1:
-				result.height = (result.height as number[])[0];
+				info.height = (info.height as number[])[0];
 		}
 	}
 
 	// Add display height
-	if (typeof result.height === 'number') {
+	if (typeof info.height === 'number') {
 		// Convert from height
-		result.displayHeight = result.height;
-		while (result.displayHeight < minDisplayHeight) {
-			result.displayHeight *= 2;
-		}
-		while (result.displayHeight > maxDisplayHeight) {
-			result.displayHeight /= 2;
-		}
-
-		if (
-			result.displayHeight !== Math.round(result.displayHeight) ||
-			result.displayHeight < minDisplayHeight ||
-			result.displayHeight > maxDisplayHeight
-		) {
-			delete result.displayHeight;
+		const displayHeight = validateDisplayHeight(info.height);
+		if (displayHeight) {
+			info.displayHeight = displayHeight;
 		}
 	}
 
@@ -183,32 +218,41 @@ export function convertIconSetInfo(
 		const value = source[prop];
 		if (typeof value === 'number' || typeof value === 'string') {
 			// Convert from source.displayHeight or source.samplesHeight
-			const num = parseInt(value as string);
-			if (
-				num >= minDisplayHeight &&
-				num <= maxDisplayHeight &&
-				Math.round(num) === num
-			) {
-				result.displayHeight = num;
+			const displayHeight = validateDisplayHeight(
+				parseInt(value as string)
+			);
+			if (displayHeight) {
+				info.displayHeight = displayHeight;
 			}
 		}
 	});
 
-	// Convert palette from string value
-	if (typeof source.palette === 'string') {
-		switch (source.palette.toLowerCase()) {
-			case 'colorless': // Iconify v1
-			case 'false': // Boolean as string
-				result.palette = false;
-				break;
-
-			case 'colorful': // Iconify v1
-			case 'true': // Boolean as string
-				result.palette = true;
-		}
+	// Category
+	if (typeof source.category === 'string') {
+		info.category = source.category;
 	}
 
-	// Parse all old keys
+	// Palette
+	switch (typeof source.palette) {
+		case 'boolean':
+			info.palette = source.palette;
+			break;
+
+		case 'string':
+			switch (source.palette.toLowerCase()) {
+				case 'colorless': // Iconify v1
+				case 'false': // Boolean as string
+					info.palette = false;
+					break;
+
+				case 'colorful': // Iconify v1
+				case 'true': // Boolean as string
+					info.palette = true;
+			}
+			break;
+	}
+
+	// Parse all old strings
 	Object.keys(source).forEach((key) => {
 		const value = source[key];
 		if (typeof value !== 'string') {
@@ -217,20 +261,20 @@ export function convertIconSetInfo(
 		switch (key) {
 			case 'url':
 			case 'uri':
-				result.author.url = value;
+				info.author.url = value;
 				break;
 
 			case 'licenseURL':
 			case 'licenseURI':
-				result.license.url = value;
+				info.license.url = value;
 				break;
 
 			case 'licenseID':
 			case 'licenseSPDX':
-				result.license.spdx = value;
+				info.license.spdx = value;
 				break;
 		}
 	});
 
-	return result;
+	return info;
 }

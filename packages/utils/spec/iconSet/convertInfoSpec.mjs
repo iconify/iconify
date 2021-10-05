@@ -14,20 +14,12 @@ describe('Testing convertIconSetInfo', () => {
 		});
 		expected = {
 			name: 'Foo',
-			version: '',
-			total: 0,
 			author: {
-				name: 'Unknown',
-				url: '',
+				name: '',
 			},
 			license: {
-				title: 'Unknown',
-				spdx: '',
-				url: '',
+				title: '',
 			},
-			samples: [],
-			palette: false,
-			category: '',
 		};
 		expect(result).toEqual(expected);
 
@@ -67,8 +59,6 @@ describe('Testing convertIconSetInfo', () => {
 		});
 		expected = {
 			name: 'Foo',
-			version: '',
-			total: 0,
 			author: {
 				name: 'Author',
 				url: 'https://localhost/',
@@ -82,7 +72,6 @@ describe('Testing convertIconSetInfo', () => {
 			samples: ['arrow-left', 'arrow-right', 'arrow-up'],
 			displayHeight: 24,
 			palette: true,
-			category: '',
 		};
 		expect(result).toEqual(expected);
 
@@ -106,21 +95,15 @@ describe('Testing convertIconSetInfo', () => {
 		});
 		expected = {
 			name: 'Foo',
-			version: '',
 			total: 100,
 			author: {
 				name: 'Author',
-				url: '',
 			},
 			license: {
 				title: 'BSD',
-				spdx: '',
-				url: '',
 			},
 			height: [16, 18],
-			samples: [],
 			palette: true,
-			category: '',
 		};
 		expect(result).toEqual(expected);
 
@@ -182,7 +165,6 @@ describe('Testing convertIconSetInfo', () => {
 		const result = convertIconSetInfo(raw);
 		const expected = {
 			name: 'Ant Design Icons',
-			version: '',
 			total: 728,
 			author: {
 				name: 'HeskeyBaozi',
@@ -190,8 +172,6 @@ describe('Testing convertIconSetInfo', () => {
 			},
 			license: {
 				title: 'MIT',
-				spdx: '',
-				url: '',
 			},
 			height: 16,
 			samples: ['pushpin', 'pie-chart-outline', 'user-add-outline'],
@@ -227,7 +207,6 @@ describe('Testing convertIconSetInfo', () => {
 			},
 			license: {
 				title: 'Open Font License',
-				spdx: '',
 				url: 'http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL',
 			},
 			samples: ['wrench', 'bell-o', 'user-o'],
@@ -248,7 +227,6 @@ describe('Testing convertIconSetInfo', () => {
 			},
 			license: {
 				title: 'Open Font License',
-				spdx: '',
 				url: 'http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL',
 			},
 			samples: ['wrench', 'bell-o', 'user-o'],

@@ -144,7 +144,7 @@ export interface IconifyInfo {
 	};
 
 	// Array of icons that should be used for samples in icon sets list.
-	samples: string[];
+	samples?: string[];
 
 	// Icon grid: number or array of numbers.
 	height?: number | number[];
@@ -156,8 +156,8 @@ export interface IconifyInfo {
 	category?: string;
 
 	// Palette status. True if icons have predefined color scheme, false if icons use currentColor.
-	// Icon set should not mix icons with and without palette to simplify search.
-	palette: boolean;
+	// Ideally, icon set should not mix icons with and without palette to simplify search.
+	palette?: boolean;
 }
 
 /**
