@@ -2,7 +2,7 @@
 	"name": "@iconify/utils",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.13",
+	"version": "1.0.14",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -22,6 +22,22 @@
 	},
 	"exports": {
 		"./*": "./*",
+		"./lib/colors": {
+			"require": "./lib/colors/index.js",
+			"import": "./lib/colors/index.mjs"
+		},
+		"./lib/colors/index": {
+			"require": "./lib/colors/index.js",
+			"import": "./lib/colors/index.mjs"
+		},
+		"./lib/colors/keywords": {
+			"require": "./lib/colors/keywords.js",
+			"import": "./lib/colors/keywords.mjs"
+		},
+		"./lib/colors/types": {
+			"require": "./lib/colors/types.js",
+			"import": "./lib/colors/types.mjs"
+		},
 		"./lib/customisations/bool": {
 			"require": "./lib/customisations/bool.js",
 			"import": "./lib/customisations/bool.mjs"
