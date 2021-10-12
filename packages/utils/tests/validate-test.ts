@@ -218,4 +218,70 @@ describe('Testing validation', () => {
 
 		done();
 	});
+
+	test('Invalid default values', (done) => {
+		try {
+			validateIconSet(
+				{
+					prefix: 'foo',
+					icons: {
+						icon1: {
+							body: '<path d="icon1" />',
+						},
+					},
+					height: 24,
+					// Object
+					rotate: {
+						foo: 1,
+					},
+				},
+				{ fix: true }
+			);
+			done('Expected to throw error for bad default properties');
+		} catch (err) {
+			//
+		}
+
+		try {
+			validateIconSet(
+				{
+					prefix: 'foo',
+					icons: {
+						icon1: {
+							body: '<path d="icon1" />',
+						},
+					},
+					height: 24,
+					// Object
+					hFlip: null,
+				},
+				{ fix: true }
+			);
+			done('Expected to throw error for bad default properties');
+		} catch (err) {
+			//
+		}
+
+		try {
+			validateIconSet(
+				{
+					prefix: 'foo',
+					icons: {
+						icon1: {
+							body: '<path d="icon1" />',
+						},
+					},
+					height: 24,
+					// String
+					width: '32',
+				},
+				{ fix: true }
+			);
+			done('Expected to throw error for bad default properties');
+		} catch (err) {
+			//
+		}
+
+		done();
+	});
 });

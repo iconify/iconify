@@ -26,7 +26,7 @@
 		"test": "jest"
 	},
 	"devDependencies": {
-		"@iconify/core": "^1.2.0-beta.3",
+		"@iconify/core": "^1.2.0-beta.4",
 		"@microsoft/api-extractor": "^7.15.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@rollup/plugin-typescript": "^8.2.1",

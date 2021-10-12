@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { IconifyJSON } from '@iconify/types';
-import { minifyProps, iconDefaults } from '../icon';
+import { iconDefaults } from '../icon';
 
 /**
  * Minify icon set
  *
- * Function finds common values for few numeric properties, such as 'width' and 'height' (see minifyProps for list of properties),
+ * Function finds common values for few numeric properties, such as 'width' and 'height' (see iconDefaults keys for list of properties),
  * removes entries from icons and sets default entry in root of icon set object.
  *
  * For example, this:
@@ -45,93 +45,88 @@ import { minifyProps, iconDefaults } from '../icon';
 export function minifyIconSet(data: IconifyJSON): void {
 	const icons = Object.keys(data.icons);
 
-	minifyProps.forEach((prop) => {
-		// Check for default value for property
-		const hasIconDefault = typeof iconDefaults[prop] === 'number';
-		if (hasIconDefault && data[prop] === iconDefaults[prop]) {
-			delete data[prop];
-		}
+	(Object.keys(iconDefaults) as (keyof typeof iconDefaults)[]).forEach(
+		(prop) => {
+			// Check for default value for property
+			if (data[prop] === iconDefaults[prop]) {
+				delete data[prop];
+			}
+			const defaultValue = iconDefaults[prop];
+			const propType = typeof defaultValue;
 
-		// Check for previously minified value
-		const hasMinifiedDefault = typeof data[prop] === 'number';
+			// Check for previously minified value
+			const hasMinifiedDefault =
+				typeof data[prop] === propType && data[prop] !== defaultValue;
 
-		// Find value that is used by most icons
-		let maxCount = 0;
-		let maxValue: number | null = null;
-		const counters: Map<number, number> = new Map();
+			// Find value that is used by most icons
+			let maxCount = 0;
+			let maxValue: typeof defaultValue | null = null;
+			const counters: Map<typeof defaultValue, number> = new Map();
 
-		for (let i = 0; i < icons.length; i++) {
-			const item = data.icons[icons[i]];
+			for (let i = 0; i < icons.length; i++) {
+				const item = data.icons[icons[i]];
 
-			let value: number;
-			if (typeof item[prop] === 'number') {
-				value = item[prop]!;
-			} else if (hasMinifiedDefault) {
-				value = data[prop]!;
-			} else if (hasIconDefault) {
-				value = iconDefaults[prop];
+				let value: typeof defaultValue;
+				if (typeof item[prop] === propType) {
+					value = item[prop]!;
+				} else if (hasMinifiedDefault) {
+					value = data[prop]!;
+				} else {
+					value = iconDefaults[prop];
+				}
+
+				if (i === 0) {
+					// First item
+					maxCount = 1;
+					maxValue = value;
+					counters.set(value, 1);
+					continue;
+				}
+
+				if (!counters.has(value)) {
+					// First entry for new value
+					counters.set(value, 1);
+					continue;
+				}
+
+				const count = counters.get(value)! + 1;
+				counters.set(value, count);
+				if (count > maxCount) {
+					maxCount = count;
+					maxValue = value;
+				}
+			}
+
+			// Found value to minify
+			const canMinify = maxValue !== null && maxCount > 1;
+			const oldDefault = hasMinifiedDefault ? data[prop] : null;
+
+			// Change global value
+			if (!canMinify || maxValue === defaultValue) {
+				delete data[prop];
 			} else {
-				// Cannot minify property
-				maxValue = null;
-				break;
+				data[prop as 'height'] = maxValue as number;
 			}
 
-			if (i === 0) {
-				// First item
-				maxCount = 1;
-				maxValue = value;
-				counters.set(value, 1);
-				continue;
-			}
+			// Minify stuff
+			icons.forEach((key) => {
+				const item = data.icons[key];
+				if (canMinify && item[prop] === maxValue) {
+					// New value matches minified value
+					delete item[prop];
+					return;
+				}
 
-			if (!counters.has(value)) {
-				// First entry for new value
-				counters.set(value, 1);
-				continue;
-			}
+				if (hasMinifiedDefault && item[prop] === void 0) {
+					// Old value matches old minified value
+					item[prop as 'height'] = oldDefault as number;
+				}
 
-			const count = counters.get(value)! + 1;
-			counters.set(value, count);
-			if (count > maxCount) {
-				maxCount = count;
-				maxValue = value;
-			}
+				if (!canMinify && item[prop] === iconDefaults[prop]) {
+					// Current value (after changes above) matches default and there is no minified value
+					delete item[prop];
+				}
+			});
 		}
-
-		// Found value to minify
-		const canMinify = maxValue !== null && maxCount > 1;
-		const oldDefault = hasMinifiedDefault ? data[prop] : null;
-
-		// Change global value
-		if (!canMinify) {
-			delete data[prop];
-		} else {
-			data[prop] = maxValue!;
-		}
-
-		// Check if new minified value matches default value
-		if (hasIconDefault && data[prop] === iconDefaults[prop]) {
-			delete data[prop];
-		}
-
-		// Minify stuff
-		icons.forEach((key) => {
-			const item = data.icons[key];
-			if (canMinify && item[prop] === maxValue) {
-				// New value matches minified value
-				delete item[prop];
-				return;
-			}
-
-			if (hasMinifiedDefault && item[prop] === void 0) {
-				// Old value matches old minified value
-				item[prop] = oldDefault!;
-			}
-
-			if (!canMinify && item[prop] === iconDefaults[prop]) {
-				// Current value (after changes above) matches default and there is no minified value
-				delete item[prop];
-			}
-		});
-	});
+	);
 }

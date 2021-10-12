@@ -1,7 +1,7 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { fullIcon } from '@iconify/utils/lib/icon';
-import type { AddIconSetTracking } from '@iconify/utils/lib/icon-set/parse';
+import type { ParseIconSetTracking } from '@iconify/utils/lib/icon-set/parse';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 
 /**
@@ -60,19 +60,19 @@ export function getStorage(provider: string, prefix: string): IconStorage {
 export function addIconSet(
 	storage: IconStorage,
 	data: IconifyJSON,
-	list: AddIconSetTracking = 'none'
+	list: ParseIconSetTracking = 'none'
 ): boolean | string[] {
 	const t = Date.now();
 	return parseIconSet(
 		data,
 		(name, icon: FullIconifyIcon | null) => {
-			if (icon === null) {
-				storage.missing[name] = t;
-			} else {
+			if (icon) {
 				storage.icons[name] = icon;
+			} else {
+				storage.missing[name] = t;
 			}
 		},
-		list
+		{ list }
 	);
 }
 

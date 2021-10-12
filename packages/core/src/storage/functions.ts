@@ -9,7 +9,6 @@ import {
 	addIconToStorage,
 	addIconSet,
 } from './storage';
-// import { parseIconSet } from '../icon';
 
 /**
  * Interface for exported storage functions
@@ -100,11 +99,21 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 	) {
 		// Simple names: add icons one by one
 		let added = false;
-		parseIconSet(data, (name, icon) => {
-			if (icon !== null && addIcon(name, icon)) {
-				added = true;
+		parseIconSet(
+			data,
+			(name, icon) => {
+				if (icon && addIcon(name, icon)) {
+					added = true;
+				}
+			},
+			{
+				// Validate icon set and set prefix to empty
+				validate: {
+					fix: true,
+					prefix: '',
+				},
 			}
-		});
+		);
 		return added;
 	}
 

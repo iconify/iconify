@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { IconifyJSON } from '@iconify/types';
-import { minifyProps } from '../icon';
+import { iconDefaults } from '../icon';
 
 /**
  * Optional properties that must be copied when copying icon set
  */
-export const propsToCopy: (keyof IconifyJSON)[] = (
-	minifyProps as (keyof IconifyJSON)[]
-).concat(['provider']);
+export const propsToCopy = Object.keys(iconDefaults).concat([
+	'provider',
+]) as (keyof IconifyJSON)[];
 
 /**
  * Extract icons from icon set

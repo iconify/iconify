@@ -116,9 +116,19 @@ export function addCollection(
 			: prefix !== false && typeof data.prefix === 'string'
 			? data.prefix + ':'
 			: '';
-	parseIconSet(data, (name, icon) => {
-		if (icon !== null) {
-			storage[iconPrefix + name] = icon;
+	parseIconSet(
+		data,
+		(name, icon) => {
+			if (icon) {
+				storage[iconPrefix + name] = icon;
+			}
+		},
+		{
+			// Allow empty prefix
+			validate: {
+				fix: true,
+				prefix: iconPrefix,
+			},
 		}
-	});
+	);
 }

@@ -1,5 +1,5 @@
 import type { IconifyJSON, IconifyOptional } from '@iconify/types';
-import { minifyProps, matchName } from '../icon';
+import { iconDefaults, matchName } from '../icon';
 
 /**
  * Match character
@@ -270,15 +270,16 @@ export function validateIconSet(
 		}
 	}
 
-	// Validate all properties that can be optimised, must be numbers
-	minifyProps.forEach((prop) => {
-		if (
-			data[prop as keyof IconifyJSON] !== void 0 &&
-			typeof data[prop as keyof IconifyJSON] !== 'number'
-		) {
-			throw new Error(`Invalid value type for "${prop}"`);
+	// Validate all properties that can be optimised
+	(Object.keys(iconDefaults) as (keyof typeof iconDefaults)[]).forEach(
+		(prop) => {
+			const expectedType = typeof iconDefaults[prop];
+			const actualType = typeof data[prop as keyof IconifyJSON];
+			if (actualType !== 'undefined' && actualType !== expectedType) {
+				throw new Error(`Invalid value type for "${prop}"`);
+			}
 		}
-	});
+	);
 
 	// Validate characters map
 	if (data.chars !== void 0) {

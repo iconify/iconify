@@ -2,7 +2,7 @@
 	"name": "@iconify/core",
 	"description": "Reusable files used by multiple Iconify packages",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.2.0-beta.3",
+	"version": "1.2.0-beta.4",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -101,8 +101,8 @@
 	},
 	"dependencies": {
 		"@iconify/api-redundancy": "^1.0.2",
-		"@iconify/types": "^1.0.7",
-		"@iconify/utils": "^1.0.10",
+		"@iconify/types": "^1.0.10",
+		"@iconify/utils": "^1.0.15",
 		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {

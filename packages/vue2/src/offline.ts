@@ -64,9 +64,15 @@ export function addCollection(
 			? data.prefix + ':'
 			: '';
 	parseIconSet(data, (name, icon) => {
-		if (icon !== null) {
+		if (icon) {
 			storage[iconPrefix + name] = icon;
 		}
+	}, {
+		// Allow empty prefix
+		validate: {
+			fix: true,
+			prefix: iconPrefix,
+		},
 	});
 }
 

@@ -37,7 +37,7 @@ export function getIconData(
 			const item = data.aliases?.[name];
 			const result = getIcon(item.parent, iteration + 1);
 			if (result) {
-				mergeIconData(result, item);
+				return mergeIconData(result, item);
 			}
 			return result;
 		}

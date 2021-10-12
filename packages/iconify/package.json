@@ -72,7 +72,7 @@
 		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {
-		"@iconify/core": "^1.2.0-beta.3",
+		"@iconify/core": "^1.2.0-beta.4",
 		"@microsoft/api-extractor": "^7.12.0",
 		"@rollup/plugin-buble": "^0.21.3",
 		"@rollup/plugin-node-resolve": "^10.0.0",

@@ -1,5 +1,5 @@
 import type { IconifyJSON } from '@iconify/types';
-import { minifyProps } from '../icon';
+import { iconDefaults } from '../icon';
 
 /**
  * Expand minified icon set
@@ -9,19 +9,21 @@ import { minifyProps } from '../icon';
 export function expandIconSet(data: IconifyJSON): void {
 	const icons = Object.keys(data.icons);
 
-	minifyProps.forEach((prop) => {
-		if (typeof data[prop] !== 'number') {
-			return;
-		}
-		const value = data[prop];
-
-		icons.forEach((name) => {
-			const item = data.icons[name];
-			if (item[prop] === void 0) {
-				item[prop] = value;
+	(Object.keys(iconDefaults) as (keyof typeof iconDefaults)[]).forEach(
+		(prop) => {
+			if (typeof data[prop] !== typeof iconDefaults[prop]) {
+				return;
 			}
-		});
+			const value = data[prop];
 
-		delete data[prop];
-	});
+			icons.forEach((name) => {
+				const item = data.icons[name];
+				if (item[prop] === void 0) {
+					item[prop as 'height'] = value as number;
+				}
+			});
+
+			delete data[prop];
+		}
+	);
 }
