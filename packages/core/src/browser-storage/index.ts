@@ -211,7 +211,7 @@ export const loadCache: LoadIconsCache = (): void => {
 					const provider = data.provider;
 					const prefix = data.data.prefix;
 					const storage = getStorage(provider, prefix);
-					valid = addIconSet(storage, data.data) as boolean;
+					valid = addIconSet(storage, data.data).length > 0;
 				}
 			} catch (err) {
 				valid = false;

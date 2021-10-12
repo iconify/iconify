@@ -110,7 +110,7 @@ describe('Testing storage', () => {
 				},
 				height: 24,
 			})
-		).toBe(true);
+		).toEqual(['icon1', 'icon2']);
 
 		expect(Object.keys(storage.icons)).toEqual(['icon1', 'icon2']);
 
@@ -169,7 +169,7 @@ describe('Testing storage', () => {
 				width: 128,
 				height: 128,
 			})
-		).toBe(true);
+		).toEqual(['16-chevron-left', '16-chevron-right']);
 
 		expect(Object.keys(storage.icons)).toEqual([
 			'16-chevron-left',
@@ -246,7 +246,7 @@ describe('Testing storage', () => {
 				width: 128,
 				height: 128,
 			})
-		).toBe(true);
+		).toEqual(['16-chevron-left', '16-chevron-right']);
 
 		// List icons
 		expect(listIcons('', prefix)).toEqual([

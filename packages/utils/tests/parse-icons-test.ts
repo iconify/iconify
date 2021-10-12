@@ -58,7 +58,7 @@ describe('Testing parsing icon set', () => {
 					expect(data).toEqual(expected[name]);
 				}
 			)
-		).toBe(true);
+		).toEqual(['missing', 'icon1', 'icon2']);
 
 		// All names should have been parsed
 		expect(names).toEqual([]);
@@ -149,9 +149,6 @@ describe('Testing parsing icon set', () => {
 
 					// Check icon data
 					expect(data).toEqual(expected[name]);
-				},
-				{
-					list: 'all',
 				}
 			)
 		).toEqual(namesCopy);
@@ -349,9 +346,6 @@ describe('Testing parsing icon set', () => {
 
 					// Check icon data
 					expect(data).toEqual(expected[name]);
-				},
-				{
-					list: 'valid',
 				}
 			)
 		).toEqual(namesCopy);

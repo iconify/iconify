@@ -102,7 +102,7 @@
 	"dependencies": {
 		"@iconify/api-redundancy": "^1.0.2",
 		"@iconify/types": "^1.0.10",
-		"@iconify/utils": "^1.0.15",
+		"@iconify/utils": "^1.0.16",
 		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {

@@ -57,7 +57,7 @@ describe('Testing parsing icon set', () => {
 					expect(data).toEqual(expected[name]);
 				}
 			)
-		).toBe(true);
+		).toEqual(['missing', 'icon1', 'icon2']);
 
 		// All names should have been parsed
 		expect(names).toEqual([]);

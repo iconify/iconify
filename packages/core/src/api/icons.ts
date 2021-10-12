@@ -186,18 +186,17 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 					} else {
 						// Add icons to storage
 						try {
-							const added = addIconSet(
+							const parsed = addIconSet(
 								storage,
-								data as IconifyJSON,
-								'all'
+								data as IconifyJSON
 							);
-							if (typeof added === 'boolean') {
+							if (!parsed.length) {
 								return;
 							}
 
 							// Remove added icons from pending list
 							const pending = providerPendingIcons[prefix];
-							added.forEach((name) => {
+							parsed.forEach((name) => {
 								delete pending[name];
 							});
 

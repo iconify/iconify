@@ -4,15 +4,6 @@ import { getIconData } from './get-icon';
 import { IconSetValidationOptions, validateIconSet } from './validate';
 
 /**
- * What to track when parsing icon set:
- *
- * none - do not track anything, return true on success
- * valid - track valid icons, return list of valid icons on success
- * all - track valid and missing icons, return full list on success
- */
-export type ParseIconSetTracking = 'none' | 'valid' | 'all';
-
-/**
  * Which aliases to parse:
  *
  * none - do not parse aliases
@@ -45,25 +36,30 @@ export function isVariation(item: IconifyAlias): boolean {
 
 export interface ParseIconSetOptions {
 	validate?: boolean | IconSetValidationOptions;
-	list?: ParseIconSetTracking;
 	aliases?: ParseIconSetAliases;
 }
 
 /**
  * Extract icons from an icon set
+ *
+ * Returns list of icons that were found in icon set
  */
 export function parseIconSet(
 	data: IconifyJSON,
 	callback: SplitIconSetCallback,
 	options?: ParseIconSetOptions
-): boolean | string[] {
+): string[] {
+	options = options || {};
+
 	// List of icon names
 	const names: string[] = [];
 
-	// Options
-	options = options || {};
-	const list = options.list || 'none';
+	// Must be an object and must have 'icons' property
+	if (typeof data !== 'object' || typeof data.icons !== 'object') {
+		return names;
+	}
 
+	// Validate icon set
 	const validate = options.validate;
 	if (validate !== false) {
 		// Validate icon set
@@ -73,28 +69,16 @@ export function parseIconSet(
 				typeof validate === 'object' ? validate : { fix: true }
 			);
 		} catch (err) {
-			return list === 'none' ? false : [];
+			return names;
 		}
-	}
-
-	// Must be an object
-	if (typeof data !== 'object') {
-		return list === 'none' ? false : names;
 	}
 
 	// Check for missing icons list returned by API
 	if (data.not_found instanceof Array) {
 		data.not_found.forEach((name) => {
 			callback(name, null);
-			if (list === 'all') {
-				names.push(name);
-			}
+			names.push(name);
 		});
-	}
-
-	// Must have 'icons' object
-	if (typeof data.icons !== 'object') {
-		return list === 'none' ? false : names;
 	}
 
 	// Get icons
@@ -125,5 +109,5 @@ export function parseIconSet(
 		});
 	}
 
-	return list === 'none' ? names.length > 0 : names;
+	return names;
 }
