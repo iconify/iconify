@@ -97,6 +97,51 @@ describe('Testing minifying icon set', () => {
 		expect(item).toEqual(expected);
 	});
 
+	test('Default values in icon', () => {
+		const item: IconifyJSON = {
+			prefix: 'bar',
+			icons: {
+				'chrome-maximize': {
+					body: '<g fill="currentColor"><path d="M3 3v10h10V3H3zm9 9H4V4h8v8z"/></g>',
+					width: 24,
+					height: 24,
+					hidden: true,
+				},
+				'chrome-minimize': {
+					body: '<g fill="currentColor"><path d="M14 8v1H3V8h11z"/></g>',
+					width: 24,
+					height: 24,
+					hidden: true,
+				},
+				'remove': {
+					body: '<g fill="currentColor"><path d="M15 8H1V7h14v1z"/></g>',
+				},
+			},
+		};
+		const expected: IconifyJSON = {
+			prefix: 'bar',
+			icons: {
+				'chrome-maximize': {
+					body: '<g fill="currentColor"><path d="M3 3v10h10V3H3zm9 9H4V4h8v8z"/></g>',
+					hidden: true,
+				},
+				'chrome-minimize': {
+					body: '<g fill="currentColor"><path d="M14 8v1H3V8h11z"/></g>',
+					hidden: true,
+				},
+				'remove': {
+					body: '<g fill="currentColor"><path d="M15 8H1V7h14v1z"/></g>',
+					width: 16,
+					height: 16,
+				},
+			},
+			width: 24,
+			height: 24,
+		};
+		minifyIconSet(item);
+		expect(item).toEqual(expected);
+	});
+
 	test('Common value', () => {
 		const item: IconifyJSON = {
 			prefix: 'foo',

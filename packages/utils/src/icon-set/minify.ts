@@ -97,34 +97,45 @@ export function minifyIconSet(data: IconifyJSON): void {
 				}
 			}
 
-			// Found value to minify
 			const canMinify = maxValue !== null && maxCount > 1;
+
+			// Get default value
 			const oldDefault = hasMinifiedDefault ? data[prop] : null;
+			const newDefault = canMinify ? maxValue : oldDefault;
+			// console.log(
+			// 	`Prop: ${prop}, oldDefault: ${oldDefault}, canMinify: ${canMinify}, maxValue: ${maxValue}`
+			// );
 
 			// Change global value
-			if (!canMinify || maxValue === defaultValue) {
+			if (newDefault === defaultValue) {
 				delete data[prop];
-			} else {
-				data[prop as 'height'] = maxValue as number;
+			} else if (canMinify) {
+				data[prop as 'height'] = newDefault as number;
 			}
 
-			// Minify stuff
+			// Update all icons
 			icons.forEach((key) => {
 				const item = data.icons[key];
-				if (canMinify && item[prop] === maxValue) {
-					// New value matches minified value
+				const value =
+					item[prop] === void 0
+						? hasMinifiedDefault
+							? oldDefault
+							: defaultValue
+						: item[prop];
+
+				if (
+					value === newDefault ||
+					(newDefault === null && value === defaultValue)
+				) {
+					// Property matches minified value
+					// Property matches default value and there is no minified value
 					delete item[prop];
 					return;
 				}
 
-				if (hasMinifiedDefault && item[prop] === void 0) {
-					// Old value matches old minified value
-					item[prop as 'height'] = oldDefault as number;
-				}
-
-				if (!canMinify && item[prop] === iconDefaults[prop]) {
-					// Current value (after changes above) matches default and there is no minified value
-					delete item[prop];
+				if (canMinify && item[prop] === void 0) {
+					// Value matches old minified value
+					item[prop as 'height'] = value as number;
 				}
 			});
 		}
