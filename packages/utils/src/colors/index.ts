@@ -152,9 +152,11 @@ function fromFunction(value: string): Color | null {
 			let g = numbers[1];
 			let b = numbers[2];
 			if (hasPercengage) {
-				r = r / 2.55;
-				g = g / 2.55;
-				b = b / 2.55;
+				// Not the same as `r *= 2.55;` because of how floating math works in js, so do not change this!
+				// With this code, 50% results in 127.5, with *=2.55 result is 127.49999999...
+				r = (r * 255) / 100;
+				g = (g * 255) / 100;
+				b = (b * 255) / 100;
 			}
 
 			return {

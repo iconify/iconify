@@ -285,6 +285,15 @@ describe('Colors', () => {
 			})
 		).toBe('rgba(10, 25, 30, 0.5)');
 
+		// Percentage in color
+		expect(stringToColor('rgba(100%, 50%, 20%)')).toEqual({
+			type: 'rgb',
+			r: 255,
+			g: 127.5,
+			b: 51,
+			alpha: 1,
+		});
+
 		// Percentage in alpha
 		expect(stringToColor('rgba(10, 20, 31, 50%)')).toEqual({
 			type: 'rgb',

@@ -1,7 +1,7 @@
 /**
  * Get rotation value
  */
-export function rotateFromString(value: string): number {
+export function rotateFromString(value: string, defaultValue = 0): number {
 	const units = value.replace(/^-?[0-9.]*/, '');
 
 	function cleanup(value: number): number {
@@ -36,5 +36,5 @@ export function rotateFromString(value: string): number {
 		}
 	}
 
-	return 0;
+	return defaultValue;
 }
