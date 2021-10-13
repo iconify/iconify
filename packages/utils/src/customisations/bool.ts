@@ -17,7 +17,7 @@ export function toBoolean(
 			switch (value.toLowerCase()) {
 				case '1':
 				case 'true':
-				case name:
+				case name.toLowerCase():
 					return true;
 
 				case '0':
