@@ -29,7 +29,7 @@ export async function updatePackageJSON(
 		'./*': './*',
 	};
 	if (packageData.main && packageData.module) {
-		data['./'] = {
+		data['.'] = {
 			require: formatExport(packageData.main),
 			import: formatExport(packageData.module),
 		};
