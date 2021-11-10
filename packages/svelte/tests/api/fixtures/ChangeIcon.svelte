@@ -16,4 +16,6 @@
         icon = icon2;
     }
 </script>
-<Icon icon={icon} onLoad={onLoad} />
+<Icon icon={icon} on:load={event => {
+    onLoad(event.detail.icon)
+}} />

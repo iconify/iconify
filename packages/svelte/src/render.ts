@@ -112,8 +112,12 @@ export function render(
 				}
 				break;
 
-			// Copy missing property if it does not exist in customisations
 			default:
+				if (key.slice(0, 3) === 'on:') {
+					// Svelte event
+					break;
+				}
+				// Copy missing property if it does not exist in customisations
 				if ((defaults as Record<string, unknown>)[key] === void 0) {
 					componentProps[key] = value;
 				}

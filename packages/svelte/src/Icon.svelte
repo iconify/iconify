@@ -36,7 +36,7 @@ export {
 
 </script>
 <script>
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
 	import { checkIconState, generateIcon } from './functions';
 
 	// State
@@ -60,10 +60,22 @@ export {
 	// Generated data
 	let data;
 
+	const onLoad = (icon) => {
+		// Legacy onLoad property
+		if (typeof $$props.onLoad === 'function') {
+			$$props.onLoad(icon);
+		}
+		// on:load event
+		const dispatch = createEventDispatcher();
+		dispatch('load', {
+			icon
+		});
+	}
+
 	// Generate data
 	$: {
 		counter;
-		const iconData = checkIconState($$props.icon, state, mounted, loaded, $$props.onLoad);
+		const iconData = checkIconState($$props.icon, state, mounted, loaded, onLoad);
 		data = iconData ? generateIcon(iconData.data, $$props) : null;
 		if (data && iconData.classes) {
 			// Add classes

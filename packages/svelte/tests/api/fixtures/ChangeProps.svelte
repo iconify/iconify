@@ -6,8 +6,7 @@
     export let onLoad;
 
     const props = {
-        icon,
-        onLoad
+        icon
     };
 
     $: {
@@ -21,4 +20,6 @@
         }
     }
 </script>
-<Icon {...props} />
+<Icon {...props} on:load={event => {
+    onLoad?.(event.detail.icon)
+}} />
