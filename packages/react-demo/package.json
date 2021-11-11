@@ -29,8 +29,8 @@
 	"devDependencies": {
 		"@iconify-icons/mdi-light": "^1.1.0",
 		"@iconify-icons/uil": "^1.1.1",
-		"@iconify/core": "^1.2.0-beta.3",
-		"@iconify/react": "^3.1.0-beta.3",
+		"@iconify/core": "^1.2.0",
+		"@iconify/react": "^3.1.0",
 		"react-scripts": "^4.0.3"
 	}
 }

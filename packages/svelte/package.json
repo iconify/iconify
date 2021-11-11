@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.1.0-beta.5",
+	"version": "2.1.0",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://github.com/iconify/iconify",
@@ -26,21 +26,21 @@
 		"test": "jest"
 	},
 	"devDependencies": {
-		"@iconify/core": "^1.2.0-beta.4",
-		"@microsoft/api-extractor": "^7.15.0",
-		"@rollup/plugin-node-resolve": "^10.0.0",
-		"@rollup/plugin-typescript": "^8.2.1",
-		"@testing-library/jest-dom": "^5.14.1",
+		"@iconify/core": "^1.2.0",
+		"@microsoft/api-extractor": "^7.18.19",
+		"@rollup/plugin-node-resolve": "^13.0.6",
+		"@rollup/plugin-typescript": "^8.3.0",
+		"@testing-library/jest-dom": "^5.15.0",
 		"@testing-library/svelte": "^3.0.3",
 		"@tsconfig/svelte": "^1.0.10",
 		"@types/jest": "^27.0.2",
 		"rimraf": "^3.0.2",
-		"rollup": "^2.33.3",
-		"rollup-plugin-svelte": "^6.1.1",
+		"rollup": "^2.59.0",
+		"rollup-plugin-svelte": "^7.1.0",
 		"svelte": "3.39",
 		"svelte-jester": "^2.1.5",
-		"svelte-preprocess": "^4.9.5",
-		"ts-jest": "^27.0.5"
+		"svelte-preprocess": "^4.9.8",
+		"ts-jest": "^27.0.7"
 	},
 	"dependencies": {
 		"cross-fetch": "^3.1.4"

@@ -1,3 +1,5 @@
+import vue from '@vitejs/plugin-vue';
+
 module.exports = {
-	// optimizeDeps: { include: ['@iconify/core/lib/misc/merge'] },
+	plugins: [vue()],
 };
