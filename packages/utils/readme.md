@@ -12,6 +12,10 @@ To install the library run this command:
 npm install @iconify/utils --save
 ```
 
+## Documentation
+
+Documentation is available at [Iconify documentation website](https://docs.iconify.design/tools/utils/).
+
 ## License
 
 The library is released with MIT license.

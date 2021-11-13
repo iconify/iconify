@@ -20,8 +20,14 @@
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine"
 	},
+	"main": "./lib/index.js",
+	"module": "./lib/index.mjs",
 	"exports": {
 		"./*": "./*",
+		".": {
+			"require": "./lib/index.js",
+			"import": "./lib/index.mjs"
+		},
 		"./lib/colors": {
 			"require": "./lib/colors/index.js",
 			"import": "./lib/colors/index.mjs"
@@ -105,6 +111,14 @@
 		"./lib/icon/name": {
 			"require": "./lib/icon/name.js",
 			"import": "./lib/icon/name.mjs"
+		},
+		"./lib": {
+			"require": "./lib/index.js",
+			"import": "./lib/index.mjs"
+		},
+		"./lib/index": {
+			"require": "./lib/index.js",
+			"import": "./lib/index.mjs"
 		},
 		"./lib/svg/build": {
 			"require": "./lib/svg/build.js",
