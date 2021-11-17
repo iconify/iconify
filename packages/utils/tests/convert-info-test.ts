@@ -238,6 +238,7 @@ describe('Testing convertIconSetInfo', () => {
 			height: [16, 24],
 			category: 'General',
 			palette: false,
+			hidden: true,
 		};
 		const result = convertIconSetInfo(raw);
 		const expected: IconifyInfo = {
@@ -258,6 +259,7 @@ describe('Testing convertIconSetInfo', () => {
 			height: [16, 24],
 			category: 'General',
 			palette: false,
+			hidden: true,
 		};
 		expect(result).toEqual(expected);
 	});

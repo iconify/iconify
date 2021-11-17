@@ -37,6 +37,9 @@ export interface LegacyIconifyInfo {
 	// Category
 	category?: string;
 	palette?: 'Colorless' | 'Colorful';
+
+	// Hidden
+	hidden?: boolean;
 }
 
 /**
@@ -250,6 +253,11 @@ export function convertIconSetInfo(
 					info.palette = true;
 			}
 			break;
+	}
+
+	// Hidden
+	if (source.hidden === true) {
+		info.hidden = true;
 	}
 
 	// Parse all old strings

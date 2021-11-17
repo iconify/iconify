@@ -158,6 +158,9 @@ export interface IconifyInfo {
 	// Palette status. True if icons have predefined color scheme, false if icons use currentColor.
 	// Ideally, icon set should not mix icons with and without palette to simplify search.
 	palette?: boolean;
+
+	// If true, icon set should not appear in icon sets list.
+	hidden?: boolean;
 }
 
 /**
