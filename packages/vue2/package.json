@@ -2,7 +2,7 @@
 	"name": "@iconify/vue2",
 	"description": "Iconify icon component for Vue 2.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -26,7 +26,7 @@
 	"exports": {
 		"./*": "./*",
 		".": {
-			"import": "./dist/iconifg.mjs",
+			"import": "./dist/iconify.mjs",
 			"types": "./dist/iconify.d.ts",
 			"default": "./dist/iconify.js"
 		},
