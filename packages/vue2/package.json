@@ -26,9 +26,9 @@
 	"exports": {
 		"./*": "./*",
 		".": {
-			"import": "./dist/index.mjs",
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
+			"import": "./dist/iconifg.mjs",
+			"types": "./dist/iconify.d.ts",
+			"default": "./dist/iconify.js"
 		},
 		"./offline": {
 			"import": "./dist/offline.mjs",
