@@ -2,7 +2,7 @@
 	"name": "@iconify/utils",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.19",
+	"version": "1.0.20",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -24,7 +24,7 @@
 	"module": "./lib/index.mjs",
 	"exports": {
 		"./*": "./*",
-		"./": {
+		".": {
 			"require": "./lib/index.js",
 			"import": "./lib/index.mjs"
 		},
@@ -137,7 +137,7 @@
 		"@iconify/types": "^1.0.12"
 	},
 	"devDependencies": {
-		"@iconify/library-builder": "^1.0.3",
+		"@iconify/library-builder": "^1.0.4",
 		"@types/jest": "^27.0.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"cross-env": "^7.0.3",
