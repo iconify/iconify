@@ -43,3 +43,5 @@ export { calculateSize } from './svg/size';
 // Colors
 export { colorKeywords } from './colors/keywords';
 export { stringToColor, compareColors, colorToString } from './colors/index';
+
+// SVG Icon loader
