@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { defaultCustomisations as DefaultIconCustomizations, iconToSVG, getIconData, tryInstallPkg } from '@iconify/utils';
 import createDebugger from 'debug';
 import { isPackageExists, resolveModule } from 'local-pkg';
@@ -53,7 +53,7 @@ export async function loadCollection(name: string, autoInstall = false): Promise
 	}
 }
 
-export function searchForIcon(iconSet: IconifyJSON, collection: string, ids: string[], scale = 1): FullIconifyIcon | null {
+export function searchForIcon(iconSet: IconifyJSON, collection: string, ids: string[], scale = 1): string | null {
 	let iconData: FullIconifyIcon | null;
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);

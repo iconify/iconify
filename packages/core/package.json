@@ -94,6 +94,10 @@
 			"require": "./lib/modern/index.js",
 			"import": "./lib/modern/index.mjs"
 		},
+		"./lib/modern/index": {
+			"require": "./lib/modern/index.js",
+			"import": "./lib/modern/index.mjs"
+		},
 		"./lib/storage/functions": {
 			"require": "./lib/storage/functions.js",
 			"import": "./lib/storage/functions.mjs"
