@@ -120,6 +120,22 @@
 			"require": "./lib/index.js",
 			"import": "./lib/index.mjs"
 		},
+		"./lib/loader/custom": {
+			"require": "./lib/loader/custom.js",
+			"import": "./lib/loader/custom.mjs"
+		},
+		"./lib/loader/loaders": {
+			"require": "./lib/loader/loaders.js",
+			"import": "./lib/loader/loaders.mjs"
+		},
+		"./lib/loader/types": {
+			"require": "./lib/loader/types.js",
+			"import": "./lib/loader/types.mjs"
+		},
+		"./lib/loader/utils": {
+			"require": "./lib/loader/utils.js",
+			"import": "./lib/loader/utils.mjs"
+		},
 		"./lib/svg/build": {
 			"require": "./lib/svg/build.js",
 			"import": "./lib/svg/build.mjs"
@@ -134,14 +150,14 @@
 		}
 	},
 	"dependencies": {
-    "@antfu/install-pkg": "^0.1.0",
-    "@antfu/utils": "^0.3.0",
+		"@antfu/install-pkg": "^0.1.0",
+		"@antfu/utils": "^0.3.0",
 		"@iconify/types": "^1.0.12",
-    "debug": "^4.3.3"
-  },
+		"debug": "^4.3.3"
+	},
 	"devDependencies": {
 		"@iconify/library-builder": "^1.0.4",
-    "@types/debug": "^4.1.7",
+		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"cross-env": "^7.0.3",
