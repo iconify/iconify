@@ -45,3 +45,7 @@ export { colorKeywords } from './colors/keywords';
 export { stringToColor, compareColors, colorToString } from './colors/index';
 
 // SVG Icon loader
+export type { CustomIconLoader, CustomCollections, InlineCollection } from './loader/types';
+export { camelize, camelToKebab, pascalize, tryInstallPkg } from './loader/utils';
+export { FileSystemIconLoader } from './loader/loaders';
+export { getCustomIcon } from './loader/custom';
