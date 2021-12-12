@@ -8,7 +8,7 @@ export function camelize(str: string): string {
 
 export function pascalize(str: string): string {
 	const camel = camelize(str);
-	return camel[0].toUpperCase() + camel.slice(1);
+	return `${camel[0].toUpperCase()}${camel.slice(1)}`;
 }
 
 export function camelToKebab(key: string): string {
@@ -19,12 +19,12 @@ export function camelToKebab(key: string): string {
 	return result.split(/\s+/g).join('-').toLowerCase();
 }
 
-const warnned = new Set<string>();
+const warned = new Set<string>();
 
 export function warnOnce(msg: string): void {
-	if (!warnned.has(msg)) {
-		warnned.add(msg);
-		console.warn(yellow(`[@iconify-loader] ${msg}`))
+	if (!warned.has(msg)) {
+		warned.add(msg);
+		console.warn(yellow(`[@iconify-loader] ${msg}`));
 	}
 }
 
@@ -44,11 +44,11 @@ export async function tryInstallPkg(name: string): Promise<void | undefined> {
 			.then(() => sleep(300))
 			// eslint-disable-next-line
 			.catch((e: any) => {
-				warnOnce(`Failed to install ${name}`)
-				console.error(e)
+				warnOnce(`Failed to install ${name}`);
+				console.error(e);
 			})
 			.finally(() => {
-				pending = undefined
+				pending = undefined;
 			});
 	}
 

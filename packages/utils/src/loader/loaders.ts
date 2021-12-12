@@ -8,7 +8,7 @@ export function FileSystemIconLoader(dir: string, transform?: (svg: string) => A
 		const paths = [
 			`${dir}/${name}.svg`,
 			`${dir}/${camelize(name)}.svg`,
-			`${dir}/${pascalize(name)}.svg`,
+			`${dir}/${pascalize(name)}.svg`
 		];
 		for (const path of paths) {
 			if (existsSync(path)) {
