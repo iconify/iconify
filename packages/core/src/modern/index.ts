@@ -10,12 +10,6 @@ const debug = createDebugger('@iconify-core:icon');
 const debugModern = createDebugger('@iconify-core:modern');
 const debugLegacy = createDebugger('@iconify-core:legacy');
 
-export interface ResolvedIconPath {
-	collection: string
-	icon: string
-	query: Record<string, string | undefined>
-}
-
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
 
@@ -54,15 +48,22 @@ export async function loadCollection(name: string, autoInstall = false): Promise
 	}
 }
 
-export function searchForIcon(iconSet: IconifyJSON, collection: string, ids: string[], customize?: (defaults: FullIconCustomisations) => void): string | null {
+export function searchForIcon(
+	iconSet: IconifyJSON,
+	collection: string,
+	ids: string[],
+	customize?: (defaultCustomizations: FullIconCustomisations) => FullIconCustomisations
+): string | null {
 	let iconData: FullIconifyIcon | null;
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
 			debug(`${collection}:${id}`);
-			const customizations: FullIconCustomisations = { ...DefaultIconCustomizations }
-			customize?.(customizations)
-			const { attributes, body } = iconToSVG(iconData, customizations);
+			const defaultCustomizations = { ...DefaultIconCustomizations }
+			const { attributes, body } = iconToSVG(
+				iconData,
+				typeof customize === 'function' ? customize(defaultCustomizations) : defaultCustomizations
+			);
 			return `<svg ${Object.entries(attributes).map(i => `${i[0]}="${i[1]}"`).join(' ')}>${body}</svg>`;
 		}
 	}
