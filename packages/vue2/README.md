@@ -196,7 +196,9 @@ Note: in templates you can use "camelCase" properties as "kebab-case". For examp
 
 ### Other properties and events
 
-In addition to the properties mentioned above, the icon component accepts any other properties and events. All other properties and events will be passed to generated `SVG` element, so you can do stuff like assigning click event, setting the inline style, add title and so on.
+In addition to the properties mentioned above, all other properties will be passed to generated `SVG` element, so you can do stuff like setting the inline style, add title and so on.
+
+Vue 2 component does not pass events to `SVG` element. However, Vue 3 component does.
 
 ### Dimensions
 
