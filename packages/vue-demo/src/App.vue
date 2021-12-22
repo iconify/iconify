@@ -10,12 +10,12 @@
 				<Checkbox
 					:checked="true"
 					text="Checkbox example"
-					hint="(click to toggle)"
+					hint="(click icon to toggle)"
 				/>
 				<Checkbox
 					:checked="false"
 					text="Another checkbox example"
-					hint="(click to toggle)"
+					hint="(only clicking icon works to test @click events)"
 				/>
 			</div>
 		</section>

@@ -68,23 +68,28 @@ p {
 }
 
 .checkbox {
-	cursor: pointer;
+	/* cursor: pointer; */
 	/* color: #1769aa; */
 	color: #626262;
 	text-decoration: none;
 }
-.checkbox:hover {
+/* .checkbox:hover {
 	color: #ba3329;
 	text-decoration: underline;
-}
+} */
 
 .checkbox svg {
+	cursor: pointer;
 	margin-right: 4px;
 	color: #afafaf;
 	font-size: 24px;
 	line-height: 1em;
 	vertical-align: -0.25em;
 }
+.checkbox svg:hover {
+	color: #ba3329;
+}
+
 .checkbox--checked svg {
 	color: #327335;
 }

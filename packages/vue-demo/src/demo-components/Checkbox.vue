@@ -1,8 +1,8 @@
 <template>
 	<div class="checkbox-container">
-		<a href="# " :class="className" @click="check">
-			<Icon :icon="icon" />{{ text }}
-		</a>
+		<span :class="className">
+			<Icon :icon="icon" @click="check" />{{ text }}
+		</span>
 		<small>{{ hint }}</small>
 	</div>
 </template>
