@@ -2,7 +2,7 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "3.1.0",
+	"version": "3.1.1",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -20,6 +20,7 @@
 		"build:dist": "rollup -c rollup.config.js",
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
+		"build:cleanup": "node cleanup",
 		"test": "jest"
 	},
 	"main": "dist/iconify.js",

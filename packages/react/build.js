@@ -8,13 +8,20 @@ const packagesDir = path.dirname(__dirname);
 // List of commands to run
 const commands = [];
 
-// Parse command line
+// Build process
 const compile = {
+	// Compile @iconify/core
 	core: false,
+	// Compile TypeScript src -> lib
 	lib: true,
+	// Fix types for icon components
+	cleanup: true,
+	// Generate bundle from compiled files lib -> dist
 	dist: true,
+	// Generate TypeScript definitions in dist
 	api: true,
 };
+
 process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
 		return;

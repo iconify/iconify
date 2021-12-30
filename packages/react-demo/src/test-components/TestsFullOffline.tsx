@@ -1,54 +1,22 @@
 import React from 'react';
-import { InlineIcon, addAPIProvider, _api } from '@iconify/react';
-import { mockAPIModule, mockAPIData } from '@iconify/core/lib/api/modules/mock';
+import { InlineIcon } from '@iconify/react';
 import { TestIcons, toggleTest } from './TestIcons';
-import playIcon from '@iconify-icons/mdi-light/map-marker';
 
-// API provider for tests
-const provider = 'mock-api';
-const prefix = 'demo';
-
-// Set API module for provider
-addAPIProvider(provider, {
-	resources: ['http://localhost'],
-	rotate: 10000,
-	timeout: 10000,
-});
-_api.setAPIModule(provider, mockAPIModule);
-
-// Set mock data
-mockAPIData({
-	type: 'icons',
-	provider,
-	prefix,
-	response: {
-		prefix,
-		icons: {
-			icon: playIcon,
-		},
-	},
-	delay: 2000,
-});
-
-export function TestsFull() {
-	const icon = `@${provider}:${prefix}:icon`;
-
+export function TestsFullOffline() {
 	return (
 		<section className="tests">
-			<h1>Tests (full module, with API)</h1>
+			<h1>Tests (full module, without API)</h1>
 
 			<h2>References</h2>
 
-			<p>Icons should load 2 seconds after page load</p>
-
 			<div className="test-row">
-				<TestIcons id="full-ref1" />
+				<TestIcons id="full-offline-ref1" />
 				Getting reference
 				<InlineIcon
-					icon={icon}
+					icon="demo"
 					ref={(element) => {
-						const key = 'full-ref1';
-						if (element && element.tagName === 'svg') {
+						const key = 'full-offline-ref1';
+						if (element?.tagName === 'svg') {
 							toggleTest(key, 'success');
 						} else {
 							toggleTest(key, 'failed');
@@ -58,23 +26,25 @@ export function TestsFull() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-ref-missing" status="success" />
+				<TestIcons id="full-offline-ref-missing" icon="success" />
 				Getting reference for empty icon
 				<InlineIcon
-					ref={(element) => {
+					icon=""
+					ref={() => {
 						// Cannot be called because there is no SVG to render!
-						toggleTest('full-ref-missing', 'failed');
+						toggleTest('full-offline-ref-missing', 'failed');
 					}}
 				/>
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-ref-missing2" status="success" />
+				<TestIcons id="full-offline-ref-missing2" icon="success" />
 				Getting reference for missing icon with fallback text{' '}
 				<InlineIcon
-					ref={(element) => {
+					icon="invalid"
+					ref={() => {
 						// Cannot be called because there is no SVG to render!
-						toggleTest('full-ref-missing2', 'failed');
+						toggleTest('full-offline-ref-missing2', 'failed');
 					}}
 				>
 					😀
@@ -84,10 +54,10 @@ export function TestsFull() {
 			<h2>Style</h2>
 
 			<div className="test-row">
-				<TestIcons id="full-style" />
+				<TestIcons id="full-offline-style" />
 				Inline style for icon
 				<InlineIcon
-					icon={icon}
+					icon="demo"
 					style={{
 						color: '#1769aa',
 						fontSize: '24px',
@@ -95,8 +65,8 @@ export function TestsFull() {
 						verticalAlign: '-0.25em',
 					}}
 					ref={(element) => {
-						const key = 'full-style';
-						if (element && element.tagName === 'svg') {
+						const key = 'full-offline-style';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -128,7 +98,7 @@ export function TestsFull() {
 								errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -137,14 +107,14 @@ export function TestsFull() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-color1" />
+				<TestIcons id="full-offline-color1" />
 				Green color from attribute:{' '}
 				<InlineIcon
-					icon={icon}
+					icon="demo"
 					color="green"
 					ref={(element) => {
-						const key = 'full-color1';
-						if (element && element.tagName === 'svg') {
+						const key = 'full-offline-color1';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -161,7 +131,7 @@ export function TestsFull() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -170,16 +140,16 @@ export function TestsFull() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-color2" />
+				<TestIcons id="full-offline-color2" />
 				Green color from style:{' '}
 				<InlineIcon
-					icon={icon}
+					icon="demo"
 					style={{
 						color: 'green',
 					}}
 					ref={(element) => {
-						const key = 'full-color2';
-						if (element && element.tagName === 'svg') {
+						const key = 'full-offline-color2';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -196,7 +166,7 @@ export function TestsFull() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -205,17 +175,17 @@ export function TestsFull() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-color3" />
+				<TestIcons id="full-offline-color3" />
 				Green color from attribute (overrides style) + red from style:{' '}
 				<InlineIcon
-					icon={icon}
+					icon="demo"
 					color="green"
 					style={{
 						color: 'red',
 					}}
 					ref={(element) => {
-						const key = 'full-color3';
-						if (element && element.tagName === 'svg') {
+						const key = 'full-offline-color3';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -232,7 +202,7 @@ export function TestsFull() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}

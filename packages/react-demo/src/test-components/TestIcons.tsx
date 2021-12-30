@@ -4,30 +4,16 @@ import successIcon from '@iconify-icons/uil/check-circle';
 import pendingIcon from '@iconify-icons/uil/question-circle';
 import failedIcon from '@iconify-icons/uil/times-circle';
 
-function getStatus(status) {
-	switch (status) {
-		case 'success':
-		case 'default-success':
-		case true:
-			return 'success';
+type StatusIcon = 'success' | 'failed' | 'pending';
 
-		case 'failed':
-		case 'fail':
-		case false:
-			return 'failed';
-
-		default:
-			return 'pending';
-	}
+interface TestIconsProps {
+	id: string;
+	icon?: StatusIcon;
 }
 
-export function TestIcons(props) {
-	if (!props.id) {
-		return null;
-	}
-
+export function TestIcons(props: TestIconsProps) {
 	const id = 'test-icons-' + props.id;
-	const icon = getStatus(props.status);
+	const icon = props.icon || 'pending';
 
 	return (
 		<span className="test-row-icons" id={id}>
@@ -53,14 +39,11 @@ export function TestIcons(props) {
 	);
 }
 
-export function toggleTest(id, status) {
+export function toggleTest(id: string, status: StatusIcon) {
 	const node = document.getElementById('test-icons-' + id);
 	if (!node) {
 		return;
 	}
-
-	// Get icon to show
-	const icon = getStatus(status);
 
 	// Remove previous status
 	const visible = node.querySelector('.visible');
@@ -70,7 +53,7 @@ export function toggleTest(id, status) {
 	}
 
 	// Show new icon
-	const toggle = node.querySelector('.' + icon);
+	const toggle = node.querySelector('.' + status);
 	if (toggle) {
 		toggle.classList.remove('hidden');
 		toggle.classList.add('visible');

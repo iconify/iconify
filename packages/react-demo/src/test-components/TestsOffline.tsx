@@ -1,22 +1,22 @@
 import React from 'react';
-import { InlineIcon } from '@iconify/react';
+import { InlineIcon } from '@iconify/react/dist/offline';
 import { TestIcons, toggleTest } from './TestIcons';
 
-export function TestsFullOffline() {
+export function TestsOffline() {
 	return (
 		<section className="tests">
-			<h1>Tests (full module, without API)</h1>
+			<h1>Tests (offline module)</h1>
 
 			<h2>References</h2>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-ref1" />
+				<TestIcons id="offline-ref1" />
 				Getting reference
 				<InlineIcon
 					icon="demo"
 					ref={(element) => {
-						const key = 'full-offline-ref1';
-						if (element && element.tagName === 'svg') {
+						const key = 'offline-ref1';
+						if (element?.tagName === 'svg') {
 							toggleTest(key, 'success');
 						} else {
 							toggleTest(key, 'failed');
@@ -26,23 +26,25 @@ export function TestsFullOffline() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-ref-missing" status="success" />
+				<TestIcons id="offline-ref-missing" icon="success" />
 				Getting reference for empty icon
 				<InlineIcon
-					ref={(element) => {
+					icon=""
+					ref={() => {
 						// Cannot be called because there is no SVG to render!
-						toggleTest('full-offline-ref-missing', 'failed');
+						toggleTest('offline-ref-missing', 'failed');
 					}}
 				/>
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-ref-missing2" status="success" />
+				<TestIcons id="offline-ref-missing2" icon="success" />
 				Getting reference for missing icon with fallback text{' '}
 				<InlineIcon
-					ref={(element) => {
+					icon="invalid"
+					ref={() => {
 						// Cannot be called because there is no SVG to render!
-						toggleTest('full-offline-ref-missing2', 'failed');
+						toggleTest('offline-ref-missing2', 'failed');
 					}}
 				>
 					😀
@@ -52,7 +54,7 @@ export function TestsFullOffline() {
 			<h2>Style</h2>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-style" />
+				<TestIcons id="offline-style" />
 				Inline style for icon
 				<InlineIcon
 					icon="demo"
@@ -63,8 +65,8 @@ export function TestsFullOffline() {
 						verticalAlign: '-0.25em',
 					}}
 					ref={(element) => {
-						const key = 'full-offline-style';
-						if (element && element.tagName === 'svg') {
+						const key = 'offline-style';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -96,7 +98,7 @@ export function TestsFullOffline() {
 								errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -105,14 +107,14 @@ export function TestsFullOffline() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-color1" />
+				<TestIcons id="offline-color1" />
 				Green color from attribute:{' '}
 				<InlineIcon
 					icon="demo"
 					color="green"
 					ref={(element) => {
-						const key = 'full-offline-color1';
-						if (element && element.tagName === 'svg') {
+						const key = 'offline-color1';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -129,7 +131,7 @@ export function TestsFullOffline() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -138,7 +140,7 @@ export function TestsFullOffline() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-color2" />
+				<TestIcons id="offline-color2" />
 				Green color from style:{' '}
 				<InlineIcon
 					icon="demo"
@@ -146,8 +148,8 @@ export function TestsFullOffline() {
 						color: 'green',
 					}}
 					ref={(element) => {
-						const key = 'full-offline-color2';
-						if (element && element.tagName === 'svg') {
+						const key = 'offline-color2';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -164,7 +166,7 @@ export function TestsFullOffline() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
@@ -173,7 +175,7 @@ export function TestsFullOffline() {
 			</div>
 
 			<div className="test-row">
-				<TestIcons id="full-offline-color3" />
+				<TestIcons id="offline-color3" />
 				Green color from attribute (overrides style) + red from style:{' '}
 				<InlineIcon
 					icon="demo"
@@ -182,8 +184,8 @@ export function TestsFullOffline() {
 						color: 'red',
 					}}
 					ref={(element) => {
-						const key = 'full-offline-color3';
-						if (element && element.tagName === 'svg') {
+						const key = 'offline-color3';
+						if (element?.tagName === 'svg') {
 							let errors = false;
 
 							// Get style
@@ -200,7 +202,7 @@ export function TestsFullOffline() {
 									errors = true;
 							}
 
-							toggleTest(key, !errors);
+							toggleTest(key, errors ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}
