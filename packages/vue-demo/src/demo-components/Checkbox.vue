@@ -7,7 +7,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import { Icon } from '@iconify/vue/dist/offline';
 import checkedIcon from '@iconify-icons/bx/bx-checkbox-checked';
 import uncheckedIcon from '@iconify-icons/bx/bx-checkbox';

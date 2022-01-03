@@ -11,7 +11,7 @@
 	</section>
 </template>
 
-<script>
+<script lang="ts">
 import { Icon } from '@iconify/vue';
 
 export default {

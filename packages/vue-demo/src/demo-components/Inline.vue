@@ -14,7 +14,7 @@
 	</section>
 </template>
 
-<script>
+<script lang="ts">
 import { Icon as OfflineIcon } from '@iconify/vue/dist/offline';
 import { Icon as FullIcon } from '@iconify/vue';
 

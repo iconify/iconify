@@ -20,7 +20,7 @@
 	</section>
 </template>
 
-<script>
+<script lang="ts">
 import { Icon } from '@iconify/vue';
 import demoIcon from '@iconify-icons/dashicons/info-outline';
 import alertIcon from '@iconify-icons/bx/bx-error';
