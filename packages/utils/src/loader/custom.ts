@@ -16,18 +16,17 @@ export async function getCustomIcon(
 
 	if (typeof custom === 'function') {
 		result = await custom(icon);
-	}
-	else {
+	} else {
 		const inline = custom[icon];
-		result = typeof inline === 'function'
-			? await inline()
-			: inline;
+		result = typeof inline === 'function' ? await inline() : inline;
 	}
 
 	if (result) {
 		if (!result.startsWith('<svg ')) {
-			console.warn(`Custom icon "${icon}" in "${collection}" is not a valid SVG`);
+			console.warn(
+				`Custom icon "${icon}" in "${collection}" is not a valid SVG`
+			);
 		}
-		return transform ? await transform(result) : result
+		return transform ? await transform(result) : result;
 	}
 }
