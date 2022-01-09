@@ -4,6 +4,9 @@ import type { CustomIconLoader, InlineCollection } from './types';
 
 const debug = createDebugger('@iconify-loader:custom');
 
+/**
+ * Get custom icon from inline collection or using loader
+ */
 export async function getCustomIcon(
 	custom: CustomIconLoader | InlineCollection,
 	collection: string,
