@@ -177,7 +177,7 @@ export const render = (
 		domProps: {
 			innerHTML: replaceIDs(
 				item.body,
-				id ? () => id + '-' + localCounter++ : 'iconify-vue-'
+				id ? () => id + 'ID' + localCounter++ : 'iconifyVue'
 			),
 		},
 	};

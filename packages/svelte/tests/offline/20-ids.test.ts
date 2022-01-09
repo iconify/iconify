@@ -24,8 +24,8 @@ describe('Replacing IDs', () => {
 		const component = render(Icon, { icon: iconDataWithID, id: 'test' });
 		const node = component.container.querySelector('svg')!;
 
-		// Check that ID 'testa' exists
-		const path = node.getElementById('test-0');
+		// Check that ID 'testID0' exists
+		const path = node.getElementById('testID0');
 		expect(path).toBeTruthy();
 	});
 });

@@ -144,7 +144,7 @@ export const render = (
 	componentProps.dangerouslySetInnerHTML = {
 		__html: replaceIDs(
 			item.body,
-			id ? () => id + '-' + localCounter++ : 'iconify-react-'
+			id ? () => id + 'ID' + localCounter++ : 'iconifyReact'
 		),
 	};
 	for (let key in item.attributes) {

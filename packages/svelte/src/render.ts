@@ -152,7 +152,7 @@ export function render(
 		attributes: componentProps,
 		body: replaceIDs(
 			item.body,
-			id ? () => id + '-' + localCounter++ : 'iconify-svelte-'
+			id ? () => id + 'ID' + localCounter++ : 'iconifySvelte'
 		),
 	};
 }

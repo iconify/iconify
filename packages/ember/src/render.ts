@@ -110,7 +110,7 @@ export const render = (
 	// Create body
 	const body = replaceIDs(
 		item.body,
-		id ? () => id + '-' + localCounter++ : 'iconify-ember-'
+		id ? () => id + 'ID' + localCounter++ : 'iconifyEmber'
 	);
 
 	// Add inline

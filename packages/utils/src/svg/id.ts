@@ -19,13 +19,13 @@ const regex = /\sid="(\S+)"/g;
 
 /**
  * New random-ish prefix for ids
+ *
+ * Do not use dash, it cannot be used in SVG 2 animations
  */
 const randomPrefix =
-	'IconifyId-' +
+	'IconifyId' +
 	Date.now().toString(16) +
-	'-' +
-	((Math.random() * 0x1000000) | 0).toString(16) +
-	'-';
+	((Math.random() * 0x1000000) | 0).toString(16);
 
 /**
  * Counter for ids, increasing with every replacement

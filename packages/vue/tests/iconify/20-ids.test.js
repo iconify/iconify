@@ -38,6 +38,6 @@ describe('Replacing IDs', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain('id="test-0"');
+		expect(wrapper.html()).toContain('id="testID0"');
 	});
 });

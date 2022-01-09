@@ -182,7 +182,7 @@ export const render = (
 	// Add innerHTML and style to props
 	componentProps['innerHTML'] = replaceIDs(
 		item.body,
-		id ? () => id + '-' + localCounter++ : 'iconify-vue-'
+		id ? () => id + 'ID' + localCounter++ : 'iconifyVue'
 	);
 	if (Object.keys(style).length > 0) {
 		componentProps['style'] = style;
