@@ -136,6 +136,10 @@
 			"require": "./lib/loader/utils.js",
 			"import": "./lib/loader/utils.mjs"
 		},
+		"./lib/misc/strings": {
+			"require": "./lib/misc/strings.js",
+			"import": "./lib/misc/strings.mjs"
+		},
 		"./lib/svg/build": {
 			"require": "./lib/svg/build.js",
 			"import": "./lib/svg/build.mjs"
@@ -154,8 +158,8 @@
 		"@antfu/utils": "^0.3.0",
 		"@iconify/types": "^1.0.12",
 		"debug": "^4.3.3",
-    "kolorist": "^1.5.0"
-  },
+		"kolorist": "^1.5.0"
+	},
 	"devDependencies": {
 		"@iconify/library-builder": "^1.0.4",
 		"@types/debug": "^4.1.7",
