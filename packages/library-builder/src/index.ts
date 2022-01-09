@@ -48,11 +48,13 @@ export async function buildFiles(params: BuildParams) {
 
 	// Build files with TypeScript compiler first to make sure there are no errors and to generate .d.ts files
 	if (typeof buildScript === 'string') {
-		console.log(`Executing npm script ${buildScript}...`)
+		console.log(`Executing npm script ${buildScript}...`);
 		await exec(root, 'npm', ['run', buildScript]);
 	} else {
-		console.log('Executing tsc...')
-		await exec(root, process.platform === 'win32' ? 'tsc.cmd' : 'tsc', ['-b']);
+		console.log('Executing tsc...');
+		await exec(root, process.platform === 'win32' ? 'tsc.cmd' : 'tsc', [
+			'-b',
+		]);
 	}
 
 	// Build ES modules
