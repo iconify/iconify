@@ -39,6 +39,15 @@ export interface IconifyStorageFunctions {
 	 * Add icon set to storage
 	 */
 	addCollection: (data: IconifyJSON, provider?: string) => boolean;
+
+	/**
+	 * Share storage (used to share icon data between various components or multiple instances of component)
+	 *
+	 * It works by moving storage to global variable, new instances of component attempt to detect global
+	 * variable during load. Therefore, function should be called as soon as possible.
+	 * Works only in browser, not usable in SSR.
+	 */
+	shareStorage: () => void;
 }
 
 /**

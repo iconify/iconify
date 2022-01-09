@@ -57,6 +57,7 @@ export {
 	listIcons,
 	addIcon,
 	addCollection,
+	shareStorage,
 } from './functions';
 
 export { calculateSize, replaceIDs, buildIcon } from './functions';
