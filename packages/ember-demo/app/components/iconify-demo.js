@@ -16,7 +16,7 @@ addIcon('demo', playIcon);
 addIcon('experiment2', {
   width: 16,
   height: 16,
-  body: '<g fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M13 8.9c.1.6.2 1.1.4 1.7l.6 1.7l-.5.7H10c0 .5-.2 1-.6 1.4c-.4.4-.9.6-1.4.6c-.5 0-1.1-.2-1.4-.6c-.4-.4-.6-.9-.6-1.4H2.5l-.5-.7l.6-1.7c.2-.8.4-1.6.4-2.4V6c0-.7.1-1.4.4-2c.3-.7.7-1.2 1.2-1.7s1.1-.8 1.8-1C6.9 1.1 7.5 1 8 1c-.2.3-.4.7-.6 1.1c-.2 0-.4 0-.7.2c-.5.1-1 .4-1.4.8c-.4.3-.8.8-1 1.3c-.2.5-.3 1-.3 1.6v2.2c0 .9-.2 1.8-.4 2.7L3.2 12h9.6l-.4-1.1c-.175-.526-.274-1.13-.363-1.674L12 9c.4 0 .7 0 1-.1zM8 14c.2 0 .5-.1.7-.3c.2-.2.3-.4.3-.7H7c0 .3.1.5.3.7c.2.2.5.3.7.3zm7-10a3 3 0 1 1-6 0a3 3 0 0 1 6 0z"></path></g>',
+  body: '<g fill="none" stroke-linecap="round" stroke-width="1" stroke="currentColor"><circle cx="8" cy="8" r="7.5" stroke-dasharray="48" stroke-dashoffset="48"><animate id="circle" attributeName="stroke-dashoffset" values="48;0" dur="0.5s" fill="freeze" /></circle><path d="M8 5v3" stroke-width="2" stroke-dasharray="5" stroke-dashoffset="5"><animate attributeName="stroke-dashoffset" values="5;0" dur="0.3s" begin="circle.end+0.1s" fill="freeze" /></path></g><circle cx="8" cy="11" r="1" fill="currentColor" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.2s" begin="circle.end+0.5s" fill="freeze" /></circle>',
 });
 
 // Add few mdi-light: icons
