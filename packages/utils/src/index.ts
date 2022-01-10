@@ -48,9 +48,11 @@ export { stringToColor, compareColors, colorToString } from './colors/index';
 export type {
 	CustomIconLoader,
 	CustomCollections,
+	IconCustomizer,
+	IconCustomizations,
 	InlineCollection,
 } from './loader/types';
-export { tryInstallPkg } from './loader/utils';
+export { tryInstallPkg, mergeIconProps } from './loader/utils';
 export { FileSystemIconLoader } from './loader/loaders';
 export { getCustomIcon } from './loader/custom';
 export { loadCollection, searchForIcon } from './loader/modern';

@@ -3,11 +3,11 @@ import type { IconifyJSON } from '@iconify/types';
 import type { FullIconifyIcon } from '../icon';
 import { iconToSVG } from '../svg/build';
 import { getIconData } from '../icon-set/get-icon';
-import { tryInstallPkg } from './utils';
+import { mergeIconProps, tryInstallPkg } from './utils';
 import createDebugger from 'debug';
 import { isPackageExists, resolveModule } from 'local-pkg';
 import { defaults as DefaultIconCustomizations } from '../customisations';
-import type { FullIconCustomisations } from '../customisations';
+import type { IconCustomizations } from './types';
 
 const debug = createDebugger('@iconify-loader:icon');
 const debugModern = createDebugger('@iconify-loader:modern');
@@ -51,13 +51,14 @@ export async function loadCollection(name: string, autoInstall = false): Promise
 	}
 }
 
-export function searchForIcon(
+export async function searchForIcon(
 	iconSet: IconifyJSON,
 	collection: string,
 	ids: string[],
-	customize?: (defaultCustomizations: FullIconCustomisations) => FullIconCustomisations
-): string | null {
+	iconCustomizactions?: IconCustomizations,
+): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
+	const { customize, additionalProps = {}, iconCustomizer } = iconCustomizactions || {}
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
@@ -67,8 +68,14 @@ export function searchForIcon(
 				iconData,
 				typeof customize === 'function' ? customize(defaultCustomizations) : defaultCustomizations
 			);
-			return `<svg ${Object.entries(attributes).map(i => `${i[0]}="${i[1]}"`).join(' ')}>${body}</svg>`;
+			return await mergeIconProps(
+				`<svg>${body}</svg>`,
+				collection,
+				id,
+				additionalProps,
+				() => attributes,
+				iconCustomizer,
+			)
 		}
 	}
-	return null;
 }
