@@ -1,7 +1,9 @@
 import { promises as fs } from 'fs';
 import type { IconifyJSON } from '@iconify/types';
 import type { FullIconifyIcon } from '../icon';
-import { iconToSVG, getIconData, tryInstallPkg } from '../index';
+import { iconToSVG } from '../svg/build';
+import { getIconData } from '../icon-set/get-icon';
+import { tryInstallPkg } from './utils';
 import createDebugger from 'debug';
 import { isPackageExists, resolveModule } from 'local-pkg';
 import { defaults as DefaultIconCustomizations } from '../customisations';
