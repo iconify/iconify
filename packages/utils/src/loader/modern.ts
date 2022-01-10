@@ -1,14 +1,17 @@
 import { promises as fs } from 'fs';
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { defaultCustomisations as DefaultIconCustomizations, iconToSVG, getIconData, tryInstallPkg } from '@iconify/utils';
+import type { FullIconifyIcon } from '../icon';
+import { iconToSVG } from '../svg/build';
+import { getIconData } from '../icon-set/get-icon';
+import { mergeIconProps, tryInstallPkg } from './utils';
 import createDebugger from 'debug';
 import { isPackageExists, resolveModule } from 'local-pkg';
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
+import { defaults as DefaultIconCustomizations } from '../customisations';
+import type { IconCustomizations } from './types';
 
-const debug = createDebugger('@iconify-core:icon');
-const debugModern = createDebugger('@iconify-core:modern');
-const debugLegacy = createDebugger('@iconify-core:legacy');
+const debug = createDebugger('@iconify-loader:icon');
+const debugModern = createDebugger('@iconify-loader:modern');
+const debugLegacy = createDebugger('@iconify-loader:legacy');
 
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
@@ -48,13 +51,14 @@ export async function loadCollection(name: string, autoInstall = false): Promise
 	}
 }
 
-export function searchForIcon(
+export async function searchForIcon(
 	iconSet: IconifyJSON,
 	collection: string,
 	ids: string[],
-	customize?: (defaultCustomizations: FullIconCustomisations) => FullIconCustomisations
-): string | null {
+	iconCustomizations?: IconCustomizations,
+): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
+	const { customize, additionalProps = {}, iconCustomizer } = iconCustomizations || {}
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
@@ -64,8 +68,14 @@ export function searchForIcon(
 				iconData,
 				typeof customize === 'function' ? customize(defaultCustomizations) : defaultCustomizations
 			);
-			return `<svg ${Object.entries(attributes).map(i => `${i[0]}="${i[1]}"`).join(' ')}>${body}</svg>`;
+			return await mergeIconProps(
+				`<svg>${body}</svg>`,
+				collection,
+				id,
+				additionalProps,
+				() => attributes,
+				iconCustomizer,
+			)
 		}
 	}
-	return null;
 }
