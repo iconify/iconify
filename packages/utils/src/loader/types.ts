@@ -9,7 +9,11 @@ export type CustomIconLoader = (name: string) => Awaitable<string | undefined>;
 /**
  * Custom icon customizer, it will allow to customize all icons on a collection or individual icons.
  */
-export type IconCustomizer = (collection: string, icon: string, props: Record<string, string>) => Awaitable<void>;
+export type IconCustomizer = (
+	collection: string,
+	icon: string,
+	props: Record<string, string>
+) => Awaitable<void>;
 
 /**
  * Icon customizations: will be applied to all resolved icons.
@@ -29,24 +33,26 @@ export type IconCustomizations = {
 	 * @param svg The loaded `svg`
 	 * @return The transformed `svg`.
 	 */
-	transform?: (svg: string) => Awaitable<string>
+	transform?: (svg: string) => Awaitable<string>;
 	/**
 	 * Change default icon customizations values.
 	 *
 	 * @param defaultCustomizations Default icon's customizations values.
 	 * @return The modified icon's customizations values.
 	 */
-	customize?: (defaultCustomizations: FullIconCustomisations) => FullIconCustomisations
+	customize?: (
+		defaultCustomizations: FullIconCustomisations
+	) => FullIconCustomisations;
 	/**
 	 * Custom icon customizer.
 	 */
-	iconCustomizer?: IconCustomizer
+	iconCustomizer?: IconCustomizer;
 	/**
 	 * Additional icon properties.
 	 *
 	 * All properties without value will not be applied.
 	 */
-	additionalProps?: Record<string, string | undefined>
+	additionalProps?: Record<string, string | undefined>;
 };
 
 /**

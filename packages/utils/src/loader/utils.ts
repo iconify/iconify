@@ -21,17 +21,21 @@ export async function mergeIconProps(
 	icon: string,
 	additionalProps: Record<string, string | undefined>,
 	propsProvider?: () => Awaitable<Record<string, string>>,
-	iconCustomizer?: IconCustomizer,
+	iconCustomizer?: IconCustomizer
 ): Promise<string> {
-	const props: Record<string, string> = await propsProvider?.() ?? {}
-	await iconCustomizer?.(collection, icon, props)
+	const props: Record<string, string> = (await propsProvider?.()) ?? {};
+	await iconCustomizer?.(collection, icon, props);
 	Object.keys(additionalProps).forEach((p) => {
-		const v = additionalProps[p]
-		if (v !== undefined && v !== null)
-			props[p] = v
-	})
-	const replacement = svg.startsWith('<svg ') ? '<svg ' : '<svg'
-	return svg.replace(replacement, `${replacement}${Object.keys(props).map(p => `${p}="${props[p]}"`).join(' ')}`)
+		const v = additionalProps[p];
+		if (v !== undefined && v !== null) props[p] = v;
+	});
+	const replacement = svg.startsWith('<svg ') ? '<svg ' : '<svg';
+	return svg.replace(
+		replacement,
+		`${replacement}${Object.keys(props)
+			.map((p) => `${p}="${props[p]}"`)
+			.join(' ')}`
+	);
 }
 
 export async function tryInstallPkg(name: string): Promise<void | undefined> {

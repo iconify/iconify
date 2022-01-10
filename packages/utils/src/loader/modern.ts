@@ -16,7 +16,10 @@ const debugLegacy = createDebugger('@iconify-loader:legacy');
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
 
-export async function loadCollection(name: string, autoInstall = false): Promise<IconifyJSON | undefined> {
+export async function loadCollection(
+	name: string,
+	autoInstall = false
+): Promise<IconifyJSON | undefined> {
 	if (!_collections[name]) {
 		_collections[name] = task();
 	}
@@ -43,8 +46,7 @@ export async function loadCollection(name: string, autoInstall = false): Promise
 
 		if (jsonPath) {
 			return JSON.parse(await fs.readFile(jsonPath, 'utf8'));
-		}
-		else {
+		} else {
 			debugModern(`failed to load ${name}`);
 			return undefined;
 		}
@@ -55,18 +57,24 @@ export async function searchForIcon(
 	iconSet: IconifyJSON,
 	collection: string,
 	ids: string[],
-	iconCustomizations?: IconCustomizations,
+	iconCustomizations?: IconCustomizations
 ): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
-	const { customize, additionalProps = {}, iconCustomizer } = iconCustomizations || {}
+	const {
+		customize,
+		additionalProps = {},
+		iconCustomizer,
+	} = iconCustomizations || {};
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
 			debug(`${collection}:${id}`);
-			const defaultCustomizations = { ...DefaultIconCustomizations }
+			const defaultCustomizations = { ...DefaultIconCustomizations };
 			const { attributes, body } = iconToSVG(
 				iconData,
-				typeof customize === 'function' ? customize(defaultCustomizations) : defaultCustomizations
+				typeof customize === 'function'
+					? customize(defaultCustomizations)
+					: defaultCustomizations
 			);
 			return await mergeIconProps(
 				`<svg>${body}</svg>`,
@@ -74,8 +82,8 @@ export async function searchForIcon(
 				id,
 				additionalProps,
 				() => attributes,
-				iconCustomizer,
-			)
+				iconCustomizer
+			);
 		}
 	}
 }

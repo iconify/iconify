@@ -128,10 +128,10 @@
 			"require": "./lib/loader/loaders.js",
 			"import": "./lib/loader/loaders.mjs"
 		},
-    "./lib/loader/modern": {
-      "require": "./lib/loader/modern.js",
-      "import": "./lib/loader/modern.mjs"
-    },
+		"./lib/loader/modern": {
+			"require": "./lib/loader/modern.js",
+			"import": "./lib/loader/modern.mjs"
+		},
 		"./lib/loader/types": {
 			"require": "./lib/loader/types.js",
 			"import": "./lib/loader/types.mjs"
@@ -163,7 +163,7 @@
 		"@iconify/types": "^1.0.12",
 		"debug": "^4.3.3",
 		"kolorist": "^1.5.0",
-    "local-pkg": "^0.4.0"
+		"local-pkg": "^0.4.0"
 	},
 	"devDependencies": {
 		"@iconify/library-builder": "^1.0.4",
