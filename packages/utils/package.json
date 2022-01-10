@@ -166,7 +166,7 @@
 		"local-pkg": "^0.4.0"
 	},
 	"devDependencies": {
-		"@iconify/library-builder": "^1.0.4",
+		"@iconify/library-builder": "^1.0.5",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
