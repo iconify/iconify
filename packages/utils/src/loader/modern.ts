@@ -55,10 +55,10 @@ export async function searchForIcon(
 	iconSet: IconifyJSON,
 	collection: string,
 	ids: string[],
-	iconCustomizactions?: IconCustomizations,
+	iconCustomizations?: IconCustomizations,
 ): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
-	const { customize, additionalProps = {}, iconCustomizer } = iconCustomizactions || {}
+	const { customize, additionalProps = {}, iconCustomizer } = iconCustomizations || {}
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {

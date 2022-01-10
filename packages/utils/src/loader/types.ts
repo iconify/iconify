@@ -15,7 +15,7 @@ export type IconCustomizer = (collection: string, icon: string, props: Record<st
  * Icon customizations: will be applied to all resolved icons.
  *
  * For each loaded icon, the customizations will be applied in this order:
- * - apply `transform` to raw `svg`, if provided
+ * - apply `transform` to raw `svg`, if provided and using custom icon collection
  * - apply `customize` with default customizations, if provided
  * - apply `iconCustomizer` with `customize` customizations, if provided
  * - apply `additionalProps` with `iconCustomizer` customizations, if provided
@@ -24,6 +24,8 @@ export type IconCustomizations = {
 	/**
 	 * Transform raw `svg`.
 	 *
+	 * **WARNING**: `transform` will be only applied when using `custom` icon collection: it will be applied only when using `getCustomIcon` and excluded when using `searchForIcon`.
+	 *
 	 * @param svg The loaded `svg`
 	 * @return The transformed `svg`.
 	 */
@@ -31,8 +33,8 @@ export type IconCustomizations = {
 	/**
 	 * Change default icon customizations values.
 	 *
-	 * @param defaultCustomizations Default icon customisations values.
-	 * @return The modified icon customisations values.
+	 * @param defaultCustomizations Default icon's customizations values.
+	 * @return The modified icon's customizations values.
 	 */
 	customize?: (defaultCustomizations: FullIconCustomisations) => FullIconCustomisations
 	/**
