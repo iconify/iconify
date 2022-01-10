@@ -90,14 +90,6 @@
 			"require": "./lib/icon/sort.js",
 			"import": "./lib/icon/sort.mjs"
 		},
-		"./lib/modern": {
-			"require": "./lib/modern/index.js",
-			"import": "./lib/modern/index.mjs"
-		},
-		"./lib/modern/index": {
-			"require": "./lib/modern/index.js",
-			"import": "./lib/modern/index.mjs"
-		},
 		"./lib/storage/functions": {
 			"require": "./lib/storage/functions.js",
 			"import": "./lib/storage/functions.mjs"
@@ -108,17 +100,13 @@
 		}
 	},
 	"dependencies": {
-		"@antfu/utils": "^0.3.0",
 		"@iconify/api-redundancy": "^1.0.2",
 		"@iconify/types": "^1.0.10",
 		"@iconify/utils": "^1.0.16",
-		"cross-fetch": "^3.1.4",
-		"debug": "^4.3.3",
-		"local-pkg": "^0.4.0"
+		"cross-fetch": "^3.1.4"
 	},
 	"devDependencies": {
 		"@iconify/library-builder": "^1.0.3",
-		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.2",
 		"@types/node": "^15.3.0",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",

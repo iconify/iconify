@@ -1,14 +1,15 @@
 import { promises as fs } from 'fs';
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { defaultCustomisations as DefaultIconCustomizations, iconToSVG, getIconData, tryInstallPkg } from '@iconify/utils';
+import type { FullIconifyIcon } from '../icon';
+import { iconToSVG, getIconData, tryInstallPkg } from '../index';
 import createDebugger from 'debug';
 import { isPackageExists, resolveModule } from 'local-pkg';
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
+import { defaults as DefaultIconCustomizations } from '../customisations';
+import type { FullIconCustomisations } from '../customisations';
 
-const debug = createDebugger('@iconify-core:icon');
-const debugModern = createDebugger('@iconify-core:modern');
-const debugLegacy = createDebugger('@iconify-core:legacy');
+const debug = createDebugger('@iconify-loader:icon');
+const debugModern = createDebugger('@iconify-loader:modern');
+const debugLegacy = createDebugger('@iconify-loader:legacy');
 
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
