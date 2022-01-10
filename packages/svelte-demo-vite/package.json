@@ -10,14 +10,14 @@
 	},
 	"devDependencies": {
 		"@iconify-icons/mdi-light": "^1.1.0",
-		"@iconify/svelte": "^2.1.0",
-		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.11",
+		"@iconify/svelte": "^2.1.1",
+		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.34",
 		"@tsconfig/svelte": "^2.0.1",
-		"svelte": "^3.37.0",
-		"svelte-check": "^2.1.0",
-		"svelte-preprocess": "^4.7.2",
-		"tslib": "^2.2.0",
-		"typescript": "^4.3.2",
-		"vite": "^2.5.4"
+		"svelte": "^3.45.0",
+		"svelte-check": "^2.2.12",
+		"svelte-preprocess": "^4.10.1",
+		"tslib": "^2.3.1",
+		"typescript": "^4.5.4",
+		"vite": "^2.7.10"
 	}
 }
