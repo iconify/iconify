@@ -16,8 +16,8 @@ export function FileSystemIconLoader(
 			`${dir}/${camelize(name)}.svg`,
 			`${dir}/${pascalize(name)}.svg`,
 		];
+		let stat: Stats;
 		for (const path of paths) {
-			let stat: Stats;
 			try {
 				stat = await fs.lstat(path);
 			} catch (err) {
