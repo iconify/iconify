@@ -93,6 +93,6 @@ describe('Using storage', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('<!---->');
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('');
 	});
 });

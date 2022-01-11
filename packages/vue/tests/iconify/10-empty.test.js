@@ -10,7 +10,7 @@ describe('Empty icon', () => {
 			props: {},
 		});
 
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('<!---->');
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('');
 	});
 
 	test('with child node', () => {
@@ -38,12 +38,12 @@ describe('Empty icon', () => {
 	test('with multiple childen', () => {
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon><i class="fa fa-home" /> Home icon</Icon>`,
+			template: `<Icon><i class="fa fa-home" />Home icon</Icon>`,
 		};
 
 		const wrapper = mount(Wrapper, {});
 		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-			'<i class="fa fa-home"></i> Home icon'
+			'<i class="fa fa-home"></i>Home icon'
 		);
 	});
 });

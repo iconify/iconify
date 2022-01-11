@@ -147,7 +147,7 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Wrapper, {});
 
 		// Should render placeholder
-		expect(wrapper.html()).toEqual('<!---->');
+		expect(wrapper.html()).toEqual('');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toEqual('');
@@ -232,7 +232,7 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Wrapper, {});
 
 		// Should render placeholder
-		expect(wrapper.html()).toEqual('<!---->');
+		expect(wrapper.html()).toEqual('');
 
 		// Change icon name
 		wrapper.setProps({

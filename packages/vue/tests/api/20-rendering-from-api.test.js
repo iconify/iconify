@@ -156,7 +156,7 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Wrapper, {});
 
 		// Should render empty icon
-		expect(wrapper.html()).toEqual('<!---->');
+		expect(wrapper.html()).toEqual('');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toEqual(false);
@@ -185,7 +185,7 @@ describe('Rendering icon', () => {
 				// Wrapped in double setTimeout() because re-render takes 2 ticks
 				setTimeout(() => {
 					setTimeout(() => {
-						expect(wrapper.html()).toEqual('<!---->');
+						expect(wrapper.html()).toEqual('');
 
 						done();
 					}, 0);
@@ -209,6 +209,6 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Wrapper, {});
 
 		// Should render empty icon
-		expect(wrapper.html()).toEqual('<!---->');
+		expect(wrapper.html()).toEqual('');
 	});
 });
