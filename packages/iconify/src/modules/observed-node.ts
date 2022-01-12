@@ -22,6 +22,6 @@ export interface ObservedNode {
 		paused: number;
 
 		// Timer for pending scan
-		pendingScan?: number;
+		pendingScan?: unknown;
 	};
 }

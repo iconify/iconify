@@ -135,7 +135,7 @@ function stopObserver(node: ObservedNode): void {
 
 	// Stop scan
 	if (observer.pendingScan) {
-		clearTimeout(observer.pendingScan);
+		clearTimeout(observer.pendingScan as number);
 		delete observer.pendingScan;
 	}
 

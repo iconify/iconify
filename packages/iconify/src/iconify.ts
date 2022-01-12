@@ -22,7 +22,7 @@ import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 // Cache
-import { storeCache, loadCache } from '@iconify/core/lib/browser-storage/';
+import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
 import { cache } from '@iconify/core/lib/cache';
 import type {
 	IconifyBrowserCacheFunctions,
