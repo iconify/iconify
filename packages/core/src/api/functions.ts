@@ -14,6 +14,7 @@ import type {
 	IconifyAPICustomQueryParams,
 } from './modules';
 import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
+import type { IconifyIcon } from '@iconify/types';
 
 /**
  * Iconify API functions
@@ -26,6 +27,13 @@ export interface IconifyAPIFunctions {
 		icons: (IconifyIconName | string)[],
 		callback?: IconifyIconLoaderCallback
 	) => IconifyIconLoaderAbort;
+
+	/**
+	 * Load one icon, using Promise syntax
+	 */
+	loadIcon: (
+		icon: IconifyIconName | string
+	) => Promise<Required<IconifyIcon>>;
 
 	/**
 	 * Add API provider
