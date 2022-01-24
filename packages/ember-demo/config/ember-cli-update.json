@@ -3,14 +3,16 @@
   "packages": [
     {
       "name": "ember-cli",
-      "version": "3.27.0",
+      "version": "4.1.0",
       "blueprints": [
         {
           "name": "app",
           "outputRepo": "https://github.com/ember-cli/ember-new-output",
           "codemodsSource": "ember-app-codemods-manifest@1",
           "isBaseBlueprint": true,
-          "options": []
+          "options": [
+            "--ci-provider=github"
+          ]
         }
       ]
     }

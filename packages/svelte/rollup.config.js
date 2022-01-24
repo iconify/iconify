@@ -52,8 +52,12 @@ export default [
 		input: sourceDir + '/functions.ts',
 		output: [
 			{
-				file: targetDir + '/functions.js',
+				file: targetDir + '/functions.mjs',
 				format: 'es',
+			},
+			{
+				file: targetDir + '/functions.js',
+				format: 'cjs',
 			},
 		],
 		plugins: [
@@ -69,8 +73,12 @@ export default [
 		input: sourceDir + '/offline-functions.ts',
 		output: [
 			{
-				file: targetDir + '/offline-functions.js',
+				file: targetDir + '/offline-functions.mjs',
 				format: 'es',
+			},
+			{
+				file: targetDir + '/offline-functions.js',
+				format: 'cjs',
 			},
 		],
 		plugins: [

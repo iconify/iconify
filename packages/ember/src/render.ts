@@ -105,7 +105,11 @@ export const render = (
 
 	// Counter for ids based on "id" property to render icons consistently on server and client
 	let localCounter = 0;
-	const id = props.id;
+	let id = props.id;
+	if (typeof id === 'string') {
+		// Convert '-' to '_' to avoid errors in animations
+		id = id.replace(/-/g, '_');
+	}
 
 	// Create body
 	const body = replaceIDs(

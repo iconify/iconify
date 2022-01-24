@@ -266,7 +266,7 @@ export default Iconify;
 export { _api };
 
 // IconifyAPIFunctions
-export { addAPIProvider, loadIcons };
+export { addAPIProvider, loadIcons, loadIcon };
 
 // IconifyStorageFunctions
 export { iconExists, getIcon, listIcons, addIcon, addCollection, shareStorage };

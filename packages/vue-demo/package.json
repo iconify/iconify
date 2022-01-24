@@ -7,15 +7,15 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.2.26"
+		"vue": "^3.2.29"
 	},
 	"devDependencies": {
-		"@iconify-icons/bx": "^1.0.2",
-		"@iconify-icons/dashicons": "^1.0.0",
+		"@iconify-icons/bx": "^1.1.5",
+		"@iconify-icons/dashicons": "^1.1.1",
 		"@iconify/types": "^1.0.12",
-		"@iconify/vue": "^3.1.2",
-		"@vitejs/plugin-vue": "^1.9.4",
-		"typescript": "^4.5.4",
-		"vite": "^2.6.14"
+		"@iconify/vue": "^3.1.3",
+		"@vitejs/plugin-vue": "^2.1.0",
+		"typescript": "^4.5.5",
+		"vite": "^2.7.13"
 	}
 }
