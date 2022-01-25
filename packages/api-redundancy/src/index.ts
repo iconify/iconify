@@ -117,10 +117,6 @@ export function initRedundancy(cfg: Partial<RedundancyConfig>): Redundancy {
 				if (doneCallback) {
 					doneCallback(data, error);
 				}
-			},
-			(newIndex) => {
-				// Update start index
-				config.index = newIndex;
 			}
 		);
 		queries.push(query);

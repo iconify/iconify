@@ -68,9 +68,6 @@ describe('Multiple resources', () => {
 				expect(diff).toBeLessThan(50);
 
 				done();
-			},
-			() => {
-				done('This should not have been called');
 			}
 		);
 
@@ -101,7 +98,6 @@ describe('Multiple resources', () => {
 		const startTime = Date.now();
 		let sentQuery = 0;
 		let itemAborted = false;
-		let parentUpdated = false;
 
 		// Send query
 		const getStatus = sendQuery(
@@ -174,20 +170,12 @@ describe('Multiple resources', () => {
 				expect(status.queriesSent).toEqual(2);
 				expect(status.queriesPending).toEqual(0);
 
-				// Parent should have been updated
-				expect(parentUpdated).toEqual(true);
-
 				// Delay between first and second queries
 				const diff = Date.now() - startTime;
 				expect(diff).toBeGreaterThan(50);
 				expect(diff).toBeLessThan(150);
 
 				done();
-			},
-			(newIndex) => {
-				// Start index should be updated to 1
-				expect(newIndex).toEqual(1);
-				parentUpdated = true;
 			}
 		);
 
@@ -300,9 +288,6 @@ describe('Multiple resources', () => {
 				expect(diff).toBeLessThan(120);
 
 				done();
-			},
-			() => {
-				done('This should have never been called');
 			}
 		);
 
@@ -385,9 +370,6 @@ describe('Multiple resources', () => {
 				expect(diff).toBeLessThan(120);
 
 				done();
-			},
-			() => {
-				done('This should have never been called');
 			}
 		);
 
@@ -448,9 +430,6 @@ describe('Multiple resources', () => {
 				expect(diff).toBeLessThan(170);
 
 				done();
-			},
-			() => {
-				done('This should have never been called');
 			}
 		);
 

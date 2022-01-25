@@ -76,8 +76,7 @@ export function sendQuery(
 	config: RedundancyConfig,
 	payload: unknown,
 	query: QueryModuleCallback,
-	done?: QueryDoneCallback,
-	success?: QueryUpdateIndexCallback
+	done?: QueryDoneCallback
 ): GetQueryStatus {
 	// Get number of resources
 	const resourcesCount = config.resources.length;
@@ -270,11 +269,11 @@ export function sendQuery(
 		resetTimer();
 		clearQueue();
 
-		// Update index in Redundancy
-		if (success && !config.random) {
+		// Update index in configuration
+		if (!config.random) {
 			const index = config.resources.indexOf(item.resource);
 			if (index !== -1 && index !== config.index) {
-				success(index);
+				config.index = index;
 			}
 		}
 
@@ -302,22 +301,16 @@ export function sendQuery(
 		if (resource === void 0) {
 			// Nothing to execute: wait for final timeout before failing
 			if (queue.length) {
-				const timeout: number =
-					typeof config.timeout === 'function'
-						? config.timeout(startTime)
-						: config.timeout;
-				if (timeout) {
-					// Last timeout before failing to allow late response
-					timer = setTimeout(() => {
-						resetTimer();
-						if (status === 'pending') {
-							// Clear queue
-							clearQueue();
-							failQuery();
-						}
-					}, timeout);
-					return;
-				}
+				// Last timeout before failing to allow late response
+				timer = setTimeout(() => {
+					resetTimer();
+					if (status === 'pending') {
+						// Clear queue
+						clearQueue();
+						failQuery();
+					}
+				}, config.timeout);
+				return;
 			}
 
 			// Fail
@@ -341,14 +334,8 @@ export function sendQuery(
 		// Bump next index
 		queriesSent++;
 
-		// Get timeout for next item
-		const timeout: number =
-			typeof config.rotate === 'function'
-				? config.rotate(queriesSent, startTime)
-				: config.rotate;
-
 		// Create timer
-		timer = setTimeout(execNext, timeout);
+		timer = setTimeout(execNext, config.rotate);
 
 		// Execute it
 		query(resource, payload, item);
