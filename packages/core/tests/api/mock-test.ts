@@ -353,4 +353,47 @@ describe('Testing mock API module', () => {
 
 		isSync = false;
 	});
+
+	it('not_found response', (done) => {
+		const prefix = nextPrefix();
+
+		mockAPIData({
+			type: 'icons',
+			provider,
+			prefix,
+			icons: ['test1', 'test2'],
+			response: {
+				prefix,
+				icons: {},
+				not_found: ['test1', 'test2'],
+			},
+		});
+
+		let isSync = true;
+
+		loadIcons(
+			[
+				{
+					provider,
+					prefix,
+					name: 'test1',
+				},
+			],
+			(loaded, missing, pending) => {
+				expect(isSync).toBe(false);
+				expect(loaded).toEqual([]);
+				expect(pending).toEqual([]);
+				expect(missing).toEqual([
+					{
+						provider,
+						prefix,
+						name: 'test1',
+					},
+				]);
+				done();
+			}
+		);
+
+		isSync = false;
+	});
 });
