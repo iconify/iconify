@@ -1,4 +1,4 @@
-import type { PendingQueryItem } from '@iconify/api-redundancy';
+import type { QueryModuleResponse } from '@iconify/api-redundancy';
 
 /**
  * Params for sendQuery()
@@ -31,7 +31,7 @@ export type IconifyAPIPrepareIconsQuery = (
 export type IconifyAPISendQuery = (
 	host: string,
 	params: IconifyAPIQueryParams,
-	status: PendingQueryItem
+	callback: QueryModuleResponse
 ) => void;
 
 /**
