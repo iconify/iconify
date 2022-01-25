@@ -173,8 +173,17 @@ export function validateIconSet(
 		}
 	});
 
+	// Check not_found
+	if (data.not_found !== void 0 && !(data.not_found instanceof Array)) {
+		if (fix) {
+			delete data.not_found;
+		} else {
+			throw new Error('Invalid not_found list');
+		}
+	}
+
 	// Make sure icons list is not empty
-	if (!Object.keys(data.icons).length) {
+	if (!Object.keys(data.icons).length && !data.not_found?.length) {
 		throw new Error('Icon set is empty');
 	}
 
