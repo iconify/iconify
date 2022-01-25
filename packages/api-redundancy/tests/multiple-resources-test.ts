@@ -24,7 +24,7 @@ describe('Multiple resources', () => {
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(resource).toEqual('api1');
 				expect(queryPayload).toEqual(payload);
@@ -34,20 +34,14 @@ describe('Multiple resources', () => {
 				sentQuery++;
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
 				expect(status.queriesSent).toEqual(1);
 				expect(status.queriesPending).toEqual(1);
 
-				// Add abort function
-				queryItem.abort = (): void => {
-					done('Abort should have not been called');
-				};
-
 				// Complete
-				queryItem.done(result);
+				callback('success', result);
 			},
 			(data, error) => {
 				// Make sure query was sent
@@ -97,13 +91,12 @@ describe('Multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let itemAborted = false;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -112,7 +105,6 @@ describe('Multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -124,29 +116,15 @@ describe('Multiple resources', () => {
 				expect(status.queriesSent).toEqual(sentQuery);
 				expect(status.queriesPending).toEqual(sentQuery);
 
-				// Add abort function
 				// Time out first, complete second
 				switch (sentQuery) {
 					case 1:
-						queryItem.abort = (): void => {
-							// First item should be aborted, but only once
-							expect(itemAborted).toEqual(false);
-
-							// When this is executed, counter should have been increased
-							expect(sentQuery).toEqual(2);
-							itemAborted = true;
-
-							// Do nothing, let it time out
-						};
+						// Do nothing, let it time out
 						return;
 
 					case 2:
-						queryItem.abort = (): void => {
-							done('Abort should have not been called');
-						};
-
 						// Send result
-						queryItem.done(result);
+						callback('success', result);
 						return;
 
 					default:
@@ -156,9 +134,6 @@ describe('Multiple resources', () => {
 			(data, error) => {
 				// Make sure queries were sent
 				expect(sentQuery).toEqual(2);
-
-				// First query should have been aborted
-				expect(itemAborted).toEqual(true);
 
 				// Validate data
 				expect(data).toEqual(result);
@@ -204,14 +179,12 @@ describe('Multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let item1Aborted = false;
-		let item2Aborted = false;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -220,7 +193,6 @@ describe('Multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -235,29 +207,8 @@ describe('Multiple resources', () => {
 				// Add abort functions
 				switch (sentQuery) {
 					case 1:
-						queryItem.abort = (): void => {
-							expect(item1Aborted).toEqual(false);
-							expect(item2Aborted).toEqual(false);
-
-							// This should have been executed at the end
-							expect(sentQuery).toEqual(2);
-							item1Aborted = true;
-
-							// Do not send anything
-						};
-						return;
-
 					case 2:
-						queryItem.abort = (): void => {
-							expect(item1Aborted).toEqual(true);
-							expect(item2Aborted).toEqual(false);
-
-							// This should have been executed at the end
-							expect(sentQuery).toEqual(2);
-							item2Aborted = true;
-
-							// Do not send anything
-						};
+						// Do not send anything
 						return;
 
 					default:
@@ -267,10 +218,6 @@ describe('Multiple resources', () => {
 			(data, error) => {
 				// Make sure queries were sent
 				expect(sentQuery).toEqual(2);
-
-				// Queries should have been aborted
-				expect(item1Aborted).toEqual(true);
-				expect(item2Aborted).toEqual(true);
 
 				// Validate data
 				expect(data).toBeUndefined();
@@ -316,14 +263,12 @@ describe('Multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let item1Aborted = false;
-		let item2Aborted = false;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -333,32 +278,10 @@ describe('Multiple resources', () => {
 
 				// Bump counter
 				sentQuery++;
-
-				// Add abort functions
-				switch (sentQuery) {
-					case 1:
-						queryItem.abort = (): void => {
-							item1Aborted = true;
-						};
-						return;
-
-					case 2:
-						queryItem.abort = (): void => {
-							item2Aborted = true;
-						};
-						return;
-
-					default:
-						done('This code should not have been reached');
-				}
 			},
 			(data, error) => {
 				// Make sure queries were sent
 				expect(sentQuery).toEqual(2);
-
-				// Queries should have been aborted
-				expect(item1Aborted).toEqual(true);
-				expect(item2Aborted).toEqual(true);
 
 				// Validate data
 				expect(data).toBeUndefined();

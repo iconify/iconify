@@ -13,9 +13,9 @@ import { sendQuery } from './query';
 export { GetQueryStatus, QueryModuleCallback, QueryDoneCallback };
 export type {
 	QueryAbortCallback,
-	QueryUpdateIndexCallback,
 	QueryStatus,
-	PendingQueryItem,
+	QueryModuleResponseType,
+	QueryModuleResponse,
 } from './query';
 
 /**
