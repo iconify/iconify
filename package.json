@@ -11,12 +11,11 @@
 		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
-		"bootstrap": "lerna bootstrap --force-local",
-		"clean": "lerna clean",
-		"link": "lerna link --force-local",
+		"bootstrap": "node monorepo/bootstrap",
+		"clean": "node monorepo/clean",
+		"link": "node monorepo/link",
+		"unlink": "node monorepo/unlink",
 		"setup": "npm run clean && npm run bootstrap"
 	},
-	"devDependencies": {
-		"lerna": "^4.0.0"
-	}
+	"devDependencies": {}
 }

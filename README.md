@@ -69,13 +69,7 @@ Other packages:
 
 ## Installation
 
-This monorepo uses Lerna to manage packages.
-
-First you need to install Lerna:
-
-```bash
-npm run install
-```
+This monorepo used Lerna to manage packages, but due to few bugs in Lerna, it was replaced with custom manager.
 
 To install dependencies in all packages, run
 

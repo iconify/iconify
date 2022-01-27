@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"target": "ESNext",
+		"module": "CommonJS",
+		"declaration": true,
+		"sourceMap": true,
+		"strict": false,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true
+	}
+}
