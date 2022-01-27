@@ -1,4 +1,4 @@
-import type { PendingQueryItem } from '@iconify/api-redundancy';
+import type { QueryModuleResponse } from '@iconify/api-redundancy';
 import type {
 	IconifyAPIQueryParams,
 	IconifyAPIPrepareIconsQuery,
@@ -104,6 +104,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 		// Get available length
 		const url = mergeParams(prefix + '.js', {
 			icons: '',
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			callback: rootVarName!,
 		});
 		result =
@@ -170,11 +171,11 @@ const prepare: IconifyAPIPrepareIconsQuery = (
 const send: IconifyAPISendQuery = (
 	host: string,
 	params: IconifyAPIQueryParams,
-	status: PendingQueryItem
+	callback: QueryModuleResponse
 ): void => {
 	if (params.type !== 'icons') {
 		// JSONP supports only icons
-		status.done(void 0, 400);
+		callback('abort', 400);
 		return;
 	}
 
@@ -201,6 +202,7 @@ const send: IconifyAPISendQuery = (
 
 	const url = mergeParams(prefix + '.js', {
 		icons: iconsList,
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		callback: rootVarName!.replace('{cb}', callbackName),
 	});
 	const path = pathCache[cacheKey] + url;
@@ -208,7 +210,7 @@ const send: IconifyAPISendQuery = (
 	global[callbackName] = (data: unknown): void => {
 		// Remove callback and complete query
 		delete global[callbackName];
-		status.done(data);
+		callback('success', data);
 	};
 
 	// Create URI

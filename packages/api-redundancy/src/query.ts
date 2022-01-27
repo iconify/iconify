@@ -12,11 +12,19 @@ type QueryItemStatus = 'pending' | 'completed' | 'aborted' | 'failed';
 type QueryPayload = unknown;
 
 /**
+ * Response from query module
+ */
+export type QueryModuleResponseData = unknown;
+
+/**
  * Callback
  *
  * If error is present, something went wrong and data is undefined. If error is undefined, data is set.
  */
-export type QueryDoneCallback = (data?: unknown, error?: unknown) => void;
+export type QueryDoneCallback = (
+	data?: QueryModuleResponseData,
+	error?: QueryModuleResponseData
+) => void;
 
 /**
  * Callback for "abort" pending item.
@@ -24,9 +32,13 @@ export type QueryDoneCallback = (data?: unknown, error?: unknown) => void;
 export type QueryAbortCallback = () => void;
 
 /**
- * Callback to call to update last successful resource index. Used by Resundancy class to automatically update config.
+ * Response from query module
  */
-export type QueryUpdateIndexCallback = (index: number) => void;
+export type QueryModuleResponseType = 'success' | 'next' | 'abort';
+export type QueryModuleResponse = (
+	status: QueryModuleResponseType,
+	data: QueryModuleResponseData
+) => void;
 
 /**
  * Status for query
@@ -52,12 +64,10 @@ export type GetQueryStatus = () => QueryStatus;
 /**
  * Item in pending items list
  */
-export interface PendingQueryItem {
-	readonly getQueryStatus: GetQueryStatus;
+interface PendingQueryItem {
 	status: QueryItemStatus; // Current query status
 	readonly resource: RedundancyResource; // Resource
-	readonly done: QueryDoneCallback; // Function to call with data
-	abort?: QueryAbortCallback; // Function to call to abort query, set by query handler
+	readonly callback: QueryModuleResponse; // Function to call with data
 }
 
 /**
@@ -66,7 +76,7 @@ export interface PendingQueryItem {
 export type QueryModuleCallback = (
 	resource: RedundancyResource,
 	payload: QueryPayload,
-	queryItem: PendingQueryItem
+	callback: QueryModuleResponse
 ) => void;
 
 /**
@@ -74,10 +84,9 @@ export type QueryModuleCallback = (
  */
 export function sendQuery(
 	config: RedundancyConfig,
-	payload: unknown,
+	payload: QueryPayload,
 	query: QueryModuleCallback,
-	done?: QueryDoneCallback,
-	success?: QueryUpdateIndexCallback
+	done?: QueryDoneCallback
 ): GetQueryStatus {
 	// Get number of resources
 	const resourcesCount = config.resources.length;
@@ -110,7 +119,7 @@ export function sendQuery(
 	const startTime = Date.now();
 	let status: QueryItemStatus = 'pending';
 	let queriesSent = 0;
-	let lastError: unknown = void 0;
+	let lastError: QueryModuleResponseData | undefined;
 
 	// Timer
 	let timer: ReturnType<typeof setTimeout> | null = null;
@@ -148,9 +157,6 @@ export function sendQuery(
 
 		// Abort all queued items
 		queue.forEach((item) => {
-			if (item.abort) {
-				item.abort();
-			}
 			if (item.status === 'pending') {
 				item.status = 'aborted';
 			}
@@ -205,15 +211,12 @@ export function sendQuery(
 	 * Clear queue
 	 */
 	function clearQueue(): void {
-		queue = queue.filter((item) => {
+		queue.forEach((item) => {
 			if (item.status === 'pending') {
 				item.status = 'aborted';
 			}
-			if (item.abort) {
-				item.abort();
-			}
-			return false;
 		});
+		queue = [];
 	}
 
 	/**
@@ -221,10 +224,10 @@ export function sendQuery(
 	 */
 	function moduleResponse(
 		item: PendingQueryItem,
-		data?: unknown,
-		error?: unknown
+		response: QueryModuleResponseType,
+		data: QueryModuleResponseData
 	): void {
-		const isError = data === void 0;
+		const isError = response !== 'success';
 
 		// Remove item from queue
 		queue = queue.filter((queued) => queued !== item);
@@ -248,11 +251,16 @@ export function sendQuery(
 				return;
 		}
 
+		// Abort
+		if (response === 'abort') {
+			lastError = data;
+			failQuery();
+			return;
+		}
+
 		// Error
 		if (isError) {
-			if (error !== void 0) {
-				lastError = error;
-			}
+			lastError = data;
 			if (!queue.length) {
 				if (!resources.length) {
 					// Nothing else queued, nothing can be queued
@@ -270,11 +278,11 @@ export function sendQuery(
 		resetTimer();
 		clearQueue();
 
-		// Update index in Redundancy
-		if (success && !config.random) {
+		// Update index in configuration
+		if (!config.random) {
 			const index = config.resources.indexOf(item.resource);
 			if (index !== -1 && index !== config.index) {
-				success(index);
+				config.index = index;
 			}
 		}
 
@@ -302,22 +310,16 @@ export function sendQuery(
 		if (resource === void 0) {
 			// Nothing to execute: wait for final timeout before failing
 			if (queue.length) {
-				const timeout: number =
-					typeof config.timeout === 'function'
-						? config.timeout(startTime)
-						: config.timeout;
-				if (timeout) {
-					// Last timeout before failing to allow late response
-					timer = setTimeout(() => {
-						resetTimer();
-						if (status === 'pending') {
-							// Clear queue
-							clearQueue();
-							failQuery();
-						}
-					}, timeout);
-					return;
-				}
+				// Last timeout before failing to allow late response
+				timer = setTimeout(() => {
+					resetTimer();
+					if (status === 'pending') {
+						// Clear queue
+						clearQueue();
+						failQuery();
+					}
+				}, config.timeout);
+				return;
 			}
 
 			// Fail
@@ -327,11 +329,10 @@ export function sendQuery(
 
 		// Create new item
 		const item: PendingQueryItem = {
-			getQueryStatus,
 			status: 'pending',
 			resource,
-			done: (data?: unknown, error?: unknown) => {
-				moduleResponse(item, data, error);
+			callback: (status, data) => {
+				moduleResponse(item, status, data);
 			},
 		};
 
@@ -341,17 +342,11 @@ export function sendQuery(
 		// Bump next index
 		queriesSent++;
 
-		// Get timeout for next item
-		const timeout: number =
-			typeof config.rotate === 'function'
-				? config.rotate(queriesSent, startTime)
-				: config.rotate;
-
 		// Create timer
-		timer = setTimeout(execNext, timeout);
+		timer = setTimeout(execNext, config.rotate);
 
 		// Execute it
-		query(resource, payload, item);
+		query(resource, payload, item.callback);
 	}
 
 	// Execute first query on next tick

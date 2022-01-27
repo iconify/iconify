@@ -23,7 +23,7 @@ describe('Redundancy class', () => {
 
 		const query = redundancy.query(
 			'/foo',
-			(resource, payload, status) => {
+			(resource, payload, callback) => {
 				counter++;
 				expect(counter).toBeLessThan(3); // No more than 2 queries should be executed
 
@@ -36,7 +36,7 @@ describe('Redundancy class', () => {
 				}
 
 				// Do something with "data", simulate instant callback
-				status.done(responses[uri]);
+				callback('success', responses[uri]);
 
 				// Complete test
 				setTimeout(() => {
@@ -80,29 +80,32 @@ describe('Redundancy class', () => {
 		};
 		let counter = 0;
 
-		const query = redundancy.query('/foo', (resource, payload, status) => {
-			counter++;
-			expect(counter).toBeLessThan(2); // Should be success on first call because start index = 1
+		const query = redundancy.query(
+			'/foo',
+			(resource, payload, callback) => {
+				counter++;
+				expect(counter).toBeLessThan(2); // Should be success on first call because start index = 1
 
-			// Make URI from resource + payload
-			const uri = (resource as string) + (payload as string);
+				// Make URI from resource + payload
+				const uri = (resource as string) + (payload as string);
 
-			// Get fake data if it exists
-			if (responses[uri] === void 0) {
-				return;
+				// Get fake data if it exists
+				if (responses[uri] === void 0) {
+					return;
+				}
+
+				// Do something with "data", simulate instant callback
+				callback('success', responses[uri]);
+
+				// Complete test
+				setTimeout(() => {
+					expect(counter).toEqual(1);
+					expect(query().status).toEqual('completed');
+					expect(redundancy.getIndex()).toEqual(1);
+					done();
+				});
 			}
-
-			// Do something with "data", simulate instant callback
-			status.done(responses[uri]);
-
-			// Complete test
-			setTimeout(() => {
-				expect(counter).toEqual(1);
-				expect(query().status).toEqual('completed');
-				expect(redundancy.getIndex()).toEqual(1);
-				done();
-			});
-		});
+		);
 
 		// Test find()
 		expect(redundancy.find((item) => item().payload === '/foo')).toEqual(
