@@ -1,34 +1,94 @@
-import { addLinksToWorkspace } from './add-links';
-import { cleanWorkspace } from './clean';
-import { installAllPackages } from './install';
-import { removeLinksFromWorkspace } from './remove-links';
-import { findWorkspaces } from './workspaces';
+import { runAction } from './helpers/action';
+import { addLinksToWorkspace } from './helpers/add-links';
+import { cleanWorkspace } from './helpers/clean';
+import { runNPMCommand } from './helpers/exec';
+import { removeLinksFromWorkspace } from './helpers/remove-links';
 
 /**
- * Fix links
+ * All actions
  */
-export function fixLinks(): void {
-	const workspaces = findWorkspaces();
-	workspaces.forEach(addLinksToWorkspace);
+const actionFunctions: Record<string, () => void> = {
+	link: () => {
+		runAction('Creating/fixing symbolic links', addLinksToWorkspace);
+	},
+	unlink: () => {
+		runAction('Removing symbolic links', removeLinksFromWorkspace);
+	},
+	clean: () => {
+		runAction('Removing node_modules', cleanWorkspace);
+	},
+	install: () => {
+		runAction('Installing dependencies', (workspace) => {
+			runNPMCommand(workspace, ['install']);
+		});
+	},
+};
+
+/**
+ * Actions that require parameter
+ */
+interface ActionWithParam {
+	action: string;
+	param: string;
 }
+const actionWithParamsFunctions: Record<string, (param: string) => void> = {
+	run: (param: string) => {
+		runAction(`Running "npm run ${param}"`, (workspace) => {
+			runNPMCommand(workspace, ['run', param]);
+		});
+	},
+};
 
 /**
- * Remove links
+ * Run code
  */
-export function removeLinks(): void {
-	const workspaces = findWorkspaces();
-	workspaces.forEach(removeLinksFromWorkspace);
-}
+export function run() {
+	// List of actions
+	const actions: (string | ActionWithParam)[] = [];
 
-/**
- * Install all packages
- */
-export { installAllPackages };
+	// Process args
+	let nextActionParam: string | null = null;
+	process.argv.slice(2).forEach((arg) => {
+		// Parameter for action with param
+		if (nextActionParam !== null) {
+			actions.push({
+				action: nextActionParam,
+				param: arg,
+			});
+			nextActionParam = null;
+			return;
+		}
 
-/**
- * Clean
- */
-export function cleanWorkspaces(): void {
-	const workspaces = findWorkspaces();
-	workspaces.forEach(cleanWorkspace);
+		// Action
+		if (actionFunctions[arg] !== void 0) {
+			actions.push(arg);
+			return;
+		}
+
+		// Action with parameter
+		if (actionWithParamsFunctions[arg] !== void 0) {
+			nextActionParam = arg;
+			return;
+		}
+
+		// Invalid argument
+		throw new Error(`Invalid argument: ${arg}`);
+	});
+
+	// Make sure arguments list is complete
+	if (nextActionParam !== null) {
+		throw new Error(`Missing parameter for action: ${nextActionParam}`);
+	}
+
+	// Run actions
+	if (!actions.length) {
+		throw new Error('Nothing to do');
+	}
+	actions.forEach((action) => {
+		if (typeof action === 'string') {
+			actionFunctions[action]();
+		} else {
+			actionWithParamsFunctions[action.action](action.param);
+		}
+	});
 }

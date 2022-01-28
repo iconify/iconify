@@ -63,7 +63,7 @@ function rmdir(dir: string) {
 	try {
 		const stat = fs.lstatSync(dir);
 		if (stat.isDirectory() || stat.isSymbolicLink()) {
-			console.log('Removing', dir);
+			console.log('Removing', relativePath(dir));
 			fs.rmSync(dir, {
 				recursive: true,
 			});

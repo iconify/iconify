@@ -11,11 +11,11 @@
 		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
-		"bootstrap": "node monorepo/bootstrap",
-		"clean": "node monorepo/clean",
-		"link": "node monorepo/link",
-		"unlink": "node monorepo/unlink",
-		"setup": "npm run clean && npm run bootstrap"
+		"install": "node monorepo/index install",
+		"clean": "node monorepo/index clean",
+		"link": "node monorepo/index link",
+		"unlink": "node monorepo/index unlink",
+		"reinstall": "node monorepo/index clean install"
 	},
 	"devDependencies": {}
 }

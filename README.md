@@ -74,14 +74,16 @@ This monorepo used Lerna to manage packages, but due to few bugs in Lerna, it wa
 To install dependencies in all packages, run
 
 ```bash
-npm run bootstrap
+npm install
 ```
 
 This will install all dependencies and create symbolic links to packages.
 
 If links stop working for some reason, run `npm run link` to fix links.
 
-If you want to re-install dependencies, run `npm run clean` to clear all repositories (press "Y" to continue), then `npm run bootstrap` to install everything again.
+If you want to remove `node_modules` for all packages, run `npm run clean`.
+
+If you want to re-install dependencies, run `npm run reinstall`.
 
 ## Documentation
 

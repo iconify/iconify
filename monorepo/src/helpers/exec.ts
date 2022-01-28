@@ -7,7 +7,7 @@ import { PackageInfo } from './types';
  */
 export function runNPMCommand(workspace: PackageInfo, params: string[]): void {
 	const cwd = pathToString(workspace.path);
-	console.log(relativePath(cwd) + ':', 'npm', params.join(' '));
+	console.log('\n' + relativePath(cwd) + ':', 'npm', params.join(' '));
 	const result = spawnSync('npm', params, {
 		cwd,
 		stdio: 'inherit',

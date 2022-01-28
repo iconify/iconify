@@ -74,6 +74,17 @@ function build() {
 	});
 }
 
-module.exports = {
-	build,
-};
+/**
+ * Export or build
+ */
+if (!module.parent) {
+	build()
+		.then((functions) => {
+			functions.run();
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+} else {
+	module.exports = { build };
+}

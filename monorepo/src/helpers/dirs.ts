@@ -2,7 +2,7 @@ import fs from 'fs';
 import { dirname } from 'path';
 import type { PathList } from './types';
 
-export const fixDir = dirname(__dirname);
+export const fixDir = dirname(dirname(__dirname));
 export const rootDir = dirname(fixDir);
 
 /**
