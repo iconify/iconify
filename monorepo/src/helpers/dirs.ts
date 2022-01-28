@@ -2,7 +2,7 @@ import fs from 'fs';
 import { dirname } from 'path';
 import type { PathList } from './types';
 
-export const fixDir = dirname(dirname(__dirname));
+export const fixDir = dirname(dirname(__dirname.replace(/\\/g, '/')));
 export const rootDir = dirname(fixDir);
 
 /**
@@ -26,7 +26,7 @@ export function addToPath(
  */
 export function pathToString(path: PathList, absolute = true): string {
 	const isAbsolute =
-		path.length && (path[0] === '' || path[0].slice(0, 1) === '/');
+		path.length && (path[0] === '' || path[0].slice(0, 1) === '/' || path[0].indexOf(':') !== -1);
 	return (isAbsolute ? '' : absolute ? rootDir + '/' : './') + path.join('/');
 }
 

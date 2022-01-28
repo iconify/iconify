@@ -4,7 +4,7 @@
 const fs = require('fs');
 const child_process = require('child_process');
 
-const rootDir = __dirname;
+const rootDir = __dirname.replace(/\\/g, '/');
 const mainFile = rootDir + '/lib/index.js';
 
 // Check if required modules in same monorepo are available
@@ -18,17 +18,34 @@ const fileExists = (file) => {
 };
 
 /**
+ * Get NPM command
+ */
+function getNPMCommand() {
+	const clients = ['npm', 'npm.cmd'];
+	for (let i = 0; i < clients.length; i++) {
+		const cmd = clients[i];
+		const result = child_process.spawnSync(cmd, ['--version']);
+		if (result.status === 0) {
+			return cmd;
+		}
+	}
+	throw new Error('Cannot execute NPM commands')
+}
+
+/**
  * Build scripts, return imported main file on success
  */
 function build() {
 	return new Promise((fulfill, reject) => {
+		const npm = getNPMCommand();
+
 		// List of commands to execute
 		const commands = [];
 
 		// Build script
 		if (!fileExists(mainFile)) {
 			commands.push({
-				cmd: 'npm',
+				cmd: npm,
 				args: ['run', 'build'],
 				cwd: rootDir,
 			});
@@ -37,7 +54,7 @@ function build() {
 		// Install dependencies before building
 		if (!fileExists(rootDir + '/node_modules/typescript')) {
 			commands.unshift({
-				cmd: 'npm',
+				cmd: npm,
 				args: ['install'],
 				cwd: rootDir,
 			});
