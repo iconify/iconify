@@ -85,6 +85,15 @@ If you want to remove `node_modules` for all packages, run `npm run clean`.
 
 If you want to re-install dependencies, run `npm run reinstall`.
 
+### Monorepo on Windows
+
+This monorepo uses symbolic links to create links between packages. This allows development of multiple packages at the same time.
+
+When using Windows, symbolic links require setting up extra permissions. If you are using Windows and cannot set permissions for symbolic links, there are several options:
+
+-   Use Windows Subsystem for Linux (WSL).
+-   Treat each package as a separate package, without links to other packages. All packages do have correct dependencies, so you will be able to use most packages (except for `browser-tests` that requires links to access directory `lib` from `iconify` package), but you will not be able to work on multiple packages at the same time.
+
 ## Documentation
 
 Documentation for all packages is available on [Iconify documentation website](https://docs.iconify.design/icon-components/):
