@@ -20,6 +20,7 @@ const actionFunctions: Record<string, () => void> = {
 	install: () => {
 		runAction('Installing dependencies', (workspace) => {
 			runNPMCommand(workspace, ['install']);
+			addLinksToWorkspace(workspace);
 		});
 	},
 };
