@@ -1,5 +1,5 @@
 {
-	"name": "svelte-demo-vite",
+	"name": "@iconify-demo/svelte-vite",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",

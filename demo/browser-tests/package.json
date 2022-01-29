@@ -1,5 +1,5 @@
 {
-	"name": "@iconify/iconify-browser-tests",
+	"name": "@iconify-demo/browser-tests",
 	"private": true,
 	"description": "Browser tests for @iconify/iconify package",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",

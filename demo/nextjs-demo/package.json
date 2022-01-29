@@ -1,5 +1,5 @@
 {
-	"name": "nextjs-demo",
+	"name": "@iconify-demo/nextjs",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {

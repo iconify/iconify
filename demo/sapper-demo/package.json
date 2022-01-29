@@ -1,5 +1,5 @@
 {
-	"name": "@iconify/sapper-demo",
+	"name": "@iconify-demo/sapper",
 	"description": "Sapper demo for Iconify for Svelte",
 	"version": "0.0.1",
 	"private": true,
