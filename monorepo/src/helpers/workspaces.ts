@@ -2,6 +2,7 @@ import type { PathList, PackageInfo } from './types';
 import { rootDir } from './dirs';
 import { addToPath, findSubdirs } from './dirs';
 import { getFixPackageName, getPackageInfo } from './package';
+import { actionOptions } from './options';
 
 /**
  * Workspaces cache
@@ -59,4 +60,32 @@ export function findWorkspaces(): PackageInfo[] {
 
 	// Cache and return result
 	return workspaces;
+}
+
+// Cache for filterWorkspaces() result
+let filteredWorkspaces: PackageInfo[];
+
+/**
+ * Get only workspaces that match options
+ */
+export function filterWorkspaces(): PackageInfo[] {
+	if (!filteredWorkspaces) {
+		filteredWorkspaces = findWorkspaces().filter((item) => {
+			// Filter by `private` property
+			if (
+				actionOptions.private !== void 0 &&
+				actionOptions.private !== 'all'
+			) {
+				if (item.private !== (actionOptions.private === 'private')) {
+					return false;
+				}
+			}
+
+			// TODO: match name
+
+			// Match
+			return true;
+		});
+	}
+	return filteredWorkspaces;
 }

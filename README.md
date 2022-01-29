@@ -69,7 +69,7 @@ Other packages:
 
 ## Installation
 
-This monorepo used Lerna to manage packages, but due to few bugs in Lerna, it was replaced with custom manager.
+This monorepo used Lerna to manage packages, but due to several bugs in Lerna and Lerna development being abandoned, it was replaced with custom manager.
 
 To install dependencies in all packages, run
 
@@ -84,6 +84,26 @@ If links stop working for some reason, run `npm run link` to fix links.
 If you want to remove `node_modules` for all packages, run `npm run clean`.
 
 If you want to re-install dependencies, run `npm run reinstall`.
+
+To build everything, run `npm run build` (this excludes demo packages).
+
+To run tests, run `npm run test` (this excludes demo packages).
+
+### Other commands
+
+You can run any commands on any package from that package's directory.
+
+Commands that modify `node_modules` might break symlinks. To fix it, run `npm run link` from monorepo directory.
+
+### Commands for all packages
+
+If you want to run a command on all packages, run `node monorepo run your_command --if-present`.
+
+There are several options to filter packages:
+
+-   `--if-present` will check if command is present before running it.
+-   `--public` will execute command only for public packages (everything except demo).
+-   `--private` will execute command only for private packages (only demo packages).
 
 ### Monorepo on Windows
 

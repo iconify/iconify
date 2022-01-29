@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { dirname } from 'path';
 import { addToPath, pathToString, relativePath } from './dirs';
+import { consoleLog } from './log';
 import type { PathList } from './types';
 
 /**
@@ -24,7 +25,7 @@ export function createLink(from: PathList, to: PathList, unlink = true): void {
 	}
 
 	// Create link
-	console.log(
+	consoleLog(
 		'Creating link:',
 		relativePath(fromDir),
 		'->',
@@ -38,7 +39,7 @@ export function createLink(from: PathList, to: PathList, unlink = true): void {
  */
 export function removeLink(path: PathList, packageName: string): void {
 	const dir = pathToString(addToPath(path, packageName));
-	console.log('Removing link:', relativePath(dir));
+	consoleLog('Removing link:', relativePath(dir));
 	try {
 		fs.unlinkSync(dir);
 	} catch (err) {
@@ -63,7 +64,7 @@ function rmdir(dir: string) {
 	try {
 		const stat = fs.lstatSync(dir);
 		if (stat.isDirectory() || stat.isSymbolicLink()) {
-			console.log('Removing', relativePath(dir));
+			consoleLog('Removing', relativePath(dir));
 			fs.rmSync(dir, {
 				recursive: true,
 			});

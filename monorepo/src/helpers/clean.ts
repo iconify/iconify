@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { addToPath, pathToString, relativePath } from './dirs';
+import { consoleLog } from './log';
 import { PackageInfo } from './types';
 
 /**
@@ -17,7 +18,7 @@ export function cleanWorkspace(workspace: PackageInfo) {
 		return;
 	}
 
-	console.log('Removing:', relativePath(dir));
+	consoleLog('Removing:', relativePath(dir));
 	try {
 		fs.rmSync(dir, {
 			recursive: true,

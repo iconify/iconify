@@ -10,27 +10,33 @@ import { pathToString } from './dirs';
 export function getPackageInfo(path: PathList): PackageInfo | null {
 	const packageFilename = pathToString(addToPath(path, 'package.json'));
 
-	let name: unknown;
-	let version: string;
-	let isPrivate: boolean;
+	let data: Record<string, unknown>;
+	let name: string;
 	try {
-		const data = JSON.parse(
-			fs.readFileSync(packageFilename, 'utf8')
-		) as Record<string, unknown>;
+		data = JSON.parse(fs.readFileSync(packageFilename, 'utf8'));
+		if (
+			typeof data !== 'object' ||
+			!data ||
+			typeof data.name !== 'string'
+		) {
+			return null;
+		}
 		name = data.name;
-		version = typeof data.version === 'string' ? data.version : '';
-		isPrivate = version ? !!data.private : true;
 	} catch (err) {
 		return null;
 	}
-	return typeof name === 'string'
-		? {
-				name,
-				private: isPrivate,
-				version,
-				path,
-		  }
-		: null;
+
+	const version = typeof data.version === 'string' ? data.version : '';
+	const isPrivate = version ? !!data.private : true;
+	const scripts =
+		typeof data.scripts === 'object' ? Object.keys(data.scripts) : [];
+	return {
+		name,
+		private: isPrivate,
+		version,
+		scripts,
+		path,
+	};
 }
 
 /**

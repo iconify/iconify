@@ -15,5 +15,6 @@ export interface PackageInfo {
 	name: PackageName;
 	private: boolean;
 	version: string;
+	scripts: string[];
 	path: PathList;
 }

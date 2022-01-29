@@ -2,6 +2,7 @@ import { runAction } from './helpers/action';
 import { addLinksToWorkspace } from './helpers/add-links';
 import { cleanWorkspace } from './helpers/clean';
 import { runNPMCommand } from './helpers/exec';
+import { actionOptions, enablePrivateFilter } from './helpers/options';
 import { removeLinksFromWorkspace } from './helpers/remove-links';
 
 /**
@@ -35,10 +36,18 @@ interface ActionWithParam {
 const actionWithParamsFunctions: Record<string, (param: string) => void> = {
 	run: (param: string) => {
 		runAction(`Running "npm run ${param}"`, (workspace) => {
-			runNPMCommand(workspace, ['run', param]);
+			if (
+				!actionOptions.ifPresent ||
+				workspace.scripts.indexOf(param) !== -1
+			) {
+				runNPMCommand(workspace, ['run', param]);
+			}
 		});
 	},
 };
+
+// Aliases
+actionWithParamsFunctions['run-script'] = actionWithParamsFunctions['run'];
 
 /**
  * Run code
@@ -58,6 +67,25 @@ export function run() {
 			});
 			nextActionParam = null;
 			return;
+		}
+
+		// Options
+		switch (arg) {
+			case '--if-present':
+				actionOptions.ifPresent = true;
+				return;
+
+			case '--silent':
+				actionOptions.silent = true;
+				return;
+
+			case '--public':
+				enablePrivateFilter(false);
+				return;
+
+			case '--private':
+				enablePrivateFilter(true);
+				return;
 		}
 
 		// Action

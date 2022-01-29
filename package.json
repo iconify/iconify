@@ -4,6 +4,7 @@
 	"description": "The most versatile icon framework",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"license": "(Apache-2.0 OR GPL-2.0)",
+	"main": "./monorepo/index.js",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
 	"repository": {
@@ -11,11 +12,13 @@
 		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
-		"install": "node monorepo/index install",
-		"clean": "node monorepo/index clean",
-		"link": "node monorepo/index link",
-		"unlink": "node monorepo/index unlink",
-		"reinstall": "node monorepo/index clean install"
+		"install": "node monorepo install",
+		"clean": "node monorepo clean",
+		"link": "node monorepo link",
+		"unlink": "node monorepo unlink",
+		"reinstall": "node monorepo clean install",
+		"build": "node monorepo run build --if-present --public",
+		"test": "node monorepo run build --if-present --public"
 	},
 	"devDependencies": {}
 }
