@@ -56,16 +56,16 @@ Other packages:
 -   [Iconify core](./packages/core/) - common files used by various components.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
 -   [Library builder](./packages/library-builder/) - build scripts for packages that do not require bundling, similar to `tsup`, but without bundler. Used by Utils, Core and API Redundancy packages. Builds ES and CommonJS modules, type definition files and updates exports in `package.json`.
--   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
--   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
--   [Vue 3 demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Vue 2 demo](./packages/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
--   [Svelte demo with Vite](./packages/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
--   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
--   [SvelteKit demo](./packages/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
--   [Ember demo](./packages/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
--   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
+-   [React demo](./demo/react-demo/) - demo for React component. Run `npm start` to start demo.
+-   [Next.js demo](./demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
+-   [Vue 3 demo](./demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Vue 2 demo](./demo/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Svelte demo](./demo/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
+-   [Svelte demo with Vite](./demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
+-   [Sapper demo](./demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
+-   [SvelteKit demo](./demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
+-   [Ember demo](./demo/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
+-   [Browser tests](./demo/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
 
 ## Installation
 
