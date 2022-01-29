@@ -27,6 +27,11 @@ const actionFunctions: Record<string, () => void> = {
 };
 
 /**
+ * Extra parameters for `run` or `run-script`
+ */
+let runParams: string[] | undefined;
+
+/**
  * Actions that require parameter
  */
 interface ActionWithParam {
@@ -35,12 +40,13 @@ interface ActionWithParam {
 }
 const actionWithParamsFunctions: Record<string, (param: string) => void> = {
 	run: (param: string) => {
-		runAction(`Running "npm run ${param}"`, (workspace) => {
+		const params = ['run', param].concat(runParams);
+		runAction(`Running "npm ${params.join(' ')}"`, (workspace) => {
 			if (
 				!actionOptions.ifPresent ||
 				workspace.scripts.indexOf(param) !== -1
 			) {
-				runNPMCommand(workspace, ['run', param]);
+				runNPMCommand(workspace, params);
 			}
 		});
 	},
@@ -57,9 +63,19 @@ export function run() {
 	const actions: (string | ActionWithParam)[] = [];
 
 	// Process args
+	let args = process.argv.slice(2);
+
+	// Check for extra options for `run`
+	const customParamsIndex = args.indexOf('--');
+	if (customParamsIndex > 0) {
+		runParams = args.slice(customParamsIndex);
+		args = args.slice(0, customParamsIndex);
+	}
+
+	// Process args
 	let nextActionParam: string | null = null;
 	let nextOptionValue: string | null = null;
-	process.argv.slice(2).forEach((arg) => {
+	args.forEach((arg) => {
 		// Parameter for action with param
 		if (nextActionParam !== null) {
 			actions.push({
