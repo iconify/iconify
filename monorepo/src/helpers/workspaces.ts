@@ -20,7 +20,11 @@ export function findWorkspaces(): PackageInfo[] {
 
 		function checkWorkspace(path: PathList) {
 			const info = getPackageInfo(path);
-			if (info && info.name !== fixPackageName) {
+			if (
+				info &&
+				info.name !== fixPackageName &&
+				!workspaces.find((item) => item.name === info.name)
+			) {
 				workspaces.push({
 					...info,
 					path,

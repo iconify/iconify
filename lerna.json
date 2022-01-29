@@ -1,5 +1,13 @@
 {
 	"version": "independent",
 	"npmClient": "npm",
-	"packages": ["packages/*", "debug_packages/*"]
+	"packages": [
+		"packages/types",
+		"packages/library-builder",
+		"packages/api-redundancy",
+		"packages/utils",
+		"packages/core",
+		"packages/*",
+		"debug_packages/*"
+	]
 }
