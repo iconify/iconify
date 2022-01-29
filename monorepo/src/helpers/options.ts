@@ -10,6 +10,12 @@ export interface ActionOptions {
 	// Filter packages by `private` property, undefined if not set
 	private?: PackageTypeFilter;
 
+	// Filter by workspace
+	workspaces: string[];
+
+	// Filter by package name
+	packages: string[];
+
 	// Silent
 	silent: boolean;
 }
@@ -19,6 +25,8 @@ export interface ActionOptions {
  */
 export const actionOptions: ActionOptions = {
 	ifPresent: false,
+	workspaces: [],
+	packages: [],
 	silent: false,
 };
 

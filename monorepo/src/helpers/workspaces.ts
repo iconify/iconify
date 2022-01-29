@@ -81,7 +81,21 @@ export function filterWorkspaces(): PackageInfo[] {
 				}
 			}
 
-			// TODO: match name
+			// Match workspace
+			if (actionOptions.workspaces.length) {
+				const workspace = item.path.join('/');
+				if (actionOptions.workspaces.indexOf(workspace) === -1) {
+					return false;
+				}
+			}
+
+			// Match package
+			if (
+				actionOptions.packages.length &&
+				actionOptions.packages.indexOf(item.name) === -1
+			) {
+				return false;
+			}
 
 			// Match
 			return true;

@@ -99,11 +99,7 @@ Commands that modify `node_modules` might break symlinks. To fix it, run `npm ru
 
 If you want to run a command on all packages, run `node monorepo run your_command --if-present`.
 
-There are several options to filter packages:
-
--   `--if-present` will check if command is present before running it.
--   `--public` will execute command only for public packages (everything except demo).
--   `--private` will execute command only for private packages (only demo packages).
+There are several options to filter packages, see [monorepo/README.md](monorepo/README.md).
 
 ### Monorepo on Windows
 

@@ -58,6 +58,7 @@ export function run() {
 
 	// Process args
 	let nextActionParam: string | null = null;
+	let nextOptionValue: string | null = null;
 	process.argv.slice(2).forEach((arg) => {
 		// Parameter for action with param
 		if (nextActionParam !== null) {
@@ -66,6 +67,23 @@ export function run() {
 				param: arg,
 			});
 			nextActionParam = null;
+			return;
+		}
+
+		// Parameter for option with param
+		if (nextOptionValue !== null) {
+			switch (nextOptionValue) {
+				case '--workspace':
+				case '-w':
+					actionOptions.workspaces.push(arg);
+					break;
+
+				case '--package':
+				case '-p':
+					actionOptions.packages.push(arg);
+					break;
+			}
+			nextOptionValue = null;
 			return;
 		}
 
@@ -88,6 +106,24 @@ export function run() {
 				return;
 		}
 
+		// Options with '='
+		const argParts = arg.split('=');
+		if (argParts.length > 1) {
+			const cmd = argParts.shift();
+			const value = argParts.join('=');
+			switch (cmd) {
+				case '--workspace':
+				case '-w':
+					actionOptions.workspaces.push(value);
+					return;
+
+				case '--package':
+				case '-p':
+					actionOptions.packages.push(value);
+					return;
+			}
+		}
+
 		// Action
 		if (actionFunctions[arg] !== void 0) {
 			actions.push(arg);
@@ -107,6 +143,9 @@ export function run() {
 	// Make sure arguments list is complete
 	if (nextActionParam !== null) {
 		throw new Error(`Missing parameter for action: ${nextActionParam}`);
+	}
+	if (nextOptionValue !== null) {
+		throw new Error(`Missing parameter for option: ${nextOptionValue}`);
 	}
 
 	// Run actions
