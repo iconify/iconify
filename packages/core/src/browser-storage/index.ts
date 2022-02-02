@@ -308,6 +308,17 @@ export const storeCache: CacheIcons = (
 		return true;
 	}
 
+	// Do not store empty sets
+	if (!Object.keys(data.icons).length) {
+		return;
+	}
+
+	// Remove not_found (clone object to keep old object intact)
+	if (data.not_found) {
+		data = Object.assign({}, data);
+		delete data.not_found;
+	}
+
 	// Attempt to store at localStorage first, then at sessionStorage
 	if (!store('local')) {
 		store('session');
