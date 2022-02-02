@@ -40,7 +40,7 @@ interface ActionWithParam {
 }
 const actionWithParamsFunctions: Record<string, (param: string) => void> = {
 	run: (param: string) => {
-		const params = ['run', param].concat(runParams);
+		const params = ['run', param].concat(runParams || []);
 		runAction(`Running "npm ${params.join(' ')}"`, (workspace) => {
 			if (
 				!actionOptions.ifPresent ||
