@@ -56,38 +56,59 @@ Other packages:
 -   [Iconify core](./packages/core/) - common files used by various components.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
 -   [Library builder](./packages/library-builder/) - build scripts for packages that do not require bundling, similar to `tsup`, but without bundler. Used by Utils, Core and API Redundancy packages. Builds ES and CommonJS modules, type definition files and updates exports in `package.json`.
--   [React demo](./packages/react-demo/) - demo for React component. Run `npm start` to start demo.
--   [Next.js demo](./packages/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
--   [Vue 3 demo](./packages/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Vue 2 demo](./packages/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Svelte demo](./packages/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
--   [Svelte demo with Vite](./packages/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
--   [Sapper demo](./packages/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
--   [SvelteKit demo](./packages/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
--   [Ember demo](./packages/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
--   [Browser tests](./packages/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
+-   [React demo](./demo/react-demo/) - demo for React component. Run `npm start` to start demo.
+-   [Next.js demo](./demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
+-   [Vue 3 demo](./demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Vue 2 demo](./demo/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Svelte demo](./demo/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
+-   [Svelte demo with Vite](./demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
+-   [Sapper demo](./demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
+-   [SvelteKit demo](./demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
+-   [Ember demo](./demo/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
+-   [Browser tests](./demo/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
 
 ## Installation
 
-This monorepo uses Lerna to manage packages.
-
-First you need to install Lerna:
-
-```bash
-npm run install
-```
+This monorepo used Lerna to manage packages, but due to several bugs in Lerna and Lerna development being abandoned, it was replaced with custom manager.
 
 To install dependencies in all packages, run
 
 ```bash
-npm run bootstrap
+npm install
 ```
 
 This will install all dependencies and create symbolic links to packages.
 
 If links stop working for some reason, run `npm run link` to fix links.
 
-If you want to re-install dependencies, run `npm run clean` to clear all repositories (press "Y" to continue), then `npm run bootstrap` to install everything again.
+If you want to remove `node_modules` for all packages, run `npm run clean`.
+
+If you want to re-install dependencies, run `npm run reinstall`.
+
+To build everything, run `npm run build` (this excludes demo packages).
+
+To run tests, run `npm run test` (this excludes demo packages).
+
+### Other commands
+
+You can run any commands on any package from that package's directory.
+
+Commands that modify `node_modules` might break symlinks. To fix it, run `npm run link` from monorepo directory.
+
+### Commands for all packages
+
+If you want to run a command on all packages, run `node monorepo run your_command --if-present`.
+
+There are several options to filter packages, see [monorepo/README.md](monorepo/README.md).
+
+### Monorepo on Windows
+
+This monorepo uses symbolic links to create links between packages. This allows development of multiple packages at the same time.
+
+When using Windows, symbolic links require setting up extra permissions. If you are using Windows and cannot set permissions for symbolic links, there are several options:
+
+-   Use Windows Subsystem for Linux (WSL).
+-   Treat each package as a separate package, without links to other packages. All packages do have correct dependencies, so you will be able to use most packages (except for `browser-tests` that requires links to access directory `lib` from `iconify` package), but you will not be able to work on multiple packages at the same time.
 
 ## Documentation
 

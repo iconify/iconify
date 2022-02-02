@@ -1,0 +1,39 @@
+{
+	"name": "@iconify-demo/sapper",
+	"description": "Sapper demo for Iconify for Svelte",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "sapper dev",
+		"build": "sapper build --legacy",
+		"export": "sapper export --legacy",
+		"start": "node __sapper__/build",
+		"cy:run": "cypress run",
+		"cy:open": "cypress open",
+		"test": "run-p --race dev cy:run"
+	},
+	"dependencies": {
+		"compression": "^1.7.4",
+		"polka": "^0.5.2",
+		"sirv": "^2.0.2"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.16.12",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.16.10",
+		"@babel/preset-env": "^7.16.11",
+		"@babel/runtime": "^7.16.7",
+		"@iconify-icons/openmoji": "^1.1.20",
+		"@iconify/svelte": "^2.1.2",
+		"@rollup/plugin-babel": "^5.3.0",
+		"@rollup/plugin-commonjs": "^21.0.1",
+		"@rollup/plugin-node-resolve": "^13.1.3",
+		"@rollup/plugin-replace": "^3.0.1",
+		"npm-run-all": "^4.1.5",
+		"rollup": "^2.66.0",
+		"rollup-plugin-svelte": "^7.1.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"sapper": "^0.29.3",
+		"svelte": "^3.46.2"
+	}
+}

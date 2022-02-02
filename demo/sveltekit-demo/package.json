@@ -1,0 +1,29 @@
+{
+	"name": "@iconify-demo/sveltekit",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"preview": "svelte-kit preview",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@iconify-icons/mdi-light": "^1.1.1",
+		"@iconify/svelte": "^2.1.2",
+		"@sveltejs/kit": "next",
+		"@types/cookie": "^0.4.1",
+		"svelte": "^3.46.2",
+		"svelte-check": "^2.3.0",
+		"svelte-preprocess": "^4.10.2",
+		"tslib": "^2.3.1",
+		"typescript": "^4.5.5"
+	},
+	"type": "module",
+	"dependencies": {
+		"@fontsource/fira-mono": "^4.5.0",
+		"@lukeed/uuid": "^2.0.0",
+		"cookie": "^0.4.1"
+	}
+}
