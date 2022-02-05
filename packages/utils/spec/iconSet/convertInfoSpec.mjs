@@ -70,7 +70,6 @@ describe('Testing convertIconSetInfo', () => {
 			},
 			height: 24,
 			samples: ['arrow-left', 'arrow-right', 'arrow-up'],
-			displayHeight: 24,
 			palette: true,
 		};
 		expect(result).toEqual(expected);
@@ -175,7 +174,6 @@ describe('Testing convertIconSetInfo', () => {
 			},
 			height: 16,
 			samples: ['pushpin', 'pie-chart-outline', 'user-add-outline'],
-			displayHeight: 16,
 			palette: false,
 			category: 'General',
 		};

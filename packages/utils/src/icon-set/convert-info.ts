@@ -212,7 +212,7 @@ export function convertIconSetInfo(
 	if (typeof info.height === 'number') {
 		// Convert from height
 		const displayHeight = validateDisplayHeight(info.height);
-		if (displayHeight) {
+		if (displayHeight && displayHeight !== info.height) {
 			info.displayHeight = displayHeight;
 		}
 	}
