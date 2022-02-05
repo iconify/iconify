@@ -30,6 +30,12 @@ export interface LCHColor {
 	alpha: number;
 }
 
+export interface FunctionColor {
+	type: 'function';
+	func: string;
+	value: string;
+}
+
 export interface TransparentColor {
 	type: 'transparent';
 }
@@ -47,6 +53,7 @@ export type Color =
 	| HSLColor
 	| LABColor
 	| LCHColor
+	| FunctionColor
 	| TransparentColor
 	| NoColor
 	| CurrentColor;

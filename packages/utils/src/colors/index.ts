@@ -86,11 +86,24 @@ function fromFunction(value: string): Color | null {
 			break;
 		}
 
-		default: {
+		case 'rgb':
+		case 'rgba':
+		case 'hsl':
+		case 'hsla': {
 			values = content.trim().split(/[\s,]+/);
 			if (values.length === 4) {
 				alphaStr = (values.pop() as string).trim();
 			}
+			break;
+		}
+
+		default: {
+			// Unsupported function
+			return {
+				type: 'function',
+				func,
+				value: content,
+			};
 		}
 	}
 
@@ -445,6 +458,10 @@ export function colorToString(color: Color): string {
 				list.push('/ ' + color.alpha);
 			}
 			return 'lch(' + list.join(' ') + ')';
+		}
+
+		case 'function': {
+			return color.func + '(' + color.value + ')';
 		}
 	}
 }

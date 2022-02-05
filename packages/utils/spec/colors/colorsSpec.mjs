@@ -98,6 +98,15 @@ describe('Colors', () => {
 				alpha: 0,
 			})
 		).toBe('transparent');
+
+		// Function
+		expect(
+			colorToString({
+				type: 'function',
+				func: 'var',
+				value: '--foo',
+			})
+		).toBe('var(--foo)');
 	});
 
 	it('Hexadecimal', () => {
@@ -444,7 +453,7 @@ describe('Colors', () => {
 		expect(stringToColor('lch(10%, 20%, 30)')).toBeNull();
 		expect(stringToColor('lch(10, 20, 30)')).toBeNull();
 
-		// Simple llchb
+		// Simple lch
 		expect(stringToColor('lch(10%, 20, 30)')).toEqual({
 			type: 'lch',
 			l: 10,
@@ -488,7 +497,32 @@ describe('Colors', () => {
 		).toBe('lch(10.4% 20.7 30.1 / 0.845)');
 	});
 
+	it('Functions', () => {
+		// Missing ')'
+		expect(stringToColor('var(--foo')).toBeNull();
+
+		// Valid functions
+		expect(stringToColor('var(--foo)')).toEqual({
+			type: 'function',
+			func: 'var',
+			value: '--foo',
+		});
+		expect(stringToColor('url(#a)')).toEqual({
+			type: 'function',
+			func: 'url',
+			value: '#a',
+		});
+	});
+
 	it('Compare colors', () => {
+		// Identical items
+		expect(
+			compareColors(
+				stringToColor('var(--foo)'),
+				stringToColor('var(--foo)')
+			)
+		).toBe(true);
+
 		// Black colors
 		expect(
 			compareColors(
