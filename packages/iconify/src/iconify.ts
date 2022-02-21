@@ -54,11 +54,10 @@ import {
 	getAPIConfig,
 	listAPIProviders,
 } from '@iconify/core/lib/api/config';
-import { jsonpAPIModule } from '@iconify/core/lib/api/modules/jsonp';
 import {
 	fetchAPIModule,
 	getFetch,
-	setFetch as setFetchFunction,
+	setFetch,
 } from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
@@ -152,15 +151,7 @@ function disableCache(storage: IconifyBrowserCacheType): void {
  * Initialise stuff
  */
 // Set API module
-setAPIModule('', getFetch() ? fetchAPIModule : jsonpAPIModule);
-
-/**
- * Function to enable node-fetch for getting icons on server side
- */
-function setFetch(nodeFetch: typeof fetch): void {
-	setFetchFunction(nodeFetch);
-	setAPIModule('', fetchAPIModule);
-}
+setAPIModule('', fetchAPIModule);
 
 /**
  * Browser stuff
@@ -209,6 +200,7 @@ const _api: IconifyAPIInternalFunctions = {
 	setAPIModule,
 	sendAPIQuery,
 	setFetch,
+	getFetch,
 	listAPIProviders,
 	mergeParams,
 };

@@ -32,21 +32,6 @@ const detectFetch = (): FetchType | null => {
 		//
 	}
 
-	// Try cross-fetch
-	try {
-		// Obfuscate require() to avoid cross-fetch being bundled by Webpack
-		const chunk = String.fromCharCode(114) + String.fromCharCode(101);
-		const req = (global as unknown as Record<string, FetchType>)[
-			chunk + 'qui' + chunk
-		];
-		callback = req('cross-fetch');
-		if (typeof callback === 'function') {
-			return callback;
-		}
-	} catch (err) {
-		//
-	}
-
 	return null;
 };
 

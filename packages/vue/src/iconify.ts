@@ -59,7 +59,11 @@ import {
 	getAPIConfig,
 	listAPIProviders,
 } from '@iconify/core/lib/api/config';
-import { fetchAPIModule, setFetch } from '@iconify/core/lib/api/modules/fetch';
+import {
+	fetchAPIModule,
+	setFetch,
+	getFetch,
+} from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
@@ -386,6 +390,7 @@ const _api: IconifyAPIInternalFunctions = {
 	setAPIModule,
 	sendAPIQuery,
 	setFetch,
+	getFetch,
 	listAPIProviders,
 	mergeParams,
 };

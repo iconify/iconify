@@ -72,10 +72,10 @@ export interface IconifyAPIInternalFunctions {
 	) => QueryAbortCallback;
 
 	/**
-	 * Optional setFetch and getFetch (should be imported from ./modules/fetch if fetch is used)
+	 * Set and get fetch()
 	 */
-	setFetch?: (item: typeof fetch) => void;
-	getFetch?: () => typeof fetch | null;
+	setFetch: (item: typeof fetch) => void;
+	getFetch: () => typeof fetch | null;
 
 	/**
 	 * List all API providers (from config)
