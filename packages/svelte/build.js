@@ -168,7 +168,7 @@ function cleanup() {
 			.trim()
 			.replace(/\r/g, '')
 			.split('\n\n');
-		if (svelteParts.lenght < 2) {
+		if (svelteParts.length < 2) {
 			throw new Error(
 				'Error parsing svelte.d.ts. Imports and content should be separated by 2 new lines'
 			);
