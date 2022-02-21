@@ -20,7 +20,7 @@ export interface IconifyBuilderFunctions {
 	) => string | number;
 	buildIcon: (
 		icon: IconifyIcon,
-		customisations: IconifyIconCustomisations
+		customisations?: IconifyIconCustomisations
 	) => IconifyIconBuildResult;
 }
 
@@ -29,7 +29,7 @@ export interface IconifyBuilderFunctions {
  */
 export function buildIcon(
 	icon: IconifyIcon,
-	customisations: IconifyIconCustomisations
+	customisations?: IconifyIconCustomisations
 ): IconifyIconBuildResult {
 	return iconToSVG(
 		fullIcon(icon),
