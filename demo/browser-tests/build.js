@@ -1,8 +1,9 @@
 const fs = require('fs');
-const path = require('path');
+const { dirname } = require('path');
 const child_process = require('child_process');
 
-const packagesDir = path.dirname(__dirname);
+const testsDir = __dirname;
+const librariesDir = dirname(dirname(testsDir)) + '/packages';
 
 // List of commands to run
 const commands = [];
@@ -56,19 +57,19 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.dist && !fileExists(packagesDir + '/browser-tests/lib/node.js')) {
+if (compile.dist && !fileExists(testsDir + '/lib/node.js')) {
 	compile.lib = true;
 }
 
 if (
 	compile.lib &&
-	(!fileExists(packagesDir + '/iconify/dist/iconify.js') ||
-		!fileExists(packagesDir + '/iconify/lib/iconify.js'))
+	(!fileExists(librariesDir + '/iconify/dist/iconify.js') ||
+		!fileExists(librariesDir + '/iconify/lib/iconify.js'))
 ) {
 	compile.iconify = true;
 }
 
-if (compile.iconify && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.iconify && !fileExists(librariesDir + '/core/lib/modules.js')) {
 	compile.core = true;
 }
 
@@ -77,7 +78,7 @@ if (compile.core) {
 	commands.push({
 		cmd: 'npm',
 		args: ['run', 'build'],
-		cwd: path.dirname(__dirname) + '/core',
+		cwd: librariesDir + '/core',
 	});
 }
 
@@ -85,7 +86,7 @@ if (compile.iconify || compile.core) {
 	commands.push({
 		cmd: 'npm',
 		args: ['run', 'build'],
-		cwd: path.dirname(__dirname) + '/iconify',
+		cwd: librariesDir + '/iconify',
 	});
 }
 
@@ -127,7 +128,7 @@ next();
 
 // Update version number in package.json
 const packageJSON = JSON.parse(
-	fs.readFileSync(__dirname + '/package.json', 'utf8')
+	fs.readFileSync(testsDir + '/package.json', 'utf8')
 );
 let iconifyVersion = packageJSON.devDependencies['@iconify/iconify'].replace(
 	/[\^~]/g,
@@ -137,7 +138,7 @@ if (packageJSON.version !== iconifyVersion) {
 	console.log('Updated package version to', iconifyVersion);
 	packageJSON.version = iconifyVersion;
 	fs.writeFileSync(
-		__dirname + '/package.json',
+		testsDir + '/package.json',
 		JSON.stringify(packageJSON, null, '\t') + '\n',
 		'utf8'
 	);

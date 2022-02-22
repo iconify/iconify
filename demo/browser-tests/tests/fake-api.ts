@@ -1,4 +1,4 @@
-import { PendingQueryItem } from '@iconify/api-redundancy';
+import { QueryModuleResponse } from '@iconify/api-redundancy';
 import {
 	IconifyAPIIconsQueryParams,
 	IconifyAPIQueryParams,
@@ -93,11 +93,11 @@ export const prepareQuery: IconifyAPIPrepareIconsQuery = (
 export const sendQuery: IconifyAPISendQuery = (
 	host: string,
 	params: IconifyAPIQueryParams,
-	status: PendingQueryItem
+	callback: QueryModuleResponse
 ): void => {
 	if (params.type !== 'icons') {
 		// Fake API supports only icons
-		status.done(void 0, 400);
+		callback('abort', 400);
 		return;
 	}
 
@@ -111,7 +111,7 @@ export const sendQuery: IconifyAPISendQuery = (
 	}
 	if (typeof data.host === 'string' && data.host !== host) {
 		// Host mismatch - send error (first parameter = undefined)
-		status.done(void 0, 404);
+		callback('abort', 404);
 		return;
 	}
 
@@ -123,7 +123,7 @@ export const sendQuery: IconifyAPISendQuery = (
 				'", icons:',
 			icons
 		);
-		status.done(data.data);
+		callback('success', data.data);
 	};
 
 	if (!data.delay) {
