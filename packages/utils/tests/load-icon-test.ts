@@ -8,10 +8,9 @@ const loader: CustomIconLoader = async(name) => {
 }
 
 describe('Testing loadIcon', () => {
-
 	test('CustomCollection', async () => {
 		const svg = await loader('circle');
-		expect(svg).toBeTruthy()
+		expect(svg).toBeTruthy();
 		const result = await loadIcon('a', 'circle', {
 			customCollections: {
 				'a': {
@@ -19,13 +18,13 @@ describe('Testing loadIcon', () => {
 				},
 			},
 		});
-		expect(result).toBeTruthy()
+		expect(result).toBeTruthy();
 		expect(svg).toEqual(result);
 	});
 
 	test('CustomCollection with transform', async () => {
-		const svg = await loader('circle')
-		expect(svg).toBeTruthy()
+		const svg = await loader('circle');
+		expect(svg).toBeTruthy();
 		const result = await loadIcon('a', 'circle', {
 			customCollections: {
 				'a': {
@@ -36,16 +35,16 @@ describe('Testing loadIcon', () => {
 				transform(icon) {
 					return icon.replace('<svg ', '<svg width="1em" height="1em" ');
 				},
-			}
+			},
 		});
-		expect(result).toBeTruthy()
+		expect(result).toBeTruthy();
 		expect(result && result.indexOf('width="1em"') > -1).toBeTruthy();
 		expect(result && result.indexOf('height="1em"') > -1).toBeTruthy();
 	});
 
 	test('CustomCollection Icon with XML heading', async () => {
-		const svg = await loader('1f3eb')
-		expect(svg).toBeTruthy()
+		const svg = await loader('1f3eb');
+		expect(svg).toBeTruthy();
 		// Intercept console.warn
 		let warned = false;
 		const warn = console.warn;
