@@ -1,9 +1,5 @@
 import createDebugger from 'debug';
-import type {
-	CustomIconLoader,
-	IconCustomizations,
-	InlineCollection,
-} from './types';
+import type { CustomIconLoader, IconifyLoaderOptions, InlineCollection } from './types';
 import { mergeIconProps } from './utils';
 
 const debug = createDebugger('@iconify-loader:custom');
@@ -15,7 +11,7 @@ export async function getCustomIcon(
 	custom: CustomIconLoader | InlineCollection,
 	collection: string,
 	icon: string,
-	iconsCustomizations?: IconCustomizations
+	options?: IconifyLoaderOptions,
 ): Promise<string | undefined> {
 	let result: string | undefined | null;
 
@@ -29,7 +25,7 @@ export async function getCustomIcon(
 	}
 
 	if (result) {
-		if (!result.startsWith('<svg ')) {
+		if (!result.startsWith('<svg')) {
 			console.warn(
 				`Custom icon "${icon}" in "${collection}" is not a valid SVG`
 			);
@@ -39,14 +35,14 @@ export async function getCustomIcon(
 			transform,
 			additionalProps = {},
 			iconCustomizer,
-		} = iconsCustomizations || {};
+		} = options?.customizations ?? {};
 		return await mergeIconProps(
 			transform ? await transform(result) : result,
 			collection,
 			icon,
 			additionalProps,
 			undefined,
-			iconCustomizer
+			iconCustomizer,
 		);
 	}
 }

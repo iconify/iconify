@@ -50,12 +50,14 @@ export type {
 	CustomCollections,
 	IconCustomizer,
 	IconCustomizations,
+	IconifyLoaderOptions,
 	InlineCollection,
 } from './loader/types';
-export { tryInstallPkg, mergeIconProps } from './loader/utils';
+export { encodeCssSvg, mergeIconProps } from './loader/utils';
+export { loadIcon } from './loader/loader';
 export { FileSystemIconLoader } from './loader/loaders';
 export { getCustomIcon } from './loader/custom';
-export { loadCollection, searchForIcon } from './loader/modern';
+export { searchForIcon } from './loader/modern';
 
 // Misc
 export { camelize, camelToKebab, pascalize } from './misc/strings';
