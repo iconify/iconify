@@ -37,6 +37,7 @@ export async function searchForIcon(
 				collection,
 				id,
 				additionalProps,
+				options?.scale ?? 1.2,
 				() => attributes,
 				iconCustomizer
 			);
