@@ -59,7 +59,7 @@ async function loadNodeBuiltinIcon(
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		const { loadCollectionFromFS } = await importFsModule();
-		const iconSet = loadCollectionFromFS(collection, options?.autoInstall);
+		const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
 		if (iconSet) {
 			// possible icon names
 			const ids = [
