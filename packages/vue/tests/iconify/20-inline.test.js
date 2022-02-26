@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon } from '../../';
 
@@ -11,7 +12,7 @@ const iconData = {
 };
 
 describe('Inline attribute', () => {
-	test('string', () => {
+	test('string', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" inline="true" />`,
@@ -23,10 +24,12 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
 	});
 
-	test('false string', () => {
+	test('false string', async () => {
 		// "false" should be ignored
 		const Wrapper = {
 			components: { Icon },
@@ -39,12 +42,14 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).not.toContain(
 			'style="vertical-align: -0.125em;"'
 		);
 	});
 
-	test('true', () => {
+	test('true', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :inline="true" />`,
@@ -56,10 +61,12 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
 	});
 
-	test('false', () => {
+	test('false', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :inline="false" />`,
@@ -71,12 +78,14 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).not.toContain(
 			'style="vertical-align: -0.125em;"'
 		);
 	});
 
-	test('inline and style string', () => {
+	test('inline and style string', async () => {
 		// Style goes after vertical-align
 		const Wrapper = {
 			components: { Icon },
@@ -89,12 +98,14 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'color: red; vertical-align: -0.125em;'
 		);
 	});
 
-	test('inline and style object', () => {
+	test('inline and style object', async () => {
 		// Style goes after vertical-align
 		const Wrapper = {
 			components: { Icon },
@@ -110,12 +121,14 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'color: red; vertical-align: -0.125em;'
 		);
 	});
 
-	test('inline and style overriding it', () => {
+	test('inline and style overriding it', async () => {
 		// Style goes after vertical-align
 		const Wrapper = {
 			components: { Icon },
@@ -131,6 +144,8 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain('style="vertical-align: 0;"');
+		await nextTick();
+
+		expect(wrapper.html()).toContain('vertical-align: 0;"');
 	});
 });

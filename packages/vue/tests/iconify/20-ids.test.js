@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon } from '../../';
 
@@ -11,7 +12,7 @@ const iconDataWithID = {
 };
 
 describe('Replacing IDs', () => {
-	test('default behavior', () => {
+	test('default behavior', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" />`,
@@ -23,10 +24,12 @@ describe('Replacing IDs', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).not.toContain('ssvg-id-1st-place-medala');
 	});
 
-	test('custom generator', () => {
+	test('custom generator', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" id="test" />`,
@@ -38,6 +41,8 @@ describe('Replacing IDs', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('id="testID0"');
 	});
 });

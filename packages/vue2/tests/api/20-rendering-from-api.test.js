@@ -1,10 +1,12 @@
 /**
  * @jest-environment jsdom
  */
+import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon, loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { defaultIconResult } from '../empty';
 
 const iconData = {
 	body:
@@ -66,17 +68,19 @@ describe('Rendering icon', () => {
 			const wrapper = mount(Wrapper, {});
 			const html = wrapper.html().replace(/\s*\n\s*/g, '');
 
-			// Check HTML
-			expect(html).toBe(
-				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="test ' +
-					className +
-					'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-			);
+			// Check HTML on next tick
+			Vue.nextTick(() => {
+				expect(html).toBe(
+					'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="test ' +
+						className +
+						'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+				);
 
-			// Make sure onLoad has been called
-			expect(onLoadCalled).toBe(true);
+				// Make sure onLoad has been called
+				expect(onLoadCalled).toBe(true);
 
-			done();
+				done();
+			});
 		});
 	});
 
@@ -109,25 +113,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						// Check HTML
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-								className +
-								// 'foo' is appended because of weird Vue 2 behavior. Fixed in Vue 3
-								' foo"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called
-						expect(onLoadCalled).toBe(true);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -143,6 +128,22 @@ describe('Rendering icon', () => {
 					expect(name).toBe(iconName);
 					expect(onLoadCalled).toBe(false);
 					onLoadCalled = true;
+
+					// Test component on next tick
+					Vue.nextTick(() => {
+						// Check HTML
+						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								// 'foo' is appended because of weird Vue 2 behavior. Fixed in Vue 3
+								' foo"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+						);
+
+						// onLoad should have been called
+						expect(onLoadCalled).toBe(true);
+
+						done();
+					});
 				},
 			},
 			data() {
@@ -156,9 +157,6 @@ describe('Rendering icon', () => {
 			},
 		};
 		const wrapper = mount(Wrapper, {});
-
-		// Should render empty icon
-		expect(wrapper.html()).toBe('');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toBe(false);
@@ -183,15 +181,16 @@ describe('Rendering icon', () => {
 				// Test it again
 				expect(iconExists(iconName)).toBe(false);
 
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html()).toBe('');
+				// Check if state was changed after few ticks
+				Vue.nextTick(() => {
+					Vue.nextTick(() => {
+						Vue.nextTick(() => {
+							expect(wrapper.html()).toBe(defaultIconResult);
 
-						done();
-					}, 0);
-				}, 0);
+							done();
+						});
+					});
+				});
 			},
 		});
 
@@ -211,6 +210,6 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Wrapper, {});
 
 		// Should render empty icon
-		expect(wrapper.html()).toBe('');
+		expect(wrapper.html()).toBe(defaultIconResult);
 	});
 });

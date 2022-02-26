@@ -1,10 +1,12 @@
 /**
  * @jest-environment jsdom
  */
+import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { defaultIconResult } from '../empty';
 
 const iconData = {
 	body:
@@ -36,11 +38,41 @@ describe('Rendering icon', () => {
 				// First onLoad call
 				case iconName:
 					expect(onLoadCalled).toBe('');
+
+					// Wait 1 tick, then test rendered icon
+					Vue.nextTick(() => {
+						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+						);
+
+						// onLoad should have been called
+						expect(onLoadCalled).toBe(iconName);
+
+						wrapper.setProps({
+							icon: iconName2,
+						});
+					});
 					break;
 
 				// Second onLoad call
 				case iconName2:
 					expect(onLoadCalled).toBe(iconName);
+
+					// Wait 1 tick, then test rendered icon
+					Vue.nextTick(() => {
+						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+								className +
+								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+						);
+
+						// onLoad should have been called for second icon
+						expect(onLoadCalled).toBe(iconName2);
+
+						done();
+					});
 					break;
 
 				default:
@@ -69,27 +101,8 @@ describe('Rendering icon', () => {
 				// Send icon data
 				next();
 
-				// Test it again
+				// Make sure icon data is available
 				expect(iconExists(iconName)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks (one to handle API response, one to re-render)
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-								className +
-								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called
-						expect(onLoadCalled).toBe(iconName);
-
-						wrapper.setProps({
-							icon: iconName2,
-						});
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -113,25 +126,8 @@ describe('Rendering icon', () => {
 				// Send icon data
 				next();
 
-				// Test it again
+				// Make sure icon data is available
 				expect(iconExists(iconName2)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
-								className +
-								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called for second icon
-						expect(onLoadCalled).toBe(iconName2);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -147,7 +143,7 @@ describe('Rendering icon', () => {
 		});
 
 		// Should render placeholder
-		expect(wrapper.html()).toBe('');
+		expect(wrapper.html()).toBe(defaultIconResult);
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toBe('');
@@ -161,6 +157,31 @@ describe('Rendering icon', () => {
 		const iconName2 = `@${provider}:${prefix}:${name2}`;
 		const className = `iconify iconify--${prefix} iconify--${provider}`;
 		let isSync = true;
+
+		const onLoad = name => {
+			switch (name) {
+				case iconName:
+					done('onLoad should not be called for initial icon');
+					break;
+
+				case iconName2:
+					// Wait 1 tick, then test rendered icon
+					Vue.nextTick(() => {
+						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+								className +
+								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+						);
+
+						done();
+					});
+
+					break;
+
+				default:
+					throw new Error(`Unexpected onLoad('${name}') call`);
+			}
+		};
 
 		mockAPIData({
 			type: 'icons',
@@ -203,20 +224,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName2)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks (one to handle API response, one to re-render)
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
-								className +
-								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
-						);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -227,11 +234,12 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Icon, {
 			propsData: {
 				icon: iconName,
+				onLoad,
 			},
 		});
 
 		// Should render placeholder
-		expect(wrapper.html()).toBe('');
+		expect(wrapper.html()).toBe(defaultIconResult);
 
 		// Change icon name
 		wrapper.setProps({
@@ -247,6 +255,39 @@ describe('Rendering icon', () => {
 		const name = 'multiple-props';
 		const iconName = `@${provider}:${prefix}:${name}`;
 		const className = `iconify iconify--${prefix} iconify--${provider}`;
+
+		const onLoad = name => {
+			expect(name).toBe(iconName);
+
+			// Wait 1 tick, test rendered icon
+			Vue.nextTick(() => {
+				expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+					'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+						className +
+						'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+				);
+
+				// Add horizontal flip and style
+				wrapper.setProps({
+					icon: iconName,
+					hFlip: true,
+					// Vue 2 issue: changing style in unit test doesn't work, so changing color
+					// TODO: test changing style in live demo to see if its a unit test bug or component issue
+					color: 'red',
+				});
+
+				// Wait for 1 tick and test again
+				Vue.nextTick(() => {
+					expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
+						'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+							className +
+							'" style="color: red;"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
+					);
+
+					done();
+				});
+			});
+		};
 
 		mockAPIData({
 			type: 'icons',
@@ -265,42 +306,8 @@ describe('Rendering icon', () => {
 				// Send icon data
 				next();
 
-				// Test it again
+				// Make sure icon was loaded
 				expect(iconExists(iconName)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks (one to handle API response, one to re-render)
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-								className +
-								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// Add horizontal flip and style
-						wrapper.setProps({
-							icon: iconName,
-							hFlip: true,
-							// Vue 2 issue: changing style in unit test doesn't work, so changing color
-							// TODO: test changing style in live demo to see if its a unit test bug or component issue
-							color: 'red',
-						});
-
-						// Wait for 1 tick
-						setTimeout(() => {
-							expect(
-								wrapper.html().replace(/\s*\n\s*/g, '')
-							).toBe(
-								'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-									className +
-									'" style="color: red;"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
-							);
-
-							done();
-						}, 0);
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -311,10 +318,11 @@ describe('Rendering icon', () => {
 		const wrapper = mount(Icon, {
 			propsData: {
 				icon: iconName,
+				onLoad,
 			},
 		});
 
 		// Should be empty
-		expect(wrapper.html()).toBe('');
+		expect(wrapper.html()).toBe(defaultIconResult);
 	});
 });

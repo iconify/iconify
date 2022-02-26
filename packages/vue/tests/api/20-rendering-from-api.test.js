@@ -1,10 +1,12 @@
 /**
  * @jest-environment jsdom
  */
+import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon, loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { defaultIconResult } from '../empty';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -63,19 +65,23 @@ describe('Rendering icon', () => {
 				},
 			};
 			const wrapper = mount(Wrapper, {});
-			const html = wrapper.html().replace(/\s*\n\s*/g, '');
 
-			// Check HTML
-			expect(html).toEqual(
-				'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
-					className +
-					'" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-			);
+			// Check HTML on next tick
+			nextTick()
+				.then(() => {
+					const html = wrapper.html().replace(/\s*\n\s*/g, '');
+					expect(html).toEqual(
+						'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
+							className +
+							'" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+					);
 
-			// Make sure onLoad has been called
-			expect(onLoadCalled).toEqual(true);
+					// Make sure onLoad has been called
+					expect(onLoadCalled).toEqual(true);
 
-			done();
+					done();
+				})
+				.catch(done);
 		});
 	});
 
@@ -108,24 +114,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName)).toEqual(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						// Check HTML
-						expect(wrapper.html().replace(/\s*\n\s*/g, '')).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="foo ' +
-								className +
-								'" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called
-						expect(onLoadCalled).toEqual(true);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -141,6 +129,22 @@ describe('Rendering icon', () => {
 					expect(name).toEqual(iconName);
 					expect(onLoadCalled).toEqual(false);
 					onLoadCalled = true;
+
+					// Test component on next tick
+					nextTick()
+						.then(() => {
+							// Check HTML
+							expect(
+								wrapper.html().replace(/\s*\n\s*/g, '')
+							).toEqual(
+								'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="foo ' +
+									className +
+									'" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+							);
+
+							done();
+						})
+						.catch(done);
 				},
 			},
 			data() {
@@ -154,9 +158,6 @@ describe('Rendering icon', () => {
 			},
 		};
 		const wrapper = mount(Wrapper, {});
-
-		// Should render empty icon
-		expect(wrapper.html()).toEqual('');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toEqual(false);
@@ -181,15 +182,21 @@ describe('Rendering icon', () => {
 				// Test it again
 				expect(iconExists(iconName)).toEqual(false);
 
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(wrapper.html()).toEqual('');
-
+				// Check if state was changed on next few ticks
+				nextTick()
+					.then(() => {
+						expect(wrapper.html()).toEqual(defaultIconResult);
+						return nextTick();
+					})
+					.then(() => {
+						expect(wrapper.html()).toEqual(defaultIconResult);
+						return nextTick();
+					})
+					.then(() => {
+						expect(wrapper.html()).toEqual(defaultIconResult);
 						done();
-					}, 0);
-				}, 0);
+					})
+					.catch(done);
 			},
 		});
 
@@ -207,8 +214,5 @@ describe('Rendering icon', () => {
 			},
 		};
 		const wrapper = mount(Wrapper, {});
-
-		// Should render empty icon
-		expect(wrapper.html()).toEqual('');
 	});
 });

@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon } from '../../';
 
@@ -11,7 +12,7 @@ const iconData = {
 };
 
 describe('Dimensions', () => {
-	test('height', () => {
+	test('height', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" height="48" />`,
@@ -23,6 +24,8 @@ describe('Dimensions', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		const html = wrapper.html();
 		expect(html).toContain('height="48"');
 		expect(html).toContain('width="48"');
@@ -30,7 +33,7 @@ describe('Dimensions', () => {
 		expect(html).not.toContain('width="1em"');
 	});
 
-	test('width and height', () => {
+	test('width and height', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :width="32" height="48" />`,
@@ -42,6 +45,8 @@ describe('Dimensions', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		const html = wrapper.html();
 		expect(html).toContain('height="48"');
 		expect(html).toContain('width="32"');
@@ -49,7 +54,7 @@ describe('Dimensions', () => {
 		expect(html).not.toContain('width="1em"');
 	});
 
-	test('auto', () => {
+	test('auto', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" height="auto" />`,
@@ -61,6 +66,8 @@ describe('Dimensions', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		const html = wrapper.html();
 		expect(html).toContain('height="24"');
 		expect(html).toContain('width="24"');

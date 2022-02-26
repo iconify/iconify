@@ -7,4 +7,4 @@ api-extractor.json
 build.js
 tsconfig.json
 *.config.js
-
+__mocks__

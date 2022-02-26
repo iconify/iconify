@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon } from '../../';
 
@@ -11,7 +12,7 @@ const iconData = {
 };
 
 describe('Rotation', () => {
-	test('number', () => {
+	test('number', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :rotate="1" />`,
@@ -23,12 +24,14 @@ describe('Rotation', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
 			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g transform="rotate(90 12 12)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
 		);
 	});
 
-	test('string', () => {
+	test('string', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" rotate="180deg" />`,
@@ -40,12 +43,14 @@ describe('Rotation', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('<g transform="rotate(180 12 12)">');
 	});
 });
 
 describe('Flip', () => {
-	test('boolean', () => {
+	test('boolean', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :hFlip="true" />`,
@@ -57,12 +62,14 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'<g transform="translate(24 0) scale(-1 1)">'
 		);
 	});
 
-	test('string', () => {
+	test('string', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" flip="vertical" />`,
@@ -74,12 +81,14 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'<g transform="translate(0 24) scale(1 -1)">'
 		);
 	});
 
-	test('string and boolean', () => {
+	test('string and boolean', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" flip="horizontal" :vFlip="true" />`,
@@ -91,10 +100,12 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('<g transform="rotate(180 12 12)">');
 	});
 
-	test('string for boolean attribute', () => {
+	test('string for boolean attribute', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" horizontal-flip="true" />`,
@@ -106,12 +117,14 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'<g transform="translate(24 0) scale(-1 1)">'
 		);
 	});
 
-	test('shorthand and boolean', () => {
+	test('shorthand and boolean', async () => {
 		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
 		const Wrapper = {
 			components: { Icon },
@@ -124,12 +137,14 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'<g transform="translate(24 0) scale(-1 1)">'
 		);
 	});
 
-	test('shorthand and boolean as string', () => {
+	test('shorthand and boolean as string', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" flip="vertical" :horizontal-flip="true" />`,
@@ -141,10 +156,12 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('<g transform="rotate(180 12 12)">');
 	});
 
-	test('wrong case', () => {
+	test('wrong case', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :vflip="true" />`,
@@ -156,12 +173,14 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).not.toContain('<g transform="');
 	});
 });
 
 describe('Alignment and slice', () => {
-	test('vAlign and slice', () => {
+	test('vAlign and slice', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" vAlign="top" :slice="true" />`,
@@ -173,12 +192,14 @@ describe('Alignment and slice', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain(
 			'preserveAspectRatio="xMidYMin slice"'
 		);
 	});
 
-	test('string', () => {
+	test('string', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" align="left bottom" />`,
@@ -190,10 +211,12 @@ describe('Alignment and slice', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('preserveAspectRatio="xMinYMax meet"');
 	});
 
-	test('aliases', () => {
+	test('aliases', async () => {
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" h-align="left" vertical-align="bottom" />`,
@@ -205,6 +228,8 @@ describe('Alignment and slice', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
 		expect(wrapper.html()).toContain('preserveAspectRatio="xMinYMax meet"');
 	});
 });

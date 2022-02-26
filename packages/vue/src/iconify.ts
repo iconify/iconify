@@ -231,6 +231,13 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 }
 
 /**
+ * Empty icon data, rendered when icon is not available
+ */
+const emptyIcon = fullIcon({
+	body: '',
+});
+
+/**
  * Component
  */
 interface IconComponentData {
@@ -246,14 +253,14 @@ export const Icon = defineComponent({
 	data() {
 		return {
 			// Mounted status
-			mounted: false,
+			iconMounted: false,
 
 			// Callback counter to trigger re-render
 			counter: 0,
 		};
 	},
 
-	beforeMount() {
+	mounted() {
 		// Current icon name
 		this._name = '';
 
@@ -261,7 +268,7 @@ export const Icon = defineComponent({
 		this._loadingIcon = null;
 
 		// Mark as mounted
-		this.mounted = true;
+		this.iconMounted = true;
 	},
 
 	unmounted() {
@@ -275,6 +282,7 @@ export const Icon = defineComponent({
 				this._loadingIcon = null;
 			}
 		},
+
 		// Get data for icon to render or null
 		getIcon(
 			icon: IconifyIcon | string,
@@ -346,23 +354,19 @@ export const Icon = defineComponent({
 
 	// Render icon
 	render() {
-		if (!this.mounted) {
-			return this.$slots.default ? this.$slots.default() : null;
-		}
-
 		// Re-render when counter changes
 		this.counter;
 
-		// Get icon data
 		const props = this.$attrs;
-		const icon: IconComponentData | null = this.getIcon(
-			props.icon,
-			props.onLoad
-		);
+
+		// Get icon data
+		const icon: IconComponentData | null = this.iconMounted
+			? this.getIcon(props.icon, props.onLoad)
+			: null;
 
 		// Validate icon object
 		if (!icon) {
-			return this.$slots.default ? this.$slots.default() : null;
+			return render(emptyIcon, props);
 		}
 
 		// Add classes

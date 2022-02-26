@@ -220,6 +220,13 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 }
 
 /**
+ * Empty icon data, rendered when icon is not available
+ */
+ const emptyIcon = fullIcon({
+	body: '',
+});
+
+/**
  * Component
  */
 interface IconComponentData {
@@ -236,7 +243,7 @@ export const Icon = Vue.extend({
 	data() {
 		return {
 			// Mounted status
-			mounted: false,
+			iconMounted: false,
 		};
 	},
 
@@ -248,7 +255,7 @@ export const Icon = Vue.extend({
 		this._loadingIcon = null;
 
 		// Mark as mounted
-		this.mounted = true;
+		this.iconMounted = true;
 	},
 
 	beforeDestroy() {
@@ -333,38 +340,21 @@ export const Icon = Vue.extend({
 
 	// Render icon
 	render(createElement: CreateElement): VNode {
-		function placeholder(slots): VNode {
-			// Render child nodes
-			if (slots.default) {
-				const result = slots.default;
-				if (result instanceof Array && result.length > 0) {
-					// If there are multiple child nodes, they must be wrapped in Vue 2
-					return result.length === 1
-						? result[0]
-						: createElement('span', result);
-				}
-			}
-			return null as unknown as VNode;
-		}
-		if (!this.mounted) {
-			return placeholder(this.$slots);
-		}
+		const props = this.$attrs;
+		let context = this.$data;
 
 		// Get icon data
-		const props = this.$attrs;
-		const icon: IconComponentData | null = this.getIcon(
+		const icon: IconComponentData | null = this.iconMounted ? this.getIcon(
 			props.icon,
 			props.onLoad
-		);
+		) : null;
 
 		// Validate icon object
 		if (!icon) {
-			// Render child nodes
-			return placeholder(this.$slots);
+			return render(createElement, props, context, emptyIcon);
 		}
 
 		// Add classes
-		let context = this.$data;
 		if (icon.classes) {
 			context = {
 				...context,
