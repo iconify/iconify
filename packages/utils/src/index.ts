@@ -39,6 +39,7 @@ export { convertIconSetInfo } from './icon-set/convert-info';
 export { iconToSVG } from './svg/build';
 export { replaceIDs } from './svg/id';
 export { calculateSize } from './svg/size';
+export { encodeSvgForCss } from './svg/encode-svg-for-css';
 
 // Colors
 export { colorKeywords } from './colors/keywords';
@@ -53,7 +54,7 @@ export type {
 	IconifyLoaderOptions,
 	InlineCollection,
 } from './loader/types';
-export { encodeCssSvg, mergeIconProps } from './loader/utils';
+export { mergeIconProps } from './loader/utils';
 export { loadIcon } from './loader/loader';
 export { FileSystemIconLoader } from './loader/loaders';
 export { getCustomIcon } from './loader/custom';
