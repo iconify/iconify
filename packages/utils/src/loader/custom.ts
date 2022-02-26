@@ -42,6 +42,7 @@ export async function getCustomIcon(
 			icon,
 			additionalProps,
 			options?.addXmlNs === true,
+			options?.scale,
 			undefined,
 			iconCustomizer,
 		);
