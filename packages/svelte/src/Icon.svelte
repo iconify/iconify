@@ -15,6 +15,7 @@ import {
 	replaceIDs,
 	buildIcon,
 	loadIcons,
+	loadIcon,
 	addAPIProvider,
 	_api
 } from './functions';
@@ -32,6 +33,7 @@ export {
 	replaceIDs,
 	buildIcon,
 	loadIcons,
+	loadIcon,
 	addAPIProvider,
 	_api
 }

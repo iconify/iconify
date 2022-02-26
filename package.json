@@ -14,10 +14,9 @@
 		"bootstrap": "lerna bootstrap --force-local",
 		"clean": "lerna clean",
 		"link": "lerna link --force-local",
-		"setup": "npm run clean && npm run bootstrap",
-		"update": "node update-deps --all --update"
+		"setup": "npm run clean && npm run bootstrap"
 	},
 	"devDependencies": {
-		"lerna": "^3.22.1"
+		"lerna": "^4.0.0"
 	}
 }

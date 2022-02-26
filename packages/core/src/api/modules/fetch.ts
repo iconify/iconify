@@ -1,4 +1,4 @@
-import type { PendingQueryItem } from '@iconify/api-redundancy';
+import type { QueryModuleResponse } from '@iconify/api-redundancy';
 import type {
 	IconifyAPIQueryParams,
 	IconifyAPIPrepareIconsQuery,
@@ -107,6 +107,13 @@ function calculateMaxLength(provider: string, prefix: string): number {
 }
 
 /**
+ * Should query be aborted, based on last HTTP status
+ */
+function shouldAbort(status: number): boolean {
+	return status === 404;
+}
+
+/**
  * Prepare params
  */
 const prepare: IconifyAPIPrepareIconsQuery = (
@@ -178,11 +185,11 @@ function getPath(provider?: string): string {
 const send: IconifyAPISendQuery = (
 	host: string,
 	params: IconifyAPIQueryParams,
-	status: PendingQueryItem
+	callback: QueryModuleResponse
 ): void => {
 	if (!fetchModule) {
 		// Fail: return "424 Failed Dependency" (its not meant to be used like that, but it is the closest match)
-		status.done(void 0, 424);
+		callback('abort', 424);
 		return;
 	}
 
@@ -208,7 +215,7 @@ const send: IconifyAPISendQuery = (
 
 		default:
 			// Fail: return 400 Bad Request
-			status.done(void 0, 400);
+			callback('abort', 400);
 			return;
 	}
 
@@ -218,10 +225,11 @@ const send: IconifyAPISendQuery = (
 	// console.log('API query:', host + path);
 	fetchModule(host + path)
 		.then((response) => {
-			if (response.status !== 200) {
+			const status = response.status;
+			if (status !== 200) {
 				setTimeout(() => {
 					// Complete on next tick to get out of try...catch
-					status.done(void 0, response.status);
+					callback(shouldAbort(status) ? 'abort' : 'next', status);
 				});
 				return;
 			}
@@ -234,7 +242,7 @@ const send: IconifyAPISendQuery = (
 			if (typeof data !== 'object' || data === null) {
 				setTimeout(() => {
 					// Complete on next tick to get out of try...catch
-					status.done(void 0, defaultError);
+					callback('next', defaultError);
 				});
 				return;
 			}
@@ -242,11 +250,11 @@ const send: IconifyAPISendQuery = (
 			// Store cache and complete on next tick
 			setTimeout(() => {
 				// Complete on next tick to get out of try...catch
-				status.done(data);
+				callback('success', data);
 			});
 		})
 		.catch(() => {
-			status.done(void 0, defaultError);
+			callback('next', defaultError);
 		});
 };
 

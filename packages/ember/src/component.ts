@@ -9,8 +9,7 @@ import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { fullIcon } from '@iconify/utils/lib/icon';
 
 // API
-import type { IconifyIconLoaderAbort } from '@iconify/core/lib/api/icons';
-import { loadIcons } from '@iconify/core/lib/api/icons';
+import { loadIcon } from '@iconify/core/lib/api/icons';
 
 // Component stuff
 import type { IconifyIconProps } from './props';
@@ -20,14 +19,12 @@ import { render } from './render';
 /**
  * Type for loading status
  */
-interface CurrentIconAsString {
+interface CurrentIconData {
 	name: string;
 	className: string;
 
 	// Data if icon has been loaded
 	data?: FullIconifyIcon;
-	// Abort if icon is being loaded
-	abort?: IconifyIconLoaderAbort;
 }
 
 /**
@@ -50,18 +47,7 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 	@tracked _counter = 0;
 
 	// Currently visible icon data, null if rendering object
-	_icon: CurrentIconAsString | null = null;
-
-	/**
-	 * Abort loading icon
-	 */
-	_abortLoading() {
-		const icon = this._icon;
-		if (icon?.abort) {
-			icon.abort();
-			delete icon.abort;
-		}
-	}
+	_icon: CurrentIconData | null = null;
 
 	/**
 	 * Render
@@ -79,11 +65,8 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 			icon !== null &&
 			typeof icon.body === 'string'
 		) {
-			// Stop loading icon
-			if (this._icon) {
-				this._abortLoading();
-				this._icon = null;
-			}
+			// Reset current icon
+			this._icon = null;
 
 			// Render object
 			return render(fullIcon(icon), this.args, '');
@@ -103,10 +86,8 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 			typeof icon !== 'string' ||
 			(iconName = stringToIcon(icon, false, true)) === null
 		) {
-			if (this._icon) {
-				this._abortLoading();
-				this._icon = null;
-			}
+			// Reset current icon, return empty icon
+			this._icon = null;
 			return emptyIcon;
 		}
 
@@ -125,29 +106,30 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 			// Icon needs to be loaded
 			if (!this._icon || this._icon.name !== icon) {
 				// New icon to load
-				this._abortLoading();
 				this._icon = {
 					name: icon,
 					className,
-					abort: loadIcons([iconName], () => {
+				};
+
+				loadIcon(iconName)
+					.then((data) => {
 						if (!this.isDestroyed && this._icon?.name === icon) {
 							// Loaded
-							const data = getIconData(iconName);
-							if (data) {
-								this._icon = {
-									name: icon,
-									className,
-									data,
-								};
-								this._counter++;
+							this._icon = {
+								name: icon,
+								className,
+								data,
+							};
+							this._counter++;
 
-								if (this.args.onLoad) {
-									this.args.onLoad(icon);
-								}
+							if (this.args.onLoad) {
+								this.args.onLoad(icon);
 							}
 						}
-					}),
-				};
+					})
+					.catch(() => {
+						// Failed to load icon
+					});
 			}
 		} else {
 			// Got icon data
@@ -160,13 +142,5 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 		}
 
 		return emptyIcon;
-	}
-
-	/**
-	 * Remove loader callback
-	 */
-	willDestroy() {
-		super.willDestroy();
-		this._abortLoading();
 	}
 }

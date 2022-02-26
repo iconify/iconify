@@ -57,7 +57,7 @@ import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
-import { loadIcons } from '@iconify/core/lib/api/icons';
+import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 import { mergeParams } from '@iconify/core/lib/api/params';
 
@@ -399,7 +399,7 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export { addAPIProvider, loadIcons };
+export { addAPIProvider, loadIcons, loadIcon };
 
 // IconifyStorageFunctions
 export { iconExists, getIcon, listIcons, addIcon, addCollection, shareStorage };

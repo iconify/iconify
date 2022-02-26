@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { PendingQueryItem } from '@iconify/api-redundancy';
+import type { QueryModuleResponse } from '@iconify/api-redundancy';
 import type {
 	IconifyAPIIconsQueryParams,
 	IconifyAPIQueryParams,
@@ -252,7 +251,7 @@ export const mockAPIModule: IconifyAPIModule = {
 	send: (
 		host: string,
 		params: IconifyAPIQueryParams,
-		status: PendingQueryItem
+		queryCallback: QueryModuleResponse
 	) => {
 		const provider = params.provider;
 		let data: IconifyMockAPI;
@@ -261,7 +260,7 @@ export const mockAPIModule: IconifyAPIModule = {
 			case 'icons': {
 				if (provider === void 0) {
 					// Fail: return 400 Bad Request
-					status.done(void 0, 400);
+					queryCallback('abort', 400);
 					return;
 				}
 				const index = (params as MockAPIIconsQueryParams).index;
@@ -280,12 +279,12 @@ export const mockAPIModule: IconifyAPIModule = {
 
 			default:
 				// Fail: return 400 Bad Request
-				status.done(void 0, 400);
+				queryCallback('abort', 400);
 				return;
 		}
 
 		if (data === void 0) {
-			status.done(void 0, 404);
+			queryCallback('abort', 404);
 			return;
 		}
 
@@ -308,11 +307,10 @@ export const mockAPIModule: IconifyAPIModule = {
 
 		// Run after delay
 		callback(() => {
-			if (typeof data.response === 'number') {
-				status.done(void 0, data.response);
-			} else {
-				status.done(data.response);
-			}
+			queryCallback(
+				typeof data.response === 'number' ? 'next' : 'success',
+				data.response
+			);
 		});
 	},
 };

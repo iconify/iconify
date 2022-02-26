@@ -1,13 +1,14 @@
-import type { IconifyJSON } from '@iconify/types';
-import type {
+import type { IconifyIcon, IconifyJSON } from '@iconify/types';
+import {
 	IconifyIconName,
 	IconifyIconSource,
+	stringToIcon,
 } from '@iconify/utils/lib/icon/name';
 import type { SortedIcons } from '../icon/sort';
 import { sortIcons } from '../icon/sort';
 import { storeCallback, updateCallbacks } from './callbacks';
 import { getAPIModule } from './modules';
-import { getStorage, addIconSet } from '../storage/storage';
+import { getStorage, addIconSet, getIconFromStorage } from '../storage/storage';
 import { listToIcons } from '../icon/list';
 import { allowSimpleNames } from '../storage/functions';
 import { sendAPIQuery } from './query';
@@ -337,4 +338,37 @@ export const loadIcons: IconifyLoadIcons = (
 	return callback
 		? storeCallback(callback, sortedIcons, sources)
 		: emptyCallback;
+};
+
+/**
+ * Cache for loadIcon promises
+ */
+type LoadIconResult = Promise<Required<IconifyIcon>>;
+const iconsQueue: Record<string, LoadIconResult> = Object.create(null);
+
+export const loadIcon = (icon: IconifyIconName | string): LoadIconResult => {
+	if (typeof icon === 'string' && iconsQueue[icon]) {
+		return iconsQueue[icon];
+	}
+
+	const result: LoadIconResult = new Promise((fulfill, reject) => {
+		const iconObj = typeof icon === 'string' ? stringToIcon(icon) : icon;
+		loadIcons([iconObj || icon], (loaded) => {
+			if (loaded.length && iconObj) {
+				const storage = getStorage(iconObj.provider, iconObj.prefix);
+				const data = getIconFromStorage(storage, iconObj.name);
+				if (data) {
+					fulfill(data);
+					return;
+				}
+			}
+
+			reject(icon);
+		});
+	});
+
+	if (typeof icon === 'string') {
+		iconsQueue[icon] = result;
+	}
+	return result;
 };

@@ -9,15 +9,15 @@
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.1.0",
-		"@iconify/svelte": "^2.1.1",
+		"@iconify-icons/mdi-light": "^1.1.1",
+		"@iconify/svelte": "^2.1.2",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.4.1",
-		"svelte": "^3.34.0",
-		"svelte-check": "^2.2.6",
-		"svelte-preprocess": "^4.9.4",
+		"svelte": "^3.46.2",
+		"svelte-check": "^2.3.0",
+		"svelte-preprocess": "^4.10.2",
 		"tslib": "^2.3.1",
-		"typescript": "^4.4.3"
+		"typescript": "^4.5.5"
 	},
 	"type": "module",
 	"dependencies": {

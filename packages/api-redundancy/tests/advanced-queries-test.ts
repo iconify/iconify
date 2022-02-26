@@ -1,5 +1,5 @@
 import type { RedundancyConfig } from '../src/config';
-import type { PendingQueryItem } from '../src/query';
+import type { QueryModuleResponse } from '../src/query';
 import { sendQuery } from '../src/query';
 
 describe('Advanced queries with multiple resources', () => {
@@ -20,14 +20,13 @@ describe('Advanced queries with multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let itemAborted = false;
-		let secondItem: PendingQueryItem;
+		let secondCallback: QueryModuleResponse;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -36,7 +35,6 @@ describe('Advanced queries with multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -51,13 +49,6 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(1);
 						expect(status.queriesPending).toEqual(1);
 
-						// Add abort
-						queryItem.abort = (): void => {
-							done(
-								'Abort should have not been called for first item'
-							);
-						};
-
 						// Fail in 20ms
 						setTimeout(() => {
 							// Status should not have changed
@@ -66,7 +57,7 @@ describe('Advanced queries with multiple resources', () => {
 							expect(status.queriesPending).toEqual(1);
 
 							// Fail
-							queryItem.done(void 0, true);
+							callback('next', true);
 						}, 20);
 						return;
 
@@ -75,15 +66,8 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(2);
 						expect(status.queriesPending).toEqual(1);
 
-						// Add abort
-						queryItem.abort = (): void => {
-							done(
-								'Abort should have not been called for second item'
-							);
-						};
-
 						// Save item
-						secondItem = queryItem;
+						secondCallback = callback;
 						return;
 
 					case 3:
@@ -91,16 +75,8 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(3);
 						expect(status.queriesPending).toEqual(2);
 
-						// Add abort
-						queryItem.abort = (): void => {
-							// This item should be aborted, but only once
-							expect(itemAborted).toEqual(false);
-							expect(sentQuery).toEqual(3);
-							itemAborted = true;
-						};
-
 						// Complete second item
-						secondItem.done(result);
+						secondCallback('success', result);
 						return;
 
 					default:
@@ -110,9 +86,6 @@ describe('Advanced queries with multiple resources', () => {
 			(data, error) => {
 				// Make sure queries were sent
 				expect(sentQuery).toEqual(3);
-
-				// Third query should have been aborted
-				expect(itemAborted).toEqual(true);
 
 				// Validate data
 				expect(data).toEqual(result);
@@ -159,14 +132,13 @@ describe('Advanced queries with multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let itemAborted = false;
-		let firstItem: PendingQueryItem;
+		let firstCallback: QueryModuleResponse;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -175,7 +147,6 @@ describe('Advanced queries with multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -190,27 +161,14 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(1);
 						expect(status.queriesPending).toEqual(1);
 
-						// Add abort
-						queryItem.abort = (): void => {
-							done(
-								'Abort should have not been called for first item'
-							);
-						};
-
-						// Store item
-						firstItem = queryItem;
+						// Store callback
+						firstCallback = callback;
 						return;
 
 					case 2:
 						// Both queries should be pending
 						expect(status.queriesSent).toEqual(2);
 						expect(status.queriesPending).toEqual(2);
-
-						// Add abort
-						queryItem.abort = (): void => {
-							expect(itemAborted).toEqual(false);
-							itemAborted = true;
-						};
 
 						// Complete first item in 20ms (70ms from start), then second item
 						setTimeout(() => {
@@ -220,14 +178,12 @@ describe('Advanced queries with multiple resources', () => {
 							expect(status.queriesSent).toEqual(2);
 							expect(status.queriesPending).toEqual(2);
 
-							firstItem.done(result1);
+							firstCallback('success', result1);
 
 							// Complete second item in 30 ms
 							setTimeout(() => {
-								expect(queryItem.status).toEqual('aborted');
-
 								// Should not change anything because query is already complete
-								queryItem.done(result2);
+								callback('success', result2);
 
 								// Finish test
 								done();
@@ -242,9 +198,6 @@ describe('Advanced queries with multiple resources', () => {
 			(data, error) => {
 				// Make sure queries were sent
 				expect(sentQuery).toEqual(2);
-
-				// Second query should have been aborted
-				expect(itemAborted).toEqual(true);
 
 				// Validate data
 				expect(data).toEqual(result1);
@@ -290,14 +243,14 @@ describe('Advanced queries with multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let firstItem: PendingQueryItem;
+		let firstCallback: QueryModuleResponse;
 		let completeCount = 0;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -306,7 +259,6 @@ describe('Advanced queries with multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -321,8 +273,8 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(1);
 						expect(status.queriesPending).toEqual(1);
 
-						// Store item
-						firstItem = queryItem;
+						// Store callback
+						firstCallback = callback;
 						return;
 
 					case 2:
@@ -360,7 +312,7 @@ describe('Advanced queries with multiple resources', () => {
 							expect(diff > 130 && diff < 170).toEqual(true);
 
 							// Send data from first query, which should be ignored because dataAfterTimeout is false
-							firstItem.done(result);
+							firstCallback('success', result);
 
 							// Complete test
 							done();
@@ -399,14 +351,14 @@ describe('Advanced queries with multiple resources', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = 0;
-		let firstItem: PendingQueryItem;
+		let firstCallback: QueryModuleResponse;
 		let completeCount = 0;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(queryPayload).toEqual(payload);
 
@@ -415,7 +367,6 @@ describe('Advanced queries with multiple resources', () => {
 				expect(resource).toEqual(resources[sentQuery]);
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
@@ -430,8 +381,8 @@ describe('Advanced queries with multiple resources', () => {
 						expect(status.queriesSent).toEqual(1);
 						expect(status.queriesPending).toEqual(1);
 
-						// Store item
-						firstItem = queryItem;
+						// Store callback
+						firstCallback = callback;
 						return;
 
 					case 2:
@@ -469,7 +420,7 @@ describe('Advanced queries with multiple resources', () => {
 							expect(diff > 130 && diff < 170).toEqual(true);
 
 							// Send data from first query
-							firstItem.done(result);
+							firstCallback('success', result);
 						})();
 						return;
 

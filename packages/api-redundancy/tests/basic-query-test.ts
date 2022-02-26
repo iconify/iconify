@@ -74,7 +74,7 @@ describe('Basic queries', () => {
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(resource).toEqual(resources[0]);
 				expect(queryPayload).toEqual(payload);
@@ -84,20 +84,14 @@ describe('Basic queries', () => {
 				sentQuery = true;
 
 				// Check status
-				expect(queryItem.getQueryStatus).toEqual(getStatus);
 				const status = getStatus();
 				expect(status.status).toEqual('pending');
 				expect(status.payload).toEqual(payload);
 				expect(status.queriesSent).toEqual(1);
 				expect(status.queriesPending).toEqual(1);
 
-				// Add abort function
-				queryItem.abort = (): void => {
-					done('Abort should have not been called');
-				};
-
 				// Complete
-				queryItem.done(result);
+				callback('success', result);
 			},
 			(data, error) => {
 				// Make sure query was sent
@@ -152,7 +146,7 @@ describe('Basic queries', () => {
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload, callback) => {
 				expect(isSync).toEqual(false);
 				expect(resource).toEqual(resources[0]);
 				expect(queryPayload).toEqual(payload);
@@ -161,13 +155,8 @@ describe('Basic queries', () => {
 				expect(sentQuery).toEqual(false);
 				sentQuery = true;
 
-				// Add abort function
-				queryItem.abort = (): void => {
-					done('Abort should have not been called');
-				};
-
 				// Fail
-				queryItem.done(void 0, result);
+				callback('next', result);
 			},
 			(data, error) => {
 				// Make sure query was sent
@@ -216,13 +205,12 @@ describe('Basic queries', () => {
 		let isSync = true;
 		const startTime = Date.now();
 		let sentQuery = false;
-		let itemAborted = false;
 
 		// Send query
 		const getStatus = sendQuery(
 			config,
 			payload,
-			(resource, queryPayload, queryItem) => {
+			(resource, queryPayload) => {
 				expect(isSync).toEqual(false);
 				expect(resource).toEqual(resources[0]);
 				expect(queryPayload).toEqual(payload);
@@ -230,12 +218,6 @@ describe('Basic queries', () => {
 				// Make sure query was executed only once
 				expect(sentQuery).toEqual(false);
 				sentQuery = true;
-
-				// Add abort function
-				queryItem.abort = (): void => {
-					expect(itemAborted).toEqual(false);
-					itemAborted = true;
-				};
 
 				// Do not do anything
 			},
@@ -253,12 +235,68 @@ describe('Basic queries', () => {
 				expect(status.queriesSent).toEqual(1);
 				expect(status.queriesPending).toEqual(0);
 
-				// Item should have been aborted
-				expect(itemAborted).toEqual(true);
-
 				// Should have been config.rotate + config.timeout
 				const diff = Date.now() - startTime;
 				expect(diff).toBeGreaterThan(250);
+
+				done();
+			}
+		);
+
+		// Check status
+		const status = getStatus();
+		expect(status.status).toEqual('pending');
+		expect(status.queriesSent).toEqual(0);
+		expect(status.queriesPending).toEqual(0);
+
+		isSync = false;
+	});
+
+	it('Abort query', (done) => {
+		const payload = {};
+		const resources = ['api1', 'api2', 'api3'];
+		const config: RedundancyConfig = {
+			resources,
+			index: 0,
+			timeout: 200,
+			rotate: 100,
+			random: false,
+			dataAfterTimeout: false,
+		};
+
+		// Tracking
+		let isSync = true;
+		let sentQuery = false;
+
+		// Send query
+		const getStatus = sendQuery(
+			config,
+			payload,
+			(resource, queryPayload, callback) => {
+				expect(isSync).toEqual(false);
+				expect(resource).toEqual(resources[0]);
+				expect(queryPayload).toEqual(payload);
+
+				// Make sure query was executed only once
+				expect(sentQuery).toEqual(false);
+				sentQuery = true;
+
+				// Abort
+				callback('abort', 404);
+			},
+			(data, error) => {
+				// Make sure query was sent
+				expect(sentQuery).toEqual(true);
+
+				// Validate data
+				expect(data).toBeUndefined();
+				expect(error).toBe(404);
+
+				// Check status
+				const status = getStatus();
+				expect(status.status).toEqual('failed');
+				expect(status.queriesSent).toEqual(1);
+				expect(status.queriesPending).toEqual(0);
 
 				done();
 			}

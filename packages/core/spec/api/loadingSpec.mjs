@@ -46,7 +46,7 @@ describe('Testing API loadIcons', () => {
 			return [item];
 		};
 
-		const sendQuery = (host, params, item) => {
+		const sendQuery = (host, params, callback) => {
 			// This callback should be called after prepareQuery
 			expect(asyncCounter).toBe(2);
 			asyncCounter++;
@@ -64,7 +64,7 @@ describe('Testing API loadIcons', () => {
 			expect(params).toEqual(expected);
 
 			// Send data
-			item.done({
+			callback('success', {
 				prefix,
 				icons: {
 					icon1: {
@@ -170,7 +170,7 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (host, params, item) => {
+		const sendQuery = (host, params, callback) => {
 			// Test input
 			expect(host).toBe('https://api1.local');
 
@@ -196,7 +196,7 @@ describe('Testing API loadIcons', () => {
 					body: '<path d="" />',
 				};
 			});
-			item.done({
+			callback('success', {
 				prefix,
 				icons,
 				// Test mismatched provider: should be ignored because provider name is not affected by actual API response
@@ -263,7 +263,7 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (host, params, item) => {
+		const sendQuery = (host, params, callback) => {
 			queryCounter++;
 			params;
 			switch (queryCounter) {
@@ -279,7 +279,7 @@ describe('Testing API loadIcons', () => {
 					expect(host).toBe('https://api2.local');
 
 					// Return result
-					item.done({
+					callback('success', {
 						prefix,
 						icons: {
 							icon1: {
@@ -359,7 +359,7 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (host, params, item) => {
+		const sendQuery = (host, params, callback) => {
 			queryCounter++;
 
 			expect(params.type).toBe('icons');
@@ -382,7 +382,7 @@ describe('Testing API loadIcons', () => {
 					expect(host).toBe('https://api2.local');
 
 					// Return result
-					item.done({
+					callback('success', {
 						prefix,
 						icons: {
 							icon1: {
@@ -401,7 +401,7 @@ describe('Testing API loadIcons', () => {
 					expect(host).toBe('https://api2.local');
 
 					// Return result
-					item.done({
+					callback('success', {
 						prefix,
 						icons: {
 							icon3: {
@@ -514,7 +514,7 @@ describe('Testing API loadIcons', () => {
 		};
 
 		let queryCounter = 0;
-		const sendQuery = (host, params, item) => {
+		const sendQuery = (host, params, callback) => {
 			queryCounter++;
 
 			expect(params.type).toBe('icons');
@@ -539,7 +539,7 @@ describe('Testing API loadIcons', () => {
 					expect(host).toBe('https://api2.local');
 
 					// Return result
-					item.done({
+					callback('success', {
 						prefix: params.prefix,
 						icons: {
 							icon1: {
@@ -559,7 +559,7 @@ describe('Testing API loadIcons', () => {
 					expect(host).toBe('https://api2.local');
 
 					// Return result
-					item.done({
+					callback('success', {
 						prefix: params.prefix,
 						icons: {
 							icon2: {

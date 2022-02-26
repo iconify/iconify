@@ -62,4 +62,4 @@ export {
 
 export { calculateSize, replaceIDs, buildIcon } from './functions';
 
-export { loadIcons, addAPIProvider, _api } from './functions';
+export { loadIcons, loadIcon, addAPIProvider, _api } from './functions';

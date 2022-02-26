@@ -13,9 +13,9 @@ import { sendQuery } from './query';
 export { GetQueryStatus, QueryModuleCallback, QueryDoneCallback };
 export type {
 	QueryAbortCallback,
-	QueryUpdateIndexCallback,
 	QueryStatus,
-	PendingQueryItem,
+	QueryModuleResponseType,
+	QueryModuleResponse,
 } from './query';
 
 /**
@@ -117,10 +117,6 @@ export function initRedundancy(cfg: Partial<RedundancyConfig>): Redundancy {
 				if (doneCallback) {
 					doneCallback(data, error);
 				}
-			},
-			(newIndex) => {
-				// Update start index
-				config.index = newIndex;
 			}
 		);
 		queries.push(query);

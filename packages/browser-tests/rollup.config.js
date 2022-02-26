@@ -34,8 +34,8 @@ const config = files.map((file) => {
 		external: ['mocha', 'chai'],
 		plugins: [
 			resolve({
-				browser: true,
-				extensions: ['.js'],
+				// browser: true,
+				// exxtensions: ['.js'],
 			}),
 			commonjs({
 				ignore: ['cross-fetch'],
