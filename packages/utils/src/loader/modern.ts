@@ -16,11 +16,7 @@ export async function searchForIcon(
 	options?: IconifyLoaderOptions,
 ): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
-	const {
-		customize,
-		additionalProps = {},
-		iconCustomizer,
-	} = options?.customizations ?? {};
+	const { customize } = options?.customizations ?? {};
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
@@ -37,11 +33,8 @@ export async function searchForIcon(
 				`<svg >${body}</svg>`,
 				collection,
 				id,
-				additionalProps,
-				options?.addXmlNs === true,
-				options?.scale,
+				options,
 				() => attributes,
-				iconCustomizer
 			);
 		}
 	}

@@ -23,20 +23,7 @@ export async function loadIcon(
 		return undefined;
 	}
 
-	let svg = await loadNodeBuiltinIcon(collection, icon, options);
-
-	if (svg && options) {
-		const { defaultStyle, defaultClass } = options
-		// additional props and iconCustomizer takes precedence
-		if (defaultClass && !svg.includes(' class='))
-			svg = svg.replace('<svg ', `<svg class="${defaultClass}" `)
-		// additional props and iconCustomizer takes precedence
-		if (defaultStyle && !svg.includes(' style='))
-			svg = svg.replace('<svg ', `<svg style="${defaultStyle}" `)
-	}
-
-
-	return svg;
+	return await loadNodeBuiltinIcon(collection, icon, options);
 }
 
 async function importFsModule(): Promise<typeof import('./fs') | undefined> {

@@ -1,16 +1,18 @@
 import type { Awaitable } from '@antfu/utils';
-import type { IconCustomizer } from './types';
+import type { IconifyLoaderOptions } from './types';
 
 export async function mergeIconProps(
 	svg: string,
 	collection: string,
 	icon: string,
-	additionalProps: Record<string, string | undefined>,
-	addXmlNs: boolean,
-	scale?: number,
+	options?: IconifyLoaderOptions,
 	propsProvider?: () => Awaitable<Record<string, string>>,
-	iconCustomizer?: IconCustomizer,
 ): Promise<string> {
+	const { scale, addXmlNs = false } = options ?? {}
+	const {
+		additionalProps = {},
+		iconCustomizer,
+	} = options?.customizations ?? {};
 	const props: Record<string, string> = (await propsProvider?.()) ?? {};
 	if (!svg.includes(" width=") && !svg.includes(" height=") && typeof scale === 'number') {
 		if ((typeof props.width === 'undefined' || props.width === null) && (typeof props.height === 'undefined' || props.height === null)) {
@@ -18,6 +20,7 @@ export async function mergeIconProps(
 			props.height = `${scale}em`;
 		}
 	}
+
 	await iconCustomizer?.(collection, icon, props);
 	Object.keys(additionalProps).forEach((p) => {
 		const v = additionalProps[p];
@@ -35,8 +38,22 @@ export async function mergeIconProps(
 		}
 	}
 
-	return svg.replace(
+	svg = svg.replace(
 		'<svg ',
 		`<svg ${Object.keys(props).map((p) => `${p}="${props[p]}"`).join(' ')}`
 	);
+
+	if (svg && options) {
+		const { defaultStyle, defaultClass } = options
+		// additional props and iconCustomizer takes precedence
+		if (defaultClass && !svg.includes(' class=')) {
+			svg = svg.replace('<svg ', `<svg class="${defaultClass}" `);
+		}
+		// additional props and iconCustomizer takes precedence
+		if (defaultStyle && !svg.includes(' style=')) {
+			svg = svg.replace('<svg ', `<svg style="${defaultStyle}" `);
+		}
+	}
+
+	return svg;
 }

@@ -31,20 +31,13 @@ export async function getCustomIcon(
 			);
 			return result;
 		}
-		const {
-			transform,
-			additionalProps = {},
-			iconCustomizer,
-		} = options?.customizations ?? {};
+		const { transform } = options?.customizations ?? {};
 		return await mergeIconProps(
-			transform ? await transform(result) : result,
+			typeof transform === 'function' ? await transform(result) : result,
 			collection,
 			icon,
-			additionalProps,
-			options?.addXmlNs === true,
-			options?.scale,
+			options,
 			undefined,
-			iconCustomizer,
 		);
 	}
 }
