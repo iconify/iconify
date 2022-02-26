@@ -8,6 +8,7 @@ export async function mergeIconProps(
 	collection: string,
 	icon: string,
 	additionalProps: Record<string, string | undefined>,
+	addXmlNs: boolean,
 	propsProvider?: () => Awaitable<Record<string, string>>,
 	iconCustomizer?: IconCustomizer,
 ): Promise<string> {
@@ -17,17 +18,20 @@ export async function mergeIconProps(
 		const v = additionalProps[p];
 		if (v !== undefined && v !== null) props[p] = v;
 	});
-	// add svg xmlns if missing
-	if (!svg.includes(' xmlns=') && !additionalProps['xmlns']) {
-		additionalProps['xmlns'] = 'http://www.w3.org/2000/svg';
+	// add xml namespaces if necessary
+	if (addXmlNs) {
+		// add svg xmlns if missing
+		if (!svg.includes(' xmlns=') && !props['xmlns']) {
+			props['xmlns'] = 'http://www.w3.org/2000/svg';
+		}
+		// add xmlns:xlink if xlink present and the xmlns missing
+		if (!svg.includes(' xmlns:xlink=') && svg.includes('xlink:') && !props['xmlns:xlink']) {
+			props['xmlns:xlink'] = 'http://www.w3.org/1999/xlink';
+		}
 	}
-	// add xmlns:xlink if xlink present and the xmlns missing
-	if (!svg.includes('xmlns:xlink') && svg.includes('xlink:') && !additionalProps['xmlns:xlink']) {
-		additionalProps['xmlns:xlink'] = 'http://www.w3.org/1999/xlink';
-	}
-	const replacement = svg.startsWith('<svg ') ? '<svg ' : '<svg';
+
 	return svg.replace(
-		replacement,
-		`${replacement}${Object.keys(props).map((p) => `${p}="${props[p]}"`).join(' ')}`
+		'<svg ',
+		`<svg ${Object.keys(props).map((p) => `${p}="${props[p]}"`).join(' ')}`
 	);
 }

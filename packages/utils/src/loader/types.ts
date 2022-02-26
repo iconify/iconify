@@ -76,9 +76,14 @@ export type CustomCollections = Record<
  */
 export type IconifyLoaderOptions = {
 	/**
-	 * Scale of icons against 1em
+	 * Add svg and xlink xml namespace when necessary.
 	 *
-	 * @default 1.2
+	 * @default false
+	 */
+	addXmlNs?: boolean
+
+	/**
+	 * Scale of icons against 1em
 	 */
 	scale?: number
 
