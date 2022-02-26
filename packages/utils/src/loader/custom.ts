@@ -41,7 +41,6 @@ export async function getCustomIcon(
 			collection,
 			icon,
 			additionalProps,
-			options?.scale ?? 1.2,
 			undefined,
 			iconCustomizer,
 		);

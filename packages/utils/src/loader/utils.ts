@@ -8,14 +8,10 @@ export async function mergeIconProps(
 	collection: string,
 	icon: string,
 	additionalProps: Record<string, string | undefined>,
-	scale: number,
 	propsProvider?: () => Awaitable<Record<string, string>>,
 	iconCustomizer?: IconCustomizer,
 ): Promise<string> {
-	const props: Record<string, string> = (await propsProvider?.()) ?? {
-		height: `${scale ?? 1}em`,
-		width: `${scale ?? 1}em`,
-	};
+	const props: Record<string, string> = (await propsProvider?.()) ?? {};
 	await iconCustomizer?.(collection, icon, props);
 	Object.keys(additionalProps).forEach((p) => {
 		const v = additionalProps[p];
