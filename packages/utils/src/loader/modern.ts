@@ -33,7 +33,8 @@ export async function searchForIcon(
 					: defaultCustomizations
 			);
 			return await mergeIconProps(
-				`<svg>${body}</svg>`,
+				// DON'T remove space on <svg >
+				`<svg >${body}</svg>`,
 				collection,
 				id,
 				additionalProps,
