@@ -56,7 +56,7 @@ export type IconCustomizations = {
 };
 
 /**
- * List of icons as object. Key is icon name, value is icon data or callback (can be async) to get icon data
+ * List of icons as object. Key is the icon name, the value is the icon data or callback (can be async) to get icon data
  */
 export type InlineCollection = Record<
 	string,
@@ -64,9 +64,59 @@ export type InlineCollection = Record<
 >;
 
 /**
- * Collection of custom icons. Key is collection name, value is loader or InlineCollection object
+ * Collection of custom icons. Key is the collection name, the value is the loader or InlineCollection object
  */
 export type CustomCollections = Record<
 	string,
 	CustomIconLoader | InlineCollection
 >;
+
+/**
+ * Options to use with the modern loader.
+ */
+export type IconifyLoaderOptions = {
+	/**
+	 * Add svg and xlink xml namespace when necessary.
+	 *
+	 * @default false
+	 */
+	addXmlNs?: boolean
+
+	/**
+	 * Scale of icons against 1em
+	 */
+	scale?: number
+
+	/**
+	 * Style to apply to icons by default
+	 *
+	 * @default ''
+	 */
+	defaultStyle?: string
+
+	/**
+	 * Class names to apply to icons by default
+	 *
+	 * @default ''
+	 */
+	defaultClass?: string
+
+	/**
+	 * Loader for custom loaders
+	 */
+	customCollections?: Record<string, CustomIconLoader | InlineCollection>
+
+	/**
+	 * Icon customizer
+	 */
+	customizations?: IconCustomizations
+
+	/**
+	 * Auto install icon sources package when the usages is detected
+	 *
+	 * **WARNING**: only on `node` environment, on `browser` this option will be ignored
+	 *
+	 * @default false
+	 */
+	autoInstall?: boolean
+}

@@ -39,6 +39,7 @@ export { convertIconSetInfo } from './icon-set/convert-info';
 export { iconToSVG } from './svg/build';
 export { replaceIDs } from './svg/id';
 export { calculateSize } from './svg/size';
+export { encodeSvgForCss } from './svg/encode-svg-for-css';
 
 // Colors
 export { colorKeywords } from './colors/keywords';
@@ -50,12 +51,14 @@ export type {
 	CustomCollections,
 	IconCustomizer,
 	IconCustomizations,
+	IconifyLoaderOptions,
 	InlineCollection,
 } from './loader/types';
-export { tryInstallPkg, mergeIconProps } from './loader/utils';
+export { mergeIconProps } from './loader/utils';
+export { isNode, loadIcon } from './loader/loader';
 export { FileSystemIconLoader } from './loader/loaders';
 export { getCustomIcon } from './loader/custom';
-export { loadCollection, searchForIcon } from './loader/modern';
+export { searchForIcon } from './loader/modern';
 
 // Misc
 export { camelize, camelToKebab, pascalize } from './misc/strings';

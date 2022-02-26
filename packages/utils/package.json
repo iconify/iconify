@@ -124,6 +124,18 @@
 			"require": "./lib/loader/custom.js",
 			"import": "./lib/loader/custom.mjs"
 		},
+		"./lib/loader/fs": {
+			"require": "./lib/loader/fs.js",
+			"import": "./lib/loader/fs.mjs"
+		},
+		"./lib/loader/install-pkg": {
+			"require": "./lib/loader/install-pkg.js",
+			"import": "./lib/loader/install-pkg.mjs"
+		},
+		"./lib/loader/loader": {
+			"require": "./lib/loader/loader.js",
+			"import": "./lib/loader/loader.mjs"
+		},
 		"./lib/loader/loaders": {
 			"require": "./lib/loader/loaders.js",
 			"import": "./lib/loader/loaders.mjs"
@@ -148,6 +160,10 @@
 			"require": "./lib/svg/build.js",
 			"import": "./lib/svg/build.mjs"
 		},
+		"./lib/svg/encode-svg-for-css": {
+			"require": "./lib/svg/encode-svg-for-css.js",
+			"import": "./lib/svg/encode-svg-for-css.mjs"
+		},
 		"./lib/svg/id": {
 			"require": "./lib/svg/id.js",
 			"import": "./lib/svg/id.mjs"
@@ -166,6 +182,7 @@
 		"local-pkg": "^0.4.0"
 	},
 	"devDependencies": {
+		"@iconify-json/flat-color-icons": "^1.0.2",
 		"@iconify/library-builder": "^1.0.5",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.1",

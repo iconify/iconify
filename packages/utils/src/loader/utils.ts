@@ -1,66 +1,59 @@
-import { installPackage } from '@antfu/install-pkg';
-import { Awaitable, sleep } from '@antfu/utils';
-import { cyan, yellow } from 'kolorist';
-import type { IconCustomizer } from './types';
-
-const warned = new Set<string>();
-
-export function warnOnce(msg: string): void {
-	if (!warned.has(msg)) {
-		warned.add(msg);
-		console.warn(yellow(`[@iconify-loader] ${msg}`));
-	}
-}
-
-let pending: Promise<void> | undefined;
-const tasks: Record<string, Promise<void> | undefined> = {};
+import type { Awaitable } from '@antfu/utils';
+import type { IconifyLoaderOptions } from './types';
 
 export async function mergeIconProps(
 	svg: string,
 	collection: string,
 	icon: string,
-	additionalProps: Record<string, string | undefined>,
+	options?: IconifyLoaderOptions,
 	propsProvider?: () => Awaitable<Record<string, string>>,
-	iconCustomizer?: IconCustomizer
 ): Promise<string> {
+	const { scale, addXmlNs = false } = options ?? {}
+	const {
+		additionalProps = {},
+		iconCustomizer,
+	} = options?.customizations ?? {};
 	const props: Record<string, string> = (await propsProvider?.()) ?? {};
+	if (!svg.includes(" width=") && !svg.includes(" height=") && typeof scale === 'number') {
+		if ((typeof props.width === 'undefined' || props.width === null) && (typeof props.height === 'undefined' || props.height === null)) {
+			props.width = `${scale}em`;
+			props.height = `${scale}em`;
+		}
+	}
+
 	await iconCustomizer?.(collection, icon, props);
 	Object.keys(additionalProps).forEach((p) => {
 		const v = additionalProps[p];
 		if (v !== undefined && v !== null) props[p] = v;
 	});
-	const replacement = svg.startsWith('<svg ') ? '<svg ' : '<svg';
-	return svg.replace(
-		replacement,
-		`${replacement}${Object.keys(props)
-			.map((p) => `${p}="${props[p]}"`)
-			.join(' ')}`
+	// add xml namespaces if necessary
+	if (addXmlNs) {
+		// add svg xmlns if missing
+		if (!svg.includes(' xmlns=') && !props['xmlns']) {
+			props['xmlns'] = 'http://www.w3.org/2000/svg';
+		}
+		// add xmlns:xlink if xlink present and the xmlns missing
+		if (!svg.includes(' xmlns:xlink=') && svg.includes('xlink:') && !props['xmlns:xlink']) {
+			props['xmlns:xlink'] = 'http://www.w3.org/1999/xlink';
+		}
+	}
+
+	svg = svg.replace(
+		'<svg ',
+		`<svg ${Object.keys(props).map((p) => `${p}="${props[p]}"`).join(' ')}`
 	);
-}
 
-export async function tryInstallPkg(name: string): Promise<void | undefined> {
-	if (pending) {
-		await pending;
+	if (svg && options) {
+		const { defaultStyle, defaultClass } = options
+		// additional props and iconCustomizer takes precedence
+		if (defaultClass && !svg.includes(' class=')) {
+			svg = svg.replace('<svg ', `<svg class="${defaultClass}" `);
+		}
+		// additional props and iconCustomizer takes precedence
+		if (defaultStyle && !svg.includes(' style=')) {
+			svg = svg.replace('<svg ', `<svg style="${defaultStyle}" `);
+		}
 	}
 
-	if (!tasks[name]) {
-		// eslint-disable-next-line no-console
-		console.log(cyan(`Installing ${name}...`));
-		tasks[name] = pending = installPackage(name, {
-			dev: true,
-			preferOffline: true,
-		})
-			.then(() => sleep(300))
-			// eslint-disable-next-line
-			.catch((e: any) => {
-				warnOnce(`Failed to install ${name}`);
-				console.error(e);
-			})
-			.finally(() => {
-				pending = undefined;
-			});
-	}
-
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	return tasks[name]!;
+	return svg;
 }
