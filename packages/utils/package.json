@@ -160,6 +160,10 @@
 			"require": "./lib/svg/build.js",
 			"import": "./lib/svg/build.mjs"
 		},
+		"./lib/svg/encode-svg-for-css": {
+			"require": "./lib/svg/encode-svg-for-css.js",
+			"import": "./lib/svg/encode-svg-for-css.mjs"
+		},
 		"./lib/svg/id": {
 			"require": "./lib/svg/id.js",
 			"import": "./lib/svg/id.mjs"
