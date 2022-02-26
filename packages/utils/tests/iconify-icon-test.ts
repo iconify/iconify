@@ -13,21 +13,23 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.indexOf('xmlns:xlink=') > - 1).toBeTruthy();
 	});
 
-	test('loadIcon with transform with default style and class', async () => {
+	test('loadIcon with customize with default style and class', async () => {
 		const result = await loadIcon('flat-color-icons', 'up-right', {
 			defaultStyle: 'margin-top: 1rem;',
 			defaultClass: 'clazz',
 			customizations: {
-				transform(icon) {
-					return icon.replace('<svg ', '<svg width="1em" height="1em" ');
+				customize(props) {
+					props.width = '2em';
+					props.height = '2em';
+					return props;
 				},
 			}
 		});
 		expect(result).toBeTruthy();
 		expect(result && result.indexOf('margin-top: 1rem;') > - 1).toBeTruthy();
 		expect(result && result.indexOf('class="clazz"') > - 1).toBeTruthy();
-		expect(result && result.indexOf('width="1em"') > - 1).toBeTruthy();
-		expect(result && result.indexOf('height="1em"') > - 1).toBeTruthy();
+		expect(result && result.indexOf('width="2em"') > - 1).toBeTruthy();
+		expect(result && result.indexOf('height="2em"') > - 1).toBeTruthy();
 	});
 
 	test('loadIcon preserves customizations order', async () => {
