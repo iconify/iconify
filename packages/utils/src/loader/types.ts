@@ -1,5 +1,6 @@
 import type { Awaitable } from '@antfu/utils';
 import type { FullIconCustomisations } from '../customisations';
+import type { IconifyJSON } from '@iconify/types';
 
 /**
  * Custom icon loader, used by `getCustomIcon`.
@@ -109,7 +110,7 @@ export type IconifyLoaderOptions = {
 	/**
 	 * Loader for custom loaders
 	 */
-	customCollections?: Record<string, CustomIconLoader | InlineCollection>
+	customCollections?: Record<string, (() => Awaitable<IconifyJSON>) | undefined | CustomIconLoader | InlineCollection>
 
 	/**
 	 * Icon customizer

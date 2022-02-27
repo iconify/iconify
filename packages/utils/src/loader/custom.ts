@@ -20,7 +20,7 @@ export async function getCustomIcon(
 	if (typeof custom === 'function') {
 		result = await custom(icon);
 	} else {
-		const inline = custom[icon];
+		const inline = (custom as InlineCollection)[icon];
 		result = typeof inline === 'function' ? await inline() : inline;
 	}
 

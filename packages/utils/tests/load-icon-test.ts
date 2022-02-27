@@ -23,6 +23,17 @@ describe('Testing loadIcon', () => {
 		expect(svg).toEqual(result);
 	});
 
+	test('CustomCollection using dynamic import', async () => {
+		const result = await loadIcon('flat-color-icons', 'up-right', {
+			customCollections: {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				'flat-color-icons': () => import('@iconify-json/flat-color-icons/icons.json').then(i => i?.default),
+			},
+		});
+		expect(result).toBeTruthy();
+	});
+
 	test('CustomCollection with transform', async () => {
 		const svg = await loader('circle');
 		expect(svg).toBeTruthy();

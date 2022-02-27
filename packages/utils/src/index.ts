@@ -57,6 +57,7 @@ export type {
 export { mergeIconProps } from './loader/utils';
 export { getCustomIcon } from './loader/custom';
 export { searchForIcon } from './loader/modern';
+export { loadIcon } from './loader/loader';
 
 // Misc
 export { camelize, camelToKebab, pascalize } from './misc/strings';
