@@ -1,9 +1,9 @@
 import { getCustomIcon } from './custom';
 import { searchForIcon } from './modern';
-import { warnOnce } from './install-pkg';
+import { warnOnce } from './warn';
 import type { IconifyLoaderOptions } from './types';
 
-export const isNode = typeof process < 'u' && typeof process.stdout < 'u'
+export const isNode = typeof process < 'u' && typeof process.stdout < 'u';
 
 export async function loadIcon(
 	collection: string,
@@ -44,24 +44,27 @@ async function loadNodeBuiltinIcon(
 	collection: string,
 	icon: string,
 	options?: IconifyLoaderOptions,
-	warn = true,
 ): Promise<string | undefined> {
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	const { loadCollectionFromFS } = await importFsModule();
-	const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
-	if (iconSet) {
-		// possible icon names
-		const ids = [
-			icon,
-			icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
-			icon.replace(/([a-z])(\d+)/g, '$1-$2'),
-		];
-		return await searchForIcon(iconSet, collection, ids, options);
+	let result: string | undefined;
+	const loadCollectionFromFS = await importFsModule().then(i => i?.loadCollectionFromFS);
+	if (loadCollectionFromFS) {
+		const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
+		if (iconSet) {
+			// possible icon names
+			const ids = [
+				icon,
+				icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
+				icon.replace(/([a-z])(\d+)/g, '$1-$2'),
+			];
+			result = await searchForIcon(iconSet, collection, ids, options);
+		}
+
 	}
 
-	if (warn) {
-		warnOnce(`failed to load \`@iconify-json/${collection}\`, have you installed it?`);
+	if (!result && options?.warn) {
+		warnOnce(`failed to load ${options.warn} icon`);
 	}
+
+	return result;
 }
 

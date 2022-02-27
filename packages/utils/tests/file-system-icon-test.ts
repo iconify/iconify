@@ -1,4 +1,4 @@
-import { FileSystemIconLoader } from '../lib';
+import { FileSystemIconLoader } from '../lib/loader/loaders';
 
 describe('Testing FileSystemIconLoader', () => {
 	test('FileSystemIconLoader', async () => {

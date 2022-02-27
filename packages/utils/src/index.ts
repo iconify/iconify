@@ -55,8 +55,7 @@ export type {
 	InlineCollection,
 } from './loader/types';
 export { mergeIconProps } from './loader/utils';
-export { isNode, loadIcon } from './loader/loader';
-export { FileSystemIconLoader } from './loader/loaders';
+export { warnOnce } from './loader/warn';
 export { getCustomIcon } from './loader/custom';
 export { searchForIcon } from './loader/modern';
 

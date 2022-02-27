@@ -152,6 +152,10 @@
 			"require": "./lib/loader/utils.js",
 			"import": "./lib/loader/utils.mjs"
 		},
+		"./lib/loader/warn": {
+			"require": "./lib/loader/warn.js",
+			"import": "./lib/loader/warn.mjs"
+		},
 		"./lib/misc/strings": {
 			"require": "./lib/misc/strings.js",
 			"import": "./lib/misc/strings.mjs"

@@ -1,4 +1,4 @@
-import { loadIcon } from '../lib';
+import { loadIcon } from '../lib/loader/loader';
 
 describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 
@@ -55,5 +55,62 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('class="clazz2"')).toBeTruthy();
 		expect(result && result.includes('width="2em"')).toBeTruthy();
 		expect(result && result.includes('height="2em"')).toBeTruthy();
+	});
+
+	test('loadIcon warn missing icon', async () => {
+		// Intercept console.warn
+		let warned = false;
+		const warn = console.warn;
+		console.warn = (/*...args*/) => {
+			// warn.apply(this, args);
+			warned = true;
+		};
+
+		const result = await loadIcon('flat-color-icons', 'missing1', {
+			warn: 'flat-color-icons:missing'
+		});
+		// Restore console.warn
+		console.warn = warn;
+
+		expect(result).toBeFalsy();
+		expect(warned).toEqual(true);
+	});
+
+	test('test warnOnce on loadIcon on missing icon', async () => {
+		// Intercept console.warn
+		let warned = false;
+		const warn = console.warn;
+		console.warn = (/*...args*/) => {
+			// warn.apply(this, args);
+			warned = true;
+		};
+
+		// use another name since it is using warnOnce
+		const result = await loadIcon('flat-color-icons', 'missing1', {
+			warn: 'flat-color-icons:missing'
+		});
+		// Restore console.warn
+		console.warn = warn;
+
+		expect(result).toBeFalsy();
+		expect(warned).toEqual(false);
+	});
+
+	test('loadIcon doesn\'t warn missing icon', async () => {
+		// Intercept console.warn
+		let warned = false;
+		const warn = console.warn;
+		console.warn = (/*...args*/) => {
+			// warn.apply(this, args);
+			warned = true;
+		};
+
+		// use another name since it is using warnOnce
+		const result = await loadIcon('flat-color-icons', 'missing2');
+		// Restore console.warn
+		console.warn = warn;
+
+		expect(result).toBeFalsy();
+		expect(warned).toEqual(false);
 	});
 });
