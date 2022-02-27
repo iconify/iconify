@@ -124,21 +124,9 @@
 			"require": "./lib/loader/custom.js",
 			"import": "./lib/loader/custom.mjs"
 		},
-		"./lib/loader/fs": {
-			"require": "./lib/loader/fs.js",
-			"import": "./lib/loader/fs.mjs"
-		},
-		"./lib/loader/install-pkg": {
-			"require": "./lib/loader/install-pkg.js",
-			"import": "./lib/loader/install-pkg.mjs"
-		},
 		"./lib/loader/loader": {
 			"require": "./lib/loader/loader.js",
 			"import": "./lib/loader/loader.mjs"
-		},
-		"./lib/loader/loaders": {
-			"require": "./lib/loader/loaders.js",
-			"import": "./lib/loader/loaders.mjs"
 		},
 		"./lib/loader/modern": {
 			"require": "./lib/loader/modern.js",
@@ -151,10 +139,6 @@
 		"./lib/loader/utils": {
 			"require": "./lib/loader/utils.js",
 			"import": "./lib/loader/utils.mjs"
-		},
-		"./lib/loader/warn": {
-			"require": "./lib/loader/warn.js",
-			"import": "./lib/loader/warn.mjs"
 		},
 		"./lib/misc/strings": {
 			"require": "./lib/misc/strings.js",
