@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { tick } from 'svelte';
 import { render } from '@testing-library/svelte';
 import { iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
@@ -58,29 +59,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						const node = component.container.querySelector('svg')!;
-						const html = (node.parentNode as HTMLDivElement)
-							.innerHTML;
-
-						// Check HTML
-						expect(html).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-								className +
-								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called
-						expect(onLoadCalled).toBe(iconName);
-
-						// Change property
-						triggerSwap!();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -106,28 +84,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName2)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						const node = component.container.querySelector('svg')!;
-						const html = (node.parentNode as HTMLDivElement)
-							.innerHTML;
-
-						// Check HTML
-						expect(html).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
-								className +
-								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called for second icon
-						expect(onLoadCalled).toBe(iconName2);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -147,11 +103,50 @@ describe('Rendering icon', () => {
 					// First onLoad call
 					case iconName:
 						expect(onLoadCalled).toBe('');
+
+						// Wait 1 tick, then test rendered icon
+						tick()
+							.then(() => {
+								const node =
+									component.container.querySelector('svg')!;
+								const html = (node.parentNode as HTMLDivElement)
+									.innerHTML;
+
+								// Check HTML
+								expect(html).toBe(
+									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+										className +
+										'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+								);
+
+								// Change property
+								triggerSwap!();
+							})
+							.catch(done);
 						break;
 
 					// Second onLoad call
 					case iconName2:
 						expect(onLoadCalled).toBe(iconName);
+
+						// Wait 1 tick, then test rendered icon
+						tick()
+							.then(() => {
+								const node =
+									component.container.querySelector('svg')!;
+								const html = (node.parentNode as HTMLDivElement)
+									.innerHTML;
+
+								// Check HTML
+								expect(html).toBe(
+									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+										className +
+										'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+								);
+
+								done();
+							})
+							.catch(done);
 						break;
 
 					default:
@@ -224,28 +219,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName2)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						const node = component.container.querySelector('svg')!;
-						const html = (node.parentNode as HTMLDivElement)
-							.innerHTML;
-
-						// Check HTML
-						expect(html).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
-								className +
-								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called for second icon
-						expect(onLoadCalled).toBe(iconName2);
-
-						done();
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -263,6 +236,24 @@ describe('Rendering icon', () => {
 				// onLoad should be called only for second icon
 				expect(name).toBe(iconName2);
 				onLoadCalled = name;
+
+				// Wait 1 tick, then test rendered icon
+				tick()
+					.then(() => {
+						const node = component.container.querySelector('svg')!;
+						const html = (node.parentNode as HTMLDivElement)
+							.innerHTML;
+
+						// Check HTML
+						expect(html).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" class="' +
+								className +
+								'"><path d="M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z" fill="currentColor"></path></svg>'
+						);
+
+						done();
+					})
+					.catch(done);
 			},
 		});
 
@@ -313,48 +304,6 @@ describe('Rendering icon', () => {
 
 				// Test it again
 				expect(iconExists(iconName)).toBe(true);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						const node = component.container.querySelector('svg')!;
-						const html = (node.parentNode as HTMLDivElement)
-							.innerHTML;
-
-						// Check HTML
-						expect(html).toBe(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-								className +
-								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
-						);
-
-						// onLoad should have been called
-						expect(onLoadCalled).toBe(true);
-
-						// Add horizontal flip and style
-						triggerSwap!();
-
-						// Wait for component to re-render
-						setTimeout(() => {
-							setTimeout(() => {
-								// Check HTML again
-								const node =
-									component.container.querySelector('svg')!;
-								const html = (node.parentNode as HTMLDivElement)
-									.innerHTML;
-
-								expect(html).toBe(
-									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
-										className +
-										'"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
-								);
-
-								done();
-							}, 0);
-						}, 0);
-					}, 0);
-				}, 0);
 			},
 		});
 
@@ -369,9 +318,46 @@ describe('Rendering icon', () => {
 			},
 			onLoad: (name: string) => {
 				expect(name).toBe(iconName);
+
 				// Should be called only once
 				expect(onLoadCalled).toBe(false);
 				onLoadCalled = true;
+
+				// Check if state was changed on next tick
+				tick()
+					.then(() => {
+						const node = component.container.querySelector('svg')!;
+						const html = (node.parentNode as HTMLDivElement)
+							.innerHTML;
+
+						// Check HTML
+						expect(html).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								'"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+						);
+
+						// Add horizontal flip and style
+						triggerSwap!();
+
+						// Wait for component to re-render
+						return tick();
+					})
+					.then(() => {
+						// Check HTML again
+						const node = component.container.querySelector('svg')!;
+						const html = (node.parentNode as HTMLDivElement)
+							.innerHTML;
+
+						expect(html).toBe(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="' +
+								className +
+								'"><g transform="translate(24 0) scale(-1 1)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
+						);
+
+						done();
+					})
+					.catch(done);
 			},
 		});
 
