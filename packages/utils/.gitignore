@@ -7,4 +7,5 @@ npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
 lib
+dual-lib
 tests-compiled

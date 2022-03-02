@@ -1,6 +1,4 @@
 import { getCustomIcon } from './custom';
-import { searchForIcon } from './modern';
-import { warnOnce } from './warn';
 import type { IconifyLoaderOptions } from './types';
 import { searchForIcon } from './modern';
 
@@ -50,7 +48,21 @@ async function importFsModule(): Promise<typeof import('./fs') | undefined> {
 	} catch {
 		try {
 			// cjs environments
-			return require('./fs.js');
+			return require('./fs.cjs');
+		}
+		catch {
+			return undefined;
+		}
+	}
+}
+
+async function importWarnModule(): Promise<typeof import('./warn') | undefined> {
+	try {
+		return await import('./warn');
+	} catch {
+		try {
+			// cjs environments
+			return require('./warn.cjs');
 		}
 		catch {
 			return undefined;
@@ -80,7 +92,8 @@ async function loadNodeBuiltinIcon(
 	}
 
 	if (!result && options?.warn) {
-		warnOnce(`failed to load ${options.warn} icon`);
+		const warnOnce = await importWarnModule().then(i => i?.warnOnce);
+		warnOnce?.(`failed to load ${options.warn} icon`);
 	}
 
 	return result;

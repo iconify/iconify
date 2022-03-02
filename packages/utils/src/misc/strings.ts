@@ -23,3 +23,11 @@ export function camelToKebab(key: string): string {
 		.trim();
 	return result.split(/\s+/g).join('-').toLowerCase();
 }
+
+/**
+ * Convert string string to snake-case
+ */
+export function snakelize(str: string): string {
+	const kebab = camelToKebab(str)
+	return kebab.replace(/-/g, '_')
+}

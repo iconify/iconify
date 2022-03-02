@@ -1,8 +1,18 @@
 {
-	"extends": "./tsconfig-base.json",
-	"include": ["src/**/*.ts", ".eslintrc.js"],
 	"compilerOptions": {
-		"rootDir": "./src",
-		"outDir": "./lib"
-	}
+		"rootDir": "./",
+		"outDir": "./dual-lib",
+		"target": "ES2019",
+		"module": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error"
+	},
+  "include": ["./src/**/*.ts"]
 }
