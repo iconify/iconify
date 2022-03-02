@@ -1,16 +1,16 @@
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
-	outDir: './dual-lib',
+	outDir: './lib',
 	entries: [
 		{ input: 'src/colors/types', name: 'colors/types' },
 		{ input: 'src/colors/keywords', name: 'colors/keywords' },
 		{ input: 'src/colors/index', name: 'colors/index' },
-		{ input: 'src/customisations/bool', name: 'customizations/bool' },
-		{ input: 'src/customisations/compare', name: 'customizations/compare' },
-		{ input: 'src/customisations/index', name: 'customizations/index' },
-		{ input: 'src/customisations/rotate', name: 'customizations/rotate' },
-		{ input: 'src/customisations/shorthand', name: 'customizations/shorthand' },
+		{ input: 'src/customisations/bool', name: 'customisations/bool' },
+		{ input: 'src/customisations/compare', name: 'customisations/compare' },
+		{ input: 'src/customisations/index', name: 'customisations/index' },
+		{ input: 'src/customisations/rotate', name: 'customisations/rotate' },
+		{ input: 'src/customisations/shorthand', name: 'customisations/shorthand' },
 		{ input: 'src/icon/index', name: 'icon/index' },
 		{ input: 'src/icon/merge', name: 'icon/merge' },
 		{ input: 'src/icon/name', name: 'icon/name' },
