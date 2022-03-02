@@ -77,11 +77,6 @@ export type CustomCollections = Record<
  */
 export type IconifyLoaderOptions = {
 	/**
-	 * Emit warning when missing icons are matched
-	 */
-	warn?: string
-
-	/**
 	 * Add svg and xlink xml namespace when necessary.
 	 *
 	 * @default false
