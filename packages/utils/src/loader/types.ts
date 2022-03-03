@@ -3,6 +3,15 @@ import type { FullIconCustomisations } from '../customisations';
 import type { IconifyJSON } from '@iconify/types';
 
 /**
+ * Type for universal icon loader.
+ */
+export type UniversalIconLoader = (
+	collection: string,
+	icon: string,
+	options?: IconifyLoaderOptions
+) => Promise<string | undefined>;
+
+/**
  * Custom icon loader, used by `getCustomIcon`.
  */
 export type CustomIconLoader = (name: string) => Awaitable<string | undefined>;

@@ -9,10 +9,11 @@
       "DOM"
     ],
 		"strict": true,
+		"skipLibCheck": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"importsNotUsedAsValues": "error"
 	},
-  "include": ["./src/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

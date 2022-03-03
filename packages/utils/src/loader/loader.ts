@@ -1,14 +1,12 @@
 import { getCustomIcon } from './custom';
-import type { IconifyLoaderOptions } from './types';
+import type { UniversalIconLoader } from './types';
 import { searchForIcon } from './modern';
 
-export const isNode = typeof process < 'u' && typeof process.stdout < 'u';
-
-export async function loadIcon(
-	collection: string,
-	icon: string,
-	options?: IconifyLoaderOptions
-): Promise<string | undefined> {
+export const loadIcon: UniversalIconLoader = async(
+	collection,
+	icon,
+	options
+) => {
 	const custom = options?.customCollections?.[collection];
 
 	if (custom) {
@@ -35,67 +33,5 @@ export async function loadIcon(
 		}
 	}
 
-	if (!isNode) {
-		return undefined;
-	}
-
-	return await loadNodeBuiltinIcon(collection, icon, options);
+	return undefined;
 }
-
-async function importFsModule(): Promise<typeof import('./fs') | undefined> {
-	try {
-		return await import('./fs');
-	} catch {
-		try {
-			// cjs environments
-			return require('./fs.cjs');
-		}
-		catch {
-			return undefined;
-		}
-	}
-}
-
-async function importWarnModule(): Promise<typeof import('./warn') | undefined> {
-	try {
-		return await import('./warn');
-	} catch {
-		try {
-			// cjs environments
-			return require('./warn.cjs');
-		}
-		catch {
-			return undefined;
-		}
-	}
-}
-
-async function loadNodeBuiltinIcon(
-	collection: string,
-	icon: string,
-	options?: IconifyLoaderOptions,
-): Promise<string | undefined> {
-	let result: string | undefined;
-	const loadCollectionFromFS = await importFsModule().then(i => i?.loadCollectionFromFS);
-	if (loadCollectionFromFS) {
-		const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
-		if (iconSet) {
-			// possible icon names
-			const ids = [
-				icon,
-				icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
-				icon.replace(/([a-z])(\d+)/g, '$1-$2'),
-			];
-			result = await searchForIcon(iconSet, collection, ids, options);
-		}
-
-	}
-
-	if (!result && options?.warn) {
-		const warnOnce = await importWarnModule().then(i => i?.warnOnce);
-		warnOnce?.(`failed to load ${options.warn} icon`);
-	}
-
-	return result;
-}
-

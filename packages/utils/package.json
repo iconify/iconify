@@ -22,9 +22,8 @@
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine"
 	},
-  "sideEffects": "false",
+  "sideEffects": false,
 	"exports": {
-		"./*": "./*",
 		".": {
 			"require": "./lib/index.cjs",
 			"import": "./lib/index.mjs"
@@ -139,15 +138,20 @@
 			"require": "./lib/loader/loader.cjs",
 			"import": "./lib/loader/loader.mjs"
 		},
-		"./lib/loader/loaders": {
-			"require": "./lib/loader/loaders.cjs",
-			"import": "./lib/loader/loaders.mjs",
-			"types": "./lib/loader/loaders.d.ts"
-		},
 		"./lib/loader/modern": {
 			"require": "./lib/loader/modern.cjs",
 			"import": "./lib/loader/modern.mjs"
 		},
+    "./lib/loader/node-loader": {
+      "require": "./lib/loader/node-loader.cjs",
+      "import": "./lib/loader/node-loader.mjs",
+      "types": "./lib/loader/node-loader.d.ts"
+    },
+    "./lib/loader/node-loaders": {
+      "require": "./lib/loader/node-loaders.cjs",
+      "import": "./lib/loader/node-loaders.mjs",
+      "types": "./lib/loader/node-loaders.d.ts"
+    },
 		"./lib/loader/types": {
 			"require": "./lib/loader/types.cjs",
 			"import": "./lib/loader/types.mjs"
@@ -180,11 +184,23 @@
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs"
-    }
+    },
+    "./*": "./*"
   },
-  "main": "./lib/index.cjs",
-  "module": "./lib/index.mjs",
-  "types": "./lib/index.d.ts",
+  "main": "lib/index.cjs",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "lib/colors",
+    "lib/customisations",
+    "lib/icon",
+    "lib/icon-set",
+    "lib/loader",
+    "lib/misc",
+    "lib/svg",
+    "*.d.ts"
+  ],
   "dependencies": {
     "@antfu/install-pkg": "^0.1.0",
     "@antfu/utils": "^0.3.0",

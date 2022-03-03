@@ -53,11 +53,12 @@ export type {
 	IconCustomizations,
 	IconifyLoaderOptions,
 	InlineCollection,
+	UniversalIconLoader,
 } from './loader/types';
 export { mergeIconProps } from './loader/utils';
 export { getCustomIcon } from './loader/custom';
 export { searchForIcon } from './loader/modern';
-export { isNode, loadIcon } from './loader/loader';
+export { loadIcon } from './loader/loader';
 
 // Misc
 export { camelize, camelToKebab, snakelize, pascalize } from './misc/strings';
