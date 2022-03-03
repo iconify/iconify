@@ -1,20 +1,20 @@
-import { loadIcon } from '../lib';
+import { loadNodeIcon } from '../lib/loader/node-loader';
 
 describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 
 	test('loadIcon works', async () => {
-		const result = await loadIcon('flat-color-icons', 'up-right');
+		const result = await loadNodeIcon('flat-color-icons', 'up-right');
 		expect(result).toBeTruthy();
 	});
 
 	test('loadIcon adds xmlns:xlink', async () => {
-		const result = await loadIcon('flat-color-icons', 'up-right', { addXmlNs: true });
+		const result = await loadNodeIcon('flat-color-icons', 'up-right', { addXmlNs: true });
 		expect(result).toBeTruthy();
 		expect(result && result.indexOf('xmlns:xlink=') > - 1).toBeTruthy();
 	});
 
 	test('loadIcon with customize with default style and class', async () => {
-		const result = await loadIcon('flat-color-icons', 'up-right', {
+		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
 			defaultStyle: 'margin-top: 1rem;',
 			defaultClass: 'clazz',
 			customizations: {
@@ -33,7 +33,7 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 	});
 
 	test('loadIcon preserves customizations order', async () => {
-		const result = await loadIcon('flat-color-icons', 'up-right', {
+		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
 			scale: 1,
 			defaultStyle: 'color: red;',
 			defaultClass: 'clazz1',

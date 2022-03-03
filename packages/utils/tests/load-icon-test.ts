@@ -1,7 +1,8 @@
 import { promises as fs } from 'fs';
-import { CustomIconLoader, loadIcon } from '../lib';
+import type { CustomIconLoader } from '../lib';
+import { loadIcon } from '../lib';
 
-const fixturesDir = __dirname + '/fixtures';
+const fixturesDir = './tests/fixtures';
 
 const loader: CustomIconLoader = async(name) => {
 	return await fs.readFile(`${fixturesDir}/${name}.svg`, 'utf8');

@@ -1,6 +1,5 @@
 {
 	"name": "@iconify/utils",
-  "type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
 	"version": "1.0.23",
@@ -20,9 +19,12 @@
 		"build-dual": "unbuild",
 		"test:jest": "jest --runInBand",
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
-		"test": "npm run test:jest && npm run test:jasmine"
-	},
-  "sideEffects": false,
+		"test": "npm run test:jest && npm run test:jasmine",
+    "test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.esm.config.ts",
+    "test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.cjs.config.ts",
+    "test-dual": "npm run test:jest-esm && npm run test:jest-cjs && npm run test:jasmine"
+  },
+	"sideEffects": false,
 	"exports": {
 		".": {
 			"require": "./lib/index.cjs",
@@ -127,13 +129,13 @@
 		"./lib/loader/fs": {
 			"require": "./lib/loader/fs.cjs",
 			"import": "./lib/loader/fs.mjs",
-      "types": "./lib/loader/fs.d.ts"
-    },
-    "./lib/loader/install-pkg": {
-      "require": "./lib/loader/install-pkg.cjs",
-      "import": "./lib/loader/install-pkg.mjs",
-      "types": "./lib/loader/install-pkg.d.ts"
-    },
+			"types": "./lib/loader/fs.d.ts"
+		},
+		"./lib/loader/install-pkg": {
+			"require": "./lib/loader/install-pkg.cjs",
+			"import": "./lib/loader/install-pkg.mjs",
+			"types": "./lib/loader/install-pkg.d.ts"
+		},
 		"./lib/loader/loader": {
 			"require": "./lib/loader/loader.cjs",
 			"import": "./lib/loader/loader.mjs"
@@ -142,16 +144,16 @@
 			"require": "./lib/loader/modern.cjs",
 			"import": "./lib/loader/modern.mjs"
 		},
-    "./lib/loader/node-loader": {
-      "require": "./lib/loader/node-loader.cjs",
-      "import": "./lib/loader/node-loader.mjs",
-      "types": "./lib/loader/node-loader.d.ts"
-    },
-    "./lib/loader/node-loaders": {
-      "require": "./lib/loader/node-loaders.cjs",
-      "import": "./lib/loader/node-loaders.mjs",
-      "types": "./lib/loader/node-loaders.d.ts"
-    },
+		"./lib/loader/node-loader": {
+			"require": "./lib/loader/node-loader.cjs",
+			"import": "./lib/loader/node-loader.mjs",
+			"types": "./lib/loader/node-loader.d.ts"
+		},
+		"./lib/loader/node-loaders": {
+			"require": "./lib/loader/node-loaders.cjs",
+			"import": "./lib/loader/node-loaders.mjs",
+			"types": "./lib/loader/node-loaders.d.ts"
+		},
 		"./lib/loader/types": {
 			"require": "./lib/loader/types.cjs",
 			"import": "./lib/loader/types.mjs"
@@ -159,12 +161,12 @@
 		"./lib/loader/utils": {
 			"require": "./lib/loader/utils.cjs",
 			"import": "./lib/loader/utils.mjs"
-    },
-    "./lib/loader/warn": {
-      "require": "./lib/loader/warn.cjs",
-      "import": "./lib/loader/warn.mjs",
-      "types": "./lib/loader/warn.d.ts"
-    },
+		},
+		"./lib/loader/warn": {
+			"require": "./lib/loader/warn.cjs",
+			"import": "./lib/loader/warn.mjs",
+			"types": "./lib/loader/warn.d.ts"
+		},
 		"./lib/misc/strings": {
 			"require": "./lib/misc/strings.cjs",
 			"import": "./lib/misc/strings.mjs"
@@ -184,30 +186,30 @@
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs"
-    },
-    "./*": "./*"
-  },
-  "main": "lib/index.cjs",
-  "module": "lib/index.mjs",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib",
-    "lib/colors",
-    "lib/customisations",
-    "lib/icon",
-    "lib/icon-set",
-    "lib/loader",
-    "lib/misc",
-    "lib/svg",
-    "*.d.ts"
-  ],
-  "dependencies": {
-    "@antfu/install-pkg": "^0.1.0",
-    "@antfu/utils": "^0.3.0",
+		},
+		"./*": "./*"
+	},
+	"main": "lib/index.cjs",
+	"module": "lib/index.mjs",
+	"types": "lib/index.d.ts",
+	"files": [
+		"lib",
+		"lib/colors",
+		"lib/customisations",
+		"lib/icon",
+		"lib/icon-set",
+		"lib/loader",
+		"lib/misc",
+		"lib/svg",
+		"*.d.ts"
+	],
+	"dependencies": {
+		"@antfu/install-pkg": "^0.1.0",
+		"@antfu/utils": "^0.3.0",
 		"@iconify/types": "^1.0.12",
 		"debug": "^4.3.3",
-    "kolorist": "^1.5.0",
-    "local-pkg": "^0.4.0"
+		"kolorist": "^1.5.0",
+		"local-pkg": "^0.4.0"
 	},
 	"devDependencies": {
 		"@iconify-json/flat-color-icons": "^1.0.2",
@@ -222,6 +224,7 @@
 		"jest": "^27.2.1",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^27.0.5",
+		"ts-node": "^10.6.0",
 		"typescript": "^4.4.3",
 		"unbuild": "^0.6.9"
 	}

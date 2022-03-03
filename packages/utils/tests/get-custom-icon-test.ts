@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { getCustomIcon } from '../lib';
 
-const fixturesDir = __dirname + '/fixtures';
+const fixturesDir = './tests/fixtures';
 
 describe('Testing getCustomIcon', () => {
 	test('CustomIconLoader', async () => {
