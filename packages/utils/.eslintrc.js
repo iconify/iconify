@@ -25,7 +25,6 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],
 		'@typescript-eslint/no-unused-vars-experimental': ['error'],
-		'prettier/prettier': ['off'], // TODO: enable and fix prettier errors.
 	},
 	overrides: [
 		{
