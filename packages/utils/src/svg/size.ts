@@ -33,7 +33,7 @@ export function calculateSize(
 
 	const newParts = [];
 	let code = oldParts.shift() as string;
-	let isNumber = unitsTest.test(code as string);
+	let isNumber = unitsTest.test(code);
 
 	// eslint-disable-next-line no-constant-condition
 	while (true) {

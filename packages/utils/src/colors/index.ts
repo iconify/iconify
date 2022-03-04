@@ -60,8 +60,8 @@ function fromFunction(value: string): Color | null {
 	}
 
 	// Get function and values
-	const func = (parts[0] as string).trim();
-	const content = (parts[1] as string).trim();
+	const func = parts[0].trim();
+	const content = parts[1].trim();
 
 	// Get alpha and split content
 	let values: string[];
@@ -133,7 +133,7 @@ function fromFunction(value: string): Color | null {
 	const isPercentage: boolean[] = [];
 	const numbers: number[] = [];
 	for (let i = 0; i < 3; i++) {
-		const colorStr = values[i] as string;
+		const colorStr = values[i];
 		const index = colorStr.indexOf('%');
 		const hasPercentage = index !== -1;
 		if (hasPercentage && index !== colorStr.length - 1) {
