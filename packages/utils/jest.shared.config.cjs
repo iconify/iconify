@@ -1,6 +1,6 @@
 // see https://jestjs.io/docs/ecmascript-modules
 
-/** @type {() => typeof import('ts-jest/dist/types').InitialOptionsTsJest} */
+/** @type {() => import('ts-jest/dist/types').InitialOptionsTsJest} */
 /** @return {import('ts-jest/dist/types').InitialOptionsTsJest} */
 const buildConfiguration = (configuration) => {
 	return Object.assign({}, {
