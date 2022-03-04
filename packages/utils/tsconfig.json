@@ -1,8 +1,19 @@
 {
-	"extends": "./tsconfig-base.json",
-	"include": ["src/**/*.ts", ".eslintrc.js"],
 	"compilerOptions": {
-		"rootDir": "./src",
-		"outDir": "./lib"
-	}
+		"target": "ES2019",
+		"module": "CommonJS",
+		"allowJs": true,
+		"declaration": true,
+		"declarationMap": false,
+		"sourceMap": false,
+		"composite": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error",
+		"noEmit": true
+	},
+	"include": ["./tests/**/*", "./src/**/*"],
+	"files": ["./.eslintrc.js"]
 }
