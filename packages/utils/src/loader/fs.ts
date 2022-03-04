@@ -1,12 +1,15 @@
 import { promises as fs, Stats } from 'fs';
-import { isPackageExists, resolveModule } from 'local-pkg'
-import type { IconifyJSON } from '@iconify/types'
+import { isPackageExists, resolveModule } from 'local-pkg';
+import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
 
-export async function loadCollectionFromFS(name: string, autoInstall = false): Promise<IconifyJSON | undefined> {
+export async function loadCollectionFromFS(
+	name: string,
+	autoInstall = false
+): Promise<IconifyJSON | undefined> {
 	if (!_collections[name]) {
 		_collections[name] = task();
 	}
@@ -30,9 +33,10 @@ export async function loadCollectionFromFS(name: string, autoInstall = false): P
 			return undefined;
 		}
 		if (stat && stat.isFile()) {
-			return JSON.parse(await fs.readFile(jsonPath as string, 'utf8')) as IconifyJSON;
-		}
-		else {
+			return JSON.parse(
+				await fs.readFile(jsonPath as string, 'utf8')
+			) as IconifyJSON;
+		} else {
 			return undefined;
 		}
 	}

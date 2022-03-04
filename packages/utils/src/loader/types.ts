@@ -80,36 +80,36 @@ export type IconifyLoaderOptions = {
 	 *
 	 * @default false
 	 */
-	addXmlNs?: boolean
+	addXmlNs?: boolean;
 
 	/**
 	 * Scale of icons against 1em
 	 */
-	scale?: number
+	scale?: number;
 
 	/**
 	 * Style to apply to icons by default
 	 *
 	 * @default ''
 	 */
-	defaultStyle?: string
+	defaultStyle?: string;
 
 	/**
 	 * Class names to apply to icons by default
 	 *
 	 * @default ''
 	 */
-	defaultClass?: string
+	defaultClass?: string;
 
 	/**
 	 * Loader for custom loaders
 	 */
-	customCollections?: Record<string, CustomIconLoader | InlineCollection>
+	customCollections?: Record<string, CustomIconLoader | InlineCollection>;
 
 	/**
 	 * Icon customizer
 	 */
-	customizations?: IconCustomizations
+	customizations?: IconCustomizations;
 
 	/**
 	 * Auto install icon sources package when the usages is detected
@@ -118,5 +118,5 @@ export type IconifyLoaderOptions = {
 	 *
 	 * @default false
 	 */
-	autoInstall?: boolean
-}
+	autoInstall?: boolean;
+};

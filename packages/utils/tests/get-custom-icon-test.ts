@@ -15,9 +15,12 @@ describe('Testing getCustomIcon', () => {
 		const result = await getCustomIcon(() => svg, 'a', 'b', {
 			customizations: {
 				transform(icon) {
-					return icon.replace('<svg ', '<svg width="1em" height="1em" ');
+					return icon.replace(
+						'<svg ',
+						'<svg width="1em" height="1em" '
+					);
 				},
-			}
+			},
 		});
 		expect(result && result.indexOf('width="1em"') > -1).toBeTruthy();
 		expect(result && result.indexOf('height="1em"') > -1).toBeTruthy();

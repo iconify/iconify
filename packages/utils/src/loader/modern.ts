@@ -13,7 +13,7 @@ export async function searchForIcon(
 	iconSet: IconifyJSON,
 	collection: string,
 	ids: string[],
-	options?: IconifyLoaderOptions,
+	options?: IconifyLoaderOptions
 ): Promise<string | undefined> {
 	let iconData: FullIconifyIcon | null;
 	const { customize } = options?.customizations ?? {};
@@ -34,7 +34,7 @@ export async function searchForIcon(
 				collection,
 				id,
 				options,
-				() => attributes,
+				() => attributes
 			);
 		}
 	}

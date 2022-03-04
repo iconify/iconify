@@ -3,7 +3,7 @@ import { searchForIcon } from './modern';
 import { warnOnce } from './install-pkg';
 import type { IconifyLoaderOptions } from './types';
 
-export const isNode = typeof process < 'u' && typeof process.stdout < 'u'
+export const isNode = typeof process < 'u' && typeof process.stdout < 'u';
 
 export async function loadIcon(
 	collection: string,
@@ -33,8 +33,7 @@ async function importFsModule(): Promise<typeof import('./fs') | undefined> {
 		try {
 			// cjs environments
 			return require('./fs.js');
-		}
-		catch {
+		} catch {
 			return undefined;
 		}
 	}
@@ -44,12 +43,15 @@ async function loadNodeBuiltinIcon(
 	collection: string,
 	icon: string,
 	options?: IconifyLoaderOptions,
-	warn = true,
+	warn = true
 ): Promise<string | undefined> {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	const { loadCollectionFromFS } = await importFsModule();
-	const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
+	const iconSet = await loadCollectionFromFS(
+		collection,
+		options?.autoInstall
+	);
 	if (iconSet) {
 		// possible icon names
 		const ids = [
@@ -61,7 +63,8 @@ async function loadNodeBuiltinIcon(
 	}
 
 	if (warn) {
-		warnOnce(`failed to load \`@iconify-json/${collection}\`, have you installed it?`);
+		warnOnce(
+			`failed to load \`@iconify-json/${collection}\`, have you installed it?`
+		);
 	}
 }
-
