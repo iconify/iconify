@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/utils",
-  "type": "module",
+	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
 	"version": "1.0.23",
@@ -21,17 +21,18 @@
 		"test:jest": "jest --runInBand",
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine",
-    "test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.config.cjs",
-    "test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.mjs",
-    "test-dual": "npm run test:jest-esm && npm run test:jest-cjs && npm run test:jasmine"
-  },
+		"test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.config.cjs",
+		"test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.mjs",
+		"test-dual": "npm run test:jest-esm && npm run test:jest-cjs && npm run test:jasmine",
+    "vitest": "vitest"
+	},
 	"sideEffects": false,
 	"exports": {
 		".": {
 			"require": "./lib/index.cjs",
 			"import": "./lib/index.mjs"
 		},
-    "./*": "./*",
+		"./*": "./*",
 		"./lib/colors": {
 			"require": "./lib/colors/index.cjs",
 			"import": "./lib/colors/index.mjs"
@@ -195,7 +196,7 @@
 	"types": "lib/index.d.ts",
 	"files": [
 		"lib",
-    "*.d.ts"
+		"*.d.ts"
 	],
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
@@ -220,6 +221,7 @@
 		"ts-jest": "^27.0.5",
 		"ts-node": "^10.6.0",
 		"typescript": "^4.4.3",
-		"unbuild": "^0.6.9"
+		"unbuild": "^0.6.9",
+		"vitest": "^0.5.9"
 	}
 }
