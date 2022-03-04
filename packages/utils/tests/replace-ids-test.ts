@@ -9,7 +9,9 @@ describe('Testing replaceIDs', () => {
 
 		// Using callback
 		let counter = 0;
-		expect(replaceIDs(body, () => 'callback' + counter++)).toBe(expected);
+		expect(
+			replaceIDs(body, () => 'callback' + (counter++).toString())
+		).toBe(expected);
 	});
 
 	test('Many IDs', () => {
@@ -23,7 +25,9 @@ describe('Testing replaceIDs', () => {
 
 		// Using callback
 		let counter = 0;
-		expect(replaceIDs(body, () => 'callbackID' + counter++)).toBe(
+		expect(
+			replaceIDs(body, () => 'callbackID' + (counter++).toString())
+		).toBe(
 			body
 				.replace(/ssvg-id-1st-place-medala/g, 'callbackID0')
 				.replace(/ssvg-id-1st-place-medalb/g, 'callbackID7')
@@ -70,7 +74,9 @@ describe('Testing replaceIDs', () => {
 
 		// To avoid messing up counter, using custom callback
 		let counter = 0;
-		expect(replaceIDs(body, () => 'callbackID' + counter++)).toBe(
+		expect(
+			replaceIDs(body, () => 'callbackID' + (counter++).toString())
+		).toBe(
 			body
 				.replace(/ssvg-id-compassa/g, 'callbackID2')
 				.replace(/ssvg-id-compassb/g, 'callbackID0')

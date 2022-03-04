@@ -435,7 +435,11 @@ export function colorToString(color: Color): string {
 		}
 
 		case 'hsl': {
-			const list = [color.h, color.s + '%', color.l + '%'];
+			const list = [
+				color.h,
+				color.s.toString() + '%',
+				color.l.toString() + '%',
+			];
 			if (color.alpha !== 1) {
 				list.push(color.alpha);
 			}
@@ -445,17 +449,17 @@ export function colorToString(color: Color): string {
 		}
 
 		case 'lab': {
-			const list = [color.l + '%', color.a, color.b];
+			const list = [color.l.toString() + '%', color.a, color.b];
 			if (color.alpha !== 1) {
-				list.push('/ ' + color.alpha);
+				list.push('/ ' + color.alpha.toString());
 			}
 			return 'lab(' + list.join(' ') + ')';
 		}
 
 		case 'lch': {
-			const list = [color.l + '%', color.c, color.h];
+			const list = [color.l.toString() + '%', color.c, color.h];
 			if (color.alpha !== 1) {
-				list.push('/ ' + color.alpha);
+				list.push('/ ' + color.alpha.toString());
 			}
 			return 'lch(' + list.join(' ') + ')';
 		}
