@@ -1,8 +1,8 @@
-import type { Config } from '@jest/types'
-
 // see https://jestjs.io/docs/ecmascript-modules
 
-export const buildConfiguration = (configuration: Partial<Config.InitialOptions>): Config.InitialOptions => {
+/** @type {() => typeof import('ts-jest/dist/types').InitialOptionsTsJest} */
+/** @return {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const buildConfiguration = (configuration) => {
 	return Object.assign({}, {
 		verbose: true,
 		testEnvironment: 'node',
@@ -19,3 +19,6 @@ export const buildConfiguration = (configuration: Partial<Config.InitialOptions>
 		],
 	}, configuration)
 }
+
+exports.buildConfiguration = buildConfiguration;
+module.exports = { buildConfiguration };

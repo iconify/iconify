@@ -40,6 +40,10 @@ export default defineBuildConfig({
 	],
 	clean: true,
 	declaration: true,
+	externals: [
+		'local-pkg',
+		'fs',
+	],
 	rollup: {
 		emitCJS: true,
 	},

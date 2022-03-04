@@ -1,5 +1,6 @@
 {
 	"name": "@iconify/utils",
+  "type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
 	"version": "1.0.23",
@@ -20,8 +21,8 @@
 		"test:jest": "jest --runInBand",
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine",
-    "test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.esm.config.ts",
-    "test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.cjs.config.ts",
+    "test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.config.cjs",
+    "test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.mjs",
     "test-dual": "npm run test:jest-esm && npm run test:jest-cjs && npm run test:jasmine"
   },
 	"sideEffects": false,
@@ -30,6 +31,7 @@
 			"require": "./lib/index.cjs",
 			"import": "./lib/index.mjs"
 		},
+    "./*": "./*",
 		"./lib/colors": {
 			"require": "./lib/colors/index.cjs",
 			"import": "./lib/colors/index.mjs"
@@ -186,22 +188,14 @@
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs"
-		},
-		"./*": "./*"
+		}
 	},
 	"main": "lib/index.cjs",
 	"module": "lib/index.mjs",
 	"types": "lib/index.d.ts",
 	"files": [
 		"lib",
-		"lib/colors",
-		"lib/customisations",
-		"lib/icon",
-		"lib/icon-set",
-		"lib/loader",
-		"lib/misc",
-		"lib/svg",
-		"*.d.ts"
+    "*.d.ts"
 	],
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
