@@ -19,7 +19,7 @@ export function getIcons(
 ): IconifyJSON | null {
 	const result: IconifyJSON = {
 		prefix: data.prefix,
-		icons: Object.create(null),
+		icons: Object.create(null) as never,
 	};
 	const tested: Set<string> = new Set();
 	let empty = true;
@@ -43,9 +43,9 @@ export function getIcons(
 			const copied = copy(data.aliases[name].parent, iteration + 1);
 			if (copied) {
 				if (result.aliases === void 0) {
-					result.aliases = Object.create(null);
+					result.aliases = Object.create(null) as never;
 				}
-				result.aliases![name] = { ...data.aliases[name] };
+				result.aliases[name] = { ...data.aliases[name] };
 			}
 			return copied;
 		}
@@ -56,9 +56,9 @@ export function getIcons(
 			const copied = copy(parent, iteration + 1);
 			if (copied) {
 				if (result.aliases === void 0) {
-					result.aliases = Object.create(null);
+					result.aliases = Object.create(null) as never;
 				}
-				result.aliases![name] = {
+				result.aliases[name] = {
 					parent,
 				};
 			}

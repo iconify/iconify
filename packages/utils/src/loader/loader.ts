@@ -32,7 +32,10 @@ async function importFsModule(): Promise<typeof import('./fs') | undefined> {
 	} catch {
 		try {
 			// cjs environments
-			return require('./fs.js');
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			return require('./fs.js') as Promise<
+				typeof import('./fs') | undefined
+			>;
 		} catch {
 			return undefined;
 		}
@@ -45,9 +48,18 @@ async function loadNodeBuiltinIcon(
 	options?: IconifyLoaderOptions,
 	warn = true
 ): Promise<string | undefined> {
+	type IconifyJSON = Parameters<typeof searchForIcon>[0];
+	type LoadCollectionFromFS = (
+		collection: string,
+		autoInstall?: boolean
+	) => Promise<IconifyJSON>;
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	const { loadCollectionFromFS } = await importFsModule();
+	const {
+		loadCollectionFromFS,
+	}: {
+		loadCollectionFromFS: LoadCollectionFromFS;
+	} = await importFsModule();
 	const iconSet = await loadCollectionFromFS(
 		collection,
 		options?.autoInstall

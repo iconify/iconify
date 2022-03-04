@@ -2,7 +2,14 @@ import { validateIconSet } from '../lib/icon-set/validate';
 
 describe('Testing validating icon', () => {
 	// Add various types for testing
-	const validationValues = new Map();
+	const validationValues = new Map<
+		| boolean
+		| Record<string | number | symbol, never>
+		| []
+		| number
+		| string,
+		{ text: string; type: string }
+	>();
 
 	beforeAll(() => {
 		validationValues.set(true, {

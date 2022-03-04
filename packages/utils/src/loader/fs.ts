@@ -10,7 +10,7 @@ export async function loadCollectionFromFS(
 	name: string,
 	autoInstall = false
 ): Promise<IconifyJSON | undefined> {
-	if (!_collections[name]) {
+	if (!(await _collections[name])) {
 		_collections[name] = task();
 	}
 	return _collections[name];
