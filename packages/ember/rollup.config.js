@@ -11,7 +11,7 @@ const config = [
 				format: 'esm',
 			},
 		],
-		external: ['@glimmer/component', '@glimmer/tracking'],
+		external: ['@ember/template', '@glimmer/component', '@glimmer/tracking'],
 		plugins: [
 			resolve({
 				browser: true,
