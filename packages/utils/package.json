@@ -23,9 +23,9 @@
 		"test:jest-cjs": "npm run build-dual && jest --clearCache && jest --config=jest.config.cjs",
 		"test:jest-esm": "npm run build-dual && jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.mjs",
 		"test-dual": "npm run test:jest-cjs && npm run test:jest-esm && npm run test:jasmine",
-    "vitest:cjs": "npm run build-dual && vitest --config vitest.config.cjs",
-    "vitest:esm": "npm run build-dual && vitest --config vitest.config.mjs",
-    "vitest": "npm run vitest:cjs && npm run vitest:esm"
+		"vitest:cjs": "npm run build-dual && vitest --config vitest.config.cjs",
+		"vitest:esm": "npm run build-dual && vitest --config vitest.config.mjs",
+		"vitest": "npm run vitest:cjs && npm run vitest:esm"
 	},
 	"sideEffects": false,
 	"exports": {
