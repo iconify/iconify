@@ -14,7 +14,7 @@
 	},
 	"scripts": {
 		"clean": "rimraf lib tests-compiled tsconfig.tsbuildinfo",
-		"lint": "eslint src/**/*.ts",
+		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
 		"build": "node build",
 		"build-dual": "unbuild",

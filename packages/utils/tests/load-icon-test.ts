@@ -24,11 +24,15 @@ describe('Testing loadIcon', () => {
 	});
 
 	test('CustomCollection using dynamic import', async () => {
+		// @ts-ignore
 		const result = await loadIcon('flat-color-icons', 'up-right', {
 			customCollections: {
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// @ts-ignore
-				'flat-color-icons': () => import('@iconify-json/flat-color-icons/icons.json').then(i => i?.default),
+				'flat-color-icons': () =>
+					import(
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+						// @ts-ignore
+						'@iconify-json/flat-color-icons/icons.json'
+					).then((i) => i?.default),
 			},
 		});
 		expect(result).toBeTruthy();
