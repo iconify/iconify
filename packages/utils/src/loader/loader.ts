@@ -3,7 +3,7 @@ import { searchForIcon } from './modern';
 import { warnOnce } from './install-pkg';
 import type { IconifyLoaderOptions } from './types';
 
-export const isNode = typeof process < 'u' && typeof process.stdout < 'u'
+export const isNode = typeof process < 'u' && typeof process.stdout < 'u';
 
 export async function loadIcon(
 	collection: string,
@@ -32,9 +32,11 @@ async function importFsModule(): Promise<typeof import('./fs') | undefined> {
 	} catch {
 		try {
 			// cjs environments
-			return require('./fs.js');
-		}
-		catch {
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			return require('./fs.js') as Promise<
+				typeof import('./fs') | undefined
+			>;
+		} catch {
 			return undefined;
 		}
 	}
@@ -44,12 +46,24 @@ async function loadNodeBuiltinIcon(
 	collection: string,
 	icon: string,
 	options?: IconifyLoaderOptions,
-	warn = true,
+	warn = true
 ): Promise<string | undefined> {
+	type IconifyJSON = Parameters<typeof searchForIcon>[0];
+	type LoadCollectionFromFS = (
+		collection: string,
+		autoInstall?: boolean
+	) => Promise<IconifyJSON>;
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	const { loadCollectionFromFS } = await importFsModule();
-	const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
+	const {
+		loadCollectionFromFS,
+	}: {
+		loadCollectionFromFS: LoadCollectionFromFS;
+	} = await importFsModule();
+	const iconSet = await loadCollectionFromFS(
+		collection,
+		options?.autoInstall
+	);
 	if (iconSet) {
 		// possible icon names
 		const ids = [
@@ -61,7 +75,8 @@ async function loadNodeBuiltinIcon(
 	}
 
 	if (warn) {
-		warnOnce(`failed to load \`@iconify-json/${collection}\`, have you installed it?`);
+		warnOnce(
+			`failed to load \`@iconify-json/${collection}\`, have you installed it?`
+		);
 	}
 }
-

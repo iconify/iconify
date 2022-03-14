@@ -304,7 +304,7 @@ export function validateIconSet(
 	if (typeof data.chars === 'object') {
 		const chars = data.chars;
 		Object.keys(chars).forEach((char) => {
-			if (!char.match(matchChar) || typeof chars[char] !== 'string') {
+			if (!matchChar.exec(char) || typeof chars[char] !== 'string') {
 				if (fix) {
 					delete chars[char];
 					return;

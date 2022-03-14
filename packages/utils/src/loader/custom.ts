@@ -1,5 +1,9 @@
 import createDebugger from 'debug';
-import type { CustomIconLoader, IconifyLoaderOptions, InlineCollection } from './types';
+import type {
+	CustomIconLoader,
+	IconifyLoaderOptions,
+	InlineCollection,
+} from './types';
 import { mergeIconProps } from './utils';
 
 const debug = createDebugger('@iconify-loader:custom');
@@ -11,7 +15,7 @@ export async function getCustomIcon(
 	custom: CustomIconLoader | InlineCollection,
 	collection: string,
 	icon: string,
-	options?: IconifyLoaderOptions,
+	options?: IconifyLoaderOptions
 ): Promise<string | undefined> {
 	let result: string | undefined | null;
 
@@ -37,7 +41,7 @@ export async function getCustomIcon(
 			collection,
 			icon,
 			options,
-			undefined,
+			undefined
 		);
 	}
 }

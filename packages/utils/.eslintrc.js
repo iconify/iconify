@@ -8,7 +8,7 @@ module.exports = {
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		//	'plugin:@typescript-eslint/recommended-requiring-type-checking',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 		'plugin:prettier/recommended',
 	],
 	globals: {
@@ -25,7 +25,6 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],
 		'@typescript-eslint/no-unused-vars-experimental': ['error'],
-		'prettier/prettier': ['off'], // TODO: enable and fix prettier errors.
 	},
 	overrides: [
 		{

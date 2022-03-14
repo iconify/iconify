@@ -88,9 +88,9 @@ export function convertIconSetInfo(
 	// Get name
 	let name: string;
 	if (typeof source.name === 'string') {
-		name = source.name as string;
+		name = source.name;
 	} else if (typeof source.title === 'string') {
-		name = source.title as string;
+		name = source.title;
 	} else {
 		return null;
 	}

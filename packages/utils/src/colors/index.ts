@@ -60,8 +60,8 @@ function fromFunction(value: string): Color | null {
 	}
 
 	// Get function and values
-	const func = (parts[0] as string).trim();
-	const content = (parts[1] as string).trim();
+	const func = parts[0].trim();
+	const content = parts[1].trim();
 
 	// Get alpha and split content
 	let values: string[];
@@ -133,7 +133,7 @@ function fromFunction(value: string): Color | null {
 	const isPercentage: boolean[] = [];
 	const numbers: number[] = [];
 	for (let i = 0; i < 3; i++) {
-		const colorStr = values[i] as string;
+		const colorStr = values[i];
 		const index = colorStr.indexOf('%');
 		const hasPercentage = index !== -1;
 		if (hasPercentage && index !== colorStr.length - 1) {
@@ -435,7 +435,11 @@ export function colorToString(color: Color): string {
 		}
 
 		case 'hsl': {
-			const list = [color.h, color.s + '%', color.l + '%'];
+			const list = [
+				color.h,
+				color.s.toString() + '%',
+				color.l.toString() + '%',
+			];
 			if (color.alpha !== 1) {
 				list.push(color.alpha);
 			}
@@ -445,17 +449,17 @@ export function colorToString(color: Color): string {
 		}
 
 		case 'lab': {
-			const list = [color.l + '%', color.a, color.b];
+			const list = [color.l.toString() + '%', color.a, color.b];
 			if (color.alpha !== 1) {
-				list.push('/ ' + color.alpha);
+				list.push('/ ' + color.alpha.toString());
 			}
 			return 'lab(' + list.join(' ') + ')';
 		}
 
 		case 'lch': {
-			const list = [color.l + '%', color.c, color.h];
+			const list = [color.l.toString() + '%', color.c, color.h];
 			if (color.alpha !== 1) {
-				list.push('/ ' + color.alpha);
+				list.push('/ ' + color.alpha.toString());
 			}
 			return 'lch(' + list.join(' ') + ')';
 		}

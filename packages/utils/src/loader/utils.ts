@@ -6,16 +6,21 @@ export async function mergeIconProps(
 	collection: string,
 	icon: string,
 	options?: IconifyLoaderOptions,
-	propsProvider?: () => Awaitable<Record<string, string>>,
+	propsProvider?: () => Awaitable<Record<string, string>>
 ): Promise<string> {
-	const { scale, addXmlNs = false } = options ?? {}
-	const {
-		additionalProps = {},
-		iconCustomizer,
-	} = options?.customizations ?? {};
+	const { scale, addXmlNs = false } = options ?? {};
+	const { additionalProps = {}, iconCustomizer } =
+		options?.customizations ?? {};
 	const props: Record<string, string> = (await propsProvider?.()) ?? {};
-	if (!svg.includes(" width=") && !svg.includes(" height=") && typeof scale === 'number') {
-		if ((typeof props.width === 'undefined' || props.width === null) && (typeof props.height === 'undefined' || props.height === null)) {
+	if (
+		!svg.includes(' width=') &&
+		!svg.includes(' height=') &&
+		typeof scale === 'number'
+	) {
+		if (
+			(typeof props.width === 'undefined' || props.width === null) &&
+			(typeof props.height === 'undefined' || props.height === null)
+		) {
 			props.width = `${scale}em`;
 			props.height = `${scale}em`;
 		}
@@ -33,18 +38,24 @@ export async function mergeIconProps(
 			props['xmlns'] = 'http://www.w3.org/2000/svg';
 		}
 		// add xmlns:xlink if xlink present and the xmlns missing
-		if (!svg.includes(' xmlns:xlink=') && svg.includes('xlink:') && !props['xmlns:xlink']) {
+		if (
+			!svg.includes(' xmlns:xlink=') &&
+			svg.includes('xlink:') &&
+			!props['xmlns:xlink']
+		) {
 			props['xmlns:xlink'] = 'http://www.w3.org/1999/xlink';
 		}
 	}
 
 	svg = svg.replace(
 		'<svg ',
-		`<svg ${Object.keys(props).map((p) => `${p}="${props[p]}"`).join(' ')}`
+		`<svg ${Object.keys(props)
+			.map((p) => `${p}="${props[p]}"`)
+			.join(' ')}`
 	);
 
 	if (svg && options) {
-		const { defaultStyle, defaultClass } = options
+		const { defaultStyle, defaultClass } = options;
 		// additional props and iconCustomizer takes precedence
 		if (defaultClass && !svg.includes(' class=')) {
 			svg = svg.replace('<svg ', `<svg class="${defaultClass}" `);

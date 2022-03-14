@@ -102,9 +102,9 @@ export function iconToSVG(
 				// Horizontal flip
 				transformations.push(
 					'translate(' +
-						(box.width + box.left) +
+						(box.width + box.left).toString() +
 						' ' +
-						(0 - box.top) +
+						(0 - box.top).toString() +
 						')'
 				);
 				transformations.push('scale(-1 1)');
@@ -114,9 +114,9 @@ export function iconToSVG(
 			// Vertical flip
 			transformations.push(
 				'translate(' +
-					(0 - box.left) +
+					(0 - box.left).toString() +
 					' ' +
-					(box.height + box.top) +
+					(box.height + box.top).toString() +
 					')'
 			);
 			transformations.push('scale(1 -1)');
@@ -133,7 +133,11 @@ export function iconToSVG(
 				// 90deg
 				tempValue = box.height / 2 + box.top;
 				transformations.unshift(
-					'rotate(90 ' + tempValue + ' ' + tempValue + ')'
+					'rotate(90 ' +
+						tempValue.toString() +
+						' ' +
+						tempValue.toString() +
+						')'
 				);
 				break;
 
@@ -141,9 +145,9 @@ export function iconToSVG(
 				// 180deg
 				transformations.unshift(
 					'rotate(180 ' +
-						(box.width / 2 + box.left) +
+						(box.width / 2 + box.left).toString() +
 						' ' +
-						(box.height / 2 + box.top) +
+						(box.height / 2 + box.top).toString() +
 						')'
 				);
 				break;
@@ -152,7 +156,11 @@ export function iconToSVG(
 				// 270deg
 				tempValue = box.width / 2 + box.left;
 				transformations.unshift(
-					'rotate(-90 ' + tempValue + ' ' + tempValue + ')'
+					'rotate(-90 ' +
+						tempValue.toString() +
+						' ' +
+						tempValue.toString() +
+						')'
 				);
 				break;
 		}
@@ -214,8 +222,8 @@ export function iconToSVG(
 	}
 
 	// Convert to string
-	width = typeof width === 'string' ? width : width + '';
-	height = typeof height === 'string' ? height : height + '';
+	width = typeof width === 'string' ? width : width.toString() + '';
+	height = typeof height === 'string' ? height : height.toString() + '';
 
 	// Result
 	const result: IconifyIconBuildResult = {
@@ -224,7 +232,13 @@ export function iconToSVG(
 			height,
 			preserveAspectRatio: preserveAspectRatio(customisations),
 			viewBox:
-				box.left + ' ' + box.top + ' ' + box.width + ' ' + box.height,
+				box.left.toString() +
+				' ' +
+				box.top.toString() +
+				' ' +
+				box.width.toString() +
+				' ' +
+				box.height.toString(),
 		},
 		body,
 	};
