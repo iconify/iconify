@@ -15,7 +15,7 @@
 		"clean": "rimraf lib tests-compiled tsconfig.tsbuildinfo",
 		"lint": "eslint src/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
-		"build": "node build",
+		"build": "unbuild",
 		"test:jest": "jest --runInBand",
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine"
@@ -23,79 +23,79 @@
 	"exports": {
 		"./*": "./*",
 		"./lib/api/callbacks": {
-			"require": "./lib/api/callbacks.js",
+			"require": "./lib/api/callbacks.cjs",
 			"import": "./lib/api/callbacks.mjs"
 		},
 		"./lib/api/config": {
-			"require": "./lib/api/config.js",
+			"require": "./lib/api/config.cjs",
 			"import": "./lib/api/config.mjs"
 		},
 		"./lib/api/functions": {
-			"require": "./lib/api/functions.js",
+			"require": "./lib/api/functions.cjs",
 			"import": "./lib/api/functions.mjs"
 		},
 		"./lib/api/icons": {
-			"require": "./lib/api/icons.js",
+			"require": "./lib/api/icons.cjs",
 			"import": "./lib/api/icons.mjs"
 		},
 		"./lib/api/modules": {
-			"require": "./lib/api/modules.js",
+			"require": "./lib/api/modules.cjs",
 			"import": "./lib/api/modules.mjs"
 		},
 		"./lib/api/modules/deprecated-jsonp": {
-			"require": "./lib/api/modules/deprecated-jsonp.js",
+			"require": "./lib/api/modules/deprecated-jsonp.cjs",
 			"import": "./lib/api/modules/deprecated-jsonp.mjs"
 		},
 		"./lib/api/modules/fetch": {
-			"require": "./lib/api/modules/fetch.js",
+			"require": "./lib/api/modules/fetch.cjs",
 			"import": "./lib/api/modules/fetch.mjs"
 		},
 		"./lib/api/modules/mock": {
-			"require": "./lib/api/modules/mock.js",
+			"require": "./lib/api/modules/mock.cjs",
 			"import": "./lib/api/modules/mock.mjs"
 		},
 		"./lib/api/params": {
-			"require": "./lib/api/params.js",
+			"require": "./lib/api/params.cjs",
 			"import": "./lib/api/params.mjs"
 		},
 		"./lib/api/query": {
-			"require": "./lib/api/query.js",
+			"require": "./lib/api/query.cjs",
 			"import": "./lib/api/query.mjs"
 		},
 		"./lib/browser-storage/functions": {
-			"require": "./lib/browser-storage/functions.js",
+			"require": "./lib/browser-storage/functions.cjs",
 			"import": "./lib/browser-storage/functions.mjs"
 		},
 		"./lib/browser-storage": {
-			"require": "./lib/browser-storage/index.js",
+			"require": "./lib/browser-storage/index.cjs",
 			"import": "./lib/browser-storage/index.mjs"
 		},
 		"./lib/browser-storage/index": {
-			"require": "./lib/browser-storage/index.js",
+			"require": "./lib/browser-storage/index.cjs",
 			"import": "./lib/browser-storage/index.mjs"
 		},
 		"./lib/builder/functions": {
-			"require": "./lib/builder/functions.js",
+			"require": "./lib/builder/functions.cjs",
 			"import": "./lib/builder/functions.mjs"
 		},
 		"./lib/cache": {
-			"require": "./lib/cache.js",
+			"require": "./lib/cache.cjs",
 			"import": "./lib/cache.mjs"
 		},
 		"./lib/icon/list": {
-			"require": "./lib/icon/list.js",
+			"require": "./lib/icon/list.cjs",
 			"import": "./lib/icon/list.mjs"
 		},
 		"./lib/icon/sort": {
-			"require": "./lib/icon/sort.js",
+			"require": "./lib/icon/sort.cjs",
 			"import": "./lib/icon/sort.mjs"
 		},
 		"./lib/storage/functions": {
-			"require": "./lib/storage/functions.js",
+			"require": "./lib/storage/functions.cjs",
 			"import": "./lib/storage/functions.mjs"
 		},
 		"./lib/storage/storage": {
-			"require": "./lib/storage/storage.js",
+			"require": "./lib/storage/storage.cjs",
 			"import": "./lib/storage/storage.mjs"
 		}
 	},
@@ -105,7 +105,6 @@
 		"@iconify/utils": "^1.0.23"
 	},
 	"devDependencies": {
-		"@iconify/library-builder": "^1.0.5",
 		"@types/jest": "^27.4.0",
 		"@types/node": "^17.0.10",
 		"@typescript-eslint/eslint-plugin": "^5.10.0",
@@ -117,6 +116,7 @@
 		"jest": "^27.4.7",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^27.1.3",
-		"typescript": "^4.5.5"
+		"typescript": "^4.5.5",
+		"unbuild": "^0.7.0"
 	}
 }
