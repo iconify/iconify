@@ -1,8 +1,10 @@
-// see https://jestjs.io/docs/ecmascript-modules
-
-/** @type {() => import('ts-jest/dist/types').InitialOptionsTsJest} */
-/** @return {import('ts-jest/dist/types').InitialOptionsTsJest} */
-const buildConfiguration = (configuration) => {
+/**
+ * Jest shared configuration: see https://jestjs.io/docs/ecmascript-modules.
+ *
+ * @param {import('ts-jest/dist/types').InitialOptionsTsJest} configuration
+ * @return {import('ts-jest/dist/types').InitialOptionsTsJest}
+ */
+function buildConfiguration(configuration) {
 	return Object.assign({}, {
 		verbose: true,
 		testEnvironment: 'node',
