@@ -1,3 +1,5 @@
+// @ts-ignore
+import { htmlSafe } from '@ember/template';
 import type { IconifyIcon } from '@iconify/types';
 import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
@@ -124,7 +126,7 @@ export const render = (
 
 	return {
 		...item.attributes,
-		style: style === '' ? void 0 : style,
+		style: style === '' ? void 0 : htmlSafe(style),
 		className,
 		body,
 	};
