@@ -1,5 +1,15 @@
 import type { Awaitable } from '@antfu/utils';
 import type { FullIconCustomisations } from '../customisations';
+import type { IconifyJSON } from '@iconify/types';
+
+/**
+ * Type for universal icon loader.
+ */
+export type UniversalIconLoader = (
+	collection: string,
+	icon: string,
+	options?: IconifyLoaderOptions
+) => Promise<string | undefined>;
 
 /**
  * Custom icon loader, used by `getCustomIcon`.
@@ -76,6 +86,11 @@ export type CustomCollections = Record<
  */
 export type IconifyLoaderOptions = {
 	/**
+	 * Emit warning when missing icons are matched
+	 */
+	warn?: string;
+
+	/**
 	 * Add svg and xlink xml namespace when necessary.
 	 *
 	 * @default false
@@ -104,7 +119,13 @@ export type IconifyLoaderOptions = {
 	/**
 	 * Loader for custom loaders
 	 */
-	customCollections?: Record<string, CustomIconLoader | InlineCollection>;
+	customCollections?: Record<
+		string,
+		| (() => Awaitable<IconifyJSON>)
+		| undefined
+		| CustomIconLoader
+		| InlineCollection
+	>;
 
 	/**
 	 * Icon customizer

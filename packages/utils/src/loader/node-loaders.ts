@@ -1,7 +1,7 @@
 import type { Awaitable } from '@antfu/utils';
 import { promises as fs, Stats } from 'fs';
 import type { CustomIconLoader } from './types';
-import { camelize, pascalize } from '../misc/strings';
+import { camelize, pascalize, snakelize } from '../misc/strings';
 
 /**
  * Returns CustomIconLoader for loading icons from a directory
@@ -15,6 +15,7 @@ export function FileSystemIconLoader(
 			`${dir}/${name}.svg`,
 			`${dir}/${camelize(name)}.svg`,
 			`${dir}/${pascalize(name)}.svg`,
+			`${dir}/${snakelize(name)}.svg`,
 		];
 		let stat: Stats;
 		for (const path of paths) {
