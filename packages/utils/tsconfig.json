@@ -4,17 +4,14 @@
 		"outDir": "./lib",
 		"target": "ES2019",
 		"module": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "strict": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "importsNotUsedAsValues": "error",
-    "resolveJsonModule": true
-  },
-  "include": ["src/**/*.ts"]
+		"lib": ["ESNext", "DOM"],
+		"strict": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error",
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*.ts"]
 }
