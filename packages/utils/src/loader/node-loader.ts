@@ -4,17 +4,20 @@ import { loadCollectionFromFS } from './fs';
 import { warnOnce } from './warn';
 import { loadIcon } from './loader';
 
-export const loadNodeIcon: UniversalIconLoader = async(
+export const loadNodeIcon: UniversalIconLoader = async (
 	collection,
 	icon,
-	options,
+	options
 ) => {
 	let result = await loadIcon(collection, icon, options);
 	if (result) {
 		return result;
 	}
 
-	const iconSet = await loadCollectionFromFS(collection, options?.autoInstall);
+	const iconSet = await loadCollectionFromFS(
+		collection,
+		options?.autoInstall
+	);
 	if (iconSet) {
 		// possible icon names
 		const ids = [
@@ -30,5 +33,4 @@ export const loadNodeIcon: UniversalIconLoader = async(
 	}
 
 	return result;
-}
-
+};

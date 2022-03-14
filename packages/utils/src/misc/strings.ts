@@ -28,6 +28,6 @@ export function camelToKebab(key: string): string {
  * Convert string string to snake-case
  */
 export function snakelize(str: string): string {
-	const kebab = camelToKebab(str)
-	return kebab.replace(/-/g, '_')
+	const kebab = camelToKebab(str);
+	return kebab.replace(/-/g, '_');
 }
