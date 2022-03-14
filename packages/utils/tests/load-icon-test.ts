@@ -4,9 +4,9 @@ import { loadIcon } from '../lib';
 
 const fixturesDir = './tests/fixtures';
 
-const loader: CustomIconLoader = async(name) => {
+const loader: CustomIconLoader = async (name) => {
 	return await fs.readFile(`${fixturesDir}/${name}.svg`, 'utf8');
-}
+};
 
 describe('Testing loadIcon', () => {
 	test('CustomCollection', async () => {
@@ -14,8 +14,8 @@ describe('Testing loadIcon', () => {
 		expect(svg).toBeTruthy();
 		const result = await loadIcon('a', 'circle', {
 			customCollections: {
-				'a': {
-					'circle': svg as string,
+				a: {
+					circle: svg as string,
 				},
 			},
 		});
@@ -39,13 +39,16 @@ describe('Testing loadIcon', () => {
 		expect(svg).toBeTruthy();
 		const result = await loadIcon('a', 'circle', {
 			customCollections: {
-				'a': {
-					'circle': svg as string,
+				a: {
+					circle: svg as string,
 				},
 			},
 			customizations: {
 				transform(icon) {
-					return icon.replace('<svg ', '<svg width="1em" height="1em" ');
+					return icon.replace(
+						'<svg ',
+						'<svg width="1em" height="1em" '
+					);
 				},
 			},
 		});
@@ -67,7 +70,7 @@ describe('Testing loadIcon', () => {
 
 		const result = await loadIcon('a', '1f3eb', {
 			customCollections: {
-				'a': {
+				a: {
 					'1f3eb': svg as string,
 				},
 			},

@@ -52,7 +52,9 @@ export function replaceIDs(
 	// Replace with unique ids
 	ids.forEach((id) => {
 		const newID =
-			typeof prefix === 'function' ? prefix(id) : prefix + counter++;
+			typeof prefix === 'function'
+				? prefix(id)
+				: prefix + (counter++).toString();
 
 		const escapedID = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
