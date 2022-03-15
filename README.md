@@ -55,7 +55,6 @@ Other packages:
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
 -   [Iconify core](./packages/core/) - common files used by various components.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
--   [Library builder](./packages/library-builder/) - build scripts for packages that do not require bundling, similar to `tsup`, but without bundler. Used by Utils, Core and API Redundancy packages. Builds ES and CommonJS modules, type definition files and updates exports in `package.json`.
 -   [React demo](./demo/react-demo/) - demo for React component. Run `npm start` to start demo.
 -   [Next.js demo](./demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
 -   [Vue 3 demo](./demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.

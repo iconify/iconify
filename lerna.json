@@ -3,7 +3,6 @@
 	"npmClient": "npm",
 	"packages": [
 		"packages/types",
-		"packages/library-builder",
 		"packages/api-redundancy",
 		"packages/utils",
 		"packages/core",
