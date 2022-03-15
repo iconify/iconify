@@ -58,7 +58,7 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.mjs')) {
 	compile.core = true;
 }
 
