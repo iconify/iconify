@@ -1,15 +1,7 @@
 import { installPackage } from '@antfu/install-pkg';
 import { sleep } from '@antfu/utils';
-import { cyan, yellow } from 'kolorist';
-
-const warned = new Set<string>();
-
-export function warnOnce(msg: string): void {
-	if (!warned.has(msg)) {
-		warned.add(msg);
-		console.warn(yellow(`[@iconify-loader] ${msg}`));
-	}
-}
+import { cyan } from 'kolorist';
+import { warnOnce } from './warn';
 
 let pending: Promise<void> | undefined;
 const tasks: Record<string, Promise<void> | undefined> = {};
