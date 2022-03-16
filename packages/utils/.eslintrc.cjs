@@ -18,12 +18,12 @@ module.exports = {
 	parserOptions: {
 		tsconfigRootDir: __dirname,
 		project: ['tsconfig.json', 'tests/tsconfig.json'],
+		extraFileExtensions: ['.cjs'],
 	},
 	plugins: ['@typescript-eslint'],
 	rules: {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],
-		'@typescript-eslint/no-unused-vars-experimental': ['error'],
 	},
 	overrides: [
 		{
