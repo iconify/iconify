@@ -79,6 +79,10 @@
 			"require": "./lib/browser-storage/index.cjs",
 			"import": "./lib/browser-storage/index.mjs"
 		},
+		"./lib/browser-storage/mock": {
+			"require": "./lib/browser-storage/mock.cjs",
+			"import": "./lib/browser-storage/mock.mjs"
+		},
 		"./lib/builder/functions": {
 			"require": "./lib/builder/functions.cjs",
 			"import": "./lib/builder/functions.mjs"

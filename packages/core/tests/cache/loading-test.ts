@@ -12,7 +12,7 @@ import {
 	countKey,
 	hour,
 	cacheExpiration,
-} from './fake_cache';
+} from '../../lib/browser-storage/mock';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';

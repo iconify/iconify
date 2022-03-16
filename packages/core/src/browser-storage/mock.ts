@@ -1,4 +1,4 @@
-import { mock, count, config, emptyList } from '../../lib/browser-storage';
+import { mock, count, config, emptyList } from './index';
 
 /**
  * Get next icon set prefix for testing
