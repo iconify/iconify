@@ -4,6 +4,6 @@ export default defineConfig({
 	test: {
 		globals: true,
 		watch: false,
-		include: ['**/tests/*-test.ts'],
+		include: ['**/tests/**/*-test.ts'],
 	},
 });
