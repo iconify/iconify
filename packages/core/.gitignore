@@ -2,9 +2,7 @@
 .DS_Store
 *.map
 node_modules
-imports-test.mjs
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
 lib
-tests-compiled

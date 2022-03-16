@@ -107,7 +107,7 @@ function setCount(
 	value: number
 ): boolean {
 	try {
-		storage.setItem(countKey, value + '');
+		storage.setItem(countKey, value.toString());
 		count[key] = value;
 		return true;
 	} catch (err) {
@@ -156,7 +156,7 @@ function destroyCache(storage: typeof localStorage): void {
 	try {
 		const total = getCount(storage);
 		for (let i = 0; i < total; i++) {
-			storage.removeItem(cachePrefix + i);
+			storage.removeItem(cachePrefix + i.toString());
 		}
 	} catch (err) {
 		//
@@ -184,7 +184,7 @@ export const loadCache: LoadIconsCache = (): void => {
 
 		// Get one item from storage
 		const getItem = (index: number): boolean => {
-			const name = cachePrefix + index;
+			const name = cachePrefix + index.toString();
 			const item = func.getItem(name);
 
 			if (typeof item !== 'string') {
@@ -196,7 +196,7 @@ export const loadCache: LoadIconsCache = (): void => {
 			let valid = true;
 			try {
 				// Parse, check time stamp
-				const data = JSON.parse(item as string) as StoredItem;
+				const data = JSON.parse(item) as StoredItem;
 				if (
 					typeof data !== 'object' ||
 					typeof data.cached !== 'number' ||
@@ -301,7 +301,7 @@ export const storeCache: CacheIcons = (
 				provider,
 				data,
 			};
-			func.setItem(cachePrefix + index, JSON.stringify(item));
+			func.setItem(cachePrefix + index.toString(), JSON.stringify(item));
 		} catch (err) {
 			return false;
 		}

@@ -27,8 +27,10 @@ interface IconifyAPIInternalStorage {
 	config: IconifyAPIConfig;
 	redundancy: Redundancy;
 }
-const redundancyCache: Record<string, IconifyAPIInternalStorage> =
-	Object.create(null);
+const redundancyCache = Object.create(null) as Record<
+	string,
+	IconifyAPIInternalStorage
+>;
 
 /**
  * Get Redundancy instance for provider
@@ -87,9 +89,7 @@ export function sendAPIQuery(
 			redundancy = initRedundancy(config);
 
 			// Use host instead of API provider (defaults to '')
-			const moduleKey = target.resources
-				? (target.resources[0] as string)
-				: '';
+			const moduleKey = target.resources ? target.resources[0] : '';
 			const api = getAPIModule(moduleKey);
 			if (api) {
 				send = api.send;

@@ -1,5 +1,6 @@
 {
 	"name": "@iconify/core",
+	"type": "module",
 	"description": "Reusable files used by multiple Iconify packages",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"version": "1.2.4",
@@ -12,13 +13,18 @@
 		"directory": "packages/core"
 	},
 	"scripts": {
-		"clean": "rimraf lib tests-compiled tsconfig.tsbuildinfo",
-		"lint": "eslint src/**/*.ts",
+		"clean": "rimraf lib tsconfig.tsbuildinfo",
+		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
 		"build": "unbuild",
-		"test:jest": "jest --runInBand",
-		"test": "npm run test:jest"
+		"test:jest-cjs": "jest --clearCache && jest --runInBand --config=jest.config.cjs",
+		"test:jest-esm": "jest --clearCache && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config=jest.config.mjs",
+		"test": "npm run test:jest-cjs && npm run test:jest-esm",
+		"vitest:cjs": "vitest --config vitest.config.cjs",
+		"vitest:esm": "vitest --config vitest.config.mjs",
+		"vitest": "npm run vitest:cjs && npm run vitest:esm"
 	},
+	"sideEffects": false,
 	"exports": {
 		"./*": "./*",
 		"./lib/api/callbacks": {
@@ -99,21 +105,25 @@
 		}
 	},
 	"dependencies": {
-		"@iconify/api-redundancy": "^1.0.2",
+		"@iconify/api-redundancy": "^1.1.0",
 		"@iconify/types": "^1.0.12",
-		"@iconify/utils": "^1.0.23"
+		"@iconify/utils": "^1.0.24"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.4.0",
 		"@types/node": "^17.0.10",
-		"@typescript-eslint/eslint-plugin": "^5.10.0",
+		"@typescript-eslint/eslint-plugin": "^5.15.0",
 		"cross-env": "^7.0.3",
 		"cross-fetch": "^3.1.5",
-		"eslint": "^8.7.0",
+		"eslint": "^8.11.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
 		"jest": "^27.4.7",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^27.1.3",
+		"ts-node": "^10.7.0",
 		"typescript": "^4.5.5",
-		"unbuild": "^0.7.0"
+		"unbuild": "^0.6.9",
+		"vitest": "^0.5.9"
 	}
 }

@@ -26,7 +26,10 @@ const storageVersion = 1;
 /**
  * Storage by provider and prefix
  */
-let storage: Record<string, Record<string, IconStorage>> = Object.create(null);
+let storage = Object.create(null) as Record<
+	string,
+	Record<string, IconStorage>
+>;
 
 /**
  * Share storage
@@ -71,8 +74,8 @@ export function newStorage(provider: string, prefix: string): IconStorage {
 	return {
 		provider,
 		prefix,
-		icons: Object.create(null),
-		missing: Object.create(null),
+		icons: Object.create(null) as IconStorage['icons'],
+		missing: Object.create(null) as IconStorage['missing'],
 	};
 }
 
@@ -81,7 +84,7 @@ export function newStorage(provider: string, prefix: string): IconStorage {
  */
 export function getStorage(provider: string, prefix: string): IconStorage {
 	if (storage[provider] === void 0) {
-		storage[provider] = Object.create(null);
+		storage[provider] = Object.create(null) as Record<string, IconStorage>;
 	}
 	const providerStorage = storage[provider];
 	if (providerStorage[prefix] === void 0) {

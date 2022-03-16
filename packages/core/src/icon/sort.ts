@@ -20,8 +20,10 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		missing: [],
 		pending: [],
 	};
-	const storage: Record<string, Record<string, IconStorage>> =
-		Object.create(null);
+	const storage = Object.create(null) as Record<
+		string,
+		Record<string, IconStorage>
+	>;
 
 	// Sort icons alphabetically to prevent duplicates and make sure they are sorted in API queries
 	icons.sort((a, b) => {
@@ -55,7 +57,10 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		const name = icon.name;
 
 		if (storage[provider] === void 0) {
-			storage[provider] = Object.create(null);
+			storage[provider] = Object.create(null) as Record<
+				string,
+				IconStorage
+			>;
 		}
 		const providerStorage = storage[provider];
 

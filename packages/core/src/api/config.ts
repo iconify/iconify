@@ -62,7 +62,7 @@ export function createAPIConfig(
 /**
  * Local storage
  */
-const configStorage: Record<string, IconifyAPIConfig> = Object.create(null);
+const configStorage = Object.create(null) as Record<string, IconifyAPIConfig>;
 
 /**
  * Redundancy for API servers.

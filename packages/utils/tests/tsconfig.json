@@ -2,7 +2,6 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"types": ["node", "jest"],
-		"rootDir": ".",
-		"outDir": "../tests-compiled",
-  }
+		"rootDir": "."
+	}
 }
