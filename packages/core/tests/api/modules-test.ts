@@ -11,7 +11,9 @@ describe('Testing API modules', () => {
 	function nextPrefix(): string {
 		prefixCounter++;
 		return (
-			'api-mod-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter
+			'api-mod-test-' +
+			(prefixCounter < 10 ? '0' : '') +
+			prefixCounter.toString()
 		);
 	}
 

@@ -10,7 +10,11 @@ describe('Testing API callbacks', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return 'api-cb-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter;
+		return (
+			'api-cb-test-' +
+			(prefixCounter < 10 ? '0' : '') +
+			prefixCounter.toString()
+		);
 	}
 
 	it('Simple callback', (done) => {
@@ -356,7 +360,7 @@ describe('Testing API callbacks', () => {
 						break;
 
 					default:
-						done('Callback was called ' + counter + ' times.');
+						done(`Callback was called ${counter} times.`);
 				}
 			},
 			sortIcons([
@@ -480,7 +484,7 @@ describe('Testing API callbacks', () => {
 						break;
 
 					default:
-						done('Callback was called ' + counter + ' times.');
+						done(`Callback was called ${counter} times.`);
 				}
 			},
 			sortIcons([

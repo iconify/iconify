@@ -10,7 +10,11 @@ describe('Testing mock API module', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return 'api-mock-' + (prefixCounter < 10 ? '0' : '') + prefixCounter;
+		return (
+			'api-mock-' +
+			(prefixCounter < 10 ? '0' : '') +
+			prefixCounter.toString()
+		);
 	}
 
 	// Set API module for provider

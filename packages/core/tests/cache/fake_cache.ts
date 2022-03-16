@@ -5,7 +5,7 @@ import { mock, count, config, emptyList } from '../../lib/browser-storage';
  */
 let prefixCounter = 0;
 export function nextPrefix(): string {
-	return 'fake-storage-' + prefixCounter++;
+	return 'fake-storage-' + (prefixCounter++).toString();
 }
 
 // Cache version. Bump when structure changes
@@ -28,7 +28,7 @@ export const cacheExpiration = 168; // In hours
 export class Storage {
 	canRead = true;
 	canWrite = true;
-	items: Record<string, string> = Object.create(null);
+	items = Object.create(null) as Record<string, string>;
 
 	/**
 	 * Get number of items
@@ -84,7 +84,7 @@ export class Storage {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
-		this.items = Object.create(null);
+		this.items = Object.create(null) as Record<string, string>;
 	}
 }
 
