@@ -357,15 +357,10 @@ export const loadIcons: IconifyLoadIcons = (
 /**
  * Cache for loadIcon promises
  */
-type LoadIconResult = Promise<Required<IconifyIcon>>;
-const iconsQueue = Object.create(null) as Record<string, LoadIconResult>;
-
-export const loadIcon = (icon: IconifyIconName | string): LoadIconResult => {
-	if (typeof icon === 'string' && iconsQueue[icon] !== void 0) {
-		return iconsQueue[icon];
-	}
-
-	const result: LoadIconResult = new Promise((fulfill, reject) => {
+export const loadIcon = (
+	icon: IconifyIconName | string
+): Promise<Required<IconifyIcon>> => {
+	return new Promise((fulfill, reject) => {
 		const iconObj = typeof icon === 'string' ? stringToIcon(icon) : icon;
 		loadIcons([iconObj || icon], (loaded) => {
 			if (loaded.length && iconObj) {
@@ -380,9 +375,4 @@ export const loadIcon = (icon: IconifyIconName | string): LoadIconResult => {
 			reject(icon);
 		});
 	});
-
-	if (typeof icon === 'string') {
-		iconsQueue[icon] = result;
-	}
-	return result;
 };
