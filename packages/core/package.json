@@ -17,8 +17,7 @@
 		"prebuild": "npm run lint && npm run clean",
 		"build": "unbuild",
 		"test:jest": "jest --runInBand",
-		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
-		"test": "npm run test:jest && npm run test:jasmine"
+		"test": "npm run test:jest"
 	},
 	"exports": {
 		"./*": "./*",
@@ -111,8 +110,6 @@
 		"cross-env": "^7.0.3",
 		"cross-fetch": "^3.1.5",
 		"eslint": "^8.7.0",
-		"eslint-plugin-jasmine": "^4.1.3",
-		"jasmine": "^4.0.2",
 		"jest": "^27.4.7",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^27.1.3",
