@@ -29,6 +29,5 @@ export async function tryInstallPkg(name: string): Promise<void | undefined> {
 			});
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	return tasks[name]!;
+	return tasks[name];
 }
