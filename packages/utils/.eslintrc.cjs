@@ -3,7 +3,6 @@ module.exports = {
 		browser: true,
 		es6: true,
 		node: true,
-		jasmine: true,
 	},
 	extends: [
 		'eslint:recommended',
@@ -20,7 +19,7 @@ module.exports = {
 		tsconfigRootDir: __dirname,
 		project: ['tsconfig.json', 'tests/tsconfig.json'],
 	},
-	plugins: ['@typescript-eslint', 'jasmine'],
+	plugins: ['@typescript-eslint'],
 	rules: {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],
