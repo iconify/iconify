@@ -9,6 +9,7 @@ yarn.lock
 tsconfig.tsbuildinfo
 .eslintrc.cjs
 tsconfig.json
+tsconfig.common.json
 jest.config.*
 jest.shared.config.cjs
 vitest.config.*
