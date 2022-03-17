@@ -1,6 +1,39 @@
 import type { Awaitable } from '@antfu/utils';
 import type { IconifyLoaderOptions } from './types';
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
+/*
+const svgWidthRegex = /(width\s*=\s*["'](\w+)["'])/d
+const svgHeightRegex = /(height\s*=\s*["'](\w+)["'])/d
+
+function configureSvgSize(svg: string, props: Record<string, string>, scale: number) {
+	if (props.width && props.height) {
+		return;
+	}
+
+	const svgNode = svg.slice(0, svg.indexOf('>'))
+	let height: string | undefined
+	let width: string | undefined
+
+	let result = svgWidthRegex.exec(svgNode)
+	if (result) {
+
+	}
+	if (!width) {
+		width = props.widht ?? `${scale}em`
+	}
+
+	result = svgHeightRegex.exec(svgNode)
+	if (result) {
+
+	}
+	if (!height) {
+		height = props.height ?? `${scale}em`
+	}
+
+}
+
+*/
 export async function mergeIconProps(
 	svg: string,
 	collection: string,
@@ -31,6 +64,14 @@ export async function mergeIconProps(
 		const v = additionalProps[p];
 		if (v !== undefined && v !== null) props[p] = v;
 	});
+
+	const addUsedProps = options && options.usedProps;
+	// we need to parse the svg if we need to also return used props
+	// and there are no width nor height in the props
+	// if (addUsedProps) {
+	// 	if (typeof props.width === 'undefined' || props.width === null)
+	// }
+
 	// add xml namespaces if necessary
 	if (addXmlNs) {
 		// add svg xmlns if missing
@@ -64,6 +105,23 @@ export async function mergeIconProps(
 		if (defaultStyle && !svg.includes(' style=')) {
 			svg = svg.replace('<svg ', `<svg style="${defaultStyle}" `);
 		}
+	}
+
+	if (addUsedProps) {
+		options!.usedProps = Object.keys(props).reduce((acc, k) => {
+			if (k) {
+				switch (k) {
+					case 'scale':
+					case 'xmlns':
+					case 'xmlns:xlink':
+						break;
+					default:
+						acc[k] = props[k];
+						break;
+				}
+			}
+			return acc;
+		}, {} as Record<string, string>);
 	}
 
 	return svg;

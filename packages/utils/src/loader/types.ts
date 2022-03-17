@@ -140,4 +140,9 @@ export type IconifyLoaderOptions = {
 	 * @default false
 	 */
 	autoInstall?: boolean;
+
+	/**
+	 * Holder to return the properties added to the svg.
+	 */
+	usedProps?: Record<string, string>;
 };

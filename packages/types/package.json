@@ -1,5 +1,6 @@
 {
 	"name": "@iconify/types",
+	"type": "module",
 	"description": "Types for Iconify data",
 	"version": "1.0.12",
 	"author": "Vjacheslav Trushkin",
