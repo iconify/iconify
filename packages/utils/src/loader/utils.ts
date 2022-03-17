@@ -109,7 +109,6 @@ export async function mergeIconProps(
 			}
 			return acc;
 		}, {} as Record<string, string>);
-		console.log(options.usedProps);
 	}
 
 	return svg;

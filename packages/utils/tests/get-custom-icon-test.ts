@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { getCustomIcon } from '../lib';
-import { IconifyLoaderOptions } from '../src';
+import type { IconifyLoaderOptions } from '../src';
 
 const fixturesDir = './tests/fixtures';
 
@@ -32,10 +32,11 @@ describe('Testing getCustomIcon', () => {
 		const result = await getCustomIcon(() => svg, 'a', 'b', options);
 		expect(result && result.indexOf('width="1em"') > -1).toBeTruthy();
 		expect(result && result.indexOf('height="1em"') > -1).toBeTruthy();
-		expect(options.usedProps).toHaveProperty('width');
-		expect(options.usedProps).toHaveProperty('height');
-		expect(options.usedProps.width).toEqual('4em');
-		expect(options.usedProps.height).toEqual('4em');
+		expect(options.usedProps).toBeTruthy();
+		expect(options.usedProps!).toHaveProperty('width');
+		expect(options.usedProps!).toHaveProperty('height');
+		expect(options.usedProps!.width).toEqual('4em');
+		expect(options.usedProps!.height).toEqual('4em');
 	});
 
 	test('Icon with XML heading', async () => {
