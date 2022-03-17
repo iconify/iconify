@@ -94,16 +94,17 @@ export async function mergeIconProps(
 		}
 	}
 
-	if (options && options.usedProps) {
+	const usedProps = options?.usedProps;
+	if (usedProps) {
 		Object.keys(additionalProps).forEach((p) => {
 			const v = props[p];
-			if (v !== undefined && v !== null) options.usedProps![p] = v;
+			if (v !== undefined && v !== null) usedProps[p] = v;
 		});
 		if (typeof props.width !== 'undefined' && props.width !== null) {
-			options.usedProps.width = props.width;
+			usedProps.width = props.width;
 		}
 		if (typeof props.height !== 'undefined' && props.height !== null) {
-			options.usedProps.height = props.height;
+			usedProps.height = props.height;
 		}
 	}
 
