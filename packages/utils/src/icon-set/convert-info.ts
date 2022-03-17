@@ -189,7 +189,7 @@ export function convertIconSetInfo(
 
 	if (source.height instanceof Array) {
 		source.height.forEach((item) => {
-			const num = parseInt(item);
+			const num = parseInt(item as string);
 			if (num > 0) {
 				if (!(info.height instanceof Array)) {
 					info.height = [];

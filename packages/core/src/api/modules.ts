@@ -45,7 +45,7 @@ export interface IconifyAPIModule {
 /**
  * Local storate types and entries
  */
-const storage: Record<string, IconifyAPIModule> = Object.create(null);
+const storage = Object.create(null) as Record<string, IconifyAPIModule>;
 
 /**
  * Set API module

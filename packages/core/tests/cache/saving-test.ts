@@ -18,7 +18,7 @@ import {
 	countKey,
 	hour,
 	cacheExpiration,
-} from './fake_cache';
+} from '../../lib/browser-storage/mock';
 
 describe('Testing saving to localStorage', () => {
 	const provider = '';
@@ -231,7 +231,7 @@ describe('Testing saving to localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['foo' + i]: {
+					['foo' + i.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -257,7 +257,7 @@ describe('Testing saving to localStorage', () => {
 
 			// Skip items 1, 5, 9+
 			if (i !== 1 && i !== 5 && i < 9) {
-				cache.setItem(cachePrefix + i, JSON.stringify(item));
+				cache.setItem(cachePrefix + i.toString(), JSON.stringify(item));
 			}
 		}
 
@@ -291,7 +291,7 @@ describe('Testing saving to localStorage', () => {
 
 		// Check cached items
 		[0, 3, 6, 7, 8].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index)).toBe(
+			expect(cache.getItem(cachePrefix + index.toString())).toBe(
 				JSON.stringify(items[index])
 			);
 		});
@@ -299,7 +299,7 @@ describe('Testing saving to localStorage', () => {
 		// Check expired items - should have been deleted
 		// Also check items that weren't supposed to be added
 		[2, 4, 1, 5, 9, 10, 11, 12, 13].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index)).toBeNull();
+			expect(cache.getItem(cachePrefix + index.toString())).toBeNull();
 		});
 
 		// Add item 5
@@ -364,11 +364,11 @@ describe('Testing saving to localStorage', () => {
 		cache.setItem(countKey, '3');
 		for (let i = 0; i < 3; i++) {
 			cache.setItem(
-				cachePrefix + i,
+				cachePrefix + i.toString(),
 				JSON.stringify({
 					prefix: prefix,
 					icons: {
-						['foo' + i]: {
+						['foo' + i.toString()]: {
 							body: '<g></g>',
 						},
 					},
@@ -455,7 +455,7 @@ describe('Testing saving to localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['foo' + index]: {
+					['foo' + index.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -465,7 +465,10 @@ describe('Testing saving to localStorage', () => {
 				provider,
 				data: icon,
 			};
-			cache1.setItem(cachePrefix + index, JSON.stringify(item));
+			cache1.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(item)
+			);
 		});
 
 		// Add icon sets to sessionStorage
@@ -475,7 +478,7 @@ describe('Testing saving to localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['bar' + index]: {
+					['bar' + index.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -485,7 +488,10 @@ describe('Testing saving to localStorage', () => {
 				provider,
 				data: icon,
 			};
-			cache2.setItem(cachePrefix + index, JSON.stringify(item));
+			cache2.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(item)
+			);
 		});
 
 		// Set cache
@@ -514,10 +520,10 @@ describe('Testing saving to localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).toBe(true);
+			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
 		}
 		for (let i = 0; i < count.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i)).toBe(true);
+			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Add new item to localStorage
@@ -562,7 +568,7 @@ describe('Testing saving to localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['foo' + index]: {
+					['foo' + index.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -572,7 +578,10 @@ describe('Testing saving to localStorage', () => {
 				provider,
 				data: icon,
 			};
-			cache1.setItem(cachePrefix + index, JSON.stringify(item));
+			cache1.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(item)
+			);
 		});
 
 		// Add icon sets to sessionStorage
@@ -582,7 +591,7 @@ describe('Testing saving to localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['bar' + index]: {
+					['bar' + index.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -592,7 +601,10 @@ describe('Testing saving to localStorage', () => {
 				provider,
 				data: icon,
 			};
-			cache2.setItem(cachePrefix + index, JSON.stringify(item));
+			cache2.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(item)
+			);
 		});
 
 		// Set cache
@@ -621,10 +633,10 @@ describe('Testing saving to localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < count.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).toBe(true);
+			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
 		}
 		for (let i = 0; i < count.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i)).toBe(true);
+			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Set localStorage to read-only

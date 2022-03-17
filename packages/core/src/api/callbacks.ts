@@ -23,15 +23,22 @@ interface CallbackItem {
 	abort: IconifyIconLoaderAbort;
 }
 
+type PrefixCallbackItems = CallbackItem[];
+type ProviderCallbackItems = Record<string, PrefixCallbackItems>;
+
 // Records sorted by provider and prefix
 // This export is only for unit testing, should not be used
-export const callbacks: Record<
+export const callbacks = Object.create(null) as Record<
 	string,
-	Record<string, CallbackItem[]>
-> = Object.create(null);
-const pendingUpdates: Record<string, Record<string, boolean>> = Object.create(
-	null
-);
+	ProviderCallbackItems
+>;
+
+// List of provider/prefix combinations that need to be updated
+type ProviderPendingUpdates = Record<string, boolean>;
+const pendingUpdates = Object.create(null) as Record<
+	string,
+	ProviderPendingUpdates
+>;
 
 /**
  * Remove callback
@@ -57,7 +64,9 @@ function removeCallback(sources: IconifyIconSource[], id: number): void {
  */
 export function updateCallbacks(provider: string, prefix: string): void {
 	if (pendingUpdates[provider] === void 0) {
-		pendingUpdates[provider] = Object.create(null);
+		pendingUpdates[provider] = Object.create(
+			null
+		) as ProviderPendingUpdates;
 	}
 	const providerPendingUpdates = pendingUpdates[provider];
 
@@ -176,7 +185,7 @@ export function storeCallback(
 		const provider = source.provider;
 		const prefix = source.prefix;
 		if (callbacks[provider] === void 0) {
-			callbacks[provider] = Object.create(null);
+			callbacks[provider] = Object.create(null) as ProviderCallbackItems;
 		}
 		const providerCallbacks = callbacks[provider];
 		if (providerCallbacks[prefix] === void 0) {

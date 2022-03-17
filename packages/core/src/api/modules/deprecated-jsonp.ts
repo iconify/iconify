@@ -20,8 +20,8 @@ let rootVarName: string | null = null;
 /**
  * Cache: provider:prefix = value
  */
-const maxLengthCache: Record<string, number> = Object.create(null);
-const pathCache: Record<string, string> = Object.create(null);
+const maxLengthCache: Record<string, number> = {};
+const pathCache: Record<string, string> = {};
 
 /**
  * Get hash for query
@@ -58,14 +58,14 @@ function getGlobal(): JSONPRoot {
 			prefix = 'IconifyJSONP';
 			extraPrefix = '';
 			if (globalRoot[prefix] === void 0) {
-				globalRoot[prefix] = Object.create(null);
+				globalRoot[prefix] = {};
 			}
 			rootVar = globalRoot[prefix] as JSONPRoot;
 		} else {
 			// Use 'Iconify.cb'
 			const iconifyRoot = globalRoot[prefix] as Record<string, JSONPRoot>;
 			if (iconifyRoot.cb === void 0) {
-				iconifyRoot.cb = Object.create(null);
+				iconifyRoot.cb = {};
 			}
 			rootVar = iconifyRoot.cb;
 		}
@@ -94,7 +94,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 	} else {
 		let maxHostLength = 0;
 		config.resources.forEach((item) => {
-			const host = item as string;
+			const host = item;
 			maxHostLength = Math.max(maxHostLength, host.length);
 		});
 
@@ -195,10 +195,10 @@ const send: IconifyAPISendQuery = (
 	let cbCounter = hash(
 		provider + ':' + host + ':' + prefix + ':' + iconsList
 	);
-	while (global[cbPrefix + cbCounter] !== void 0) {
+	while (global[`${cbPrefix}${cbCounter}`] !== void 0) {
 		cbCounter++;
 	}
-	const callbackName = cbPrefix + cbCounter;
+	const callbackName = `${cbPrefix}${cbCounter}`;
 
 	const url = mergeParams(prefix + '.js', {
 		icons: iconsList,

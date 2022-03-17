@@ -1,16 +1,11 @@
-import {
-	mock,
-	count,
-	config,
-	emptyList,
-} from '@iconify/core/lib/browser-storage';
+import { mock, count, config, emptyList } from './index';
 
 /**
  * Get next icon set prefix for testing
  */
 let prefixCounter = 0;
-export function nextPrefix() {
-	return 'fake-storage-' + prefixCounter++;
+export function nextPrefix(): string {
+	return 'fake-storage-' + (prefixCounter++).toString();
 }
 
 // Cache version. Bump when structure changes
@@ -33,12 +28,12 @@ export const cacheExpiration = 168; // In hours
 export class Storage {
 	canRead = true;
 	canWrite = true;
-	items = Object.create(null);
+	items = Object.create(null) as Record<string, string>;
 
 	/**
 	 * Get number of items
 	 */
-	get length() {
+	get length(): number {
 		if (!this.canRead) {
 			throw new Error('Restricted storage');
 		}
@@ -50,7 +45,7 @@ export class Storage {
 	 *
 	 * @param name
 	 */
-	getItem(name) {
+	getItem(name: string): string | null {
 		if (!this.canRead) {
 			throw new Error('Restricted storage');
 		}
@@ -63,7 +58,7 @@ export class Storage {
 	 * @param name
 	 * @param value
 	 */
-	setItem(name, value) {
+	setItem(name: string, value: string): void {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
@@ -75,7 +70,7 @@ export class Storage {
 	 *
 	 * @param name
 	 */
-	removeItem(name) {
+	removeItem(name: string): void {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
@@ -85,19 +80,19 @@ export class Storage {
 	/**
 	 * Clear everything
 	 */
-	clear() {
+	clear(): void {
 		if (!this.canWrite) {
 			throw new Error('Read-only storage');
 		}
-		this.items = Object.create(null);
+		this.items = Object.create(null) as Record<string, string>;
 	}
 }
 
 /**
  * Create fake storage, assign localStorage type
  */
-export function createCache() {
-	return new Storage();
+export function createCache(): typeof localStorage {
+	return new Storage() as unknown as typeof localStorage;
 }
 
 /**
@@ -105,13 +100,13 @@ export function createCache() {
  *
  * @param fakeWindow
  */
-export function reset(fakeWindow) {
+export function reset(fakeWindow: Record<string, typeof localStorage>): void {
 	// Replace window
 	mock(fakeWindow);
 
 	// Reset all data
 	for (const key in config) {
-		const attr = key;
+		const attr = key as unknown as keyof typeof config;
 		config[attr] = true;
 		count[attr] = 0;
 		emptyList[attr] = [];

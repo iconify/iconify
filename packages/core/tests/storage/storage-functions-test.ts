@@ -12,7 +12,7 @@ describe('Testing IconifyStorageFunctions', () => {
 	let count = 0;
 
 	function nextProvider(): string {
-		return 'storage-test-' + count++;
+		return 'storage-test-' + (count++).toString();
 	}
 
 	it('Storage functions', () => {
@@ -35,7 +35,7 @@ describe('Testing IconifyStorageFunctions', () => {
 	});
 
 	it('Invalid icon name', () => {
-		const testName = 'storage' + count++;
+		const testName = 'storage' + (count++).toString();
 
 		// Reset module
 		allowSimpleNames(false);
@@ -71,7 +71,7 @@ describe('Testing IconifyStorageFunctions', () => {
 	});
 
 	it('Simple icon name', () => {
-		const testName = 'storage' + count++;
+		const testName = 'storage' + (count++).toString();
 
 		// Enable empty storage
 		allowSimpleNames(true);
@@ -101,7 +101,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		allowSimpleNames(true);
 
 		// Add icon set
-		const name1 = 'test' + n;
+		const name1 = 'test' + n.toString();
 		const prefix2 = `prefixed${n}`;
 		const name2 = `icon${n2}`;
 		expect(

@@ -8,7 +8,7 @@ import { mockAPIModule } from '../../lib/api/modules/mock';
 describe('Testing live API with fetch', () => {
 	let counter = 0;
 	function nextProvider(): string {
-		return 'fetch-' + counter++;
+		return 'fetch-' + (counter++).toString();
 	}
 
 	const host = 'https://api.iconify.design';

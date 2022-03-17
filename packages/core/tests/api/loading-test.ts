@@ -6,13 +6,16 @@ import type {
 } from '../../lib/api/modules';
 import { setAPIModule } from '../../lib/api/modules';
 import { loadIcons, loadIcon, isPending } from '../../lib/api/icons';
+import type { IconifyIcon } from '@iconify/types';
 
 describe('Testing API loadIcons', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
 		return (
-			'api-load-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter
+			'api-load-test-' +
+			(prefixCounter < 10 ? '0' : '') +
+			prefixCounter.toString()
 		);
 	}
 
@@ -367,12 +370,12 @@ describe('Testing API loadIcons', () => {
 				type: 'icons',
 				provider,
 				prefix,
-				icons: ['icon' + queryCounter],
+				icons: ['icon' + queryCounter.toString()],
 			};
 			expect(params).toEqual(expected);
 
 			// Send only requested icons
-			const icons = Object.create(null);
+			const icons = Object.create(null) as Record<string, IconifyIcon>;
 			params.icons.forEach((icon) => {
 				icons[icon] = {
 					body: '<path d="" />',

@@ -12,7 +12,7 @@ describe('Testing mock API module prepare function', () => {
 		return (
 			'api-mock-prepare-' +
 			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter
+			prefixCounter.toString()
 		);
 	}
 

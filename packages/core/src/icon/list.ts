@@ -32,7 +32,7 @@ export function listToIcons(
  * Get all providers
  */
 export function getProviders(list: IconifyIconName[]): string[] {
-	const providers: Record<string, boolean> = Object.create(null);
+	const providers = Object.create(null) as Record<string, boolean>;
 	list.forEach((icon) => {
 		providers[icon.provider] = true;
 	});

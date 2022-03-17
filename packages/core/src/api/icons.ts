@@ -59,11 +59,13 @@ export type IsPending = (icon: IconifyIconName) => boolean;
  *
  * [provider][prefix][icon] = time when icon was added to queue
  */
-type PendingIcons = Record<string, number>;
-const pendingIcons: Record<
+type PrefixPendingIcons = Record<string, number>;
+type ProviderPendingIcons = Record<string, PrefixPendingIcons>;
+
+const pendingIcons = Object.create(null) as Record<
 	string,
-	Record<string, PendingIcons>
-> = Object.create(null);
+	ProviderPendingIcons
+>;
 
 /**
  * List of icons that are waiting to be loaded.
@@ -75,15 +77,19 @@ const pendingIcons: Record<
  *
  * [provider][prefix] = array of icon names
  */
-const iconsToLoad: Record<string, Record<string, string[]>> = Object.create(
-	null
-);
+type IconsToLoadPrefixItem = string[];
+type IconsToLoadProviderItem = Record<string, IconsToLoadPrefixItem>;
+
+const iconsToLoad = Object.create(null) as Record<
+	string,
+	IconsToLoadProviderItem
+>;
 
 // Flags to merge multiple synchronous icon requests in one asynchronous request
-const loaderFlags: Record<string, Record<string, boolean>> = Object.create(
-	null
-);
-const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
+type FlagsItem = Record<string, boolean>;
+
+const loaderFlags = Object.create(null) as Record<string, FlagsItem>;
+const queueFlags = Object.create(null) as Record<string, FlagsItem>;
 
 /**
  * Function called when new icons have been loaded
@@ -91,7 +97,7 @@ const queueFlags: Record<string, Record<string, boolean>> = Object.create(null);
 function loadedNewIcons(provider: string, prefix: string): void {
 	// Run only once per tick, possibly joining multiple API responses in one call
 	if (loaderFlags[provider] === void 0) {
-		loaderFlags[provider] = Object.create(null);
+		loaderFlags[provider] = Object.create(null) as FlagsItem;
 	}
 	const providerLoaderFlags = loaderFlags[provider];
 	if (!providerLoaderFlags[prefix]) {
@@ -104,7 +110,7 @@ function loadedNewIcons(provider: string, prefix: string): void {
 }
 
 // Storage for errors for loadNewIcons(). Used to avoid spamming log with identical errors.
-const errorsCache: Record<string, number> = Object.create(null);
+const errorsCache = Object.create(null) as Record<string, number>;
 
 /**
  * Load icons
@@ -125,17 +131,17 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 
 	// Create nested objects if needed
 	if (iconsToLoad[provider] === void 0) {
-		iconsToLoad[provider] = Object.create(null);
+		iconsToLoad[provider] = Object.create(null) as IconsToLoadProviderItem;
 	}
 	const providerIconsToLoad = iconsToLoad[provider];
 
 	if (queueFlags[provider] === void 0) {
-		queueFlags[provider] = Object.create(null);
+		queueFlags[provider] = Object.create(null) as FlagsItem;
 	}
 	const providerQueueFlags = queueFlags[provider];
 
 	if (pendingIcons[provider] === void 0) {
-		pendingIcons[provider] = Object.create(null);
+		pendingIcons[provider] = Object.create(null) as ProviderPendingIcons;
 	}
 	const providerPendingIcons = pendingIcons[provider];
 
@@ -267,9 +273,13 @@ export const loadIcons: IconifyLoadIcons = (
 	}
 
 	// Get all sources for pending icons
-	const newIcons: Record<string, Record<string, string[]>> = Object.create(
-		null
-	);
+	type PrefixNewIconsList = string[];
+	type ProviderNewIconsList = Record<string, PrefixNewIconsList>;
+
+	const newIcons = Object.create(null) as Record<
+		string,
+		ProviderNewIconsList
+	>;
 	const sources: IconifyIconSource[] = [];
 	let lastProvider: string, lastPrefix: string;
 
@@ -288,15 +298,19 @@ export const loadIcons: IconifyLoadIcons = (
 		});
 
 		if (pendingIcons[provider] === void 0) {
-			pendingIcons[provider] = Object.create(null);
+			pendingIcons[provider] = Object.create(
+				null
+			) as ProviderPendingIcons;
 		}
 		const providerPendingIcons = pendingIcons[provider];
 		if (providerPendingIcons[prefix] === void 0) {
-			providerPendingIcons[prefix] = Object.create(null);
+			providerPendingIcons[prefix] = Object.create(
+				null
+			) as PrefixPendingIcons;
 		}
 
 		if (newIcons[provider] === void 0) {
-			newIcons[provider] = Object.create(null);
+			newIcons[provider] = Object.create(null) as ProviderNewIconsList;
 		}
 		const providerNewIcons = newIcons[provider];
 		if (providerNewIcons[prefix] === void 0) {
@@ -343,15 +357,10 @@ export const loadIcons: IconifyLoadIcons = (
 /**
  * Cache for loadIcon promises
  */
-type LoadIconResult = Promise<Required<IconifyIcon>>;
-const iconsQueue: Record<string, LoadIconResult> = Object.create(null);
-
-export const loadIcon = (icon: IconifyIconName | string): LoadIconResult => {
-	if (typeof icon === 'string' && iconsQueue[icon]) {
-		return iconsQueue[icon];
-	}
-
-	const result: LoadIconResult = new Promise((fulfill, reject) => {
+export const loadIcon = (
+	icon: IconifyIconName | string
+): Promise<Required<IconifyIcon>> => {
+	return new Promise((fulfill, reject) => {
 		const iconObj = typeof icon === 'string' ? stringToIcon(icon) : icon;
 		loadIcons([iconObj || icon], (loaded) => {
 			if (loaded.length && iconObj) {
@@ -366,9 +375,4 @@ export const loadIcon = (icon: IconifyIconName | string): LoadIconResult => {
 			reject(icon);
 		});
 	});
-
-	if (typeof icon === 'string') {
-		iconsQueue[icon] = result;
-	}
-	return result;
 };

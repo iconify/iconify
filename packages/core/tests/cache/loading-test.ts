@@ -12,7 +12,7 @@ import {
 	countKey,
 	hour,
 	cacheExpiration,
-} from './fake_cache';
+} from '../../lib/browser-storage/mock';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';
@@ -427,7 +427,7 @@ describe('Testing loading from localStorage', () => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
 				icons: {
-					['foo' + i]: {
+					['foo' + i.toString()]: {
 						body: '<g></g>',
 					},
 				},
@@ -443,12 +443,18 @@ describe('Testing loading from localStorage', () => {
 
 		// Add items 1,3,5 to localStorage
 		[1, 3, 5].forEach((index) => {
-			cache1.setItem(cachePrefix + index, JSON.stringify(items[index]));
+			cache1.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(items[index])
+			);
 		});
 
 		// Add items 0 and 2 to sessionStorage
 		[0, 2].forEach((index) => {
-			cache2.setItem(cachePrefix + index, JSON.stringify(items[index]));
+			cache2.setItem(
+				cachePrefix + index.toString(),
+				JSON.stringify(items[index])
+			);
 		});
 
 		// Set cache
@@ -460,7 +466,7 @@ describe('Testing loading from localStorage', () => {
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).toBe(false);
+			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(false);
 		}
 
 		// Load localStorage
@@ -468,7 +474,9 @@ describe('Testing loading from localStorage', () => {
 
 		// Icons should exist now, except for number 4
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i)).toBe(i !== 4);
+			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(
+				i !== 4
+			);
 		}
 
 		// Check data

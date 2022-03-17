@@ -58,7 +58,7 @@ export const defaults: FullIconCustomisations = Object.freeze({
 /**
  * TypeScript
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function assertNever(v: never) {
 	//
 }

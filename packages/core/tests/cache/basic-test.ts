@@ -7,7 +7,7 @@ import {
 	cacheVersion,
 	versionKey,
 	countKey,
-} from './fake_cache';
+} from '../../lib/browser-storage/mock';
 
 describe('Testing mocked localStorage', () => {
 	const provider = '';
