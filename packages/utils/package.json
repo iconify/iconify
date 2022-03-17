@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "1.0.24",
+	"version": "1.0.25",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -199,7 +199,7 @@
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
 		"@antfu/utils": "^0.3.0",
-		"@iconify/types": "^1.0.12",
+		"@iconify/types": "^1.0.13",
 		"debug": "^4.3.3",
 		"kolorist": "^1.5.0",
 		"local-pkg": "^0.4.0"
