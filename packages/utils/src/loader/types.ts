@@ -142,7 +142,7 @@ export type IconifyLoaderOptions = {
 	autoInstall?: boolean;
 
 	/**
-	 * Holder to include the properties added to the svg.
+	 * The additional icon properties applied to the svg.
 	 *
 	 * The `width` and `height` will not be set to the `svg` if already present on it, and so, the `width` and `height` will be those you configure on the customizations.
 	 * If you omit the `width/height/scale` options and the `svg` contains the `width` and/or `height`, then, both will be extracted from the `svg`.
