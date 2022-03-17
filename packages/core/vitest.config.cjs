@@ -7,6 +7,7 @@ module.exports = defineConfig({
 	},
 	test: {
 		globals: true,
+		isolate: false,
 		watch: false,
 		include: ['**/tests/**/*-test.ts'],
 	},

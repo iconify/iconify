@@ -12,8 +12,8 @@ import { mergeParams } from '../params';
 /**
  * Cache
  */
-const maxLengthCache: Record<string, number> = Object.create(null);
-const pathCache: Record<string, string> = Object.create(null);
+const maxLengthCache: Record<string, number> = {};
+const pathCache: Record<string, string> = {};
 
 /**
  * Get fetch function
@@ -71,7 +71,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 	} else {
 		let maxHostLength = 0;
 		config.resources.forEach((item) => {
-			const host = item as string;
+			const host = item;
 			maxHostLength = Math.max(maxHostLength, host.length);
 		});
 

@@ -80,7 +80,7 @@ export type IconifyMockAPI =
 export const iconsStorage: Record<
 	string,
 	Record<string, IconifyMockIconsAPI[]>
-> = Object.create(null);
+> = {};
 
 /**
  * Fake API storage for custom queries
@@ -90,7 +90,7 @@ export const iconsStorage: Record<
 export const customProviderStorage: Record<
 	string,
 	Record<string, IconifyMockCustomAPI>
-> = Object.create(null);
+> = {};
 
 /**
  * Fake API storage for custom queries
@@ -100,7 +100,7 @@ export const customProviderStorage: Record<
 export const customHostStorage: Record<
 	string,
 	Record<string, IconifyMockCustomHostAPI>
-> = Object.create(null);
+> = {};
 
 /**
  * Set data for mocking API
@@ -110,7 +110,7 @@ export function mockAPIData(data: IconifyMockAPI): void {
 		case 'icons': {
 			const provider = data.provider;
 			if (iconsStorage[provider] === void 0) {
-				iconsStorage[provider] = Object.create(null);
+				iconsStorage[provider] = {};
 			}
 			const providerStorage = iconsStorage[provider];
 
@@ -126,7 +126,7 @@ export function mockAPIData(data: IconifyMockAPI): void {
 		case 'custom': {
 			const provider = data.provider;
 			if (customProviderStorage[provider] === void 0) {
-				customProviderStorage[provider] = Object.create(null);
+				customProviderStorage[provider] = {};
 			}
 			customProviderStorage[provider][data.uri] = data;
 			break;
@@ -135,7 +135,7 @@ export function mockAPIData(data: IconifyMockAPI): void {
 		case 'host': {
 			const host = data.host;
 			if (customHostStorage[host] === void 0) {
-				customHostStorage[host] = Object.create(null);
+				customHostStorage[host] = {};
 			}
 			customHostStorage[host][data.uri] = data;
 			break;
@@ -180,7 +180,7 @@ export const mockAPIModule: IconifyAPIModule = {
 		);
 
 		// Find all icons
-		const matches: Record<number, string[]> = Object.create(null);
+		const matches: Record<number, string[]> = {};
 		const noMatch: string[] = [];
 		icons.forEach((name) => {
 			let index = mockData.findIndex((item) => {
