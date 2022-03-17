@@ -3,6 +3,7 @@ api-extractor.json
 rollup.config.js
 tsconfig.json
 build.js
+cleanup.js
 node_modules
 src
 lib
