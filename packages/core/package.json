@@ -20,9 +20,7 @@
 		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs  && jest --runInBand --config=jest.config.cjs",
 		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config=jest.config.mjs",
 		"test": "npm run test:jest-cjs && npm run test:jest-esm",
-		"vitest:cjs": "vitest --config vitest.config.cjs",
-		"vitest:esm": "vitest --config vitest.config.mjs",
-		"vitest": "npm run vitest:cjs && npm run vitest:esm"
+		"vitest": "vitest --config vitest.config.mjs"
 	},
 	"sideEffects": false,
 	"exports": {
