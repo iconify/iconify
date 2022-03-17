@@ -1,39 +1,39 @@
 import type { Awaitable } from '@antfu/utils';
 import type { IconifyLoaderOptions } from './types';
 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
-/*
-const svgWidthRegex = /(width\s*=\s*["'](\w+)["'])/d
-const svgHeightRegex = /(height\s*=\s*["'](\w+)["'])/d
+const svgWidthRegex = /width\s*=\s*["'](\w+)["']/;
+const svgHeightRegex = /height\s*=\s*["'](\w+)["']/;
 
-function configureSvgSize(svg: string, props: Record<string, string>, scale: number) {
-	if (props.width && props.height) {
-		return;
+function configureSvgSize(
+	svg: string,
+	props: Record<string, string>,
+	scale?: number
+): [boolean, boolean] {
+	const svgNode = svg.slice(0, svg.indexOf('>'));
+
+	let result = svgWidthRegex.exec(svgNode);
+	const w = result != null;
+	if (typeof props.width === 'undefined' || props.width === null) {
+		if (typeof scale === 'number') {
+			props.width = `${scale}em`;
+		} else if (result) {
+			props.width = result[1];
+		}
 	}
 
-	const svgNode = svg.slice(0, svg.indexOf('>'))
-	let height: string | undefined
-	let width: string | undefined
-
-	let result = svgWidthRegex.exec(svgNode)
-	if (result) {
-
-	}
-	if (!width) {
-		width = props.widht ?? `${scale}em`
+	result = svgHeightRegex.exec(svgNode);
+	const h = result != null;
+	if (typeof props.height === 'undefined' || props.height === null) {
+		if (typeof scale === 'number') {
+			props.height = `${scale}em`;
+		} else if (result) {
+			props.height = result[1];
+		}
 	}
 
-	result = svgHeightRegex.exec(svgNode)
-	if (result) {
-
-	}
-	if (!height) {
-		height = props.height ?? `${scale}em`
-	}
-
+	return [w, h];
 }
 
-*/
 export async function mergeIconProps(
 	svg: string,
 	collection: string,
@@ -45,19 +45,6 @@ export async function mergeIconProps(
 	const { additionalProps = {}, iconCustomizer } =
 		options?.customizations ?? {};
 	const props: Record<string, string> = (await propsProvider?.()) ?? {};
-	if (
-		!svg.includes(' width=') &&
-		!svg.includes(' height=') &&
-		typeof scale === 'number'
-	) {
-		if (
-			(typeof props.width === 'undefined' || props.width === null) &&
-			(typeof props.height === 'undefined' || props.height === null)
-		) {
-			props.width = `${scale}em`;
-			props.height = `${scale}em`;
-		}
-	}
 
 	await iconCustomizer?.(collection, icon, props);
 	Object.keys(additionalProps).forEach((p) => {
@@ -65,12 +52,7 @@ export async function mergeIconProps(
 		if (v !== undefined && v !== null) props[p] = v;
 	});
 
-	const addUsedProps = options && options.usedProps;
-	// we need to parse the svg if we need to also return used props
-	// and there are no width nor height in the props
-	// if (addUsedProps) {
-	// 	if (typeof props.width === 'undefined' || props.width === null)
-	// }
+	const [widthOnSvg, heightOnSvg] = configureSvgSize(svg, props, scale);
 
 	// add xml namespaces if necessary
 	if (addXmlNs) {
@@ -91,7 +73,12 @@ export async function mergeIconProps(
 	svg = svg.replace(
 		'<svg ',
 		`<svg ${Object.keys(props)
-			.map((p) => `${p}="${props[p]}"`)
+			.map((p) =>
+				(p === 'width' && widthOnSvg) || (p === 'height' && heightOnSvg)
+					? null
+					: `${p}="${props[p]}"`
+			)
+			.filter((p) => p != null)
 			.join(' ')}`
 	);
 
@@ -107,8 +94,8 @@ export async function mergeIconProps(
 		}
 	}
 
-	if (addUsedProps) {
-		options!.usedProps = Object.keys(props).reduce((acc, k) => {
+	if (options && options.usedProps) {
+		options.usedProps = Object.keys(props).reduce((acc, k) => {
 			if (k) {
 				switch (k) {
 					case 'scale':
@@ -122,6 +109,7 @@ export async function mergeIconProps(
 			}
 			return acc;
 		}, {} as Record<string, string>);
+		console.log(options.usedProps);
 	}
 
 	return svg;

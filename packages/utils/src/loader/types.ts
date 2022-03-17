@@ -142,7 +142,9 @@ export type IconifyLoaderOptions = {
 	autoInstall?: boolean;
 
 	/**
-	 * Holder to return the properties added to the svg.
+	 * Holder to include the properties added to the svg.
+	 *
+	 * If you need that properties just add an empty object here, usefull for example when using it on `CSS`.
 	 */
 	usedProps?: Record<string, string>;
 };
