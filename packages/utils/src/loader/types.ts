@@ -144,7 +144,10 @@ export type IconifyLoaderOptions = {
 	/**
 	 * Holder to include the properties added to the svg.
 	 *
-	 * If you need that properties just add an empty object here, usefull for example when using it on `CSS`.
+	 * The `width` and `height` will not be set to the `svg` if already present on it, and so, the `width` and `height` will be those you configure on the customizations.
+	 * If you omit the `width/height/scale` options and the `svg` contains the `width` and/or `height`, then, both will be extracted from the `svg`.
+	 *
+	 * If you need that properties just add an empty object here, useful for example when using the `svg` on `CSS`.
 	 */
 	usedProps?: Record<string, string>;
 };
