@@ -1,9 +1,12 @@
 .DS_Store
+.babelrc
 rollup.config.js
+tsconfig-base.json
 tsconfig.json
 api-extractor*.json
 build.js
 copy.js
+jest.config.js
 node_modules
 build
 src

@@ -61,7 +61,7 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.dist && !fileExists(packagesDir + '/core/lib/modules.js')) {
+if (compile.dist && !fileExists(packagesDir + '/core/lib/modules.mjs')) {
 	compile.core = true;
 }
 
