@@ -70,17 +70,16 @@ export async function mergeIconProps(
 		}
 	}
 
-	svg = svg.replace(
-		'<svg ',
-		`<svg ${Object.keys(props)
-			.map((p) =>
-				(p === 'width' && widthOnSvg) || (p === 'height' && heightOnSvg)
-					? null
-					: `${p}="${props[p]}"`
-			)
-			.filter((p) => p != null)
-			.join(' ')} `
-	);
+	const propsToAdd = Object.keys(props)
+		.map((p) =>
+			(p === 'width' && widthOnSvg) || (p === 'height' && heightOnSvg)
+				? null
+				: `${p}="${props[p]}"`
+		)
+		.filter((p) => p != null);
+	if (propsToAdd.length) {
+		svg = svg.replace('<svg ', `<svg ${propsToAdd.join(' ')} `);
+	}
 
 	if (svg && options) {
 		const { defaultStyle, defaultClass } = options;
