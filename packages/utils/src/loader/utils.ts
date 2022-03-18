@@ -79,7 +79,7 @@ export async function mergeIconProps(
 					: `${p}="${props[p]}"`
 			)
 			.filter((p) => p != null)
-			.join(' ')}`
+			.join(' ')} `
 	);
 
 	if (svg && options) {
