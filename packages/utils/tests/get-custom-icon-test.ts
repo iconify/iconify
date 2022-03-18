@@ -43,11 +43,14 @@ describe('Testing getCustomIcon', () => {
 		const result = await getCustomIcon(() => svg, 'a', 'b', options);
 		expect(result && result.indexOf('width="1em"') > -1).toBeTruthy();
 		expect(result && result.indexOf('height="1em"') > -1).toBeTruthy();
+
 		expect(options.usedProps).toBeTruthy();
-		expect(options.usedProps!).toHaveProperty('width');
-		expect(options.usedProps!).toHaveProperty('height');
-		expect(options.usedProps!.width).toEqual('4em');
-		expect(options.usedProps!.height).toEqual('4em');
+
+		const usedProps = options.usedProps as Record<string, string>;
+		expect(usedProps).toHaveProperty('width');
+		expect(usedProps).toHaveProperty('height');
+		expect(usedProps.width).toEqual('4em');
+		expect(usedProps.height).toEqual('4em');
 	});
 
 	test('Icon with XML heading', async () => {
