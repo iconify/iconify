@@ -1,7 +1,6 @@
 import fs from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import buble from '@rollup/plugin-buble';
 
 const match = '-test.ts';
 
@@ -39,9 +38,6 @@ const config = files.map((file) => {
 			}),
 			commonjs({
 				ignore: ['cross-fetch'],
-			}),
-			buble({
-				objectAssign: 'Object.assign',
 			}),
 		],
 	};

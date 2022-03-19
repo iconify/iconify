@@ -69,7 +69,7 @@ if (
 	compile.iconify = true;
 }
 
-if (compile.iconify && !fileExists(librariesDir + '/core/lib/modules.js')) {
+if (compile.iconify && !fileExists(librariesDir + '/core/lib/modules.mjs')) {
 	compile.core = true;
 }
 
