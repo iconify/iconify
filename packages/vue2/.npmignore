@@ -1,9 +1,12 @@
 .DS_Store
+.babelrc
+.eslintignore
+.eslintrc.js
 node_modules
 src
 lib
 tests
-api-extractor.json
+api-extractor.*.json
 build.js
 tsconfig.json
 *.config.js

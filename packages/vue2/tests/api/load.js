@@ -1,5 +1,5 @@
 import { _api, addAPIProvider } from '../../dist/iconify';
-import { mockAPIModule } from '@iconify/core/lib/api/modules/mock';
+import { mockAPIModule } from '@iconify/core/lib/api/modules/mock.cjs';
 
 // API provider for tests
 export const provider = 'mock-api';

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { loadIcons, iconExists } from '../../';
-import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
+import { mockAPIData } from '@iconify/core/lib/api/modules/mock.cjs';
 import { provider, nextPrefix } from './load';
 
 describe('Testing fake API', () => {

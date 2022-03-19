@@ -65,7 +65,7 @@ if (compile.api && !fileExists(packagesDir + '/vue/lib/IconifyIcon.d.ts')) {
 	compile.lib = true;
 }
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.js')) {
+if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.mjs')) {
 	compile.core = true;
 }
 

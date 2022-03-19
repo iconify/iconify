@@ -4,7 +4,7 @@
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import { Icon, loadIcons, iconExists } from '../../';
-import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
+import { mockAPIData } from '@iconify/core/lib/api/modules/mock.cjs';
 import { provider, nextPrefix } from './load';
 import { defaultIconResult } from '../empty';
 
