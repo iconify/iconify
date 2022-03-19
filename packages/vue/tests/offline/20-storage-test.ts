@@ -1,8 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import { mount } from '@vue/test-utils';
 import { Icon, addIcon, addCollection } from '../../offline';
+import { emptyString } from '../empty';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -93,6 +91,6 @@ describe('Using storage', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('');
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(emptyString);
 	});
 });

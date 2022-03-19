@@ -3,33 +3,42 @@
 		<h1>Style (components/Style.vue)</h1>
 		<div>
 			Default icon:
-			<Icon icon="experiment" />
+			<Icon icon="demo" />
 		</div>
 		<div>
 			Red color:
-			<Icon icon="experiment" color="red" />
-			<Icon icon="experiment" :style="{ color: 'red' }" />
-			<Icon icon="experiment" style="color: red" />
-			<Icon icon="experiment" :style="redIcon" />
+			<Icon icon="demo" color="red" />
+			<Icon
+				icon="demo"
+				:inline="true"
+				:style="{ color: 'red', verticalAlign: 0 }"
+			/>
+			<Icon
+				icon="demo"
+				:inline="true"
+				style="color: red; vertical-align: 0"
+			/>
+			<Icon icon="demo" :style="redIcon" />
 		</div>
 		<div>
 			40px:
-			<Icon icon="experiment" height="40" />
-			<Icon icon="experiment" :width="40" />
-			<Icon icon="experiment" :style="{ fontSize: '40px' }" />
-			<Icon icon="experiment" style="font-size: 40px" />
-			<Icon icon="experiment" :style="bigIcon" />
+			<Icon icon="demo" height="40" />
+			<Icon icon="demo" :width="40" />
+			<Icon
+				icon="demo"
+				:inline="true"
+				:style="{ fontSize: '40px', verticalAlign: 0 }"
+			/>
+			<Icon icon="demo" style="font-size: 40px" />
+			<Icon icon="demo" :style="bigIcon" />
 		</div>
 		<div>
 			Red and 40px:
-			<Icon icon="experiment" height="40" color="red" />
-			<Icon icon="experiment" :width="40" :style="redIcon" />
-			<Icon
-				icon="experiment"
-				:style="{ color: 'red', fontSize: '40px' }"
-			/>
-			<Icon icon="experiment" style="color: red; font-size: 40px" />
-			<Icon icon="experiment" :style="[bigIcon, redIcon]" />
+			<Icon icon="demo" height="40" color="red" />
+			<Icon icon="demo" :width="40" :style="redIcon" />
+			<Icon icon="demo" :style="{ color: 'red', fontSize: '40px' }" />
+			<Icon icon="demo" style="color: red; font-size: 40px" />
+			<Icon icon="demo" :style="[bigIcon, redIcon]" />
 		</div>
 	</section>
 </template>

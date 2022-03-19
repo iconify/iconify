@@ -3,17 +3,17 @@
 		<h1>Class (components/Class.vue)</h1>
 		<div>
 			Default icon:
-			<Icon icon="experiment" />
+			<Icon icon="demo" />
 		</div>
 		<div>
 			Red color:
-			<Icon icon="experiment" class="red-color" />
-			<Icon icon="experiment" :class="redClass" />
+			<Icon icon="demo" class="red-color" />
+			<Icon icon="demo" :class="redClass" />
 		</div>
 		<div>
 			Red color and 20px:
-			<Icon icon="experiment" class="red-color big-icon" />
-			<Icon icon="experiment" :class="[redClass, bigIcon]" />
+			<Icon icon="demo" class="red-color big-icon" />
+			<Icon icon="demo" :class="[redClass, bigIcon]" />
 		</div>
 	</section>
 </template>

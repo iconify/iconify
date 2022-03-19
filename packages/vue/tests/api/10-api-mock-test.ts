@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { loadIcons, iconExists } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';

@@ -3,50 +3,46 @@
 		<h1>Transformations (components/Transform.vue)</h1>
 		<div>
 			Default icon:
-			<Icon icon="experiment" />
+			<Icon icon="demo" />
 		</div>
 		<div>
 			Flip horizontally:
-			<Icon icon="experiment" :hFlip="true" />
-			<Icon icon="experiment" flip="horizontal" />
-			<Icon icon="experiment" :horizontal-flip="true" />
-			<Icon icon="experiment" :h-flip="true" />
+			<Icon icon="demo" :hFlip="true" />
+			<Icon icon="demo" flip="horizontal" />
+			<Icon icon="demo" :horizontal-flip="true" />
+			<Icon icon="demo" :h-flip="true" />
 		</div>
 		<div>
 			Flip vertically:
-			<Icon icon="experiment" :vFlip="true" />
-			<Icon icon="experiment" flip="vertical" />
-			<Icon icon="experiment" :vertical-flip="true" />
-			<Icon icon="experiment" :v-flip="true" />
+			<Icon icon="demo" :vFlip="true" />
+			<Icon icon="demo" flip="vertical" />
+			<Icon icon="demo" :vertical-flip="true" />
+			<Icon icon="demo" :v-flip="true" />
 		</div>
 		<div>
 			Flip horizontally and vertically:
-			<Icon icon="experiment" :hFlip="true" :vFlip="true" />
-			<Icon icon="experiment" flip="horizontal,vertical" />
-			<Icon
-				icon="experiment"
-				:horizontal-flip="true"
-				:vertical-flip="true"
-			/>
-			<Icon icon="experiment" :h-flip="true" :v-flip="true" />
+			<Icon icon="demo" :hFlip="true" :vFlip="true" />
+			<Icon icon="demo" flip="horizontal,vertical" />
+			<Icon icon="demo" :horizontal-flip="true" :vertical-flip="true" />
+			<Icon icon="demo" :h-flip="true" :v-flip="true" />
 		</div>
 		<div>
 			90&deg; rotation:
-			<Icon icon="experiment" :rotate="1" />
-			<Icon icon="experiment" rotate="90deg" />
-			<Icon icon="experiment" rotate="25%" />
+			<Icon icon="demo" :rotate="1" />
+			<Icon icon="demo" rotate="90deg" />
+			<Icon icon="demo" rotate="25%" />
 		</div>
 		<div>
 			180&deg; rotation:
-			<Icon icon="experiment" :rotate="2" />
-			<Icon icon="experiment" rotate="180deg" />
-			<Icon icon="experiment" rotate="50%" />
+			<Icon icon="demo" :rotate="2" />
+			<Icon icon="demo" rotate="180deg" />
+			<Icon icon="demo" rotate="50%" />
 		</div>
 		<div>
 			270&deg; rotation:
-			<Icon icon="experiment" :rotate="3" />
-			<Icon icon="experiment" rotate="270deg" />
-			<Icon icon="experiment" rotate="-25%" />
+			<Icon icon="demo" :rotate="3" />
+			<Icon icon="demo" rotate="270deg" />
+			<Icon icon="demo" rotate="-25%" />
 		</div>
 	</section>
 </template>

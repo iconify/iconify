@@ -22,7 +22,9 @@
 
 		<InlineDemo />
 
-		<LoadingDemo />
+		<LoadingTest />
+		<StyleTest />
+		<InlineTest />
 	</div>
 </template>
 
@@ -45,7 +47,9 @@ import OfflineUsageDemo from './demo-components/UsageOffline.vue';
 import FullOfflineUsageDemo from './demo-components/UsageFullOffline.vue';
 import FullUsageDemo from './demo-components/UsageFull.vue';
 
-import LoadingDemo from './test-components/LoadingDemo.vue';
+import LoadingTest from './test-components/LoadingDemo.vue';
+import StyleTest from './test-components/Style.vue';
+import InlineTest from './test-components/Inline.vue';
 
 // Disable cache
 disableCache('all');
@@ -104,7 +108,9 @@ export default {
 		OfflineUsageDemo,
 		FullOfflineUsageDemo,
 		FullUsageDemo,
-		LoadingDemo,
+		LoadingTest,
+		StyleTest,
+		InlineTest,
 	},
 };
 </script>

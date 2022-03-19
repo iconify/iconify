@@ -12,4 +12,4 @@ _api.setAPIModule(provider, mockAPIModule);
 
 // Prefix
 let counter = 0;
-export const nextPrefix = () => 'mock-' + counter++;
+export const nextPrefix = () => 'mock-' + (counter++).toString();

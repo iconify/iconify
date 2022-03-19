@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { mount } from '@vue/test-utils';
 import { Icon } from '../../dist/offline';
 

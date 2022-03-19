@@ -1,9 +1,7 @@
-/**
- * @jest-environment jsdom
- */
 import { mount } from '@vue/test-utils';
 // Import from alias
 import { Icon } from '../../offline';
+import { emptyString } from '../empty';
 
 describe('Empty icon', () => {
 	test('basic test', () => {
@@ -11,7 +9,7 @@ describe('Empty icon', () => {
 			props: {},
 		});
 
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('');
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(emptyString);
 	});
 
 	test('with child node', () => {
