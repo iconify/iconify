@@ -25,6 +25,9 @@
 		"vitest": "npm run vitest:cjs && npm run vitest:esm"
 	},
 	"sideEffects": false,
+	"main": "lib/index.cjs",
+	"module": "lib/index.mjs",
+	"types": "lib/index.d.ts",
 	"exports": {
 		".": {
 			"require": "./lib/index.cjs",
@@ -189,13 +192,17 @@
 			"import": "./lib/svg/size.mjs"
 		}
 	},
-	"main": "lib/index.cjs",
-	"module": "lib/index.mjs",
-	"types": "lib/index.d.ts",
 	"files": [
 		"lib",
 		"*.d.ts"
 	],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
 		"@antfu/utils": "^0.3.0",
