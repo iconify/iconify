@@ -34,8 +34,7 @@ export async function searchForIcon(
 				collection,
 				id,
 				options,
-				() => attributes,
-				false
+				() => attributes
 			);
 		}
 	}
