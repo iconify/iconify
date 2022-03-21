@@ -33,9 +33,9 @@ export async function searchForIcon(
 				`<svg >${body}</svg>`,
 				collection,
 				id,
-				false,
 				options,
-				() => attributes
+				() => attributes,
+				false
 			);
 		}
 	}

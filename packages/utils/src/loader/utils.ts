@@ -39,9 +39,9 @@ export async function mergeIconProps(
 	svg: string,
 	collection: string,
 	icon: string,
-	customSvg: boolean,
 	options?: IconifyLoaderOptions,
-	propsProvider?: () => Awaitable<Record<string, string>>
+	propsProvider?: () => Awaitable<Record<string, string>>,
+	customSvg?: boolean
 ): Promise<string> {
 	const { scale, addXmlNs = false } = options ?? {};
 	const { additionalProps = {}, iconCustomizer } =
@@ -109,7 +109,7 @@ export async function mergeIconProps(
 		}
 	}
 
-	return customSvg && options?.customizations?.trimCustomSvg === true
+	return customSvg === true && options?.customizations?.trimCustomSvg === true
 		? trimSVG(svg)
 		: svg;
 }

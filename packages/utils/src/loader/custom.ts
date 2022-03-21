@@ -40,9 +40,9 @@ export async function getCustomIcon(
 			typeof transform === 'function' ? await transform(result) : result,
 			collection,
 			icon,
-			true,
 			options,
-			undefined
+			undefined,
+			true
 		);
 	}
 }
