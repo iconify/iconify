@@ -5,7 +5,6 @@ import type {
 	InlineCollection,
 } from './types';
 import { mergeIconProps } from './utils';
-import { trimSVG } from '../svg/trim';
 
 const debug = createDebugger('@iconify-loader:custom');
 

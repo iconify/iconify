@@ -109,5 +109,7 @@ export async function mergeIconProps(
 		}
 	}
 
-	return customSvg && options?.customizations?.trimCustomSvg === true ? trimSVG(svg) : svg;
+	return customSvg && options?.customizations?.trimCustomSvg === true
+		? trimSVG(svg)
+		: svg;
 }
