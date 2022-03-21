@@ -1,5 +1,6 @@
 import type { Awaitable } from '@antfu/utils';
 import type { IconifyLoaderOptions } from './types';
+import { trimSVG } from '../svg/trim';
 
 const svgWidthRegex = /width\s*=\s*["'](\w+)["']/;
 const svgHeightRegex = /height\s*=\s*["'](\w+)["']/;
@@ -38,6 +39,7 @@ export async function mergeIconProps(
 	svg: string,
 	collection: string,
 	icon: string,
+	customSvg: boolean,
 	options?: IconifyLoaderOptions,
 	propsProvider?: () => Awaitable<Record<string, string>>
 ): Promise<string> {
@@ -81,7 +83,7 @@ export async function mergeIconProps(
 		svg = svg.replace('<svg ', `<svg ${propsToAdd.join(' ')} `);
 	}
 
-	if (svg && options) {
+	if (options) {
 		const { defaultStyle, defaultClass } = options;
 		// additional props and iconCustomizer takes precedence
 		if (defaultClass && !svg.includes(' class=')) {
@@ -107,5 +109,5 @@ export async function mergeIconProps(
 		}
 	}
 
-	return svg;
+	return customSvg && options?.customizations?.trimCustomSvg === true ? trimSVG(svg) : svg;
 }

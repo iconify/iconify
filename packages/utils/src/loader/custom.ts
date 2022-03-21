@@ -5,6 +5,7 @@ import type {
 	InlineCollection,
 } from './types';
 import { mergeIconProps } from './utils';
+import { trimSVG } from '../svg/trim';
 
 const debug = createDebugger('@iconify-loader:custom');
 
@@ -40,6 +41,7 @@ export async function getCustomIcon(
 			typeof transform === 'function' ? await transform(result) : result,
 			collection,
 			icon,
+			true,
 			options,
 			undefined
 		);

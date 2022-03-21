@@ -1,4 +1,8 @@
-// https://bl.ocks.org/jennyknuth/222825e315d45a738ed9d6e04c7a88d0
+/**
+ * Encode the `SVG` to be used on `CSS`: https://bl.ocks.org/jennyknuth/222825e315d45a738ed9d6e04c7a88d0.
+ *
+ * @param svg The `SVG` source.
+ */
 export function encodeSvgForCss(svg: string): string {
 	let useSvg = svg.startsWith('<svg>') ? svg.replace('<svg>', '<svg >') : svg;
 	if (!useSvg.includes(' xmlns:xlink=') && useSvg.includes(' xlink:')) {

@@ -33,6 +33,7 @@ export type IconCustomizer = (
  * - apply `customize` with default customizations, if provided
  * - apply `iconCustomizer` with `customize` customizations, if provided
  * - apply `additionalProps` with `iconCustomizer` customizations, if provided
+ * - apply `trimSVG` to the final `SVG` only when using custom icon collection and `trimCustomSvg` enabled
  */
 export type IconCustomizations = {
 	/**
@@ -63,6 +64,14 @@ export type IconCustomizations = {
 	 * All properties without value will not be applied.
 	 */
 	additionalProps?: Record<string, string | undefined>;
+	/**
+	 * Should optimize the custom `svg` icon?.
+	 *
+	 * Enable this flag when using custom `SVG` on `CSS`.
+	 *
+	 * @default `false`.
+	 */
+	trimCustomSvg?: boolean;
 };
 
 /**
