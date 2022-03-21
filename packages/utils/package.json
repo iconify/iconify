@@ -190,6 +190,10 @@
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs"
+		},
+		"./lib/svg/trim": {
+			"require": "./lib/svg/trim.cjs",
+			"import": "./lib/svg/trim.mjs"
 		}
 	},
 	"files": [

@@ -40,6 +40,7 @@ export { iconToSVG } from './svg/build';
 export { replaceIDs } from './svg/id';
 export { calculateSize } from './svg/size';
 export { encodeSvgForCss } from './svg/encode-svg-for-css';
+export { trimSVG } from './svg/trim';
 
 // Colors
 export { colorKeywords } from './colors/keywords';
