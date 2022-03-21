@@ -196,13 +196,13 @@
 		"lib",
 		"*.d.ts"
 	],
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./lib/*"
-      ]
-    }
-  },
+	"typesVersions": {
+		"*": {
+			"*": [
+				"./lib/*"
+			]
+		}
+	},
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
 		"@antfu/utils": "^0.3.0",
