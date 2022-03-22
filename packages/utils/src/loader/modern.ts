@@ -21,20 +21,46 @@ export async function searchForIcon(
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
 			debug(`${collection}:${id}`);
-			const defaultCustomizations = { ...DefaultIconCustomizations };
-			const { attributes, body } = iconToSVG(
-				iconData,
-				typeof customize === 'function'
-					? customize(defaultCustomizations)
-					: defaultCustomizations
-			);
+			let defaultCustomizations = { ...DefaultIconCustomizations };
+			if (typeof customize === 'function')
+				defaultCustomizations = customize(defaultCustomizations);
+
+			const {
+				attributes: { width, height, ...restAttributes },
+				body,
+			} = iconToSVG(iconData, defaultCustomizations);
+			const scale = options?.scale;
 			return await mergeIconProps(
 				// DON'T remove space on <svg >
 				`<svg >${body}</svg>`,
 				collection,
 				id,
 				options,
-				() => attributes
+				() => {
+					return { ...restAttributes };
+				},
+				(props) => {
+					if (
+						typeof props.width === 'undefined' ||
+						props.width === null
+					) {
+						if (typeof scale === 'number') {
+							props.width = `${scale}em`;
+						} else {
+							props.width = width;
+						}
+					}
+					if (
+						typeof props.height === 'undefined' ||
+						props.height === null
+					) {
+						if (typeof scale === 'number') {
+							props.height = `${scale}em`;
+						} else {
+							props.height = height;
+						}
+					}
+				}
 			);
 		}
 	}
