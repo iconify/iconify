@@ -21,3 +21,4 @@ yarn-error.log*
 *.sw?
 
 # Vue 2 repo is outdated, hiding from repo to avoid Dependabot alerts
+package-lock.json
