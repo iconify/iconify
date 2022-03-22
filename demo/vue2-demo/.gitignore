@@ -19,3 +19,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Vue 2 repo is outdated, hiding from repo to avoid Dependabot alerts
