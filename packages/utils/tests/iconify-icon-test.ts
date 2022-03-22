@@ -60,4 +60,30 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('width="2em"')).toBeTruthy();
 		expect(result && result.includes('height="2em"')).toBeTruthy();
 	});
+
+	test('loadIcon apply scale', async () => {
+		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
+			scale: 1.2,
+			defaultStyle: 'color: red;',
+			defaultClass: 'clazz1',
+			customizations: {
+				additionalProps: {
+					style: 'color: blue;',
+					class: 'clazz2',
+				},
+				// it will never be called, it is not a custom icon
+				transform(icon) {
+					return icon.replace(
+						'<svg ',
+						'<svg width="4em" height="4em" '
+					);
+				},
+			},
+		});
+		expect(result).toBeTruthy();
+		expect(result && result.includes('style="color: blue;"')).toBeTruthy();
+		expect(result && result.includes('class="clazz2"')).toBeTruthy();
+		expect(result && result.includes('width="1.2em"')).toBeTruthy();
+		expect(result && result.includes('height="1.2em"')).toBeTruthy();
+	});
 });
