@@ -42,9 +42,15 @@ export type IconCustomizations = {
 	 * **WARNING**: `transform` will be only applied when using `custom` icon collection: it will be applied only when using `getCustomIcon` and excluded when using `searchForIcon`.
 	 *
 	 * @param svg The loaded `svg`
+	 * @param collection The name of the collection
+	 * @param icon The name of the icon
 	 * @return The transformed `svg`.
 	 */
-	transform?: (svg: string) => Awaitable<string>;
+	transform?: (
+		svg: string,
+		collection: string,
+		icon: string
+	) => Awaitable<string>;
 	/**
 	 * Change default icon customizations values.
 	 *

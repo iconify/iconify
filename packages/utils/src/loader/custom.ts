@@ -38,7 +38,9 @@ export async function getCustomIcon(
 		}
 		const { transform } = options?.customizations ?? {};
 		result =
-			typeof transform === 'function' ? await transform(result) : result;
+			typeof transform === 'function'
+				? await transform(result, collection, icon)
+				: result;
 		return await mergeIconProps(
 			options?.customizations?.trimCustomSvg === true
 				? trimSVG(result)

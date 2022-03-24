@@ -46,8 +46,8 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 					class: 'clazz2',
 				},
 				// it will never be called, it is not a custom icon
-				transform(icon) {
-					return icon.replace(
+				transform(svg) {
+					return svg.replace(
 						'<svg ',
 						'<svg width="4em" height="4em" '
 					);
@@ -72,8 +72,8 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 					class: 'clazz2',
 				},
 				// it will never be called, it is not a custom icon
-				transform(icon) {
-					return icon.replace(
+				transform(svg) {
+					return svg.replace(
 						'<svg ',
 						'<svg width="4em" height="4em" '
 					);

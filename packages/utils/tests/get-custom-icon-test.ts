@@ -44,8 +44,8 @@ describe('Testing getCustomIcon', () => {
 					width: '4em',
 					height: '4em',
 				},
-				transform(icon) {
-					return icon.replace(
+				transform(svg) {
+					return svg.replace(
 						'<svg ',
 						'<svg width="1em" height="1em" '
 					);
