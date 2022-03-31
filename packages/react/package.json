@@ -47,7 +47,7 @@
 	"devDependencies": {
 		"@babel/preset-env": "^7.16.11",
 		"@babel/preset-react": "^7.16.7",
-		"@iconify/core": "^1.3.1",
+		"@iconify/core": "^1.3.2",
 		"@microsoft/api-extractor": "^7.19.5",
 		"@rollup/plugin-node-resolve": "^13.1.3",
 		"@types/react": "^17.0.41",
