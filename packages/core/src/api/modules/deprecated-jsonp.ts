@@ -7,7 +7,6 @@ import type {
 	IconifyAPIIconsQueryParams,
 } from '../modules';
 import { getAPIConfig } from '../config';
-import { mergeParams } from '../params';
 
 /**
  * Global
@@ -102,11 +101,13 @@ function calculateMaxLength(provider: string, prefix: string): number {
 		getGlobal();
 
 		// Get available length
-		const url = mergeParams(prefix + '.js', {
+		const params = new URLSearchParams({
 			icons: '',
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			callback: rootVarName!,
 		});
+
+		const url = prefix + '.js?' + params.toString();
 		result =
 			config.maxURL - maxHostLength - config.path.length - url.length;
 	}
@@ -145,7 +146,7 @@ const prepare: IconifyAPIPrepareIconsQuery = (
 	};
 	let length = 0;
 	icons.forEach((name, index) => {
-		length += name.length + 1;
+		length += name.length + 3; // comma = %2C
 		if (length >= maxLength && index > 0) {
 			// Next set
 			results.push(item);
@@ -200,11 +201,12 @@ const send: IconifyAPISendQuery = (
 	}
 	const callbackName = `${cbPrefix}${cbCounter}`;
 
-	const url = mergeParams(prefix + '.js', {
+	const urlParams = new URLSearchParams({
 		icons: iconsList,
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		callback: rootVarName!.replace('{cb}', callbackName),
 	});
+	const url = prefix + '.js?' + urlParams.toString();
 	const path = pathCache[cacheKey] + url;
 
 	global[callbackName] = (data: unknown): void => {

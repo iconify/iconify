@@ -57,10 +57,6 @@
 			"require": "./lib/api/modules/mock.cjs",
 			"import": "./lib/api/modules/mock.mjs"
 		},
-		"./lib/api/params": {
-			"require": "./lib/api/params.cjs",
-			"import": "./lib/api/params.mjs"
-		},
 		"./lib/api/query": {
 			"require": "./lib/api/query.cjs",
 			"import": "./lib/api/query.mjs"

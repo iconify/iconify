@@ -35,7 +35,6 @@ export {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
-	IconifyAPIMergeQueryParams,
 } from './functions';
 
 // Builder functions

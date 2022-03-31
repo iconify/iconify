@@ -13,7 +13,6 @@ import type {
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
 } from './modules';
-import type { MergeParams, IconifyAPIMergeQueryParams } from './params';
 import type { IconifyIcon } from '@iconify/types';
 
 /**
@@ -81,18 +80,9 @@ export interface IconifyAPIInternalFunctions {
 	 * List all API providers (from config)
 	 */
 	listAPIProviders: () => string[];
-
-	/**
-	 * Merge parameters
-	 */
-	mergeParams: MergeParams;
 }
 
 /**
  * Types needed for internal functions
  */
-export type {
-	IconifyAPIQueryParams,
-	IconifyAPICustomQueryParams,
-	IconifyAPIMergeQueryParams,
-};
+export type { IconifyAPIQueryParams, IconifyAPICustomQueryParams };

@@ -7,7 +7,6 @@ import type {
 	IconifyAPIIconsQueryParams,
 } from '../modules';
 import { getAPIConfig } from '../config';
-import { mergeParams } from '../params';
 
 /**
  * Cache
@@ -76,9 +75,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 		});
 
 		// Get available length
-		const url = mergeParams(prefix + '.json', {
-			icons: '',
-		});
+		const url = prefix + '.json?icons=';
 
 		result =
 			config.maxURL - maxHostLength - config.path.length - url.length;
@@ -186,9 +183,10 @@ const send: IconifyAPISendQuery = (
 			const icons = params.icons;
 			const iconsList = icons.join(',');
 
-			path += mergeParams(prefix + '.json', {
+			const urlParams = new URLSearchParams({
 				icons: iconsList,
 			});
+			path += prefix + '.json?' + urlParams.toString();
 			break;
 		}
 

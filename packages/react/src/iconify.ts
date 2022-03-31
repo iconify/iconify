@@ -32,7 +32,6 @@ import type {
 	IconifyAPIInternalFunctions,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
-	IconifyAPIMergeQueryParams,
 } from '@iconify/core/lib/api/functions';
 import type {
 	IconifyAPIModule,
@@ -61,7 +60,6 @@ import type {
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
-import { mergeParams } from '@iconify/core/lib/api/params';
 
 // Cache
 import { cache } from '@iconify/core/lib/cache';
@@ -123,7 +121,6 @@ export {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
-	IconifyAPIMergeQueryParams,
 };
 
 // Builder functions
@@ -456,7 +453,6 @@ const _api: IconifyAPIInternalFunctions = {
 	setFetch,
 	getFetch,
 	listAPIProviders,
-	mergeParams,
 };
 
 /**
