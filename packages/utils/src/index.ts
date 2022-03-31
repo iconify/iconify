@@ -27,6 +27,7 @@ export {
 // Icon set functions
 export { parseIconSet, isVariation } from './icon-set/parse';
 export { validateIconSet } from './icon-set/validate';
+export { quicklyValidateIconSet } from './icon-set/validate-basic';
 export { expandIconSet } from './icon-set/expand';
 export { minifyIconSet } from './icon-set/minify';
 export { getIcons } from './icon-set/get-icons';

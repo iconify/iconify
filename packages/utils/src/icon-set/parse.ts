@@ -1,7 +1,6 @@
 import type { IconifyAlias, IconifyJSON } from '@iconify/types';
 import { FullIconifyIcon, iconDefaults } from '../icon';
 import { getIconData } from './get-icon';
-import { IconSetValidationOptions, validateIconSet } from './validate';
 
 /**
  * Which aliases to parse:
@@ -35,7 +34,6 @@ export function isVariation(item: IconifyAlias): boolean {
 }
 
 export interface ParseIconSetOptions {
-	validate?: boolean | IconSetValidationOptions;
 	aliases?: ParseIconSetAliases;
 }
 
@@ -57,20 +55,6 @@ export function parseIconSet(
 	// Must be an object and must have 'icons' property
 	if (typeof data !== 'object' || typeof data.icons !== 'object') {
 		return names;
-	}
-
-	// Validate icon set
-	const validate = options.validate;
-	if (validate !== false) {
-		// Validate icon set
-		try {
-			validateIconSet(
-				data,
-				typeof validate === 'object' ? validate : { fix: true }
-			);
-		} catch (err) {
-			return names;
-		}
 	}
 
 	// Check for missing icons list returned by API

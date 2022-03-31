@@ -102,6 +102,10 @@
 			"require": "./lib/icon-set/validate.cjs",
 			"import": "./lib/icon-set/validate.mjs"
 		},
+		"./lib/icon-set/validate-basic": {
+			"require": "./lib/icon-set/validate-basic.cjs",
+			"import": "./lib/icon-set/validate-basic.mjs"
+		},
 		"./lib/icon": {
 			"require": "./lib/icon/index.cjs",
 			"import": "./lib/icon/index.mjs"

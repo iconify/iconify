@@ -2,6 +2,7 @@ import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
+import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 
 /**
  * List of icons
@@ -99,6 +100,10 @@ export function getStorage(provider: string, prefix: string): IconStorage {
  * Returns array of added icons
  */
 export function addIconSet(storage: IconStorage, data: IconifyJSON): string[] {
+	if (!quicklyValidateIconSet(data)) {
+		return [];
+	}
+
 	const t = Date.now();
 	return parseIconSet(data, (name, icon: FullIconifyIcon | null) => {
 		if (icon) {

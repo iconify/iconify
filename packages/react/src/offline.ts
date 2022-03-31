@@ -7,6 +7,7 @@ import type {
 } from '@iconify/utils/lib/customisations';
 import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
+import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -116,19 +117,11 @@ export function addCollection(
 			: prefix !== false && typeof data.prefix === 'string'
 			? data.prefix + ':'
 			: '';
-	parseIconSet(
-		data,
-		(name, icon) => {
+
+	quicklyValidateIconSet(data) &&
+		parseIconSet(data, (name, icon) => {
 			if (icon) {
 				storage[iconPrefix + name] = icon;
 			}
-		},
-		{
-			// Allow empty prefix
-			validate: {
-				fix: true,
-				prefix: iconPrefix,
-			},
-		}
-	);
+		});
 }

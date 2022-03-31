@@ -1,6 +1,7 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
+import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
 import {
@@ -108,21 +109,17 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 	) {
 		// Simple names: add icons one by one
 		let added = false;
-		parseIconSet(
-			data,
-			(name, icon) => {
+
+		if (quicklyValidateIconSet(data)) {
+			// Reset prefix
+			data.prefix = '';
+
+			parseIconSet(data, (name, icon) => {
 				if (icon && addIcon(name, icon)) {
 					added = true;
 				}
-			},
-			{
-				// Validate icon set and set prefix to empty
-				validate: {
-					fix: true,
-					prefix: '',
-				},
-			}
-		);
+			});
+		}
 		return added;
 	}
 
