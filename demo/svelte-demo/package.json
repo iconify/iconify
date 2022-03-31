@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@iconify-icons/mdi-light": "^1.1.1",
 		"@iconify-icons/uil": "^1.1.2",
-		"@iconify/svelte": "^2.2.0",
+		"@iconify/svelte": "^2.2.1",
 		"@rollup/plugin-commonjs": "^16.0.0",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"rollup": "^2.33.3",
