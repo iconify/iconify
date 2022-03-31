@@ -15,11 +15,11 @@
 		"@iconify-icons/bx": "^1.1.5",
 		"@iconify-icons/dashicons": "^1.1.1",
 		"@iconify/vue2": "^1.2.0",
-		"@vue/cli-plugin-babel": "^4.5.15",
-		"@vue/cli-plugin-typescript": "^4.5.15",
-		"@vue/cli-service": "^4.5.15",
+		"@vue/cli-plugin-babel": "^4.5.17",
+		"@vue/cli-plugin-typescript": "^4.5.17",
+		"@vue/cli-service": "^4.5.17",
 		"@vue/eslint-config-typescript": "^10.0.0",
-		"core-js": "^3.20.3",
+		"core-js": "^3.21.1",
 		"typescript": "^4.6.3",
 		"vue-template-compiler": "^2.6.14"
 	}
