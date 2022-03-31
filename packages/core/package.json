@@ -109,7 +109,7 @@
 	"dependencies": {
 		"@iconify/api-redundancy": "^1.1.0",
 		"@iconify/types": "^1.1.0",
-		"@iconify/utils": "^1.0.29"
+		"@iconify/utils": "^1.0.31"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.4.1",

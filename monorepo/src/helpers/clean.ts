@@ -14,7 +14,7 @@ export function cleanWorkspace(workspace: PackageInfo) {
 		if (!stat.isDirectory()) {
 			return;
 		}
-	} catch (err) {
+	} catch {
 		return;
 	}
 

@@ -4,6 +4,7 @@ import { cleanWorkspace } from './helpers/clean';
 import { runNPMCommand } from './helpers/exec';
 import { actionOptions, enablePrivateFilter } from './helpers/options';
 import { removeLinksFromWorkspace } from './helpers/remove-links';
+import { updateVersions } from './helpers/versions';
 
 /**
  * All actions
@@ -23,6 +24,9 @@ const actionFunctions: Record<string, () => void> = {
 			runNPMCommand(workspace, ['install']);
 			addLinksToWorkspace(workspace);
 		});
+	},
+	versions: () => {
+		runAction('Updating versions of local packages', updateVersions);
 	},
 };
 

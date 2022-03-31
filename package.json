@@ -18,7 +18,8 @@
 		"unlink": "node monorepo unlink",
 		"reinstall": "node monorepo clean install",
 		"build": "node monorepo run build --if-present --public",
-		"test": "node monorepo run build --if-present --public"
+		"test": "node monorepo run build --if-present --public",
+		"versions": "node monorepo versions"
 	},
 	"devDependencies": {}
 }
