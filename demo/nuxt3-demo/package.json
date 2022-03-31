@@ -10,6 +10,6 @@
 		"nuxt3": "latest"
 	},
 	"dependencies": {
-		"@iconify/vue": "^3.2.0"
+		"@iconify/vue": "^3.2.1"
 	}
 }
