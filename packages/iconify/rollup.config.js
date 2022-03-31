@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
+import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
 
@@ -121,6 +122,17 @@ names.forEach((name) => {
 					replace(replacements),
 				],
 			};
+
+			if (ext === 'js') {
+				// Support old browsers only in .js files.
+				// Other files are for modern browsers that don't need it or
+				// for bundlers that should handle old browser support themselves.
+				item.plugins.push(
+					buble({
+						objectAssign: 'Object.assign',
+					})
+				);
+			}
 
 			if (minify) {
 				item.plugins.push(terser());

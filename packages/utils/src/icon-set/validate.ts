@@ -92,7 +92,7 @@ export function validateIconSet(
 	obj: unknown,
 	options?: IconSetValidationOptions
 ): IconifyJSON {
-	const fix = !!options?.fix;
+	const fix = !!(options && options.fix);
 
 	// Check for object with 'icons' nested object
 	if (
@@ -108,7 +108,7 @@ export function validateIconSet(
 	const data = obj as IconifyJSON;
 
 	// Set or validate prefix
-	if (typeof options?.prefix === 'string') {
+	if (options && typeof options.prefix === 'string') {
 		data.prefix = options.prefix;
 	} else if (
 		typeof data.prefix !== 'string' ||
@@ -118,7 +118,7 @@ export function validateIconSet(
 	}
 
 	// Set or validate provider
-	if (typeof options?.provider === 'string') {
+	if (options && typeof options.provider === 'string') {
 		data.provider = options.provider;
 	} else if (data.provider !== void 0) {
 		const value = data.provider;
@@ -183,7 +183,10 @@ export function validateIconSet(
 	}
 
 	// Make sure icons list is not empty
-	if (!Object.keys(data.icons).length && !data.not_found?.length) {
+	if (
+		!Object.keys(data.icons).length &&
+		!(data.not_found && data.not_found.length)
+	) {
 		throw new Error('Icon set is empty');
 	}
 
@@ -313,8 +316,8 @@ export function validateIconSet(
 			}
 			const target = chars[char];
 			if (
-				data.icons[target] === void 0 &&
-				data.aliases?.[target] === void 0
+				!data.icons[target] &&
+				(!data.aliases || !data.aliases[target])
 			) {
 				if (fix) {
 					delete chars[char];

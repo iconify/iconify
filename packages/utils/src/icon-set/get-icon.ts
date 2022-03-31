@@ -33,8 +33,9 @@ export function getIconData(
 		}
 
 		// Check if alias exists
-		if (data.aliases?.[name] !== void 0) {
-			const item = data.aliases?.[name];
+		const aliases = data.aliases;
+		if (aliases && aliases[name] !== void 0) {
+			const item = aliases[name];
 			const result = getIcon(item.parent, iteration + 1);
 			if (result) {
 				return mergeIconData(result, item);
@@ -43,8 +44,9 @@ export function getIconData(
 		}
 
 		// Check if character exists
-		if (iteration === 0 && data.chars?.[name] !== void 0) {
-			return getIcon(data.chars?.[name], iteration + 1);
+		const chars = data.chars;
+		if (!iteration && chars && chars[name] !== void 0) {
+			return getIcon(chars[name], iteration + 1);
 		}
 
 		return null;

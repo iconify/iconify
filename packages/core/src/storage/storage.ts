@@ -44,7 +44,7 @@ interface WindowWithStorage extends Window {
 
 try {
 	const w = (window || self) as unknown as WindowWithStorage | undefined;
-	if (w?._iconifyStorage.version === storageVersion) {
+	if (w && w._iconifyStorage.version === storageVersion) {
 		storage = w._iconifyStorage.storage;
 	}
 } catch (err) {

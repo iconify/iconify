@@ -39,20 +39,22 @@ export function getIcons(
 		}
 
 		// Check for alias
-		if (data.aliases?.[name] !== void 0) {
-			const copied = copy(data.aliases[name].parent, iteration + 1);
+		const aliases = data.aliases;
+		if (aliases && aliases[name] !== void 0) {
+			const copied = copy(aliases[name].parent, iteration + 1);
 			if (copied) {
 				if (result.aliases === void 0) {
 					result.aliases = Object.create(null) as never;
 				}
-				result.aliases[name] = { ...data.aliases[name] };
+				result.aliases[name] = { ...aliases[name] };
 			}
 			return copied;
 		}
 
 		// Check for character, return as alias
-		if (data.chars?.[name] !== void 0) {
-			const parent = data.chars?.[name];
+		const chars = data.chars;
+		if (chars && chars[name] !== void 0) {
+			const parent = chars[name];
 			const copied = copy(parent, iteration + 1);
 			if (copied) {
 				if (result.aliases === void 0) {
