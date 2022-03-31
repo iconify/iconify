@@ -3,7 +3,7 @@
 	"private": true,
 	"description": "Browser tests for @iconify/iconify package",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"license": "(Apache-2.0 OR GPL-2.0)",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -18,7 +18,7 @@
 		"build:dist": "rollup -c rollup.config.js"
 	},
 	"devDependencies": {
-		"@iconify/iconify": "^2.2.0",
+		"@iconify/iconify": "^2.2.1",
 		"@rollup/plugin-commonjs": "^21.0.1",
 		"@rollup/plugin-node-resolve": "^10.0.0",
 		"@types/chai": "^4.3.0",
