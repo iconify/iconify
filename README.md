@@ -64,7 +64,6 @@ Other packages:
 -   [Sapper demo](./demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
 -   [SvelteKit demo](./demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./demo/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
--   [Browser tests](./demo/browser-tests/) - unit tests for SVG framework. Run `npm run build` to build it. Open test.html in browser (requires HTTP server).
 
 ## Installation
 
@@ -107,7 +106,7 @@ This monorepo uses symbolic links to create links between packages. This allows 
 When using Windows, symbolic links require setting up extra permissions. If you are using Windows and cannot set permissions for symbolic links, there are several options:
 
 -   Use Windows Subsystem for Linux (WSL).
--   Treat each package as a separate package, without links to other packages. All packages do have correct dependencies, so you will be able to use most packages (except for `browser-tests` that requires links to access directory `lib` from `iconify` package), but you will not be able to work on multiple packages at the same time.
+-   Treat each package as a separate package, without links to other packages. All packages do have correct dependencies, so you will be able to use most packages, but you will not be able to work on multiple packages at the same time.
 
 ## Documentation
 

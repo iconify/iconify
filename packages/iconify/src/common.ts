@@ -11,24 +11,29 @@ import {
 } from '@iconify/core/lib/storage/functions';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
-import { renderIconInPlaceholder } from './modules/render';
-import { initObserver } from './modules/observer';
-import { scanDOM, scanElement } from './modules/scanner';
-
-// Finders
-import { addFinder } from './modules/finder';
-import { finder as iconifyFinder } from './finders/iconify';
-import { addBodyNode } from './modules/root';
-// import { finder as iconifyIconFinder } from './finders/iconify-icon';
+import { initObserver } from './observer/index';
+import { scanDOM, scanElement } from './scanner/index';
+import { addBodyNode } from './observer/root';
+import { renderInlineSVG } from './render/svg';
 
 /**
  * Generate icon
  */
 function generateIcon(
 	name: string,
+	customisations: IconifyIconCustomisations | undefined,
+	returnString: false | undefined
+): SVGSVGElement | null;
+function generateIcon(
+	name: string,
+	customisations: IconifyIconCustomisations | undefined,
+	returnString: true
+): string | null;
+function generateIcon(
+	name: string,
 	customisations?: IconifyIconCustomisations,
-	returnString?: boolean
-): SVGElement | string | null {
+	returnString = false
+): SVGSVGElement | string | null {
 	// Get icon data
 	const iconData = getIconData(name);
 	if (!iconData) {
@@ -45,14 +50,18 @@ function generateIcon(
 	);
 
 	// Get data
-	return renderIconInPlaceholder(
+	const result = renderInlineSVG(
+		document.createElement('span'),
 		{
-			name: iconName,
+			name,
+			icon: iconName,
+			customisations: changes,
 		},
-		changes,
-		iconData,
-		returnString
-	) as unknown as SVGElement | string | null;
+		iconData
+	);
+	return returnString
+		? result.outerHTML
+		: (result as unknown as SVGSVGElement);
 }
 
 /**
@@ -182,10 +191,6 @@ export function scan(root?: HTMLElement): void {
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Add document.body node
 	addBodyNode();
-
-	// Add finder modules
-	// addFinder(iconifyIconFinder);
-	addFinder(iconifyFinder);
 
 	interface WindowWithIconifyStuff {
 		IconifyPreload?: IconifyJSON[] | IconifyJSON;

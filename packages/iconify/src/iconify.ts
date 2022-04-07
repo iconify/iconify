@@ -73,7 +73,7 @@ import {
 	stopObserving,
 	pauseObserver,
 	resumeObserver,
-} from './modules/observer';
+} from './observer/index';
 
 /**
  * Export required types
