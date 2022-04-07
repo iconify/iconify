@@ -7,7 +7,8 @@ import {
 	IconifyElementProps,
 	IconifyElementData,
 } from '../scanner/config';
-import { applyClasses } from './classes';
+import { applyClasses, iconClasses } from './classes';
+import { generateHTML } from './html';
 import { applyStyle } from './style';
 
 /**
@@ -33,21 +34,20 @@ export function renderInlineSVG(
 	const oldData = element[elementDataProperty];
 
 	// Generate SVG
-	const html =
-		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img">' +
-		replaceIDs(renderData.body) +
-		'</svg>';
+	const html = generateHTML(
+		{
+			'aria-hidden': 'true',
+			'role': 'img',
+			...renderData.attributes,
+		},
+		replaceIDs(renderData.body)
+	);
 	span.innerHTML = html;
 
 	// Get SVG element
 	const svg = span.childNodes[0] as IconifyElement;
 
 	// Add attributes
-	const svgAttributes = renderData.attributes as Record<string, string>;
-	Object.keys(svgAttributes).forEach((attr) => {
-		svg.setAttribute(attr, svgAttributes[attr]);
-	});
-
 	const placeholderAttributes = element.attributes;
 	for (let i = 0; i < placeholderAttributes.length; i++) {
 		const item = placeholderAttributes.item(i);
@@ -58,13 +58,7 @@ export function renderInlineSVG(
 	}
 
 	// Add classes
-	const classesToAdd: Set<string> = new Set(['iconify']);
-	const iconName = props.icon;
-	['provider', 'prefix'].forEach((attr: keyof typeof iconName) => {
-		if (iconName[attr]) {
-			classesToAdd.add('iconify--' + iconName[attr]);
-		}
-	});
+	const classesToAdd = iconClasses(props.icon);
 	const addedClasses = applyClasses(
 		svg,
 		classesToAdd,

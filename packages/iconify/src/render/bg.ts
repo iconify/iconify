@@ -6,7 +6,8 @@ import {
 	IconifyElementProps,
 	IconifyElementData,
 } from '../scanner/config';
-import { applyClasses } from './classes';
+import { applyClasses, iconClasses } from './classes';
+import { generateHTML } from './html';
 import { applyStyle } from './style';
 
 const commonProps: Record<string, string> = {
@@ -51,34 +52,21 @@ export function renderBackground(
 	const renderData = iconToSVG(iconData, {
 		...props.customisations,
 	});
+	const renderAttribs = renderData.attributes;
 
 	// Get old data
 	const oldData = element[elementDataProperty];
 
 	// Generate SVG
-	const renderAttribs = renderData.attributes;
-	let renderAttribsHTML = '';
-	for (const attr in renderAttribs) {
-		const value = (
-			iconData[attr] !== void 0 ? iconData[attr] : renderAttribs[attr]
-		) as string;
-		renderAttribsHTML += ' ' + attr + '="' + value + '"';
-	}
-	const html =
-		'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' +
-		renderAttribsHTML +
-		'>' +
-		renderData.body +
-		'</svg>';
+	const svgAttribs: Record<string, string> = {
+		...renderAttribs,
+	};
+	svgAttribs.width = iconData.width.toString();
+	svgAttribs.height = iconData.height.toString();
+	const html = generateHTML(svgAttribs, renderData.body);
 
 	// Add classes
-	const classesToAdd: Set<string> = new Set(['iconify']);
-	const iconName = props.icon;
-	['provider', 'prefix'].forEach((attr: keyof typeof iconName) => {
-		if (iconName[attr]) {
-			classesToAdd.add('iconify--' + iconName[attr]);
-		}
-	});
+	const classesToAdd = iconClasses(props.icon);
 	const addedClasses = applyClasses(
 		element,
 		classesToAdd,

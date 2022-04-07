@@ -1,4 +1,18 @@
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type { IconifyElement } from '../scanner/config';
+
+/**
+ * Get classes to add from icon name
+ */
+export function iconClasses(iconName: IconifyIconName): Set<string> {
+	const classesToAdd: Set<string> = new Set(['iconify']);
+	['provider', 'prefix'].forEach((attr: keyof typeof iconName) => {
+		if (iconName[attr]) {
+			classesToAdd.add('iconify--' + iconName[attr]);
+		}
+	});
+	return classesToAdd;
+}
 
 /**
  * Add classes to SVG, removing previously added classes, keeping custom classes
