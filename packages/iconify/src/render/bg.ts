@@ -14,21 +14,30 @@ const commonProps: Record<string, string> = {
 };
 
 const monotoneProps: Record<string, string> = {
-	'-webkit-mask-image': 'var(--svg)',
-	'-webkit-mask-repeat': 'no-repeat',
-	'-webkit-mask-size': '100% 100%',
-	'mask-image': 'var(--svg)',
-	'mask-repeat': 'no-repeat',
-	'mask-size': '100% 100%',
 	'background-color': 'currentColor',
 };
 
 const coloredProps: Record<string, string> = {
-	'background-image': 'var(--svg)',
-	'background-repeat': 'no-repeat',
-	'background-size': '100% 100%',
 	'background-color': 'transparent',
 };
+
+// Dynamically add common props to variables above
+const propsToAdd: Record<string, string> = {
+	image: 'var(--svg)',
+	repeat: 'no-repeat',
+	size: '100% 100%',
+};
+const propsToAddTo: Record<string, Record<string, string>> = {
+	'-webkit-mask': monotoneProps,
+	'mask': monotoneProps,
+	'background': coloredProps,
+};
+for (const prefix in propsToAddTo) {
+	const list = propsToAddTo[prefix];
+	for (const prop in propsToAdd) {
+		list[prefix + '-' + prop] = propsToAdd[prop];
+	}
+}
 
 /**
  * Render icon as inline SVG
