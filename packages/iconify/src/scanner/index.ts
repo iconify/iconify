@@ -22,7 +22,7 @@ import {
 	stopObserving,
 } from '../observer';
 import { renderInlineSVG } from '../render/svg';
-import { renderBackground } from '../render/bg';
+// import { renderBackground } from '../render/bg';
 
 /**
  * Flag to avoid scanning DOM too often

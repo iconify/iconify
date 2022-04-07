@@ -86,7 +86,6 @@ export function renderInlineSVG(
 	// Add data to element
 	const newData: IconifyElementData = {
 		...props,
-		isSVG: true,
 		status: 'loaded',
 		addedClasses,
 		addedStyles,

@@ -47,9 +47,6 @@ export interface IconifyElementData extends IconifyElementProps {
 	// Status
 	status: IconStatus;
 
-	// True if SVG has been rendered
-	isSVG?: boolean;
-
 	// List of classes that were added to element on last render
 	addedClasses?: IconifyElementAddedClasses;
 

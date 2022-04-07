@@ -67,7 +67,6 @@ describe('Observing DOM changes', () => {
 		const svg = document.body.childNodes[0] as SVGSVGElement;
 		const svgData = svg[elementDataProperty];
 		expect(svgData.status).toBe('loaded');
-		expect(svgData.isSVG).toBe(true);
 		expect(svgData.name).toEqual(iconName);
 
 		// Rotate icon
@@ -148,7 +147,6 @@ describe('Observing DOM changes', () => {
 		const svg = document.body.childNodes[0] as SVGSVGElement;
 		const svgData = svg[elementDataProperty];
 		expect(svgData.status).toBe('loaded');
-		expect(svgData.isSVG).toBe(true);
 		expect(svgData.name).toEqual(iconName);
 
 		// Chang icon name
@@ -163,7 +161,6 @@ describe('Observing DOM changes', () => {
 		);
 		expect(document.body.childNodes[0]).toBe(svg);
 		expect(svgData.status).toBe('loading');
-		expect(svgData.isSVG).toBe(true);
 		expect(svgData.name).toEqual(iconName2);
 
 		// Send API query
@@ -248,7 +245,6 @@ describe('Observing DOM changes', () => {
 		const placeholder = document.body.childNodes[0] as HTMLSpanElement;
 		const placeholderData = placeholder[elementDataProperty];
 		expect(placeholderData.status).toBe('loading');
-		expect(placeholderData.isSVG).toBeFalsy();
 		expect(placeholderData.name).toEqual(iconName);
 
 		// Chang icon name
@@ -263,7 +259,6 @@ describe('Observing DOM changes', () => {
 		);
 		expect(document.body.childNodes[0]).toBe(placeholder);
 		expect(placeholderData.status).toBe('loading');
-		expect(placeholderData.isSVG).toBeFalsy();
 		expect(placeholderData.name).toEqual(iconName2);
 
 		// Send first API query
@@ -279,7 +274,6 @@ describe('Observing DOM changes', () => {
 		);
 		expect(document.body.childNodes[0]).toBe(placeholder);
 		expect(placeholderData.status).toBe('loading');
-		expect(placeholderData.isSVG).toBeFalsy();
 		expect(placeholderData.name).toEqual(iconName2);
 
 		// Send second API query

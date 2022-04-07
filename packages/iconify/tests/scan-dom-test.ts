@@ -104,7 +104,6 @@ describe('Scanning DOM', () => {
 		const placeholderData = placeholder[elementDataProperty];
 		expect(placeholderData.status).toBe('loading');
 		expect(placeholderData.name).toEqual(iconName);
-		expect(placeholderData.isSVG).toBeFalsy();
 
 		// Wait for re-render
 		await awaitUntil(() => document.body.childNodes[0] !== placeholder);
@@ -116,7 +115,6 @@ describe('Scanning DOM', () => {
 		const svg = document.body.childNodes[0];
 		const svgData = svg[elementDataProperty];
 		expect(svgData.status).toBe('loaded');
-		expect(svgData.isSVG).toBe(true);
 		expect(svgData.name).toEqual(iconName);
 	});
 
@@ -162,7 +160,6 @@ describe('Scanning DOM', () => {
 		const placeholderData = placeholder[elementDataProperty];
 		expect(placeholderData.status).toBe('loading');
 		expect(placeholderData.name).toEqual(iconName);
-		expect(placeholderData.isSVG).toBeFalsy();
 
 		// Wait for re-render
 		await awaitUntil(() => placeholderData.status === 'missing');
