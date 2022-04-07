@@ -15,13 +15,13 @@ import {
 import { scanRootNode } from './find';
 import type { IconifyIconName } from '../iconify';
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { renderInlineSVG } from '../render/svg';
 import {
 	observe,
 	pauseObservingNode,
 	resumeObservingNode,
 	stopObserving,
 } from '../observer';
+import { renderInlineSVG } from '../render/svg';
 import { renderBackground } from '../render/bg';
 
 /**
@@ -122,8 +122,8 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 				paused = true;
 				pauseObservingNode(observedNode);
 			}
-			// renderInlineSVG(element, props, iconData);
-			renderBackground(element, props, iconData);
+			renderInlineSVG(element, props, iconData);
+			// renderBackground(element, props, iconData);
 		}
 
 		// Find all elements
