@@ -8,6 +8,11 @@ export const blockClass = 'iconify';
 export const inlineClass = 'iconify-inline';
 
 /**
+ * Icon render mode
+ */
+export type IconRenderMode = 'style' | 'inline';
+
+/**
  * Data used to verify if icon is the same
  */
 export interface IconifyElementProps {
@@ -19,6 +24,9 @@ export interface IconifyElementProps {
 
 	// Customisations
 	customisations: Required<IconifyIconCustomisations>;
+
+	// Render mode
+	mode?: IconRenderMode;
 }
 
 /**

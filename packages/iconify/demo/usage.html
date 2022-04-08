@@ -24,7 +24,10 @@
 			p:nth-child(2n) {
 				background-color: #f8f8f8;
 			}
-			svg:hover {
+			:where(p:hover) .iconify {
+				color: green;
+			}
+			.iconify:hover {
 				color: red;
 			}
 		</style>
@@ -43,16 +46,32 @@
 		<script src="../dist/iconify.min.js"></script>
 	</head>
 	<body>
-		<p>This is a simple HTML page with few icons.</p>
+		<p>
+			This is a simple HTML page with few icons.<br />
+			There are 2 entries for each sample: one as inline SVG, one using
+			style.
+		</p>
 		<p>
 			Icons that behave like images:
 			<span class="iconify" data-icon="bi:house-door"></span>
+			<span
+				class="iconify"
+				data-icon="bi:house-door"
+				data-mode="style"
+			></span>
 			<i class="iconify" data-icon="cif:ee"></i>
+			<i class="iconify" data-icon="cif:ee" data-mode="style"></i>
 		</p>
 		<p>
 			Icon that behaves like an glyph (aligned to bottom of this text):
 			<span class="iconify-inline" data-icon="bi:house-door"></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:house-door"
+				data-mode="style"
+			></span>
 			<i class="iconify-inline" data-icon="cif:ee"></i>
+			<i class="iconify-inline" data-icon="cif:ee" data-mode="style"></i>
 		</p>
 		<p>
 			Changing icon color:
@@ -60,6 +79,12 @@
 				class="iconify-inline"
 				style="color: red"
 				data-icon="bi:house-door"
+			></span>
+			<span
+				class="iconify-inline"
+				style="color: red"
+				data-icon="bi:house-door"
+				data-mode="style"
 			></span>
 		</p>
 		<p>
@@ -72,7 +97,19 @@
 			<span
 				class="iconify-inline"
 				data-icon="bi:person-lines-fill"
+				style="font-size: 2em"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:person-lines-fill"
 				data-height="2em"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:person-lines-fill"
+				data-height="2em"
+				data-mode="style"
 			></span>
 			<br />
 			Icons above should be aligned differently because they have
@@ -88,7 +125,19 @@
 			<span
 				class="iconify"
 				data-icon="bi:person-lines-fill"
+				style="font-size: 2em"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify"
+				data-icon="bi:person-lines-fill"
 				data-height="2em"
+			></span>
+			<span
+				class="iconify"
+				data-icon="bi:person-lines-fill"
+				data-height="2em"
+				data-mode="style"
 			></span>
 			<br />
 			Icons above should be aligned identically because they are not using
@@ -100,7 +149,18 @@
 			<span
 				class="iconify-inline"
 				data-icon="bi:image"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
 				data-rotate="1"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
+				data-rotate="1"
+				data-mode="style"
 			></span>
 			<span
 				class="iconify-inline"
@@ -110,7 +170,19 @@
 			<span
 				class="iconify-inline"
 				data-icon="bi:image"
+				data-rotate="180deg"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
 				data-rotate="75%"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="bi:image"
+				data-rotate="75%"
+				data-mode="style"
 			></span>
 		</p>
 		<p>
@@ -119,7 +191,18 @@
 			<span
 				class="iconify-inline"
 				data-icon="test:icon"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="test:icon"
 				data-flip="horizontal"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="test:icon"
+				data-flip="horizontal"
+				data-mode="style"
 			></span>
 			<span
 				class="iconify-inline"
@@ -129,7 +212,19 @@
 			<span
 				class="iconify-inline"
 				data-icon="test:icon"
+				data-flip="vertical"
+				data-mode="style"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="test:icon"
 				data-flip="horizontal,vertical"
+			></span>
+			<span
+				class="iconify-inline"
+				data-icon="test:icon"
+				data-flip="horizontal,vertical"
+				data-mode="style"
 			></span>
 		</p>
 	</body>

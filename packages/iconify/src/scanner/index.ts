@@ -22,7 +22,7 @@ import {
 	stopObserving,
 } from '../observer';
 import { renderInlineSVG } from '../render/svg';
-// import { renderBackground } from '../render/bg';
+import { renderBackground } from '../render/bg';
 
 /**
  * Flag to avoid scanning DOM too often
@@ -122,8 +122,15 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 				paused = true;
 				pauseObservingNode(observedNode);
 			}
-			renderInlineSVG(element, props, iconData);
-			// renderBackground(element, props, iconData);
+
+			if (
+				element.tagName.toUpperCase() === 'SVG' ||
+				props.mode !== 'style'
+			) {
+				renderInlineSVG(element, props, iconData);
+			} else {
+				renderBackground(element, props, iconData);
+			}
 		}
 
 		// Find all elements

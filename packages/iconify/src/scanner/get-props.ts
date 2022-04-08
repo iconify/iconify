@@ -6,7 +6,7 @@ import {
 	alignmentFromString,
 	flipFromString,
 } from '@iconify/utils/lib/customisations/shorthand';
-import { inlineClass } from './config';
+import { IconRenderMode, inlineClass } from './config';
 import type { IconifyElementProps } from './config';
 
 /**
@@ -99,9 +99,15 @@ export function getElementProps(element: Element): IconifyElementProps | null {
 		}
 	});
 
+	// Get render mode. Not checking actual value because incorrect values are treated as inline
+	const mode = element.getAttribute('data-mode') as
+		| IconRenderMode
+		| undefined;
+
 	return {
 		name,
 		icon,
 		customisations,
+		mode,
 	};
 }
