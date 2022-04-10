@@ -1,6 +1,7 @@
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { svgToURL } from '@iconify/utils/lib/svg/url';
 import {
 	elementDataProperty,
 	IconifyElement,
@@ -74,17 +75,7 @@ export function renderBackground(
 
 	// Update style
 	const isMonotone = renderData.body.indexOf('currentColor') !== -1;
-	const url =
-		'url("data:image/svg+xml,' +
-		html
-			.replace(/"/g, "'")
-			.replace(/%/g, '%25')
-			.replace(/#/g, '%23')
-			.replace(/{/g, '%7B')
-			.replace(/}/g, '%7D')
-			.replace(/</g, '%3C')
-			.replace(/>/g, '%3E') +
-		'")';
+	const url = svgToURL(html);
 	const newStyles: Record<string, string> = {
 		'--svg': url,
 		'width': renderAttribs.width,
