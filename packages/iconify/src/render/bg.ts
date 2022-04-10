@@ -1,5 +1,6 @@
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import {
 	elementDataProperty,
 	IconifyElement,
@@ -7,7 +8,6 @@ import {
 	IconifyElementData,
 } from '../scanner/config';
 import { applyClasses, iconClasses } from './classes';
-import { generateHTML } from './html';
 import { applyStyle } from './style';
 
 const commonProps: Record<string, string> = {
@@ -58,12 +58,11 @@ export function renderBackground(
 	const oldData = element[elementDataProperty];
 
 	// Generate SVG
-	const svgAttribs: Record<string, string> = {
+	const html = iconToHTML(renderData.body, {
 		...renderAttribs,
-	};
-	svgAttribs.width = iconData.width.toString();
-	svgAttribs.height = iconData.height.toString();
-	const html = generateHTML(svgAttribs, renderData.body);
+		width: iconData.width + '',
+		height: iconData.height + '',
+	});
 
 	// Add classes
 	const classesToAdd = iconClasses(props.icon);

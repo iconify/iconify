@@ -1,6 +1,7 @@
 import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import {
 	elementDataProperty,
 	IconifyElement,
@@ -8,7 +9,6 @@ import {
 	IconifyElementData,
 } from '../scanner/config';
 import { applyClasses, iconClasses } from './classes';
-import { generateHTML } from './html';
 import { applyStyle } from './style';
 
 /**
@@ -34,14 +34,11 @@ export function renderInlineSVG(
 	const oldData = element[elementDataProperty];
 
 	// Generate SVG
-	const html = generateHTML(
-		{
-			'aria-hidden': 'true',
-			'role': 'img',
-			...renderData.attributes,
-		},
-		replaceIDs(renderData.body)
-	);
+	const html = iconToHTML(replaceIDs(renderData.body), {
+		'aria-hidden': 'true',
+		'role': 'img',
+		...renderData.attributes,
+	});
 	span.innerHTML = html;
 
 	// Get SVG element

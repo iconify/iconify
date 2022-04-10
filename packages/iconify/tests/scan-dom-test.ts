@@ -51,7 +51,7 @@ describe('Scanning DOM', () => {
 
 		// Check HTML
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
 		);
 		const svg = document.body.childNodes[0];
 		const svgData = svg[elementDataProperty];
@@ -110,7 +110,7 @@ describe('Scanning DOM', () => {
 
 		// Check HTML
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
 		);
 		const svg = document.body.childNodes[0];
 		const svgData = svg[elementDataProperty];

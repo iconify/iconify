@@ -62,7 +62,7 @@ describe('Observing DOM changes', () => {
 
 		// Check HTML
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix}"><g></g></svg>`
 		);
 		const svg = document.body.childNodes[0] as SVGSVGElement;
 		const svgData = svg[elementDataProperty];
@@ -77,7 +77,7 @@ describe('Observing DOM changes', () => {
 			() => document.body.innerHTML.indexOf('transform=') !== -1
 		);
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" data-rotate="90deg" class="iconify iconify--${provider} iconify--${prefix}"><g transform="rotate(90 8 8)"><g></g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" data-rotate="90deg" class="iconify iconify--${provider} iconify--${prefix}"><g transform="rotate(90 8 8)"><g></g></g></svg>`
 		);
 	});
 
@@ -142,7 +142,7 @@ describe('Observing DOM changes', () => {
 
 		// Check HTML
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix1}"><g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName}" class="iconify iconify--${provider} iconify--${prefix1}"><g></g></svg>`
 		);
 		const svg = document.body.childNodes[0] as SVGSVGElement;
 		const svgData = svg[elementDataProperty];
@@ -157,7 +157,7 @@ describe('Observing DOM changes', () => {
 
 		// SVG should not have been replaced yet, but data should match new icon
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix1}"><g></g></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix1}"><g></g></svg>`
 		);
 		expect(document.body.childNodes[0]).toBe(svg);
 		expect(svgData.status).toBe('loading');
@@ -172,7 +172,7 @@ describe('Observing DOM changes', () => {
 		);
 
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix2}"><path d="M0 0v2"></path></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix2}"><path d="M0 0v2"></path></svg>`
 		);
 	});
 
@@ -285,7 +285,7 @@ describe('Observing DOM changes', () => {
 		);
 
 		expect(document.body.innerHTML).toBe(
-			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix2}"><path d="M0 0v2"></path></svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="${iconName2}" class="iconify iconify--${provider} iconify--${prefix2}"><path d="M0 0v2"></path></svg>`
 		);
 	});
 });

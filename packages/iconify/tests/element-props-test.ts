@@ -27,6 +27,10 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			// Value is null because that is what getAttribute() returns, but type and value are not
+			// checked because it does not actually matter. In render it compares to string, any other
+			// value is considered to be automatic mode
+			mode: null,
 		});
 
 		// More complex name
@@ -42,6 +46,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 		expect(propsChanged(props1, props2)).toBe(true);
 
@@ -58,6 +63,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 		expect(propsChanged(props1, props3)).toBe(true);
 		expect(propsChanged(props2, props3)).toBe(true);
@@ -88,6 +94,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: false,
 			},
+			mode: null,
 		});
 
 		// Inline: set via attribute
@@ -100,6 +107,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: true,
 			},
+			mode: null,
 		});
 		expect(propsChanged(props1Block, props2Inline)).toBe(true);
 
@@ -113,6 +121,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: false,
 			},
+			mode: null,
 		});
 		expect(propsChanged(props1Block, props3Block)).toBe(false);
 
@@ -127,6 +136,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: true,
 			},
+			mode: null,
 		});
 		expect(propsChanged(props1Block, props4Inline)).toBe(true);
 		expect(propsChanged(props2Inline, props4Inline)).toBe(false);
@@ -140,6 +150,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: false,
 			},
+			mode: null,
 		});
 
 		// Inline: set via attribute, overriding class
@@ -152,6 +163,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: true,
 			},
+			mode: null,
 		});
 
 		// Block: set via attribute, overriding class
@@ -164,6 +176,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				inline: false,
 			},
+			mode: null,
 		});
 	});
 
@@ -188,6 +201,7 @@ describe('Testing element properties', () => {
 				width: null,
 				height: null,
 			},
+			mode: null,
 		});
 
 		// Set width
@@ -200,6 +214,7 @@ describe('Testing element properties', () => {
 				width: '200',
 				height: null,
 			},
+			mode: null,
 		});
 
 		// Set height
@@ -212,6 +227,7 @@ describe('Testing element properties', () => {
 				width: '200',
 				height: '1em',
 			},
+			mode: null,
 		});
 
 		// Empty width
@@ -224,6 +240,7 @@ describe('Testing element properties', () => {
 				width: null,
 				height: '1em',
 			},
+			mode: null,
 		});
 	});
 
@@ -247,6 +264,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				rotate: 0,
 			},
+			mode: null,
 		});
 
 		// 90deg
@@ -258,6 +276,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				rotate: 1,
 			},
+			mode: null,
 		});
 
 		// 180deg
@@ -269,6 +288,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				rotate: 2,
 			},
+			mode: null,
 		});
 
 		// 270deg
@@ -280,6 +300,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				rotate: 3,
 			},
+			mode: null,
 		});
 
 		// 270deg
@@ -291,6 +312,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				rotate: 3,
 			},
+			mode: null,
 		});
 
 		// Invalid values or 0 deg
@@ -301,6 +323,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 
 		element.setAttribute('data-rotate', '360deg');
@@ -310,6 +333,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 
 		element.setAttribute('data-rotate', 'true');
@@ -319,6 +343,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 
 		element.setAttribute('data-rotate', '-100%');
@@ -328,6 +353,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 	});
 
@@ -352,6 +378,7 @@ describe('Testing element properties', () => {
 				hFlip: false,
 				vFlip: false,
 			},
+			mode: null,
 		});
 
 		// Horizontal
@@ -363,6 +390,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				hFlip: true,
 			},
+			mode: null,
 		});
 
 		// Both
@@ -375,6 +403,7 @@ describe('Testing element properties', () => {
 				hFlip: true,
 				vFlip: true,
 			},
+			mode: null,
 		});
 
 		// Vertical
@@ -387,6 +416,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				vFlip: true,
 			},
+			mode: null,
 		});
 
 		// Overwriting shorthand attr
@@ -398,6 +428,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 
 		// Both
@@ -411,6 +442,7 @@ describe('Testing element properties', () => {
 				hFlip: true,
 				vFlip: true,
 			},
+			mode: null,
 		});
 
 		// None
@@ -422,6 +454,7 @@ describe('Testing element properties', () => {
 			customisations: {
 				...defaults,
 			},
+			mode: null,
 		});
 	});
 
@@ -447,6 +480,7 @@ describe('Testing element properties', () => {
 				vAlign: 'middle',
 				slice: false,
 			},
+			mode: null,
 		});
 
 		// Horizontal
@@ -458,6 +492,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				hAlign: 'left',
 			},
+			mode: null,
 		});
 
 		element.setAttribute('data-align', 'right,meet');
@@ -468,6 +503,7 @@ describe('Testing element properties', () => {
 				...defaults,
 				hAlign: 'right',
 			},
+			mode: null,
 		});
 
 		// Vertical, slice
@@ -480,6 +516,7 @@ describe('Testing element properties', () => {
 				vAlign: 'top',
 				slice: true,
 			},
+			mode: null,
 		});
 
 		// Overrides, spaces
@@ -495,6 +532,7 @@ describe('Testing element properties', () => {
 				hAlign: 'right',
 				slice: true,
 			},
+			mode: null,
 		});
 	});
 });

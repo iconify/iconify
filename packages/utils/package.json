@@ -187,6 +187,10 @@
 			"require": "./lib/svg/encode-svg-for-css.cjs",
 			"import": "./lib/svg/encode-svg-for-css.mjs"
 		},
+		"./lib/svg/html": {
+			"require": "./lib/svg/html.cjs",
+			"import": "./lib/svg/html.mjs"
+		},
 		"./lib/svg/id": {
 			"require": "./lib/svg/id.cjs",
 			"import": "./lib/svg/id.mjs"

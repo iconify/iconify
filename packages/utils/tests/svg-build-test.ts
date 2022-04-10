@@ -4,6 +4,7 @@ import type { FullIconifyIcon } from '../lib/icon';
 import { fullIcon, iconDefaults } from '../lib/icon';
 import type { FullIconCustomisations } from '../lib/customisations';
 import { defaults, mergeCustomisations } from '../lib/customisations';
+import { iconToHTML } from '../lib/svg/html';
 
 describe('Testing iconToSVG', () => {
 	test('Empty icon', () => {
@@ -21,6 +22,12 @@ describe('Testing iconToSVG', () => {
 
 		const result = iconToSVG(icon, custom);
 		expect(result).toEqual(expected);
+
+		// Test HTML
+		const html = iconToHTML(result.body, result.attributes);
+		expect(html).toBe(
+			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
+		);
 	});
 
 	test('Auto size, inline, body', () => {
@@ -44,6 +51,20 @@ describe('Testing iconToSVG', () => {
 
 		const result = iconToSVG(icon, custom);
 		expect(result).toEqual(expected);
+
+		// Test HTML
+		const htmlProps: Record<string, string> = {
+			'aria-hidden': 'true',
+			'role': 'img',
+			...result.attributes,
+		};
+		if (result.inline) {
+			htmlProps['style'] = 'vertical-align: -0.125em;';
+		}
+		const html = iconToHTML(result.body, htmlProps);
+		expect(html).toBe(
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" style="vertical-align: -0.125em;"><path d="" /></svg>'
+		);
 	});
 
 	test('Auto size, inline, body', () => {
