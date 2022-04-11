@@ -47,7 +47,8 @@ for (const prefix in propsToAddTo) {
 export function renderBackground(
 	element: IconifyElement,
 	props: IconifyElementProps,
-	iconData: FullIconifyIcon
+	iconData: FullIconifyIcon,
+	useMask: boolean
 ): IconifyElement {
 	// Generate data to render
 	const renderData = iconToSVG(iconData, {
@@ -74,14 +75,13 @@ export function renderBackground(
 	);
 
 	// Update style
-	const isMonotone = renderData.body.indexOf('currentColor') !== -1;
 	const url = svgToURL(html);
 	const newStyles: Record<string, string> = {
 		'--svg': url,
 		'width': renderAttribs.width,
 		'height': renderAttribs.height,
 		...commonProps,
-		...(isMonotone ? monotoneProps : coloredProps),
+		...(useMask ? monotoneProps : coloredProps),
 	};
 	if (renderData.inline) {
 		newStyles['vertical-align'] = '-0.125em';

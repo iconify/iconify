@@ -9,8 +9,13 @@ export const inlineClass = 'iconify-inline';
 
 /**
  * Icon render mode
+ *
+ * 'style' = 'bg' or 'mask', depending on icon content
+ * 'bg' = inline style using `background`
+ * 'mask' = inline style using `mask`
+ * 'inline' = inline SVG.
  */
-export type IconRenderMode = 'style' | 'inline';
+export type IconRenderMode = 'style' | 'bg' | 'mask' | 'inline';
 
 /**
  * Data used to verify if icon is the same

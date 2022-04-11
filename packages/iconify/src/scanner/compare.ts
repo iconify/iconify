@@ -8,7 +8,7 @@ export function propsChanged(
 	props1: IconifyElementProps,
 	props2: IconifyElementProps
 ): boolean {
-	if (props1.name !== props2.name) {
+	if (props1.name !== props2.name || props1.mode !== props2.mode) {
 		return true;
 	}
 

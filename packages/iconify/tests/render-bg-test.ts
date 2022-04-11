@@ -36,10 +36,15 @@ describe('Testing rendering nodes as background', () => {
 
 		// Get node and render it
 		const { node, props } = items[0];
-		const result = renderBackground(node, props, {
-			...iconDefaults,
-			...data,
-		});
+		const result = renderBackground(
+			node,
+			props,
+			{
+				...iconDefaults,
+				...data,
+			},
+			data.body.indexOf('currentColor') !== -1
+		);
 
 		// Make sure node did not change
 		expect(result).toBe(node);

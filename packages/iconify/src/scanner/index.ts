@@ -123,14 +123,24 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 				pauseObservingNode(observedNode);
 			}
 
-			if (
-				element.tagName.toUpperCase() === 'SVG' ||
-				props.mode !== 'style'
-			) {
-				renderInlineSVG(element, props, iconData);
-			} else {
-				renderBackground(element, props, iconData);
+			if (element.tagName.toUpperCase() !== 'SVG') {
+				// Check for one of style modes
+				const mode = props.mode;
+				const isMask: boolean | null =
+					mode === 'mask' ||
+					(mode === 'bg'
+						? false
+						: mode === 'style'
+						? iconData.body.indexOf('currentColor') !== -1
+						: null);
+
+				if (typeof isMask === 'boolean') {
+					renderBackground(element, props, iconData, isMask);
+					return;
+				}
 			}
+
+			renderInlineSVG(element, props, iconData);
 		}
 
 		// Find all elements
