@@ -24,8 +24,12 @@ export {
 	}
 </script>
 
-{#if data !== null}
-<svg {...data.attributes}>
-	{@html data.body}
-</svg>
+{#if data}
+	{#if data.svg}
+		<svg {...data.attributes}>
+			{@html data.body}
+		</svg>
+	{:else}
+		<span {...data.attributes} />
+	{/if}
 {/if}

@@ -10,7 +10,9 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import type { IconProps } from './props';
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { svgToURL } from '@iconify/utils/lib/svg/url';
+import type { IconProps, IconifyRenderMode } from './props';
 
 /**
  * Default SVG attributes
@@ -23,12 +25,52 @@ const svgDefaults = {
 };
 
 /**
+ * Style modes
+ */
+
+const commonProps: Record<string, string> = {
+	display: 'inline-block',
+};
+
+const monotoneProps: Record<string, string> = {
+	'background-color': 'currentColor',
+};
+
+const coloredProps: Record<string, string> = {
+	'background-color': 'transparent',
+};
+
+// Dynamically add common props to variables above
+const propsToAdd: Record<string, string> = {
+	image: 'var(--svg)',
+	repeat: 'no-repeat',
+	size: '100% 100%',
+};
+const propsToAddTo: Record<string, Record<string, string>> = {
+	'-webkit-mask': monotoneProps,
+	'mask': monotoneProps,
+	'background': coloredProps,
+};
+for (const prefix in propsToAddTo) {
+	const list = propsToAddTo[prefix];
+	for (const prop in propsToAdd) {
+		list[prefix + '-' + prop] = propsToAdd[prop];
+	}
+}
+
+/**
  * Result
  */
-export interface RenderResult {
+interface RenderSVGResult {
+	svg: true;
 	attributes: Record<string, unknown>;
 	body: string;
 }
+interface RenderSPANResult {
+	svg: false;
+	attributes: Record<string, unknown>;
+}
+export type RenderResult = RenderSVGResult | RenderSPANResult;
 
 /**
  * Generate icon from properties
@@ -43,7 +85,12 @@ export function render(
 		defaults,
 		props as typeof defaults
 	);
-	const componentProps = { ...svgDefaults } as Record<string, unknown>;
+
+	// Check mode
+	const mode: IconifyRenderMode = props.mode || 'inline';
+	const componentProps = (
+		mode === 'inline' ? { ...svgDefaults } : {}
+	) as Record<string, unknown>;
 
 	// Create style if missing
 	let style = typeof props.style === 'string' ? props.style : '';
@@ -59,6 +106,7 @@ export function render(
 			case 'icon':
 			case 'style':
 			case 'onLoad':
+			case 'mode':
 				break;
 
 			// Boolean attributes
@@ -126,37 +174,72 @@ export function render(
 
 	// Generate icon
 	const item = iconToSVG(icon, customisations);
+	const renderAttribs = item.attributes;
 
-	// Add icon stuff
-	for (let key in item.attributes) {
-		componentProps[key] =
-			item.attributes[key as keyof typeof item.attributes];
-	}
-
+	// Inline mode
 	if (item.inline) {
 		// Style overrides it
 		style = 'vertical-align: -0.125em; ' + style;
 	}
 
-	// Style
-	if (style !== '') {
-		componentProps.style = style;
+	if (mode === 'inline') {
+		// Add icon stuff
+		Object.assign(componentProps, renderAttribs);
+
+		// Style
+		if (style !== '') {
+			componentProps.style = style;
+		}
+
+		// Counter for ids based on "id" property to render icons consistently on server and client
+		let localCounter = 0;
+		let id = props.id;
+		if (typeof id === 'string') {
+			// Convert '-' to '_' to avoid errors in animations
+			id = id.replace(/-/g, '_');
+		}
+
+		// Generate HTML
+		return {
+			svg: true,
+			attributes: componentProps,
+			body: replaceIDs(
+				item.body,
+				id ? () => id + 'ID' + localCounter++ : 'iconifySvelte'
+			),
+		};
 	}
 
-	// Counter for ids based on "id" property to render icons consistently on server and client
-	let localCounter = 0;
-	let id = props.id;
-	if (typeof id === 'string') {
-		// Convert '-' to '_' to avoid errors in animations
-		id = id.replace(/-/g, '_');
+	const { body, width, height } = icon;
+	const useMask =
+		mode === 'mask' ||
+		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
+
+	// Generate SVG
+	const html = iconToHTML(body, {
+		...renderAttribs,
+		width: width + '',
+		height: height + '',
+	});
+
+	// Generate style
+	const url = svgToURL(html);
+	const styles: Record<string, string> = {
+		'--svg': url,
+		'width': renderAttribs.width,
+		'height': renderAttribs.height,
+		...commonProps,
+		...(useMask ? monotoneProps : coloredProps),
+	};
+
+	let customStyle = '';
+	for (const key in styles) {
+		customStyle += key + ': ' + styles[key] + ';';
 	}
 
-	// Generate HTML
+	componentProps.style = customStyle + style;
 	return {
+		svg: false,
 		attributes: componentProps,
-		body: replaceIDs(
-			item.body,
-			id ? () => id + 'ID' + localCounter++ : 'iconifySvelte'
-		),
 	};
 }
