@@ -15,7 +15,7 @@ export const inlineClass = 'iconify-inline';
  * 'mask' = inline style using `mask`
  * 'inline' = inline SVG.
  */
-export type IconRenderMode = 'style' | 'bg' | 'mask' | 'inline';
+export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'inline';
 
 /**
  * Data used to verify if icon is the same
@@ -31,7 +31,7 @@ export interface IconifyElementProps {
 	customisations: Required<IconifyIconCustomisations>;
 
 	// Render mode
-	mode?: IconRenderMode;
+	mode?: IconifyRenderMode;
 }
 
 /**
