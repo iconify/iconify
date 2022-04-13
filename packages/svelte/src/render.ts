@@ -27,7 +27,6 @@ const svgDefaults = {
 /**
  * Style modes
  */
-
 const commonProps: Record<string, string> = {
 	display: 'inline-block',
 };
@@ -176,7 +175,7 @@ export function render(
 	const item = iconToSVG(icon, customisations);
 	const renderAttribs = item.attributes;
 
-	// Inline mode
+	// Inline display
 	if (item.inline) {
 		// Style overrides it
 		style = 'vertical-align: -0.125em; ' + style;
@@ -210,6 +209,7 @@ export function render(
 		};
 	}
 
+	// Render <span> with style
 	const { body, width, height } = icon;
 	const useMask =
 		mode === 'mask' ||
