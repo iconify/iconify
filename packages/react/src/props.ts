@@ -4,6 +4,16 @@ import type { IconifyIconCustomisations as RawIconCustomisations } from '@iconif
 
 export { RawIconCustomisations };
 
+/**
+ * Icon render mode
+ *
+ * 'style' = 'bg' or 'mask', depending on icon content
+ * 'bg' = inline style using `background`
+ * 'mask' = inline style using `mask`
+ * 'inline' = inline SVG.
+ */
+export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'inline';
+
 // Allow rotation to be string
 /**
  * Icon customisations
@@ -26,6 +36,9 @@ export type IconifyIconOnLoad = (name: string) => void;
 export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Icon object or icon name (must be added to storage using addIcon for offline package)
 	icon: IconifyIcon | string;
+
+	// Render mode
+	mode?: IconifyRenderMode;
 
 	// Style
 	color?: string;

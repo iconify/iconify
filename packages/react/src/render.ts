@@ -13,7 +13,9 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import type { IconProps, IconRef } from './props';
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { svgToURL } from '@iconify/utils/lib/svg/url';
+import type { IconifyRenderMode, IconProps, IconRef } from './props';
 
 /**
  * Default SVG attributes
@@ -25,6 +27,39 @@ const svgDefaults: SVGProps<SVGSVGElement> = {
 	'role': 'img',
 	'style': {}, // Include style if it isn't set to add verticalAlign later
 };
+
+/**
+ * Style modes
+ */
+const commonProps: Record<string, string> = {
+	display: 'inline-block',
+};
+
+const monotoneProps: Record<string, string> = {
+	backgroundColor: 'currentColor',
+};
+
+const coloredProps: Record<string, string> = {
+	backgroundColor: 'transparent',
+};
+
+// Dynamically add common props to variables above
+const propsToAdd: Record<string, string> = {
+	Image: 'var(--svg)',
+	Repeat: 'no-repeat',
+	Size: '100% 100%',
+};
+const propsToAddTo: Record<string, Record<string, string>> = {
+	webkitMask: monotoneProps,
+	mask: monotoneProps,
+	background: coloredProps,
+};
+for (const prefix in propsToAddTo) {
+	const list = propsToAddTo[prefix];
+	for (const prop in propsToAdd) {
+		list[prefix + prop] = propsToAdd[prop];
+	}
+}
 
 /**
  * Default values for customisations for inline icon
@@ -44,7 +79,7 @@ export const render = (
 	// True if icon should have vertical-align added
 	inline: boolean,
 
-	// Optional reference for SVG, extracted by React.forwardRef()
+	// Optional reference for SVG/SPAN, extracted by React.forwardRef()
 	ref?: IconRef
 ): JSX.Element => {
 	// Get default properties
@@ -56,14 +91,18 @@ export const render = (
 		props as FullIconCustomisations
 	);
 
+	// Check mode
+	const mode: IconifyRenderMode = props.mode || 'inline';
+
 	// Create style
-	const style =
-		typeof props.style === 'object' && props.style !== null
-			? props.style
-			: {};
+	const style: React.CSSProperties = {};
+	const customStyle = props.style || {};
 
 	// Create SVG component properties
-	const componentProps = { ...svgDefaults, ref, style };
+	const componentProps = {
+		...(mode === 'inline' ? svgDefaults : {}),
+		ref,
+	};
 
 	// Get element properties
 	for (let key in props) {
@@ -77,6 +116,7 @@ export const render = (
 			case 'style':
 			case 'children':
 			case 'onLoad':
+			case 'mode':
 			case '_ref':
 			case '_inline':
 				break;
@@ -135,29 +175,64 @@ export const render = (
 
 	// Generate icon
 	const item = iconToSVG(icon, customisations);
+	const renderAttribs = item.attributes;
 
-	// Counter for ids based on "id" property to render icons consistently on server and client
-	let localCounter = 0;
-	let id = props.id;
-	if (typeof id === 'string') {
-		// Convert '-' to '_' to avoid errors in animations
-		id = id.replace(/-/g, '_');
-	}
-
-	// Add icon stuff
-	componentProps.dangerouslySetInnerHTML = {
-		__html: replaceIDs(
-			item.body,
-			id ? () => id + 'ID' + localCounter++ : 'iconifyReact'
-		),
-	};
-	for (let key in item.attributes) {
-		componentProps[key] = item.attributes[key];
-	}
-
-	if (item.inline && style.verticalAlign === void 0) {
+	// Inline display
+	if (item.inline) {
 		style.verticalAlign = '-0.125em';
 	}
 
-	return React.createElement('svg', componentProps);
+	if (mode === 'inline') {
+		// Add style
+		componentProps.style = {
+			...style,
+			...customStyle,
+		};
+
+		// Add icon stuff
+		Object.assign(componentProps, renderAttribs);
+
+		// Counter for ids based on "id" property to render icons consistently on server and client
+		let localCounter = 0;
+		let id = props.id;
+		if (typeof id === 'string') {
+			// Convert '-' to '_' to avoid errors in animations
+			id = id.replace(/-/g, '_');
+		}
+
+		// Add icon stuff
+		componentProps.dangerouslySetInnerHTML = {
+			__html: replaceIDs(
+				item.body,
+				id ? () => id + 'ID' + localCounter++ : 'iconifyReact'
+			),
+		};
+		return React.createElement('svg', componentProps);
+	}
+
+	// Render <span> with style
+	const { body, width, height } = icon;
+	const useMask =
+		mode === 'mask' ||
+		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
+
+	// Generate SVG
+	const html = iconToHTML(body, {
+		...renderAttribs,
+		width: width + '',
+		height: height + '',
+	});
+
+	// Generate style
+	componentProps.style = {
+		...style,
+		'--svg': svgToURL(html),
+		'width': renderAttribs.width,
+		'height': renderAttribs.height,
+		...commonProps,
+		...(useMask ? monotoneProps : coloredProps),
+		...customStyle,
+	} as React.CSSProperties;
+
+	return React.createElement('span', componentProps);
 };
