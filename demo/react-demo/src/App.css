@@ -48,22 +48,27 @@ p {
 .test-row-icons {
 	padding-right: 4px;
 }
-.test-row-icons > svg {
+.test-row-icons > svg,
+.test-row-icons > span {
 	color: #afafaf;
 	display: none;
 }
-.test-row-icons > svg.visible {
+.test-row-icons > .hidden {
+	display: none !important;
+}
+.test-row-icons > .visible {
 	display: inline-block;
 }
-.test-row-icons > svg.success {
+.test-row-icons > .success {
 	color: #327335;
 }
-.test-row-icons > svg.failed {
+.test-row-icons > .failed {
 	color: #ba3329;
 }
 
 /* 24px icon */
-.icon-24 svg {
+.icon-24 svg,
+.icon-24 span {
 	font-size: 24px;
 	line-height: 1;
 	vertical-align: -0.25em;
@@ -85,7 +90,7 @@ p {
 	clear: both;
 }
 
-.alert svg {
+.alert :is(svg, span) {
 	position: absolute;
 	left: 12px;
 	top: 50%;
@@ -110,17 +115,17 @@ p {
 	text-decoration: underline;
 }
 
-.checkbox svg {
+.checkbox :is(svg, span) {
 	margin-right: 4px;
 	color: #afafaf;
 	font-size: 24px;
 	line-height: 1em;
 	vertical-align: -0.25em;
 }
-.checkbox--checked svg {
+.checkbox--checked :is(svg, span) {
 	color: #327335;
 }
-.checkbox:hover svg {
+.checkbox:hover :is(svg, span) {
 	color: inherit;
 }
 
@@ -130,7 +135,7 @@ p {
 }
 
 /* Inline demo */
-.inline-demo svg {
+.inline-demo :is(svg, span) {
 	color: #06a;
 	margin: 0 8px;
 	position: relative;

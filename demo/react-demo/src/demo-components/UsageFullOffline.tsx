@@ -8,17 +8,20 @@ export function FullOfflineUsageDemo() {
 		<section className="icon-24">
 			<h1>Usage (full module, offline mode)</h1>
 			<div>
-				Icon referenced by name: <Icon icon="demo" />
+				Icons referenced by name (as SVG, as SPAN): <Icon icon="demo" />
+				<Icon icon="demo" mode="style" />
 			</div>
 			<div>
-				Icon referenced by object: <Icon icon={accountIcon} />
+				Icons referenced by object (as SVG, as SPAN):{' '}
+				<Icon icon={accountIcon} />
+				<Icon icon={accountIcon} mode="style" />
 			</div>
 			<div>
 				2 icons imported from icon set: <Icon icon="alert1" />
-				<Icon icon="link1" />
+				<Icon icon="link1" mode="style" />
 			</div>
 			<div className="alert">
-				<Icon icon={alertIcon} />
+				<Icon icon={alertIcon} mode="mask" />
 				Important notice with alert icon!
 			</div>
 		</section>

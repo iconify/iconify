@@ -12,6 +12,11 @@ interface CheckboxProps {
 export function Checkbox(props: CheckboxProps) {
 	const [checked, setChecked] = useState(props.checked);
 
+	function onClick(event: React.MouseEvent<HTMLElement>) {
+		event.preventDefault();
+		setChecked((value) => !value);
+	}
+
 	return (
 		<div className="checkbox-container">
 			<a
@@ -20,9 +25,12 @@ export function Checkbox(props: CheckboxProps) {
 					'checkbox ' +
 					(checked ? 'checkbox--checked' : 'checkbox--unchecked')
 				}
-				onClick={() => setChecked((value) => !value)}
+				onClick={onClick}
 			>
-				<Icon icon={checked ? checkedIcon : uncheckedIcon} />
+				<Icon
+					icon={checked ? checkedIcon : uncheckedIcon}
+					mode={checked ? 'mask' : 'inline'}
+				/>
 				{props.text}
 			</a>
 			<small>{props.hint}</small>

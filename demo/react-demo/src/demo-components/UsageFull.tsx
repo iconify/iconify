@@ -6,7 +6,8 @@ export function FullUsageDemo() {
 		<section className="icon-24">
 			<h1>Usage (full module)</h1>
 			<div>
-				Icon referenced by name: <Icon icon="mdi:home" />
+				Icons referenced by name (as SVG, as SPAN):{' '}
+				<Icon icon="mdi:home" /> <Icon icon="mdi:home" mode="style" />
 			</div>
 			<div className="alert">
 				<Icon icon="mdi-light:alert" />

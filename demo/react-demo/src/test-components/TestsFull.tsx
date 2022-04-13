@@ -208,12 +208,13 @@ export function TestsFull() {
 
 			<div className="test-row">
 				<TestIcons id="full-color3" />
-				Green color from attribute (overrides style) + red from style:{' '}
+				Red color from attribute + green from style (style overrides
+				attribute):{' '}
 				<InlineIcon
 					icon={icon}
-					color="green"
+					color="red"
 					style={{
-						color: 'red',
+						color: 'green',
 					}}
 					ref={(element) => {
 						const key = 'full-color3';

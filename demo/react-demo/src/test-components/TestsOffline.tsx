@@ -176,12 +176,13 @@ export function TestsOffline() {
 
 			<div className="test-row">
 				<TestIcons id="offline-color3" />
-				Green color from attribute (overrides style) + red from style:{' '}
+				Red color from attribute + green from style (style overrides
+				attribute):{' '}
 				<InlineIcon
 					icon="demo"
-					color="green"
+					color="red"
 					style={{
-						color: 'red',
+						color: 'green',
 					}}
 					ref={(element) => {
 						const key = 'offline-color3';

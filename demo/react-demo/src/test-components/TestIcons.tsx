@@ -19,18 +19,21 @@ export function TestIcons(props: TestIconsProps) {
 		<span className="test-row-icons" id={id}>
 			<InlineIcon
 				icon={successIcon}
+				mode="style"
 				className={
 					'success ' + (icon === 'success' ? 'visible' : 'hidden')
 				}
 			/>
 			<InlineIcon
 				icon={pendingIcon}
+				mode="style"
 				className={
 					'pending ' + (icon === 'pending' ? 'visible' : 'hidden')
 				}
 			/>
 			<InlineIcon
 				icon={failedIcon}
+				mode="style"
 				className={
 					'failed ' + (icon === 'failed' ? 'visible' : 'hidden')
 				}

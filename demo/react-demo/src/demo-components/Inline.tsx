@@ -20,11 +20,13 @@ export function InlineDemo() {
 					id="inline-demo-inline-offline"
 					icon="experiment2"
 					inline={true}
+					mode="style"
 				/>
 				<FullIcon
 					id="inline-demo-inline-full"
 					icon="experiment2"
 					inline={true}
+					mode="style"
 				/>
 			</div>
 		</section>
