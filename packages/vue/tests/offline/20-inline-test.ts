@@ -87,7 +87,7 @@ describe('Inline attribute', () => {
 
 		const wrapper = mount(Wrapper, {});
 		expect(wrapper.html()).toContain(
-			'color: red; vertical-align: -0.125em;'
+			'style="vertical-align: -0.125em; color: red;"'
 		);
 	});
 
@@ -108,7 +108,7 @@ describe('Inline attribute', () => {
 
 		const wrapper = mount(Wrapper, {});
 		expect(wrapper.html()).toContain(
-			'color: red; vertical-align: -0.125em;'
+			'style="vertical-align: -0.125em; color: red;"'
 		);
 	});
 

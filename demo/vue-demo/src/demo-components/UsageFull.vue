@@ -2,8 +2,9 @@
 	<section class="icon-24">
 		<h1>Usage (full module)</h1>
 		<div>
-			Icon referenced by name:
+			Icons referenced by name (rendered as SVG, then as SPAN):
 			<Icon icon="mdi:home" />
+			<Icon icon="mdi:home" mode="style" />
 		</div>
 		<div class="alert">
 			<Icon icon="mdi-light:alert" />Important notice with alert icon!

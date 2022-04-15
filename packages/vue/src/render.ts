@@ -13,7 +13,13 @@ import {
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import type { IconifyIconCustomisations, IconProps } from './props';
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { svgToURL } from '@iconify/utils/lib/svg/url';
+import type {
+	IconifyIconCustomisations,
+	IconifyRenderMode,
+	IconProps,
+} from './props';
 
 /**
  * Default SVG attributes
@@ -24,6 +30,39 @@ const svgDefaults: Record<string, unknown> = {
 	'aria-hidden': true,
 	'role': 'img',
 };
+
+/**
+ * Style modes
+ */
+const commonProps: Record<string, string> = {
+	display: 'inline-block',
+};
+
+const monotoneProps: Record<string, string> = {
+	backgroundColor: 'currentColor',
+};
+
+const coloredProps: Record<string, string> = {
+	backgroundColor: 'transparent',
+};
+
+// Dynamically add common props to variables above
+const propsToAdd: Record<string, string> = {
+	Image: 'var(--svg)',
+	Repeat: 'no-repeat',
+	Size: '100% 100%',
+};
+const propsToAddTo: Record<string, Record<string, string>> = {
+	webkitMask: monotoneProps,
+	mask: monotoneProps,
+	background: coloredProps,
+};
+for (const prefix in propsToAddTo) {
+	const list = propsToAddTo[prefix];
+	for (const prop in propsToAdd) {
+		list[prefix + prop] = propsToAdd[prop];
+	}
+}
 
 /**
  * Aliases for customisations.
@@ -71,10 +110,15 @@ export const render = (
 	) as FullIconCustomisations;
 	const componentProps = { ...svgDefaults };
 
+	// Check mode
+	const mode: IconifyRenderMode = props.mode || 'inline';
+
 	// Copy style
-	let style: VStyle =
-		typeof props.style === 'object' && !(props.style instanceof Array)
-			? { ...props.style }
+	const style: VStyle = {};
+	const propsStyle = props.style;
+	const customStyle =
+		typeof propsStyle === 'object' && !(propsStyle instanceof Array)
+			? propsStyle
 			: {};
 
 	// Get element properties
@@ -88,6 +132,7 @@ export const render = (
 			case 'icon':
 			case 'style':
 			case 'onLoad':
+			case 'mode':
 				break;
 
 			// Boolean attributes
@@ -161,37 +206,64 @@ export const render = (
 
 	// Generate icon
 	const item = iconToSVG(icon, customisations);
+	const renderAttribs = item.attributes;
 
-	// Add icon stuff
-	for (let key in item.attributes) {
-		componentProps[key] = item.attributes[key];
-	}
-
-	if (
-		item.inline &&
-		style.verticalAlign === void 0 &&
-		style['vertical-align'] === void 0
-	) {
+	// Inline display
+	if (item.inline) {
 		style.verticalAlign = '-0.125em';
 	}
 
-	// Counter for ids based on "id" property to render icons consistently on server and client
-	let localCounter = 0;
-	let id = props.id;
-	if (typeof id === 'string') {
-		// Convert '-' to '_' to avoid errors in animations
-		id = id.replace(/-/g, '_');
+	if (mode === 'inline') {
+		// Add style
+		componentProps.style = {
+			...style,
+			...customStyle,
+		};
+
+		// Add icon stuff
+		Object.assign(componentProps, renderAttribs);
+
+		// Counter for ids based on "id" property to render icons consistently on server and client
+		let localCounter = 0;
+		let id = props.id;
+		if (typeof id === 'string') {
+			// Convert '-' to '_' to avoid errors in animations
+			id = id.replace(/-/g, '_');
+		}
+
+		// Add innerHTML and style to props
+		componentProps['innerHTML'] = replaceIDs(
+			item.body,
+			id ? () => id + 'ID' + localCounter++ : 'iconifyVue'
+		);
+
+		// Render icon
+		return h('svg', componentProps);
 	}
 
-	// Add innerHTML and style to props
-	componentProps['innerHTML'] = replaceIDs(
-		item.body,
-		id ? () => id + 'ID' + localCounter++ : 'iconifyVue'
-	);
-	if (Object.keys(style).length > 0) {
-		componentProps['style'] = style;
-	}
+	// Render <span> with style
+	const { body, width, height } = icon;
+	const useMask =
+		mode === 'mask' ||
+		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
 
-	// Render icon
-	return h('svg', componentProps);
+	// Generate SVG
+	const html = iconToHTML(body, {
+		...renderAttribs,
+		width: width + '',
+		height: height + '',
+	});
+
+	// Generate style
+	componentProps.style = {
+		...style,
+		'--svg': svgToURL(html),
+		'width': renderAttribs.width,
+		'height': renderAttribs.height,
+		...commonProps,
+		...(useMask ? monotoneProps : coloredProps),
+		...customStyle,
+	};
+
+	return h('span', componentProps);
 };

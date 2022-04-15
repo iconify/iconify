@@ -2,20 +2,24 @@
 	<section class="icon-24">
 		<h1>Usage (full module, offline mode)</h1>
 		<div>
-			Icon referenced by name:
-			<Icon icon="demo" />
+			Icons referenced by name (rendered as SVG, then as SPAN):
+			<Icon icon="demo" /><Icon icon="demo" mode="style" />
 		</div>
 		<div>
-			Icon referenced by object:
-			<Icon v-bind:icon="demoIcon" />
+			Icons referenced by object:
+			<Icon v-bind:icon="demoIcon" /><Icon
+				v-bind:icon="demoIcon"
+				mode="style"
+			/>
 		</div>
 		<div>
 			2 icons imported from icon set:
 			<Icon icon="alert1" />
-			<Icon icon="link1" />
+			<Icon icon="link1" mode="style" />
 		</div>
 		<div class="alert">
-			<Icon :icon="alertIcon" />Important notice with alert icon!
+			<Icon :icon="alertIcon" mode="style" />Important notice with alert
+			icon!
 		</div>
 	</section>
 </template>

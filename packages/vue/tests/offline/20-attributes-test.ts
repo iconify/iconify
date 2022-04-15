@@ -108,10 +108,10 @@ describe('Passing attributes', () => {
 	});
 
 	test('color with style', () => {
-		// color overrides style
+		// style overrides color
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon :icon="icon" color="purple" style="color: green;" />`,
+			template: `<Icon :icon="icon" color="green" style="color: purple;" />`,
 			data() {
 				return {
 					icon: iconData,

@@ -98,7 +98,7 @@ describe('Inline attribute', () => {
 		await nextTick();
 
 		expect(wrapper.html()).toContain(
-			'color: red; vertical-align: -0.125em;'
+			'style="vertical-align: -0.125em; color: red;"'
 		);
 	});
 
@@ -121,7 +121,7 @@ describe('Inline attribute', () => {
 		await nextTick();
 
 		expect(wrapper.html()).toContain(
-			'color: red; vertical-align: -0.125em;'
+			'style="vertical-align: -0.125em; color: red;"'
 		);
 	});
 

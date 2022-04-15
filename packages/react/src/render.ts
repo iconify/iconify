@@ -25,7 +25,6 @@ const svgDefaults: SVGProps<SVGSVGElement> = {
 	'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
 	'role': 'img',
-	'style': {}, // Include style if it isn't set to add verticalAlign later
 };
 
 /**

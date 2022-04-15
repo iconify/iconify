@@ -31,7 +31,7 @@ p {
 }
 
 /* 24px icon */
-.icon-24 svg {
+.icon-24 :where(svg, span) {
 	font-size: 24px;
 	line-height: 1;
 	vertical-align: -0.25em;
@@ -53,7 +53,7 @@ p {
 	clear: both;
 }
 
-.alert svg {
+.alert :where(svg, span) {
 	position: absolute;
 	left: 12px;
 	top: 50%;
@@ -78,7 +78,7 @@ p {
 	text-decoration: underline;
 } */
 
-.checkbox svg {
+.checkbox :where(svg, span) {
 	cursor: pointer;
 	margin-right: 4px;
 	color: #afafaf;
@@ -86,14 +86,14 @@ p {
 	line-height: 1em;
 	vertical-align: -0.25em;
 }
-.checkbox svg:hover {
+.checkbox :where(svg, span):hover {
 	color: #ba3329;
 }
 
-.checkbox--checked svg {
+.checkbox--checked :where(svg, span) {
 	color: #327335;
 }
-.checkbox:hover svg {
+.checkbox:hover :where(svg, span) {
 	color: inherit;
 }
 
@@ -103,7 +103,7 @@ p {
 }
 
 /* Inline demo */
-.inline-demo svg {
+.inline-demo :where(svg, span) {
 	color: #06a;
 	margin: 0 8px;
 	position: relative;

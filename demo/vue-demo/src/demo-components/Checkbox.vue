@@ -1,7 +1,11 @@
 <template>
 	<div class="checkbox-container">
 		<span :class="className">
-			<Icon :icon="icon" @click="check" />{{ text }}
+			<Icon
+				:icon="icon"
+				:mode="isChecked ? 'inline' : 'style'"
+				@click="check"
+			/>{{ text }}
 		</span>
 		<small>{{ hint }}</small>
 	</div>
@@ -22,7 +26,7 @@ export default {
 		checked: Boolean,
 	},
 	methods: {
-		check(event) {
+		check(event: MouseEvent) {
 			event.preventDefault();
 			this.state = !this.isChecked;
 		},
