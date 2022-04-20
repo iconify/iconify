@@ -331,11 +331,13 @@ load polyfills for those browsers. All newer browsers do not require those polyf
 
 ## License
 
-Iconify is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
+This package is licensed under MIT license.
 
-`SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
+`SPDX-License-Identifier: MIT`
+
+Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
 
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2020, 2021 Iconify OÜ
+© 2019 - 2022 Vjacheslav Trushkin / Iconify OÜ

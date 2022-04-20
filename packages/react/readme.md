@@ -372,6 +372,6 @@ For extended documentation visit [Iconify for React documentation](https://docs.
 
 React component is released with MIT license.
 
-© 2020, 2021 Iconify OÜ
+© 2019 - 2022 Vjacheslav Trushkin / Iconify OÜ
 
 See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.

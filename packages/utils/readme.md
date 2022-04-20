@@ -20,4 +20,4 @@ Documentation is available at [Iconify documentation website](https://docs.iconi
 
 The library is released with MIT license.
 
-© 2021 Vjacheslav Trushkin / Iconify OÜ
+© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ

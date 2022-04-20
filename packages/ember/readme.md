@@ -323,6 +323,6 @@ For extended documentation visit [Iconify for Ember documentation](https://docs.
 
 Ember component is released with MIT license.
 
-© 2021 Iconify OÜ
+© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ
 
 See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.
