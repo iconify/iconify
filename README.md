@@ -118,11 +118,13 @@ Documentation for all packages is available on [Iconify documentation website](h
 
 ## Licence
 
-Iconify is dual-licensed under Apache 2.0 and GPL 2.0 licence. You may select, at your option, one of the above-listed licences.
+Iconify is licensed under MIT license.
 
-`SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
+`SPDX-License-Identifier: MIT`
+
+Some packages of this monorepo in previous versions were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
 
 This licence does not apply to icons. Icons are released under different licences, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free licence.
 
-© 2020, 2021 Iconify OÜ
+© 2020 - 2022 Iconify OÜ
