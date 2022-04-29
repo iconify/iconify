@@ -89,7 +89,7 @@ function getGlobal(key: keyof StorageConfig): typeof localStorage | null {
 		) {
 			return _window[attr];
 		}
-	} catch (err) {
+	} catch {
 		//
 	}
 
@@ -110,9 +110,10 @@ function setCount(
 		storage.setItem(countKey, value.toString());
 		count[key] = value;
 		return true;
-	} catch (err) {
-		return false;
+	} catch {
+		//
 	}
+	return false;
 }
 
 /**
@@ -141,7 +142,7 @@ function initCache(
 ): void {
 	try {
 		storage.setItem(versionKey, cacheVersion);
-	} catch (err) {
+	} catch {
 		//
 	}
 	setCount(storage, key, 0);
@@ -158,7 +159,7 @@ function destroyCache(storage: typeof localStorage): void {
 		for (let i = 0; i < total; i++) {
 			storage.removeItem(cachePrefix + i.toString());
 		}
-	} catch (err) {
+	} catch {
 		//
 	}
 }
@@ -213,7 +214,7 @@ export const loadCache: LoadIconsCache = (): void => {
 					const storage = getStorage(provider, prefix);
 					valid = addIconSet(storage, data.data).length > 0;
 				}
-			} catch (err) {
+			} catch {
 				valid = false;
 			}
 
@@ -253,7 +254,7 @@ export const loadCache: LoadIconsCache = (): void => {
 
 			// Update total
 			setCount(func, key, total);
-		} catch (err) {
+		} catch {
 			//
 		}
 	}
@@ -302,7 +303,7 @@ export const storeCache: CacheIcons = (
 				data,
 			};
 			func.setItem(cachePrefix + index.toString(), JSON.stringify(item));
-		} catch (err) {
+		} catch {
 			return false;
 		}
 		return true;

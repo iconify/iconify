@@ -3,7 +3,6 @@ import {
 	newStorage,
 	addIconToStorage,
 	iconExists,
-	getIconFromStorage,
 	addIconSet,
 	getStorage,
 	listIcons,
@@ -65,7 +64,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		const icon = getIconFromStorage(storage, 'test');
+		const icon = storage.icons['test'];
 		expect(icon).toEqual(expected);
 
 		// Test icon mutation
@@ -88,10 +87,9 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 1,
 		};
-		expect(getIconFromStorage(storage, 'constructor')).toEqual(expected);
+		expect(storage.icons['constructor']).toEqual(expected);
 
-		expect(getIconFromStorage(storage, 'invalid')).toBeNull();
-		expect(getIconFromStorage(storage, 'missing')).toBeNull();
+		expect(storage.icons['invalid']).toBeUndefined();
 	});
 
 	it('Adding simple icon set', () => {
@@ -134,7 +132,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIconFromStorage(storage, 'icon1')).toEqual(expected);
+		expect(storage.icons['icon1']).toEqual(expected);
 		expected = {
 			body: '<path d="icon2" />',
 			width: 24,
@@ -145,9 +143,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIconFromStorage(storage, 'icon2')).toEqual(expected);
-		expect(getIconFromStorage(storage, 'invalid')).toBeNull();
-		expect(getIconFromStorage(storage, 'missing')).toBeNull();
+		expect(storage.icons['icon2']).toEqual(expected);
 	});
 
 	it('Icon set with aliases that use transformations', () => {
@@ -190,9 +186,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIconFromStorage(storage, '16-chevron-left')).toEqual(
-			expected
-		);
+		expect(storage.icons['16-chevron-left']).toEqual(expected);
 
 		// Test alias
 		expected = {
@@ -205,9 +199,7 @@ describe('Testing storage', () => {
 			vFlip: false,
 			rotate: 0,
 		};
-		expect(getIconFromStorage(storage, '16-chevron-right')).toEqual(
-			expected
-		);
+		expect(storage.icons['16-chevron-right']).toEqual(expected);
 	});
 
 	it('List icons in a global storage', () => {

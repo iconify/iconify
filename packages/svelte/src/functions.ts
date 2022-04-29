@@ -293,8 +293,8 @@ export function checkIconState(
 
 	// Load icon
 	const data = getIconData(iconName);
-	if (data === null) {
-		// Icon needs to be loaded
+	if (!data) {
+		// Icon data is not available
 		// Do not load icon until component is mounted
 		if (mounted && (!state.loading || state.loading.name !== icon)) {
 			// New icon to load

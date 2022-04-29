@@ -1,11 +1,12 @@
 import { fullIcon } from '@iconify/utils/lib/icon';
-import { listIcons } from '../../lib/storage/storage';
+import { addIconSet, getStorage, listIcons } from '../../lib/storage/storage';
 import {
 	iconExists,
 	getIcon,
 	addIcon,
 	addCollection,
 	allowSimpleNames,
+	getIconData,
 } from '../../lib/storage/functions';
 
 describe('Testing IconifyStorageFunctions', () => {
@@ -15,6 +16,13 @@ describe('Testing IconifyStorageFunctions', () => {
 		return 'storage-test-' + (count++).toString();
 	}
 
+	beforeEach(() => {
+		allowSimpleNames(false);
+	});
+	afterAll(() => {
+		allowSimpleNames(false);
+	});
+
 	it('Storage functions', () => {
 		const provider = nextProvider();
 		const testName = `@${provider}:foo:bar`;
@@ -22,6 +30,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		// Empty
 		expect(iconExists(testName)).toBe(false);
 		expect(getIcon(testName)).toBeNull();
+		expect(getIconData(testName)).toBeUndefined();
 		expect(listIcons(provider)).toEqual([]);
 
 		// Add and test one icon
@@ -32,17 +41,52 @@ describe('Testing IconifyStorageFunctions', () => {
 		).toBe(true);
 		expect(iconExists(testName)).toBe(true);
 		expect(listIcons(provider)).toEqual([testName]);
+
+		let expected = fullIcon({
+			body: '<g />',
+		});
+		expect(getIconData(testName)).toEqual(expected);
+		expect(getIcon(testName)).toEqual(expected);
+
+		// Add icon set
+		const prefix = 'prefix' + (count++).toString();
+		const storage = getStorage('', prefix);
+		addIconSet(storage, {
+			prefix,
+			icons: {
+				home: {
+					body: '<g id="home" />',
+				},
+			},
+			not_found: ['missing'],
+		});
+
+		// Test 'home' icon
+		expect(iconExists(`${prefix}:home`)).toBe(true);
+		expected = fullIcon({
+			body: '<g id="home" />',
+		});
+		expect(getIconData(`${prefix}:home`)).toEqual(expected);
+		expect(getIcon(`${prefix}:home`)).toEqual(expected);
+
+		// Test 'missing' icon
+		expect(iconExists(`${prefix}:missing`)).toBe(false);
+		expect(getIconData(`${prefix}:missing`)).toBeNull();
+		expect(getIcon(`${prefix}:missing`)).toBeNull();
+
+		// Test 'invalid' icon
+		expect(iconExists(`${prefix}:invalid`)).toBe(false);
+		expect(getIconData(`${prefix}:invalid`)).toBeUndefined();
+		expect(getIcon(`${prefix}:invalid`)).toBeNull();
 	});
 
 	it('Invalid icon name', () => {
 		const testName = 'storage' + (count++).toString();
 
-		// Reset module
-		allowSimpleNames(false);
-
 		// Empty
 		expect(iconExists(testName)).toBe(false);
 		expect(getIcon(testName)).toBeNull();
+		expect(getIconData(testName)).toBeUndefined();
 
 		// Add and test one icon (icon should not be added)
 		expect(
@@ -54,9 +98,6 @@ describe('Testing IconifyStorageFunctions', () => {
 	});
 
 	it('Invalid icon set', () => {
-		// Reset module
-		allowSimpleNames(false);
-
 		// Icon set without prefix (should work only when simple names are allowed, tested later in this file)
 		expect(
 			addCollection({
@@ -87,9 +128,6 @@ describe('Testing IconifyStorageFunctions', () => {
 			})
 		).toBe(true);
 		expect(iconExists(testName)).toBe(true);
-
-		// Reset config after test
-		allowSimpleNames(false);
 	});
 
 	it('Collection with simple icon name', () => {
@@ -104,6 +142,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		const name1 = 'test' + n.toString();
 		const prefix2 = `prefixed${n}`;
 		const name2 = `icon${n2}`;
+		const missing = `missing${n}`;
 		expect(
 			addCollection({
 				prefix: '',
@@ -115,38 +154,41 @@ describe('Testing IconifyStorageFunctions', () => {
 						body: '<g data-icon="prefixed-icon" />',
 					},
 				},
+				not_found: [missing],
 			})
 		).toBe(true);
 
 		// Test 'test'
 		name = name1;
 		expect(iconExists(name)).toBe(true);
-		expect(getIcon(name)).toEqual(
-			fullIcon({
-				body: '<g data-icon="basic-icon" />',
-			})
-		);
+		let expected = fullIcon({
+			body: '<g data-icon="basic-icon" />',
+		});
+		expect(getIcon(name)).toEqual(expected);
+		expect(getIconData(name)).toEqual(expected);
 
 		// Test prefixed icon, using ':' separator
 		name = `${prefix2}:${name2}`;
 		expect(listIcons('', prefix2)).toEqual([name]);
 		expect(iconExists(name)).toBe(true);
-		expect(getIcon(name)).toEqual(
-			fullIcon({
-				body: '<g data-icon="prefixed-icon" />',
-			})
-		);
+		expected = fullIcon({
+			body: '<g data-icon="prefixed-icon" />',
+		});
+		expect(getIcon(name)).toEqual(expected);
+		expect(getIconData(name)).toEqual(expected);
 
 		// Test prefixed icon, using '-' separator
 		name = `${prefix2}-${name2}`;
 		expect(iconExists(name)).toBe(true);
-		expect(getIcon(name)).toEqual(
-			fullIcon({
-				body: '<g data-icon="prefixed-icon" />',
-			})
-		);
+		expected = fullIcon({
+			body: '<g data-icon="prefixed-icon" />',
+		});
+		expect(getIcon(name)).toEqual(expected);
+		expect(getIconData(name)).toEqual(expected);
 
-		// Reset config after test
-		allowSimpleNames(false);
+		// Test missing icon: should not exist because without provider missing icon cannot be added
+		expect(iconExists(missing)).toBe(false);
+		expect(getIcon(missing)).toBeNull();
+		expect(getIconData(missing)).toBeUndefined();
 	});
 });

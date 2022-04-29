@@ -4,7 +4,7 @@ import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import { removeRootNode, listRootNodes } from '../src/observer/root';
 import { onReady } from '../src/helpers/ready';
-import { stopObserver, stopObserving } from '../src/observer';
+import { stopObserver } from '../src/observer';
 
 /**
  * Generate next prefix

@@ -316,20 +316,23 @@ class IconComponent extends React.Component<
 
 		// Load icon
 		const data = getIconData(iconName);
-		if (data === null) {
-			// Icon needs to be loaded
+		if (!data) {
+			// Icon data is not available
 			if (!this._loading || this._loading.name !== icon) {
 				// New icon to load
 				this._abortLoading();
 				this._icon = '';
 				this._setData(null);
-				this._loading = {
-					name: icon,
-					abort: loadIcons(
-						[iconName],
-						this._checkIcon.bind(this, false)
-					),
-				};
+				if (data !== null) {
+					// Icon was not loaded
+					this._loading = {
+						name: icon,
+						abort: loadIcons(
+							[iconName],
+							this._checkIcon.bind(this, false)
+						),
+					};
+				}
 			}
 			return;
 		}

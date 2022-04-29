@@ -297,18 +297,21 @@ export const Icon = Vue.extend({
 
 			// Load icon
 			const data = getIconData(iconName);
-			if (data === null) {
-				// Icon needs to be loaded
+			if (!data) {
+				// Icon data is not available
 				if (!this._loadingIcon || this._loadingIcon.name !== icon) {
 					// New icon to load
 					this.abortLoading();
 					this._name = '';
-					this._loadingIcon = {
-						name: icon,
-						abort: loadIcons([iconName], () => {
-							this.$forceUpdate();
-						}),
-					};
+					if (data !== null) {
+						// Icon was not loaded
+						this._loadingIcon = {
+							name: icon,
+							abort: loadIcons([iconName], () => {
+								this.$forceUpdate();
+							}),
+						};
+					}
 				}
 				return null;
 			}

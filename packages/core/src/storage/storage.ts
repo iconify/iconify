@@ -47,7 +47,7 @@ try {
 	if (w && w._iconifyStorage.version === storageVersion) {
 		storage = w._iconifyStorage.storage;
 	}
-} catch (err) {
+} catch {
 	//
 }
 
@@ -63,7 +63,7 @@ export function shareStorage(): void {
 				storage,
 			};
 		}
-	} catch (err) {
+	} catch {
 		//
 	}
 }
@@ -128,7 +128,7 @@ export function addIconToStorage(
 			storage.icons[name] = Object.freeze(fullIcon(icon));
 			return true;
 		}
-	} catch (err) {
+	} catch {
 		// Do nothing
 	}
 	return false;
@@ -139,17 +139,6 @@ export function addIconToStorage(
  */
 export function iconExists(storage: IconStorage, name: string): boolean {
 	return storage.icons[name] !== void 0;
-}
-
-/**
- * Get icon data
- */
-export function getIconFromStorage(
-	storage: IconStorage,
-	name: string
-): Readonly<FullIconifyIcon> | null {
-	const value = storage.icons[name];
-	return value === void 0 ? null : value;
 }
 
 /**

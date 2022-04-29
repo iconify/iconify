@@ -8,9 +8,9 @@ import type { SortedIcons } from '../icon/sort';
 import { sortIcons } from '../icon/sort';
 import { storeCallback, updateCallbacks } from './callbacks';
 import { getAPIModule } from './modules';
-import { getStorage, addIconSet, getIconFromStorage } from '../storage/storage';
+import { getStorage, addIconSet } from '../storage/storage';
 import { listToIcons } from '../icon/list';
-import { allowSimpleNames } from '../storage/functions';
+import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
 import { cache } from '../cache';
 
@@ -364,10 +364,11 @@ export const loadIcon = (
 		const iconObj = typeof icon === 'string' ? stringToIcon(icon) : icon;
 		loadIcons([iconObj || icon], (loaded) => {
 			if (loaded.length && iconObj) {
-				const storage = getStorage(iconObj.provider, iconObj.prefix);
-				const data = getIconFromStorage(storage, iconObj.name);
+				const data = getIconData(iconObj);
 				if (data) {
-					fulfill(data);
+					fulfill({
+						...data,
+					});
 					return;
 				}
 			}

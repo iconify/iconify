@@ -1,7 +1,4 @@
-import {
-	getIconFromStorage,
-	getStorage,
-} from '@iconify/core/lib/storage/storage';
+import { getStorage } from '@iconify/core/lib/storage/storage';
 import { isPending, loadIcons } from '@iconify/core/lib/api/icons';
 import { findRootNode, listRootNodes } from '../observer/root';
 import type { ObservedNode } from '../observer/types';
@@ -65,10 +62,11 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 		const { provider, prefix, name } = icon;
 		const storage = getStorage(provider, prefix);
 
-		if (storage.icons[name]) {
+		const storedIcon = storage.icons[name];
+		if (storedIcon) {
 			return {
 				status: 'loaded',
-				icon: getIconFromStorage(storage, name),
+				icon: storedIcon,
 			};
 		}
 

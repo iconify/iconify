@@ -4,12 +4,7 @@ import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
-import {
-	getStorage,
-	getIconFromStorage,
-	addIconToStorage,
-	addIconSet,
-} from './storage';
+import { getStorage, addIconToStorage, addIconSet } from './storage';
 
 /**
  * Interface for exported storage functions
@@ -65,15 +60,26 @@ export function allowSimpleNames(allow?: boolean): boolean {
 
 /**
  * Get icon data
+ *
+ * Returns:
+ * - Required<IconifyIcon> on success, object directly from storage so don't modify it
+ * - null if icon is marked as missing (returned in `not_found` property from API, so don't bother sending API requests)
+ * - undefined if icon is missing
  */
 export function getIconData(
 	name: string | IconifyIconName
-): FullIconifyIcon | null {
+): FullIconifyIcon | null | undefined {
 	const icon =
 		typeof name === 'string' ? stringToIcon(name, true, simpleNames) : name;
-	return icon
-		? getIconFromStorage(getStorage(icon.provider, icon.prefix), icon.name)
-		: null;
+
+	if (!icon) {
+		return;
+	}
+	const storage = getStorage(icon.provider, icon.prefix);
+	const iconName = icon.name;
+	return (
+		storage.icons[iconName] || (storage.missing[iconName] ? null : void 0)
+	);
 }
 
 /**
@@ -143,9 +149,8 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
  * Check if icon exists
  */
 export function iconExists(name: string): boolean {
-	return getIconData(name) !== null;
+	return !!getIconData(name);
 }
-
 /**
  * Get icon
  */
