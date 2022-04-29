@@ -6,6 +6,7 @@
 		"packages/api-redundancy",
 		"packages/utils",
 		"packages/core",
+		"packages/icon",
 		"packages/*",
 		"demo/*",
 		"debug_packages/*"

@@ -1,0 +1,45 @@
+{
+	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+	"mainEntryPointFilePath": "lib/iconify.d.ts",
+	"bundledPackages": [
+		"@iconify/types",
+		"@iconify/core",
+		"@iconify/utils",
+		"@cyberalien/redundancy",
+		"@iconify/api-redundancy"
+	],
+	"compiler": {},
+	"apiReport": {
+		"enabled": false
+	},
+	"docModel": {
+		"enabled": false
+	},
+	"dtsRollup": {
+		"enabled": true,
+		"untrimmedFilePath": "<projectFolder>/dist/iconify.d.ts"
+	},
+	"tsdocMetadata": {
+		"enabled": false
+	},
+	"messages": {
+		"compilerMessageReporting": {
+			"default": {
+				"logLevel": "warning"
+			}
+		},
+		"extractorMessageReporting": {
+			"default": {
+				"logLevel": "warning"
+			},
+			"ae-missing-release-tag": {
+				"logLevel": "none"
+			}
+		},
+		"tsdocMessageReporting": {
+			"default": {
+				"logLevel": "warning"
+			}
+		}
+	}
+}
