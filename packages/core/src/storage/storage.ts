@@ -47,7 +47,7 @@ try {
 	if (w && w._iconifyStorage.version === storageVersion) {
 		storage = w._iconifyStorage.storage;
 	}
-} catch {
+} catch (err) {
 	//
 }
 
@@ -63,7 +63,7 @@ export function shareStorage(): void {
 				storage,
 			};
 		}
-	} catch {
+	} catch (err) {
 		//
 	}
 }
@@ -128,7 +128,7 @@ export function addIconToStorage(
 			storage.icons[name] = Object.freeze(fullIcon(icon));
 			return true;
 		}
-	} catch {
+	} catch (err) {
 		// Do nothing
 	}
 	return false;

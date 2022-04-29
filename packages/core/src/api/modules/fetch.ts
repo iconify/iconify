@@ -27,7 +27,7 @@ const detectFetch = (): FetchType | null => {
 		if (typeof callback === 'function') {
 			return callback;
 		}
-	} catch {
+	} catch (err) {
 		//
 	}
 
