@@ -149,7 +149,7 @@ export function defineIconifyIcon(
 				}
 
 				case 'inline': {
-					const newInline = !!newValue;
+					const newInline = getInline(this);
 					if (newInline !== state.inline) {
 						// Update style if inline mode changed
 						state.inline = newInline;

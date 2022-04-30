@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Iconify Icon Demo: Usage</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #fff;
+				color: #000;
+			}
+			body {
+				padding: 8px;
+				font-size: 16px;
+				line-height: 24px;
+			}
+			p {
+				margin: 0;
+				padding: 8px;
+			}
+			p:nth-child(2n) {
+				background-color: #f8f8f8;
+			}
+			:where(p:hover) iconify-icon {
+				color: green;
+			}
+			iconify-icon:hover {
+				color: red;
+			}
+		</style>
+		<script>
+			IconifyPreload = [
+				{
+					prefix: 'test',
+					icons: {
+						icon: {
+							body: '<mask id="coffee-mask" x="0" y="0" width="16" height="16"><g fill="white"><path d="M5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M8.5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4" stroke="white" stroke-width="1" fill="none"><animateMotion path="M0 0v-8" calcMode="linear" dur="3s" repeatCount="indefinite" /></path></g><rect y="4" width="16" height="12" fill="black" /><path d="M2 5H13C14.1046 5 15 5.89543 15 7V8C15 9.10457 14.1046 10 13 10H12V14C12 15.1046 11.1046 16 10 16H4C2.89543 16 2 15.1046 2 14V5Z" fill="white" /><path d="M12 6H13C13.5523 6 14 6.44772 14 7V8C14 8.55228 13.5523 9 13 9H12V6Z" fill="black" /></mask><rect mask="url(#coffee-mask)" width="16" height="16" fill="currentColor" />',
+						},
+					},
+				},
+			];
+		</script>
+		<script src="../dist/iconify-icon.min.js"></script>
+	</head>
+	<body>
+		<p>
+			This is a simple HTML page with few icons.<br />
+			There are 2 entries for each sample: one as inline SVG, one using
+			style.
+		</p>
+		<p>
+			Icons that behave like images:
+			<iconify-icon icon="bi:house-door"></iconify-icon>
+			<iconify-icon icon="bi:house-door" mode="style"></iconify-icon>
+			<iconify-icon icon="cif:ee"></iconify-icon>
+			<iconify-icon icon="cif:ee" mode="style"></iconify-icon>
+		</p>
+		<p>
+			Icon that behaves like an glyph (aligned to bottom of this text):
+			<iconify-icon inline icon="bi:house-door"></iconify-icon>
+			<iconify-icon
+				inline="inline"
+				icon="bi:house-door"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon inline icon="cif:ee"></iconify-icon>
+			<iconify-icon
+				inline="true"
+				icon="cif:ee"
+				mode="style"
+			></iconify-icon>
+		</p>
+		<p>
+			Changing icon color:
+			<iconify-icon
+				inline
+				style="color: red"
+				icon="bi:house-door"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				style="color: red"
+				icon="bi:house-door"
+				mode="style"
+			></iconify-icon>
+		</p>
+		<p>
+			Big icon (showing various ways to do it):
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				style="font-size: 2em"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				style="font-size: 2em"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				height="2em"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				height="2em"
+				mode="style"
+			></iconify-icon>
+			<br />
+			Icons above should be aligned differently because they have
+			different font-size. Vertical alignment is relative to font size.
+		</p>
+		<p>
+			Big icon (showing various ways to do it):
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				style="font-size: 2em"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				style="font-size: 2em"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				height="2em"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:person-lines-fill"
+				height="2em"
+				mode="style"
+			></iconify-icon>
+			<br />
+			Icons above should be aligned identically because they are not using
+			inline mode.
+		</p>
+		<p>
+			Rotation:
+			<iconify-icon inline icon="bi:image"></iconify-icon>
+			<iconify-icon inline icon="bi:image" mode="style"></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="1"></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:image"
+				rotate="1"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="180deg"></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:image"
+				rotate="180deg"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="75%"></iconify-icon>
+			<iconify-icon
+				inline
+				icon="bi:image"
+				rotate="75%"
+				mode="style"
+			></iconify-icon>
+		</p>
+		<p>
+			Flip:
+			<iconify-icon inline icon="test:icon"></iconify-icon>
+			<iconify-icon inline icon="test:icon" mode="style"></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="horizontal"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="horizontal"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="vertical"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="vertical"
+				mode="style"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="horizontal,vertical"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test:icon"
+				flip="horizontal,vertical"
+				mode="style"
+			></iconify-icon>
+		</p>
+	</body>
+</html>
