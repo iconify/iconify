@@ -1,8 +1,7 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-	"mainEntryPointFilePath": "lib/iconify.d.ts",
+	"mainEntryPointFilePath": "lib/index.d.ts",
 	"bundledPackages": [
-		"@iconify/types",
 		"@iconify/core",
 		"@iconify/utils",
 		"@cyberalien/redundancy",
@@ -17,7 +16,7 @@
 	},
 	"dtsRollup": {
 		"enabled": true,
-		"untrimmedFilePath": "<projectFolder>/dist/iconify.d.ts"
+		"untrimmedFilePath": "<projectFolder>/dist/iconify-icon.d.ts"
 	},
 	"tsdocMetadata": {
 		"enabled": false

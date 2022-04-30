@@ -57,11 +57,11 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.dist && !fileExists(packagesDir + '/iconify/lib/iconify.js')) {
+if (compile.dist && !fileExists(packagesDir + '/icon/lib/index.js')) {
 	compile.lib = true;
 }
 
-if (compile.api && !fileExists(packagesDir + '/iconify/lib/iconify.d.ts')) {
+if (compile.api && !fileExists(packagesDir + '/icon/lib/index.d.ts')) {
 	compile.lib = true;
 }
 
@@ -76,11 +76,6 @@ if (compile.core) {
 		args: ['run', 'build'],
 		cwd: packagesDir + '/core',
 	});
-}
-
-// Add api2
-if (compile.api) {
-	compile.api2 = true;
 }
 
 // Compile other packages

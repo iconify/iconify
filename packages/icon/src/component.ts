@@ -332,8 +332,3 @@ export function defineIconifyIcon(
 
 	return IconifyIcon as IconifyIconHTMLElementClass;
 }
-
-/**
- * Create exported data: either component instance or functions
- */
-export const IconifyIconComponent = defineIconifyIcon() || exportFunctions();

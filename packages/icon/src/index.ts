@@ -41,8 +41,12 @@ import type {
 } from '@iconify/core/lib/browser-storage/functions';
 
 // Component
-import type { IconifyIconAttributes } from './attributes/types';
-import { IconifyIconComponent } from './component';
+import type {
+	IconifyIconAttributes,
+	IconifyRenderMode,
+} from './attributes/types';
+import { defineIconifyIcon } from './component';
+import { exportFunctions } from './functions';
 
 /**
  * Export used types
@@ -88,12 +92,12 @@ export { IconifyIconBuildResult };
 export { IconifyBrowserCacheType };
 
 // Component types
-export { IconifyIconAttributes };
+export { IconifyIconAttributes, IconifyRenderMode };
 
 /**
- * Export component
+ * Create exported data: either component instance or functions
  */
-export { IconifyIconComponent };
+export const IconifyIconComponent = defineIconifyIcon() || exportFunctions();
 
 /**
  * Export functions
