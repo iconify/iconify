@@ -11,7 +11,6 @@ import {
 import { listIcons, shareStorage } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
 import { buildIcon } from '@iconify/core/lib/builder/functions';
-import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 // API
@@ -158,7 +157,6 @@ export function exportFunctions(): IconifyExportedFunctions {
 		addIcon,
 		addCollection,
 		calculateSize,
-		replaceIDs,
 		buildIcon,
 		loadIcons,
 		loadIcon,
