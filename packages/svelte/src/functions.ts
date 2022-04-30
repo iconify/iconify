@@ -125,6 +125,7 @@ export { RawIconCustomisations, IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
+
 /**
  * Enable cache
  */

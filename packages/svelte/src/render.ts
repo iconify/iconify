@@ -86,10 +86,11 @@ export function render(
 	);
 
 	// Check mode
-	const mode: IconifyRenderMode = props.mode || 'inline';
-	const componentProps = (
-		mode === 'inline' ? { ...svgDefaults } : {}
-	) as Record<string, unknown>;
+	const mode: IconifyRenderMode = props.mode || 'svg';
+	const componentProps = (mode === 'svg' ? { ...svgDefaults } : {}) as Record<
+		string,
+		unknown
+	>;
 
 	// Create style if missing
 	let style = typeof props.style === 'string' ? props.style : '';
@@ -181,7 +182,7 @@ export function render(
 		style = 'vertical-align: -0.125em; ' + style;
 	}
 
-	if (mode === 'inline') {
+	if (mode === 'svg') {
 		// Add icon stuff
 		Object.assign(componentProps, renderAttribs);
 

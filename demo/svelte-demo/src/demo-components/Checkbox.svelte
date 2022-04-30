@@ -23,6 +23,6 @@
 </script>
 
 <div class="checkbox-container">
-    <a href="# " class={className} on:click|preventDefault={toggle}><Icon icon={icon} />{text}</a>
+    <a href="# " class={className} on:click|preventDefault={toggle}><Icon icon={icon} mode={checked ? 'svg' : 'style'} />{text}</a>
     <small>{hint}</small>
 </div>

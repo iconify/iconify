@@ -13,12 +13,12 @@
   <Counter />
 
   <p>
-    Visit <a href="https://svelte.dev">svelte.dev <Icon icon="ci:external-link" inline={true} /></a> to learn how to build <Icon icon="logos:svelte" inline={true} />
+    Visit <a href="https://svelte.dev">svelte.dev <Icon icon="ci:external-link" inline={true}  mode="style" /></a> to learn how to build <Icon icon="logos:svelte" inline={true} />
     apps.
   </p>
 
   <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit <Icon icon="ci:external-link" inline={true} /></a> for
+    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit <Icon icon="ci:external-link" inline={true} mode="style" /></a> for
     the officially supported framework, also powered by Vite!
   </p>
 </main>

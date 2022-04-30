@@ -91,7 +91,7 @@ export const render = (
 	);
 
 	// Check mode
-	const mode: IconifyRenderMode = props.mode || 'inline';
+	const mode: IconifyRenderMode = props.mode || 'svg';
 
 	// Create style
 	const style: React.CSSProperties = {};
@@ -99,7 +99,7 @@ export const render = (
 
 	// Create SVG component properties
 	const componentProps = {
-		...(mode === 'inline' ? svgDefaults : {}),
+		...(mode === 'svg' ? svgDefaults : {}),
 		ref,
 	};
 
@@ -181,7 +181,7 @@ export const render = (
 		style.verticalAlign = '-0.125em';
 	}
 
-	if (mode === 'inline') {
+	if (mode === 'svg') {
 		// Add style
 		componentProps.style = {
 			...style,

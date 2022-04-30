@@ -3,7 +3,7 @@
 		<span :class="className">
 			<Icon
 				:icon="icon"
-				:mode="isChecked ? 'inline' : 'style'"
+				:mode="isChecked ? 'svg' : 'style'"
 				@click="check"
 			/>{{ text }}
 		</span>

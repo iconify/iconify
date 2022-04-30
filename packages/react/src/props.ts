@@ -8,11 +8,11 @@ export { RawIconCustomisations };
  * Icon render mode
  *
  * 'style' = 'bg' or 'mask', depending on icon content
- * 'bg' = inline style using `background`
- * 'mask' = inline style using `mask`
- * 'inline' = inline SVG.
+ * 'bg' = <span> with style using `background`
+ * 'mask' = <span> with style using `mask`
+ * 'svg' = <svg>
  */
-export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'inline';
+export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'svg';
 
 // Allow rotation to be string
 /**

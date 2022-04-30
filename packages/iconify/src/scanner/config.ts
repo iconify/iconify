@@ -11,11 +11,11 @@ export const inlineClass = 'iconify-inline';
  * Icon render mode
  *
  * 'style' = 'bg' or 'mask', depending on icon content
- * 'bg' = inline style using `background`
- * 'mask' = inline style using `mask`
- * 'inline' = inline SVG.
+ * 'bg' = add inline style to placeholder using `background`
+ * 'mask' = add inline style to placeholder using `mask`
+ * 'svg' = <svg>
  */
-export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'inline';
+export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'svg';
 
 /**
  * Data used to verify if icon is the same

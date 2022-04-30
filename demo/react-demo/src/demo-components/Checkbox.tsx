@@ -29,7 +29,7 @@ export function Checkbox(props: CheckboxProps) {
 			>
 				<Icon
 					icon={checked ? checkedIcon : uncheckedIcon}
-					mode={checked ? 'mask' : 'inline'}
+					mode={checked ? 'mask' : 'svg'}
 				/>
 				{props.text}
 			</a>
