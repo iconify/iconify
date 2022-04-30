@@ -1,7 +1,6 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
 	"bundledPackages": [
-		"@iconify/types",
 		"@iconify/core",
 		"@iconify/utils",
 		"@cyberalien/redundancy",

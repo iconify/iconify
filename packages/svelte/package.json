@@ -25,6 +25,9 @@
 		"build:api": "node build --only-api",
 		"test": "jest --runInBand"
 	},
+	"dependencies": {
+		"@iconify/types": "^1.1.0"
+	},
 	"devDependencies": {
 		"@iconify/core": "^1.3.2",
 		"@microsoft/api-extractor": "^7.19.5",

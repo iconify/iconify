@@ -2,10 +2,10 @@
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
 	"mainEntryPointFilePath": "lib/iconify-icon.d.ts",
 	"bundledPackages": [
-		"@iconify/types",
 		"@iconify/core",
 		"@iconify/utils",
-		"@cyberalien/redundancy"
+		"@cyberalien/redundancy",
+		"@iconify/api-redundancy"
 	],
 	"compiler": {},
 	"apiReport": {

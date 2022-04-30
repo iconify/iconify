@@ -44,6 +44,9 @@
 			"default": "./dist/offline.js"
 		}
 	},
+	"dependencies": {
+		"@iconify/types": "^1.1.0"
+	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.16.11",
 		"@babel/preset-react": "^7.16.7",
