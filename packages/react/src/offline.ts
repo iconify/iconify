@@ -11,6 +11,7 @@ import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-bas
 import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
+	IconifyRenderMode,
 	IconProps,
 	IconRef,
 } from './props';
@@ -30,6 +31,7 @@ export {
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
+	IconifyRenderMode,
 };
 
 /**

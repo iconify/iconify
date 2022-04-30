@@ -75,6 +75,7 @@ import type {
 	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
+	IconifyRenderMode,
 } from './props';
 
 // Render SVG
@@ -102,6 +103,7 @@ export {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
+	IconifyRenderMode,
 	IconifyIconProps,
 	IconProps,
 };

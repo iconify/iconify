@@ -21,6 +21,7 @@ import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
 	IconProps,
+	IconifyRenderMode,
 } from './props';
 import { render } from './render';
 
@@ -38,6 +39,7 @@ export {
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
 	IconifyIconSize,
+	IconifyRenderMode,
 };
 
 /**

@@ -74,6 +74,7 @@ import {
 	pauseObserver,
 	resumeObserver,
 } from './observer/index';
+import type { IconifyRenderMode } from './scanner/config';
 
 /**
  * Export required types
@@ -96,6 +97,7 @@ export {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
+	IconifyRenderMode,
 };
 
 // Build

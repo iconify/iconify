@@ -7,7 +7,11 @@ export type {
 } from '@iconify/utils/lib/customisations';
 
 // Types from props.ts
-export type { IconifyIconCustomisations, IconProps } from './props';
+export type {
+	IconifyIconCustomisations,
+	IconProps,
+	IconifyRenderMode,
+} from './props';
 
 // Functions
 // Important: duplicate of global exports in OfflineIcon.svelte. When changing exports, they must be changed in both files.

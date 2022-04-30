@@ -76,6 +76,7 @@ import type {
 	IconifyIconOnLoad,
 	IconifyIconCustomisations,
 	IconifyIconProps,
+	IconifyRenderMode,
 	IconProps,
 	IconRef,
 } from './props';
@@ -104,6 +105,7 @@ export {
 	IconifyIconSize,
 	IconifyHorizontalIconAlignment,
 	IconifyVerticalIconAlignment,
+	IconifyRenderMode,
 	IconifyIconProps,
 	IconProps,
 	IconifyIconOnLoad,

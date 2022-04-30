@@ -21,6 +21,7 @@ export {
 	IconifyVerticalIconAlignment,
 	IconifyIconProps,
 	IconProps,
+	IconifyRenderMode,
 } from './functions';
 
 // API
