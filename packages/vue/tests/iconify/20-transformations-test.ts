@@ -24,7 +24,7 @@ describe('Rotation', () => {
 		await nextTick();
 
 		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g transform="rotate(90 12 12)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24"><g transform="rotate(90 12 12)"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></g></svg>'
 		);
 	});
 
@@ -173,60 +173,5 @@ describe('Flip', () => {
 		await nextTick();
 
 		expect(wrapper.html()).not.toContain('<g transform="');
-	});
-});
-
-describe('Alignment and slice', () => {
-	test('vAlign and slice', async () => {
-		const Wrapper = {
-			components: { Icon },
-			template: `<Icon :icon="icon" vAlign="top" :slice="true" />`,
-			data() {
-				return {
-					icon: iconData,
-				};
-			},
-		};
-
-		const wrapper = mount(Wrapper, {});
-		await nextTick();
-
-		expect(wrapper.html()).toContain(
-			'preserveAspectRatio="xMidYMin slice"'
-		);
-	});
-
-	test('string', async () => {
-		const Wrapper = {
-			components: { Icon },
-			template: `<Icon :icon="icon" align="left bottom" />`,
-			data() {
-				return {
-					icon: iconData,
-				};
-			},
-		};
-
-		const wrapper = mount(Wrapper, {});
-		await nextTick();
-
-		expect(wrapper.html()).toContain('preserveAspectRatio="xMinYMax meet"');
-	});
-
-	test('aliases', async () => {
-		const Wrapper = {
-			components: { Icon },
-			template: `<Icon :icon="icon" h-align="left" vertical-align="bottom" />`,
-			data() {
-				return {
-					icon: iconData,
-				};
-			},
-		};
-
-		const wrapper = mount(Wrapper, {});
-		await nextTick();
-
-		expect(wrapper.html()).toContain('preserveAspectRatio="xMinYMax meet"');
 	});
 });

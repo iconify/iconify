@@ -64,7 +64,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<span class="iconify iconify--mdi" data-icon="mdi:home" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></span>`
+			`<span class="iconify iconify--mdi" data-icon="mdi:home" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></span>`
 		);
 
 		const data = svg[elementDataProperty];
@@ -81,7 +81,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<i class="iconify-inline iconify iconify--mdi" data-icon="mdi:home" data-flip="horizontal" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg transform='translate(24 0) scale(-1 1)'%3E%3Cg /%3E%3C/g%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%; vertical-align: -0.125em;"></i>`
+			`<i class="iconify-inline iconify iconify--mdi" data-icon="mdi:home" data-flip="horizontal" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg transform='translate(24 0) scale(-1 1)'%3E%3Cg /%3E%3C/g%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%; vertical-align: -0.125em;"></i>`
 		);
 
 		const data = svg[elementDataProperty];
@@ -101,7 +101,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<span id="test" style="color: red; vertical-align: -0.1em; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;" class="iconify my-icon iconify--mdi" data-icon="mdi:home"></span>`
+			`<span id="test" style="color: red; vertical-align: -0.1em; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;" class="iconify my-icon iconify--mdi" data-icon="mdi:home"></span>`
 		);
 
 		const data = svg[elementDataProperty];
@@ -118,7 +118,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<i class="iconify-inline iconify iconify--mdi" data-icon="mdi:home" style="vertical-align: 0; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></i>`
+			`<i class="iconify-inline iconify iconify--mdi" data-icon="mdi:home" style="vertical-align: 0; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></i>`
 		);
 
 		const data = svg[elementDataProperty];
@@ -135,7 +135,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<i class="iconify-inline iconify iconify--provider iconify--mdi-light" data-icon="@provider:mdi-light:home-outline" style="color: red; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%; vertical-align: -0.125em;"></i>`
+			`<i class="iconify-inline iconify iconify--provider iconify--mdi-light" data-icon="@provider:mdi-light:home-outline" style="color: red; --svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%; vertical-align: -0.125em;"></i>`
 		);
 
 		const data = svg[elementDataProperty];
@@ -159,7 +159,7 @@ describe('Testing rendering nodes as background', () => {
 				width: 24,
 				height: 24,
 			},
-			`<i class="iconify iconify--test" data-icon="@test:test:arrow-left" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></i>`
+			`<i class="iconify iconify--test" data-icon="@test:test:arrow-left" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></i>`
 		);
 
 		const data = svg[elementDataProperty];

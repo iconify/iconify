@@ -2,10 +2,7 @@ import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import { defaults } from '@iconify/utils/lib/customisations';
 import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
-import {
-	alignmentFromString,
-	flipFromString,
-} from '@iconify/utils/lib/customisations/shorthand';
+import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { IconifyRenderMode, inlineClass } from './config';
 import type { IconifyElementProps } from './config';
 
@@ -22,18 +19,6 @@ const booleanAttributes: (keyof IconifyIconCustomisations)[] = [
 	'hFlip',
 	'vFlip',
 ];
-
-/**
- * Combined attributes
- */
-type CombinedAtttributeFunction = (
-	customisations: IconifyIconCustomisations,
-	value: string
-) => void;
-const combinedAttributes: Record<string, CombinedAtttributeFunction> = {
-	flip: flipFromString,
-	align: alignmentFromString,
-};
 
 /**
  * Get attribute value
@@ -82,12 +67,10 @@ export function getElementProps(element: Element): IconifyElementProps | null {
 		customisations.rotate = rotateFromString(rotation);
 	}
 
-	// Get alignment and transformations shorthand attributes
-	for (const attr in combinedAttributes) {
-		const value = element.getAttribute('data-' + attr);
-		if (typeof value === 'string') {
-			combinedAttributes[attr](customisations, value);
-		}
+	// Get flip shorthand
+	const flip = element.getAttribute('data-flip');
+	if (typeof flip === 'string') {
+		flipFromString(customisations, flip);
 	}
 
 	// Boolean attributes

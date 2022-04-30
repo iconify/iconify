@@ -130,26 +130,3 @@ describe('Flip', () => {
 		expect(child.tagName).toBe('path');
 	});
 });
-
-describe('Alignment and slice', () => {
-	test('vAlign and slice', () => {
-		const component = render(Icon, {
-			icon: iconData,
-			vAlign: 'top',
-			slice: true,
-		});
-		const node = component.container.querySelector('svg')!;
-
-		expect(node.getAttribute('preserveAspectRatio')).toBe('xMidYMin slice');
-	});
-
-	test('string', () => {
-		const component = render(Icon, {
-			icon: iconData,
-			align: 'left bottom',
-		});
-		const node = component.container.querySelector('svg')!;
-
-		expect(node.getAttribute('preserveAspectRatio')).toBe('xMinYMax meet');
-	});
-});

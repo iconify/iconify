@@ -59,7 +59,7 @@ describe('Testing icon component', () => {
 
 		// Should render SVG
 		const blankSVG =
-			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g></g></svg>';
+			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g></g></svg>';
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedBlock}</style>${blankSVG}`
 		);
@@ -112,7 +112,7 @@ describe('Testing icon component', () => {
 
 		// Should render SPAN, with comment
 		const renderedIconWithComment =
-			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' preserveAspectRatio='xMidYMid meet' viewBox='0 0 16 16'%3E%3Crect width='10' height='10'%3E%3Canimate attributeName='width' values='10;5;10' dur='10s' repeatCount='indefinite' /%3E%3C/rect%3E%3C!-- --%3E%3C/svg%3E&quot;); width: 1em; height: 1em; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;\"></span>";
+			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect width='10' height='10'%3E%3Canimate attributeName='width' values='10;5;10' dur='10s' repeatCount='indefinite' /%3E%3C/rect%3E%3C!-- --%3E%3C/svg%3E&quot;); width: 1em; height: 1em; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;\"></span>";
 		const html1 = node._shadowRoot.innerHTML;
 		expect(html1.replace(/-- [0-9]+ --/, '-- --')).toBe(
 			`<style>${expectedBlock}</style>${renderedIconWithComment}`
@@ -178,7 +178,7 @@ describe('Testing icon component', () => {
 
 		// Should render SVG
 		const renderedIcon =
-			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><rect width="10" height="10"><animate attributeName="width" values="10;5;10" dur="10s" repeatCount="indefinite"></animate></rect></svg>';
+			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><rect width="10" height="10"><animate attributeName="width" values="10;5;10" dur="10s" repeatCount="indefinite"></animate></rect></svg>';
 		const html1 = node._shadowRoot.innerHTML;
 		const svg1 = node._shadowRoot.lastChild as SVGSVGElement;
 		const setCurrentTimeSupported = !!svg1.setCurrentTime;

@@ -1,10 +1,6 @@
 // Types
 export type { IconifyJSON, IconifyIcon } from '@iconify/types';
-export type {
-	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-} from '@iconify/utils/lib/customisations';
+export type { IconifyIconSize } from '@iconify/utils/lib/customisations';
 
 // Types from props.ts
 export type {

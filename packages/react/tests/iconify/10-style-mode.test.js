@@ -26,7 +26,7 @@ describe('Rendering as span', () => {
 			type: 'span',
 			props: {
 				style: {
-					'--svg': `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E")`,
+					'--svg': `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E")`,
 					'width': '1em',
 					'height': '1em',
 					'display': 'inline-block',

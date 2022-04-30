@@ -2,11 +2,7 @@ import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import type {
-	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-} from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
 	iconExists,
@@ -96,8 +92,6 @@ export { IconifyIcon, IconifyJSON, IconifyIconName };
 export {
 	IconifyIconCustomisations,
 	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
 	IconifyIconProps,
 	IconifyIconOnLoad,
 };

@@ -132,7 +132,7 @@ describe('Passing attributes', () => {
 	test('attributes that cannot change', () => {
 		const Wrapper = {
 			components: { Icon },
-			template: `<Icon :icon="icon" viewBox="0 0 0 0" preserveAspectRatio="none" />`,
+			template: `<Icon :icon="icon" viewBox="0 0 0 0" />`,
 			data() {
 				return {
 					icon: iconData,
@@ -143,7 +143,6 @@ describe('Passing attributes', () => {
 		const wrapper = mount(Wrapper, {});
 		const html = wrapper.html();
 		expect(html).not.toContain('viewBox="0 0 0 0"');
-		expect(html).not.toContain('preserveAspectRatio="none"');
 	});
 
 	test('class', () => {

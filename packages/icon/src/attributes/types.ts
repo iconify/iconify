@@ -27,9 +27,6 @@ export type IconifyIconCustomisationAttributes = {
 	// Transformations
 	rotate?: string | number;
 	flip?: string;
-
-	// Alignment
-	align?: string;
 };
 
 /**

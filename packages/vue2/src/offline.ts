@@ -2,11 +2,7 @@ import Vue from 'vue';
 import type { CreateElement, VNode } from 'vue';
 import type { ExtendedVue } from 'vue/types/vue';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import type {
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
-} from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
 import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
@@ -28,8 +24,6 @@ export { IconifyIconCustomisations, IconifyIconProps, IconProps };
 export {
 	IconifyIcon,
 	IconifyJSON,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
 	IconifyIconSize,
 };
 

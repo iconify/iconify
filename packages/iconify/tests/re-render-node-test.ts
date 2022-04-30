@@ -77,7 +77,7 @@ describe('Testing re-rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -94,7 +94,7 @@ describe('Testing re-rendering nodes', () => {
 					height: 32,
 				};
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" data-icon="mdi-light:home-outline" data-height="auto" class="iconify iconify--mdi-light"><path d=""></path></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="32" height="32" viewBox="0 0 32 32" data-icon="mdi-light:home-outline" data-height="auto" class="iconify iconify--mdi-light"><path d=""></path></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -113,7 +113,7 @@ describe('Testing re-rendering nodes', () => {
 		const svg = await testIcon(
 			'<span class="iconify" data-icon="mdi:home"></span>',
 			iconData,
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -125,7 +125,7 @@ describe('Testing re-rendering nodes', () => {
 
 				return iconData;
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi iconify-inline" style="vertical-align: -0.125em;"><g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi iconify-inline" style="vertical-align: -0.125em;"><g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -137,7 +137,7 @@ describe('Testing re-rendering nodes', () => {
 
 				return iconData;
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" style="" class="iconify iconify--mdi"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" style="" class="iconify iconify--mdi"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -156,7 +156,7 @@ describe('Testing re-rendering nodes', () => {
 		const svg = await testIcon(
 			'<span class="iconify" data-icon="mdi:home"></span>',
 			iconData,
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -168,7 +168,7 @@ describe('Testing re-rendering nodes', () => {
 
 				return iconData;
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" data-inline="data-inline" class="iconify iconify--mdi" style="vertical-align: -0.125em;"><g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" data-inline="data-inline" class="iconify iconify--mdi" style="vertical-align: -0.125em;"><g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -180,7 +180,7 @@ describe('Testing re-rendering nodes', () => {
 
 				return iconData;
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" data-inline="" style="" class="iconify iconify--mdi"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" data-inline="" style="" class="iconify iconify--mdi"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -197,7 +197,7 @@ describe('Testing re-rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" data-flip="horizontal" class="iconify iconify--mdi"><g transform="translate(24 0) scale(-1 1)"><g></g></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" data-flip="horizontal" class="iconify iconify--mdi"><g transform="translate(24 0) scale(-1 1)"><g></g></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -214,7 +214,7 @@ describe('Testing re-rendering nodes', () => {
 					height: 32,
 				};
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" data-icon="mdi:home" data-flip="vertical" data-rotate="90deg" class="iconify iconify--mdi"><g transform="rotate(90 16 16) translate(0 32) scale(1 -1)"><path d=""></path></g></svg>',
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 32 32" data-icon="mdi:home" data-flip="vertical" data-rotate="90deg" class="iconify iconify--mdi"><g transform="rotate(90 16 16) translate(0 32) scale(1 -1)"><path d=""></path></g></svg>',
 			(svg) => {
 				const data = svg[elementDataProperty];
 				expect(data.status).toBe('loaded');
@@ -229,7 +229,7 @@ describe('Testing re-rendering nodes', () => {
 					body: '<g />',
 				};
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" data-icon="mdi:home" data-rotate="180deg" class="iconify iconify--mdi"><g transform="rotate(180 8 8)"><g></g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 16 16" data-icon="mdi:home" data-rotate="180deg" class="iconify iconify--mdi"><g transform="rotate(180 8 8)"><g></g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];

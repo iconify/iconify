@@ -1,10 +1,7 @@
 import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import { defaults } from '@iconify/utils/lib/customisations';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
-import {
-	flipFromString,
-	alignmentFromString,
-} from '@iconify/utils/lib/customisations/shorthand';
+import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 
 // Remove 'inline' from defaults
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,9 +33,6 @@ export function getCustomisations(node: Element): RenderedIconCustomisations {
 
 	// Flip
 	flipFromString(customisations, attr('flip', ''));
-
-	// Alignment
-	alignmentFromString(customisations, attr('align', ''));
 
 	return customisations;
 }

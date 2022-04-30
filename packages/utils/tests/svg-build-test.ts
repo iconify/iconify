@@ -14,7 +14,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '1em',
 				height: '1em',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 16',
 			},
 			body: '',
@@ -26,7 +25,7 @@ describe('Testing iconToSVG', () => {
 		// Test HTML
 		const html = iconToHTML(result.body, result.attributes);
 		expect(html).toBe(
-			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"></svg>'
 		);
 	});
 
@@ -42,7 +41,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '16',
 				height: '16',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 16',
 			},
 			body: '<path d="" />',
@@ -63,7 +61,7 @@ describe('Testing iconToSVG', () => {
 		}
 		const html = iconToHTML(result.body, htmlProps);
 		expect(html).toBe(
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16" style="vertical-align: -0.125em;"><path d="" /></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 16 16" style="vertical-align: -0.125em;"><path d="" /></svg>'
 		);
 	});
 
@@ -79,7 +77,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '16',
 				height: '16',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 16',
 			},
 			body: '<path d="" />',
@@ -90,11 +87,9 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Custom size, alignment', () => {
+	test('Custom size', () => {
 		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
 			height: 'auto',
-			hAlign: 'left',
-			slice: true,
 		});
 		const icon: FullIconifyIcon = fullIcon({
 			width: 20,
@@ -105,7 +100,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '20',
 				height: '16',
-				preserveAspectRatio: 'xMinYMid slice',
 				viewBox: '0 0 20 16',
 			},
 			body: '<path d="..." />',
@@ -115,10 +109,9 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Rotation, alignment', () => {
+	test('Rotation', () => {
 		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
 			height: '40px',
-			vAlign: 'bottom',
 			rotate: 1,
 		});
 		const icon: FullIconifyIcon = fullIcon({
@@ -130,7 +123,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '32px',
 				height: '40px',
-				preserveAspectRatio: 'xMidYMax meet',
 				viewBox: '0 0 16 20',
 			},
 			body: '<g transform="rotate(90 8 8)"><path d="..." /></g>',
@@ -154,7 +146,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '32px',
 				height: '40px',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 20',
 			},
 			body: '<g transform="rotate(-90 10 10)"><path d="..." /></g>',
@@ -164,11 +155,9 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip, alignment', () => {
+	test('Flip', () => {
 		const custom: FullIconCustomisations = mergeCustomisations(defaults, {
 			height: '32',
-			vAlign: 'top',
-			hAlign: 'right',
 			hFlip: true,
 		});
 		const icon: FullIconifyIcon = fullIcon({
@@ -180,7 +169,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '40',
 				height: '32',
-				preserveAspectRatio: 'xMaxYMin meet',
 				viewBox: '0 0 20 16',
 			},
 			body: '<g transform="translate(20 0) scale(-1 1)"><path d="..." /></g>',
@@ -204,7 +192,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '0.8em',
 				height: '1em',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 20',
 			},
 			body: '<g transform="rotate(90 8 8) translate(20 0) scale(-1 1)"><path d="..." /></g>',
@@ -231,7 +218,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '0.8em',
 				height: '1em',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 16 20',
 			},
 			body: '<g transform="translate(16 0) scale(-1 1)"><g transform="rotate(90 8 8)"><path d="..." /></g></g>',
@@ -258,7 +244,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '1em',
 				height: '16',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 20 16',
 			},
 			body: '<path d="..." />',
@@ -286,7 +271,6 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				width: '1em',
 				height: '1em',
-				preserveAspectRatio: 'xMidYMid meet',
 				viewBox: '0 0 128 128',
 			},
 			body:

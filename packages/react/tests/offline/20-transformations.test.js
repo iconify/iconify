@@ -112,23 +112,3 @@ describe('Flip', () => {
 		expect(body).not.toMatch('scale(');
 	});
 });
-
-describe('Alignment and slice', () => {
-	test('vAlign and slice', () => {
-		const component = renderer.create(
-			<InlineIcon icon={iconData} vAlign="top" slice={true} />
-		);
-		const tree = component.toJSON();
-
-		expect(tree.props.preserveAspectRatio).toStrictEqual('xMidYMin slice');
-	});
-
-	test('string', () => {
-		const component = renderer.create(
-			<InlineIcon icon={iconData} align="left bottom" />
-		);
-		const tree = component.toJSON();
-
-		expect(tree.props.preserveAspectRatio).toStrictEqual('xMinYMax meet');
-	});
-});

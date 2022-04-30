@@ -85,7 +85,6 @@ export function defineIconifyIcon(
 		'height',
 		'rotate',
 		'flip',
-		'align',
 	];
 
 	/**

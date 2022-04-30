@@ -70,10 +70,8 @@ describe('Padding attributes', () => {
 		const component = render(Icon, {
 			icon: iconData,
 			viewBox: '0 0 0 0',
-			preserveAspectRatio: 'none',
 		});
 		const node = component.container.querySelector('svg')!;
 		expect(node.getAttribute('viewBox')).toBe('0 0 24 24');
-		expect(node.getAttribute('preserveAspectRatio')).toBe('xMidYMid meet');
 	});
 });

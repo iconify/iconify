@@ -6,10 +6,7 @@ import {
 	defaults,
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
-import {
-	flipFromString,
-	alignmentFromString,
-} from '@iconify/utils/lib/customisations/shorthand';
+import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
@@ -27,26 +24,20 @@ const svgDefaults: Record<string, unknown> = {
 
 /**
  * Aliases for customisations.
- * In Vue 'v-' properties are reserved, so v-align and v-flip must be renamed
+ * In Vue 'v-' properties are reserved, so v-flip must be renamed
  */
-let customisationAliases = {};
-['horizontal', 'vertical'].forEach((prefix) => {
-	['Align', 'Flip'].forEach((suffix) => {
-		const attr = prefix.slice(0, 1) + suffix;
-		const value = {
-			attr,
-			boolean: suffix === 'Flip',
-		};
-
-		// vertical-align
-		customisationAliases[prefix + '-' + suffix.toLowerCase()] = value;
-		// v-align
-		customisationAliases[prefix.slice(0, 1) + '-' + suffix.toLowerCase()] =
-			value;
-		// verticalAlign
-		customisationAliases[prefix + suffix] = value;
-	});
-});
+ const customisationAliases: Record<string, string> = {};
+ ['horizontal', 'vertical'].forEach((prefix) => {
+	 const attr = prefix.slice(0, 1) + 'Flip';
+ 
+	 // vertical-flip
+	 customisationAliases[prefix + '-flip'] = attr;
+	 // v-flip
+	 customisationAliases[prefix.slice(0, 1) + '-flip'] = attr;
+	 // verticalFlip
+	 customisationAliases[prefix + 'Flip'] = attr;
+ });
+ 
 
 /**
  * Render icon
@@ -101,13 +92,6 @@ export const render = (
 				}
 				break;
 
-			// Alignment as string
-			case 'align':
-				if (typeof value === 'string') {
-					alignmentFromString(customisations, value);
-				}
-				break;
-
 			// Color: override style
 			case 'color':
 				style.color = value;
@@ -132,21 +116,11 @@ export const render = (
 				break;
 
 			default:
-				if (customisationAliases[key] !== void 0) {
-					// Aliases for customisations
-					if (
-						customisationAliases[key].boolean &&
-						(value === true || value === 'true' || value === 1)
-					) {
-						// Check for boolean
-						customisations[customisationAliases[key].attr] = true;
-					} else if (
-						!customisationAliases[key].boolean &&
-						typeof value === 'string' &&
-						value !== ''
-					) {
-						// String
-						customisations[customisationAliases[key].attr] = value;
+				const alias = customisationAliases[key];
+				if (alias) {
+					// Aliases for boolean customisations
+					if (value === true || value === 'true' || value === 1) {
+						customisations[alias] = true;
 					}
 				} else if (defaults[key] === void 0) {
 					// Copy missing property if it does not exist in customisations

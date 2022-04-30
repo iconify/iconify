@@ -17,8 +17,6 @@ export { IconifyIcon, IconifyJSON, IconifyIconName } from './functions';
 export {
 	IconifyIconCustomisations,
 	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
 	IconifyIconProps,
 	IconProps,
 	IconifyRenderMode,

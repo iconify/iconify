@@ -55,16 +55,13 @@ describe('Testing customisations', () => {
 		expect(haveCustomisationsChanged(test1, test2)).toBe(true);
 		expect(getInline(testNode)).toBe(false);
 
-		// Dimensions and alignment. Empty value
-		node.innerHTML =
-			'<span align="left top" width="auto" height=""></span>';
+		// Dimensions, empty value
+		node.innerHTML = '<span width="auto" height=""></span>';
 		testNode = node.lastChild as HTMLSpanElement;
 
 		const test3 = getCustomisations(testNode);
 		expect(test3).toEqual({
 			...defaultCustomisations,
-			hAlign: 'left',
-			vAlign: 'top',
 			width: 'auto',
 		});
 		expect(haveCustomisationsChanged(test3, test2)).toBe(true);

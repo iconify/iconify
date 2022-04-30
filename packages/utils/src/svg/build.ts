@@ -3,39 +3,6 @@ import type { FullIconCustomisations } from '../customisations';
 import { calculateSize } from './size';
 
 /**
- * Get preserveAspectRatio value
- */
-function preserveAspectRatio(props: FullIconCustomisations): string {
-	let result = '';
-	switch (props.hAlign) {
-		case 'left':
-			result += 'xMin';
-			break;
-
-		case 'right':
-			result += 'xMax';
-			break;
-
-		default:
-			result += 'xMid';
-	}
-	switch (props.vAlign) {
-		case 'top':
-			result += 'YMin';
-			break;
-
-		case 'bottom':
-			result += 'YMax';
-			break;
-
-		default:
-			result += 'YMid';
-	}
-	result += props.slice ? ' slice' : ' meet';
-	return result;
-}
-
-/**
  * Interface for getSVGData() result
  */
 export interface IconifyIconBuildResult {
@@ -43,7 +10,6 @@ export interface IconifyIconBuildResult {
 		// Attributes for <svg>
 		width: string;
 		height: string;
-		preserveAspectRatio: string;
 		viewBox: string;
 	};
 	// Content
@@ -230,7 +196,6 @@ export function iconToSVG(
 		attributes: {
 			width,
 			height,
-			preserveAspectRatio: preserveAspectRatio(customisations),
 			viewBox:
 				box.left.toString() +
 				' ' +

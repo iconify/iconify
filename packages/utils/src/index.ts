@@ -7,10 +7,7 @@ export {
 
 // Customisations: converting attributes in components
 export { toBoolean } from './customisations/bool';
-export {
-	flipFromString,
-	alignmentFromString,
-} from './customisations/shorthand';
+export { flipFromString } from './customisations/flip';
 export { rotateFromString } from './customisations/rotate';
 
 // Icon names

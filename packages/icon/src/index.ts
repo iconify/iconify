@@ -4,8 +4,6 @@ import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
 	IconifyIconCustomisations,
 } from '@iconify/utils/lib/customisations';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
@@ -64,12 +62,7 @@ export {
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
 // Customisations
-export {
-	IconifyIconCustomisations,
-	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-};
+export { IconifyIconCustomisations, IconifyIconSize };
 
 // API
 export {

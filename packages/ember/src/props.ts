@@ -26,9 +26,8 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Style
 	color?: string;
 
-	// Shorthand properties
+	// Flip shorthand
 	flip?: string;
-	align?: string;
 
 	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
 	id?: string;

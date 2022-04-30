@@ -76,15 +76,10 @@ describe('Passing attributes', () => {
 
 	test('attributes that cannot change', () => {
 		const component = renderer.create(
-			<InlineIcon
-				icon={iconData}
-				viewBox="0 0 0 0"
-				preserveAspectRatio="none"
-			/>
+			<InlineIcon icon={iconData} viewBox="0 0 0 0" />
 		);
 		const tree = component.toJSON();
 
 		expect(tree.props.viewBox).toStrictEqual('0 0 24 24');
-		expect(tree.props.preserveAspectRatio).toStrictEqual('xMidYMid meet');
 	});
 });

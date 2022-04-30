@@ -1,10 +1,6 @@
 import React from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import type {
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
-} from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
 import { fullIcon } from '@iconify/utils/lib/icon';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
@@ -25,14 +21,7 @@ export { IconifyIconCustomisations, IconifyIconProps, IconProps };
 /**
  * Export types that could be used in component
  */
-export {
-	IconifyIcon,
-	IconifyJSON,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyIconSize,
-	IconifyRenderMode,
-};
+export { IconifyIcon, IconifyJSON, IconifyIconSize, IconifyRenderMode };
 
 /**
  * Storage for icons referred by name

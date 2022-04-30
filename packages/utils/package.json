@@ -62,6 +62,10 @@
 			"require": "./lib/customisations/index.cjs",
 			"import": "./lib/customisations/index.mjs"
 		},
+		"./lib/customisations/flip": {
+			"require": "./lib/customisations/flip.cjs",
+			"import": "./lib/customisations/flip.mjs"
+		},
 		"./lib/customisations/index": {
 			"require": "./lib/customisations/index.cjs",
 			"import": "./lib/customisations/index.mjs"
@@ -69,10 +73,6 @@
 		"./lib/customisations/rotate": {
 			"require": "./lib/customisations/rotate.cjs",
 			"import": "./lib/customisations/rotate.mjs"
-		},
-		"./lib/customisations/shorthand": {
-			"require": "./lib/customisations/shorthand.cjs",
-			"import": "./lib/customisations/shorthand.mjs"
 		},
 		"./lib/icon-set/convert-info": {
 			"require": "./lib/icon-set/convert-info.cjs",

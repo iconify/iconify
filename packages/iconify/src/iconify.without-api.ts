@@ -4,8 +4,6 @@ import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconCustomisations,
 	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
 } from '@iconify/utils/lib/customisations';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
@@ -42,13 +40,7 @@ export { IconifyStorageFunctions, IconifyBuilderFunctions };
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
 // Customisations
-export {
-	IconifyIconCustomisations,
-	IconifyIconSize,
-	IconifyHorizontalIconAlignment,
-	IconifyVerticalIconAlignment,
-	IconifyRenderMode,
-};
+export { IconifyIconCustomisations, IconifyIconSize, IconifyRenderMode };
 
 // Build
 export { IconifyIconBuildResult };

@@ -6,10 +6,7 @@ import {
 	defaults,
 	mergeCustomisations,
 } from '@iconify/utils/lib/customisations';
-import {
-	flipFromString,
-	alignmentFromString,
-} from '@iconify/utils/lib/customisations/shorthand';
+import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
@@ -22,7 +19,6 @@ export interface RenderResult {
 	width: string | number;
 	height: string | number;
 	viewBox: string;
-	preserveAspectRatio: string;
 	style?: string;
 	className: string;
 	body: string;
@@ -74,13 +70,6 @@ export const render = (
 			case 'flip':
 				if (typeof value === 'string') {
 					flipFromString(customisations, value);
-				}
-				break;
-
-			// Alignment as string
-			case 'align':
-				if (typeof value === 'string') {
-					alignmentFromString(customisations, value);
 				}
 				break;
 

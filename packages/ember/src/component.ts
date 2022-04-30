@@ -33,7 +33,6 @@ interface CurrentIconData {
 const emptyIcon: RenderResult = {
 	width: 16,
 	height: 16,
-	preserveAspectRatio: 'xMidYMid meet',
 	viewBox: '0 0 16 16',
 	className: '',
 	body: '',

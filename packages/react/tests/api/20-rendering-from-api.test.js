@@ -73,7 +73,6 @@ describe('Rendering icon', () => {
 					},
 					'width': '1em',
 					'height': '1em',
-					'preserveAspectRatio': 'xMidYMid meet',
 					'viewBox': '0 0 ' + iconData.width + ' ' + iconData.height,
 					className,
 				},
@@ -136,7 +135,6 @@ describe('Rendering icon', () => {
 								},
 								'width': '1em',
 								'height': '1em',
-								'preserveAspectRatio': 'xMidYMid meet',
 								'viewBox':
 									'0 0 ' +
 									iconData.width +

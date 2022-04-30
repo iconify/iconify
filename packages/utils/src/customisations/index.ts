@@ -1,10 +1,4 @@
 /**
- * Icon alignment
- */
-export type IconifyHorizontalIconAlignment = 'left' | 'center' | 'right';
-export type IconifyVerticalIconAlignment = 'top' | 'middle' | 'bottom';
-
-/**
  * Icon size
  */
 export type IconifyIconSize = null | string | number;
@@ -19,11 +13,6 @@ export interface IconifyIconCustomisations {
 	// Dimensions
 	width?: IconifyIconSize;
 	height?: IconifyIconSize;
-
-	// Alignment
-	hAlign?: IconifyHorizontalIconAlignment;
-	vAlign?: IconifyVerticalIconAlignment;
-	slice?: boolean;
 
 	// Transformations
 	hFlip?: boolean;
@@ -43,11 +32,6 @@ export const defaults: FullIconCustomisations = Object.freeze({
 	// Dimensions
 	width: null,
 	height: null,
-
-	// Alignment
-	hAlign: 'center',
-	vAlign: 'middle',
-	slice: false,
 
 	// Transformations
 	hFlip: false,
@@ -86,7 +70,6 @@ export function mergeCustomisations(
 		switch (attr) {
 			// Boolean attributes that override old value
 			case 'inline':
-			case 'slice':
 				if (typeof value === 'boolean') {
 					result[attr] = value;
 				}
@@ -97,14 +80,6 @@ export function mergeCustomisations(
 			case 'vFlip':
 				if (value === true) {
 					result[attr] = !result[attr];
-				}
-				break;
-
-			// Non-empty string
-			case 'hAlign':
-			case 'vAlign':
-				if (typeof value === 'string' && value !== '') {
-					(result as Record<string, unknown>)[attr] = value;
 				}
 				break;
 

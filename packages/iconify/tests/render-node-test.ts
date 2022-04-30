@@ -47,7 +47,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" class="iconify iconify--mdi"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -64,7 +64,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" data-flip="horizontal" class="iconify-inline iconify iconify--mdi" style="vertical-align: -0.125em;"><g transform="translate(24 0) scale(-1 1)"><g></g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" data-flip="horizontal" class="iconify-inline iconify iconify--mdi" style="vertical-align: -0.125em;"><g transform="translate(24 0) scale(-1 1)"><g></g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -81,7 +81,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" id="test" style="color: red; vertical-align: -0.1em;" data-icon="mdi:home" class="iconify my-icon iconify--mdi"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" id="test" style="color: red; vertical-align: -0.1em;" data-icon="mdi:home" class="iconify my-icon iconify--mdi"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -98,7 +98,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="mdi:home" style="vertical-align: 0" class="iconify-inline iconify iconify--mdi"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="mdi:home" style="vertical-align: 0" class="iconify-inline iconify iconify--mdi"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -115,7 +115,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="@provider:mdi-light:home-outline" style="color: red; vertical-align: -0.125em;" class="iconify-inline iconify iconify--provider iconify--mdi-light"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="@provider:mdi-light:home-outline" style="color: red; vertical-align: -0.125em;" class="iconify-inline iconify iconify--provider iconify--mdi-light"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];
@@ -136,7 +136,7 @@ describe('Testing rendering nodes', () => {
 				width: 24,
 				height: 24,
 			},
-			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="@test:test:arrow-left" class="iconify iconify--test"><g></g></svg>'
+			'<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="@test:test:arrow-left" class="iconify iconify--test"><g></g></svg>'
 		);
 
 		const data = svg[elementDataProperty];

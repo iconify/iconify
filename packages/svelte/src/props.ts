@@ -34,9 +34,8 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Style
 	color?: string;
 
-	// Shorthand properties
+	// Flip shorthand
 	flip?: string;
-	align?: string;
 }
 
 /**
