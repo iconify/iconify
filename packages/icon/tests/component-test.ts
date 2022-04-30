@@ -26,7 +26,8 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeUndefined();
 
 		// Define component
-		expect(defineIconifyIcon()).toBeDefined();
+		const IconifyIcon = defineIconifyIcon();
+		expect(IconifyIcon).toBeDefined();
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
@@ -38,6 +39,10 @@ describe('Testing icon component', () => {
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedBlock}</style>`
 		);
+
+		// Check for dynamically added methods
+		expect(typeof node.loadIcon).toBe('function');
+		expect(typeof IconifyIcon.loadIcon).toBe('function');
 
 		// Set icon
 		node.icon = {

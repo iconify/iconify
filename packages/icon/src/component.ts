@@ -11,6 +11,7 @@ import type {
 import { getInline } from './attributes/inline';
 import { getRenderMode } from './attributes/mode';
 import type { IconifyIconAttributes } from './attributes/types';
+import { exportFunctions, IconifyExportedFunctions } from './functions';
 import { renderIcon } from './render/icon';
 import { updateStyle } from './render/style';
 import { IconState, setPendingState } from './state';
@@ -26,6 +27,8 @@ declare interface PartialIconifyIconHTMLElement extends HTMLElement {
 // Add dynamically generated getters and setters
 export declare interface IconifyIconHTMLElement
 	extends PartialIconifyIconHTMLElement,
+		// Functions added dynamically after class creation
+		IconifyExportedFunctions,
 		Required<IconifyIconAttributes> {}
 
 /**
@@ -36,7 +39,9 @@ interface PartialIconifyIconHTMLElementClass {
 	prototype: PartialIconifyIconHTMLElement;
 }
 
-export interface IconifyIconHTMLElementClass {
+export interface IconifyIconHTMLElementClass
+	// Functions added dynamically as static methods and methods on instance
+	extends IconifyExportedFunctions {
 	new (): IconifyIconHTMLElement;
 	prototype: IconifyIconHTMLElement;
 }
@@ -46,7 +51,7 @@ export interface IconifyIconHTMLElementClass {
  */
 export function defineIconifyIcon(
 	name = 'iconify-icon'
-): PartialIconifyIconHTMLElementClass | undefined {
+): IconifyIconHTMLElementClass | undefined {
 	// Check for custom elements registry and HTMLElement
 	let customElements: CustomElementRegistry;
 	let ParentClass: typeof HTMLElement;
@@ -86,7 +91,7 @@ export function defineIconifyIcon(
 	/**
 	 * Component class
 	 */
-	class IconifyIcon extends ParentClass {
+	const IconifyIcon: PartialIconifyIconHTMLElementClass = class extends ParentClass {
 		// Root
 		_shadowRoot: ShadowRoot;
 
@@ -300,7 +305,7 @@ export function defineIconifyIcon(
 				})
 			);
 		}
-	}
+	};
 
 	// Add getters and setters
 	attributes.forEach((attr) => {
@@ -316,8 +321,19 @@ export function defineIconifyIcon(
 		}
 	});
 
+	// Add exported functions: both as static and instance methods
+	const functions = exportFunctions();
+	for (const key in functions) {
+		IconifyIcon[key] = IconifyIcon.prototype[key] = functions[key];
+	}
+
 	// Define new component
 	customElements.define(name, IconifyIcon);
 
-	return IconifyIcon;
+	return IconifyIcon as IconifyIconHTMLElementClass;
 }
+
+/**
+ * Create exported data: either component instance or functions
+ */
+export const IconifyIconComponent = defineIconifyIcon() || exportFunctions();
