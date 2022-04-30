@@ -14,8 +14,10 @@ See `@iconify/iconify` version 2 and `@iconify/icon-finder` source code for usag
 
 ## License
 
-This package is dual-licensed under Apache 2.0 and GPL 2.0 license. You may select, at your option, one of the above-listed licenses.
+This package is licensed under MIT license.
 
-`SPDX-License-Identifier: Apache-2.0 OR GPL-2.0`
+`SPDX-License-Identifier: MIT`
 
-© 2020 Vjacheslav Trushkin
+Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
+
+© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ

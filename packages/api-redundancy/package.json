@@ -3,7 +3,7 @@
 	"description": "Reusable redundancy library for API queries",
 	"version": "1.1.0",
 	"author": "Vjacheslav Trushkin",
-	"license": "(Apache-2.0 OR GPL-2.0)",
+	"license": "MIT",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",

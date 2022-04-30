@@ -51,3 +51,11 @@ Options for all commands:
 -   `--package <package>` or `-p=<package>` filter by package name, such as `-p=@iconify/core`. You can use this option several times to specify multiple packages.
 
 You can add custom parameters for `run` or `run-script` commands by listing them after `--` argument: `run <command> -- <param1> <param2>`. Everything after `--` argument is treated as parameters for `run` command, so you need to specify other options before it.
+
+## License
+
+This package is licensed under MIT license.
+
+`SPDX-License-Identifier: MIT`
+
+© 2022 Vjacheslav Trushkin / Iconify OÜ

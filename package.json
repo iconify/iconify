@@ -3,7 +3,7 @@
 	"private": true,
 	"description": "The most versatile icon framework",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"license": "(Apache-2.0 OR GPL-2.0)",
+	"license": "MIT",
 	"main": "./monorepo/index.js",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
