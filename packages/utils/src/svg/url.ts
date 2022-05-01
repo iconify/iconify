@@ -18,6 +18,7 @@ export function encodeSVGforURL(svg: string): string {
 			// .replace(/}/g, '%7D') // not needed in string inside double quotes
 			.replace(/</g, '%3C')
 			.replace(/>/g, '%3E')
+			.replace(/\s+/g, ' ') // Replace all whitespace with space to get rid of '\r', '\n' and '\t'
 	);
 }
 
