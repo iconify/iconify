@@ -130,7 +130,7 @@ Another option is to import icons and bundle them with Iconify, similar to React
 
 ```js
 // Installation: npm install --save-dev iconify-icon
-import { addIcon } from 'iconify-icon';
+import 'iconify-icon';
 // Installation: npm install --save-dev @iconify/icons-dashicons
 import adminUsers from '@iconify/icons-dashicons/admin-users';
 
