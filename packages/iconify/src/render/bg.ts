@@ -42,6 +42,13 @@ for (const prefix in propsToAddTo) {
 }
 
 /**
+ * Fix size: add 'px' to numbers
+ */
+function fixSize(value: string): string {
+	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
+}
+
+/**
  * Render icon as inline SVG
  */
 export function renderBackground(
@@ -78,8 +85,8 @@ export function renderBackground(
 	const url = svgToURL(html);
 	const newStyles: Record<string, string> = {
 		'--svg': url,
-		'width': renderAttribs.width,
-		'height': renderAttribs.height,
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 	};

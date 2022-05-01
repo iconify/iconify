@@ -167,4 +167,16 @@ describe('Testing rendering nodes as background', () => {
 		expect(data.addedClasses).toEqual(['iconify--test']);
 		expect(data.addedStyles).toEqual([...expectedBackgroundStyles]);
 	});
+
+	it('Custom dimensions', async () => {
+		await testIcon(
+			'<span class="iconify" data-icon="mdi:home" data-width="auto" data-height="48"></span>',
+			{
+				body: '<g />',
+				width: 24,
+				height: 24,
+			},
+			`<span class="iconify iconify--mdi" data-icon="mdi:home" data-width="auto" data-height="48" style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 24px; height: 48px; display: inline-block; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;"></span>`
+		);
+	});
 });

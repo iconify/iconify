@@ -55,6 +55,13 @@ for (const prefix in propsToAddTo) {
 }
 
 /**
+ * Fix size: add 'px' to numbers
+ */
+function fixSize(value: string): string {
+	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
+}
+
+/**
  * Result
  */
 interface RenderSVGResult {
@@ -217,8 +224,8 @@ export function render(
 	const url = svgToURL(html);
 	const styles: Record<string, string> = {
 		'--svg': url,
-		'width': renderAttribs.width,
-		'height': renderAttribs.height,
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 	};

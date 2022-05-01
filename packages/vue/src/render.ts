@@ -84,6 +84,13 @@ const customisationAliases: Record<string, string> = {};
 type VStyle = Record<string, unknown>;
 
 /**
+ * Fix size: add 'px' to numbers
+ */
+function fixSize(value: string): string {
+	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
+}
+
+/**
  * Render icon
  */
 export const render = (
@@ -232,8 +239,8 @@ export const render = (
 	componentProps.style = {
 		...style,
 		'--svg': svgToURL(html),
-		'width': renderAttribs.width,
-		'height': renderAttribs.height,
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 		...customStyle,
