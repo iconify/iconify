@@ -17,6 +17,36 @@ export declare interface DebugIconifyIconHTMLElement
 describe('Testing icon component', () => {
 	afterEach(cleanupGlobals);
 
+	it('Registering component', () => {
+		// Setup DOM
+		const doc = setupDOM('').window.document;
+
+		// Make sure component does not exist and registry is available
+		expect(window.customElements).toBeDefined();
+		expect(window.customElements.get('iconify-icon')).toBeUndefined();
+
+		// Define component
+		const IconifyIcon = defineIconifyIcon();
+		expect(IconifyIcon).toBeDefined();
+		expect(window.customElements.get('iconify-icon')).toBeDefined();
+
+		// Create element
+		const node = document.createElement(
+			'iconify-icon'
+		) as DebugIconifyIconHTMLElement;
+		expect(node instanceof IconifyIcon).toBe(true);
+
+		// Define component again (should return previous class)
+		const IconifyIcon2 = defineIconifyIcon();
+		expect(IconifyIcon2).toBe(IconifyIcon);
+
+		// Create another element
+		const node2 = document.createElement(
+			'iconify-icon'
+		) as DebugIconifyIconHTMLElement;
+		expect(node2 instanceof IconifyIcon).toBe(true);
+	});
+
 	it('Creating component instance, changing properties', () => {
 		// Setup DOM
 		const doc = setupDOM('').window.document;
@@ -76,6 +106,65 @@ describe('Testing icon component', () => {
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedInline}</style>${blankSVG}`
 		);
+	});
+
+	it('Testing changes to inline', () => {
+		// Setup DOM
+		const doc = setupDOM('').window.document;
+
+		// Make sure component does not exist and registry is available
+		expect(window.customElements).toBeDefined();
+		expect(window.customElements.get('iconify-icon')).toBeUndefined();
+
+		// Define component
+		const IconifyIcon = defineIconifyIcon();
+		expect(IconifyIcon).toBeDefined();
+		expect(window.customElements.get('iconify-icon')).toBeDefined();
+
+		// Create element
+		const node = document.createElement(
+			'iconify-icon'
+		) as DebugIconifyIconHTMLElement;
+
+		// Should be empty with block style
+		expect(node._shadowRoot.innerHTML).toBe(
+			`<style>${expectedBlock}</style>`
+		);
+
+		// Check inline
+		expect(node.inline).toBe(false);
+		expect(node.hasAttribute('inline')).toBe(false);
+		expect(node.getAttribute('inline')).toBeFalsy();
+
+		// Change to inline via property
+		node.inline = true;
+
+		expect(node._shadowRoot.innerHTML).toBe(
+			`<style>${expectedInline}</style>`
+		);
+		expect(node.inline).toBe(true);
+		expect(node.hasAttribute('inline')).toBe(true);
+		expect(node.getAttribute('inline')).toBeTruthy();
+
+		// Change to block by removing attribute
+		node.removeAttribute('inline');
+
+		expect(node._shadowRoot.innerHTML).toBe(
+			`<style>${expectedBlock}</style>`
+		);
+		expect(node.inline).toBe(false);
+		expect(node.hasAttribute('inline')).toBe(false);
+		expect(node.getAttribute('inline')).toBeFalsy();
+
+		// Change to inline by setting attribute
+		node.setAttribute('inline', 'inline');
+
+		expect(node._shadowRoot.innerHTML).toBe(
+			`<style>${expectedInline}</style>`
+		);
+		expect(node.inline).toBe(true);
+		expect(node.hasAttribute('inline')).toBe(true);
+		expect(node.getAttribute('inline')).toBeTruthy();
 	});
 
 	it('Restarting animation', async () => {
