@@ -14,11 +14,9 @@ const header = `/**
 * For the full copyright and license information, please view the license.txt or license.gpl.txt
 * files at https://github.com/iconify/iconify
 *
-* Licensed under Apache 2.0 or GPL 2.0 at your option.
-* If derivative product is not compatible with one of licenses, you can pick one of licenses.
+* Licensed under MIT.
 *
-* @license Apache 2.0
-* @license GPL 2.0
+* @license MIT
 * @version __iconify_version__
 */`;
 

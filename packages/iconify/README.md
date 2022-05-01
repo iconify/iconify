@@ -63,10 +63,10 @@ Below is a shortened version of documentation.
 
 Full documentation is available on Iconify website:
 
--   [SVG framework documentation](https://docs.iconify.design/implementations/svg-framework/).
--   [Iconify API documentation](https://docs.iconify.design/sources/api/).
--   [Creating icon bundles](https://docs.iconify.design/sources/bundles/).
--   [Iconify Tools documentation](https://docs.iconify.design/tools/node/).
+-   [SVG framework documentation](https://docs.iconify.design/icon-components/svg-framework/).
+-   [Iconify API documentation](https://docs.iconify.design/api/).
+-   [Creating icon bundles](https://docs.iconify.design/icon-components/bundles/).
+-   [Iconify Tools documentation](https://docs.iconify.design/tools/tools2/).
 
 ## How does it work?
 
@@ -139,9 +139,9 @@ Relying on a third party service is often not an option. Many companies and deve
 
 Iconify API and icon sets are all [available on GitHub](https://github.com/iconify), making it easy to host API on your own server.
 
-For more details see [Iconify API documentation](https://docs.iconify.design/sources/api/).
+For more details see [Iconify API documentation](https://docs.iconify.design/api/).
 
-You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://iconify.design/docs/api-custom-hosting/).
+You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://docs.iconify.design/api/hosting.html).
 
 ### Using Iconify offline
 
@@ -151,7 +151,7 @@ Easiest option to serve icons without API is by creating icon bundles.
 
 Icon bundles are small scripts that you can load after Iconify SVG framework or bundle it together in one file.
 
-For more details see [icon bundles in Iconify documentation](https://iconify.design/docs/icon-bundles/).
+For more details see [icon bundles in Iconify documentation](https://docs.iconify.design/icon-components/bundles/).
 
 Another option is to import icons and bundle them with Iconify, similar to React and Vue components. Example:
 
@@ -170,7 +170,7 @@ Iconify.addIcon('dashicons:admin-users', adminUsers);
 <span class="iconify" data-icon="dashicons:admin-users"></span>
 ```
 
-See [Iconify for React](http://github.com/iconify/iconify/packages/react) documentation for more details.
+See [Iconify for React](https://docs.iconify.design/icon-components/react/) documentation for more details.
 
 ## Color
 
@@ -262,7 +262,7 @@ Possible values for `data-rotate`: 90deg, 180deg, 270deg.
 
 If you use both flip and rotation, the icon is flipped first, then rotated.
 
-To use custom transformations use CSS transform rule. Add `!important` after rule to override the SVG inline style (inline style exists to fix an SVG rendering bug in Firefox browser).
+To use custom transformations use CSS transform rule.
 
 ```html
 <span data-icon="twemoji-helicopter" class="iconify icon-helicopter"></span>
@@ -270,7 +270,7 @@ To use custom transformations use CSS transform rule. Add `!important` after rul
 
 ```css
 .icon-helicopter {
-	transform: 45deg !important;
+	transform: 45deg;
 }
 ```
 
@@ -284,14 +284,13 @@ There are over 100,000 icons to choose from.
 
 General collections (monotone icons):
 
+-   [Material Symbols](https://icon-sets.iconify.design/material-symbols/) (7000+ icons)
 -   [Material Design Icons](https://icon-sets.iconify.design/mdi/) (5000+ icons)
 -   [Unicons](https://icon-sets.iconify.design/uil/) (1000+ icons)
 -   [Jam Icons](https://icon-sets.iconify.design/jam/) (900 icons)
 -   [IonIcons](https://icon-sets.iconify.design/ion/) (1200+ icons)
--   [FontAwesome 4](https://icon-sets.iconify.design/fa/) and [FontAwesome 5](https://icon-sets.iconify.design/fa-solid/) (2000+ icons)
--   [Vaadin Icons](https://icon-sets.iconify.design/vaadin/) (600+ icons)
+-   [FontAwesome 6](https://icon-sets.iconify.design/fa6-solid/) (2000+ icons)
 -   [Bootstrap Icons](https://icon-sets.iconify.design/bi/) (500+ icons)
--   [Feather Icons](https://icon-sets.iconify.design/feather/) and [Feather Icon](https://icon-sets.iconify.design/fe/) (500+ icons)
 -   [IcoMoon Free](https://icon-sets.iconify.design/icomoon-free/) (400+ icons)
 -   [Dashicons](https://icon-sets.iconify.design/dashicons/) (300 icons)
 
@@ -311,23 +310,9 @@ You can use browse or search available icons on the Iconify website: https://ico
 
 Click an icon to get HTML code.
 
-## Iconify vs SVG vs glyph fonts
-
-Why use Iconify instead of fonts or other frameworks?
-
-There is a tutorial that explains all differences. See http://iconify.design/docs/iconify-svg-fonts/
-
 ## Browser support
 
-Iconify supports all modern browsers.
-
-Old browsers that are supported:
-
--   IE 9+
--   iOS Safari for iOS 8+
-
-IE 9, 10 and iOS 8 Safari do not support some modern functions that Iconify relies on. Iconify will automatically
-load polyfills for those browsers. All newer browsers do not require those polyfills.
+Iconify SVG framework supports all modern browsers.
 
 ## License
 

@@ -1,93 +1,76 @@
 # What is Iconify?
 
+There are many excellent icon sets available. Each icon set has its own custom syntax, some are available only as fonts. Unfortunately, almost all of them load an entire set, even if you are displaying just a few icons. This makes it hard to use different icon sets.
+
+Iconify tries to unify all icon sets. You can use the same code no matter what icon set you choose. You can mix icons from multiple icon sets on the same page.
+
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
 -   Out of the box includes 100+ icon sets with more than 100,000 icons.
--   Embed icons in HTML with SVG framework or components for front-end frameworks.
+-   Embed icons in HTML with Iconify icon web component and components for various front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
-# Iconify SVG framework
+# IconifyIcon web component
 
-There are many fonts and SVG sets available, but they all have one thing in common: using any font or SVG set limits you to icons that are included in that set and forces browsers to load entire font or icons set. That limits developers to one or two fonts or icon sets.
+Iconify Icon web component renders icons.
 
-Iconify uses a new innovative approach to loading icons. Unlike fonts and SVG frameworks, Iconify only loads icons that are used on the page instead of loading entire fonts. How is it done? By serving icons dynamically from publicly available JSON API (you can make a copy of script and API if you prefer to keep everything on your servers).
-
-Iconify SVG framework is designed to be as easy to use as possible.
-
-Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of the page or before `</body>`):
+Add this line to your page to load IconifyIcon (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/2/0.0.1-dev/iconify.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/0.0.1/iconify-icon.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@0.0.1-dev/dist/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.1/dist/iconify-icon.min.js"></script>
 ```
 
-or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `@iconify/iconify` as a dependency and importing it in your project:
+or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:
 
 ```js
-import Iconify from '@iconify/iconify';
+import IconifyIcon from 'iconify-icon';
 ```
 
 To add any icon, write something like this:
 
 ```html
-<span class="iconify" data-icon="eva:people-outline"></span>
+<iconify-icon icon="eva:people-outline"></iconify-icon>
 ```
 
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/assets/images/eva-people-outline.svg)
 
-or this:
-
-```html
-<span class="iconify-inline" data-icon="fa-solid:home"></span>
-<a href="#">Return home!</a>
-```
-
-&nbsp;&nbsp;&nbsp; ![Screenshot](https://iconify.design/assets/images/inline-sample.png)
-
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 100,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
+That is it. Change `icon` attribute to the name of the icon you want to use. There are over 100,000 premade icons to choose from, including Material Symbols, Photphor, Remix Icons, Carbon, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
 
 ## Full documentation
 
-Below is a shortened version of documentation.
+This package is in development, documentation for it is not ready yet.
 
-Full documentation is available on Iconify website:
+Until it is ready, you can look at SVG framework documentation instead:
 
--   [SVG framework documentation](https://docs.iconify.design/implementations/svg-framework/).
--   [Iconify API documentation](https://docs.iconify.design/sources/api/).
--   [Creating icon bundles](https://docs.iconify.design/sources/bundles/).
--   [Iconify Tools documentation](https://docs.iconify.design/tools/node/).
+-   [SVG framework documentation](https://docs.iconify.design/icon-components/svg-framework/).
+-   [React component documentation](https://docs.iconify.design/icon-components/react/).
+-   [Iconify API documentation](https://docs.iconify.design/api/).
+-   [Creating icon bundles](https://docs.iconify.design/icon-components/bundles/).
+-   [Iconify Tools documentation](https://docs.iconify.design/tools/tools2/).
 
 ## How does it work?
 
-The syntax is similar to icon fonts. Instead of inserting `SVG` in the document, you write a placeholder element, such `SPAN` or `I`.
+Iconify icon script registers a web component `iconify-icon`.
 
-Iconify SVG framework finds those placeholders and uses the following logic to parse them:
+Web component uses the following logic to render icon:
 
-1. Retrieves icon name from `data-icon` attribute.
+1. Retrieves icon name from `icon` attribute.
 2. Checks if icon exists. If not, it sends a request to Iconify API to retrieve icon data.
-3. Replaces placeholder element with `SVG`.
-
-This is done in a fraction of a second. Iconify SVG framework watches DOM for changes, so whenever you add new placeholders, it immediately replaces them with `SVG`, making it easy to use with dynamic content, such as AJAX forms.
+3. Renders icon in shadow DOM in web component.
 
 ### Inline mode
-
-Code examples above use different class names: the first example uses "iconify", the second example uses "iconify-inline".
-
-What is the difference?
-
--   "iconify" renders icon as is, so it behaves like an image.
--   "iconify-inline" renders adds vertical alignment to the icon, making it behave like text (inline mode).
 
 Usually, icon fonts do not render like normal images, they render like text. Text is aligned slightly below the baseline.
 
@@ -95,43 +78,33 @@ Visual example to show the difference between inline and block modes:
 
 &nbsp;&nbsp;&nbsp; ![Inline icon](https://iconify.design/assets/images/inline.png)
 
+To help developers, Iconify Icon has inline mode.
+
 Why is the inline mode needed?
 
 -   To easily align icons within the text, such as emojis.
 -   To make the transition from outdated icon fonts to SVG easier.
 
-Use "iconify" for decorations, use "iconify-inline" if you want the icon to behave like an icon font.
-
-#### data-inline attribute
-
-In addition to using "iconify-inline" class, you can toggle inline mode with the `data-inline` attribute.
-
-Set value to "true" to force inline mode, set value to "false" to use block mode.
-
-Different ways to use block mode:
+You can toggle inline mode by adding `inline` attribute:
 
 ```html
-<span class="iconify" data-icon="eva:people-outline"></span>
-<span class="iconify" data-icon="eva:people-outline" data-inline="false"></span>
+<iconify-icon inline icon="material-symbols:account-circle"></iconify-icon>
 ```
 
-Different ways to use inline mode:
+You can also do that by applying style:
 
 ```html
-<span class="iconify-inline" data-icon="eva:people-outline"></span>
-<span class="iconify" data-icon="eva:people-outline" data-inline="true"></span>
-<span
-	class="iconify"
-	data-icon="eva:people-outline"
+<iconify-icon
+	icon="material-symbols:account-circle"
 	style="vertical-align: -0.125em"
-></span>
+></iconify-icon>
 ```
 
 ## Iconify API
 
 When you use an icon font, each visitor loads an entire font, even if your page only uses a few icons. This is a major downside of using icon fonts. That limits developers to one or two fonts or icon sets.
 
-Unlike icon fonts, Iconify SVG framework does not load the entire icon set. Unlike fonts and SVG frameworks, Iconify only loads icons that are used on the current page instead of loading entire icon sets. How is it done? By serving icons dynamically from publicly available JSON API.
+Unlike icon fonts, Iconify Icon web component does not load the entire icon set. Unlike fonts and SVG frameworks, Iconify only loads icons that are used on the current page instead of loading entire icon sets. How is it done? By serving icons dynamically from publicly available JSON API.
 
 ### Custom API
 
@@ -139,38 +112,38 @@ Relying on a third party service is often not an option. Many companies and deve
 
 Iconify API and icon sets are all [available on GitHub](https://github.com/iconify), making it easy to host API on your own server.
 
-For more details see [Iconify API documentation](https://docs.iconify.design/sources/api/).
+For more details see [Iconify API documentation](https://docs.iconify.design/api/).
 
-You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://iconify.design/docs/api-custom-hosting/).
+You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://docs.iconify.design/api/hosting.html).
 
 ### Using Iconify offline
 
-While the default method of retrieving icons is to retrieve them from API, there are other options. Iconify SVG framework is designed to be as flexible as possible.
+While the default method of retrieving icons is to retrieve them from API, there are other options. Iconify Icon web component is designed to be as flexible as possible.
 
 Easiest option to serve icons without API is by creating icon bundles.
 
-Icon bundles are small scripts that you can load after Iconify SVG framework or bundle it together in one file.
+Icon bundles are small scripts that you can load after Iconify Icon web component or bundle it together in one file.
 
-For more details see [icon bundles in Iconify documentation](https://iconify.design/docs/icon-bundles/).
+For more details see [icon bundles in Iconify documentation](https://docs.iconify.design/icon-components/bundles/).
 
 Another option is to import icons and bundle them with Iconify, similar to React and Vue components. Example:
 
 ```js
-// Installation: npm install --save-dev @iconify/iconify
-import Iconify from '@iconify/iconify/offline';
+// Installation: npm install --save-dev iconify-icon
+import { addIcon } from 'iconify-icon';
 // Installation: npm install --save-dev @iconify/icons-dashicons
 import adminUsers from '@iconify/icons-dashicons/admin-users';
 
 // Unlike React and Vue components, in SVG framework each icon added with addIcon() name must have a
 // prefix and a name. In this example prefix is "dashicons" and name is "admin-users".
-Iconify.addIcon('dashicons:admin-users', adminUsers);
+addIcon('dashicons:admin-users', adminUsers);
 ```
 
 ```html
-<span class="iconify" data-icon="dashicons:admin-users"></span>
+<iconify-icon icon="dashicons:admin-users"></iconify-icon>
 ```
 
-See [Iconify for React](http://github.com/iconify/iconify/packages/react) documentation for more details.
+See [Iconify for React](https://docs.iconify.design/icon-components/react/) documentation for more details.
 
 ## Color
 
@@ -182,7 +155,7 @@ There are 2 types of icons: monotone and coloured.
 Monotone icons use font colour, just like glyph fonts. To change colour, you can do this:
 
 ```html
-<span class="iconify icon-bell" data-icon="vaadin-bell"></span>
+<iconify-icon class="icon-bell" icon="vaadin-bell"></iconify-icon>
 ```
 
 and add this to CSS:
@@ -205,7 +178,7 @@ Sample:
 By default all icons are scaled to 1em height. To control icon height use font-size:
 
 ```html
-<span class="iconify icon-clipboard" data-icon="emojione-clipboard"></span>
+<iconify-icon class="icon-clipboard" icon="emojione-clipboard"></iconify-icon>
 ```
 
 and add this to css:
@@ -229,15 +202,10 @@ you might also need to set line-height:
 }
 ```
 
-You can also set custom dimensions using `data-width` and `data-height` attributes:
+You can also set custom dimensions using `width` and `height` attributes:
 
 ```html
-<span
-	data-icon="twemoji-ice-cream"
-	data-width="32"
-	data-height="32"
-	class="iconify"
-></span>
+<iconify-icon icon="twemoji-ice-cream" width="32" height="32"></iconify-icon>
 ```
 
 Sample:
@@ -246,31 +214,27 @@ Sample:
 
 ## Transformations
 
-You can rotate and flip icon by adding `data-flip` and `data-rotate` attributes:
+You can rotate and flip icon by adding `flip` and `rotate` attributes:
 
 ```html
-<span
-	data-icon="twemoji-helicopter"
-	class="iconify"
-	data-flip="horizontal"
-></span>
-<span data-icon="twemoji-helicopter" class="iconify" data-rotate="90deg"></span>
+<iconify-icon icon="twemoji-helicopter" flip="horizontal"></iconify-icon>
+<iconify-icon icon="twemoji-helicopter" rotate="90deg"></iconify-icon>
 ```
 
-Possible values for `data-flip`: horizontal, vertical.
-Possible values for `data-rotate`: 90deg, 180deg, 270deg.
+Possible values for `flip`: horizontal, vertical.
+Possible values for `rotate`: 90deg, 180deg, 270deg.
 
 If you use both flip and rotation, the icon is flipped first, then rotated.
 
-To use custom transformations use CSS transform rule. Add `!important` after rule to override the SVG inline style (inline style exists to fix an SVG rendering bug in Firefox browser).
+To use custom transformations use CSS transform rule.
 
 ```html
-<span data-icon="twemoji-helicopter" class="iconify icon-helicopter"></span>
+<iconify-icon icon="twemoji-helicopter" class="icon-helicopter"></iconify-icon>
 ```
 
 ```css
 .icon-helicopter {
-	transform: 45deg !important;
+	transform: 45deg;
 }
 ```
 
@@ -282,16 +246,16 @@ Samples:
 
 There are over 100,000 icons to choose from.
 
-General collections (monotone icons):
+Few popular icon sets (monotone icons):
 
+-   [Material Symbols](https://icon-sets.iconify.design/material-symbols/) (7000+ icons)
 -   [Material Design Icons](https://icon-sets.iconify.design/mdi/) (5000+ icons)
+-   [Carbon](https://icon-sets.iconify.design/carbon/) (1000+ icons)
 -   [Unicons](https://icon-sets.iconify.design/uil/) (1000+ icons)
 -   [Jam Icons](https://icon-sets.iconify.design/jam/) (900 icons)
 -   [IonIcons](https://icon-sets.iconify.design/ion/) (1200+ icons)
--   [FontAwesome 4](https://icon-sets.iconify.design/fa/) and [FontAwesome 5](https://icon-sets.iconify.design/fa-solid/) (2000+ icons)
--   [Vaadin Icons](https://icon-sets.iconify.design/vaadin/) (600+ icons)
+-   [FontAwesome 6](https://icon-sets.iconify.design/fa6-solid/) (2000+ icons)
 -   [Bootstrap Icons](https://icon-sets.iconify.design/bi/) (500+ icons)
--   [Feather Icons](https://icon-sets.iconify.design/feather/) and [Feather Icon](https://icon-sets.iconify.design/fe/) (500+ icons)
 -   [IcoMoon Free](https://icon-sets.iconify.design/icomoon-free/) (400+ icons)
 -   [Dashicons](https://icon-sets.iconify.design/dashicons/) (300 icons)
 
@@ -311,23 +275,9 @@ You can use browse or search available icons on the Iconify website: https://ico
 
 Click an icon to get HTML code.
 
-## Iconify vs SVG vs glyph fonts
-
-Why use Iconify instead of fonts or other frameworks?
-
-There is a tutorial that explains all differences. See http://iconify.design/docs/iconify-svg-fonts/
-
 ## Browser support
 
-Iconify supports all modern browsers.
-
-Old browsers that are supported:
-
--   IE 9+
--   iOS Safari for iOS 8+
-
-IE 9, 10 and iOS 8 Safari do not support some modern functions that Iconify relies on. Iconify will automatically
-load polyfills for those browsers. All newer browsers do not require those polyfills.
+Iconify web component supports all modern browsers.
 
 ## License
 
