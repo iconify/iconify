@@ -25,7 +25,7 @@
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
 		"test:jest": "jest --runInBand",
-		"test:mjs": "echo \"TODO...\"",
+		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
 		"test": "npm run test:jest && npm run test:mjs"
 	},
 	"exports": {

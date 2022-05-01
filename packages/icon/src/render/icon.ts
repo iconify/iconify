@@ -28,7 +28,14 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 	// Set element
 	// Assumes first node is a style node created with updateStyle()
 	if (parent.childNodes.length > 1) {
-		parent.removeChild(parent.lastChild);
+		const lastChild = parent.lastChild as HTMLElement;
+		if (node.tagName === 'SPAN' && lastChild.tagName === node.tagName) {
+			// Swap style instead of whole node
+			lastChild.setAttribute('style', node.getAttribute('style'));
+		} else {
+			parent.replaceChild(node, lastChild);
+		}
+	} else {
+		parent.appendChild(node);
 	}
-	parent.appendChild(node);
 }
