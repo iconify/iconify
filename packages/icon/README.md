@@ -21,13 +21,13 @@ Iconify Icon web component renders icons.
 Add this line to your page to load IconifyIcon (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/iconify-icon/0.0.1/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/0.0.2/iconify-icon.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.1/dist/iconify-icon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.2/dist/iconify-icon.min.js"></script>
 ```
 
 or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:
@@ -47,6 +47,21 @@ To add any icon, write something like this:
 That is it. Change `icon` attribute to the name of the icon you want to use. There are over 100,000 premade icons to choose from, including Material Symbols, Photphor, Remix Icons, Carbon, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
+
+## Advantages
+
+What are advantages of using IconifyIcon web component?
+
+Advantages of using Iconify components:
+
+-   No need to pre-bundle icons. Pass icon name as parameter, component will load data for icon from public API and render it.
+-   Huge choice of icons, no icon fonts!
+-   Easy to style. All monotone icons use font color for color (`currentColor`) and font size for size (height is set to `1em`), making it easy to change color and size.
+
+Main advantage of web component over other implementations is shadow DOM. Using shadow DOM instead of inlining SVG has the following advantages:
+
+-   Document's styles do not affect content of shadow DOM, so there are no conflicting styles.
+-   HTML served from server does not contain long code for icons. It only contains `<iconify-icon />` tags, which reduces document size. Frameworks that use SSR and hydration, using web component for icons means same HTML code generated on server and rendered in client, preventing potential hydration errors. Actual icon code is hidden in shadow DOM.
 
 ## Full documentation
 
@@ -99,6 +114,23 @@ You can also do that by applying style:
 	style="vertical-align: -0.125em"
 ></iconify-icon>
 ```
+
+## Render modes
+
+Web component has several render modes, which can be changed by passing `mode` property:
+
+-   `svg`: renders icon as `<svg>`.
+-   `bg`: renders icon as `<span>` with background set to SVG.
+-   `mask`: same as `bg`, but uses masks instead, combined with `background-color: currentColor`, which results in icon rendered as background that uses text color.
+-   `style`: `bg` or `mask`, depending on icon content.
+
+Why are these modes needed?
+
+It solves issues with SVG 2 animations. Usually, when SVG contains animations, animations do not start until DOM is ready. This can be affected by small things like ad code failing to load, preventing animations from working and causing frustration to developers. However, this is not an issue if SVG is rendered as background - animations are ran instantly. Also performance of SVG 2 animations is much better when used as background or mask. Background is used when icon does not contain `currentColor`, so all colors are displayed properly. Mask is used when icon contains `currentColor`, so icon is used as mask for background that uses `currentColor`, so icon correctly follows `currentColor`.
+
+If background and masks are so good, why SVG mode is available? First issue is color: if icon has mix of `currentColor` and palette (please do not design icons like that, it is bad practice!), icon colors will be incorrect, so such icons should be rendered as `<svg>`. Second issue is performance of icons without animations. Animated icons do perform much better as background or mask, but icons without animation usually perform better as `<svg>`.
+
+What is default rendering mode? That depends on icon. If icon contains SVG 2 animation tags, icon is rendered as `<span>` with background or mask (mask for icons that contain `currentColor`, background for other icons), otherwise icon is rendered as `<svg>`.
 
 ## Iconify API
 
