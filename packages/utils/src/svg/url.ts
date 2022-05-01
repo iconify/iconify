@@ -3,10 +3,6 @@
  *
  * Short alternative to encodeURIComponent() that encodes only stuff used in SVG, generating
  * smaller code.
- *
- * If icon is not optimised, run trimSVG() before this function to get rid of new lines.
- * This function is intended to be used with Iconify icon sets, which are already optimised
- * and do not contain new lines.
  */
 export function encodeSVGforURL(svg: string): string {
 	return (
