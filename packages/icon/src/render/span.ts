@@ -31,6 +31,13 @@ for (const prefix in propsToAddTo) {
 }
 
 /**
+ * Fix size: add 'px' to numbers
+ */
+function fixSize(value: string): string {
+	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
+}
+
+/**
  * Render node as <span>
  */
 export function renderSPAN(
@@ -60,8 +67,8 @@ export function renderSPAN(
 	const svgStyle = node.style;
 	const styles: Record<string, string> = {
 		'--svg': url,
-		'width': renderAttribs.width,
-		'height': renderAttribs.height,
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...(useMask ? monotoneProps : coloredProps),
 	};
 
