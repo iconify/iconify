@@ -3,6 +3,7 @@ import {
 	expectedBlock,
 	expectedInline,
 	setupDOM,
+	nextTick,
 } from './helpers';
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
@@ -15,7 +16,10 @@ export declare interface DebugIconifyIconHTMLElement
 }
 
 describe('Testing icon component', () => {
-	afterEach(cleanupGlobals);
+	afterEach(async () => {
+		await nextTick();
+		cleanupGlobals();
+	});
 
 	it('Registering component', () => {
 		// Setup DOM
@@ -35,6 +39,7 @@ describe('Testing icon component', () => {
 			'iconify-icon'
 		) as DebugIconifyIconHTMLElement;
 		expect(node instanceof IconifyIcon).toBe(true);
+		expect(node.status).toBe('loading');
 
 		// Define component again (should return previous class)
 		const IconifyIcon2 = defineIconifyIcon();
@@ -45,9 +50,10 @@ describe('Testing icon component', () => {
 			'iconify-icon'
 		) as DebugIconifyIconHTMLElement;
 		expect(node2 instanceof IconifyIcon).toBe(true);
+		expect(node2.status).toBe('loading');
 	});
 
-	it('Creating component instance, changing properties', () => {
+	it('Creating component instance, changing properties', async () => {
 		// Setup DOM
 		const doc = setupDOM('').window.document;
 
@@ -69,6 +75,7 @@ describe('Testing icon component', () => {
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedBlock}</style>`
 		);
+		expect(node.status).toBe('loading');
 
 		// Check for dynamically added methods
 		expect(typeof node.loadIcon).toBe('function');
@@ -87,12 +94,20 @@ describe('Testing icon component', () => {
 			})
 		);
 
+		// Should still be empty: waiting for next tick
+		expect(node._shadowRoot.innerHTML).toBe(
+			`<style>${expectedBlock}</style>`
+		);
+		expect(node.status).toBe('loading');
+		await nextTick();
+
 		// Should render SVG
 		const blankSVG =
 			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g></g></svg>';
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedBlock}</style>${blankSVG}`
 		);
+		expect(node.status).toBe('rendered');
 
 		// Check inline attribute
 		expect(node.inline).toBe(false);
@@ -106,6 +121,7 @@ describe('Testing icon component', () => {
 		expect(node._shadowRoot.innerHTML).toBe(
 			`<style>${expectedInline}</style>${blankSVG}`
 		);
+		expect(node.status).toBe('rendered');
 	});
 
 	it('Testing changes to inline', () => {
@@ -125,6 +141,7 @@ describe('Testing icon component', () => {
 		const node = document.createElement(
 			'iconify-icon'
 		) as DebugIconifyIconHTMLElement;
+		expect(node.status).toBe('loading');
 
 		// Should be empty with block style
 		expect(node._shadowRoot.innerHTML).toBe(
@@ -165,6 +182,9 @@ describe('Testing icon component', () => {
 		expect(node.inline).toBe(true);
 		expect(node.hasAttribute('inline')).toBe(true);
 		expect(node.getAttribute('inline')).toBeTruthy();
+
+		// No icon data, so still loading
+		expect(node.status).toBe('loading');
 	});
 
 	it('Restarting animation', async () => {
@@ -183,6 +203,7 @@ describe('Testing icon component', () => {
 		const node = document.createElement(
 			'iconify-icon'
 		) as DebugIconifyIconHTMLElement;
+		expect(node.status).toBe('loading');
 
 		// Set icon
 		const body =
@@ -199,7 +220,11 @@ describe('Testing icon component', () => {
 			})
 		);
 
+		// Wait to render
+		await nextTick();
+
 		// Should render SPAN, with comment
+		expect(node.status).toBe('rendered');
 		const renderedIconWithComment =
 			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect width='10' height='10'%3E%3Canimate attributeName='width' values='10;5;10' dur='10s' repeatCount='indefinite' /%3E%3C/rect%3E%3C!-- --%3E%3C/svg%3E&quot;); width: 1em; height: 1em; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;\"></span>";
 		const html1 = node._shadowRoot.innerHTML;
@@ -215,6 +240,7 @@ describe('Testing icon component', () => {
 		expect(html2.replace(/-- [0-9]+ --/, '-- --')).toBe(
 			`<style>${expectedBlock}</style>${renderedIconWithComment}`
 		);
+		expect(node.status).toBe('rendered');
 
 		// Small delay to make sure timer is increased to get new number
 		await new Promise((fulfill) => {
@@ -230,9 +256,10 @@ describe('Testing icon component', () => {
 		);
 		expect(html3).not.toBe(html1);
 		expect(html3).not.toBe(html2);
+		expect(node.status).toBe('rendered');
 	});
 
-	it('Restarting animation for SVG', () => {
+	it('Restarting animation for SVG', async () => {
 		// Setup DOM
 		const doc = setupDOM('').window.document;
 
@@ -248,6 +275,7 @@ describe('Testing icon component', () => {
 		const node = document.createElement(
 			'iconify-icon'
 		) as DebugIconifyIconHTMLElement;
+		expect(node.status).toBe('loading');
 
 		// Set icon
 		const body =
@@ -265,7 +293,11 @@ describe('Testing icon component', () => {
 			})
 		);
 
+		// Wait to render
+		await nextTick();
+
 		// Should render SVG
+		expect(node.status).toBe('rendered');
 		const renderedIcon =
 			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><rect width="10" height="10"><animate attributeName="width" values="10;5;10" dur="10s" repeatCount="indefinite"></animate></rect></svg>';
 		const html1 = node._shadowRoot.innerHTML;
@@ -288,5 +320,7 @@ describe('Testing icon component', () => {
 		} else {
 			expect(svg2).not.toBe(svg1);
 		}
+
+		expect(node.status).toBe('rendered');
 	});
 });

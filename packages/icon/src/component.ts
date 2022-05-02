@@ -17,11 +17,19 @@ import { updateStyle } from './render/style';
 import { IconState, setPendingState } from './state';
 
 /**
+ * Icon status
+ */
+export type IconifyIconStatus = 'rendered' | 'loading' | 'failed';
+
+/**
  * Interface
  */
 declare interface PartialIconifyIconHTMLElement extends HTMLElement {
 	// Restart animation for animated icons
 	restartAnimation: () => void;
+
+	// Get status
+	get status(): IconifyIconStatus;
 }
 
 // Add dynamically generated getters and setters
@@ -97,6 +105,9 @@ export function defineIconifyIcon(
 		// State
 		_state: IconState;
 
+		// Attributes check queued
+		_checkQueued = false;
+
 		/**
 		 * Constructor
 		 */
@@ -113,16 +124,15 @@ export function defineIconifyIcon(
 			updateStyle(root, inline);
 
 			// Create empty state
-			const value = this.getAttribute('icon');
 			this._state = setPendingState(
 				{
-					value,
+					value: '',
 				},
 				inline
 			);
 
-			// Update icon
-			this._iconChanged(value);
+			// Queue icon render
+			this._queueCheck();
 		}
 
 		/**
@@ -135,51 +145,19 @@ export function defineIconifyIcon(
 		/**
 		 * Attribute has changed
 		 */
-		attributeChangedCallback(
-			name: string,
-			oldValue: unknown,
-			newValue: unknown
-		) {
-			const state = this._state;
-			switch (name as keyof IconifyIconAttributes) {
-				case 'icon': {
-					this._iconChanged(newValue);
-					return;
+		attributeChangedCallback(name: string) {
+			if (name === 'inline') {
+				// Update immediately: not affected by other attributes
+				const newInline = getInline(this);
+				const state = this._state;
+				if (newInline !== state.inline) {
+					// Update style if inline mode changed
+					state.inline = newInline;
+					updateStyle(this._shadowRoot, newInline);
 				}
-
-				case 'inline': {
-					const newInline = getInline(this);
-					if (newInline !== state.inline) {
-						// Update style if inline mode changed
-						state.inline = newInline;
-						updateStyle(this._shadowRoot, newInline);
-					}
-					return;
-				}
-
-				case 'mode': {
-					if (state.rendered) {
-						// Re-render if icon is currently being renrered
-						this._renderIcon(state.icon);
-					}
-					return;
-				}
-
-				default: {
-					if (state.rendered) {
-						// Check customisations only if icon has been rendered
-						const newCustomisations = getCustomisations(this);
-						if (
-							haveCustomisationsChanged(
-								newCustomisations,
-								state.customisations
-							)
-						) {
-							// Re-render
-							this._renderIcon(state.icon, newCustomisations);
-						}
-					}
-				}
+			} else {
+				// Queue check for other attributes
+				this._queueCheck();
 			}
 		}
 
@@ -237,13 +215,71 @@ export function defineIconifyIcon(
 		}
 
 		/**
+		 * Get status
+		 */
+		get status(): IconifyIconStatus {
+			const state = this._state;
+			return state.rendered
+				? 'rendered'
+				: state.icon.data === null
+				? 'failed'
+				: 'loading';
+		}
+
+		/**
+		 * Queue attributes re-check
+		 */
+		_queueCheck() {
+			if (!this._checkQueued) {
+				this._checkQueued = true;
+				setTimeout(() => {
+					this._check();
+				});
+			}
+		}
+
+		/**
+		 * Check for changes
+		 */
+		_check() {
+			if (!this._checkQueued) {
+				return;
+			}
+			this._checkQueued = false;
+
+			const state = this._state;
+
+			// Get icon
+			const newIcon = this.getAttribute('icon');
+			if (newIcon !== state.icon.value) {
+				this._iconChanged(newIcon);
+				return;
+			}
+
+			// Ignore other attributes if icon is not rendered
+			if (!state.rendered) {
+				return;
+			}
+
+			// Check for mode and attribute changes
+			const mode = this.getAttribute('mode');
+			const customisations = getCustomisations(this);
+			if (
+				state.attrMode !== mode ||
+				haveCustomisationsChanged(state.customisations, customisations)
+			) {
+				this._renderIcon(state.icon, customisations, mode);
+			}
+		}
+
+		/**
 		 * Icon value has changed
 		 */
 		_iconChanged(newValue: unknown) {
 			const icon = parseIconValue(newValue, (value, name, data) => {
 				// Asynchronous callback: re-check values to make sure stuff wasn't changed
 				const state = this._state;
-				if (state.rendered || state.icon.value !== value) {
+				if (state.rendered || this.getAttribute('icon') !== value) {
 					// Icon data is already available or icon attribute was changed
 					return;
 				}
@@ -257,7 +293,7 @@ export function defineIconifyIcon(
 
 				if (icon.data) {
 					// Render icon
-					this._renderIcon(icon as RenderedCurrentIconData);
+					this._gotIconData(icon as RenderedCurrentIconData);
 				} else {
 					// Nothing to render: update icon in state
 					state.icon = icon;
@@ -266,7 +302,7 @@ export function defineIconifyIcon(
 
 			if (icon.data) {
 				// Icon is ready to render
-				this._renderIcon(icon as RenderedCurrentIconData);
+				this._gotIconData(icon as RenderedCurrentIconData);
 			} else {
 				// Pending icon
 				this._state = setPendingState(
@@ -278,14 +314,27 @@ export function defineIconifyIcon(
 		}
 
 		/**
+		 *
+		 * @param icon
+		 */
+		_gotIconData(icon: RenderedCurrentIconData) {
+			this._checkQueued = false;
+			this._renderIcon(
+				icon,
+				getCustomisations(this),
+				this.getAttribute('mode')
+			);
+		}
+
+		/**
 		 * Re-render based on icon data
 		 */
 		_renderIcon(
 			icon: RenderedCurrentIconData,
-			customisations?: RenderedIconCustomisations
+			customisations: RenderedIconCustomisations,
+			attrMode: string
 		) {
 			// Get mode
-			const attrMode = this.getAttribute('mode');
 			const renderedMode = getRenderMode(icon.data.body, attrMode);
 
 			// Inline was not changed
@@ -298,7 +347,7 @@ export function defineIconifyIcon(
 					rendered: true,
 					icon,
 					inline,
-					customisations: customisations || getCustomisations(this),
+					customisations,
 					attrMode,
 					renderedMode,
 				})
