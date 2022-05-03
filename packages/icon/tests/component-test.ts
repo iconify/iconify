@@ -277,10 +277,13 @@ describe('Testing icon component', () => {
 		) as DebugIconifyIconHTMLElement;
 		expect(node.status).toBe('loading');
 
+		// Set mode by changing property
+		node.mode = 'svg';
+		expect(node.getAttribute('mode')).toBe('svg');
+
 		// Set icon
 		const body =
 			'<rect width="10" height="10"><animate attributeName="width" values="10;5;10" dur="10s" repeatCount="indefinite" /></rect>';
-		node.mode = 'svg';
 		node.icon = {
 			body,
 		};
