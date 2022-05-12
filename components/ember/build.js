@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 
-const packagesDir = path.dirname(__dirname);
+const coreDir = path.dirname(require.resolve('@iconify/core/package.json'));
 
 // List of commands to run
 const commands = [];
@@ -58,7 +58,7 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.lib && !fileExists(packagesDir + '/core/lib/cache.mjs')) {
+if (compile.lib && !fileExists(coreDir + '/lib/cache.mjs')) {
 	compile.core = true;
 }
 
@@ -67,7 +67,7 @@ if (compile.core) {
 	commands.push({
 		cmd: 'npm',
 		args: ['run', 'build'],
-		cwd: packagesDir + '/core',
+		cwd: coreDir,
 	});
 }
 

@@ -38,32 +38,56 @@ This makes it possible to have an unlimited choice of icons!
 
 ## Available packages
 
-There are several Iconify components included in this repository:
+There are several types of packages, split in their own directories.
 
-| Implementation                         | Usage                     |
-| -------------------------------------- | ------------------------- |
-| [SVG Framework](./packages/iconify/)   | HTML                      |
-| [React component](./packages/react/)   | React, Next.js            |
-| [Vue 3 component](./packages/vue/)     | Vue 3                     |
-| [Vue 2 component](./packages/vue2/)    | Vue 2                     |
-| [Svelte component](./packages/svelte/) | Svelte, SvelteKit, Sapper |
-| [Ember component](./packages/ember/)   | Ember                     |
+### Main packages
 
-Other packages:
+Directory `packages` contains main packages that are reusable by all other packages in this repository as well as third party components.
+
+Main packages:
 
 -   [Iconify types](./packages/types/) - TypeScript types.
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
 -   [Iconify core](./packages/core/) - common files used by various components.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
--   [React demo](./demo/react-demo/) - demo for React component. Run `npm start` to start demo.
--   [Next.js demo](./demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run build` to build it and `npm start` to start demo.
--   [Vue 3 demo](./demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Vue 2 demo](./demo/vue2-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Svelte demo](./demo/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
--   [Svelte demo with Vite](./demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
--   [Sapper demo](./demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
--   [SvelteKit demo](./demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
--   [Ember demo](./demo/ember-demo/) - demo for Ember component. Run `npm run start` to start demo.
+
+### Iconify icon components
+
+Directory `component` contains Iconify icon components and SVG framework.
+
+| Icon component                           | Usage  |
+| ---------------------------------------- | ------ |
+| [SVG Framework](./components/iconify/)   | HTML   |
+| [React component](./components/react/)   | React  |
+| [Vue 3 component](./components/vue/)     | Vue 3  |
+| [Vue 2 component](./components/vue2/)    | Vue 2  |
+| [Svelte component](./components/svelte/) | Svelte |
+| [Ember component](./components/ember/)   | Ember  |
+
+#### Demo
+
+Directory `components-demo` contains demo packages that show usage of icon components.
+
+-   [React demo](./components-demo/react-demo/) - demo for React component. Run `npm run dev` to start demo.
+-   [Next.js demo](./components-demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run dev` to start demo.
+-   [Vue 3 demo](./components-demo/vue-demo/) - demo for Vue 3 component. Run `npm run dev` to start demo.
+-   [Nuxt 3 demo](./components-demo/nuxt3-demo/) - demo for Vue 3 component with Nuxt. Run `npm run dev` to start demo.
+-   [Vue 2 demo](./components-demo/vue2-demo/) - demo for Vue 2 component. Run `npm run build` to build demo and `npm run serve` to start it.
+-   [Svelte demo](./components-demo/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
+-   [Svelte demo with Vite](./components-demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
+-   [Sapper demo](./components-demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
+-   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
+-   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
+
+### IconifyIcon
+
+Directory `iconify-icon` contains `iconify-icon` web component and wrappers for various frameworks.
+
+-   [IconifyIcon web component](./iconify-icon/icon/) - `iconify-icon` web component.
+
+#### Demo
+
+Directory `iconify-icon-demo` will contain demo packages that show usage of `iconify-icon` web component.
 
 ## Installation
 

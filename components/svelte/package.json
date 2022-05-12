@@ -10,7 +10,7 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
-		"directory": "packages/svelte"
+		"directory": "components/svelte"
 	},
 	"svelte": "dist/Icon.svelte",
 	"module": "dist/index.mjs",
