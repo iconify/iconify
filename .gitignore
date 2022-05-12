@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
-debug_packages
+debug/
+debug_packages/
 lerna-debug.log
 .idea/

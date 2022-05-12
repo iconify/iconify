@@ -1,3 +1,4 @@
+import type { IconifyIcon } from '@iconify/types';
 import {
 	getCustomisations,
 	haveCustomisationsChanged,
@@ -138,9 +139,27 @@ export function defineIconifyIcon(
 		/**
 		 * Observed attributes
 		 */
-		static get observedAttributes() {
+		static get observedAttributes(): string[] {
 			return attributes.slice(0);
 		}
+
+		/**
+		 * Observed properties that are different from attributes
+		 *
+		 * Experimental! Need to test with various frameworks that support it
+		 */
+		/*
+		static get properties() {
+			return {
+				inline: {
+					type: Boolean,
+					reflect: true,
+				},
+				// Not listing other attributes because they are strings or combination
+				// of string and another type. Cannot have multiple types
+			};
+		}
+		*/
 
 		/**
 		 * Attribute has changed
@@ -164,7 +183,7 @@ export function defineIconifyIcon(
 		/**
 		 * Get/set icon
 		 */
-		get icon() {
+		get icon(): string | IconifyIcon {
 			const value = this.getAttribute('icon');
 			if (value && value.slice(0, 1) === '{') {
 				try {
@@ -176,7 +195,7 @@ export function defineIconifyIcon(
 			return value;
 		}
 
-		set icon(value) {
+		set icon(value: string | IconifyIcon) {
 			if (typeof value === 'object') {
 				value = JSON.stringify(value);
 			}
@@ -186,11 +205,11 @@ export function defineIconifyIcon(
 		/**
 		 * Get/set inline
 		 */
-		get inline() {
+		get inline(): boolean {
 			return getInline(this);
 		}
 
-		set inline(value) {
+		set inline(value: boolean) {
 			this.setAttribute('inline', value ? 'true' : null);
 		}
 
@@ -314,8 +333,7 @@ export function defineIconifyIcon(
 		}
 
 		/**
-		 *
-		 * @param icon
+		 * Got new icon data, icon is ready to (re)render
 		 */
 		_gotIconData(icon: RenderedCurrentIconData) {
 			this._checkQueued = false;
