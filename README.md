@@ -55,7 +55,7 @@ Main packages:
 
 Directory `component` contains Iconify icon components and SVG framework.
 
-| Icon component                           | Usage  |
+| Package                                  | Usage  |
 | ---------------------------------------- | ------ |
 | [SVG Framework](./components/iconify/)   | HTML   |
 | [React component](./components/react/)   | React  |
@@ -83,11 +83,15 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 Directory `iconify-icon` contains `iconify-icon` web component and wrappers for various frameworks.
 
--   [IconifyIcon web component](./iconify-icon/icon/) - `iconify-icon` web component.
+| Package                               | Usage      |
+| ------------------------------------- | ---------- |
+| [Web component](./iconify-icon/icon/) | Everywhere |
 
 #### Demo
 
-Directory `iconify-icon-demo` will contain demo packages that show usage of `iconify-icon` web component.
+Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
+
+-   [Ember demo](./iconify-icon-demo/ember-icon-demo/) - demo using web component with Ember. Run `npm run build` to build demo and `npm run start` to start it.
 
 ## Installation
 
