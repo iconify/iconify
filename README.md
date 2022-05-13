@@ -53,7 +53,7 @@ Main packages:
 
 ### Iconify icon components
 
-Directory `component` contains Iconify icon components and SVG framework.
+Directory `components` contains Iconify icon components and SVG framework.
 
 | Package                                  | Usage  |
 | ---------------------------------------- | ------ |
@@ -63,6 +63,21 @@ Directory `component` contains Iconify icon components and SVG framework.
 | [Vue 2 component](./components/vue2/)    | Vue 2  |
 | [Svelte component](./components/svelte/) | Svelte |
 | [Ember component](./components/ember/)   | Ember  |
+
+#### Deprecation notice
+
+Components in directory `components` are slowly phased out in favor of `iconify-icon` web component. Functionality is identical, but web component has some advantages:
+
+-   No framework specific shenanigans. Events and attributes are supported for all frameworks.
+-   Works better with SSR (icon is rendered only in browser, but because icon is contained in shadow DOM, it does not cause hydration problems).
+-   Better interoperability. All parts of applicaiton reuse same web component, even if those parts are written in different frameworks.
+
+Deprecation status:
+
+-   SVG Framework: can be replaced with `iconify-icon`.
+-   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
+
+To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
 
 #### Demo
 
