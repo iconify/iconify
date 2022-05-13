@@ -10,6 +10,7 @@
 		"iconify-icon/*",
 		"components/*",
 		"components-demo/*",
+		"iconify-icon-demo/*",
 		"debug/*"
 	]
 }

@@ -66,7 +66,9 @@ Directory `components` contains Iconify icon components and SVG framework.
 
 #### Deprecation notice
 
-Components in directory `components` are slowly phased out in favor of `iconify-icon` web component. Functionality is identical, but web component has some advantages:
+Components in directory `components` are slowly phased out in favor of `iconify-icon` web component. Components are still maintained and supported, but it is better to switch to web component.
+
+Functionality is identical, but web component has some advantages:
 
 -   No framework specific shenanigans. Events and attributes are supported for all frameworks.
 -   Works better with SSR (icon is rendered only in browser, but because icon is contained in shadow DOM, it does not cause hydration problems).
@@ -75,6 +77,7 @@ Components in directory `components` are slowly phased out in favor of `iconify-
 Deprecation status:
 
 -   SVG Framework: can be replaced with `iconify-icon`.
+-   React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
 -   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
 
 To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
@@ -98,15 +101,17 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 Directory `iconify-icon` contains `iconify-icon` web component and wrappers for various frameworks.
 
-| Package                               | Usage      |
-| ------------------------------------- | ---------- |
-| [Web component](./iconify-icon/icon/) | Everywhere |
+| Package                                | Usage      |
+| -------------------------------------- | ---------- |
+| [Web component](./iconify-icon/icon/)  | Everywhere |
+| [React wrapper](./iconify-icon/react/) | React      |
 
 #### Demo
 
 Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
 
 -   [Ember demo](./iconify-icon-demo/ember-icon-demo/) - demo using web component with Ember. Run `npm run build` to build demo and `npm run start` to start it.
+-   [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
 
 ## Installation
 

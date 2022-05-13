@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.common.json",
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./dist",
+		"module": "CommonJS",
+		"lib": ["ESNext", "DOM"]
+	},
+	"include": ["src/*.ts"]
+}

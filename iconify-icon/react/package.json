@@ -1,0 +1,55 @@
+{
+	"name": "@iconify-icon/react",
+	"description": "React wrapper for Iconify Icon web component",
+	"author": "Vjacheslav Trushkin",
+	"version": "0.0.1",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"funding": "http://github.com/sponsors/cyberalien",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "iconify-icon/react"
+	},
+	"scripts": {
+		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
+		"prebuild": "npm run clean",
+		"build": "tsup",
+		"test": "jest --runInBand"
+	},
+	"main": "dist/iconify.js",
+	"module": "dist/iconify.mjs",
+	"types": "dist/iconify.d.ts",
+	"exports": {
+		"./*": "./*",
+		".": {
+			"import": "./dist/iconify.mjs",
+			"types": "./dist/iconify.d.ts",
+			"default": "./dist/iconify.js"
+		},
+		"./lib/iconify": {
+			"require": "./dist/iconify.js",
+			"import": "./dist/iconify.mjs",
+			"types": "./dist/iconify.d.ts"
+		}
+	},
+	"dependencies": {
+		"iconify-icon": "^0.0.4"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "^7.16.11",
+		"@babel/preset-react": "^7.16.7",
+		"@types/react": "^17.0.41",
+		"babel-jest": "^27.4.6",
+		"jest": "^28.0.0-alpha.7",
+		"react": "^17.0.2",
+		"react-test-renderer": "^17.0.2",
+		"rimraf": "^3.0.2",
+		"tsup": "^5.12.7",
+		"typescript": "^4.6.2"
+	},
+	"peerDependencies": {
+		"react": "*"
+	}
+}
