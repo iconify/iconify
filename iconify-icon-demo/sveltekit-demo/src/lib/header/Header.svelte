@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon, { addIcon } from '@iconify/svelte';
+	import { addIcon } from 'iconify-icon';
 	import { page } from '$app/stores';
 
 	addIcon('corner-left', {
@@ -17,23 +17,23 @@
 <header>
 	<div class="corner">
 		<a href="https://kit.svelte.dev">
-			<Icon icon="logos:svelte-icon" title="SvekteKit" />
+			<iconify-icon icon="logos:svelte-icon" title="SvekteKit" />
 		</a>
 	</div>
 
 	<nav>
-		<Icon icon="corner-left" height="auto" />
+		<iconify-icon icon="corner-left" />
 		<ul>
 			<li class:active={$page.url.pathname === '/'}><a sveltekit:prefetch href="/">Home</a></li>
 			<li class:active={$page.url.pathname === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 			<li class:active={$page.url.pathname === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
 		</ul>
-		<Icon icon="corner-right" height="auto" />
+		<iconify-icon icon="corner-right" />
 	</nav>
 
 	<div class="corner">
 		<a href="https://github.com/iconify/iconify/tree/master/packages/svelte">
-			<Icon icon="line-md:iconify1" title="Iconify" />
+			<iconify-icon icon="line-md:iconify1" title="Iconify" />
 		</a>
 	</div>
 </header>
@@ -57,7 +57,7 @@
 		height: 100%;
 	}
 
-	.corner :global(svg) {
+	.corner iconify-icon {
 		font-size: 2em;
 	}
 
@@ -67,10 +67,8 @@
 		--background: rgba(255, 255, 255, 0.7);
 	}
 
-	nav :global(svg) {
-		width: 2em;
-		height: 3em;
-		display: block;
+	nav iconify-icon {
+		font-size: 3em;
 		color: var(--background);
 	}
 
