@@ -23,7 +23,8 @@ export function parseIconValue(
 	onload: IconOnLoadCallback
 ): CurrentIconData {
 	// Check if icon name is valid
-	const name = typeof value === 'string' ? stringToIcon(value, true) : null;
+	const name =
+		typeof value === 'string' ? stringToIcon(value, true, true) : null;
 	if (!name) {
 		// Test for serialised object
 		const data = testIconObject(value);
@@ -35,7 +36,9 @@ export function parseIconValue(
 
 	// Valid icon name: check if data is available
 	const data = getIconData(name);
-	if (data !== void 0) {
+
+	// Icon data exists or icon has no prefix. Do not load icon from API if icon has no prefix
+	if (data !== void 0 || !name.prefix) {
 		return {
 			value,
 			name,

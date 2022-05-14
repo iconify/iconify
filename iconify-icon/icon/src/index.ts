@@ -44,6 +44,10 @@ import type {
 	IconifyRenderMode,
 } from './attributes/types';
 import { defineIconifyIcon } from './component';
+import type {
+	IconifyIconHTMLElement,
+	IconifyIconHTMLElementClass,
+} from './component';
 import { exportFunctions } from './functions';
 
 /**
@@ -85,7 +89,12 @@ export { IconifyIconBuildResult };
 export { IconifyBrowserCacheType };
 
 // Component types
-export { IconifyIconAttributes, IconifyRenderMode };
+export {
+	IconifyIconAttributes,
+	IconifyRenderMode,
+	IconifyIconHTMLElement,
+	IconifyIconHTMLElementClass,
+};
 
 /**
  * Create exported data: either component instance or functions

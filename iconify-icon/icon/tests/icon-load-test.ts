@@ -52,6 +52,11 @@ describe('Testing parseIconValue without API', () => {
 		});
 		expect(result).toEqual({
 			value,
+			name: {
+				provider: '',
+				prefix: '',
+				name: value,
+			},
 		});
 	});
 });
