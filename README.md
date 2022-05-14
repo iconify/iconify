@@ -76,6 +76,7 @@ Directory `iconify-icon-demo` contains demo packages that show usage of `iconify
 -   [Svelte demo with Vite](./iconify-icon-demo/svelte-demo/) - demo for web component with Svelte using Vite. Run `npm run dev` to start demo.
 -   [SvelteKit demo](./iconify-icon-demo/sveltekit-demo/) - demo for web component with SvelteKit. Run `npm run dev` to start the demo.
 -   [Vue 3 demo](./iconify-icon-demo/vue-demo/) - demo for web component with Vue 3. Run `npm run dev` to start demo.
+-   [Vue 2 demo](./iconify-icon-demo/vue2-demo/) - demo for web component with Vue 2. Run `npm run build` to build demo and `npm run serve` to start it.
 
 ### Iconify icon components
 
@@ -106,6 +107,7 @@ Deprecation status:
 -   React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
 -   Svelte component: can be replaced with `iconify-icon`, does not require Svelte specific wrapper.
 -   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper.
+-   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
 -   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
 
 To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
