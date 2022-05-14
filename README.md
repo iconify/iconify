@@ -1,5 +1,3 @@
-### What is Iconify?
-
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
@@ -10,21 +8,29 @@ Iconify is the most versatile icon framework.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
-## Iconify version 1
+## Iconify parts
 
-If you are looking for Iconify version 1, check out https://github.com/iconify/iconify/tree/iconify1
+There are several parts of project, some are in this repository, some are in other repositories.
 
-This repository contains the new version, completely rewritten using modern development process.
+What is included in this repository?
 
-## Iconify monorepo
+-   Directory `monorepo` contains script that manages this repository. See below.
+-   Directory `packages` contains main reusable packages: types, utilities, reusable functions used by various components.
+-   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
+-   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
 
-This repository is a big monorepo that contains several icon components for various frameworks and several packages that are reused by all those components.
+Other repositories you might want to look at:
+
+-   Data for all icons is available in [`iconify/icon-sets`](https://github.com/iconify/icon-sets) repository.
+-   Tools for parsing icons and generating icon sets are available in [`iconify/tools`](https://github.com/iconify/tools) repository.
 
 ## Iconify icon components
 
-Iconify icon components are not just yet another set of icon components. Unlike other icon components, Iconify icon components do not include icon data. They load icon data on demand from Iconify API.
+Main packages in this repository are various icon components.
 
-Iconify API provides data for over 100,000 icons! API is hosted on publicly available servers, spread out geographically to make sure visitors from all over the world have the fastest possible connection with redundancies in place to make sure it is always online.
+Why are those icon components needed? Iconify icon components are not just yet another set of icon components. Unlike other icon components, Iconify icon components do not include icon data. Instead, icon data is loaded on demand from Iconify API.
+
+Iconify API provides data for over 100,000 open source icons! API is hosted on publicly available servers, spread out geographically to make sure visitors from all over the world have the fastest possible connection with redundancies in place to make sure it is always online.
 
 #### Why is API needed?
 
@@ -36,7 +42,7 @@ Unlike icon fonts and components for various icon sets, Iconify icon components 
 
 This makes it possible to have an unlimited choice of icons!
 
-## Available packages
+## Packages in this repository
 
 There are several types of packages, split in their own directories.
 
