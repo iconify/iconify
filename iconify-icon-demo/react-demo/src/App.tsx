@@ -1,10 +1,12 @@
 import { addIcon, addCollection, disableCache } from '@iconify-icon/react';
-import playIcon from '@iconify-icons/mdi-light/play';
+import chartIcon from '@iconify-icons/mdi-light/chart-histogram';
 
 import { Checkbox } from './demo-components/Checkbox';
 import { InlineDemo } from './demo-components/Inline';
 import { OfflineUsageDemo } from './demo-components/UsageOffline';
 import { FullUsageDemo } from './demo-components/UsageAPI';
+
+import { TestIcon } from './test-components/TestIcon';
 
 import './App.css';
 
@@ -12,8 +14,8 @@ import './App.css';
 disableCache('all');
 
 // Add few custom icons
-addIcon('test:demo', playIcon);
-addIcon('test:experiment2', {
+addIcon('demo', chartIcon);
+addIcon('experiment2', {
 	width: 16,
 	height: 16,
 	body: '<mask id="coffee-mask" x="0" y="0" width="16" height="16"><g fill="white"><path d="M5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M8.5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4" stroke="white" stroke-width="1" fill="none"><animateMotion path="M0 0v-8" calcMode="linear" dur="3s" repeatCount="indefinite" /></path></g><rect y="4" width="16" height="12" fill="black" /><path d="M2 5H13C14.1046 5 15 5.89543 15 7V8C15 9.10457 14.1046 10 13 10H12V14C12 15.1046 11.1046 16 10 16H4C2.89543 16 2 15.1046 2 14V5Z" fill="white" /><path d="M12 6H13C13.5523 6 14 6.44772 14 7V8C14 8.55228 13.5523 9 13 9H12V6Z" fill="black" /></mask><rect mask="url(#coffee-mask)" width="16" height="16" fill="currentColor" />',
@@ -57,6 +59,8 @@ function App() {
 			</section>
 
 			<InlineDemo />
+
+			<TestIcon />
 		</div>
 	);
 }

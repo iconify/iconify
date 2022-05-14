@@ -8,6 +8,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"importsNotUsedAsValues": "error",
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"jsx": "react-jsx"
 	}
 }

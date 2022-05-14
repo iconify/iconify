@@ -1,5 +1,9 @@
 import React from 'react';
-import type { IconifyIcon, IconifyIconAttributes } from 'iconify-icon';
+import type {
+	IconifyIcon,
+	IconifyIconAttributes,
+	IconifyIconHTMLElement,
+} from 'iconify-icon';
 
 /**
  * Export types
@@ -39,7 +43,11 @@ export type { IconifyIconBuildResult } from 'iconify-icon';
 export type { IconifyBrowserCacheType } from 'iconify-icon';
 
 // Component types
-export type { IconifyIconAttributes, IconifyRenderMode } from 'iconify-icon';
+export type {
+	IconifyIconAttributes,
+	IconifyRenderMode,
+	IconifyIconHTMLElement,
+} from 'iconify-icon';
 
 /**
  * Export functions
@@ -70,25 +78,37 @@ export interface IconifyIconProps
 		IconifyIconAttributes {
 	icon: string | IconifyIcon;
 	inline?: boolean;
+	rotate?: string | number;
 }
 
 /**
  * React component
  */
-export function Icon(props: IconifyIconProps) {
-	const newProps = {
-		...props,
-	};
+export const Icon = React.forwardRef(
+	(
+		props: IconifyIconProps,
+		ref: React.ForwardedRef<IconifyIconHTMLElement>
+	) => {
+		const newProps: Record<string, unknown> = {
+			...props,
+			ref,
+		};
 
-	// Stringify icon
-	if (typeof props.icon === 'object') {
-		newProps.icon = JSON.stringify(props.icon);
+		// Stringify icon
+		if (typeof props.icon === 'object') {
+			newProps.icon = JSON.stringify(props.icon);
+		}
+
+		// Boolean
+		if (!props.inline) {
+			delete newProps.inline;
+		}
+
+		// React cannot handle className for web components
+		if (props.className) {
+			newProps['class'] = props.className;
+		}
+
+		return React.createElement('iconify-icon', newProps);
 	}
-
-	// Boolean
-	if (!props.inline) {
-		delete newProps.inline;
-	}
-
-	return React.createElement('iconify-icon', newProps);
-}
+);

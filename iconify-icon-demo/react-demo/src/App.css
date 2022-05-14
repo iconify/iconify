@@ -52,16 +52,16 @@ p {
 	color: #afafaf;
 	display: none;
 }
-.test-row-icons > .hidden {
+.test-row-icons > iconify-icon.hidden {
 	display: none !important;
 }
-.test-row-icons > .visible {
+.test-row-icons > iconify-icon.visible {
 	display: inline-block;
 }
-.test-row-icons > .success {
+.test-row-icons > iconify-icon.success {
 	color: #327335;
 }
-.test-row-icons > .failed {
+.test-row-icons > iconify-icon.failed {
 	color: #ba3329;
 }
 

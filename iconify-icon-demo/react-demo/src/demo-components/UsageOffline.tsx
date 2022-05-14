@@ -8,9 +8,8 @@ export function OfflineUsageDemo() {
 		<section className="icon-24">
 			<h1>Usage (offline mode: using preloaded icons)</h1>
 			<div>
-				Icons referenced by name (as SVG, as SPAN):{' '}
-				<Icon icon="test:demo" />
-				<Icon icon="test:demo" mode="style" />
+				Icons referenced by name (as SVG, as SPAN): <Icon icon="demo" />
+				<Icon icon="demo" mode="style" />
 			</div>
 			<div>
 				Icons referenced by object (as SVG, as SPAN):{' '}
