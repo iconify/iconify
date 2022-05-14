@@ -1,7 +1,10 @@
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
+import {
+	allowSimpleNames,
+	IconifyStorageFunctions,
+} from '@iconify/core/lib/storage/functions';
 import {
 	iconExists,
 	getIcon,
@@ -62,6 +65,9 @@ export function exportFunctions(): IconifyExportedFunctions {
 	 */
 	// Set API module
 	setAPIModule('', fetchAPIModule);
+
+	// Allow simple icon names
+	allowSimpleNames(true);
 
 	/**
 	 * Browser stuff
