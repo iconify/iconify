@@ -1,0 +1,135 @@
+#app {
+	font-family: Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: left;
+	color: #2c3e50;
+	font-size: 16px;
+	line-height: 1.5;
+}
+section {
+	border-bottom: 1px dotted #ccc;
+	padding: 16px;
+}
+section:last-child {
+	border-bottom-width: 0;
+}
+section:after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+h1 {
+	margin: 0 0 16px;
+	padding: 0;
+	font-size: 24px;
+	font-weight: normal;
+}
+p {
+	margin: 12px 0 4px;
+	padding: 0;
+}
+
+/* 24px icon */
+.icon-24 iconify-icon {
+	font-size: 24px;
+	line-height: 1;
+	vertical-align: -0.25em;
+}
+
+/* Alert demo */
+.alert {
+	position: relative;
+	margin: 8px;
+	padding: 16px;
+	padding-left: 48px;
+	background: #ba3329;
+	color: #fff;
+	border-radius: 5px;
+	float: left;
+}
+
+.alert + div {
+	clear: both;
+}
+
+.alert iconify-icon {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	font-size: 24px;
+	line-height: 1em;
+	margin: -0.5em 0 0;
+}
+
+/* Checkbox component */
+.checkbox-container {
+	margin: 8px 0;
+}
+
+.checkbox {
+	/* cursor: pointer; */
+	/* color: #1769aa; */
+	color: #626262;
+	text-decoration: none;
+}
+/* .checkbox:hover {
+	color: #ba3329;
+	text-decoration: underline;
+} */
+
+.checkbox iconify-icon {
+	cursor: pointer;
+	margin-right: 4px;
+	color: #afafaf;
+	font-size: 24px;
+	line-height: 1em;
+	vertical-align: -0.25em;
+}
+.checkbox iconify-icon:hover {
+	color: #ba3329;
+}
+
+.checkbox--checked iconify-icon {
+	color: #327335;
+}
+.checkbox:hover iconify-icon {
+	color: inherit;
+}
+
+.checkbox-container small {
+	margin-left: 4px;
+	opacity: 0.7;
+}
+
+/* Inline demo */
+.inline-demo iconify-icon {
+	color: #06a;
+	margin: 0 8px;
+	position: relative;
+	z-index: 2;
+	background: #fff;
+}
+.inline-demo div {
+	position: relative;
+	font-size: 16px;
+	line-height: 1.5;
+}
+.inline-demo div:before,
+.inline-demo div:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 0;
+	border-top: 1px dashed #506874;
+	opacity: 0.5;
+	z-index: -1;
+}
+.inline-demo div:before {
+	bottom: 5px;
+}
+.inline-demo div:after {
+	bottom: 7px;
+	border-top-color: #ba3329;
+}
