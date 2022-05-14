@@ -48,8 +48,24 @@ Main packages:
 
 -   [Iconify types](./packages/types/) - TypeScript types.
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
--   [Iconify core](./packages/core/) - common files used by various components.
+-   [Iconify core](./packages/core/) - common files used by various icon components.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts.
+
+### Web component
+
+Directory `iconify-icon` contains `iconify-icon` web component and wrappers for various frameworks.
+
+| Package                                | Usage      |
+| -------------------------------------- | ---------- |
+| [Web component](./iconify-icon/icon/)  | Everywhere |
+| [React wrapper](./iconify-icon/react/) | React      |
+
+#### Demo
+
+Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
+
+-   [Ember demo](./iconify-icon-demo/ember-icon-demo/) - demo using web component with Ember. Run `npm run build` to build demo and `npm run start` to start it.
+-   [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
 
 ### Iconify icon components
 
@@ -96,22 +112,6 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 -   [Sapper demo](./components-demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
 -   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
-
-### IconifyIcon
-
-Directory `iconify-icon` contains `iconify-icon` web component and wrappers for various frameworks.
-
-| Package                                | Usage      |
-| -------------------------------------- | ---------- |
-| [Web component](./iconify-icon/icon/)  | Everywhere |
-| [React wrapper](./iconify-icon/react/) | React      |
-
-#### Demo
-
-Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
-
--   [Ember demo](./iconify-icon-demo/ember-icon-demo/) - demo using web component with Ember. Run `npm run build` to build demo and `npm run start` to start it.
--   [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
 
 ## Installation
 
