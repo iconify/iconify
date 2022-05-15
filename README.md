@@ -76,7 +76,28 @@ Directory `iconify-icon-demo` contains demo packages that show usage of `iconify
 -   [Svelte demo with Vite](./iconify-icon-demo/svelte-demo/) - demo for web component with Svelte using Vite. Run `npm run dev` to start demo.
 -   [SvelteKit demo](./iconify-icon-demo/sveltekit-demo/) - demo for web component with SvelteKit. Run `npm run dev` to start the demo.
 -   [Vue 3 demo](./iconify-icon-demo/vue-demo/) - demo for web component with Vue 3. Run `npm run dev` to start demo.
+-   [Nuxt 3 demo](./iconify-icon-demo/nuxt3-demo/) - demo for web component with Nuxt 3. Run `npm run dev` to start demo. Requires custom config, see below.
 -   [Vue 2 demo](./iconify-icon-demo/vue2-demo/) - demo for web component with Vue 2. Run `npm run build` to build demo and `npm run serve` to start it.
+
+#### Nuxt 3 usage
+
+When using web component with Nuxt 3, you need to tell Nuxt that `iconify-icon` is a custom element. Otherwise it will show few errors.
+
+Example `nuxt.config.ts`:
+
+```ts
+import { defineNuxtConfig } from 'nuxt3';
+
+export default defineNuxtConfig({
+	vue: {
+		compilerOptions: {
+			isCustomElement: (tag) => tag === 'iconify-icon',
+		},
+	},
+});
+```
+
+This configuration change is not needed when using Vue with `@vitejs/plugin-vue`.
 
 ### Iconify icon components
 
