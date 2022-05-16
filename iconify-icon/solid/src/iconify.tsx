@@ -73,17 +73,12 @@ export {
 	_api,
 } from 'iconify-icon';
 
-// Test to make sure all properties are handled
-function assertNever(v: never) {
-	//
-}
-
 /**
  * Properties for Solid component
  */
-type BaseAttributes = JSX.IntrinsicElements['span'];
+type BaseElementProps = JSX.IntrinsicElements['span'];
 export interface IconifyIconProps
-	extends BaseAttributes,
+	extends BaseElementProps,
 		IconifyIconProperties {
 	// Rotation can be string or number
 	rotate?: string | number;
