@@ -67,6 +67,13 @@ Directory `iconify-icon` contains `iconify-icon` web component and wrappers for 
 | [React wrapper](./iconify-icon/react/) | React      |
 | [Solid wrapper](./iconify-icon/solid/) | Solid.js   |
 
+Frameworks that are confirmed to work with web components without custom wrappers:
+
+-   Svelte.
+-   Vue 2 and Vue 3, but requires custom config when used in Nuxt (see below).
+-   React, but with small differences, such as using `class` instead of `className`. Wrapper fixes it and provides types.
+-   Ember.
+
 #### Demo
 
 Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
