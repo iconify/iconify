@@ -40,6 +40,7 @@ import type {
 
 // Component
 import type {
+	IconifyIconProperties,
 	IconifyIconAttributes,
 	IconifyRenderMode,
 } from './attributes/types';
@@ -90,6 +91,7 @@ export { IconifyBrowserCacheType };
 
 // Component types
 export {
+	IconifyIconProperties,
 	IconifyIconAttributes,
 	IconifyRenderMode,
 	IconifyIconHTMLElement,

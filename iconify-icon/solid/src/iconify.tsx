@@ -1,4 +1,5 @@
-import React from 'react';
+import type { JSX } from 'solid-js';
+
 import type {
 	IconifyIcon,
 	IconifyIconProperties,
@@ -72,44 +73,44 @@ export {
 	_api,
 } from 'iconify-icon';
 
+// Test to make sure all properties are handled
+function assertNever(v: never) {
+	//
+}
+
 /**
- * Properties for React component
+ * Properties for Solid component
  */
+type BaseAttributes = JSX.IntrinsicElements['span'];
 export interface IconifyIconProps
-	extends React.HTMLProps<HTMLElement>,
+	extends BaseAttributes,
 		IconifyIconProperties {
 	// Rotation can be string or number
 	rotate?: string | number;
 }
 
 /**
- * React component
+ * Solid component
  */
-export const Icon = React.forwardRef(
-	(
-		props: IconifyIconProps,
-		ref: React.ForwardedRef<IconifyIconHTMLElement>
-	) => {
-		const newProps: Record<string, unknown> = {
-			...props,
-			ref,
-		};
+export function Icon(props: IconifyIconProps): JSX.Element {
+	let { icon, mode, inline, rotate, flip, width, height } = props;
 
-		// Stringify icon
-		if (typeof props.icon === 'object') {
-			newProps.icon = JSON.stringify(props.icon);
-		}
-
-		// Boolean
-		if (!props.inline) {
-			delete newProps.inline;
-		}
-
-		// React cannot handle className for web components
-		if (props.className) {
-			newProps['class'] = props.className;
-		}
-
-		return React.createElement('iconify-icon', newProps);
+	// Convert icon to string
+	if (typeof icon === 'object') {
+		icon = JSON.stringify(icon);
 	}
-);
+
+	return (
+		// @ts-ignore
+		<iconify-icon
+			attr:icon={icon}
+			attr:mode={mode}
+			attr:inline={inline}
+			attr:rotate={rotate}
+			attr:flip={flip}
+			attr:width={width}
+			attr:height={height}
+			{...props}
+		/>
+	);
+}

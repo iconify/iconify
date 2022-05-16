@@ -19,7 +19,7 @@ export type IconifyRenderMode = 'style' | ActualRenderMode;
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisationAttributes = {
+export type IconifyIconCustomisationProperties = {
 	// Dimensions
 	width?: string | number;
 	height?: string | number;
@@ -30,10 +30,10 @@ export type IconifyIconCustomisationAttributes = {
 };
 
 /**
- * All attributes
+ * All properties
  */
-export interface IconifyIconAttributes
-	extends IconifyIconCustomisationAttributes {
+export interface IconifyIconProperties
+	extends IconifyIconCustomisationProperties {
 	// Icon to render: name, object or serialised object
 	icon: string | IconifyIcon;
 
@@ -41,5 +41,19 @@ export interface IconifyIconAttributes
 	mode?: IconifyRenderMode;
 
 	// Inline mode
-	inline?: boolean | string;
+	inline?: boolean;
+}
+
+/**
+ * Attributes as properties
+ */
+export interface IconifyIconAttributes
+	extends Partial<
+		Record<keyof Omit<IconifyIconProperties, 'icon' | 'mode'>, string>
+	> {
+	// Icon to render: name or serialised object
+	icon: string;
+
+	// Render mode
+	mode?: IconifyRenderMode;
 }

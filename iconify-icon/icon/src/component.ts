@@ -11,7 +11,7 @@ import type {
 } from './attributes/icon/state';
 import { getInline } from './attributes/inline';
 import { getRenderMode } from './attributes/mode';
-import type { IconifyIconAttributes } from './attributes/types';
+import type { IconifyIconProperties } from './attributes/types';
 import { exportFunctions, IconifyExportedFunctions } from './functions';
 import { renderIcon } from './render/icon';
 import { updateStyle } from './render/style';
@@ -38,7 +38,7 @@ export declare interface IconifyIconHTMLElement
 	extends PartialIconifyIconHTMLElement,
 		// Functions added dynamically after class creation
 		IconifyExportedFunctions,
-		Required<IconifyIconAttributes> {}
+		Required<IconifyIconProperties> {}
 
 /**
  * Constructor
@@ -83,7 +83,7 @@ export function defineIconifyIcon(
 	}
 
 	// All attributes
-	const attributes: (keyof IconifyIconAttributes)[] = [
+	const attributes: (keyof IconifyIconProperties)[] = [
 		// Icon
 		'icon',
 		// Mode

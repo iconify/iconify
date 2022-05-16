@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./dist",
+		"target": "ESNext",
+		"module": "ESNext",
+		"lib": ["ESNext", "DOM"],
+		"strict": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error",
+		"resolveJsonModule": true,
+		"jsx": "preserve",
+		"declaration": true
+	},
+	"include": ["src/iconify.tsx"]
+}
