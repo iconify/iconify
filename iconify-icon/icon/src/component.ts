@@ -67,7 +67,7 @@ export function defineIconifyIcon(
 	try {
 		customElements = window.customElements;
 		ParentClass = window.HTMLElement;
-	} catch {
+	} catch (err) {
 		return;
 	}
 
@@ -188,7 +188,7 @@ export function defineIconifyIcon(
 			if (value && value.slice(0, 1) === '{') {
 				try {
 					return JSON.parse(value);
-				} catch {
+				} catch (err) {
 					//
 				}
 			}
@@ -225,7 +225,7 @@ export function defineIconifyIcon(
 					try {
 						(root.lastChild as SVGSVGElement).setCurrentTime(0);
 						return;
-					} catch {
+					} catch (err) {
 						// Failed: setCurrentTime() is not supported
 					}
 				}

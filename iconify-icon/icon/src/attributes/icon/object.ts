@@ -15,7 +15,7 @@ export function testIconObject(
 				...obj,
 			};
 		}
-	} catch {
+	} catch (err) {
 		//
 	}
 }
