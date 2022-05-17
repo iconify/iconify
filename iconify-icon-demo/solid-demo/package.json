@@ -2,6 +2,7 @@
 	"name": "@iconify-icon/solid-demo",
 	"version": "0.0.0",
 	"description": "",
+	"private": true,
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
