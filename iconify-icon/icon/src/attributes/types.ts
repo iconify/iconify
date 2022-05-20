@@ -1,6 +1,14 @@
 import type { IconifyIcon } from '@iconify/types';
 
 /**
+ * SVG attributes that can be overwritten
+ */
+export interface IconifyIconSVGAttributes {
+	viewBox: string;
+	preserveAspectRatio: string;
+}
+
+/**
  * Icon render modes
  *
  * 'bg' = SPAN with style using `background`
@@ -33,7 +41,8 @@ export type IconifyIconCustomisationProperties = {
  * All properties
  */
 export interface IconifyIconProperties
-	extends IconifyIconCustomisationProperties {
+	extends IconifyIconCustomisationProperties,
+		Partial<IconifyIconSVGAttributes> {
 	// Icon to render: name, object or serialised object
 	icon: string | IconifyIcon;
 
@@ -49,8 +58,9 @@ export interface IconifyIconProperties
  */
 export interface IconifyIconAttributes
 	extends Partial<
-		Record<keyof Omit<IconifyIconProperties, 'icon' | 'mode'>, string>
-	> {
+			Record<keyof Omit<IconifyIconProperties, 'icon' | 'mode'>, string>
+		>,
+		Partial<IconifyIconSVGAttributes> {
 	// Icon to render: name or serialised object
 	icon: string;
 

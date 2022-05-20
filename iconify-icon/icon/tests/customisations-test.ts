@@ -66,6 +66,61 @@ describe('Testing customisations', () => {
 		});
 		expect(haveCustomisationsChanged(test3, test2)).toBe(true);
 		expect(haveCustomisationsChanged(test1, test3)).toBe(true);
+		expect(haveCustomisationsChanged(test3, emptyCustomisations)).toBe(
+			true
+		);
 		expect(getInline(testNode)).toBe(false);
+
+		// viewBox
+		node.innerHTML = '<span viewBox="0 0 24 24"></span>';
+		testNode = node.lastChild as HTMLSpanElement;
+
+		const test4 = getCustomisations(testNode);
+		expect(test4).toEqual({
+			...defaultCustomisations,
+			viewBox: '0 0 24 24',
+		});
+		expect(haveCustomisationsChanged(test4, emptyCustomisations)).toBe(
+			true
+		);
+
+		node.innerHTML = '<span viewbox="0 0 32 32"></span>';
+		testNode = node.lastChild as HTMLSpanElement;
+
+		const test5 = getCustomisations(testNode);
+		expect(test5).toEqual({
+			...defaultCustomisations,
+			viewBox: '0 0 32 32',
+		});
+		expect(haveCustomisationsChanged(test5, test4)).toBe(true);
+		expect(haveCustomisationsChanged(test5, emptyCustomisations)).toBe(
+			true
+		);
+
+		// preserveAspectRatio
+		node.innerHTML = '<span preserveAspectRatio="xMidYMid meet"></span>';
+		testNode = node.lastChild as HTMLSpanElement;
+
+		const test6 = getCustomisations(testNode);
+		expect(test6).toEqual({
+			...defaultCustomisations,
+			preserveAspectRatio: 'xMidYMid meet',
+		});
+		expect(haveCustomisationsChanged(test6, emptyCustomisations)).toBe(
+			true
+		);
+
+		node.innerHTML = '<span preserveaspectratio="xMidYMin slice"></span>';
+		testNode = node.lastChild as HTMLSpanElement;
+
+		const test7 = getCustomisations(testNode);
+		expect(test7).toEqual({
+			...defaultCustomisations,
+			preserveAspectRatio: 'xMidYMin slice',
+		});
+		expect(haveCustomisationsChanged(test7, emptyCustomisations)).toBe(
+			true
+		);
+		expect(haveCustomisationsChanged(test7, test6)).toBe(true);
 	});
 });

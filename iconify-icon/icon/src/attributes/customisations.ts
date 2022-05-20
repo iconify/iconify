@@ -2,16 +2,25 @@ import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import { defaults } from '@iconify/utils/lib/customisations';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
-
-// Remove 'inline' from defaults
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { inline, ...defaultCustomisations } = defaults;
-export { defaultCustomisations };
+import type { IconifyIconSVGAttributes } from './types';
 
 /**
  * Customisations that affect rendering
  */
-export type RenderedIconCustomisations = Omit<FullIconCustomisations, 'inline'>;
+export type RenderedIconCustomisations = Omit<
+	FullIconCustomisations,
+	'inline'
+> &
+	IconifyIconSVGAttributes;
+
+// Remove 'inline' from defaults
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { inline, ...defaultCustomisations } = {
+	...defaults,
+	viewBox: '',
+	preserveAspectRatio: '',
+} as IconifyIconSVGAttributes & FullIconCustomisations;
+export { defaultCustomisations };
 
 /**
  * Get customisations
@@ -33,6 +42,13 @@ export function getCustomisations(node: Element): RenderedIconCustomisations {
 
 	// Flip
 	flipFromString(customisations, attr('flip', ''));
+
+	// SVG attributes
+	customisations.viewBox = attr('viewBox', attr('viewbox', ''));
+	customisations.preserveAspectRatio = attr(
+		'preserveAspectRatio',
+		attr('preserveaspectratio', '')
+	);
 
 	return customisations;
 }

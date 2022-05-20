@@ -88,7 +88,17 @@ export interface IconifyIconProps
  * Solid component
  */
 export function Icon(props: IconifyIconProps): JSX.Element {
-	let { icon, mode, inline, rotate, flip, width, height } = props;
+	let {
+		icon,
+		mode,
+		inline,
+		rotate,
+		flip,
+		width,
+		height,
+		viewBox,
+		preserveAspectRatio,
+	} = props;
 
 	// Convert icon to string
 	if (typeof icon === 'object') {
@@ -105,6 +115,8 @@ export function Icon(props: IconifyIconProps): JSX.Element {
 			attr:flip={flip}
 			attr:width={width}
 			attr:height={height}
+			attr:viewBox={viewBox}
+			attr:preserveAspectRatio={preserveAspectRatio}
 			{...props}
 		/>
 	);
