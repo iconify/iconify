@@ -4,7 +4,6 @@ import type { IconifyIcon } from '@iconify/types';
  * SVG attributes that can be overwritten
  */
 export interface IconifyIconSVGAttributes {
-	viewBox: string;
 	preserveAspectRatio: string;
 }
 

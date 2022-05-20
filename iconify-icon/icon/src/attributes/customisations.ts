@@ -17,7 +17,6 @@ export type RenderedIconCustomisations = Omit<
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { inline, ...defaultCustomisations } = {
 	...defaults,
-	viewBox: '',
 	preserveAspectRatio: '',
 } as IconifyIconSVGAttributes & FullIconCustomisations;
 export { defaultCustomisations };
@@ -44,7 +43,6 @@ export function getCustomisations(node: Element): RenderedIconCustomisations {
 	flipFromString(customisations, attr('flip', ''));
 
 	// SVG attributes
-	customisations.viewBox = attr('viewBox', attr('viewbox', ''));
 	customisations.preserveAspectRatio = attr(
 		'preserveAspectRatio',
 		attr('preserveaspectratio', '')

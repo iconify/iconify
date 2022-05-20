@@ -71,32 +71,6 @@ describe('Testing customisations', () => {
 		);
 		expect(getInline(testNode)).toBe(false);
 
-		// viewBox
-		node.innerHTML = '<span viewBox="0 0 24 24"></span>';
-		testNode = node.lastChild as HTMLSpanElement;
-
-		const test4 = getCustomisations(testNode);
-		expect(test4).toEqual({
-			...defaultCustomisations,
-			viewBox: '0 0 24 24',
-		});
-		expect(haveCustomisationsChanged(test4, emptyCustomisations)).toBe(
-			true
-		);
-
-		node.innerHTML = '<span viewbox="0 0 32 32"></span>';
-		testNode = node.lastChild as HTMLSpanElement;
-
-		const test5 = getCustomisations(testNode);
-		expect(test5).toEqual({
-			...defaultCustomisations,
-			viewBox: '0 0 32 32',
-		});
-		expect(haveCustomisationsChanged(test5, test4)).toBe(true);
-		expect(haveCustomisationsChanged(test5, emptyCustomisations)).toBe(
-			true
-		);
-
 		// preserveAspectRatio
 		node.innerHTML = '<span preserveAspectRatio="xMidYMid meet"></span>';
 		testNode = node.lastChild as HTMLSpanElement;

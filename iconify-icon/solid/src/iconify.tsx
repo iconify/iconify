@@ -96,7 +96,6 @@ export function Icon(props: IconifyIconProps): JSX.Element {
 		flip,
 		width,
 		height,
-		viewBox,
 		preserveAspectRatio,
 	} = props;
 
@@ -115,7 +114,6 @@ export function Icon(props: IconifyIconProps): JSX.Element {
 			attr:flip={flip}
 			attr:width={width}
 			attr:height={height}
-			attr:viewBox={viewBox}
 			attr:preserveAspectRatio={preserveAspectRatio}
 			{...props}
 		/>
