@@ -133,7 +133,7 @@ export function iconToSVG(
 
 		if (rotation % 2 === 1) {
 			// Swap width/height and x/y for 90deg or 270deg rotation
-			if (box.left !== 0 || box.top !== 0) {
+			if (box.left !== box.top) {
 				tempValue = box.left;
 				box.left = box.top;
 				box.top = tempValue;
@@ -156,40 +156,35 @@ export function iconToSVG(
 	});
 
 	// Calculate dimensions
-	let width, height;
+	const customisationsWidth = customisations.width;
+	const customisationsHeight = customisations.height;
+	const boxWidth = box.width;
+	const boxHeight = box.height;
 
-	if (customisations.width === null && customisations.height === null) {
-		// Set height to '1em', calculate width
-		height = '1em';
-		width = calculateSize(height, box.width / box.height);
-	} else if (
-		customisations.width !== null &&
-		customisations.height !== null
-	) {
-		// Values are set
-		width = customisations.width;
-		height = customisations.height;
-	} else if (customisations.height !== null) {
-		// Height is set
-		height = customisations.height;
-		width = calculateSize(height, box.width / box.height);
+	let width, height;
+	if (customisationsWidth === null) {
+		// Width is not set: calculate width from height, default to '1em'
+		height =
+			customisationsHeight === null
+				? '1em'
+				: customisationsHeight === 'auto'
+				? boxHeight
+				: customisationsHeight;
+		width = calculateSize(height, boxWidth / boxHeight);
 	} else {
 		// Width is set
-		width = customisations.width as number | string;
-		height = calculateSize(width, box.height / box.width);
-	}
-
-	// Check for 'auto'
-	if (width === 'auto') {
-		width = box.width;
-	}
-	if (height === 'auto') {
-		height = box.height;
+		width = customisationsWidth === 'auto' ? boxWidth : customisationsWidth;
+		height =
+			customisationsHeight === null
+				? calculateSize(width, boxHeight / boxWidth)
+				: customisationsHeight === 'auto'
+				? boxHeight
+				: customisationsHeight;
 	}
 
 	// Convert to string
-	width = typeof width === 'string' ? width : width.toString() + '';
-	height = typeof height === 'string' ? height : height.toString() + '';
+	width = typeof width === 'string' ? width : width.toString();
+	height = typeof height === 'string' ? height : height.toString();
 
 	// Result
 	const result: IconifyIconBuildResult = {
@@ -201,9 +196,9 @@ export function iconToSVG(
 				' ' +
 				box.top.toString() +
 				' ' +
-				box.width.toString() +
+				boxWidth.toString() +
 				' ' +
-				box.height.toString(),
+				boxHeight.toString(),
 		},
 		body,
 	};
