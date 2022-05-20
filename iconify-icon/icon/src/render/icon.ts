@@ -11,7 +11,9 @@ const viewBoxProps: (keyof IconifyIcon)[] = ['left', 'top', 'width', 'height'];
  * Render icon
  */
 export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
-	let iconData = state.icon.data;
+	const iconData = {
+		...state.icon.data,
+	};
 	const customisations = state.customisations;
 
 	// Custom viewBox
@@ -31,10 +33,7 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 			}
 
 			if (!failed) {
-				iconData = {
-					...iconData,
-					...customisedViewBox,
-				};
+				Object.assign(iconData, customisedViewBox);
 			}
 		}
 	}
