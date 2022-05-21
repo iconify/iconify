@@ -13,7 +13,7 @@ import {
 	addIcon,
 	addCollection,
 } from '@iconify/core/lib/storage/functions';
-import { listIcons, shareStorage } from '@iconify/core/lib/storage/storage';
+import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
 import { buildIcon } from '@iconify/core/lib/builder/functions';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
@@ -63,7 +63,6 @@ const Iconify: IconifyGlobal = {
 	listIcons,
 	addIcon,
 	addCollection,
-	shareStorage,
 
 	// IconifyBuilderFunctions
 	replaceIDs,
@@ -91,7 +90,7 @@ export default Iconify;
  * Named exports
  */
 // IconifyStorageFunctions
-export { iconExists, getIcon, listIcons, addIcon, addCollection, shareStorage };
+export { iconExists, getIcon, listIcons, addIcon, addCollection };
 
 // IconifyBuilderFunctions
 export { replaceIDs, calculateSize, buildIcon };

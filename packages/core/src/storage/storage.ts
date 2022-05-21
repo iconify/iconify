@@ -20,53 +20,12 @@ export interface IconStorage {
 }
 
 /**
- * Storage format version
- */
-const storageVersion = 1;
-
-/**
  * Storage by provider and prefix
  */
-let storage = Object.create(null) as Record<
+const storage = Object.create(null) as Record<
 	string,
 	Record<string, IconStorage>
 >;
-
-/**
- * Share storage
- */
-interface WindowWithStorage extends Window {
-	_iconifyStorage: {
-		version: number;
-		storage: Record<string, Record<string, IconStorage>>;
-	};
-}
-
-try {
-	const w = (window || self) as unknown as WindowWithStorage | undefined;
-	if (w && w._iconifyStorage.version === storageVersion) {
-		storage = w._iconifyStorage.storage;
-	}
-} catch (err) {
-	//
-}
-
-/**
- * Share storage between components
- */
-export function shareStorage(): void {
-	try {
-		const w = (window || self) as unknown as WindowWithStorage | undefined;
-		if (w && !w._iconifyStorage) {
-			w._iconifyStorage = {
-				version: storageVersion,
-				storage,
-			};
-		}
-	} catch (err) {
-		//
-	}
-}
 
 /**
  * Create new storage

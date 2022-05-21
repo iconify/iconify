@@ -60,7 +60,6 @@ export {
 	iconExists,
 	getIcon,
 	listIcons,
-	shareStorage,
 	addIcon,
 	addCollection,
 	calculateSize,
