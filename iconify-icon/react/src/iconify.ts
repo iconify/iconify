@@ -64,7 +64,6 @@ export {
 	addIcon,
 	addCollection,
 	calculateSize,
-	replaceIDs,
 	buildIcon,
 	loadIcons,
 	loadIcon,

@@ -30,7 +30,7 @@ or
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.6/dist/iconify-icon.min.js"></script>
 ```
 
-or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:
+or, if you are building a project with a bundler, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:
 
 ```js
 import 'iconify-icon';
