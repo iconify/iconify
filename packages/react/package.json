@@ -58,5 +58,8 @@
 		"rimraf": "^3.0.2",
 		"rollup": "^2.70.1",
 		"typescript": "^4.6.2"
+	},
+	"peerDependencies": {
+		"react": "^16.8 || ^17.0 || ^18.0"
 	}
 }
