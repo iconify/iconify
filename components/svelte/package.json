@@ -23,6 +23,7 @@
 		"build:tsc": "tsc -b",
 		"build:bundles": "rollup -c rollup.config.js",
 		"build:api": "node build --only-api",
+		"monorepo:postinstall": "npm run build",
 		"test": "jest --runInBand"
 	},
 	"dependencies": {

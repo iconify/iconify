@@ -29,7 +29,7 @@ function getNPMCommand() {
 			return cmd;
 		}
 	}
-	throw new Error('Cannot execute NPM commands')
+	throw new Error('Cannot execute NPM commands');
 }
 
 /**

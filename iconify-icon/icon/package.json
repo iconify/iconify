@@ -24,6 +24,7 @@
 		"build:api": "api-extractor run --local --verbose",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
+		"monorepo:postinstall": "npm run build",
 		"test:jest": "jest --runInBand",
 		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
 		"test": "npm run test:jest && npm run test:mjs"

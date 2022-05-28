@@ -18,6 +18,7 @@
 		"lint": "eslint src/*.ts",
 		"prebuild": "npm run lint",
 		"build": "tsup src/index.ts --dts --format esm,cjs",
+		"monorepo:postinstall": "npm run build",
 		"test:jest": "jest --runInBand",
 		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jasmine",
 		"test": "npm run test:jest && npm run test:jasmine"

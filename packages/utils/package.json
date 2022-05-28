@@ -17,6 +17,7 @@
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "npm run lint && npm run clean",
 		"build": "unbuild",
+		"monorepo:postinstall": "npm run build",
 		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs && jest --runInBand --config=jest.config.cjs",
 		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config=jest.config.mjs",
 		"test": "npm run test:jest-cjs && npm run test:jest-esm",

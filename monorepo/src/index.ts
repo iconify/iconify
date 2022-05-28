@@ -19,11 +19,26 @@ const actionFunctions: Record<string, () => void> = {
 	clean: () => {
 		runAction('Removing node_modules', cleanWorkspace);
 	},
-	install: () => {
+	reinstall: () => {
 		runAction('Installing dependencies', (workspace) => {
 			runNPMCommand(workspace, ['install']);
 			addLinksToWorkspace(workspace);
 		});
+	},
+	install: () => {
+		runAction(
+			'Installing dependencies and building packages',
+			(workspace) => {
+				if (workspace.scripts.indexOf('monorepo:preinstall') !== -1) {
+					runNPMCommand(workspace, ['run', 'monorepo:preinstall']);
+				}
+				runNPMCommand(workspace, ['install']);
+				addLinksToWorkspace(workspace);
+				if (workspace.scripts.indexOf('monorepo:postinstall') !== -1) {
+					runNPMCommand(workspace, ['run', 'monorepo:postinstall']);
+				}
+			}
+		);
 	},
 	versions: () => {
 		runAction('Updating versions of local packages', updateVersions);

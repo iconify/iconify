@@ -18,6 +18,7 @@
 		"build:dist": "rollup -c rollup.config.js",
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
+		"monorepo:postinstall": "npm run build",
 		"test": "vitest"
 	},
 	"main": "dist/iconify.js",

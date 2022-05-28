@@ -16,6 +16,7 @@
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
 		"prebuild": "npm run clean",
 		"build": "tsup",
+		"monorepo:postinstall": "npm run build",
 		"test": "vitest --config vitest.config.mjs"
 	},
 	"main": "dist/iconify.js",

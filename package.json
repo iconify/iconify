@@ -16,7 +16,7 @@
 		"clean": "node monorepo clean",
 		"link": "node monorepo link",
 		"unlink": "node monorepo unlink",
-		"reinstall": "node monorepo clean install",
+		"reinstall": "node monorepo clean reinstall",
 		"build": "node monorepo run build --if-present --public",
 		"test": "node monorepo run build --if-present --public",
 		"versions": "node monorepo versions"
