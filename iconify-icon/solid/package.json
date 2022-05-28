@@ -29,6 +29,6 @@
 		"typescript": "^4.6.2"
 	},
 	"peerDependencies": {
-		"solid-js": "*"
+		"solid-js": ">=1"
 	}
 }

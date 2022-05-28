@@ -59,6 +59,6 @@
 		"vue": "^3.2.31"
 	},
 	"peerDependencies": {
-		"vue": "3.x"
+		"vue": ">=3"
 	}
 }
