@@ -1,5 +1,13 @@
 import type { ActualRenderMode, IconifyRenderMode } from './types';
 
+// Check for Safari
+let isBuggedSafari = false;
+try {
+	isBuggedSafari = navigator.vendor.indexOf('Apple') === 0;
+} catch (err) {
+	//
+}
+
 /**
  * Get render mode
  */
@@ -12,9 +20,12 @@ export function getRenderMode(body: string, mode?: string): ActualRenderMode {
 			return mode as ActualRenderMode;
 	}
 
-	// Check for animation, use 'style' for animated icons
+	// Check for animation, use 'style' for animated icons, unless browser is Safari
 	// (only <a>, which should be ignored or animations start with '<a')
-	if ((mode as IconifyRenderMode) !== 'style' && body.indexOf('<a') === -1) {
+	if (
+		(mode as IconifyRenderMode) !== 'style' &&
+		(isBuggedSafari || body.indexOf('<a') === -1)
+	) {
 		// Render <svg>
 		return 'svg';
 	}
