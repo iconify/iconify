@@ -22,7 +22,7 @@ export {
 } from './icon/index';
 
 // Icon set functions
-export { parseIconSet, isVariation } from './icon-set/parse';
+export { parseIconSet } from './icon-set/parse';
 export { validateIconSet } from './icon-set/validate';
 export { quicklyValidateIconSet } from './icon-set/validate-basic';
 export { expandIconSet } from './icon-set/expand';

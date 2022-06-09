@@ -139,6 +139,10 @@ describe('Testing parsing icon set', () => {
 							hFlip: true,
 							width: 20,
 						},
+						// invalid alias
+						icon2: {
+							parent: 'icon1',
+						},
 					},
 					height: 24,
 				},
