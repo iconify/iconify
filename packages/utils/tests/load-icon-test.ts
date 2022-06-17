@@ -24,6 +24,7 @@ describe('Testing loadIcon', () => {
 	});
 
 	test('CustomCollection using dynamic import', async () => {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		const result = await loadIcon('flat-color-icons', 'up-right', {
 			customCollections: {
@@ -82,7 +83,15 @@ describe('Testing loadIcon', () => {
 		// Restore console.warn
 		console.warn = warn;
 
-		expect(svg).toEqual(result);
-		expect(warned).toEqual(true);
+		expect(svg).not.toEqual(result);
+		expect(
+			svg?.replace(
+				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+				''
+			)
+		).toEqual(result);
+
+		// warning should not longer be used
+		expect(warned).toEqual(false);
 	});
 });

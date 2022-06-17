@@ -30,17 +30,21 @@ export async function getCustomIcon(
 	}
 
 	if (result) {
+		const cleanupIdx = result.indexOf('<svg');
+		if (cleanupIdx > 0) result = result.slice(cleanupIdx);
+		const { transform } = options?.customizations ?? {};
+		result =
+			typeof transform === 'function'
+				? await transform(result, collection, icon)
+				: result;
+
 		if (!result.startsWith('<svg')) {
 			console.warn(
 				`Custom icon "${icon}" in "${collection}" is not a valid SVG`
 			);
 			return result;
 		}
-		const { transform } = options?.customizations ?? {};
-		result =
-			typeof transform === 'function'
-				? await transform(result, collection, icon)
-				: result;
+
 		return await mergeIconProps(
 			options?.customizations?.trimCustomSvg === true
 				? trimSVG(result)
