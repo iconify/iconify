@@ -8,6 +8,14 @@ describe('Testing FileSystemIconLoader', () => {
 		expect(result && result.indexOf('svg') > -1).toBeTruthy();
 	});
 
+	test('FileSystemIconLoader cleanups svg preface', async () => {
+		const result = await FileSystemIconLoader(fixturesDir)(
+			'circle-xml-preface'
+		);
+		console.log(result);
+		expect(result && result.indexOf('<svg') === 0).toBeTruthy();
+	});
+
 	test('FileSystemIconLoader with transform', async () => {
 		const result = await FileSystemIconLoader(fixturesDir, (icon) => {
 			return icon.replace('<svg ', '<svg width="1em" height="1em" ');
