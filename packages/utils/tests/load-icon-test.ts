@@ -62,7 +62,7 @@ describe('Testing loadIcon', () => {
 		expect(result && result.indexOf('height="1em"') > -1).toBeTruthy();
 	});
 
-	test.skip('CustomCollection Icon with XML heading', async () => {
+	test('CustomCollection Icon with XML heading', async () => {
 		const svg = await loader('1f3eb');
 		expect(svg).toBeTruthy();
 		// Intercept console.warn
@@ -83,7 +83,15 @@ describe('Testing loadIcon', () => {
 		// Restore console.warn
 		console.warn = warn;
 
-		expect(svg).toEqual(result);
-		expect(warned).toEqual(true);
+		expect(svg).not.toEqual(result);
+		expect(
+			svg?.replace(
+				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+				''
+			)
+		).toEqual(result);
+
+		// warning should not longer be used
+		expect(warned).toEqual(false);
 	});
 });
