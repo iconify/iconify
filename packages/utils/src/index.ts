@@ -19,6 +19,8 @@ export { mergeIconData } from './icon/merge';
 export {
 	iconDefaults as defaultIconData,
 	fullIcon as fullIconData,
+	defaultIconDimensions,
+	defaultIconTransformations,
 } from './icon/index';
 
 // Icon set functions

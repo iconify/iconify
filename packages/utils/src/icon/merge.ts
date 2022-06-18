@@ -1,11 +1,10 @@
 import type { IconifyOptional } from '@iconify/types';
-import type { FullIconifyIcon, IconifyIcon } from './index';
 import { iconDefaults } from './index';
 
 /**
  * Merge icon and alias
  */
-export function mergeIconData<T extends IconifyIcon | FullIconifyIcon>(
+export function mergeIconData<T extends IconifyOptional>(
 	icon: T,
 	alias: IconifyOptional
 ): T {
