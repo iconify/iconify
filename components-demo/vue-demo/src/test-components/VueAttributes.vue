@@ -2,8 +2,8 @@
 	<section>
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
-			Icon with color (red):
-			<Icon :icon="icon" color="red" />
+			Icon with color (red) and title:
+			<Icon :icon="icon" color="red" title="Red icon" />
 		</div>
 		<div>
 			Icon size (2em):
