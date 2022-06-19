@@ -1,10 +1,10 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '../icon';
+import type { FullIconifyIcon } from '../icon/defaults';
 import { iconToSVG } from '../svg/build';
 import { getIconData } from '../icon-set/get-icon';
 import { mergeIconProps } from './utils';
 import createDebugger from 'debug';
-import { defaults as DefaultIconCustomizations } from '../customisations';
+import { defaultIconCustomisations } from '../customisations/defaults';
 import type { IconifyLoaderOptions } from './types';
 
 const debug = createDebugger('@iconify-loader:icon');
@@ -21,7 +21,7 @@ export async function searchForIcon(
 		iconData = getIconData(iconSet, id, true);
 		if (iconData) {
 			debug(`${collection}:${id}`);
-			let defaultCustomizations = { ...DefaultIconCustomizations };
+			let defaultCustomizations = { ...defaultIconCustomisations };
 			if (typeof customize === 'function')
 				defaultCustomizations = customize(defaultCustomizations);
 

@@ -1,5 +1,5 @@
-import type { FullIconifyIcon } from '../icon';
-import type { FullIconCustomisations } from '../customisations';
+import type { FullIconifyIcon } from '../icon/defaults';
+import type { FullIconCustomisations } from '../customisations/defaults';
 import { calculateSize } from './size';
 
 /**
@@ -12,10 +12,9 @@ export interface IconifyIconBuildResult {
 		height: string;
 		viewBox: string;
 	};
+
 	// Content
 	body: string;
-	// True if 'vertical-align: -0.125em' or equivalent should be added by implementation
-	inline?: boolean;
 }
 
 /**
@@ -202,10 +201,6 @@ export function iconToSVG(
 		},
 		body,
 	};
-
-	if (customisations.inline) {
-		result.inline = true;
-	}
 
 	return result;
 }

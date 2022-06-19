@@ -1,5 +1,5 @@
 import { parseIconSet } from '../lib/icon-set/parse';
-import type { FullIconifyIcon } from '../lib/icon';
+import type { FullIconifyIcon } from '../lib/icon/defaults';
 
 describe('Testing parsing icon set', () => {
 	test('Simple icon set', () => {

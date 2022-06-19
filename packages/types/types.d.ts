@@ -30,7 +30,6 @@ export interface IconifyDimenisons {
  * Used in:
  *  icon (as is)
  *  alias (merged with icon's properties)
- *  root of JSON file (default values)
  */
 export interface IconifyTransformations {
 	// Number of 90 degrees rotations.
@@ -223,7 +222,7 @@ export interface IconifyMetaData {
 /**
  * JSON structure, contains only icon data
  */
-export interface IconifyJSONIconsData extends IconifyOptional {
+export interface IconifyJSONIconsData extends IconifyDimenisons {
 	// Prefix for icons in JSON file, required.
 	prefix: string;
 
@@ -236,8 +235,8 @@ export interface IconifyJSONIconsData extends IconifyOptional {
 	// Optional aliases.
 	aliases?: IconifyAliases;
 
-	// IconifyOptional properties that are used as default values for icons when icon is missing value.
-	// If property exists in both icon and root, use value from icon.
+	// IconifyDimenisons properties that are used as default viewbox for icons when icon is missing value.
+	// If viewbox exists in both icon and root, use value from icon.
 	// This is used to reduce duplication.
 }
 

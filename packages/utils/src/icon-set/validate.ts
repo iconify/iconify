@@ -1,5 +1,6 @@
 import type { IconifyJSON, IconifyOptional } from '@iconify/types';
-import { iconDefaults, matchName } from '../icon';
+import { matchIconName } from '../icon/name';
+import { defaultIconDimensions } from '../icon/defaults';
 
 /**
  * Match character
@@ -112,7 +113,7 @@ export function validateIconSet(
 		data.prefix = options.prefix;
 	} else if (
 		typeof data.prefix !== 'string' ||
-		!data.prefix.match(matchName)
+		!data.prefix.match(matchIconName)
 	) {
 		throw new Error('Invalid prefix');
 	}
@@ -124,7 +125,7 @@ export function validateIconSet(
 		const value = data.provider;
 		if (
 			typeof value !== 'string' ||
-			(value !== '' && !value.match(matchName))
+			(value !== '' && !value.match(matchIconName))
 		) {
 			if (fix) {
 				delete data.provider;
@@ -137,7 +138,7 @@ export function validateIconSet(
 	// Validate all icons
 	const icons = data.icons;
 	Object.keys(icons).forEach((name) => {
-		if (!name.match(matchName)) {
+		if (!name.match(matchIconName)) {
 			if (fix) {
 				delete icons[name];
 				return;
@@ -221,7 +222,7 @@ export function validateIconSet(
 				item === null ||
 				typeof item.parent !== 'string' ||
 				// Check if name is valid
-				!name.match(matchName)
+				!name.match(matchIconName)
 			) {
 				if (fix) {
 					delete aliases[name];
@@ -283,15 +284,17 @@ export function validateIconSet(
 	}
 
 	// Validate all properties that can be optimised
-	(Object.keys(iconDefaults) as (keyof typeof iconDefaults)[]).forEach(
-		(prop) => {
-			const expectedType = typeof iconDefaults[prop];
-			const actualType = typeof data[prop as keyof IconifyJSON];
-			if (actualType !== 'undefined' && actualType !== expectedType) {
-				throw new Error(`Invalid value type for "${prop}"`);
-			}
+	(
+		Object.keys(
+			defaultIconDimensions
+		) as (keyof typeof defaultIconDimensions)[]
+	).forEach((prop) => {
+		const expectedType = typeof defaultIconDimensions[prop];
+		const actualType = typeof data[prop as keyof IconifyJSON];
+		if (actualType !== 'undefined' && actualType !== expectedType) {
+			throw new Error(`Invalid value type for "${prop}"`);
 		}
-	);
+	});
 
 	// Validate characters map
 	if (data.chars !== void 0) {

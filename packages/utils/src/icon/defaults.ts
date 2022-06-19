@@ -10,11 +10,6 @@ export { IconifyIcon };
 export type FullIconifyIcon = Required<IconifyIcon>;
 
 /**
- * Expression to test part of icon name.
- */
-export const matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-
-/**
  * Default values for dimensions
  */
 export const defaultIconDimensions: Required<IconifyDimenisons> = Object.freeze(
@@ -39,14 +34,7 @@ export const defaultIconTransformations: Required<IconifyTransformations> =
 /**
  * Default values for all optional IconifyIcon properties
  */
-export const iconDefaults: Required<IconifyOptional> = Object.freeze({
+export const defaultIconProps: Required<IconifyOptional> = Object.freeze({
 	...defaultIconDimensions,
 	...defaultIconTransformations,
 });
-
-/**
- * Add optional properties to icon
- */
-export function fullIcon(data: IconifyIcon): FullIconifyIcon {
-	return { ...iconDefaults, ...data };
-}

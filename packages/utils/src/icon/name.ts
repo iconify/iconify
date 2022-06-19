@@ -1,5 +1,3 @@
-import { matchName } from './index';
-
 /**
  * Icon name
  */
@@ -13,6 +11,11 @@ export interface IconifyIconName {
  * Icon source: icon object without name
  */
 export type IconifyIconSource = Omit<IconifyIconName, 'name'>;
+
+/**
+ * Expression to test part of icon name.
+ */
+export const matchIconName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /**
  * Convert string to Icon object.
@@ -93,9 +96,9 @@ export const validateIcon = (
 	}
 
 	return !!(
-		(icon.provider === '' || icon.provider.match(matchName)) &&
+		(icon.provider === '' || icon.provider.match(matchIconName)) &&
 		((allowSimpleName && icon.prefix === '') ||
-			icon.prefix.match(matchName)) &&
-		icon.name.match(matchName)
+			icon.prefix.match(matchIconName)) &&
+		icon.name.match(matchIconName)
 	);
 };

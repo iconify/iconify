@@ -1,5 +1,5 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '../icon';
+import type { FullIconifyIcon } from '../icon/defaults';
 import { getIconData } from './get-icon';
 
 /**

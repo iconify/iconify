@@ -1,9 +1,9 @@
 // Customisations
-export { compare as compareCustomisations } from './customisations/compare';
 export {
-	defaults as defaultCustomisations,
-	mergeCustomisations,
-} from './customisations/index';
+	defaultIconCustomisations,
+	defaultIconSizeCustomisations,
+} from './customisations/defaults';
+export { mergeCustomisations } from './customisations/merge';
 
 // Customisations: converting attributes in components
 export { toBoolean } from './customisations/bool';
@@ -11,17 +11,19 @@ export { flipFromString } from './customisations/flip';
 export { rotateFromString } from './customisations/rotate';
 
 // Icon names
-export { stringToIcon, validateIcon as validateIconName } from './icon/name';
-export { matchName as matchIconName } from './icon/index';
+export {
+	matchIconName,
+	stringToIcon,
+	validateIcon as validateIconName,
+} from './icon/name';
 
 // Icon data
 export { mergeIconData } from './icon/merge';
 export {
-	iconDefaults as defaultIconData,
-	fullIcon as fullIconData,
+	defaultIconProps,
 	defaultIconDimensions,
 	defaultIconTransformations,
-} from './icon/index';
+} from './icon/defaults';
 
 // Icon set functions
 export { parseIconSet } from './icon-set/parse';

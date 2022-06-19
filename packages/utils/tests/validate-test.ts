@@ -231,7 +231,7 @@ describe('Testing validation', () => {
 					},
 					height: 24,
 					// Object
-					rotate: {
+					width: {
 						foo: 1,
 					},
 				},
@@ -253,7 +253,7 @@ describe('Testing validation', () => {
 					},
 					height: 24,
 					// Object
-					hFlip: null,
+					left: null,
 				},
 				{ fix: true }
 			);

@@ -1,5 +1,5 @@
 import type { Awaitable } from '@antfu/utils';
-import type { FullIconCustomisations } from '../customisations';
+import type { FullIconCustomisations } from '../customisations/defaults';
 import type { IconifyJSON } from '@iconify/types';
 
 /**

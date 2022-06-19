@@ -55,21 +55,17 @@
 			"require": "./lib/customisations/bool.cjs",
 			"import": "./lib/customisations/bool.mjs"
 		},
-		"./lib/customisations/compare": {
-			"require": "./lib/customisations/compare.cjs",
-			"import": "./lib/customisations/compare.mjs"
-		},
-		"./lib/customisations": {
-			"require": "./lib/customisations/index.cjs",
-			"import": "./lib/customisations/index.mjs"
+		"./lib/customisations/defaults": {
+			"require": "./lib/customisations/defaults.cjs",
+			"import": "./lib/customisations/defaults.mjs"
 		},
 		"./lib/customisations/flip": {
 			"require": "./lib/customisations/flip.cjs",
 			"import": "./lib/customisations/flip.mjs"
 		},
-		"./lib/customisations/index": {
-			"require": "./lib/customisations/index.cjs",
-			"import": "./lib/customisations/index.mjs"
+		"./lib/customisations/merge": {
+			"require": "./lib/customisations/merge.cjs",
+			"import": "./lib/customisations/merge.mjs"
 		},
 		"./lib/customisations/rotate": {
 			"require": "./lib/customisations/rotate.cjs",
@@ -107,13 +103,9 @@
 			"require": "./lib/icon-set/validate-basic.cjs",
 			"import": "./lib/icon-set/validate-basic.mjs"
 		},
-		"./lib/icon": {
-			"require": "./lib/icon/index.cjs",
-			"import": "./lib/icon/index.mjs"
-		},
-		"./lib/icon/index": {
-			"require": "./lib/icon/index.cjs",
-			"import": "./lib/icon/index.mjs"
+		"./lib/icon/defaults": {
+			"require": "./lib/icon/defaults.cjs",
+			"import": "./lib/icon/defaults.mjs"
 		},
 		"./lib/icon/merge": {
 			"require": "./lib/icon/merge.cjs",
@@ -122,6 +114,10 @@
 		"./lib/icon/name": {
 			"require": "./lib/icon/name.cjs",
 			"import": "./lib/icon/name.mjs"
+		},
+		"./lib/icon/transformations": {
+			"require": "./lib/icon/transformations.cjs",
+			"import": "./lib/icon/transformations.mjs"
 		},
 		"./lib": {
 			"require": "./lib/index.cjs",

@@ -1,18 +1,32 @@
 import type { IconifyJSON } from '@iconify/types';
-import { iconDefaults, matchName } from '../icon';
+import { matchIconName } from '../icon/name';
+import { defaultIconDimensions, defaultIconProps } from '../icon/defaults';
+
+type PropsList = Record<string, unknown>;
 
 /**
  * Optional properties
  */
-const optionalProperties = {
-	provider: 'string',
-	aliases: 'object',
-	not_found: 'object',
-} as Record<string, string>;
+const optionalPropertyDefaults = {
+	provider: '',
+	aliases: {},
+	not_found: {},
+	...defaultIconDimensions,
+} as PropsList;
 
-for (const prop in iconDefaults) {
-	optionalProperties[prop] =
-		typeof iconDefaults[prop as keyof typeof iconDefaults];
+/**
+ * Check props
+ */
+function checkOptionalProps(item: PropsList, defaults: PropsList): boolean {
+	for (const prop in defaults) {
+		if (
+			item[prop] !== void 0 &&
+			typeof item[prop] !== typeof defaults[prop]
+		) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /**
@@ -40,58 +54,35 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 	}
 
 	// Check for optional properties
-	for (const prop in optionalProperties) {
-		if (
-			(obj as Record<string, unknown>)[prop] !== void 0 &&
-			typeof (obj as Record<string, unknown>)[prop] !==
-				optionalProperties[prop]
-		) {
-			return null;
-		}
+	if (!checkOptionalProps(obj as PropsList, optionalPropertyDefaults)) {
+		return null;
 	}
 
 	// Check all icons
 	const icons = data.icons;
 	for (const name in icons) {
 		const icon = icons[name];
-		if (!name.match(matchName) || typeof icon.body !== 'string') {
+		if (
+			!name.match(matchIconName) ||
+			typeof icon.body !== 'string' ||
+			!checkOptionalProps(icon as unknown as PropsList, defaultIconProps)
+		) {
 			return null;
-		}
-
-		for (const prop in iconDefaults) {
-			if (
-				icon[prop as keyof typeof icon] !== void 0 &&
-				typeof icon[prop as keyof typeof icon] !==
-					typeof iconDefaults[prop as keyof typeof iconDefaults]
-			) {
-				return null;
-			}
 		}
 	}
 
 	// Check all aliases
-	const aliases = data.aliases;
-	if (aliases) {
-		for (const name in aliases) {
-			const icon = aliases[name];
-			const parent = icon.parent;
-			if (
-				!name.match(matchName) ||
-				typeof parent !== 'string' ||
-				(!icons[parent] && !aliases[parent])
-			) {
-				return null;
-			}
-
-			for (const prop in iconDefaults) {
-				if (
-					icon[prop as keyof typeof icon] !== void 0 &&
-					typeof icon[prop as keyof typeof icon] !==
-						typeof iconDefaults[prop as keyof typeof iconDefaults]
-				) {
-					return null;
-				}
-			}
+	const aliases = data.aliases || {};
+	for (const name in aliases) {
+		const icon = aliases[name];
+		const parent = icon.parent;
+		if (
+			!name.match(matchIconName) ||
+			typeof parent !== 'string' ||
+			(!icons[parent] && !aliases[parent]) ||
+			!checkOptionalProps(icon as unknown as PropsList, defaultIconProps)
+		) {
+			return null;
 		}
 	}
 
