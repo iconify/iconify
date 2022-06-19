@@ -11,9 +11,10 @@
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git"
 	},
+	"packageManager": "pnpm@7.3.0",
 	"scripts": {
 		"install": "node monorepo install",
-		"clean": "node monorepo clean",
+		"clean": "rm -rf */*/node_modules",
 		"link": "node monorepo link",
 		"unlink": "node monorepo unlink",
 		"reinstall": "node monorepo clean reinstall",

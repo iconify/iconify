@@ -3,4 +3,5 @@ node_modules
 debug/
 debug_packages/
 lerna-debug.log
+.pnpm-debug.log
 .idea/
