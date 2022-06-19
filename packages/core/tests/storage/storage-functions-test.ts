@@ -1,4 +1,4 @@
-import { fullIcon } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { addIconSet, getStorage, listIcons } from '../../lib/storage/storage';
 import {
 	iconExists,
@@ -42,9 +42,10 @@ describe('Testing IconifyStorageFunctions', () => {
 		expect(iconExists(testName)).toBe(true);
 		expect(listIcons(provider)).toEqual([testName]);
 
-		let expected = fullIcon({
+		let expected = {
+			...defaultIconProps,
 			body: '<g />',
-		});
+		};
 		expect(getIconData(testName)).toEqual(expected);
 		expect(getIcon(testName)).toEqual(expected);
 
@@ -63,9 +64,10 @@ describe('Testing IconifyStorageFunctions', () => {
 
 		// Test 'home' icon
 		expect(iconExists(`${prefix}:home`)).toBe(true);
-		expected = fullIcon({
+		expected = {
+			...defaultIconProps,
 			body: '<g id="home" />',
-		});
+		};
 		expect(getIconData(`${prefix}:home`)).toEqual(expected);
 		expect(getIcon(`${prefix}:home`)).toEqual(expected);
 
@@ -161,9 +163,10 @@ describe('Testing IconifyStorageFunctions', () => {
 		// Test 'test'
 		name = name1;
 		expect(iconExists(name)).toBe(true);
-		let expected = fullIcon({
+		let expected = {
+			...defaultIconProps,
 			body: '<g data-icon="basic-icon" />',
-		});
+		};
 		expect(getIcon(name)).toEqual(expected);
 		expect(getIconData(name)).toEqual(expected);
 
@@ -171,18 +174,20 @@ describe('Testing IconifyStorageFunctions', () => {
 		name = `${prefix2}:${name2}`;
 		expect(listIcons('', prefix2)).toEqual([name]);
 		expect(iconExists(name)).toBe(true);
-		expected = fullIcon({
+		expected = {
+			...defaultIconProps,
 			body: '<g data-icon="prefixed-icon" />',
-		});
+		};
 		expect(getIcon(name)).toEqual(expected);
 		expect(getIconData(name)).toEqual(expected);
 
 		// Test prefixed icon, using '-' separator
 		name = `${prefix2}-${name2}`;
 		expect(iconExists(name)).toBe(true);
-		expected = fullIcon({
+		expected = {
+			...defaultIconProps,
 			body: '<g data-icon="prefixed-icon" />',
-		});
+		};
 		expect(getIcon(name)).toEqual(expected);
 		expect(getIconData(name)).toEqual(expected);
 

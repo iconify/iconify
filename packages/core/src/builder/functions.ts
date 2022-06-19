@@ -1,10 +1,8 @@
 import type { IconifyIcon } from '@iconify/types';
-import { fullIcon } from '@iconify/utils/lib/icon';
-import {
-	defaults,
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
-import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
+import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 
@@ -32,9 +30,9 @@ export function buildIcon(
 	customisations?: IconifyIconCustomisations
 ): IconifyIconBuildResult {
 	return iconToSVG(
-		fullIcon(icon),
+		{ ...defaultIconProps, ...icon },
 		customisations
-			? mergeCustomisations(defaults, customisations)
-			: defaults
+			? mergeCustomisations(defaultIconCustomisations, customisations)
+			: defaultIconCustomisations
 	);
 }

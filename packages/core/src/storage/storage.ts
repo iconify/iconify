@@ -1,6 +1,6 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 
@@ -84,7 +84,10 @@ export function addIconToStorage(
 	try {
 		if (typeof icon.body === 'string') {
 			// Freeze icon to make sure it will not be modified
-			storage.icons[name] = Object.freeze(fullIcon(icon));
+			storage.icons[name] = Object.freeze({
+				...defaultIconProps,
+				...icon,
+			});
 			return true;
 		}
 	} catch (err) {
