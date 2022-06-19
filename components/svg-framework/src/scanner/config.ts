@@ -1,5 +1,21 @@
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
+import {
+	defaultIconCustomisations,
+	IconifyIconCustomisations,
+} from '@iconify/utils/lib/customisations/defaults';
+
+/**
+ * Add inline to customisations
+ */
+export interface ExtendedIconifyIconCustomisations
+	extends IconifyIconCustomisations {
+	inline?: boolean;
+}
+
+export const defaultExtendedIconCustomisations = {
+	...defaultIconCustomisations,
+	inline: false,
+};
 
 /**
  * Class names
@@ -28,7 +44,7 @@ export interface IconifyElementProps {
 	icon: IconifyIconName;
 
 	// Customisations
-	customisations: Required<IconifyIconCustomisations>;
+	customisations: Required<ExtendedIconifyIconCustomisations>;
 
 	// Render mode
 	mode?: IconifyRenderMode;

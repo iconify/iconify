@@ -1,7 +1,7 @@
 import { cleanupGlobals, setupDOM } from './helpers';
 import { getElementProps } from '../src/scanner/get-props';
 import { propsChanged } from '../src/scanner/compare';
-import { defaults } from '@iconify/utils/lib/customisations';
+import { defaultExtendedIconCustomisations } from '../src/scanner/config';
 
 describe('Testing element properties', () => {
 	beforeEach(() => {
@@ -25,7 +25,7 @@ describe('Testing element properties', () => {
 				name: 'home',
 			},
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			// Value is null because that is what getAttribute() returns, but type and value are not
 			// checked because it does not actually matter. In render it compares to string, any other
@@ -44,7 +44,7 @@ describe('Testing element properties', () => {
 				name: 'icon-name',
 			},
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -61,7 +61,7 @@ describe('Testing element properties', () => {
 				name: 'home',
 			},
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -91,7 +91,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: false,
 			},
 			mode: null,
@@ -104,7 +104,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: true,
 			},
 			mode: null,
@@ -118,7 +118,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: false,
 			},
 			mode: null,
@@ -133,7 +133,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: true,
 			},
 			mode: null,
@@ -147,7 +147,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: false,
 			},
 			mode: null,
@@ -160,7 +160,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: true,
 			},
 			mode: null,
@@ -173,7 +173,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				inline: false,
 			},
 			mode: null,
@@ -197,7 +197,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				width: null,
 				height: null,
 			},
@@ -210,7 +210,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				width: '200',
 				height: null,
 			},
@@ -223,7 +223,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				width: '200',
 				height: '1em',
 			},
@@ -236,7 +236,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				width: null,
 				height: '1em',
 			},
@@ -261,7 +261,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				rotate: 0,
 			},
 			mode: null,
@@ -273,7 +273,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				rotate: 1,
 			},
 			mode: null,
@@ -285,7 +285,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				rotate: 2,
 			},
 			mode: null,
@@ -297,7 +297,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				rotate: 3,
 			},
 			mode: null,
@@ -309,7 +309,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				rotate: 3,
 			},
 			mode: null,
@@ -321,7 +321,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -331,7 +331,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -341,7 +341,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -351,7 +351,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -374,7 +374,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				hFlip: false,
 				vFlip: false,
 			},
@@ -387,7 +387,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				hFlip: true,
 			},
 			mode: null,
@@ -399,7 +399,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				hFlip: true,
 				vFlip: true,
 			},
@@ -413,7 +413,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				vFlip: true,
 			},
 			mode: null,
@@ -426,7 +426,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});
@@ -438,7 +438,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 				hFlip: true,
 				vFlip: true,
 			},
@@ -452,7 +452,7 @@ describe('Testing element properties', () => {
 			name,
 			icon,
 			customisations: {
-				...defaults,
+				...defaultExtendedIconCustomisations,
 			},
 			mode: null,
 		});

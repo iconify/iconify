@@ -1,10 +1,7 @@
 import type { IconifyJSON } from '@iconify/types';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
-import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
-import {
-	defaults,
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
+import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import {
 	getIconData,
 	addCollection,
@@ -15,6 +12,7 @@ import { initObserver } from './observer/index';
 import { scanDOM, scanElement } from './scanner/index';
 import { addBodyNode } from './observer/root';
 import { renderInlineSVG } from './render/svg';
+import { defaultExtendedIconCustomisations } from './scanner/config';
 
 /**
  * Generate icon
@@ -45,8 +43,8 @@ function generateIcon(
 
 	// Clean up customisations
 	const changes = mergeCustomisations(
-		defaults,
-		typeof customisations === 'object' ? customisations : {}
+		defaultExtendedIconCustomisations,
+		customisations || {}
 	);
 
 	// Get data
@@ -166,8 +164,8 @@ export function renderIcon(
 
 	// Clean up customisations
 	const changes = mergeCustomisations(
-		defaults,
-		typeof customisations === 'object' ? customisations : {}
+		defaultExtendedIconCustomisations,
+		customisations || {}
 	);
 
 	// Get data

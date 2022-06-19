@@ -11,7 +11,7 @@ import {
 } from './config';
 import { scanRootNode } from './find';
 import type { IconifyIconName } from '../iconify';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import {
 	observe,
 	pauseObservingNode,

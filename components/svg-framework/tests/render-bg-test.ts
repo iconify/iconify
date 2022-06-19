@@ -1,8 +1,8 @@
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { cleanupGlobals, setupDOM, waitDOMReady } from './helpers';
 import { scanRootNode } from '../src/scanner/find';
 import { renderBackground } from '../src/render/bg';
-import type { IconifyIcon } from '@iconify/utils/lib/icon';
+import type { IconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { elementDataProperty, IconifyElement } from '../src/scanner/config';
 
 describe('Testing rendering nodes as background', () => {
@@ -40,7 +40,7 @@ describe('Testing rendering nodes as background', () => {
 			node,
 			props,
 			{
-				...iconDefaults,
+				...defaultIconProps,
 				...data,
 			},
 			data.body.indexOf('currentColor') !== -1

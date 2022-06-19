@@ -1,4 +1,4 @@
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
@@ -58,9 +58,8 @@ export function renderBackground(
 	useMask: boolean
 ): IconifyElement {
 	// Generate data to render
-	const renderData = iconToSVG(iconData, {
-		...props.customisations,
-	});
+	const customisations = props.customisations;
+	const renderData = iconToSVG(iconData, customisations);
 	const renderAttribs = renderData.attributes;
 
 	// Get old data
@@ -90,7 +89,7 @@ export function renderBackground(
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 	};
-	if (renderData.inline) {
+	if (customisations.inline) {
 		newStyles['vertical-align'] = '-0.125em';
 	}
 

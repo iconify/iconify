@@ -1,10 +1,7 @@
 // Core
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import type {
-	IconifyIconCustomisations,
-	IconifyIconSize,
-} from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
@@ -28,7 +25,10 @@ import {
 	pauseObserver,
 	resumeObserver,
 } from './observer/index';
-import type { IconifyRenderMode } from './scanner/config';
+import type {
+	IconifyRenderMode,
+	ExtendedIconifyIconCustomisations as IconifyIconCustomisations,
+} from './scanner/config';
 
 /**
  * Export required types
@@ -40,7 +40,7 @@ export { IconifyStorageFunctions, IconifyBuilderFunctions };
 export { IconifyIcon, IconifyJSON, IconifyIconName };
 
 // Customisations
-export { IconifyIconCustomisations, IconifyIconSize, IconifyRenderMode };
+export { IconifyIconSize, IconifyRenderMode, IconifyIconCustomisations };
 
 // Build
 export { IconifyIconBuildResult };

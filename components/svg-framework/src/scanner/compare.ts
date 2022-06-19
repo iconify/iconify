@@ -1,5 +1,7 @@
-import type { IconifyElementProps } from './config';
-import { defaults } from '@iconify/utils/lib/customisations';
+import {
+	defaultExtendedIconCustomisations,
+	IconifyElementProps,
+} from './config';
 
 /**
  * Compare props
@@ -14,7 +16,7 @@ export function propsChanged(
 
 	const customisations1 = props1.customisations;
 	const customisations2 = props2.customisations;
-	for (const key in defaults) {
+	for (const key in defaultExtendedIconCustomisations) {
 		if (customisations1[key] !== customisations2[key]) {
 			return true;
 		}

@@ -7,7 +7,6 @@ import {
 	resetState,
 	mockAPIData,
 	awaitUntil,
-	nextTick,
 } from './helpers';
 import { addBodyNode } from '../src/observer/root';
 import { scanDOM } from '../src/scanner/index';

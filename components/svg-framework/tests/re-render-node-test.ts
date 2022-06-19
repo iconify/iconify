@@ -1,8 +1,8 @@
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { cleanupGlobals, setupDOM, waitDOMReady } from './helpers';
 import { scanRootNode } from '../src/scanner/find';
 import { renderInlineSVG } from '../src/render/svg';
-import type { IconifyIcon } from '@iconify/utils/lib/icon';
+import type { IconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { elementDataProperty, IconifyElement } from '../src/scanner/config';
 
 describe('Testing re-rendering nodes', () => {
@@ -33,7 +33,7 @@ describe('Testing re-rendering nodes', () => {
 			// Get node and render it
 			const { node, props } = items[0];
 			const svg = renderInlineSVG(node, props, {
-				...iconDefaults,
+				...defaultIconProps,
 				...data,
 			});
 

@@ -9,10 +9,10 @@ import {
 /**
  * Convert IconifyIconCustomisations to FullIconCustomisations
  */
-export function mergeCustomisations(
-	defaults: FullIconCustomisations,
+export function mergeCustomisations<T extends FullIconCustomisations>(
+	defaults: T,
 	item: IconifyIconCustomisations
-): FullIconCustomisations {
+): T {
 	// Merge transformations
 	const result = mergeIconTransformations(defaults, item);
 

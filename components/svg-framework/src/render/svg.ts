@@ -1,4 +1,4 @@
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
@@ -28,7 +28,8 @@ export function renderInlineSVG(
 	}
 
 	// Generate data to render
-	const renderData = iconToSVG(iconData, props.customisations);
+	const customisations = props.customisations;
+	const renderData = iconToSVG(iconData, customisations);
 
 	// Get old data
 	const oldData = element[elementDataProperty];
@@ -66,7 +67,7 @@ export function renderInlineSVG(
 	// Update style
 	const addedStyles = applyStyle(
 		svg,
-		renderData.inline
+		customisations.inline
 			? {
 					'vertical-align': '-0.125em',
 			  }

@@ -1,6 +1,6 @@
 import { iconExists } from '@iconify/core/lib/storage/functions';
 import { loadIcon } from '@iconify/core/lib/api/icons';
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { fakeAPI, nextPrefix, mockAPIData } from './helpers';
 
 describe('Testing mock API', () => {
@@ -34,7 +34,7 @@ describe('Testing mock API', () => {
 		// Load icon
 		const data = await loadIcon(iconName);
 		expect(data).toEqual({
-			...iconDefaults,
+			...defaultIconProps,
 			body: '<g />',
 		});
 	});

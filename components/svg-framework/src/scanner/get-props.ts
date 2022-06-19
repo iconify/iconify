@@ -1,20 +1,28 @@
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
-import { defaults } from '@iconify/utils/lib/customisations';
-import type { IconifyIconCustomisations } from '@iconify/utils/lib/customisations';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
-import { IconifyRenderMode, inlineClass } from './config';
-import type { IconifyElementProps } from './config';
+import {
+	defaultExtendedIconCustomisations,
+	IconifyRenderMode,
+	inlineClass,
+} from './config';
+import type {
+	IconifyElementProps,
+	ExtendedIconifyIconCustomisations,
+} from './config';
 
 /**
  * Size attributes
  */
-const sizeAttributes: (keyof IconifyIconCustomisations)[] = ['width', 'height'];
+const sizeAttributes: (keyof ExtendedIconifyIconCustomisations)[] = [
+	'width',
+	'height',
+];
 
 /**
  * Boolean attributes
  */
-const booleanAttributes: (keyof IconifyIconCustomisations)[] = [
+const booleanAttributes: (keyof ExtendedIconifyIconCustomisations)[] = [
 	'inline',
 	'hFlip',
 	'vFlip',
@@ -44,14 +52,11 @@ export function getElementProps(element: Element): IconifyElementProps | null {
 		return null;
 	}
 
-	// Get defaults
+	// Get defaults and inline
 	const customisations = {
-		...defaults,
+		...defaultExtendedIconCustomisations,
+		inline: element.classList && element.classList.contains(inlineClass),
 	};
-
-	// Get inline status
-	customisations.inline =
-		element.classList && element.classList.contains(inlineClass);
 
 	// Get dimensions
 	sizeAttributes.forEach((attr) => {
