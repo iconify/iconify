@@ -12,6 +12,7 @@
 		"esModuleInterop": true,
 		"importsNotUsedAsValues": "error",
 		"forceConsistentCasingInFileNames": true,
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		"skipLibCheck": true
 	}
 }

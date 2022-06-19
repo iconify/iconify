@@ -17,5 +17,14 @@
 		"build": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run build",
 		"test": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run test"
 	},
-	"devDependencies": {}
+	"devDependencies": {},
+	"pnpm": {
+		"packageExtensions": {
+			"vue-template-compiler": {
+				"peerDependencies": {
+					"vue": "^2.6.14"
+				}
+			}
+		}
+	}
 }

@@ -43,6 +43,7 @@ const emptyIcon: RenderResult = {
  */
 export class IconifyIconComponent extends Component<IconifyIconProps> {
 	// Dummy variable to force re-render
+	// @ts-ignore
 	@tracked _counter = 0;
 
 	// Currently visible icon data, null if rendering object
