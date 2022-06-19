@@ -32,22 +32,22 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.19.5",
-		"@rollup/plugin-node-resolve": "^13.1.3",
-		"@rollup/plugin-typescript": "^8.3.1",
-		"@testing-library/jest-dom": "^5.16.2",
-		"@testing-library/svelte": "^3.1.0",
+		"@microsoft/api-extractor": "^7.25.2",
+		"@rollup/plugin-node-resolve": "^13.3.0",
+		"@rollup/plugin-typescript": "^8.3.3",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/svelte": "^3.1.3",
 		"@tsconfig/svelte": "^3.0.0",
-		"@types/jest": "^27.4.1",
-		"jest": "^28.0.0-alpha.7",
-		"jest-environment-jsdom": "^28.0.0-alpha.7",
+		"@types/jest": "^27.5.2",
+		"jest": "^28.1.1",
+		"jest-environment-jsdom": "^28.1.1",
 		"rimraf": "^3.0.2",
-		"rollup": "^2.70.1",
+		"rollup": "^2.75.6",
 		"rollup-plugin-svelte": "^7.1.0",
 		"svelte": "3.39",
 		"svelte-jester": "^2.3.2",
-		"svelte-preprocess": "^4.10.4",
-		"ts-jest": "^27.1.3"
+		"svelte-preprocess": "^4.10.7",
+		"ts-jest": "^27.1.5"
 	},
 	"peerDependencies": {
 		"svelte": ">=3"

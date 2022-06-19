@@ -9,11 +9,11 @@
 	},
 	"dependencies": {
 		"@iconify/react": "workspace:*",
-		"next": "^12.0.8",
+		"next": "^12.1.6",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.1.1"
+		"@iconify-icons/mdi-light": "^1.2.1"
 	}
 }

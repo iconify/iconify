@@ -13,10 +13,10 @@
 		"vue-property-decorator": "^9.1.2"
 	},
 	"devDependencies": {
-		"@iconify-icons/bx": "^1.1.5",
-		"@iconify-icons/dashicons": "^1.1.1",
+		"@iconify-icons/bx": "^1.2.3",
+		"@iconify-icons/dashicons": "^1.2.2",
 		"@iconify/vue2": "workspace:*",
-		"vite": "^2.9.9",
+		"vite": "^2.9.12",
 		"vite-plugin-vue2": "^2.0.1"
 	}
 }

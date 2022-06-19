@@ -39,16 +39,16 @@
 		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
-		"@types/react": "^17.0.41",
+		"@types/react": "^17.0.47",
 		"@types/react-test-renderer": "^18.0.0",
 		"@vitejs/plugin-react": "^1.3.2",
-		"jest": "^28.0.0-alpha.7",
-		"react": "^18.1.0",
-		"react-test-renderer": "^18.1.0",
+		"jest": "^28.1.1",
+		"react": "^18.2.0",
+		"react-test-renderer": "^18.2.0",
 		"rimraf": "^3.0.2",
-		"tsup": "^5.12.7",
-		"typescript": "^4.6.2",
-		"vitest": "^0.12.6"
+		"tsup": "^5.12.9",
+		"typescript": "^4.7.4",
+		"vitest": "^0.12.10"
 	},
 	"peerDependencies": {
 		"react": ">=16"

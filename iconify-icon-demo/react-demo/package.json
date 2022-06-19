@@ -13,12 +13,12 @@
 	},
 	"devDependencies": {
 		"@iconify-icon/react": "workspace:*",
-		"@iconify-icons/mdi-light": "^1.1.1",
-		"@iconify-icons/uil": "^1.1.2",
-		"@types/react": "^17.0.33",
-		"@types/react-dom": "^17.0.10",
-		"@vitejs/plugin-react": "^1.0.7",
-		"typescript": "^4.6.3",
-		"vite": "^2.7.10"
+		"@iconify-icons/mdi-light": "^1.2.1",
+		"@iconify-icons/uil": "^1.2.1",
+		"@types/react": "^17.0.47",
+		"@types/react-dom": "^17.0.17",
+		"@vitejs/plugin-react": "^1.3.2",
+		"typescript": "^4.7.4",
+		"vite": "^2.9.12"
 	}
 }

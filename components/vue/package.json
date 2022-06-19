@@ -46,19 +46,19 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.16.11",
+		"@babel/preset-env": "^7.18.2",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.19.5",
-		"@rollup/plugin-node-resolve": "^13.1.3",
-		"@types/jest": "^27.4.1",
-		"@vitejs/plugin-vue": "^2.2.4",
-		"@vue/test-utils": "^2.0.0-rc.17",
+		"@microsoft/api-extractor": "^7.25.2",
+		"@rollup/plugin-node-resolve": "^13.3.0",
+		"@types/jest": "^27.5.2",
+		"@vitejs/plugin-vue": "^2.3.3",
+		"@vue/test-utils": "^2.0.1",
 		"jsdom": "^19.0.0",
-		"rollup": "^2.70.1",
-		"typescript": "^4.6.2",
-		"vitest": "^0.7.7",
-		"vue": "^3.2.31"
+		"rollup": "^2.75.6",
+		"typescript": "^4.7.4",
+		"vitest": "^0.7.13",
+		"vue": "^3.2.37"
 	},
 	"peerDependencies": {
 		"vue": ">=3"
