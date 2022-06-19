@@ -13,7 +13,7 @@
 		"react-dom": "^17.0.2"
 	},
 	"devDependencies": {
-		"@iconify-icon/react": "^0.0.1",
+		"@iconify-icon/react": "workspace:*",
 		"@iconify-icons/mdi-light": "^1.1.1"
 	}
 }

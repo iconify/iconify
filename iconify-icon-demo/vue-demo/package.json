@@ -13,6 +13,7 @@
 		"@iconify-icons/bx": "^1.1.5",
 		"@iconify-icons/dashicons": "^1.1.1",
 		"@vitejs/plugin-vue": "^2.1.0",
+		"iconify-icon": "workspace:*",
 		"typescript": "^4.6.3",
 		"vite": "^2.7.13"
 	}

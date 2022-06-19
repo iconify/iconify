@@ -13,6 +13,7 @@
 		"@iconify-icons/mdi-light": "^1.1.1",
 		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.35",
 		"@tsconfig/svelte": "^3.0.0",
+		"iconify-icon": "workspace:*",
 		"svelte": "^3.46.2",
 		"svelte-check": "^2.3.0",
 		"svelte-preprocess": "^4.10.2",

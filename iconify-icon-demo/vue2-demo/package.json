@@ -19,6 +19,7 @@
 		"@vue/cli-service": "^5.0.4",
 		"@vue/eslint-config-typescript": "^10.0.0",
 		"core-js": "^3.21.1",
+		"iconify-icon": "workspace:*",
 		"typescript": "^4.6.3",
 		"vue-template-compiler": "^2.6.14",
 		"webpack": "^5.72.1"

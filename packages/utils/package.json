@@ -212,7 +212,7 @@
 	"dependencies": {
 		"@antfu/install-pkg": "^0.1.0",
 		"@antfu/utils": "^0.5.0",
-		"@iconify/types": "^1.1.0",
+		"@iconify/types": "workspace:^",
 		"debug": "^4.3.4",
 		"kolorist": "^1.5.1",
 		"local-pkg": "^0.4.1"

@@ -13,14 +13,9 @@
 	},
 	"packageManager": "pnpm@7.3.0",
 	"scripts": {
-		"install": "node monorepo install",
 		"clean": "rm -rf */*/node_modules",
-		"link": "node monorepo link",
-		"unlink": "node monorepo unlink",
-		"reinstall": "node monorepo clean reinstall",
-		"build": "node monorepo run build --if-present --public",
-		"test": "node monorepo run build --if-present --public",
-		"versions": "node monorepo versions"
+		"build": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run build",
+		"test": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run test"
 	},
 	"devDependencies": {}
 }

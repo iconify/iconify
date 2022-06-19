@@ -14,7 +14,7 @@
 	"devDependencies": {
 		"@iconify-icons/bx": "^1.1.5",
 		"@iconify-icons/dashicons": "^1.1.1",
-		"@iconify/vue2": "^1.2.1",
+		"@iconify/vue2": "workspace:*",
 		"@vue/cli-plugin-babel": "^4.5.17",
 		"@vue/cli-plugin-typescript": "^4.5.17",
 		"@vue/cli-service": "^4.5.17",

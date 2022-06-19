@@ -28,7 +28,7 @@
 		"@glimmer/component": "^1.0.4",
 		"@glimmer/tracking": "^1.0.4",
 		"@iconify-icons/mdi-light": "^1.1.1",
-		"@iconify/ember": "^1.1.1",
+		"@iconify/ember": "workspace:*",
 		"babel-eslint": "^10.1.0",
 		"broccoli-asset-rev": "^3.0.0",
 		"ember-auto-import": "^2.2.4",

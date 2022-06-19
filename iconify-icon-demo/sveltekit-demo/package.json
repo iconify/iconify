@@ -13,6 +13,7 @@
 		"@iconify-icons/mdi-light": "^1.1.1",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.4.1",
+		"iconify-icon": "workspace:*",
 		"svelte": "^3.46.2",
 		"svelte-check": "^2.3.0",
 		"svelte-preprocess": "^4.10.2",

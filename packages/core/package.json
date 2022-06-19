@@ -104,9 +104,9 @@
 		}
 	},
 	"dependencies": {
-		"@iconify/api-redundancy": "^1.1.0",
-		"@iconify/types": "^1.1.0",
-		"@iconify/utils": "^1.0.32"
+		"@iconify/api-redundancy": "workspace:^",
+		"@iconify/types": "workspace:^",
+		"@iconify/utils": "workspace:^"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.4.1",

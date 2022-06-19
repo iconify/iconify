@@ -22,7 +22,7 @@
 	"main": "dist/iconify.jsx",
 	"types": "dist/iconify.d.ts",
 	"dependencies": {
-		"iconify-icon": "^0.0.4"
+		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
 		"rimraf": "^3.0.2",

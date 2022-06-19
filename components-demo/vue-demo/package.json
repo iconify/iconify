@@ -12,8 +12,8 @@
 	"devDependencies": {
 		"@iconify-icons/bx": "^1.1.5",
 		"@iconify-icons/dashicons": "^1.1.1",
-		"@iconify/types": "^1.1.0",
-		"@iconify/vue": "^3.2.1",
+		"@iconify/types": "workspace:*",
+		"@iconify/vue": "workspace:*",
 		"@vitejs/plugin-vue": "^2.1.0",
 		"typescript": "^4.6.3",
 		"vite": "^2.7.13"

@@ -36,7 +36,7 @@
 		}
 	},
 	"dependencies": {
-		"iconify-icon": "^0.0.4"
+		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.41",
