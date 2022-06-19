@@ -12,6 +12,7 @@
 	"devDependencies": {
 		"@iconify-icon/solid": "workspace:*",
 		"@iconify-icons/line-md": "^1.2.8",
+		"iconify-icon": "workspace:*",
 		"typescript": "^4.7.4",
 		"vite": "^2.9.12",
 		"vite-plugin-solid": "^2.2.6"

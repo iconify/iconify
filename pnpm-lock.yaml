@@ -108,10 +108,12 @@ importers:
     specifiers:
       '@iconify/vue': workspace:*
       nuxt3: latest
+      ufo: ^0.8.4
     dependencies:
       '@iconify/vue': link:../../components/vue
     devDependencies:
       nuxt3: 3.0.0-rc.4-27588443.cf25525_rollup@2.75.6+vite@2.9.12
+      ufo: 0.8.4
 
   components-demo/react-demo:
     specifiers:
@@ -411,8 +413,8 @@ importers:
       rollup-plugin-svelte: 7.1.0_e3vh5rhubflginbal24xaaklmi
       svelte: 3.39.0
       svelte-jester: 2.3.2_jest@28.1.1+svelte@3.39.0
-      svelte-preprocess: 4.10.7_arf6jy67qnuyasssspqa7643cy
-      ts-jest: 28.0.0-next.3_gbxwkbr7g3sr5jcplvo5vjrt4i
+      svelte-preprocess: 4.10.7_5dscr5rqd4afzbw45rurmixdcy
+      ts-jest: 28.0.0-next.3_bd4iu72zq26opd6cf5azqgsscy
 
   components/svg-framework:
     specifiers:
@@ -456,7 +458,7 @@ importers:
       rimraf: 3.0.2
       rollup: 2.75.6
       rollup-plugin-terser: 7.0.2_rollup@2.75.6
-      ts-jest: 28.0.0-next.3_gbxwkbr7g3sr5jcplvo5vjrt4i
+      ts-jest: 28.0.0-next.3_bd4iu72zq26opd6cf5azqgsscy
       typescript: 4.7.4
 
   components/vue:
@@ -671,9 +673,11 @@ importers:
     specifiers:
       iconify-icon: workspace:*
       nuxt3: latest
+      ufo: ^0.8.4
     devDependencies:
       iconify-icon: link:../../iconify-icon/icon
       nuxt3: 3.0.0-rc.4-27588443.cf25525
+      ufo: 0.8.4
 
   iconify-icon-demo/react-demo:
     specifiers:
@@ -683,6 +687,7 @@ importers:
       '@types/react': ^17.0.47
       '@types/react-dom': ^17.0.17
       '@vitejs/plugin-react': ^1.3.2
+      iconify-icon: workspace:*
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.7.4
@@ -697,6 +702,7 @@ importers:
       '@types/react': 17.0.47
       '@types/react-dom': 17.0.17
       '@vitejs/plugin-react': 1.3.2
+      iconify-icon: link:../../iconify-icon/icon
       typescript: 4.7.4
       vite: 2.9.12
 
@@ -704,6 +710,7 @@ importers:
     specifiers:
       '@iconify-icon/solid': workspace:*
       '@iconify-icons/line-md': ^1.2.8
+      iconify-icon: workspace:*
       solid-js: ^1.4.4
       typescript: ^4.7.4
       vite: ^2.9.12
@@ -713,6 +720,7 @@ importers:
     devDependencies:
       '@iconify-icon/solid': link:../../iconify-icon/solid
       '@iconify-icons/line-md': 1.2.8
+      iconify-icon: link:../../iconify-icon/icon
       typescript: 4.7.4
       vite: 2.9.12
       vite-plugin-solid: 2.2.6
@@ -850,7 +858,7 @@ importers:
       rimraf: 3.0.2
       rollup: 2.75.6
       rollup-plugin-terser: 7.0.2_rollup@2.75.6
-      ts-jest: 28.0.0-next.3_gbxwkbr7g3sr5jcplvo5vjrt4i
+      ts-jest: 28.0.0-next.3_bd4iu72zq26opd6cf5azqgsscy
       typescript: 4.7.4
 
   iconify-icon/react:
@@ -953,7 +961,7 @@ importers:
       eslint-plugin-prettier: 4.0.0_xu6ewijrtliw5q5lksq5uixwby
       jest: 28.0.0-alpha.11_cv4ngqlnn5rnhu2gcigbplrfje
       rimraf: 3.0.2
-      ts-jest: 28.0.0-next.3_hzvd4b6xgtfjwzoxnnyvnp7o6e
+      ts-jest: 28.0.0-next.3_feo25qeef6f33wutqmsotxxhsa
       ts-node: 10.8.1_x2utdhayajzrh747hktprshhby
       unbuild: 0.7.4
       vitest: 0.7.13
@@ -1005,7 +1013,7 @@ importers:
       eslint-plugin-prettier: 4.0.0_xu6ewijrtliw5q5lksq5uixwby
       jest: 28.0.0-alpha.11_jbmz3vlfopghb5mdasddsdxfzq
       rimraf: 3.0.2
-      ts-jest: 28.0.0-next.3_hzvd4b6xgtfjwzoxnnyvnp7o6e
+      ts-jest: 28.0.0-next.3_3bsxj3kfphr7svg3xksyzylrra
       ts-node: 10.8.1_qiyc72axg2v44xl4yovan2v55u
       typescript: 4.7.4
       unbuild: 0.7.4
@@ -19821,7 +19829,7 @@ packages:
       svelte: 3.39.0
     dev: true
 
-  /svelte-preprocess/4.10.7_arf6jy67qnuyasssspqa7643cy:
+  /svelte-preprocess/4.10.7_5dscr5rqd4afzbw45rurmixdcy:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -19862,7 +19870,6 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@babel/core': 7.18.5
       '@types/pug': 2.0.6
       '@types/sass': 1.43.1
       detect-indent: 6.1.0
@@ -20513,7 +20520,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-jest/28.0.0-next.3_gbxwkbr7g3sr5jcplvo5vjrt4i:
+  /ts-jest/28.0.0-next.3_3bsxj3kfphr7svg3xksyzylrra:
     resolution: {integrity: sha512-R1mD18XKfd2Cb1qpjXfB3FfJ+yX8G75czuSnDu3hAcccPumeC3FKwAM6dGMvt5Yl0RSGw+bUQskp4zDma3Gdgg==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.13.0 || >=17.0.0}
     hasBin: true
@@ -20534,11 +20541,79 @@ packages:
       esbuild:
         optional: true
     dependencies:
-      '@babel/core': 7.18.5
+      '@types/jest': 27.5.2
+      bs-logger: 0.2.6
+      esbuild: 0.14.46
+      fast-json-stable-stringify: 2.1.0
+      jest: 28.0.0-alpha.11_jbmz3vlfopghb5mdasddsdxfzq
+      jest-util: 28.1.1
+      json5: 2.2.1
+      lodash.memoize: 4.1.2
+      make-error: 1.3.6
+      semver: 7.3.7
+      typescript: 4.7.4
+      yargs-parser: 20.2.9
+    dev: true
+
+  /ts-jest/28.0.0-next.3_bd4iu72zq26opd6cf5azqgsscy:
+    resolution: {integrity: sha512-R1mD18XKfd2Cb1qpjXfB3FfJ+yX8G75czuSnDu3hAcccPumeC3FKwAM6dGMvt5Yl0RSGw+bUQskp4zDma3Gdgg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.13.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      '@babel/core': '>=7.0.0-beta.0 <8'
+      '@types/jest': ^27.0.0
+      babel-jest: ^28.0.0
+      esbuild: '*'
+      jest: ^28.0.0
+      typescript: '>=4.3'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@types/jest':
+        optional: true
+      babel-jest:
+        optional: true
+      esbuild:
+        optional: true
+    dependencies:
       '@types/jest': 27.5.2
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
-      jest: 28.1.1_@types+node@17.0.45
+      jest: 28.1.1
+      jest-util: 28.1.1
+      json5: 2.2.1
+      lodash.memoize: 4.1.2
+      make-error: 1.3.6
+      semver: 7.3.7
+      typescript: 4.7.4
+      yargs-parser: 20.2.9
+    dev: true
+
+  /ts-jest/28.0.0-next.3_feo25qeef6f33wutqmsotxxhsa:
+    resolution: {integrity: sha512-R1mD18XKfd2Cb1qpjXfB3FfJ+yX8G75czuSnDu3hAcccPumeC3FKwAM6dGMvt5Yl0RSGw+bUQskp4zDma3Gdgg==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.13.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      '@babel/core': '>=7.0.0-beta.0 <8'
+      '@types/jest': ^27.0.0
+      babel-jest: ^28.0.0
+      esbuild: '*'
+      jest: ^28.0.0
+      typescript: '>=4.3'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@types/jest':
+        optional: true
+      babel-jest:
+        optional: true
+      esbuild:
+        optional: true
+    dependencies:
+      '@types/jest': 27.5.2
+      bs-logger: 0.2.6
+      fast-json-stable-stringify: 2.1.0
+      jest: 28.0.0-alpha.11_cv4ngqlnn5rnhu2gcigbplrfje
       jest-util: 28.1.1
       json5: 2.2.1
       lodash.memoize: 4.1.2
@@ -20574,7 +20649,7 @@ packages:
       bs-logger: 0.2.6
       esbuild: 0.14.46
       fast-json-stable-stringify: 2.1.0
-      jest: 28.0.0-alpha.11_jbmz3vlfopghb5mdasddsdxfzq
+      jest: 28.0.0-alpha.11_@types+node@17.0.45
       jest-util: 28.1.1
       json5: 2.2.1
       lodash.memoize: 4.1.2

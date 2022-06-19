@@ -7,7 +7,8 @@
 		"start": "node .output/server/index.mjs"
 	},
 	"devDependencies": {
-		"nuxt3": "latest"
+		"nuxt3": "latest",
+		"ufo": "^0.8.4"
 	},
 	"dependencies": {
 		"@iconify/vue": "workspace:*"
