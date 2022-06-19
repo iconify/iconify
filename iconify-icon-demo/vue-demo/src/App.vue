@@ -23,6 +23,7 @@
 
 		<StyleTest />
 		<InlineTest />
+		<VueAttributesTest />
 	</div>
 </template>
 
@@ -37,6 +38,7 @@ import UsageDemo from './demo-components/Usage.vue';
 
 import StyleTest from './test-components/Style.vue';
 import InlineTest from './test-components/Inline.vue';
+import VueAttributesTest from './test-components/VueAttributes.vue';
 
 // Disable cache
 disableCache('all');
@@ -73,6 +75,7 @@ export default {
 		UsageDemo,
 		StyleTest,
 		InlineTest,
+		VueAttributesTest,
 	},
 };
 </script>

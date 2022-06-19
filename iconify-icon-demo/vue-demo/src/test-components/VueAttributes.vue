@@ -2,12 +2,16 @@
 	<section>
 		<h1>Vue attributes (components/VueAttributes.vue)</h1>
 		<div>
-			Icon size (2em):
-			<iconify-icon icon="admin-users" height="2em" />
+			Icon size (2em) with title:
+			<iconify-icon icon="admin-users" height="2em" title="Big icon" />
 		</div>
 		<div>
 			Icon style as string (red):
-			<iconify-icon icon="admin-users" style="color: red" />
+			<iconify-icon
+				icon="admin-users"
+				style="color: red"
+				title="Red icon"
+			/>
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
