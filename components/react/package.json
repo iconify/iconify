@@ -14,14 +14,13 @@
 	},
 	"scripts": {
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"prebuild": "npm run clean",
+		"prebuild": "pnpm run clean",
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.js",
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"build:cleanup": "node cleanup",
-		"monorepo:postinstall": "npm run build",
 		"test": "jest --runInBand"
 	},
 	"main": "dist/iconify.js",

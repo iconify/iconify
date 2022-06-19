@@ -15,12 +15,11 @@
 	"scripts": {
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
-		"prebuild": "npm run lint && npm run clean",
+		"prebuild": "pnpm run lint && pnpm run clean",
 		"build": "unbuild",
-		"monorepo:postinstall": "npm run build",
 		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs  && jest --runInBand --config=jest.config.cjs",
-		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config=jest.config.mjs",
-		"test": "npm run test:jest-cjs && npm run test:jest-esm",
+		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules pnpm dlx jest --runInBand --config=jest.config.mjs",
+		"test": "pnpm run test:jest-cjs && pnpm run test:jest-esm",
 		"vitest": "vitest --config vitest.config.mjs"
 	},
 	"sideEffects": false,
@@ -117,9 +116,9 @@
 		"eslint": "^8.18.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.0.0",
-		"jest": "^27.5.1",
+		"jest": "28.0.0-alpha.11",
 		"rimraf": "^3.0.2",
-		"ts-jest": "^27.1.5",
+		"ts-jest": "28.0.0-next.3",
 		"ts-node": "^10.8.1",
 		"unbuild": "^0.7.4",
 		"vitest": "^0.7.13"

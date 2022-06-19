@@ -20,8 +20,7 @@
 		"build:lib": "tsc -b",
 		"build:rollup": "rollup -c rollup.config.js",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.json",
-		"build:cleanup": "node cleanup",
-		"monorepo:postinstall": "npm run build"
+		"build:cleanup": "node cleanup"
 	},
 	"devDependencies": {
 		"@iconify/core": "workspace:^",

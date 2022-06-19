@@ -15,9 +15,8 @@
 	},
 	"scripts": {
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"prebuild": "npm run clean",
-		"build": "tsc -b",
-		"monorepo:postinstall": "npm run build"
+		"prebuild": "pnpm run clean",
+		"build": "tsc -b"
 	},
 	"main": "dist/iconify.jsx",
 	"types": "dist/iconify.d.ts",

@@ -89,7 +89,7 @@
 		"rimraf": "^3.0.2",
 		"rollup": "^2.75.6",
 		"rollup-plugin-terser": "^7.0.2",
-		"ts-jest": "^27.1.5",
+		"ts-jest": "28.0.0-next.3",
 		"typescript": "^4.7.4"
 	}
 }
