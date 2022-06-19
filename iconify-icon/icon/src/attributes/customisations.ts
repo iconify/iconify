@@ -1,5 +1,5 @@
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
-import { defaults } from '@iconify/utils/lib/customisations';
+import type { FullIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
+import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import type { IconifyIconSVGAttributes } from './types';
@@ -7,16 +7,11 @@ import type { IconifyIconSVGAttributes } from './types';
 /**
  * Customisations that affect rendering
  */
-export type RenderedIconCustomisations = Omit<
-	FullIconCustomisations,
-	'inline'
-> &
+export type RenderedIconCustomisations = FullIconCustomisations &
 	IconifyIconSVGAttributes;
 
-// Remove 'inline' from defaults
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { inline, ...defaultCustomisations } = {
-	...defaults,
+const defaultCustomisations = {
+	...defaultIconCustomisations,
 	preserveAspectRatio: '',
 } as IconifyIconSVGAttributes & FullIconCustomisations;
 export { defaultCustomisations };

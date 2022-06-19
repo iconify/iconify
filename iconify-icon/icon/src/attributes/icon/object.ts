@@ -1,5 +1,5 @@
 import type { IconifyIcon } from '@iconify/types';
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 /**
  * Test icon string
@@ -11,7 +11,7 @@ export function testIconObject(
 		const obj = typeof value === 'string' ? JSON.parse(value) : value;
 		if (typeof obj.body === 'string') {
 			return {
-				...iconDefaults,
+				...defaultIconProps,
 				...obj,
 			};
 		}

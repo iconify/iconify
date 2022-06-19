@@ -1,5 +1,5 @@
 import { parseIconValue } from '../src/attributes/icon/index';
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 describe('Testing parseIconValue without API', () => {
 	it('Instantly loading object', () => {
@@ -12,7 +12,7 @@ describe('Testing parseIconValue without API', () => {
 		expect(result).toEqual({
 			value,
 			data: {
-				...iconDefaults,
+				...defaultIconProps,
 				...value,
 			},
 		});
@@ -29,7 +29,7 @@ describe('Testing parseIconValue without API', () => {
 		expect(result).toEqual({
 			value,
 			data: {
-				...iconDefaults,
+				...defaultIconProps,
 				body: '<g />',
 			},
 		});

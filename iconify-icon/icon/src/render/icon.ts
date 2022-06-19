@@ -11,10 +11,7 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 	const customisations = state.customisations;
 
 	// Render icon
-	const renderData = iconToSVG(iconData, {
-		...customisations,
-		inline: state.inline,
-	});
+	const renderData = iconToSVG(iconData, customisations);
 	if (customisations.preserveAspectRatio) {
 		renderData.attributes['preserveAspectRatio'] =
 			customisations.preserveAspectRatio;

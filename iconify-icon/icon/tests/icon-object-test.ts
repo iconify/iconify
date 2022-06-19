@@ -1,5 +1,5 @@
 import { testIconObject } from '../src/attributes/icon/object';
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 describe('Testing testIconObject', () => {
 	it('Objects', () => {
@@ -8,7 +8,7 @@ describe('Testing testIconObject', () => {
 				body: '<g />',
 			})
 		).toEqual({
-			...iconDefaults,
+			...defaultIconProps,
 			body: '<g />',
 		});
 
@@ -19,7 +19,7 @@ describe('Testing testIconObject', () => {
 				height: '32',
 			})
 		).toEqual({
-			...iconDefaults,
+			...defaultIconProps,
 			body: '<g />',
 			width: 24,
 			// Validation is simple, this will fail during render
@@ -50,7 +50,7 @@ describe('Testing testIconObject', () => {
 				})
 			)
 		).toEqual({
-			...iconDefaults,
+			...defaultIconProps,
 			body: '<g />',
 		});
 

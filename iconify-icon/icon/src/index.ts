@@ -5,7 +5,7 @@ import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	IconifyIconSize,
 	IconifyIconCustomisations,
-} from '@iconify/utils/lib/customisations';
+} from '@iconify/utils/lib/customisations/defaults';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';

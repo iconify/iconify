@@ -1,4 +1,4 @@
-import { iconDefaults } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import {
 	cleanupGlobals,
 	expectedBlock,
@@ -26,7 +26,7 @@ describe('Testing rendering loaded icon', () => {
 			icon: {
 				value: 'whatever',
 				data: {
-					...iconDefaults,
+					...defaultIconProps,
 					body: '<g />',
 				},
 			},
@@ -48,7 +48,7 @@ describe('Testing rendering loaded icon', () => {
 			icon: {
 				value: 'whatever',
 				data: {
-					...iconDefaults,
+					...defaultIconProps,
 					width: 24,
 					height: 24,
 					body: '<g><path d="" /></g>',
@@ -83,7 +83,7 @@ describe('Testing rendering loaded icon', () => {
 			icon: {
 				value: 'whatever',
 				data: {
-					...iconDefaults,
+					...defaultIconProps,
 					body: '<g />',
 				},
 			},
@@ -115,7 +115,7 @@ describe('Testing rendering loaded icon', () => {
 			icon: {
 				value: 'whatever',
 				data: {
-					...iconDefaults,
+					...defaultIconProps,
 					body: '<g />',
 				},
 			},
@@ -137,7 +137,7 @@ describe('Testing rendering loaded icon', () => {
 			icon: {
 				value: 'whatever',
 				data: {
-					...iconDefaults,
+					...defaultIconProps,
 					body: '<g />',
 				},
 			},
