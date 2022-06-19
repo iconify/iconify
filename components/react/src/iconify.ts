@@ -4,7 +4,7 @@ import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 // Core
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
-import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
 	iconExists,
@@ -20,7 +20,7 @@ import { buildIcon } from '@iconify/core/lib/builder/functions';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // API
 import type {
@@ -68,7 +68,6 @@ import type {
 
 // Properties
 import type {
-	RawIconCustomisations,
 	IconifyIconOnLoad,
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -120,7 +119,7 @@ export {
 };
 
 // Builder functions
-export { RawIconCustomisations, IconifyIconBuildResult };
+export { IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
@@ -293,7 +292,7 @@ class IconComponent extends React.Component<
 			if (changed || state.icon === null) {
 				// Set data if it was changed
 				this._setData({
-					data: fullIcon(icon),
+					data: { ...defaultIconProps, ...icon },
 				});
 			}
 			return;

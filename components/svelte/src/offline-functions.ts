@@ -1,5 +1,5 @@
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import { render } from './render';
@@ -20,7 +20,7 @@ export function generateIcon(props: IconProps): RenderResult | null {
 		typeof props.icon === 'string'
 			? storage[props.icon]
 			: typeof props.icon === 'object'
-			? fullIcon(props.icon)
+			? { ...defaultIconProps, ...props.icon }
 			: null;
 
 	// Validate icon object
@@ -42,7 +42,7 @@ export function generateIcon(props: IconProps): RenderResult | null {
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = fullIcon(data);
+	storage[name] = { ...defaultIconProps, ...data };
 }
 
 /**

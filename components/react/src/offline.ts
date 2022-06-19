@@ -1,7 +1,7 @@
 import React from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type {
@@ -41,7 +41,7 @@ function component(
 		typeof props.icon === 'string'
 			? storage[props.icon]
 			: typeof props.icon === 'object'
-			? fullIcon(props.icon)
+			? { ...defaultIconProps, ...props.icon }
 			: null;
 
 	// Validate icon object
@@ -89,7 +89,7 @@ export const InlineIcon = React.forwardRef<IconRef, IconProps>(
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = fullIcon(data);
+	storage[name] = { ...defaultIconProps, ...data };
 }
 
 /**

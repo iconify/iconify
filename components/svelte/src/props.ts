@@ -1,7 +1,6 @@
 import type { IconifyIcon } from '@iconify/types';
-import type { IconifyIconCustomisations as RawIconCustomisations } from '@iconify/utils/lib/customisations';
-
-export { RawIconCustomisations };
+import type { IconifyIconCustomisations as RawIconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
+import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 
 /**
  * Icon render mode
@@ -13,12 +12,20 @@ export { RawIconCustomisations };
  */
 export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'svg';
 
-// Allow rotation to be string
 /**
  * Icon customisations
  */
-export type IconifyIconCustomisations = RawIconCustomisations & {
+export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
+	// Allow rotation to be string
 	rotate?: string | number;
+
+	// Inline mode
+	inline?: boolean;
+};
+
+export const defaultExtendedIconCustomisations = {
+	...defaultIconCustomisations,
+	inline: false,
 };
 
 /**

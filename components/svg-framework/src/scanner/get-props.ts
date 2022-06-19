@@ -6,23 +6,17 @@ import {
 	IconifyRenderMode,
 	inlineClass,
 } from './config';
-import type {
-	IconifyElementProps,
-	ExtendedIconifyIconCustomisations,
-} from './config';
+import type { IconifyElementProps, IconifyIconCustomisations } from './config';
 
 /**
  * Size attributes
  */
-const sizeAttributes: (keyof ExtendedIconifyIconCustomisations)[] = [
-	'width',
-	'height',
-];
+const sizeAttributes: (keyof IconifyIconCustomisations)[] = ['width', 'height'];
 
 /**
  * Boolean attributes
  */
-const booleanAttributes: (keyof ExtendedIconifyIconCustomisations)[] = [
+const booleanAttributes: (keyof IconifyIconCustomisations)[] = [
 	'inline',
 	'hFlip',
 	'vFlip',

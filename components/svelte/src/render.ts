@@ -1,8 +1,5 @@
 import type { IconifyIcon } from '@iconify/types';
-import {
-	defaults,
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
@@ -10,6 +7,7 @@ import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
 import type { IconProps, IconifyRenderMode } from './props';
+import { defaultExtendedIconCustomisations } from './props';
 
 /**
  * Default SVG attributes
@@ -85,8 +83,8 @@ export function render(
 	props: IconProps
 ): RenderResult {
 	const customisations = mergeCustomisations(
-		defaults,
-		props as typeof defaults
+		defaultExtendedIconCustomisations,
+		props
 	);
 
 	// Check mode
@@ -163,7 +161,14 @@ export function render(
 					break;
 				}
 				// Copy missing property if it does not exist in customisations
-				if ((defaults as Record<string, unknown>)[key] === void 0) {
+				if (
+					(
+						defaultExtendedIconCustomisations as Record<
+							string,
+							unknown
+						>
+					)[key] === void 0
+				) {
 					componentProps[key] = value;
 				}
 		}
@@ -174,7 +179,7 @@ export function render(
 	const renderAttribs = item.attributes;
 
 	// Inline display
-	if (item.inline) {
+	if (customisations.inline) {
 		// Style overrides it
 		style = 'vertical-align: -0.125em; ' + style;
 	}

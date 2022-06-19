@@ -1,14 +1,12 @@
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import {
-	defaultIconCustomisations,
-	IconifyIconCustomisations,
-} from '@iconify/utils/lib/customisations/defaults';
+import type { IconifyIconCustomisations as RawIconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
+import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 
 /**
  * Add inline to customisations
  */
-export interface ExtendedIconifyIconCustomisations
-	extends IconifyIconCustomisations {
+export interface IconifyIconCustomisations
+	extends RawIconifyIconCustomisations {
 	inline?: boolean;
 }
 
@@ -44,7 +42,7 @@ export interface IconifyElementProps {
 	icon: IconifyIconName;
 
 	// Customisations
-	customisations: Required<ExtendedIconifyIconCustomisations>;
+	customisations: Required<IconifyIconCustomisations>;
 
 	// Render mode
 	mode?: IconifyRenderMode;

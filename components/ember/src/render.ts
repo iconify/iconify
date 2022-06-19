@@ -1,16 +1,13 @@
 // @ts-ignore
 import { htmlSafe } from '@ember/template';
 import type { IconifyIcon } from '@iconify/types';
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
-import {
-	defaults,
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type { IconifyIconCustomisations, IconifyIconProps } from './props';
+import { defaultExtendedIconCustomisations } from './props';
 
 /**
  * Render result
@@ -39,9 +36,9 @@ export const render = (
 ): RenderResult => {
 	// Get all customisations
 	const customisations = mergeCustomisations(
-		defaults,
+		defaultExtendedIconCustomisations,
 		props as IconifyIconCustomisations
-	) as FullIconCustomisations;
+	);
 
 	// Create empty style
 	let style = '';
@@ -109,7 +106,7 @@ export const render = (
 	);
 
 	// Add inline
-	if (item.inline) {
+	if (customisations.inline) {
 		style += 'vertical-align: -0.125em;';
 	}
 

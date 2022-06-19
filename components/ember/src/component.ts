@@ -5,8 +5,8 @@ import { tracked } from '@glimmer/tracking';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import { getIconData } from '@iconify/core/lib/storage/functions';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // API
 import { loadIcon } from '@iconify/core/lib/api/icons';
@@ -68,7 +68,7 @@ export class IconifyIconComponent extends Component<IconifyIconProps> {
 			this._icon = null;
 
 			// Render object
-			return render(fullIcon(icon), this.args, '');
+			return render({ ...defaultIconProps, ...icon }, this.args, '');
 		}
 
 		// Already loaded

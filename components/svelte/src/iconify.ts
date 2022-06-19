@@ -37,7 +37,7 @@ export {
 } from './functions';
 
 // Builder functions
-export { RawIconCustomisations, IconifyIconBuildResult } from './functions';
+export { IconifyIconBuildResult } from './functions';
 
 // Browser cache
 export { IconifyBrowserCacheType } from './functions';

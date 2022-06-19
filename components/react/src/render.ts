@@ -1,18 +1,20 @@
 import React from 'react';
 import type { SVGProps } from 'react';
 import type { IconifyIcon } from '@iconify/types';
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
-import {
-	defaults,
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
-import type { IconifyRenderMode, IconProps, IconRef } from './props';
+import type {
+	IconifyIconCustomisations,
+	IconifyRenderMode,
+	IconProps,
+	IconRef,
+} from './props';
+import { defaultExtendedIconCustomisations } from './props';
 
 /**
  * Default SVG attributes
@@ -60,7 +62,10 @@ for (const prefix in propsToAddTo) {
 /**
  * Default values for customisations for inline icon
  */
-const inlineDefaults: FullIconCustomisations = { ...defaults, inline: true };
+const inlineDefaults: Required<IconifyIconCustomisations> = {
+	...defaultExtendedIconCustomisations,
+	inline: true,
+};
 
 /**
  * Fix size: add 'px' to numbers
@@ -86,13 +91,12 @@ export const render = (
 	ref?: IconRef
 ): JSX.Element => {
 	// Get default properties
-	const defaultProps = inline ? inlineDefaults : defaults;
+	const defaultProps = inline
+		? inlineDefaults
+		: defaultExtendedIconCustomisations;
 
 	// Get all customisations
-	const customisations = mergeCustomisations(
-		defaultProps,
-		props as FullIconCustomisations
-	);
+	const customisations = mergeCustomisations(defaultProps, props);
 
 	// Check mode
 	const mode: IconifyRenderMode = props.mode || 'svg';
@@ -174,7 +178,7 @@ export const render = (
 	const renderAttribs = item.attributes;
 
 	// Inline display
-	if (item.inline) {
+	if (customisations.inline) {
 		style.verticalAlign = '-0.125em';
 	}
 

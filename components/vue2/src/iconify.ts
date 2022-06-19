@@ -6,7 +6,7 @@ import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 // Core
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
-import type { IconifyIconSize } from '@iconify/utils/lib/customisations';
+import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
 	iconExists,
@@ -22,7 +22,7 @@ import { buildIcon } from '@iconify/core/lib/builder/functions';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import { fullIcon } from '@iconify/utils/lib/icon';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // API
 import type {
@@ -66,7 +66,6 @@ import type {
 
 // Properties
 import type {
-	RawIconCustomisations,
 	IconifyIconOnLoad,
 	IconProps,
 	IconifyIconCustomisations,
@@ -115,7 +114,7 @@ export {
 };
 
 // Builder functions
-export { RawIconCustomisations, IconifyIconBuildResult };
+export { IconifyIconBuildResult };
 
 /* Browser cache */
 export { IconifyBrowserCacheType };
@@ -213,9 +212,10 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 /**
  * Empty icon data, rendered when icon is not available
  */
- const emptyIcon = fullIcon({
+const emptyIcon = {
+	...defaultIconProps,
 	body: '',
-});
+};
 
 /**
  * Component
@@ -275,7 +275,7 @@ export const Icon = Vue.extend({
 				this._name = '';
 				this.abortLoading();
 				return {
-					data: fullIcon(icon),
+					data: {...defaultIconProps, ...icon},
 				};
 			}
 

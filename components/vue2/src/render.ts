@@ -1,16 +1,15 @@
 import type _Vue from 'vue';
 import type { VNode, VNodeData, RenderContext } from 'vue';
 import type { IconifyIcon } from '@iconify/types';
-import type { FullIconCustomisations } from '@iconify/utils/lib/customisations';
 import {
-	defaults,
 	mergeCustomisations,
-} from '@iconify/utils/lib/customisations';
+} from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type { IconifyIconCustomisations, IconProps } from './props';
+import { defaultExtendedIconCustomisations } from './props';
 
 /**
  * Default SVG attributes
@@ -56,9 +55,9 @@ export const render = (
 ): VNode => {
 	// Split properties
 	const customisations = mergeCustomisations(
-		defaults,
-		props as IconifyIconCustomisations
-	) as FullIconCustomisations;
+		defaultExtendedIconCustomisations,
+		props
+	);
 	const componentProps = { ...svgDefaults };
 
 	// Style in Vue 2 components is always passed to rendered component, so no point in parsing it
@@ -122,7 +121,7 @@ export const render = (
 					if (value === true || value === 'true' || value === 1) {
 						customisations[alias] = true;
 					}
-				} else if (defaults[key] === void 0) {
+				} else if (defaultExtendedIconCustomisations[key] === void 0) {
 					// Copy missing property if it does not exist in customisations
 					componentProps[key] = value;
 				}
@@ -137,7 +136,7 @@ export const render = (
 		componentProps[key] = item.attributes[key];
 	}
 
-	if (item.inline) {
+	if (customisations.inline) {
 		style.verticalAlign = '-0.125em';
 	}
 

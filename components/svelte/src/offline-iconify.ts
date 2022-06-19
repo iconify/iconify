@@ -1,6 +1,6 @@
 // Types
 export type { IconifyJSON, IconifyIcon } from '@iconify/types';
-export type { IconifyIconSize } from '@iconify/utils/lib/customisations';
+export type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 
 // Types from props.ts
 export type {

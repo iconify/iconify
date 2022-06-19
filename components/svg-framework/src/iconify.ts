@@ -71,7 +71,7 @@ import {
 } from './observer/index';
 import type {
 	IconifyRenderMode,
-	ExtendedIconifyIconCustomisations as IconifyIconCustomisations,
+	IconifyIconCustomisations,
 } from './scanner/config';
 
 /**
