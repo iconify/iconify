@@ -94,6 +94,10 @@
 			"require": "./lib/icon-set/parse.cjs",
 			"import": "./lib/icon-set/parse.mjs"
 		},
+		"./lib/icon-set/tree": {
+			"require": "./lib/icon-set/tree.cjs",
+			"import": "./lib/icon-set/tree.mjs"
+		},
 		"./lib/icon-set/validate": {
 			"require": "./lib/icon-set/validate.cjs",
 			"import": "./lib/icon-set/validate.mjs"

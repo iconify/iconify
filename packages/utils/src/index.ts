@@ -26,6 +26,7 @@ export {
 } from './icon/defaults';
 
 // Icon set functions
+export { getIconsTree } from './icon-set/tree';
 export { parseIconSet } from './icon-set/parse';
 export { validateIconSet } from './icon-set/validate';
 export { quicklyValidateIconSet } from './icon-set/validate-basic';
