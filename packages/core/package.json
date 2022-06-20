@@ -17,8 +17,8 @@
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
 		"build": "unbuild",
-		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs  && jest --runInBand --config=jest.config.cjs",
-		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules pnpm dlx jest --runInBand --config=jest.config.mjs",
+		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs && jest --runInBand --config=jest.config.cjs",
+		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand --config=jest.config.mjs",
 		"test": "pnpm run test:jest-cjs && pnpm run test:jest-esm",
 		"vitest": "vitest --config vitest.config.mjs"
 	},

@@ -16,10 +16,10 @@
 	},
 	"scripts": {
 		"lint": "eslint src/*.ts",
-		"prebuild": "[npm run lint",
+		"prebuild": "pnpm run lint",
 		"build": "tsup src/index.ts --dts --format esm,cjs",
 		"test:jest": "jest --runInBand",
-		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules pnpm dlx jasmine",
+		"test:jasmine": "cross-env NODE_OPTIONS=--experimental-vm-modules jasmine",
 		"test": "pnpm run test:jest && pnpm run test:jasmine"
 	},
 	"bugs": "https://github.com/iconify/iconify/issues",
