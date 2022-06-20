@@ -14,7 +14,6 @@ There are several parts of project, some are in this repository, some are in oth
 
 What is included in this repository?
 
--   Directory `monorepo` contains script that manages this repository. See below.
 -   Directory `packages` contains main reusable packages: types, utilities, reusable functions used by various components.
 -   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
 -   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
@@ -161,46 +160,38 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 ## Installation
 
-This monorepo used Lerna to manage packages, but due to several bugs in Lerna and Lerna development being abandoned, it was replaced with custom manager.
+This monorepo uses [pnpm](https://pnpm.io) package manager.
+
+Why pnpm? Because, unlike npm, it can handle multiple versions of the same dependency in one monorepo, which is required when using multiple versions of the same framework, such as Vue 2 and Vue 3.
 
 To install dependencies in all packages, run
 
 ```bash
-npm install
+pnpm install
 ```
 
 This will install all dependencies and create symbolic links to packages.
 
-If links stop working for some reason, run `npm run link` to fix links.
+To build everything, run `pnpm run build` (this excludes demo packages).
 
-If you want to remove `node_modules` for all packages, run `npm run clean`.
-
-If you want to re-install dependencies, run `npm run reinstall`.
-
-To build everything, run `npm run build` (this excludes demo packages).
-
-To run tests, run `npm run test` (this excludes demo packages).
+To run unit tests, run `pnpm run test` (this excludes demo packages).
 
 ### Other commands
 
 You can run any commands on any package from that package's directory.
 
-Commands that modify `node_modules` might break symlinks. To fix it, run `npm run link` from monorepo directory.
+For example, to build only `@iconify/utils` package, you can either:
 
-### Commands for all packages
+-   Change directory to `packages/utils`
+-   Run `pnpm build`
 
-If you want to run a command on all packages, run `node monorepo run your_command --if-present`.
+or you can use pnpm filters from root directory:
 
-There are several options to filter packages, see [monorepo/README.md](monorepo/README.md).
+`pnpm --filter @iconify/utils run build`
 
-### Monorepo on Windows
+or
 
-This monorepo uses symbolic links to create links between packages. This allows development of multiple packages at the same time.
-
-When using Windows, symbolic links require setting up extra permissions. If you are using Windows and cannot set permissions for symbolic links, there are several options:
-
--   Use Windows Subsystem for Linux (WSL).
--   Treat each package as a separate package, without links to other packages. All packages do have correct dependencies, so you will be able to use most packages, but you will not be able to work on multiple packages at the same time.
+`pnpm --filter ./packages/utils run build`
 
 ## Documentation
 
