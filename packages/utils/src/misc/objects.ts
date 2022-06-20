@@ -33,3 +33,20 @@ export function unmergeObjects<T extends Record<string, unknown>>(
 	}
 	return result;
 }
+
+/**
+ * Get common properties in 2 objects
+ */
+export function commonObjectProps<T extends Record<string, unknown>>(
+	item: unknown,
+	reference: T
+): Partial<T> {
+	const result = {} as T;
+	for (const key in reference) {
+		const value = (item as T)[key];
+		if (value !== void 0) {
+			result[key] = value;
+		}
+	}
+	return result;
+}

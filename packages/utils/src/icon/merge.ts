@@ -1,22 +1,43 @@
-import type { IconifyDimenisons, IconifyOptional } from '@iconify/types';
+import type {
+	IconifyDimenisons,
+	IconifyIcon,
+	IconifyOptional,
+	IconifyTransformations,
+} from '@iconify/types';
 import { defaultIconDimensions } from './defaults';
 import { mergeIconTransformations } from './transformations';
 
+// Props to copy: all icon properties, except transformations
+type PropsToCopy = Omit<IconifyIcon, keyof IconifyTransformations>;
+const propsToMerge: Required<PropsToCopy> = {
+	...defaultIconDimensions,
+	body: '',
+};
+
 /**
  * Merge icon and alias
+ *
+ * Can also be used to merge default values and icon
  */
 export function mergeIconData<T extends IconifyOptional>(
-	icon: T,
-	alias: IconifyOptional
+	parent: T,
+	child: IconifyOptional | IconifyIcon,
+	keepOtherParentProps = true
 ): T {
-	// Merge transformations, while keeping other props
-	const result = mergeIconTransformations(icon, alias);
+	// Merge transformations
+	const result = mergeIconTransformations(
+		parent,
+		child,
+		keepOtherParentProps
+	);
 
-	// Merge dimensions
-	for (const key in defaultIconDimensions) {
+	// Merge icon properties that aren't transformations
+	for (const key in propsToMerge) {
 		const prop = key as keyof IconifyDimenisons;
-		if (alias[prop] !== void 0) {
-			result[prop] = alias[prop];
+		if (child[prop] !== void 0) {
+			result[prop] = child[prop];
+		} else if (parent[prop] !== void 0) {
+			result[prop] = parent[prop];
 		}
 	}
 

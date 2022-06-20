@@ -173,6 +173,7 @@ describe('Testing parsing icon set', () => {
 			'alias2z4',
 			'alias2z5',
 			'alias2z6',
+			'alias2z7',
 		];
 		const namesCopy = names.slice(0);
 
@@ -275,6 +276,17 @@ describe('Testing parsing icon set', () => {
 				vFlip: true,
 				rotate: 1,
 			},
+			alias2z7: {
+				// alias of alias2z6
+				body: '<path d="icon2" />',
+				width: 21,
+				height: 24,
+				top: 0,
+				left: 0,
+				hFlip: false,
+				vFlip: true,
+				rotate: 1,
+			},
 		};
 
 		// Do stuff
@@ -333,7 +345,6 @@ describe('Testing parsing icon set', () => {
 						},
 						alias2z7: {
 							// 7 parents: alias2z6, alias2z5, alias2z4, alias2z3, alias2z, alias2f, icon2
-							// nesting is too deep and should not be parsed
 							parent: 'alias2z6',
 						},
 						alias3: {

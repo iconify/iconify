@@ -11,10 +11,11 @@ import {
  */
 export function mergeCustomisations<T extends FullIconCustomisations>(
 	defaults: T,
-	item: IconifyIconCustomisations
+	item: IconifyIconCustomisations,
+	keepOtherProps = true
 ): T {
 	// Merge transformations
-	const result = mergeIconTransformations(defaults, item);
+	const result = mergeIconTransformations(defaults, item, keepOtherProps);
 
 	// Merge dimensions
 	for (const key in defaultIconSizeCustomisations) {

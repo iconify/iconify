@@ -1,23 +1,22 @@
 import type { IconifyTransformations } from '@iconify/types';
 
 /**
- * Merge transformations. Also copies other properties from first parameter
+ * Merge transformations
  */
 export function mergeIconTransformations<T extends IconifyTransformations>(
 	obj1: T,
-	obj2: IconifyTransformations
+	obj2: IconifyTransformations,
+	keepOtherProps = true
 ): T {
-	const result = {
-		...obj1,
-	};
-	if (obj2.hFlip) {
-		result.hFlip = !result.hFlip;
+	const result = keepOtherProps ? { ...obj1 } : ({} as T);
+	if (obj1.hFlip || obj2.hFlip) {
+		result.hFlip = obj1.hFlip !== obj2.hFlip;
 	}
-	if (obj2.vFlip) {
-		result.vFlip = !result.vFlip;
+	if (obj1.vFlip || obj2.vFlip) {
+		result.vFlip = obj1.vFlip !== obj2.vFlip;
 	}
-	if (obj2.rotate) {
-		result.rotate = ((result.rotate || 0) + obj2.rotate) % 4;
+	if (obj1.rotate || obj2.rotate) {
+		result.rotate = ((obj1.rotate || 0) + (obj2.rotate || 0)) % 4;
 	}
 	return result;
 }

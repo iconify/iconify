@@ -137,38 +137,10 @@ describe('Testing retrieving icons from icon set', () => {
 		});
 
 		// Character
-		expect(getIcons(data, ['f00'])).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar2: {
-					body: '<g />',
-				},
-			},
-			aliases: {
-				f00: {
-					parent: 'bar2',
-				},
-			},
-		});
+		expect(getIcons(data, ['f00'])).toBeNull();
 
 		// Character that points to alias
-		expect(getIcons(data, ['f02'])).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-			aliases: {
-				f02: {
-					parent: 'foo',
-				},
-				foo: {
-					parent: 'bar',
-					hFlip: true,
-				},
-			},
-		});
+		expect(getIcons(data, ['f02'])).toBeNull();
 
 		// Bad character
 		expect(getIcons(data, ['f04'])).toBeNull();

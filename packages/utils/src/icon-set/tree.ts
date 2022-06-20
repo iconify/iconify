@@ -11,18 +11,20 @@ export type ParentIconsTree = Record<string, ParentIconsList | null>;
  *
  * Returns parent icon for each icon
  */
-export function getIconsTree(data: IconifyJSON): ParentIconsTree {
-	const resolved = Object.create(null) as ParentIconsTree;
-
-	// Add all icons
-	for (const key in data.icons) {
-		resolved[key] = [];
-	}
-
-	// Add all aliases
+export function getIconsTree(
+	data: IconifyJSON,
+	names?: string[]
+): ParentIconsTree {
+	const icons = data.icons;
 	const aliases = data.aliases || {};
 
-	function resolveAlias(name: string): ParentIconsList | null {
+	const resolved = Object.create(null) as ParentIconsTree;
+
+	function resolve(name: string): ParentIconsList | null {
+		if (icons[name]) {
+			return (resolved[name] = []);
+		}
+
 		if (resolved[name] === void 0) {
 			// Mark as failed if parent alias points to this icon to avoid infinite loop
 			resolved[name] = null;
@@ -31,7 +33,7 @@ export function getIconsTree(data: IconifyJSON): ParentIconsTree {
 			const parent = aliases[name] && aliases[name].parent;
 
 			// Get value for parent
-			const value = parent && resolveAlias(parent);
+			const value = parent && resolve(parent);
 			if (value) {
 				resolved[name] = [parent].concat(value);
 			}
@@ -40,9 +42,8 @@ export function getIconsTree(data: IconifyJSON): ParentIconsTree {
 		return resolved[name];
 	}
 
-	for (const name in aliases) {
-		resolveAlias(name);
-	}
+	// Resolve only required icons
+	(names || Object.keys(aliases).concat(Object.keys(icons))).forEach(resolve);
 
 	return resolved;
 }
