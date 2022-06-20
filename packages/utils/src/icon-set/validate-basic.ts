@@ -1,6 +1,9 @@
 import type { IconifyJSON } from '@iconify/types';
 import { matchIconName } from '../icon/name';
-import { defaultIconDimensions, defaultIconProps } from '../icon/defaults';
+import {
+	defaultIconDimensions,
+	defaultExtendedIconProps,
+} from '../icon/defaults';
 
 type PropsList = Record<string, unknown>;
 
@@ -65,7 +68,10 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 		if (
 			!name.match(matchIconName) ||
 			typeof icon.body !== 'string' ||
-			!checkOptionalProps(icon as unknown as PropsList, defaultIconProps)
+			!checkOptionalProps(
+				icon as unknown as PropsList,
+				defaultExtendedIconProps
+			)
 		) {
 			return null;
 		}
@@ -80,7 +86,10 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 			!name.match(matchIconName) ||
 			typeof parent !== 'string' ||
 			(!icons[parent] && !aliases[parent]) ||
-			!checkOptionalProps(icon as unknown as PropsList, defaultIconProps)
+			!checkOptionalProps(
+				icon as unknown as PropsList,
+				defaultExtendedIconProps
+			)
 		) {
 			return null;
 		}

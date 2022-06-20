@@ -5,18 +5,18 @@ import type { IconifyTransformations } from '@iconify/types';
  */
 export function mergeIconTransformations<T extends IconifyTransformations>(
 	obj1: T,
-	obj2: IconifyTransformations,
-	keepOtherProps = true
+	obj2: IconifyTransformations
 ): T {
-	const result = keepOtherProps ? { ...obj1 } : ({} as T);
-	if (obj1.hFlip || obj2.hFlip) {
-		result.hFlip = obj1.hFlip !== obj2.hFlip;
+	const result = {} as T;
+	if (!obj1.hFlip !== !obj2.hFlip) {
+		result.hFlip = true;
 	}
-	if (obj1.vFlip || obj2.vFlip) {
-		result.vFlip = obj1.vFlip !== obj2.vFlip;
+	if (!obj1.vFlip !== !obj2.vFlip) {
+		result.vFlip = true;
 	}
-	if (obj1.rotate || obj2.rotate) {
-		result.rotate = ((obj1.rotate || 0) + (obj2.rotate || 0)) % 4;
+	const rotate = ((obj1.rotate || 0) + (obj2.rotate || 0)) % 4;
+	if (rotate) {
+		result.rotate = rotate;
 	}
 	return result;
 }

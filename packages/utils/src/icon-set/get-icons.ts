@@ -1,4 +1,4 @@
-import type { IconifyAliases, IconifyJSON } from '@iconify/types';
+import type { IconifyAliases, IconifyIcons, IconifyJSON } from '@iconify/types';
 import { defaultIconDimensions } from '../icon/defaults';
 import { getIconsTree } from './tree';
 
@@ -17,7 +17,7 @@ export function getIcons(
 	names: string[],
 	not_found?: boolean
 ): IconifyJSON | null {
-	const icons = Object.create(null) as IconifyJSON['icons'];
+	const icons = Object.create(null) as IconifyIcons;
 	const aliases = Object.create(null) as IconifyAliases;
 	const result: IconifyJSON = {
 		prefix: data.prefix,

@@ -19,6 +19,7 @@ export {
 
 // Icon data
 export { mergeIconData } from './icon/merge';
+export { mergeIconTransformations } from './icon/transformations';
 export {
 	defaultIconProps,
 	defaultIconDimensions,

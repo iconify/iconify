@@ -1,5 +1,5 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { FullIconifyIcon } from '../icon/defaults';
+import type { FullExtendedIconifyIcon } from '../icon/defaults';
 import { internalGetIconData } from './get-icon';
 import { getIconsTree } from './tree';
 
@@ -10,7 +10,7 @@ import { getIconsTree } from './tree';
  */
 export type SplitIconSetCallback = (
 	name: string,
-	data: FullIconifyIcon | null
+	data: FullExtendedIconifyIcon | null
 ) => void;
 
 /**

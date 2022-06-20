@@ -7,7 +7,7 @@
 		"declaration": true,
 		"sourceMap": false,
 		"strict": true,
-		"types": ["node", "svelte"],
+		"types": ["svelte"],
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

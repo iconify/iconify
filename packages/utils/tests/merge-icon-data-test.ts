@@ -2,8 +2,7 @@ import type { IconifyIcon } from '@iconify/types';
 import { mergeIconData } from '../lib/icon/merge';
 
 describe('Testing merging icon data', () => {
-	test('Test', () => {
-		// Nothing to merge
+	test('Nothing to merge', () => {
 		const icon: IconifyIcon = {
 			body: '<g />',
 		};
@@ -13,9 +12,10 @@ describe('Testing merging icon data', () => {
 		// Check hint manually: supposed to be IconifyIcon
 		const result = mergeIconData(icon, {});
 		expect(result).toEqual(expected);
+	});
 
-		// TypeScript full icon test
-		const icon2: Required<IconifyIcon> = {
+	test('Full icons', () => {
+		const icon: Required<IconifyIcon> = {
 			body: '<g />',
 			width: 24,
 			height: 24,
@@ -25,7 +25,7 @@ describe('Testing merging icon data', () => {
 			hFlip: false,
 			vFlip: false,
 		};
-		const expected2: Required<IconifyIcon> = {
+		const expected: Required<IconifyIcon> = {
 			body: '<g />',
 			width: 24,
 			height: 24,
@@ -36,9 +36,11 @@ describe('Testing merging icon data', () => {
 			vFlip: false,
 		};
 		// Check hint manually: supposed to be Required<IconifyIcon>
-		const result2 = mergeIconData(icon2, {});
-		expect(result2).toEqual(expected2);
+		const result = mergeIconData(icon, {});
+		expect(result).toEqual(expected);
+	});
 
+	test('Copy values', () => {
 		// Copy values
 		expect(
 			mergeIconData(
@@ -55,8 +57,9 @@ describe('Testing merging icon data', () => {
 			width: 24,
 			height: 32,
 		});
+	});
 
-		// Override values
+	test('Override values', () => {
 		expect(
 			mergeIconData(
 				{
@@ -72,6 +75,32 @@ describe('Testing merging icon data', () => {
 			body: '<g />',
 			width: 24,
 			height: 32,
+		});
+	});
+
+	test('Override transformations', () => {
+		expect(
+			mergeIconData(
+				{
+					body: '<g />',
+					width: 24,
+					height: 24,
+					hFlip: true,
+					rotate: 3,
+				},
+				{
+					height: 32,
+					vFlip: true,
+					rotate: 2,
+				}
+			)
+		).toEqual({
+			body: '<g />',
+			width: 24,
+			height: 32,
+			hFlip: true,
+			vFlip: true,
+			rotate: 1,
 		});
 	});
 });

@@ -1,43 +1,42 @@
-import type {
-	IconifyDimenisons,
-	IconifyIcon,
-	IconifyOptional,
-	IconifyTransformations,
-} from '@iconify/types';
-import { defaultIconDimensions } from './defaults';
+import type { IconifyTransformations } from '@iconify/types';
+import {
+	defaultExtendedIconProps,
+	defaultIconTransformations,
+	PartialExtendedIconifyIcon,
+} from './defaults';
 import { mergeIconTransformations } from './transformations';
-
-// Props to copy: all icon properties, except transformations
-type PropsToCopy = Omit<IconifyIcon, keyof IconifyTransformations>;
-const propsToMerge: Required<PropsToCopy> = {
-	...defaultIconDimensions,
-	body: '',
-};
 
 /**
  * Merge icon and alias
  *
  * Can also be used to merge default values and icon
  */
-export function mergeIconData<T extends IconifyOptional>(
+export function mergeIconData<T extends PartialExtendedIconifyIcon>(
 	parent: T,
-	child: IconifyOptional | IconifyIcon,
-	keepOtherParentProps = true
+	child: PartialExtendedIconifyIcon
 ): T {
-	// Merge transformations
-	const result = mergeIconTransformations(
-		parent,
-		child,
-		keepOtherParentProps
-	);
+	// Merge transformations and add defaults
+	const result = mergeIconTransformations(parent, child);
 
 	// Merge icon properties that aren't transformations
-	for (const key in propsToMerge) {
-		const prop = key as keyof IconifyDimenisons;
-		if (child[prop] !== void 0) {
-			result[prop] = child[prop];
-		} else if (parent[prop] !== void 0) {
-			result[prop] = parent[prop];
+	for (const key in defaultExtendedIconProps) {
+		// Add default transformations if needed
+		if (
+			defaultIconTransformations[key as keyof IconifyTransformations] !==
+			void 0
+		) {
+			if (
+				result[key as 'rotate'] === void 0 &&
+				parent[key as keyof T] !== void 0
+			) {
+				result[key as 'rotate'] =
+					defaultIconTransformations[key as 'rotate'];
+			}
+			// Not transformation
+		} else if (child[key as 'width'] !== void 0) {
+			result[key as 'width'] = child[key as 'width'];
+		} else if (parent[key as 'width'] !== void 0) {
+			result[key as 'width'] = parent[key as 'width'];
 		}
 	}
 

@@ -43,7 +43,7 @@ export function getIconsTree(
 	}
 
 	// Resolve only required icons
-	(names || Object.keys(aliases).concat(Object.keys(icons))).forEach(resolve);
+	(names || Object.keys(icons).concat(Object.keys(aliases))).forEach(resolve);
 
 	return resolved;
 }

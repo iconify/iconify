@@ -1,6 +1,5 @@
-import type { IconifyJSON } from '@iconify/types';
-import { defaultIconProps } from '../icon/defaults';
-import type { IconifyIcon, FullIconifyIcon } from '../icon/defaults';
+import type { ExtendedIconifyIcon, IconifyJSON } from '@iconify/types';
+import { defaultIconProps, FullExtendedIconifyIcon } from '../icon/defaults';
 import { mergeIconData } from '../icon/merge';
 import { getIconsTree } from './tree';
 
@@ -12,30 +11,29 @@ export function internalGetIconData(
 	name: string,
 	tree: string[],
 	full: true
-): FullIconifyIcon;
+): FullExtendedIconifyIcon;
 export function internalGetIconData(
 	data: IconifyJSON,
 	name: string,
 	tree: string[],
 	full: false
-): IconifyIcon;
+): ExtendedIconifyIcon;
 export function internalGetIconData(
 	data: IconifyJSON,
 	name: string,
 	tree: string[],
 	full: boolean
-): FullIconifyIcon | IconifyIcon {
+): FullExtendedIconifyIcon | ExtendedIconifyIcon {
 	const icons = data.icons;
 	const aliases = data.aliases || {};
 
-	let currentProps = {} as IconifyIcon;
+	let currentProps = {} as ExtendedIconifyIcon;
 
 	// Parse parent item
 	function parse(name: string) {
 		currentProps = mergeIconData(
 			icons[name] || aliases[name],
-			currentProps,
-			false
+			currentProps
 		);
 	}
 
@@ -45,9 +43,8 @@ export function internalGetIconData(
 	// Add default values
 	currentProps = mergeIconData(
 		data,
-		currentProps,
-		false
-	) as unknown as IconifyIcon;
+		currentProps
+	) as unknown as ExtendedIconifyIcon;
 
 	// Return icon
 	return full
@@ -62,17 +59,17 @@ export function getIconData(
 	data: IconifyJSON,
 	name: string,
 	full: true
-): FullIconifyIcon | null;
+): FullExtendedIconifyIcon | null;
 export function getIconData(
 	data: IconifyJSON,
 	name: string,
 	full: false
-): IconifyIcon | null;
+): ExtendedIconifyIcon | null;
 export function getIconData(
 	data: IconifyJSON,
 	name: string,
 	full = false
-): FullIconifyIcon | IconifyIcon | null {
+): FullExtendedIconifyIcon | ExtendedIconifyIcon | null {
 	if (data.icons[name]) {
 		// Parse only icon
 		return internalGetIconData(data, name, [], full as true);

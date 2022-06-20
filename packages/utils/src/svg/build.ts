@@ -160,7 +160,8 @@ export function iconToSVG(
 	const boxWidth = box.width;
 	const boxHeight = box.height;
 
-	let width, height;
+	let width: string | number;
+	let height: string | number;
 	if (customisationsWidth === null) {
 		// Width is not set: calculate width from height, default to '1em'
 		height =
@@ -181,15 +182,11 @@ export function iconToSVG(
 				: customisationsHeight;
 	}
 
-	// Convert to string
-	width = typeof width === 'string' ? width : width.toString();
-	height = typeof height === 'string' ? height : height.toString();
-
 	// Result
 	const result: IconifyIconBuildResult = {
 		attributes: {
-			width,
-			height,
+			width: width.toString(),
+			height: height.toString(),
 			viewBox:
 				box.left.toString() +
 				' ' +

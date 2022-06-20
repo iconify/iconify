@@ -1,4 +1,3 @@
-import { mergeIconTransformations } from '../icon/transformations';
 import {
 	defaultIconSizeCustomisations,
 	FullIconCustomisations,
@@ -7,29 +6,35 @@ import {
 } from './defaults';
 
 /**
- * Convert IconifyIconCustomisations to FullIconCustomisations
+ * Convert IconifyIconCustomisations to FullIconCustomisations, checking value types
  */
 export function mergeCustomisations<T extends FullIconCustomisations>(
 	defaults: T,
-	item: IconifyIconCustomisations,
-	keepOtherProps = true
+	item: IconifyIconCustomisations
 ): T {
-	// Merge transformations
-	const result = mergeIconTransformations(defaults, item, keepOtherProps);
+	// Copy default values
+	const result = {
+		...defaults,
+	};
 
-	// Merge dimensions
-	for (const key in defaultIconSizeCustomisations) {
-		const attr = key as keyof IconifyIconSizeCustomisations;
-
-		const value = item[attr];
+	// Merge all properties
+	for (const key in item) {
+		const value = item[key as keyof IconifyIconCustomisations];
 		const valueType = typeof value;
-		if (
-			value === null ||
-			(value && (valueType === 'string' || valueType === 'number'))
-		) {
-			result[attr] = value;
-		} else {
-			(result as Record<string, unknown>)[attr] = defaults[attr];
+
+		if (key in defaultIconSizeCustomisations) {
+			// Dimension
+			if (
+				value === null ||
+				(value && (valueType === 'string' || valueType === 'number'))
+			) {
+				result[key as keyof IconifyIconSizeCustomisations] =
+					value as string;
+			}
+		} else if (valueType === typeof result[key as keyof T]) {
+			// Normalise rotation, copy everything else as is
+			(result as Record<string, unknown>)[key] =
+				key === 'rotate' ? (value as number) % 4 : value;
 		}
 	}
 

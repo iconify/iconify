@@ -4,7 +4,7 @@ import type {
 	IconifyOptional,
 } from '@iconify/types';
 import { matchIconName } from '../icon/name';
-import { defaultIconProps } from '../icon/defaults';
+import { defaultExtendedIconProps } from '../icon/defaults';
 import { getIconsTree } from './tree';
 
 /**
@@ -34,10 +34,9 @@ function validateIconProps(
 			continue;
 		}
 
-		const expectedType =
-			key === 'hidden'
-				? 'boolean'
-				: typeof (defaultIconProps as Record<string, unknown>)[attr];
+		const expectedType = typeof (
+			defaultExtendedIconProps as Record<string, unknown>
+		)[attr];
 
 		if (expectedType !== 'undefined') {
 			if (type !== expectedType) {

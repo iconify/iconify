@@ -3,11 +3,19 @@ import type {
 	IconifyTransformations,
 	IconifyOptional,
 	IconifyIcon,
+	ExtendedIconifyIcon,
 } from '@iconify/types';
 
 // Export icon and full icon types
 export { IconifyIcon };
+
 export type FullIconifyIcon = Required<IconifyIcon>;
+
+// Partial and full extended icon
+export type PartialExtendedIconifyIcon = Partial<ExtendedIconifyIcon>;
+
+type IconifyIconExtraProps = Omit<ExtendedIconifyIcon, keyof IconifyIcon>;
+export type FullExtendedIconifyIcon = FullIconifyIcon & IconifyIconExtraProps;
 
 /**
  * Default values for dimensions
@@ -38,3 +46,13 @@ export const defaultIconProps: Required<IconifyOptional> = Object.freeze({
 	...defaultIconDimensions,
 	...defaultIconTransformations,
 });
+
+/**
+ * Default values for all properties used in ExtendedIconifyIcon
+ */
+export const defaultExtendedIconProps: Required<FullExtendedIconifyIcon> =
+	Object.freeze({
+		...defaultIconProps,
+		body: '',
+		hidden: false,
+	});

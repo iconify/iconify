@@ -31,8 +31,6 @@ export function buildIcon(
 ): IconifyIconBuildResult {
 	return iconToSVG(
 		{ ...defaultIconProps, ...icon },
-		customisations
-			? mergeCustomisations(defaultIconCustomisations, customisations)
-			: defaultIconCustomisations
+		mergeCustomisations(defaultIconCustomisations, customisations || {})
 	);
 }
