@@ -1,6 +1,7 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { FullIconifyIcon } from '../icon/defaults';
-import { getIconData } from './get-icon';
+import { internalGetIconData } from './get-icon';
+import { getIconsTree } from './tree';
 
 /**
  * Callback to call for each icon.
@@ -37,27 +38,13 @@ export function parseIconSet(
 		});
 	}
 
-	// Get icons
-	const icons = data.icons;
-	for (const name in icons) {
-		const iconData = getIconData(data, name, true);
-		if (iconData) {
-			// Call callback
-			callback(name, iconData);
+	// Get tree
+	const tree = getIconsTree(data);
+	for (const name in tree) {
+		const item = tree[name];
+		if (item) {
+			callback(name, internalGetIconData(data, name, item, true));
 			names.push(name);
-		}
-	}
-
-	// Get aliases
-	const aliases = data.aliases;
-	if (aliases) {
-		for (const name in aliases) {
-			const iconData = icons[name] ? null : getIconData(data, name, true);
-			if (iconData) {
-				// Call callback
-				callback(name, iconData);
-				names.push(name);
-			}
 		}
 	}
 

@@ -5,6 +5,57 @@ import { mergeIconData } from '../icon/merge';
 import { getIconsTree } from './tree';
 
 /**
+ * Get icon data, using prepared aliases tree
+ */
+export function internalGetIconData(
+	data: IconifyJSON,
+	name: string,
+	tree: string[],
+	full: true
+): FullIconifyIcon;
+export function internalGetIconData(
+	data: IconifyJSON,
+	name: string,
+	tree: string[],
+	full: false
+): IconifyIcon;
+export function internalGetIconData(
+	data: IconifyJSON,
+	name: string,
+	tree: string[],
+	full: boolean
+): FullIconifyIcon | IconifyIcon {
+	const icons = data.icons;
+	const aliases = data.aliases || {};
+
+	let currentProps = {} as IconifyIcon;
+
+	// Parse parent item
+	function parse(name: string) {
+		currentProps = mergeIconData(
+			icons[name] || aliases[name],
+			currentProps,
+			false
+		);
+	}
+
+	parse(name);
+	tree.forEach(parse);
+
+	// Add default values
+	currentProps = mergeIconData(
+		data,
+		currentProps,
+		false
+	) as unknown as IconifyIcon;
+
+	// Return icon
+	return full
+		? Object.assign({}, defaultIconProps, currentProps)
+		: currentProps;
+}
+
+/**
  * Get data for icon
  */
 export function getIconData(
@@ -22,43 +73,12 @@ export function getIconData(
 	name: string,
 	full = false
 ): FullIconifyIcon | IconifyIcon | null {
-	const icons = data.icons;
-	const aliases = data.aliases || {};
-
-	let currentProps = {} as IconifyIcon;
-
-	// Parse parent item
-	function parse(name: string) {
-		currentProps = mergeIconData(
-			icons[name] || aliases[name],
-			currentProps,
-			false
-		);
-	}
-
-	const icon = icons[name];
-	if (icon) {
+	if (data.icons[name]) {
 		// Parse only icon
-		parse(name);
-	} else {
-		// Resolve tree
-		const tree = getIconsTree(data, [name])[name];
-		if (!tree) {
-			return null;
-		}
-		parse(name);
-		tree.forEach(parse);
+		return internalGetIconData(data, name, [], full as true);
 	}
 
-	// Add default values
-	currentProps = mergeIconData(
-		data,
-		currentProps,
-		false
-	) as unknown as IconifyIcon;
-
-	// Return icon
-	return full
-		? Object.assign({}, defaultIconProps, currentProps)
-		: currentProps;
+	// Resolve tree
+	const tree = getIconsTree(data, [name])[name];
+	return tree ? internalGetIconData(data, name, tree, full as true) : null;
 }
