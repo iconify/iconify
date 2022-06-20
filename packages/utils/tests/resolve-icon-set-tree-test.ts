@@ -28,7 +28,6 @@ describe('Testing getIconsTree', () => {
 
 	test('Long chain of aliases, bad aliases', () => {
 		const body = '<g />';
-		console.log('Starting test...');
 		const tree = getIconsTree({
 			prefix: 'foo',
 			icons: {

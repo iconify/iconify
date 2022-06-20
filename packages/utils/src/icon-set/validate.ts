@@ -1,6 +1,11 @@
-import type { IconifyJSON, IconifyOptional } from '@iconify/types';
+import type {
+	ExtendedIconifyIcon,
+	IconifyJSON,
+	IconifyOptional,
+} from '@iconify/types';
 import { matchIconName } from '../icon/name';
-import { defaultIconDimensions } from '../icon/defaults';
+import { defaultIconProps } from '../icon/defaults';
+import { getIconsTree } from './tree';
 
 /**
  * Match character
@@ -12,7 +17,11 @@ export const matchChar = /^[a-f0-9]+(-[a-f0-9]+)*$/;
  *
  * Returns name of property that failed validation or null on success
  */
-function validateIconProps(item: IconifyOptional, fix: boolean): string | null {
+function validateIconProps(
+	item: IconifyOptional,
+	fix: boolean,
+	checkOtherProps: boolean
+): string | null {
 	// Check other properties
 	for (const key in item) {
 		const attr = key as keyof typeof item;
@@ -25,52 +34,30 @@ function validateIconProps(item: IconifyOptional, fix: boolean): string | null {
 			continue;
 		}
 
-		switch (key) {
-			case 'body':
-			case 'parent':
-				if (type !== 'string') {
-					return key;
-				}
-				break;
+		const expectedType =
+			key === 'hidden'
+				? 'boolean'
+				: typeof (defaultIconProps as Record<string, unknown>)[attr];
 
-			case 'hFlip':
-			case 'vFlip':
-			case 'hidden':
-				if (type !== 'boolean') {
-					if (fix) {
-						delete item[attr];
-					} else {
-						return key;
-					}
+		if (expectedType !== 'undefined') {
+			if (type !== expectedType) {
+				// Invalid type
+				if (fix) {
+					delete item[attr];
+					continue;
 				}
-				break;
+				return attr;
+			}
+			continue;
+		}
 
-			case 'width':
-			case 'height':
-			case 'left':
-			case 'top':
-			case 'rotate':
-			case 'inlineHeight': // Legacy properties
-			case 'inlineTop':
-			case 'verticalAlign':
-				if (type !== 'number') {
-					if (fix) {
-						delete item[attr];
-					} else {
-						return key;
-					}
-				}
-				break;
-
-			default:
-				// Unknown property, make sure its not object
-				if (type === 'object') {
-					if (fix) {
-						delete item[attr];
-					} else {
-						return key;
-					}
-				}
+		// Unknown property, make sure its not object
+		if (checkOtherProps && type === 'object') {
+			if (fix) {
+				delete item[attr];
+			} else {
+				return key;
+			}
 		}
 	}
 
@@ -135,44 +122,66 @@ export function validateIconSet(
 		}
 	}
 
-	// Validate all icons
+	// Check aliases object
+	if (data.aliases !== void 0) {
+		if (typeof data.aliases !== 'object' || data.aliases === null) {
+			if (fix) {
+				delete data.aliases;
+			} else {
+				throw new Error('Invalid aliases list');
+			}
+		}
+	}
+
+	// Validate all icons and aliases
+	const tree = getIconsTree(data);
 	const icons = data.icons;
-	Object.keys(icons).forEach((name) => {
+	const aliases = data.aliases || {};
+	for (const name in tree) {
+		const treeItem = tree[name];
+		const isAlias = !icons[name];
+		const parentObj = isAlias ? aliases : icons;
+
+		if (!treeItem) {
+			if (fix) {
+				delete parentObj[name];
+				continue;
+			}
+			throw new Error(`Invalid alias: ${name}`);
+		}
+
 		if (!name.match(matchIconName)) {
 			if (fix) {
-				delete icons[name];
-				return;
+				delete parentObj[name];
+				continue;
 			}
 			throw new Error(`Invalid icon name: "${name}"`);
 		}
 
-		const item = icons[name];
-		if (
-			typeof item !== 'object' ||
-			item === null ||
-			typeof item.body !== 'string'
-		) {
-			if (fix) {
-				delete icons[name];
-				return;
+		const item = parentObj[name];
+		if (!isAlias) {
+			// Check body
+			if (typeof (item as ExtendedIconifyIcon).body !== 'string') {
+				if (fix) {
+					delete parentObj[name];
+					continue;
+				}
+				throw new Error(`Invalid icon: "${name}"`);
 			}
-			throw new Error(`Invalid icon: "${name}"`);
 		}
 
 		// Check other properties
+		const requiredProp = isAlias ? 'parent' : 'body';
 		const key =
-			typeof (item as unknown as Record<string, unknown>).parent ===
-			'string'
-				? 'parent'
-				: validateIconProps(item, fix);
+			typeof (item as unknown as Record<string, unknown>)[
+				requiredProp
+			] !== 'string'
+				? requiredProp
+				: validateIconProps(item, fix, true);
 		if (key !== null) {
-			if (fix) {
-				delete icons[name];
-				return;
-			}
-			throw new Error(`Invalid property "${key}" in icon "${name}"`);
+			throw new Error(`Invalid property "${key}" in "${name}"`);
 		}
-	});
+	}
 
 	// Check not_found
 	if (data.not_found !== void 0 && !(data.not_found instanceof Array)) {
@@ -191,110 +200,16 @@ export function validateIconSet(
 		throw new Error('Icon set is empty');
 	}
 
-	// Validate aliases
-	if (data.aliases !== void 0) {
-		if (typeof data.aliases !== 'object' || data.aliases === null) {
-			if (fix) {
-				delete data.aliases;
-			} else {
-				throw new Error('Invalid aliases list');
-			}
-		}
-	}
-	if (typeof data.aliases === 'object') {
-		const aliases = data.aliases;
-		const validatedAliases: Set<string> = new Set();
-		const failedAliases: Set<string> = new Set();
-
-		// eslint-disable-next-line no-inner-declarations
-		function validateAlias(name: string, iteration: number): boolean {
-			// Check if alias has already been validated
-			if (validatedAliases.has(name)) {
-				return !failedAliases.has(name);
-			}
-
-			const item = aliases[name];
-			if (
-				// Loop or very long chain: invalidate all aliases
-				iteration > 5 ||
-				// Check if value is a valid object
-				typeof item !== 'object' ||
-				item === null ||
-				typeof item.parent !== 'string' ||
-				// Check if name is valid
-				!name.match(matchIconName)
-			) {
-				if (fix) {
-					delete aliases[name];
-					failedAliases.add(name);
-					return false;
-				}
-				throw new Error(`Invalid icon alias: "${name}"`);
-			}
-
-			// Check if parent icon/alias exists
-			const parent = item.parent;
-			if (data.icons[parent] === void 0) {
-				// Check for parent alias
-				if (
-					aliases[parent] === void 0 ||
-					!validateAlias(parent, iteration + 1)
-				) {
-					if (fix) {
-						delete aliases[name];
-						failedAliases.add(name);
-						return false;
-					}
-					throw new Error(`Missing parent icon for alias "${name}`);
-				}
-			}
-
-			// Check other properties
-			if (
-				fix &&
-				(item as unknown as Record<string, unknown>).body !== void 0
-			) {
-				delete (item as unknown as Record<string, unknown>).body;
-			}
-			const key =
-				(item as unknown as Record<string, unknown>).body !== void 0
-					? 'body'
-					: validateIconProps(item, fix);
-			if (key !== null) {
-				if (fix) {
-					delete aliases[name];
-					failedAliases.add(name);
-					return false;
-				}
-				throw new Error(`Invalid property "${key}" in alias "${name}"`);
-			}
-
-			validatedAliases.add(name);
-			return true;
-		}
-
-		Object.keys(aliases).forEach((name) => {
-			validateAlias(name, 0);
-		});
-
-		// Delete empty aliases object
-		if (fix && !Object.keys(data.aliases).length) {
-			delete data.aliases;
-		}
+	// Remove aliases list if empty
+	if (fix && !Object.keys(aliases).length) {
+		delete data.aliases;
 	}
 
-	// Validate all properties that can be optimised
-	(
-		Object.keys(
-			defaultIconDimensions
-		) as (keyof typeof defaultIconDimensions)[]
-	).forEach((prop) => {
-		const expectedType = typeof defaultIconDimensions[prop];
-		const actualType = typeof data[prop as keyof IconifyJSON];
-		if (actualType !== 'undefined' && actualType !== expectedType) {
-			throw new Error(`Invalid value type for "${prop}"`);
-		}
-	});
+	// Validate all properties that can be optimised, do not fix
+	const failedOptionalProp = validateIconProps(data, false, false);
+	if (failedOptionalProp) {
+		throw new Error(`Invalid value type for "${failedOptionalProp}"`);
+	}
 
 	// Validate characters map
 	if (data.chars !== void 0) {
