@@ -67,7 +67,7 @@ const replaceCodeLink = (search) => {
 			readme.slice(0, start) + packageJSON.version + readme.slice(pos2);
 	}
 };
-replaceCodeLink('/code.iconify.design/2/');
+replaceCodeLink('/code.iconify.design/3/');
 replaceCodeLink('/@iconify/iconify@');
 
 if (readme !== oldReadme) {

@@ -21,7 +21,7 @@ Iconify SVG framework is designed to be as easy to use as possible.
 Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/2/3.0.0-beta.1/iconify.min.js"></script>
+<script src="https://code.iconify.design/3/3.0.0-beta.1/iconify.min.js"></script>
 ```
 
 or
