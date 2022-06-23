@@ -246,6 +246,11 @@ export interface IconifyJSONIconsData extends IconifyDimenisons {
  * All optional values can exist in root of JSON file, used as defaults.
  */
 export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData {
+	// Last modification time of icons. Unix time stamp in seconds.
+	// Time is calculated only for icon data, ignoring metadata.
+	// Used to invalidate icons cache in components.
+	lastModified?: number;
+
 	// Optional list of missing icons. Returned by Iconify API when querying for icons that do not exist.
 	not_found?: string[];
 }
