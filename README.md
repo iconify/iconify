@@ -193,6 +193,12 @@ or
 
 `pnpm --filter ./packages/utils run build`
 
+### NI
+
+I suggest to install [NI](https://github.com/antfu/ni), it makes it easy to work with any repository regardless of what package manager it uses.
+
+Instead of figuring out if you should run `npm install` or `pnpm install` or `yarn install`, just run `ni` and it will execute current package manager, `nr build` to build, `nr test` to run tests test.
+
 ## Documentation
 
 Documentation for all packages is available on [Iconify documentation website](https://docs.iconify.design/icon-components/):
