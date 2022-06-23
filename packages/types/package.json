@@ -2,7 +2,7 @@
 	"name": "@iconify/types",
 	"type": "module",
 	"description": "Types for Iconify data",
-	"version": "1.1.0",
+	"version": "2.0.0-beta.1",
 	"author": "Vjacheslav Trushkin",
 	"license": "MIT",
 	"main": "./types.js",
