@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.0-beta.1",
+	"version": "2.0.0-beta.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -178,6 +178,10 @@
 		"./lib/misc/strings": {
 			"require": "./lib/misc/strings.cjs",
 			"import": "./lib/misc/strings.mjs"
+		},
+		"./lib/misc/objects": {
+			"require": "./lib/misc/objects.cjs",
+			"import": "./lib/misc/objects.mjs"
 		},
 		"./lib/svg/build": {
 			"require": "./lib/svg/build.cjs",

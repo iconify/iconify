@@ -21,13 +21,13 @@ Iconify SVG framework is designed to be as easy to use as possible.
 Add this line to your page to load Iconify SVG framework (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+<script src="https://code.iconify.design/2/3.0.0-beta.1/iconify.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@2.2.1/dist/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.0.0-beta.1/dist/iconify.min.js"></script>
 ```
 
 or, if you are building a project with something like WebPack or Rollup, you can include the script by installing `@iconify/iconify` as a dependency and importing it in your project:
