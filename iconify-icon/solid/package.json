@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "SolidJS wrapper for Iconify Icon web component",
 	"author": "Vjacheslav Trushkin",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
