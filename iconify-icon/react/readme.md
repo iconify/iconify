@@ -1,44 +1,31 @@
-# Iconify for React
+# Iconify Icon for React
 
-Iconify for React is not yet another icon component! There are many of them already.
-
-What you get with other components:
-
--   Limited set of icons.
--   Large bundle size because all icons are bundled.
-
-Iconify icon component is nothing like that. Component does not include any icon data, it is not tied to any specific icon set. Instead, all data is retrieved from public API on demand.
-
-That means:
-
--   One syntax for over 100,000 icons from 100+ icon sets.
--   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
--   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
+Iconify Icon web component is a wrapper for `iconify-icon` package, which provides React component and typings.
 
 For more information about Iconify project visit [https://iconify.design/](https://iconify.design/).
 
-For extended documentation visit [Iconify for React documentation](https://docs.iconify.design/icon-components/react/).
+For documentation visit [Iconify Icon web component documentation](https://docs.iconify.design/iconify-icon/).
 
 ## Installation
 
 If you are using NPM:
 
 ```bash
-npm install --save-dev @iconify/react
+npm install --save-dev @iconify-icon/react
 ```
 
 If you are using Yarn:
 
 ```bash
-yarn add --dev @iconify/react
+yarn add --dev @iconify-icon/react
 ```
 
-## Usage with API
+## Usage
 
-Install `@iconify/react` and import `Icon` from it:
+Install `@iconify-icon/react` and import `Icon` from it:
 
 ```typescript
-import { Icon } from '@iconify/react';
+import { Icon } from '@iconify-icon/react';
 ```
 
 Then use `Icon` component with icon name or data as "icon" parameter:
@@ -59,7 +46,7 @@ If you want to use icon component without relying on public Iconify API, there a
 2. You can create custom icon bundles (more efficient, but requires more coding).
 3. You can host your own Iconify API instead of relying on third party service.
 
-See [Iconify for React offline use documentation](https://docs.iconify.design/icon-components/react/offline.html) or [Iconify API documentation](https://docs.iconify.design/sources/api/).
+See [offline use documentation](https://docs.iconify.design/iconify-icon/without-api.html) or [Iconify API documentation](https://docs.iconify.design/sources/api/).
 
 ## Icon Names
 
@@ -74,14 +61,14 @@ It has 3 parts, separated by ":":
 -   prefix is name of icon set.
 -   name is name of icon.
 
-See [Iconify for React icon names documentation](https://docs.iconify.design/icon-components/react/icon-name.html) for more detailed explanation.
+See [icon names documentation](https://docs.iconify.design/iconify-icon/icon-name.html) for more detailed explanation.
 
 ## Using icon data
 
 Instead of icon name, you can pass icon data to component:
 
 ```jsx
-import { Icon } from '@iconify/react';
+import { Icon } from '@iconify-icon/react';
 import home from '@iconify-icons/mdi-light/home';
 
 function renderHomeIcon() {
@@ -93,7 +80,7 @@ See [icon packages documentation](https://docs.iconify.design/sources/npm/) for 
 
 ### Next.js notice
 
-Example above will currently fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
+Example above might fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
 
 To switch to CommonJS package, replace this line in example above:
 
@@ -111,83 +98,21 @@ All icons are available as ES modules for modern bundler and as CommonJS modules
 
 For more details, see [icon packages documentation](https://docs.iconify.design/sources/npm/).
 
-## Inline icon
-
-Icons have 2 modes: inline and block. Difference between modes is `vertical-align` that is added to inline icons.
-
-Inline icons are aligned slightly below baseline, so they look centred compared to text, like glyph fonts.
-
-Block icons do not have alignment, like images, which aligns them to baseline by default.
-
-Alignment option was added to make icons look like continuation of text, behaving like glyph fonts. This should make migration from glyph fonts easier.
-
-```jsx
-import React from 'react';
-import { Icon, InlineIcon } from '@iconify/react';
-
-export function inlineDemo() {
-	return (
-		<div>
-			<p>
-				Block:
-				<Icon icon="line-md:image-twotone" />
-				<Icon icon="mdi:account-box-outline" />
-			</p>
-			<p>
-				Inline:
-				<InlineIcon icon="line-md:image-twotone" />
-				<InlineIcon icon="mdi:account-box-outline" />
-			</p>
-		</div>
-	);
-}
-```
-
-To toggle between block and inline modes, you can either use `InlineIcon` or use boolean `inline` property:
-
-```jsx
-import React from 'react';
-import { Icon } from '@iconify/react';
-
-export function inlineDemo() {
-	return (
-		<div>
-			<p>
-				Block:
-				<Icon icon="line-md:image-twotone" />
-				<Icon icon="mdi:account-box-outline" />
-			</p>
-			<p>
-				Inline:
-				<Icon icon="line-md:image-twotone" inline={true} />
-				<Icon icon="mdi:account-box-outline" inline={true} />
-			</p>
-		</div>
-	);
-}
-```
-
-Visual example to show the difference between inline and block modes:
-
-![Inline icon](https://iconify.design/assets/images/inline.png)
-
 ## Icon component properties
 
 `icon` property is mandatory. It tells component what icon to render. The value can be a string containing the icon name or an object containing the icon data.
 
 The icon component has the following optional properties:
 
--   `inline`. Changes icon behaviour to match icon fonts. See "Inline icon" section above.
+-   `inline`. Changes icon behaviour to match icon fonts. If set to `true`, it adds vertical alignment to icon to render it below text baseline, so it fits nicely in text.
 -   `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
 -   `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
--   `flip`, `hFlip`, `vFlip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
+-   `flip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
 -   `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
--   `align`, `vAlign`, `hAlign`, `slice`. Icon alignment. See "Alignment" section below.
--   `onLoad`. Callback function that is called when icon data has been loaded. See "onLoad" section below.
 
 ### Other properties and events
 
-In addition to the properties mentioned above, the icon component accepts any other properties and events. All other properties and events will be passed to generated `SVG` element, so you can do stuff like assigning `onClick` event, setting the inline style, add title and so on.
+In addition to the properties mentioned above, the icon component accepts any other properties and events.
 
 ### Dimensions
 
@@ -252,21 +177,9 @@ There are two types of icons: icons that do not have a palette and icons that do
 
 Icons that do have a palette, such as emojis, cannot be customised. Setting colour to such icons will not change anything.
 
-Icons that do not have a palette can be customised. By default, colour is set to "currentColor", which means the icon's colour matches text colour. To change the colour you can:
-
--   Set `color` style or use stylesheet to target icon. If you are using the stylesheet, target `svg` element.
--   Add `color` property.
+Icons that do not have a palette can be customised. By default, colour is set to "currentColor", which means the icon's colour matches text colour. To change the colour you need to change text color.
 
 Examples:
-
-Using `color` property:
-
-```jsx
-<Icon icon="eva:alert-triangle-fill" color="red" />
-<Icon icon="eva:alert-triangle-fill" color="#f00" />
-```
-
-Using inline style:
 
 ```jsx
 <Icon icon="eva:alert-triangle-fill" style={{color: 'red'}} />
@@ -301,36 +214,29 @@ Rotating 16x24 icon by 90 degrees results in:
 -   CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
 -   Icon transformation changes bounding box to 24x16, rotating content inside an icon.
 
-See [icon transformations documentation](https://docs.iconify.design/icon-components/react/transform.html) for more details.
+See [icon transformations documentation](https://docs.iconify.design/iconify-icon/transform.html) for more details.
 
 #### Flipping an icon
 
-There are several properties available to flip an icon:
-
--   `hFlip`: boolean property, flips icon horizontally.
--   `vFlip`: boolean property, flips icon vertically.
--   `flip`: shorthand string property, can flip icon horizontally and/or vertically.
+You can flip an icon horizontally and/or vertically by setting `flip` property.
 
 Examples:
 
 Flip an icon horizontally:
 
 ```jsx
-<Icon icon="eva:alert-triangle-fill" hFlip={true} />
 <Icon icon="eva:alert-triangle-fill" flip="horizontal" />
 ```
 
 Flip an icon vertically:
 
 ```jsx
-<Icon icon="eva:alert-triangle-fill" vFlip={true} />
 <Icon icon="eva:alert-triangle-fill" flip="vertical" />
 ```
 
 Flip an icon horizontally and vertically (the same as 180 degrees rotation):
 
 ```jsx
-<Icon icon="eva:alert-triangle-fill" hFlip={true} vFlip={true} />
 <Icon icon="eva:alert-triangle-fill" flip="horizontal,vertical" />
 ```
 
@@ -350,28 +256,14 @@ Examples of 90 degrees rotation:
 <Icon icon="eva:alert-triangle-fill" rotate="25%" />
 ```
 
-### onLoad
-
-`onLoad` property is an optional callback function. It is called when icon data has been loaded.
-
-It is not an event, such as `onClick` event for links, it is a simple callback function.
-
-When `onLoad` is called:
-
--   If value of icon property is an object, `onLoad` is not called.
--   If value of icon property is a string and icon data is available, `onLoad` is called on first render.
--   If value of icon property is a string and icon data is not available, `onLoad` is called on first re-render after icon data is retrieved from API.
-
-What is the purpose of `onLoad`? To let you know when Icon component renders an icon and when it does not render anything. This allows you to do things like adding class name for parent element, such as "container--with-icon" that modify layout if icon is being displayed.
-
 ## Full documentation
 
-For extended documentation visit [Iconify for React documentation](https://docs.iconify.design/icon-components/react/).
+For extended documentation visit [Iconify Icon web component documentation](https://docs.iconify.design/iconify-icon/).
 
 ## License
 
 React component is released with MIT license.
 
-© 2019 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2022 Vjacheslav Trushkin / Iconify OÜ
 
 See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.
