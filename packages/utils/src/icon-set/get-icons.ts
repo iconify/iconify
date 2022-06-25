@@ -27,6 +27,12 @@ export function getIcons(
 	const sourceIcons = data.icons;
 	const sourceAliases = data.aliases || {};
 
+	// Add lastModified
+	if (data.lastModified) {
+		result.lastModified = data.lastModified;
+	}
+
+	// Get dependencies tree
 	const tree = getIconsTree(data, names);
 	let empty = true;
 

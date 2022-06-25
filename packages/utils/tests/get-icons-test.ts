@@ -61,9 +61,11 @@ describe('Testing retrieving icons from icon set', () => {
 		});
 	});
 
-	test('Aliases and characters', () => {
+	test('Aliases, characters, lastModified', () => {
+		const lastModified = 12345;
 		const data: IconifyJSON = {
 			prefix: 'foo',
+			lastModified,
 			icons: {
 				bar: {
 					body: '<g />',
@@ -96,6 +98,7 @@ describe('Testing retrieving icons from icon set', () => {
 		// Alias
 		expect(getIcons(data, ['foo'])).toEqual({
 			prefix: 'foo',
+			lastModified,
 			icons: {
 				bar: {
 					body: '<g />',
@@ -112,6 +115,7 @@ describe('Testing retrieving icons from icon set', () => {
 		// Alias of alias
 		expect(getIcons(data, ['foo2'])).toEqual({
 			prefix: 'foo',
+			lastModified,
 			icons: {
 				bar: {
 					body: '<g />',
@@ -132,6 +136,7 @@ describe('Testing retrieving icons from icon set', () => {
 		expect(getIcons(data, ['missing-alias'])).toBeNull();
 		expect(getIcons(data, ['missing-alias'], true)).toEqual({
 			prefix: 'foo',
+			lastModified,
 			icons: {},
 			not_found: ['missing-alias'],
 		});
@@ -146,6 +151,7 @@ describe('Testing retrieving icons from icon set', () => {
 		expect(getIcons(data, ['f04'])).toBeNull();
 		expect(getIcons(data, ['f04'], true)).toEqual({
 			prefix: 'foo',
+			lastModified,
 			icons: {},
 			not_found: ['f04'],
 		});
