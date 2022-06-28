@@ -9,7 +9,7 @@ import {
 } from './data';
 import { getBrowserStorage } from './global';
 import { initBrowserStorage } from './index';
-import type { BrowserStorageConfig, BrowserStorageItem } from './types';
+import type { BrowserStorageItem, BrowserStorageType } from './types';
 
 /**
  * Function to cache icons
@@ -18,15 +18,18 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 	if (!browserStorageStatus) {
 		initBrowserStorage();
 	}
+	if (browserStorageStatus === 'loading') {
+		return;
+	}
 
-	function store(key: keyof BrowserStorageConfig): boolean {
+	function store(key: BrowserStorageType): true | undefined {
 		if (!browserStorageConfig[key]) {
-			return false;
+			return;
 		}
 
 		const func = getBrowserStorage(key);
 		if (!func) {
-			return false;
+			return;
 		}
 
 		// Get item index
@@ -35,7 +38,7 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 			// Create new index
 			index = browserStorageItemsCount[key];
 			if (!setBrowserStorageItemsCount(func, key, index + 1)) {
-				return false;
+				return;
 			}
 		}
 
@@ -50,10 +53,10 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
+			return true;
 		} catch (err) {
-			return false;
+			//
 		}
-		return true;
 	}
 
 	// Do not store empty sets

@@ -1,9 +1,10 @@
 import { browserStorageConfig } from './data';
+import type { BrowserStorageType } from './types';
 
 /**
  * Cache types
  */
-export type IconifyBrowserCacheType = 'local' | 'session' | 'all';
+export type IconifyBrowserCacheType = BrowserStorageType | 'all';
 
 /**
  * Toggle cache
@@ -20,8 +21,7 @@ export function toggleBrowserCache(
 
 		case 'all':
 			for (const key in browserStorageConfig) {
-				browserStorageConfig[key as keyof typeof browserStorageConfig] =
-					value;
+				browserStorageConfig[key as BrowserStorageType] = value;
 			}
 			break;
 	}

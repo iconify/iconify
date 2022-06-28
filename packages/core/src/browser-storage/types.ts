@@ -1,19 +1,16 @@
 import type { IconifyJSON } from '@iconify/types';
 
-// Mixin for config for various types
-export interface BrowserStorageType<T> {
-	local: T;
-	session: T;
-}
+// Storage types
+export type BrowserStorageType = 'local' | 'session';
 
 // Config
-export type BrowserStorageConfig = BrowserStorageType<boolean>;
+export type BrowserStorageConfig = Record<BrowserStorageType, boolean>;
 
 // Number of items
-export type BrowserStorageCount = BrowserStorageType<number>;
+export type BrowserStorageCount = Record<BrowserStorageType, number>;
 
 // List of empty items, for use later
-export type BrowserStorageEmptyList = BrowserStorageType<number[]>;
+export type BrowserStorageEmptyList = Record<BrowserStorageType, number[]>;
 
 // Stored item
 export interface BrowserStorageItem {

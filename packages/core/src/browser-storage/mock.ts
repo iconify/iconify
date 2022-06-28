@@ -5,6 +5,7 @@ import {
 	browserStorageEmptyItems,
 	setBrowserStorageStatus,
 } from './data';
+import type { BrowserStorageType } from './types';
 
 /**
  * Get next icon set prefix for testing
@@ -99,9 +100,8 @@ export function reset(fakeWindow: Record<string, typeof localStorage>): void {
 	// Reset all data
 	setBrowserStorageStatus(false);
 	for (const key in browserStorageConfig) {
-		const attr = key as unknown as keyof typeof browserStorageConfig;
-		browserStorageConfig[attr] = true;
-		browserStorageItemsCount[attr] = 0;
-		browserStorageEmptyItems[attr] = [];
+		browserStorageConfig[key as BrowserStorageType] = true;
+		browserStorageItemsCount[key as BrowserStorageType] = 0;
+		browserStorageEmptyItems[key as BrowserStorageType] = [];
 	}
 }

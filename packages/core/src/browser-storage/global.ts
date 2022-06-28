@@ -1,5 +1,5 @@
 import { browserStorageConfig } from './data';
-import type { BrowserStorageConfig } from './types';
+import type { BrowserStorageType } from './types';
 
 /**
  * Fake window for unit testing
@@ -13,7 +13,7 @@ let _window: FakeWindow =
  * Get browser storage
  */
 export function getBrowserStorage(
-	key: keyof BrowserStorageConfig
+	key: BrowserStorageType
 ): typeof localStorage | undefined {
 	const attr = key + 'Storage';
 	try {

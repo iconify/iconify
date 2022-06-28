@@ -113,7 +113,7 @@ export function initBrowserStorage() {
 				if (!getItem(i)) {
 					// Remove item
 					if (i === total - 1) {
-						// Last item - reduce country
+						// Last item - reduce count
 						total--;
 					} else {
 						// Mark as empty
