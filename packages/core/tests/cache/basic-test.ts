@@ -1,4 +1,8 @@
-import { count, config, loadCache } from '../../lib/browser-storage';
+import { loadCache } from '../../lib/browser-storage';
+import {
+	browserStorageItemsCount,
+	browserStorageConfig,
+} from '../../lib/browser-storage/data';
 import {
 	browserCacheCountKey,
 	browserCachePrefix,
@@ -14,11 +18,11 @@ describe('Testing mocked localStorage', () => {
 		reset({});
 
 		// Config before tests
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -27,13 +31,13 @@ describe('Testing mocked localStorage', () => {
 		loadCache();
 
 		// Everything should be disabled
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: false,
 			session: false,
 		});
 
 		// Nothing should have loaded
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -45,11 +49,11 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Config before tests
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -58,13 +62,13 @@ describe('Testing mocked localStorage', () => {
 		loadCache();
 
 		// sessionStorage should be disabled
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
 
 		// Nothing should have loaded
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -104,11 +108,11 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Config before tests
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -117,13 +121,13 @@ describe('Testing mocked localStorage', () => {
 		loadCache();
 
 		// Everything should be disabled because read-only mock throws errors
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: false,
 			session: false,
 		});
 
 		// Nothing should have loaded
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -158,11 +162,11 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Config before tests
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -171,13 +175,13 @@ describe('Testing mocked localStorage', () => {
 		loadCache();
 
 		// sessionStorage should be disabled
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
 
 		// One item should be in localStorage
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
@@ -190,11 +194,11 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Config before tests
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
@@ -203,13 +207,13 @@ describe('Testing mocked localStorage', () => {
 		loadCache();
 
 		// Everything should be working
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
 
 		// Empty storage
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});

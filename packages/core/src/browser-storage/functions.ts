@@ -1,4 +1,4 @@
-import { config } from './index';
+import { browserStorageConfig } from './data';
 
 /**
  * Cache types
@@ -15,12 +15,13 @@ export function toggleBrowserCache(
 	switch (storage) {
 		case 'local':
 		case 'session':
-			config[storage] = value;
+			browserStorageConfig[storage] = value;
 			break;
 
 		case 'all':
-			for (const key in config) {
-				config[key as keyof typeof config] = value;
+			for (const key in browserStorageConfig) {
+				browserStorageConfig[key as keyof typeof browserStorageConfig] =
+					value;
 			}
 			break;
 	}

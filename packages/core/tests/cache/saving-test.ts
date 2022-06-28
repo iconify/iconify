@@ -1,25 +1,20 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { StoredItem } from '../../lib/browser-storage';
+import type { BrowserStorageItem } from '../../lib/browser-storage/types';
+import { loadCache, storeCache } from '../../lib/browser-storage';
 import {
-	loadCache,
-	storeCache,
-	count,
-	config,
-	emptyList,
-} from '../../lib/browser-storage';
+	browserStorageItemsCount,
+	browserStorageConfig,
+	browserStorageEmptyItems,
+} from '../../lib/browser-storage/data';
 import { getStorage, iconExists } from '../../lib/storage/storage';
-import {
-	nextPrefix,
-	createCache,
-	reset,
-	hour,
-	cacheExpiration,
-} from '../../lib/browser-storage/mock';
+import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 import {
 	browserCacheCountKey,
 	browserCachePrefix,
 	browserCacheVersion,
 	browserCacheVersionKey,
+	browserStorageHour,
+	browserStorageCacheExpiration,
 } from '../../lib/browser-storage/config';
 
 describe('Testing saving to localStorage', () => {
@@ -38,8 +33,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon,
 		};
@@ -61,15 +56,15 @@ describe('Testing saving to localStorage', () => {
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -95,8 +90,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item0: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item0: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon0,
 		};
@@ -108,8 +103,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item1: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item1: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon1,
 		};
@@ -125,15 +120,15 @@ describe('Testing saving to localStorage', () => {
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -162,8 +157,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item0: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item0: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon0,
 		};
@@ -175,8 +170,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item1: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item1: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon1,
 		};
@@ -195,15 +190,15 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [0],
 			session: [],
 		});
@@ -212,11 +207,11 @@ describe('Testing saving to localStorage', () => {
 		storeCache(provider, icon0);
 
 		// Check data
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 2,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -238,7 +233,7 @@ describe('Testing saving to localStorage', () => {
 
 		// Add icon sets
 		const icons: IconifyJSON[] = [];
-		const items: StoredItem[] = [];
+		const items: BrowserStorageItem[] = [];
 		for (let i = 0; i < 12; i++) {
 			const icon: IconifyJSON = {
 				prefix: prefix,
@@ -248,20 +243,20 @@ describe('Testing saving to localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
 
 			// Make items 2 and 4 expire
 			if (i === 2 || i === 4) {
-				item.cached -= cacheExpiration + 1;
+				item.cached -= browserStorageCacheExpiration + 1;
 			}
 
 			// Change expiration for items 6 and 8 to almost expire
 			if (i === 6 || i === 8) {
-				item.cached -= cacheExpiration - 1;
+				item.cached -= browserStorageCacheExpiration - 1;
 			}
 
 			icons.push(icon);
@@ -288,15 +283,15 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: false,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 9, // item 9 was missing
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			// mix of expired and skipped items
 			// reverse order, 9 should not be there because it is last item
@@ -321,11 +316,11 @@ describe('Testing saving to localStorage', () => {
 
 		// Add item 5
 		storeCache(provider, icons[5]);
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 9,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [4, 2, 1],
 		});
@@ -336,11 +331,11 @@ describe('Testing saving to localStorage', () => {
 		list.slice(0).forEach((index) => {
 			expect(list.shift()).toBe(index);
 			storeCache(provider, icons[index]);
-			expect(count).toEqual({
+			expect(browserStorageItemsCount).toEqual({
 				local: 0,
 				session: 9,
 			});
-			expect(emptyList).toEqual({
+			expect(browserStorageEmptyItems).toEqual({
 				local: [],
 				session: list,
 			});
@@ -349,11 +344,11 @@ describe('Testing saving to localStorage', () => {
 
 		// Add item 10
 		storeCache(provider, icons[10]);
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 10,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -361,11 +356,11 @@ describe('Testing saving to localStorage', () => {
 
 		// Add item 11
 		storeCache(provider, icons[11]);
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 11,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -405,15 +400,15 @@ describe('Testing saving to localStorage', () => {
 		// Load cache
 		loadCache();
 
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -427,8 +422,8 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon,
 		};
@@ -441,15 +436,15 @@ describe('Testing saving to localStorage', () => {
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -479,8 +474,8 @@ describe('Testing saving to localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
@@ -502,8 +497,8 @@ describe('Testing saving to localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
@@ -523,25 +518,25 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 3,
 			session: 4,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
-		for (let i = 0; i < count.local; i++) {
+		for (let i = 0; i < browserStorageItemsCount.local; i++) {
 			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
 		}
-		for (let i = 0; i < count.session; i++) {
+		for (let i = 0; i < browserStorageItemsCount.session; i++) {
 			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
 		}
 
@@ -554,19 +549,19 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon,
 		};
 		storeCache(provider, icon);
 
 		// Check data
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 4, // +1
 			session: 4,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -594,8 +589,8 @@ describe('Testing saving to localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
@@ -617,8 +612,8 @@ describe('Testing saving to localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
@@ -638,25 +633,25 @@ describe('Testing saving to localStorage', () => {
 		loadCache();
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 3,
 			session: 4,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
 
 		// Check icon storage
 		const iconsStorage = getStorage(provider, prefix);
-		for (let i = 0; i < count.local; i++) {
+		for (let i = 0; i < browserStorageItemsCount.local; i++) {
 			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
 		}
-		for (let i = 0; i < count.session; i++) {
+		for (let i = 0; i < browserStorageItemsCount.session; i++) {
 			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
 		}
 
@@ -672,19 +667,19 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: icon,
 		};
 		storeCache(provider, icon);
 
 		// Check data
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 3,
 			session: 5,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});

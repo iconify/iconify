@@ -1,4 +1,9 @@
-import { mock, count, config, emptyList } from './index';
+import { mock } from './index';
+import {
+	browserStorageItemsCount,
+	browserStorageConfig,
+	browserStorageEmptyItems,
+} from './data';
 
 /**
  * Get next icon set prefix for testing
@@ -7,12 +12,6 @@ let prefixCounter = 0;
 export function nextPrefix(): string {
 	return 'fake-storage-' + (prefixCounter++).toString();
 }
-
-/**
- * Cache expiration
- */
-export const hour = 3600000;
-export const cacheExpiration = 168; // In hours
 
 /**
  * Storage class
@@ -97,10 +96,10 @@ export function reset(fakeWindow: Record<string, typeof localStorage>): void {
 	mock(fakeWindow);
 
 	// Reset all data
-	for (const key in config) {
-		const attr = key as unknown as keyof typeof config;
-		config[attr] = true;
-		count[attr] = 0;
-		emptyList[attr] = [];
+	for (const key in browserStorageConfig) {
+		const attr = key as unknown as keyof typeof browserStorageConfig;
+		browserStorageConfig[attr] = true;
+		browserStorageItemsCount[attr] = 0;
+		browserStorageEmptyItems[attr] = [];
 	}
 }

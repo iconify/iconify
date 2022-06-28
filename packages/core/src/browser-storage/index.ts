@@ -6,57 +6,20 @@ import {
 	browserCachePrefix,
 	browserCacheVersion,
 	browserCacheVersionKey,
+	browserStorageCacheExpiration,
+	browserStorageHour,
 } from './config';
-
-interface StorageType<T> {
-	local: T;
-	session: T;
-}
-
-type StorageConfig = StorageType<boolean>;
-type StorageCount = StorageType<number>;
-type StorageEmptyList = StorageType<number[]>;
-
-export interface StoredItem {
-	cached: number;
-	provider: string;
-	data: IconifyJSON;
-}
-
-/**
- * Cache expiration
- */
-const hour = 3600000;
-const cacheExpiration = 168; // In hours
-
-/**
- * Storage configuration
- */
-export const config: StorageConfig = {
-	local: true,
-	session: true,
-};
+import {
+	browserStorageConfig,
+	browserStorageEmptyItems,
+	browserStorageItemsCount,
+} from './data';
+import type { BrowserStorageConfig, BrowserStorageItem } from './types';
 
 /**
  * Flag to check if storage has been loaded
  */
 let loaded = false;
-
-/**
- * Items counter
- */
-export const count: StorageCount = {
-	local: 0,
-	session: 0,
-};
-
-/**
- * List of empty items
- */
-export const emptyList: StorageEmptyList = {
-	local: [],
-	session: [],
-};
 
 /**
  * Fake window for unit testing
@@ -75,7 +38,9 @@ export function mock(fakeWindow: FakeWindow): void {
  *
  * @param key
  */
-function getGlobal(key: keyof StorageConfig): typeof localStorage | null {
+function getGlobal(
+	key: keyof BrowserStorageConfig
+): typeof localStorage | null {
 	const attr = key + 'Storage';
 	try {
 		if (
@@ -90,7 +55,7 @@ function getGlobal(key: keyof StorageConfig): typeof localStorage | null {
 	}
 
 	// Failed - mark as disabled
-	config[key] = false;
+	browserStorageConfig[key] = false;
 	return null;
 }
 
@@ -99,12 +64,12 @@ function getGlobal(key: keyof StorageConfig): typeof localStorage | null {
  */
 function setCount(
 	storage: typeof localStorage,
-	key: keyof StorageConfig,
+	key: keyof BrowserStorageConfig,
 	value: number
 ): boolean {
 	try {
 		storage.setItem(browserCacheCountKey, value.toString());
-		count[key] = value;
+		browserStorageItemsCount[key] = value;
 		return true;
 	} catch (err) {
 		//
@@ -134,7 +99,7 @@ function getCount(storage: typeof localStorage): number {
  */
 function initCache(
 	storage: typeof localStorage,
-	key: keyof StorageConfig
+	key: keyof BrowserStorageConfig
 ): void {
 	try {
 		storage.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -170,10 +135,12 @@ export const loadCache: LoadIconsCache = (): void => {
 	loaded = true;
 
 	// Minimum time
-	const minTime = Math.floor(Date.now() / hour) - cacheExpiration;
+	const minTime =
+		Math.floor(Date.now() / browserStorageHour) -
+		browserStorageCacheExpiration;
 
 	// Load data from storage
-	function load(key: keyof StorageConfig): void {
+	function load(key: keyof BrowserStorageConfig): void {
 		const func = getGlobal(key);
 		if (!func) {
 			return;
@@ -193,7 +160,7 @@ export const loadCache: LoadIconsCache = (): void => {
 			let valid = true;
 			try {
 				// Parse, check time stamp
-				const data = JSON.parse(item) as StoredItem;
+				const data = JSON.parse(item) as BrowserStorageItem;
 				if (
 					typeof data !== 'object' ||
 					typeof data.cached !== 'number' ||
@@ -243,7 +210,7 @@ export const loadCache: LoadIconsCache = (): void => {
 						total--;
 					} else {
 						// Mark as empty
-						emptyList[key].push(i);
+						browserStorageEmptyItems[key].push(i);
 					}
 				}
 			}
@@ -255,8 +222,8 @@ export const loadCache: LoadIconsCache = (): void => {
 		}
 	}
 
-	for (const key in config) {
-		load(key as keyof StorageConfig);
+	for (const key in browserStorageConfig) {
+		load(key as keyof BrowserStorageConfig);
 	}
 };
 
@@ -271,8 +238,8 @@ export const storeCache: CacheIcons = (
 		loadCache();
 	}
 
-	function store(key: keyof StorageConfig): boolean {
-		if (!config[key]) {
+	function store(key: keyof BrowserStorageConfig): boolean {
+		if (!browserStorageConfig[key]) {
 			return false;
 		}
 
@@ -282,10 +249,10 @@ export const storeCache: CacheIcons = (
 		}
 
 		// Get item index
-		let index = emptyList[key].shift();
+		let index = browserStorageEmptyItems[key].shift();
 		if (index === void 0) {
 			// Create new index
-			index = count[key];
+			index = browserStorageItemsCount[key];
 			if (!setCount(func, key, index + 1)) {
 				return false;
 			}
@@ -293,8 +260,8 @@ export const storeCache: CacheIcons = (
 
 		// Create and save item
 		try {
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data,
 			};

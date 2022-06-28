@@ -1,19 +1,20 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { StoredItem } from '../../lib/browser-storage';
-import { loadCache, count, config, emptyList } from '../../lib/browser-storage';
-import { getStorage, iconExists } from '../../lib/storage/storage';
+import type { BrowserStorageItem } from '../../lib/browser-storage/types';
+import { loadCache } from '../../lib/browser-storage';
 import {
-	nextPrefix,
-	createCache,
-	reset,
-	hour,
-	cacheExpiration,
-} from '../../lib/browser-storage/mock';
+	browserStorageItemsCount,
+	browserStorageConfig,
+	browserStorageEmptyItems,
+} from '../../lib/browser-storage/data';
+import { getStorage, iconExists } from '../../lib/storage/storage';
+import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 import {
 	browserCacheCountKey,
 	browserCachePrefix,
 	browserCacheVersion,
 	browserCacheVersionKey,
+	browserStorageHour,
+	browserStorageCacheExpiration,
 } from '../../lib/browser-storage/config';
 
 describe('Testing loading from localStorage', () => {
@@ -27,8 +28,8 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
 		cache.setItem(browserCacheCountKey, '1');
 
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -57,15 +58,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(true);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -80,8 +81,8 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
 		cache.setItem(browserCacheCountKey, '1');
 
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -115,15 +116,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons2, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -137,9 +138,12 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
 		cache.setItem(browserCacheCountKey, '1');
 
-		const item: StoredItem = {
+		const item: BrowserStorageItem = {
 			// Expiration date
-			cached: Math.floor(Date.now() / hour) - cacheExpiration - 1,
+			cached:
+				Math.floor(Date.now() / browserStorageHour) -
+				browserStorageCacheExpiration -
+				1,
 			provider,
 			data: {
 				prefix: prefix,
@@ -168,15 +172,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -192,7 +196,7 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(
 			browserCachePrefix + '0',
 			JSON.stringify({
-				cached: Math.floor(Date.now() / hour),
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: {
 					prefix: prefix,
@@ -222,15 +226,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -244,8 +248,8 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
 		cache.setItem(browserCacheCountKey, '0'); // Should be at least "1"
 
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -274,15 +278,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -296,8 +300,8 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
 		cache.setItem(browserCacheCountKey, '5');
 
-		const item: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -326,15 +330,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(true);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 1,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [],
 			session: [],
 		});
@@ -349,8 +353,8 @@ describe('Testing loading from localStorage', () => {
 		cache.setItem(browserCacheCountKey, '5');
 
 		// Missing: 0, 2, 3
-		const item1: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item1: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -361,8 +365,8 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		const item4: StoredItem = {
-			cached: Math.floor(Date.now() / hour),
+		const item4: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
 			provider,
 			data: {
 				prefix: prefix,
@@ -395,15 +399,15 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo4')).toBe(true);
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: false,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 5,
 			session: 0,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [3, 2, 0], // reserse order
 			session: [],
 		});
@@ -423,7 +427,7 @@ describe('Testing loading from localStorage', () => {
 
 		// Create 5 items
 		const icons: IconifyJSON[] = [];
-		const items: StoredItem[] = [];
+		const items: BrowserStorageItem[] = [];
 
 		for (let i = 0; i < 6; i++) {
 			const icon: IconifyJSON = {
@@ -434,8 +438,8 @@ describe('Testing loading from localStorage', () => {
 					},
 				},
 			};
-			const item: StoredItem = {
-				cached: Math.floor(Date.now() / hour),
+			const item: BrowserStorageItem = {
+				cached: Math.floor(Date.now() / browserStorageHour),
 				provider,
 				data: icon,
 			};
@@ -482,15 +486,15 @@ describe('Testing loading from localStorage', () => {
 		}
 
 		// Check data
-		expect(config).toEqual({
+		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
 		});
-		expect(count).toEqual({
+		expect(browserStorageItemsCount).toEqual({
 			local: 6,
 			session: 3,
 		});
-		expect(emptyList).toEqual({
+		expect(browserStorageEmptyItems).toEqual({
 			local: [4, 2, 0],
 			session: [1],
 		});

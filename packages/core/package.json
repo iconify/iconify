@@ -61,6 +61,10 @@
 			"require": "./lib/browser-storage/config.cjs",
 			"import": "./lib/browser-storage/config.mjs"
 		},
+		"./lib/browser-storage/data": {
+			"require": "./lib/browser-storage/data.cjs",
+			"import": "./lib/browser-storage/data.mjs"
+		},
 		"./lib/browser-storage/functions": {
 			"require": "./lib/browser-storage/functions.cjs",
 			"import": "./lib/browser-storage/functions.mjs"
@@ -76,6 +80,10 @@
 		"./lib/browser-storage/mock": {
 			"require": "./lib/browser-storage/mock.cjs",
 			"import": "./lib/browser-storage/mock.mjs"
+		},
+		"./lib/browser-storage/types": {
+			"require": "./lib/browser-storage/types.cjs",
+			"import": "./lib/browser-storage/types.mjs"
 		},
 		"./lib/builder/functions": {
 			"require": "./lib/builder/functions.cjs",
