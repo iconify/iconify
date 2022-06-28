@@ -1,8 +1,9 @@
-import { mock } from './index';
+import { mockWindow } from './global';
 import {
 	browserStorageItemsCount,
 	browserStorageConfig,
 	browserStorageEmptyItems,
+	setBrowserStorageStatus,
 } from './data';
 
 /**
@@ -93,9 +94,10 @@ export function createCache(): typeof localStorage {
  */
 export function reset(fakeWindow: Record<string, typeof localStorage>): void {
 	// Replace window
-	mock(fakeWindow);
+	mockWindow(fakeWindow);
 
 	// Reset all data
+	setBrowserStorageStatus(false);
 	for (const key in browserStorageConfig) {
 		const attr = key as unknown as keyof typeof browserStorageConfig;
 		browserStorageConfig[attr] = true;

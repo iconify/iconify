@@ -1,6 +1,6 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { BrowserStorageItem } from '../../lib/browser-storage/types';
-import { loadCache } from '../../lib/browser-storage';
+import { loadBrowserStorageCache } from '../../lib/browser-storage/load';
 import {
 	browserStorageItemsCount,
 	browserStorageConfig,
@@ -52,7 +52,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should exist now
 		expect(iconExists(icons, 'foo')).toBe(true);
@@ -109,7 +109,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons2, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should exist now
 		expect(iconExists(icons, 'foo')).toBe(true);
@@ -166,7 +166,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should not have loaded
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -220,7 +220,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should not have loaded
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -272,7 +272,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should not have loaded
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -324,7 +324,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icon should exist now
 		expect(iconExists(icons, 'foo')).toBe(true);
@@ -392,7 +392,7 @@ describe('Testing loading from localStorage', () => {
 		expect(iconExists(icons, 'foo4')).toBe(false);
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icons should exist now
 		expect(iconExists(icons, 'foo1')).toBe(true);
@@ -476,7 +476,7 @@ describe('Testing loading from localStorage', () => {
 		}
 
 		// Load localStorage
-		loadCache();
+		loadBrowserStorageCache();
 
 		// Icons should exist now, except for number 4
 		for (let i = 0; i < 6; i++) {

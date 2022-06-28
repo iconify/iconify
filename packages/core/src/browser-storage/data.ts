@@ -27,3 +27,12 @@ export const browserStorageEmptyItems: BrowserStorageEmptyList = {
 	local: [],
 	session: [],
 };
+
+/**
+ * Flag to check if storage has been loaded
+ */
+export let browserStorageLoaded = false;
+
+export function setBrowserStorageStatus(loaded: boolean) {
+	browserStorageLoaded = loaded;
+}

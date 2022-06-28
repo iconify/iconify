@@ -17,7 +17,8 @@ import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 
 // Cache
-import { storeCache, loadCache } from '@iconify/core/lib/browser-storage';
+import { storeCache } from '@iconify/core/lib/browser-storage';
+import { loadBrowserStorageCache } from '@iconify/core/lib/browser-storage/load';
 import { cache } from '@iconify/core/lib/cache';
 import type {
 	IconifyBrowserCacheFunctions,
@@ -150,7 +151,7 @@ setAPIModule('', fetchAPIModule);
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Set cache and load existing cache
 	cache.store = storeCache;
-	loadCache();
+	loadBrowserStorageCache();
 
 	interface WindowWithIconifyStuff {
 		IconifyProviders?: Record<string, PartialIconifyAPIConfig>;
