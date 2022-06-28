@@ -35,22 +35,22 @@ export function createAPIConfig(
 		resources: resources,
 
 		// Root path
-		path: source.path === void 0 ? '/' : source.path,
+		path: source.path || '/',
 
 		// URL length limit
-		maxURL: source.maxURL ? source.maxURL : 500,
+		maxURL: source.maxURL || 500,
 
 		// Timeout before next host is used.
-		rotate: source.rotate ? source.rotate : 750,
+		rotate: source.rotate || 750,
 
 		// Timeout before failing query.
-		timeout: source.timeout ? source.timeout : 5000,
+		timeout: source.timeout || 5000,
 
 		// Randomise default API end point.
 		random: source.random === true,
 
 		// Start index
-		index: source.index ? source.index : 0,
+		index: source.index || 0,
 
 		// Receive data after time out (used if time out kicks in first, then API module sends data anyway).
 		dataAfterTimeout: source.dataAfterTimeout !== false,

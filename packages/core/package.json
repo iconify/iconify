@@ -45,10 +45,6 @@
 			"require": "./lib/api/modules.cjs",
 			"import": "./lib/api/modules.mjs"
 		},
-		"./lib/api/modules/deprecated-jsonp": {
-			"require": "./lib/api/modules/deprecated-jsonp.cjs",
-			"import": "./lib/api/modules/deprecated-jsonp.mjs"
-		},
 		"./lib/api/modules/fetch": {
 			"require": "./lib/api/modules/fetch.cjs",
 			"import": "./lib/api/modules/fetch.mjs"
