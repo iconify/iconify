@@ -1,6 +1,6 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { BrowserStorageItem } from '../../lib/browser-storage/types';
-import { storeCache } from '../../lib/browser-storage';
+import { storeInBrowserStorage } from '../../lib/browser-storage/store';
 import { loadBrowserStorageCache } from '../../lib/browser-storage/load';
 import {
 	browserStorageItemsCount,
@@ -50,7 +50,7 @@ describe('Testing saving to localStorage', () => {
 		expect(iconExists(icons, 'foo')).toBe(false);
 
 		// Save item
-		storeCache(provider, icon);
+		storeInBrowserStorage(provider, icon);
 
 		// Storing in cache should not add item to storage
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -116,8 +116,8 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Save items
-		storeCache(provider, icon0);
-		storeCache(provider, icon1);
+		storeInBrowserStorage(provider, icon0);
+		storeInBrowserStorage(provider, icon1);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -205,7 +205,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Save items
-		storeCache(provider, icon0);
+		storeInBrowserStorage(provider, icon0);
 
 		// Check data
 		expect(browserStorageItemsCount).toEqual({
@@ -316,7 +316,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Add item 5
-		storeCache(provider, icons[5]);
+		storeInBrowserStorage(provider, icons[5]);
 		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 9,
@@ -331,7 +331,7 @@ describe('Testing saving to localStorage', () => {
 		const list = [4, 2, 1];
 		list.slice(0).forEach((index) => {
 			expect(list.shift()).toBe(index);
-			storeCache(provider, icons[index]);
+			storeInBrowserStorage(provider, icons[index]);
 			expect(browserStorageItemsCount).toEqual({
 				local: 0,
 				session: 9,
@@ -344,7 +344,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Add item 10
-		storeCache(provider, icons[10]);
+		storeInBrowserStorage(provider, icons[10]);
 		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 10,
@@ -356,7 +356,7 @@ describe('Testing saving to localStorage', () => {
 		expect(cache.getItem(browserCacheCountKey)).toBe('10');
 
 		// Add item 11
-		storeCache(provider, icons[11]);
+		storeInBrowserStorage(provider, icons[11]);
 		expect(browserStorageItemsCount).toEqual({
 			local: 0,
 			session: 11,
@@ -430,7 +430,7 @@ describe('Testing saving to localStorage', () => {
 		};
 
 		// Save item
-		storeCache(provider, icon);
+		storeInBrowserStorage(provider, icon);
 
 		// Storing in cache should not add item to storage
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -555,7 +555,7 @@ describe('Testing saving to localStorage', () => {
 			provider,
 			data: icon,
 		};
-		storeCache(provider, icon);
+		storeInBrowserStorage(provider, icon);
 
 		// Check data
 		expect(browserStorageItemsCount).toEqual({
@@ -673,7 +673,7 @@ describe('Testing saving to localStorage', () => {
 			provider,
 			data: icon,
 		};
-		storeCache(provider, icon);
+		storeInBrowserStorage(provider, icon);
 
 		// Check data
 		expect(browserStorageItemsCount).toEqual({

@@ -60,9 +60,7 @@ import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Cache
-import { cache } from '@iconify/core/lib/cache';
-import { storeCache } from '@iconify/core/lib/browser-storage';
-import { loadBrowserStorageCache } from '@iconify/core/lib/browser-storage/load';
+import { initBrowserStorage } from '@iconify/core/lib/browser-storage';
 import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
 import type {
 	IconifyBrowserCacheType,
@@ -152,8 +150,7 @@ setAPIModule('', fetchAPIModule);
  */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 	// Set cache and load existing cache
-	cache.store = storeCache;
-	loadBrowserStorageCache();
+	initBrowserStorage();
 
 	interface WindowWithIconifyStuff {
 		IconifyPreload?: IconifyJSON[] | IconifyJSON;

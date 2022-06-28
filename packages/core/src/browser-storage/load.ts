@@ -1,4 +1,3 @@
-import type { LoadIconsCache } from '../cache';
 import { addIconSet, getStorage } from '../storage/storage';
 import {
 	browserCachePrefix,
@@ -52,7 +51,7 @@ function initBrowserStorage(
 /**
  * Load icons from cache
  */
-export const loadBrowserStorageCache: LoadIconsCache = (): void => {
+export function loadBrowserStorageCache() {
 	if (browserStorageLoaded) {
 		return;
 	}
@@ -149,4 +148,4 @@ export const loadBrowserStorageCache: LoadIconsCache = (): void => {
 	for (const key in browserStorageConfig) {
 		load(key as keyof BrowserStorageConfig);
 	}
-};
+}
