@@ -7,16 +7,21 @@ import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-bas
 /**
  * List of icons
  */
-type IconRecords = Record<string, FullIconifyIcon | null>;
+type IconRecords = Record<string, FullIconifyIcon>;
 
 /**
  * Storage type
  */
 export interface IconStorage {
+	// Provider and prefix
 	provider: string;
 	prefix: string;
+
+	// List of available icons
 	icons: IconRecords;
-	missing: Record<string, number>;
+
+	// List of missing icons
+	missing: Set<string>;
 }
 
 /**
@@ -35,7 +40,7 @@ export function newStorage(provider: string, prefix: string): IconStorage {
 		provider,
 		prefix,
 		icons: Object.create(null) as IconStorage['icons'],
-		missing: Object.create(null) as IconStorage['missing'],
+		missing: new Set(),
 	};
 }
 
@@ -63,12 +68,11 @@ export function addIconSet(storage: IconStorage, data: IconifyJSON): string[] {
 		return [];
 	}
 
-	const t = Date.now();
 	return parseIconSet(data, (name, icon: FullIconifyIcon | null) => {
 		if (icon) {
 			storage.icons[name] = icon;
 		} else {
-			storage.missing[name] = t;
+			storage.missing.add(name);
 		}
 	});
 }
@@ -100,7 +104,7 @@ export function addIconToStorage(
  * Check if icon exists
  */
 export function iconExists(storage: IconStorage, name: string): boolean {
-	return storage.icons[name] !== void 0;
+	return !!storage.icons[name];
 }
 
 /**

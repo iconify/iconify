@@ -70,7 +70,7 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 			};
 		}
 
-		if (storage.missing[name]) {
+		if (storage.missing.has(name)) {
 			return {
 				status: 'missing',
 			};

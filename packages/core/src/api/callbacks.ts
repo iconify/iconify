@@ -109,7 +109,7 @@ export function updateCallbacks(provider: string, prefix: string): void {
 							prefix,
 							name,
 						});
-					} else if (storage.missing[name] !== void 0) {
+					} else if (storage.missing.has(name)) {
 						// Missing
 						icons.missing.push({
 							provider,

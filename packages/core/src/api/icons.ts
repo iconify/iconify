@@ -186,9 +186,8 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 						}
 
 						// Not found: mark as missing
-						const t = Date.now();
 						item.icons.forEach((name) => {
-							storage.missing[name] = t;
+							storage.missing.add(name);
 						});
 					} else {
 						// Add icons to storage

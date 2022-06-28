@@ -37,7 +37,7 @@ describe('Testing storage', () => {
 		});
 
 		// Mark 'not-really-missing' as missing
-		storage.missing['not-really-missing'] = Date.now();
+		storage.missing.add('not-really-missing');
 
 		// Add invalid icon
 		addIconToStorage(storage, 'invalid', {} as unknown as IconifyIcon);
