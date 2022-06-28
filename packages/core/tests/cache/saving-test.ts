@@ -12,13 +12,15 @@ import {
 	nextPrefix,
 	createCache,
 	reset,
-	cachePrefix,
-	cacheVersion,
-	versionKey,
-	countKey,
 	hour,
 	cacheExpiration,
 } from '../../lib/browser-storage/mock';
+import {
+	browserCacheCountKey,
+	browserCachePrefix,
+	browserCacheVersion,
+	browserCacheVersionKey,
+} from '../../lib/browser-storage/config';
 
 describe('Testing saving to localStorage', () => {
 	const provider = '';
@@ -73,9 +75,11 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item));
-		expect(cache.getItem(countKey)).toBe('1');
-		expect(cache.getItem(versionKey)).toBe(cacheVersion);
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			JSON.stringify(item)
+		);
+		expect(cache.getItem(browserCacheCountKey)).toBe('1');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
 	});
 
 	it('Multiple icon sets', () => {
@@ -135,10 +139,14 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item0));
-		expect(cache.getItem(cachePrefix + '1')).toBe(JSON.stringify(item1));
-		expect(cache.getItem(countKey)).toBe('2');
-		expect(cache.getItem(versionKey)).toBe(cacheVersion);
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			JSON.stringify(item0)
+		);
+		expect(cache.getItem(browserCachePrefix + '1')).toBe(
+			JSON.stringify(item1)
+		);
+		expect(cache.getItem(browserCacheCountKey)).toBe('2');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
 	});
 
 	it('Adding icon set on unused spot', () => {
@@ -174,9 +182,9 @@ describe('Testing saving to localStorage', () => {
 		};
 
 		// Add item
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '2');
-		cache.setItem(cachePrefix + '1', JSON.stringify(item1));
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '2');
+		cache.setItem(browserCachePrefix + '1', JSON.stringify(item1));
 
 		// Set cache
 		reset({
@@ -214,10 +222,14 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item0));
-		expect(cache.getItem(cachePrefix + '1')).toBe(JSON.stringify(item1));
-		expect(cache.getItem(countKey)).toBe('2');
-		expect(cache.getItem(versionKey)).toBe(cacheVersion);
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			JSON.stringify(item0)
+		);
+		expect(cache.getItem(browserCachePrefix + '1')).toBe(
+			JSON.stringify(item1)
+		);
+		expect(cache.getItem(browserCacheCountKey)).toBe('2');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
 	});
 
 	it('Adding multiple icon sets to existing data', () => {
@@ -257,12 +269,15 @@ describe('Testing saving to localStorage', () => {
 
 			// Skip items 1, 5, 9+
 			if (i !== 1 && i !== 5 && i < 9) {
-				cache.setItem(cachePrefix + i.toString(), JSON.stringify(item));
+				cache.setItem(
+					browserCachePrefix + i.toString(),
+					JSON.stringify(item)
+				);
 			}
 		}
 
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '10');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '10');
 
 		// Set cache
 		reset({
@@ -287,11 +302,11 @@ describe('Testing saving to localStorage', () => {
 			// reverse order, 9 should not be there because it is last item
 			session: [5, 4, 2, 1],
 		});
-		expect(cache.getItem(countKey)).toBe('9');
+		expect(cache.getItem(browserCacheCountKey)).toBe('9');
 
 		// Check cached items
 		[0, 3, 6, 7, 8].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index.toString())).toBe(
+			expect(cache.getItem(browserCachePrefix + index.toString())).toBe(
 				JSON.stringify(items[index])
 			);
 		});
@@ -299,7 +314,9 @@ describe('Testing saving to localStorage', () => {
 		// Check expired items - should have been deleted
 		// Also check items that weren't supposed to be added
 		[2, 4, 1, 5, 9, 10, 11, 12, 13].forEach((index) => {
-			expect(cache.getItem(cachePrefix + index.toString())).toBeNull();
+			expect(
+				cache.getItem(browserCachePrefix + index.toString())
+			).toBeNull();
 		});
 
 		// Add item 5
@@ -312,7 +329,7 @@ describe('Testing saving to localStorage', () => {
 			local: [],
 			session: [4, 2, 1],
 		});
-		expect(cache.getItem(countKey)).toBe('9');
+		expect(cache.getItem(browserCacheCountKey)).toBe('9');
 
 		// Add items 4, 2, 1
 		const list = [4, 2, 1];
@@ -327,7 +344,7 @@ describe('Testing saving to localStorage', () => {
 				local: [],
 				session: list,
 			});
-			expect(cache.getItem(countKey)).toBe('9');
+			expect(cache.getItem(browserCacheCountKey)).toBe('9');
 		});
 
 		// Add item 10
@@ -340,7 +357,7 @@ describe('Testing saving to localStorage', () => {
 			local: [],
 			session: [],
 		});
-		expect(cache.getItem(countKey)).toBe('10');
+		expect(cache.getItem(browserCacheCountKey)).toBe('10');
 
 		// Add item 11
 		storeCache(provider, icons[11]);
@@ -352,7 +369,7 @@ describe('Testing saving to localStorage', () => {
 			local: [],
 			session: [],
 		});
-		expect(cache.getItem(countKey)).toBe('11');
+		expect(cache.getItem(browserCacheCountKey)).toBe('11');
 	});
 
 	it('Overwrite outdated data', () => {
@@ -360,11 +377,11 @@ describe('Testing saving to localStorage', () => {
 		const cache = createCache();
 
 		// Add data in old format
-		cache.setItem(versionKey, '1.0.6');
-		cache.setItem(countKey, '3');
+		cache.setItem(browserCacheVersionKey, '1.0.6');
+		cache.setItem(browserCacheCountKey, '3');
 		for (let i = 0; i < 3; i++) {
 			cache.setItem(
-				cachePrefix + i.toString(),
+				browserCachePrefix + i.toString(),
 				JSON.stringify({
 					prefix: prefix,
 					icons: {
@@ -438,9 +455,11 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache.getItem(cachePrefix + '0')).toBe(JSON.stringify(item));
-		expect(cache.getItem(countKey)).toBe('1');
-		expect(cache.getItem(versionKey)).toBe(cacheVersion);
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			JSON.stringify(item)
+		);
+		expect(cache.getItem(browserCacheCountKey)).toBe('1');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
 	});
 
 	it('Using both storage options', () => {
@@ -449,8 +468,8 @@ describe('Testing saving to localStorage', () => {
 		const cache2 = createCache();
 
 		// Add icon sets to localStorage
-		cache1.setItem(versionKey, cacheVersion);
-		cache1.setItem(countKey, '3');
+		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache1.setItem(browserCacheCountKey, '3');
 		[0, 1, 2].forEach((index) => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
@@ -466,14 +485,14 @@ describe('Testing saving to localStorage', () => {
 				data: icon,
 			};
 			cache1.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
 		});
 
 		// Add icon sets to sessionStorage
-		cache2.setItem(versionKey, cacheVersion);
-		cache2.setItem(countKey, '4');
+		cache2.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache2.setItem(browserCacheCountKey, '4');
 		[0, 1, 2, 3].forEach((index) => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
@@ -489,7 +508,7 @@ describe('Testing saving to localStorage', () => {
 				data: icon,
 			};
 			cache2.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
 		});
@@ -553,7 +572,9 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache1.getItem(cachePrefix + '3')).toBe(JSON.stringify(item));
+		expect(cache1.getItem(browserCachePrefix + '3')).toBe(
+			JSON.stringify(item)
+		);
 	});
 
 	it('Using both storage options, but localStorage is read only', () => {
@@ -562,8 +583,8 @@ describe('Testing saving to localStorage', () => {
 		const cache2 = createCache();
 
 		// Add icon sets to localStorage
-		cache1.setItem(versionKey, cacheVersion);
-		cache1.setItem(countKey, '3');
+		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache1.setItem(browserCacheCountKey, '3');
 		[0, 1, 2].forEach((index) => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
@@ -579,14 +600,14 @@ describe('Testing saving to localStorage', () => {
 				data: icon,
 			};
 			cache1.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
 		});
 
 		// Add icon sets to sessionStorage
-		cache2.setItem(versionKey, cacheVersion);
-		cache2.setItem(countKey, '4');
+		cache2.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache2.setItem(browserCacheCountKey, '4');
 		[0, 1, 2, 3].forEach((index) => {
 			const icon: IconifyJSON = {
 				prefix: prefix,
@@ -602,7 +623,7 @@ describe('Testing saving to localStorage', () => {
 				data: icon,
 			};
 			cache2.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
 		});
@@ -669,6 +690,8 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check cache
-		expect(cache2.getItem(cachePrefix + '4')).toBe(JSON.stringify(item));
+		expect(cache2.getItem(browserCachePrefix + '4')).toBe(
+			JSON.stringify(item)
+		);
 	});
 });

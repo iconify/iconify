@@ -6,13 +6,15 @@ import {
 	nextPrefix,
 	createCache,
 	reset,
-	cachePrefix,
-	cacheVersion,
-	versionKey,
-	countKey,
 	hour,
 	cacheExpiration,
 } from '../../lib/browser-storage/mock';
+import {
+	browserCacheCountKey,
+	browserCachePrefix,
+	browserCacheVersion,
+	browserCacheVersionKey,
+} from '../../lib/browser-storage/config';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';
@@ -22,8 +24,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
@@ -37,7 +39,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
 
 		// Set cache
 		reset({
@@ -75,8 +77,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
@@ -90,7 +92,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
 
 		// Set cache
 		reset({
@@ -132,8 +134,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 
 		const item: StoredItem = {
 			// Expiration date
@@ -148,7 +150,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
 
 		// Set cache
 		reset({
@@ -185,10 +187,10 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 		cache.setItem(
-			cachePrefix + '0',
+			browserCachePrefix + '0',
 			JSON.stringify({
 				cached: Math.floor(Date.now() / hour),
 				provider,
@@ -239,8 +241,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '0'); // Should be at least "1"
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '0'); // Should be at least "1"
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
@@ -254,7 +256,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
 
 		// Set cache
 		reset({
@@ -291,8 +293,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '5');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '5');
 
 		const item: StoredItem = {
 			cached: Math.floor(Date.now() / hour),
@@ -306,7 +308,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			},
 		};
-		cache.setItem(cachePrefix + '0', JSON.stringify(item));
+		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
 
 		// Set cache
 		reset({
@@ -343,8 +345,8 @@ describe('Testing loading from localStorage', () => {
 		const cache = createCache();
 
 		// Add two icon sets
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '5');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '5');
 
 		// Missing: 0, 2, 3
 		const item1: StoredItem = {
@@ -372,8 +374,8 @@ describe('Testing loading from localStorage', () => {
 			},
 		};
 
-		cache.setItem(cachePrefix + '1', JSON.stringify(item1));
-		cache.setItem(cachePrefix + '4', JSON.stringify(item4));
+		cache.setItem(browserCachePrefix + '1', JSON.stringify(item1));
+		cache.setItem(browserCachePrefix + '4', JSON.stringify(item4));
 
 		// Set cache
 		reset({
@@ -413,11 +415,11 @@ describe('Testing loading from localStorage', () => {
 		const cache2 = createCache();
 
 		// Add few icon sets
-		cache1.setItem(versionKey, cacheVersion);
-		cache2.setItem(versionKey, cacheVersion);
+		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache2.setItem(browserCacheVersionKey, browserCacheVersion);
 
-		cache1.setItem(countKey, '6');
-		cache2.setItem(countKey, '3');
+		cache1.setItem(browserCacheCountKey, '6');
+		cache2.setItem(browserCacheCountKey, '3');
 
 		// Create 5 items
 		const icons: IconifyJSON[] = [];
@@ -444,7 +446,7 @@ describe('Testing loading from localStorage', () => {
 		// Add items 1,3,5 to localStorage
 		[1, 3, 5].forEach((index) => {
 			cache1.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(items[index])
 			);
 		});
@@ -452,7 +454,7 @@ describe('Testing loading from localStorage', () => {
 		// Add items 0 and 2 to sessionStorage
 		[0, 2].forEach((index) => {
 			cache2.setItem(
-				cachePrefix + index.toString(),
+				browserCachePrefix + index.toString(),
 				JSON.stringify(items[index])
 			);
 		});

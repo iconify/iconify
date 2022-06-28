@@ -1,13 +1,11 @@
 import { count, config, loadCache } from '../../lib/browser-storage';
 import {
-	nextPrefix,
-	createCache,
-	reset,
-	cachePrefix,
-	cacheVersion,
-	versionKey,
-	countKey,
-} from '../../lib/browser-storage/mock';
+	browserCacheCountKey,
+	browserCachePrefix,
+	browserCacheVersion,
+	browserCacheVersionKey,
+} from '../../lib/browser-storage/config';
+import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 
 describe('Testing mocked localStorage', () => {
 	const provider = '';
@@ -77,10 +75,10 @@ describe('Testing mocked localStorage', () => {
 		const cache = createCache();
 
 		// Add one item
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 		cache.setItem(
-			cachePrefix + '0',
+			browserCachePrefix + '0',
 			JSON.stringify({
 				cached: Date.now(),
 				provider,
@@ -136,10 +134,10 @@ describe('Testing mocked localStorage', () => {
 		const cache = createCache();
 
 		// Add one icon set
-		cache.setItem(versionKey, cacheVersion);
-		cache.setItem(countKey, '1');
+		cache.setItem(browserCacheVersionKey, browserCacheVersion);
+		cache.setItem(browserCacheCountKey, '1');
 		cache.setItem(
-			cachePrefix + '0',
+			browserCachePrefix + '0',
 			JSON.stringify({
 				cached: Date.now(),
 				provider,

@@ -8,14 +8,6 @@ export function nextPrefix(): string {
 	return 'fake-storage-' + (prefixCounter++).toString();
 }
 
-// Cache version. Bump when structure changes
-export const cacheVersion = 'iconify2';
-
-// Cache keys
-export const cachePrefix = 'iconify';
-export const countKey = cachePrefix + '-count';
-export const versionKey = cachePrefix + '-version';
-
 /**
  * Cache expiration
  */

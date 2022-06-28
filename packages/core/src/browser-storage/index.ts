@@ -1,6 +1,12 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { CacheIcons, LoadIconsCache } from '../cache';
 import { getStorage, addIconSet } from '../storage/storage';
+import {
+	browserCacheCountKey,
+	browserCachePrefix,
+	browserCacheVersion,
+	browserCacheVersionKey,
+} from './config';
 
 interface StorageType<T> {
 	local: T;
@@ -16,16 +22,6 @@ export interface StoredItem {
 	provider: string;
 	data: IconifyJSON;
 }
-
-// After changing configuration change it in tests/*/fake_cache.ts
-
-// Cache version. Bump when structure changes
-const cacheVersion = 'iconify2';
-
-// Cache keys
-const cachePrefix = 'iconify';
-const countKey = cachePrefix + '-count';
-const versionKey = cachePrefix + '-version';
 
 /**
  * Cache expiration
@@ -107,7 +103,7 @@ function setCount(
 	value: number
 ): boolean {
 	try {
-		storage.setItem(countKey, value.toString());
+		storage.setItem(browserCacheCountKey, value.toString());
 		count[key] = value;
 		return true;
 	} catch (err) {
@@ -122,7 +118,7 @@ function setCount(
  * @param storage
  */
 function getCount(storage: typeof localStorage): number {
-	const count = storage.getItem(countKey);
+	const count = storage.getItem(browserCacheCountKey);
 	if (count) {
 		const total = parseInt(count);
 		return total ? total : 0;
@@ -141,7 +137,7 @@ function initCache(
 	key: keyof StorageConfig
 ): void {
 	try {
-		storage.setItem(versionKey, cacheVersion);
+		storage.setItem(browserCacheVersionKey, browserCacheVersion);
 	} catch (err) {
 		//
 	}
@@ -157,7 +153,7 @@ function destroyCache(storage: typeof localStorage): void {
 	try {
 		const total = getCount(storage);
 		for (let i = 0; i < total; i++) {
-			storage.removeItem(cachePrefix + i.toString());
+			storage.removeItem(browserCachePrefix + i.toString());
 		}
 	} catch (err) {
 		//
@@ -185,7 +181,7 @@ export const loadCache: LoadIconsCache = (): void => {
 
 		// Get one item from storage
 		const getItem = (index: number): boolean => {
-			const name = cachePrefix + index.toString();
+			const name = browserCachePrefix + index.toString();
 			const item = func.getItem(name);
 
 			if (typeof item !== 'string') {
@@ -226,8 +222,8 @@ export const loadCache: LoadIconsCache = (): void => {
 
 		try {
 			// Get version
-			const version = func.getItem(versionKey);
-			if (version !== cacheVersion) {
+			const version = func.getItem(browserCacheVersionKey);
+			if (version !== browserCacheVersion) {
 				if (version) {
 					// Version is set, but invalid - remove old entries
 					destroyCache(func);
@@ -302,7 +298,10 @@ export const storeCache: CacheIcons = (
 				provider,
 				data,
 			};
-			func.setItem(cachePrefix + index.toString(), JSON.stringify(item));
+			func.setItem(
+				browserCachePrefix + index.toString(),
+				JSON.stringify(item)
+			);
 		} catch (err) {
 			return false;
 		}
