@@ -12,7 +12,7 @@ import { getStorage, addIconSet } from '../storage/storage';
 import { listToIcons } from '../icon/list';
 import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
-import { cache } from '../cache';
+import { storeInBrowserStorage } from '../browser-storage/store';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {
@@ -207,9 +207,10 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 							});
 
 							// Cache API response
-							if (cache.store) {
-								cache.store(provider, data as IconifyJSON);
-							}
+							storeInBrowserStorage(
+								provider,
+								data as IconifyJSON
+							);
 						} catch (err) {
 							console.error(err);
 						}

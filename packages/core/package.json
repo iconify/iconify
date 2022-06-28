@@ -85,10 +85,6 @@
 			"require": "./lib/browser-storage/index.cjs",
 			"import": "./lib/browser-storage/index.mjs"
 		},
-		"./lib/browser-storage/load": {
-			"require": "./lib/browser-storage/load.cjs",
-			"import": "./lib/browser-storage/load.mjs"
-		},
 		"./lib/browser-storage/mock": {
 			"require": "./lib/browser-storage/mock.cjs",
 			"import": "./lib/browser-storage/mock.mjs"
@@ -104,10 +100,6 @@
 		"./lib/builder/functions": {
 			"require": "./lib/builder/functions.cjs",
 			"import": "./lib/builder/functions.mjs"
-		},
-		"./lib/cache": {
-			"require": "./lib/cache.cjs",
-			"import": "./lib/cache.mjs"
 		},
 		"./lib/icon/list": {
 			"require": "./lib/icon/list.cjs",

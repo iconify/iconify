@@ -1,26 +1,22 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { CacheIcons } from '../cache';
 import { browserCachePrefix, browserStorageHour } from './config';
 import { setBrowserStorageItemsCount } from './count';
 import {
 	browserStorageConfig,
 	browserStorageEmptyItems,
 	browserStorageItemsCount,
-	browserStorageLoaded,
+	browserStorageStatus,
 } from './data';
 import { getBrowserStorage } from './global';
-import { loadBrowserStorageCache } from './load';
+import { initBrowserStorage } from './index';
 import type { BrowserStorageConfig, BrowserStorageItem } from './types';
 
 /**
  * Function to cache icons
  */
-export const storeInBrowserStorage: CacheIcons = (
-	provider: string,
-	data: IconifyJSON
-): void => {
-	if (!browserStorageLoaded) {
-		loadBrowserStorageCache();
+export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
+	if (!browserStorageStatus) {
+		initBrowserStorage();
 	}
 
 	function store(key: keyof BrowserStorageConfig): boolean {
@@ -75,4 +71,4 @@ export const storeInBrowserStorage: CacheIcons = (
 	if (!store('local')) {
 		store('session');
 	}
-};
+}

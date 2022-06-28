@@ -21,3 +21,6 @@ export interface BrowserStorageItem {
 	provider: string;
 	data: IconifyJSON;
 }
+
+// Status: not loaded, loading, loaded
+export type BrowserStorageStatus = false | 'loading' | true;

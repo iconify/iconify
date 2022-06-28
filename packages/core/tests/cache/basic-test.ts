@@ -1,4 +1,4 @@
-import { loadBrowserStorageCache } from '../../lib/browser-storage/load';
+import { initBrowserStorage } from '../../lib/browser-storage';
 import {
 	browserStorageItemsCount,
 	browserStorageConfig,
@@ -28,7 +28,7 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Attempt to load
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Everything should be disabled
 		expect(browserStorageConfig).toEqual({
@@ -59,7 +59,7 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Attempt to load
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// sessionStorage should be disabled
 		expect(browserStorageConfig).toEqual({
@@ -118,7 +118,7 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Attempt to load
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Everything should be disabled because read-only mock throws errors
 		expect(browserStorageConfig).toEqual({
@@ -172,7 +172,7 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Attempt to load
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// sessionStorage should be disabled
 		expect(browserStorageConfig).toEqual({
@@ -204,7 +204,7 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Attempt to load
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Everything should be working
 		expect(browserStorageConfig).toEqual({

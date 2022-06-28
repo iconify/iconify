@@ -1,7 +1,7 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { BrowserStorageItem } from '../../lib/browser-storage/types';
 import { storeInBrowserStorage } from '../../lib/browser-storage/store';
-import { loadBrowserStorageCache } from '../../lib/browser-storage/load';
+import { initBrowserStorage } from '../../lib/browser-storage';
 import {
 	browserStorageItemsCount,
 	browserStorageConfig,
@@ -188,7 +188,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Load data
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -281,7 +281,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Load data
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -399,7 +399,7 @@ describe('Testing saving to localStorage', () => {
 		expect(iconExists(icons, 'foo1')).toBe(false);
 
 		// Load cache
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		expect(browserStorageConfig).toEqual({
 			local: true,
@@ -516,7 +516,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Load data
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -631,7 +631,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Load data
-		loadBrowserStorageCache();
+		initBrowserStorage();
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
