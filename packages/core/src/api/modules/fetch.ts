@@ -9,16 +9,10 @@ import type {
 import { getAPIConfig } from '../config';
 
 /**
- * Cache
- */
-const maxLengthCache: Record<string, number> = {};
-const pathCache: Record<string, string> = {};
-
-/**
  * Get fetch function
  */
 type FetchType = typeof fetch;
-const detectFetch = (): FetchType | null => {
+const detectFetch = (): FetchType | undefined => {
 	let callback;
 
 	// Try global fetch
@@ -30,14 +24,12 @@ const detectFetch = (): FetchType | null => {
 	} catch (err) {
 		//
 	}
-
-	return null;
 };
 
 /**
  * Fetch function
  */
-let fetchModule: FetchType | null = detectFetch();
+let fetchModule: FetchType | undefined = detectFetch();
 
 /**
  * Set custom fetch() function
@@ -81,10 +73,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 			config.maxURL - maxHostLength - config.path.length - url.length;
 	}
 
-	// Cache stuff and return result
-	const cacheKey = provider + ':' + prefix;
-	pathCache[provider] = config.path;
-	maxLengthCache[cacheKey] = result;
+	// Return result
 	return result;
 }
 
@@ -106,10 +95,7 @@ const prepare: IconifyAPIPrepareIconsQuery = (
 	const results: IconifyAPIIconsQueryParams[] = [];
 
 	// Get maximum icons list length
-	let maxLength = maxLengthCache[prefix];
-	if (maxLength === void 0) {
-		maxLength = calculateMaxLength(provider, prefix);
-	}
+	const maxLength = calculateMaxLength(provider, prefix);
 
 	// Split icons
 	const type = 'icons';
@@ -146,15 +132,10 @@ const prepare: IconifyAPIPrepareIconsQuery = (
  */
 function getPath(provider?: string): string {
 	if (typeof provider === 'string') {
-		if (pathCache[provider] === void 0) {
-			const config = getAPIConfig(provider);
-			if (!config) {
-				return '/';
-			}
-			pathCache[provider] = config.path;
+		const config = getAPIConfig(provider);
+		if (config) {
+			return config.path;
 		}
-
-		return pathCache[provider];
 	}
 
 	// No provider config, assume path is '/'

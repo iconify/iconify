@@ -15,13 +15,9 @@ export function listToIcons(
 		const icon: IconifyIconName =
 			typeof item === 'string'
 				? (stringToIcon(item, false, simpleNames) as IconifyIconName)
-				: item;
+				: { ...item };
 		if (!validate || validateIcon(icon, simpleNames)) {
-			result.push({
-				provider: icon.provider,
-				prefix: icon.prefix,
-				name: icon.name,
-			});
+			result.push(icon);
 		}
 	});
 

@@ -191,11 +191,6 @@ describe('Testing saving to localStorage', () => {
 				},
 			},
 		};
-		const item0: BrowserStorageItem = {
-			cached: Math.floor(Date.now() / browserStorageHour),
-			provider,
-			data: icon0,
-		};
 
 		// lastModified is newer than first entry: first entry should be deleted
 		const icon1: IconifyJSON = {

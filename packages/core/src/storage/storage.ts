@@ -116,35 +116,27 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 	let allIcons: string[] = [];
 
 	// Get providers
-	let providers: string[];
-	if (typeof provider === 'string') {
-		providers = [provider];
-	} else {
-		providers = Object.keys(dataStorage);
-	}
+	const providers =
+		typeof provider === 'string' ? [provider] : Object.keys(dataStorage);
 
 	// Get all icons
 	providers.forEach((provider) => {
-		let prefixes: string[];
-
-		if (typeof provider === 'string' && typeof prefix === 'string') {
-			prefixes = [prefix];
-		} else {
-			prefixes = dataStorage[provider]
-				? Object.keys(dataStorage[provider])
-				: [];
-		}
+		const prefixes =
+			typeof provider === 'string' && typeof prefix === 'string'
+				? [prefix]
+				: Object.keys(dataStorage[provider] || {});
 
 		prefixes.forEach((prefix) => {
 			const storage = getStorage(provider, prefix);
-			const icons = Object.keys(storage.icons).map(
-				(name) =>
-					(provider !== '' ? '@' + provider + ':' : '') +
-					prefix +
-					':' +
-					name
+			allIcons = allIcons.concat(
+				Object.keys(storage.icons).map(
+					(name) =>
+						(provider !== '' ? '@' + provider + ':' : '') +
+						prefix +
+						':' +
+						name
+				)
 			);
-			allIcons = allIcons.concat(icons);
 		});
 	});
 
