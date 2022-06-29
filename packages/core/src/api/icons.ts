@@ -9,7 +9,7 @@ import { listToIcons } from '../icon/list';
 import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
 import { storeInBrowserStorage } from '../browser-storage/store';
-import type { IconStorageWithIcons } from './types';
+import type { IconStorageWithAPI } from './types';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {
@@ -49,7 +49,7 @@ export type IsPending = (icon: IconifyIconName) => boolean;
 /**
  * Function called when new icons have been loaded
  */
-function loadedNewIcons(storage: IconStorageWithIcons): void {
+function loadedNewIcons(storage: IconStorageWithAPI): void {
 	// Run only once per tick, possibly joining multiple API responses in one call
 	if (!storage.iconsLoaderFlag) {
 		storage.iconsLoaderFlag = true;
@@ -63,7 +63,7 @@ function loadedNewIcons(storage: IconStorageWithIcons): void {
 /**
  * Load icons
  */
-function loadNewIcons(storage: IconStorageWithIcons, icons: string[]): void {
+function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 	// Add icons to queue
 	if (!storage.iconsToLoad) {
 		storage.iconsToLoad = icons;
@@ -124,10 +124,7 @@ function loadNewIcons(storage: IconStorageWithIcons, icons: string[]): void {
 							}
 
 							// Cache API response
-							storeInBrowserStorage(
-								provider,
-								data as IconifyJSON
-							);
+							storeInBrowserStorage(storage, data as IconifyJSON);
 						} catch (err) {
 							console.error(err);
 						}
@@ -148,7 +145,7 @@ export const isPending: IsPending = (icon: IconifyIconName): boolean => {
 	const storage = getStorage(
 		icon.provider,
 		icon.prefix
-	) as IconStorageWithIcons;
+	) as IconStorageWithAPI;
 	const pending = storage.pendingIcons;
 	return !!(pending && pending.has(icon.name));
 };
@@ -196,7 +193,7 @@ export const loadIcons: IconifyLoadIcons = (
 		string,
 		ProviderNewIconsList
 	>;
-	const sources: IconStorageWithIcons[] = [];
+	const sources: IconStorageWithAPI[] = [];
 	let lastProvider: string, lastPrefix: string;
 
 	sortedIcons.pending.forEach((icon) => {
@@ -224,7 +221,7 @@ export const loadIcons: IconifyLoadIcons = (
 	sortedIcons.pending.forEach((icon) => {
 		const { provider, prefix, name } = icon;
 
-		const storage = getStorage(provider, prefix) as IconStorageWithIcons;
+		const storage = getStorage(provider, prefix) as IconStorageWithAPI;
 		const pendingQueue =
 			storage.pendingIcons || (storage.pendingIcons = new Set());
 

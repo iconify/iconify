@@ -2,10 +2,11 @@ import type { IconifyJSON } from '@iconify/types';
 import type { BrowserStorageItem } from '../../lib/browser-storage/types';
 import { initBrowserStorage } from '../../lib/browser-storage';
 import {
-	browserStorageItemsCount,
 	browserStorageConfig,
 	browserStorageEmptyItems,
 } from '../../lib/browser-storage/data';
+import { getBrowserStorageItemsCount } from '../../lib/browser-storage/count';
+import { getBrowserStorage } from '../../lib/browser-storage/global';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 import {
@@ -47,6 +48,16 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Only locaStorage should be available
+		expect(getBrowserStorage('local')).toBeDefined();
+		expect(getBrowserStorage('session')).toBeUndefined();
+
+		// 1 icon
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -62,13 +73,9 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 	});
 
@@ -120,13 +127,9 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 	});
 
@@ -161,6 +164,12 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Counter should be 1 before parsing it
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -176,14 +185,16 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// Counter should have changed to 0
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
 	});
 
 	it('Bad icon set', () => {
@@ -215,6 +226,12 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Counter should be 1 before parsing it
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -230,14 +247,16 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// Counter should have changed to 0
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
 	});
 
 	it('Wrong counter', () => {
@@ -267,6 +286,12 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Counter should be 0
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -282,13 +307,9 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 	});
 
@@ -319,6 +340,12 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Counter should be 5 before validation
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			5
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo')).toBe(false);
@@ -334,14 +361,16 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// Counter should be 1 after validation
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
 	});
 
 	it('Missing entries', () => {
@@ -386,6 +415,12 @@ describe('Testing loading from localStorage', () => {
 			localStorage: cache,
 		});
 
+		// Counter should be 5 before validation
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			5
+		);
+
 		// Check icon storage
 		const icons = getStorage(provider, prefix);
 		expect(iconExists(icons, 'foo1')).toBe(false);
@@ -403,14 +438,16 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 5,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [3, 2, 0], // reserse order
-			session: [],
+			local: new Set([3, 2, 0]), // reserse order
+			session: new Set(),
 		});
+
+		// Counter should be 5 after validation
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			5
+		);
 	});
 
 	it('Using both storage options', () => {
@@ -490,13 +527,9 @@ describe('Testing loading from localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 6,
-			session: 3,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [4, 2, 0],
-			session: [1],
+			local: new Set([4, 2, 0]),
+			session: new Set([1]),
 		});
 	});
 });

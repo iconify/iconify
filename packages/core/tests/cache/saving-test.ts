@@ -3,10 +3,11 @@ import type { BrowserStorageItem } from '../../lib/browser-storage/types';
 import { storeInBrowserStorage } from '../../lib/browser-storage/store';
 import { initBrowserStorage } from '../../lib/browser-storage';
 import {
-	browserStorageItemsCount,
 	browserStorageConfig,
 	browserStorageEmptyItems,
 } from '../../lib/browser-storage/data';
+import { getBrowserStorageItemsCount } from '../../lib/browser-storage/count';
+import { getBrowserStorage } from '../../lib/browser-storage/global';
 import { getStorage, iconExists } from '../../lib/storage/storage';
 import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 import {
@@ -24,6 +25,7 @@ describe('Testing saving to localStorage', () => {
 	it('One icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add one icon set
 		const icon: IconifyJSON = {
@@ -46,14 +48,19 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
+
+		// Counter should be 0
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
 
 		// Save item
-		storeInBrowserStorage(provider, icon);
+		storeInBrowserStorage(storage, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -61,13 +68,9 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 
 		// Check cache
@@ -76,11 +79,17 @@ describe('Testing saving to localStorage', () => {
 		);
 		expect(cache.getItem(browserCacheCountKey)).toBe('1');
 		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
 	});
 
 	it('Multiple icon sets', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add icon sets
 		const icon0: IconifyJSON = {
@@ -115,9 +124,14 @@ describe('Testing saving to localStorage', () => {
 			localStorage: cache,
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
+
 		// Save items
-		storeInBrowserStorage(provider, icon0);
-		storeInBrowserStorage(provider, icon1);
+		storeInBrowserStorage(storage, icon0);
+		storeInBrowserStorage(storage, icon1);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -125,14 +139,15 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 2,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			2
+		);
 
 		// Check cache
 		expect(cache.getItem(browserCachePrefix + '0')).toBe(
@@ -148,6 +163,7 @@ describe('Testing saving to localStorage', () => {
 	it('Adding icon set on unused spot', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add icon sets
 		const icon0: IconifyJSON = {
@@ -195,27 +211,29 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 2,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [0],
-			session: [],
+			local: new Set([0]),
+			session: new Set(),
 		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			2
+		);
 
 		// Save items
-		storeInBrowserStorage(provider, icon0);
+		storeInBrowserStorage(storage, icon0);
 
 		// Check data
-		expect(browserStorageItemsCount).toEqual({
-			local: 2,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			2
+		);
 
 		// Check cache
 		expect(cache.getItem(browserCachePrefix + '0')).toBe(
@@ -231,6 +249,7 @@ describe('Testing saving to localStorage', () => {
 	it('Adding multiple icon sets to existing data', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add icon sets
 		const icons: IconifyJSON[] = [];
@@ -288,15 +307,18 @@ describe('Testing saving to localStorage', () => {
 			local: false,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 9, // item 9 was missing
-		});
+
+		// Counter should have changed to 9 after validation because last item is missing
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			9
+		);
+
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
+			local: new Set(),
 			// mix of expired and skipped items
 			// reverse order, 9 should not be there because it is last item
-			session: [5, 4, 2, 1],
+			session: new Set([5, 4, 2, 1]),
 		});
 		expect(cache.getItem(browserCacheCountKey)).toBe('9');
 
@@ -316,14 +338,10 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Add item 5
-		storeInBrowserStorage(provider, icons[5]);
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 9,
-		});
+		storeInBrowserStorage(storage, icons[5]);
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [4, 2, 1],
+			local: new Set(),
+			session: new Set([4, 2, 1]),
 		});
 		expect(cache.getItem(browserCacheCountKey)).toBe('9');
 
@@ -331,39 +349,27 @@ describe('Testing saving to localStorage', () => {
 		const list = [4, 2, 1];
 		list.slice(0).forEach((index) => {
 			expect(list.shift()).toBe(index);
-			storeInBrowserStorage(provider, icons[index]);
-			expect(browserStorageItemsCount).toEqual({
-				local: 0,
-				session: 9,
-			});
+			storeInBrowserStorage(storage, icons[index]);
 			expect(browserStorageEmptyItems).toEqual({
-				local: [],
-				session: list,
+				local: new Set(),
+				session: new Set(list),
 			});
 			expect(cache.getItem(browserCacheCountKey)).toBe('9');
 		});
 
 		// Add item 10
-		storeInBrowserStorage(provider, icons[10]);
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 10,
-		});
+		storeInBrowserStorage(storage, icons[10]);
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 		expect(cache.getItem(browserCacheCountKey)).toBe('10');
 
 		// Add item 11
-		storeInBrowserStorage(provider, icons[11]);
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 11,
-		});
+		storeInBrowserStorage(storage, icons[11]);
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 		expect(cache.getItem(browserCacheCountKey)).toBe('11');
 	});
@@ -371,6 +377,7 @@ describe('Testing saving to localStorage', () => {
 	it('Overwrite outdated data', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add data in old format
 		cache.setItem(browserCacheVersionKey, '1.0.6');
@@ -395,8 +402,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo1')).toBe(false);
+		expect(iconExists(storage, 'foo1')).toBe(false);
 
 		// Load cache
 		initBrowserStorage();
@@ -405,13 +411,9 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 
 		// Add one icon set
@@ -430,10 +432,10 @@ describe('Testing saving to localStorage', () => {
 		};
 
 		// Save item
-		storeInBrowserStorage(provider, icon);
+		storeInBrowserStorage(storage, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -441,13 +443,9 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: false,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 
 		// Check cache
@@ -462,6 +460,7 @@ describe('Testing saving to localStorage', () => {
 		const prefix = nextPrefix();
 		const cache1 = createCache();
 		const cache2 = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add icon sets to localStorage
 		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -523,22 +522,27 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 3,
-			session: 4,
-		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			3
+		);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			4
+		);
+
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 
 		// Check icon storage
-		const iconsStorage = getStorage(provider, prefix);
-		for (let i = 0; i < browserStorageItemsCount.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
+		for (let i = 0; i < 3; i++) {
+			expect(iconExists(storage, 'foo' + i.toString())).toBe(true);
 		}
-		for (let i = 0; i < browserStorageItemsCount.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
+		for (let i = 0; i < 4; i++) {
+			expect(iconExists(storage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Add new item to localStorage
@@ -555,17 +559,22 @@ describe('Testing saving to localStorage', () => {
 			provider,
 			data: icon,
 		};
-		storeInBrowserStorage(provider, icon);
+		storeInBrowserStorage(storage, icon);
 
 		// Check data
-		expect(browserStorageItemsCount).toEqual({
-			local: 4, // +1
-			session: 4,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			4 // +1
+		);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			4
+		);
 
 		// Check cache
 		expect(cache1.getItem(browserCachePrefix + '3')).toBe(
@@ -577,6 +586,7 @@ describe('Testing saving to localStorage', () => {
 		const prefix = nextPrefix();
 		const cache1 = createCache();
 		const cache2 = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add icon sets to localStorage
 		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -638,22 +648,26 @@ describe('Testing saving to localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 3,
-			session: 4,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			3
+		);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			4
+		);
+
 		// Check icon storage
-		const iconsStorage = getStorage(provider, prefix);
-		for (let i = 0; i < browserStorageItemsCount.local; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(true);
+		for (let i = 0; i < 3; i++) {
+			expect(iconExists(storage, 'foo' + i.toString())).toBe(true);
 		}
-		for (let i = 0; i < browserStorageItemsCount.session; i++) {
-			expect(iconExists(iconsStorage, 'bar' + i.toString())).toBe(true);
+		for (let i = 0; i < 4; i++) {
+			expect(iconExists(storage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Set localStorage to read-only
@@ -673,17 +687,22 @@ describe('Testing saving to localStorage', () => {
 			provider,
 			data: icon,
 		};
-		storeInBrowserStorage(provider, icon);
+		storeInBrowserStorage(storage, icon);
 
 		// Check data
-		expect(browserStorageItemsCount).toEqual({
-			local: 3,
-			session: 5,
-		});
 		expect(browserStorageEmptyItems).toEqual({
-			local: [],
-			session: [],
+			local: new Set(),
+			session: new Set(),
 		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			3
+		);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			5 // +1
+		);
 
 		// Check cache
 		expect(cache2.getItem(browserCachePrefix + '4')).toBe(

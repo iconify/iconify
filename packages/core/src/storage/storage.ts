@@ -27,7 +27,7 @@ export interface IconStorage {
 /**
  * Storage by provider and prefix
  */
-const storage = Object.create(null) as Record<
+export const dataStorage = Object.create(null) as Record<
 	string,
 	Record<string, IconStorage>
 >;
@@ -48,14 +48,16 @@ export function newStorage(provider: string, prefix: string): IconStorage {
  * Get storage for provider and prefix
  */
 export function getStorage(provider: string, prefix: string): IconStorage {
-	if (storage[provider] === void 0) {
-		storage[provider] = Object.create(null) as Record<string, IconStorage>;
-	}
-	const providerStorage = storage[provider];
-	if (providerStorage[prefix] === void 0) {
-		providerStorage[prefix] = newStorage(provider, prefix);
-	}
-	return providerStorage[prefix];
+	const providerStorage =
+		dataStorage[provider] ||
+		(dataStorage[provider] = Object.create(null) as Record<
+			string,
+			IconStorage
+		>);
+	return (
+		providerStorage[prefix] ||
+		(providerStorage[prefix] = newStorage(provider, prefix))
+	);
 }
 
 /**
@@ -68,7 +70,7 @@ export function addIconSet(storage: IconStorage, data: IconifyJSON): string[] {
 		return [];
 	}
 
-	return parseIconSet(data, (name, icon: FullIconifyIcon | null) => {
+	return parseIconSet(data, (name: string, icon: FullIconifyIcon | null) => {
 		if (icon) {
 			storage.icons[name] = icon;
 		} else {
@@ -118,7 +120,7 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 	if (typeof provider === 'string') {
 		providers = [provider];
 	} else {
-		providers = Object.keys(storage);
+		providers = Object.keys(dataStorage);
 	}
 
 	// Get all icons
@@ -128,10 +130,9 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 		if (typeof provider === 'string' && typeof prefix === 'string') {
 			prefixes = [prefix];
 		} else {
-			prefixes =
-				storage[provider] === void 0
-					? []
-					: Object.keys(storage[provider]);
+			prefixes = dataStorage[provider]
+				? Object.keys(dataStorage[provider])
+				: [];
 		}
 
 		prefixes.forEach((prefix) => {

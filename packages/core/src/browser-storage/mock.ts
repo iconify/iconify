@@ -1,6 +1,5 @@
 import { mockWindow } from './global';
 import {
-	browserStorageItemsCount,
 	browserStorageConfig,
 	browserStorageEmptyItems,
 	setBrowserStorageStatus,
@@ -101,7 +100,6 @@ export function reset(fakeWindow: Record<string, typeof localStorage>): void {
 	setBrowserStorageStatus(false);
 	for (const key in browserStorageConfig) {
 		browserStorageConfig[key as BrowserStorageType] = true;
-		browserStorageItemsCount[key as BrowserStorageType] = 0;
-		browserStorageEmptyItems[key as BrowserStorageType] = [];
+		browserStorageEmptyItems[key as BrowserStorageType] = new Set();
 	}
 }

@@ -1,5 +1,5 @@
 import { updateCallbacks, storeCallback } from '../../lib/api/callbacks';
-import type { IconStorageWithIcons } from '../../lib/api/types';
+import type { IconStorageWithAPI } from '../../lib/api/types';
 import { sortIcons } from '../../lib/icon/sort';
 import { getStorage, addIconSet } from '../../lib/storage/storage';
 
@@ -19,7 +19,7 @@ describe('Testing API callbacks', () => {
 		const prefix = nextPrefix();
 		let counter = 0;
 
-		const storage = getStorage(provider, prefix) as IconStorageWithIcons;
+		const storage = getStorage(provider, prefix) as IconStorageWithAPI;
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
 				expect(unsubscribe).toBe(abort);
@@ -139,7 +139,7 @@ describe('Testing API callbacks', () => {
 		const provider = '';
 		const prefix = nextPrefix();
 
-		const storage = getStorage(provider, prefix) as IconStorageWithIcons;
+		const storage = getStorage(provider, prefix) as IconStorageWithAPI;
 		addIconSet(storage, {
 			prefix,
 			icons: {
@@ -186,7 +186,7 @@ describe('Testing API callbacks', () => {
 		const prefix = nextPrefix();
 		let counter = 0;
 
-		const storage = getStorage(provider, prefix) as IconStorageWithIcons;
+		const storage = getStorage(provider, prefix) as IconStorageWithAPI;
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
 				expect(unsubscribe).toBe(abort);
@@ -286,8 +286,8 @@ describe('Testing API callbacks', () => {
 		const prefix2 = nextPrefix();
 		let counter = 0;
 
-		const storage1 = getStorage(provider, prefix1) as IconStorageWithIcons;
-		const storage2 = getStorage(provider, prefix2) as IconStorageWithIcons;
+		const storage1 = getStorage(provider, prefix1) as IconStorageWithAPI;
+		const storage2 = getStorage(provider, prefix2) as IconStorageWithAPI;
 
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {
@@ -398,8 +398,8 @@ describe('Testing API callbacks', () => {
 		const prefix2 = nextPrefix();
 		let counter = 0;
 
-		const storage1 = getStorage(provider1, prefix1) as IconStorageWithIcons;
-		const storage2 = getStorage(provider2, prefix2) as IconStorageWithIcons;
+		const storage1 = getStorage(provider1, prefix1) as IconStorageWithAPI;
+		const storage2 = getStorage(provider2, prefix2) as IconStorageWithAPI;
 
 		const abort = storeCallback(
 			(loaded, missing, pending, unsubscribe) => {

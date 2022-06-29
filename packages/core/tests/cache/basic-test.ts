@@ -1,14 +1,13 @@
 import { initBrowserStorage } from '../../lib/browser-storage';
-import {
-	browserStorageItemsCount,
-	browserStorageConfig,
-} from '../../lib/browser-storage/data';
+import { browserStorageConfig } from '../../lib/browser-storage/data';
 import {
 	browserCacheCountKey,
 	browserCachePrefix,
 	browserCacheVersion,
 	browserCacheVersionKey,
 } from '../../lib/browser-storage/config';
+import { getBrowserStorageItemsCount } from '../../lib/browser-storage/count';
+import { getBrowserStorage } from '../../lib/browser-storage/global';
 import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 
 describe('Testing mocked localStorage', () => {
@@ -22,10 +21,10 @@ describe('Testing mocked localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+
+		// No storage available
+		expect(getBrowserStorage('local')).toBeUndefined();
+		expect(getBrowserStorage('session')).toBeUndefined();
 
 		// Attempt to load
 		initBrowserStorage();
@@ -34,12 +33,6 @@ describe('Testing mocked localStorage', () => {
 		expect(browserStorageConfig).toEqual({
 			local: false,
 			session: false,
-		});
-
-		// Nothing should have loaded
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
 		});
 	});
 
@@ -53,10 +46,15 @@ describe('Testing mocked localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+
+		// Only locaStorage should be available
+		expect(getBrowserStorage('local')).toBeDefined();
+		expect(getBrowserStorage('session')).toBeUndefined();
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
 
 		// Attempt to load
 		initBrowserStorage();
@@ -68,10 +66,10 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// Nothing should have loaded
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
 	});
 
 	it('Restricted localStorage', () => {
@@ -112,10 +110,10 @@ describe('Testing mocked localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+
+		// Storage should not be available
+		expect(getBrowserStorage('local')).toBeUndefined();
+		expect(getBrowserStorage('session')).toBeUndefined();
 
 		// Attempt to load
 		initBrowserStorage();
@@ -124,12 +122,6 @@ describe('Testing mocked localStorage', () => {
 		expect(browserStorageConfig).toEqual({
 			local: false,
 			session: false,
-		});
-
-		// Nothing should have loaded
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
 		});
 	});
 
@@ -166,10 +158,10 @@ describe('Testing mocked localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+
+		// localStorage should be available
+		expect(getBrowserStorage('local')).toBeDefined();
+		expect(getBrowserStorage('session')).toBeUndefined();
 
 		// Attempt to load
 		initBrowserStorage();
@@ -181,10 +173,10 @@ describe('Testing mocked localStorage', () => {
 		});
 
 		// One item should be in localStorage
-		expect(browserStorageItemsCount).toEqual({
-			local: 1,
-			session: 0,
-		});
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
 	});
 
 	it('localStorage and sessionStorage', () => {
@@ -198,10 +190,20 @@ describe('Testing mocked localStorage', () => {
 			local: true,
 			session: true,
 		});
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
-		});
+
+		// Storage should be available
+		expect(getBrowserStorage('local')).toBeDefined();
+		expect(getBrowserStorage('session')).toBeDefined();
+
+		// Storage should be empty
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('session')!)).toBe(
+			0
+		);
 
 		// Attempt to load
 		initBrowserStorage();
@@ -210,12 +212,6 @@ describe('Testing mocked localStorage', () => {
 		expect(browserStorageConfig).toEqual({
 			local: true,
 			session: true,
-		});
-
-		// Empty storage
-		expect(browserStorageItemsCount).toEqual({
-			local: 0,
-			session: 0,
 		});
 	});
 });

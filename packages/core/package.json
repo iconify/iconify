@@ -73,6 +73,10 @@
 			"require": "./lib/browser-storage/data.cjs",
 			"import": "./lib/browser-storage/data.mjs"
 		},
+		"./lib/browser-storage/foreach": {
+			"require": "./lib/browser-storage/foreach.cjs",
+			"import": "./lib/browser-storage/foreach.mjs"
+		},
 		"./lib/browser-storage/functions": {
 			"require": "./lib/browser-storage/functions.cjs",
 			"import": "./lib/browser-storage/functions.mjs"

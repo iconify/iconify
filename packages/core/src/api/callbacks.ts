@@ -3,12 +3,12 @@ import type {
 	IconifyIconLoaderAbort,
 } from './icons';
 import type { SortedIcons } from '../icon/sort';
-import type { APICallbackItem, IconStorageWithIcons } from './types';
+import type { APICallbackItem, IconStorageWithAPI } from './types';
 
 /**
  * Remove callback
  */
-function removeCallback(storages: IconStorageWithIcons[], id: number): void {
+function removeCallback(storages: IconStorageWithAPI[], id: number): void {
 	storages.forEach((storage) => {
 		const items = storage.loaderCallbacks;
 		if (items) {
@@ -20,7 +20,7 @@ function removeCallback(storages: IconStorageWithIcons[], id: number): void {
 /**
  * Update all callbacks for provider and prefix
  */
-export function updateCallbacks(storage: IconStorageWithIcons): void {
+export function updateCallbacks(storage: IconStorageWithAPI): void {
 	if (!storage.pendingCallbacksFlag) {
 		storage.pendingCallbacksFlag = true;
 		setTimeout(() => {
@@ -101,7 +101,7 @@ let idCounter = 0;
 export function storeCallback(
 	callback: IconifyIconLoaderCallback,
 	icons: SortedIcons,
-	pendingSources: IconStorageWithIcons[]
+	pendingSources: IconStorageWithAPI[]
 ): IconifyIconLoaderAbort {
 	// Create unique id and abort function
 	const id = idCounter++;

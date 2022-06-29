@@ -1,10 +1,13 @@
 import type { IconifyJSON } from '@iconify/types';
+import type { IconStorage } from '../storage/storage';
 import { browserCachePrefix, browserStorageHour } from './config';
-import { setBrowserStorageItemsCount } from './count';
+import {
+	getBrowserStorageItemsCount,
+	setBrowserStorageItemsCount,
+} from './count';
 import {
 	browserStorageConfig,
 	browserStorageEmptyItems,
-	browserStorageItemsCount,
 	browserStorageStatus,
 } from './data';
 import { getBrowserStorage } from './global';
@@ -14,7 +17,7 @@ import type { BrowserStorageItem, BrowserStorageType } from './types';
 /**
  * Function to cache icons
  */
-export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
+export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 	if (!browserStorageStatus) {
 		initBrowserStorage();
 	}
@@ -30,11 +33,16 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 		}
 
 		// Get item index
-		let index = browserStorageEmptyItems[key].shift();
-		if (index === void 0) {
+		const set = browserStorageEmptyItems[key];
+		let index: number;
+		if (set.size) {
+			// Remove item from set
+			index = Array.from(set).shift() as number;
+			set.delete(index);
+		} else {
 			// Create new index
-			index = browserStorageItemsCount[key];
-			if (!setBrowserStorageItemsCount(func, key, index + 1)) {
+			index = getBrowserStorageItemsCount(func);
+			if (!setBrowserStorageItemsCount(func, index + 1)) {
 				return;
 			}
 		}
@@ -43,17 +51,19 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 		try {
 			const item: BrowserStorageItem = {
 				cached: Math.floor(Date.now() / browserStorageHour),
-				provider,
+				provider: storage.provider,
 				data,
 			};
 			func.setItem(
 				browserCachePrefix + index.toString(),
 				JSON.stringify(item)
 			);
-			return true;
 		} catch (err) {
-			//
+			return;
 		}
+
+		// Success
+		return true;
 	}
 
 	// Do not store empty sets

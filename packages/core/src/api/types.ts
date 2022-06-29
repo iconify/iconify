@@ -25,7 +25,7 @@ export interface APICallbackItem {
 /**
  * Add custom stuff to storage
  */
-export interface IconStorageWithIcons extends IconStorage {
+export interface IconStorageWithAPI extends IconStorage {
 	/**
 	 * List of icons that are being loaded, added to storage
 	 *
