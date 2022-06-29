@@ -1,18 +1,15 @@
 import { browserCacheCountKey } from './config';
+import { getStoredItem, setStoredItem } from './item';
+import type { BrowserStorageInstance } from './types';
 
 /**
  * Change current count for storage
  */
 export function setBrowserStorageItemsCount(
-	storage: typeof localStorage,
+	storage: BrowserStorageInstance,
 	value: number
 ): true | undefined {
-	try {
-		storage.setItem(browserCacheCountKey, value.toString());
-		return true;
-	} catch (err) {
-		//
-	}
+	return setStoredItem(storage, browserCacheCountKey, value.toString());
 }
 
 /**
@@ -21,5 +18,7 @@ export function setBrowserStorageItemsCount(
 export function getBrowserStorageItemsCount(
 	storage: typeof localStorage
 ): number {
-	return parseInt(storage.getItem(browserCacheCountKey) as string) || 0;
+	return (
+		parseInt(getStoredItem(storage, browserCacheCountKey) as string) || 0
+	);
 }

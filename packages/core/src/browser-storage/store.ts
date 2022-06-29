@@ -12,7 +12,12 @@ import {
 } from './data';
 import { getBrowserStorage } from './global';
 import { initBrowserStorage } from './index';
-import type { BrowserStorageItem, BrowserStorageType } from './types';
+import { setStoredItem } from './item';
+import type {
+	BrowserStorageInstance,
+	BrowserStorageItem,
+	BrowserStorageType,
+} from './types';
 
 /**
  * Function to cache icons
@@ -23,12 +28,8 @@ export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 	}
 
 	function store(key: BrowserStorageType): true | undefined {
-		if (!browserStorageConfig[key]) {
-			return;
-		}
-
-		const func = getBrowserStorage(key);
-		if (!func) {
+		let func: BrowserStorageInstance | undefined;
+		if (!browserStorageConfig[key] || !(func = getBrowserStorage(key))) {
 			return;
 		}
 
@@ -37,8 +38,7 @@ export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 		let index: number;
 		if (set.size) {
 			// Remove item from set
-			index = Array.from(set).shift() as number;
-			set.delete(index);
+			set.delete((index = Array.from(set).shift() as number));
 		} else {
 			// Create new index
 			index = getBrowserStorageItemsCount(func);
@@ -48,22 +48,17 @@ export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 		}
 
 		// Create and save item
-		try {
-			const item: BrowserStorageItem = {
-				cached: Math.floor(Date.now() / browserStorageHour),
-				provider: storage.provider,
-				data,
-			};
-			func.setItem(
-				browserCachePrefix + index.toString(),
-				JSON.stringify(item)
-			);
-		} catch (err) {
-			return;
-		}
+		const item: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
+			provider: storage.provider,
+			data,
+		};
 
-		// Success
-		return true;
+		return setStoredItem(
+			func,
+			browserCachePrefix + index.toString(),
+			JSON.stringify(item)
+		);
 	}
 
 	// Do not store empty sets

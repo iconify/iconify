@@ -11,6 +11,7 @@ import {
 } from './count';
 import { browserStorageEmptyItems } from './data';
 import { getBrowserStorage } from './global';
+import { getStoredItem, removeStoredItem, setStoredItem } from './item';
 import type { BrowserStorageConfig, BrowserStorageItem } from './types';
 
 // Result of callback. false = delete item
@@ -34,33 +35,20 @@ export function iterateBrowserStorage(
 		return;
 	}
 
-	try {
-		// Get version
-		const version = func.getItem(browserCacheVersionKey);
-		if (version !== browserCacheVersion) {
-			if (version) {
-				// Version is set, but invalid - remove old entries
-				try {
-					const total = getBrowserStorageItemsCount(func);
-					for (let i = 0; i < total; i++) {
-						func.removeItem(browserCachePrefix + i.toString());
-					}
-				} catch (err) {
-					//
-				}
+	// Get version
+	const version = getStoredItem(func, browserCacheVersionKey);
+	if (version !== browserCacheVersion) {
+		if (version) {
+			// Version is set, but invalid - remove old entries
+			const total = getBrowserStorageItemsCount(func);
+			for (let i = 0; i < total; i++) {
+				removeStoredItem(func, browserCachePrefix + i.toString());
 			}
-
-			// Empty data
-			try {
-				func.setItem(browserCacheVersionKey, browserCacheVersion);
-			} catch (err) {
-				//
-			}
-			setBrowserStorageItemsCount(func, 0);
-			return;
 		}
-	} catch (err) {
-		// Failed
+
+		// Empty data
+		setStoredItem(func, browserCacheVersionKey, browserCacheVersion);
+		setBrowserStorageItemsCount(func, 0);
 		return;
 	}
 
@@ -72,7 +60,7 @@ export function iterateBrowserStorage(
 	// Parse item
 	const parseItem = (index: number): true | undefined => {
 		const name = browserCachePrefix + index.toString();
-		const item = func.getItem(name);
+		const item = getStoredItem(func, name);
 
 		if (typeof item !== 'string') {
 			// Does not exist
@@ -100,7 +88,7 @@ export function iterateBrowserStorage(
 		}
 
 		// Remove item
-		func.removeItem(name);
+		removeStoredItem(func, name);
 	};
 
 	let total = getBrowserStorageItemsCount(func);

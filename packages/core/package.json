@@ -93,6 +93,10 @@
 			"require": "./lib/browser-storage/index.cjs",
 			"import": "./lib/browser-storage/index.mjs"
 		},
+		"./lib/browser-storage/item": {
+			"require": "./lib/browser-storage/item.cjs",
+			"import": "./lib/browser-storage/item.mjs"
+		},
 		"./lib/browser-storage/mock": {
 			"require": "./lib/browser-storage/mock.cjs",
 			"import": "./lib/browser-storage/mock.mjs"
