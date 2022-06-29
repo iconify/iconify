@@ -2,7 +2,6 @@ import type {
 	BrowserStorageConfig,
 	BrowserStorageCount,
 	BrowserStorageEmptyList,
-	BrowserStorageStatus,
 } from './types';
 
 /**
@@ -32,8 +31,8 @@ export const browserStorageEmptyItems: BrowserStorageEmptyList = {
 /**
  * Flag to check if storage has been loaded
  */
-export let browserStorageStatus: BrowserStorageStatus = false;
+export let browserStorageStatus = false;
 
-export function setBrowserStorageStatus(status: BrowserStorageStatus) {
+export function setBrowserStorageStatus(status: boolean) {
 	browserStorageStatus = status;
 }

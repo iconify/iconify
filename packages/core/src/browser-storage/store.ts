@@ -18,9 +18,6 @@ export function storeInBrowserStorage(provider: string, data: IconifyJSON) {
 	if (!browserStorageStatus) {
 		initBrowserStorage();
 	}
-	if (browserStorageStatus === 'loading') {
-		return;
-	}
 
 	function store(key: BrowserStorageType): true | undefined {
 		if (!browserStorageConfig[key]) {

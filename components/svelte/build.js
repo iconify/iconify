@@ -1,8 +1,5 @@
 const fs = require('fs');
-const path = require('path');
 const child_process = require('child_process');
-
-const coreDir = path.dirname(require.resolve('@iconify/core/package.json'));
 
 // List of commands to run
 const commands = [];
@@ -13,7 +10,6 @@ const extractor = (name) =>
 
 // Parse command line
 const compile = {
-	core: false,
 	tsc: true,
 	bundles: true,
 	api: true,
@@ -61,28 +57,12 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.dist && !fileExists(coreDir + '/lib/modules.mjs')) {
-	compile.core = true;
-}
-
-// Compile core before compiling this package
-if (compile.core) {
-	commands.push({
-		cmd: 'npm',
-		args: ['run', 'build'],
-		cwd: coreDir,
-	});
-}
-
-// Compile other packages
+// Compile packages
 Object.keys(compile).forEach((key) => {
 	if (!compile[key]) {
 		return;
 	}
 	switch (key) {
-		case 'core':
-			break;
-
 		case 'api':
 			apiFiles().forEach((name) => {
 				const cmd = extractor(name).split(' ');

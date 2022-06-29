@@ -1,21 +1,17 @@
 /* eslint-disable */
 const fs = require('fs');
-const path = require('path');
 const child_process = require('child_process');
-
-const coreDir = path.dirname(require.resolve('@iconify/core/package.json'));
 
 // List of commands to run
 const commands = [];
 
 // Parse command line
 const compile = {
-	core: false,
 	lib: true,
 	dist: true,
 	api: true,
 };
-process.argv.slice(2).forEach(cmd => {
+process.argv.slice(2).forEach((cmd) => {
 	if (cmd.slice(0, 2) !== '--') {
 		return;
 	}
@@ -39,7 +35,7 @@ process.argv.slice(2).forEach(cmd => {
 
 			case 'only':
 				// disable other modules
-				Object.keys(compile).forEach(key2 => {
+				Object.keys(compile).forEach((key2) => {
 					compile[key2] = key2 === key;
 				});
 				break;
@@ -48,7 +44,7 @@ process.argv.slice(2).forEach(cmd => {
 });
 
 // Check if required modules in same monorepo are available
-const fileExists = file => {
+const fileExists = (file) => {
 	try {
 		fs.statSync(file);
 	} catch (e) {
@@ -65,22 +61,9 @@ if (compile.api && !fileExists('./lib/IconifyIcon.d.ts')) {
 	compile.lib = true;
 }
 
-if (compile.lib && !fileExists(coreDir + '/lib/cache.mjs')) {
-	compile.core = true;
-}
-
-// Compile core before compiling this package
-if (compile.core) {
-	commands.push({
-		cmd: 'npm',
-		args: ['run', 'build'],
-		cwd: coreDir,
-	});
-}
-
-// Compile other packages
-Object.keys(compile).forEach(key => {
-	if (key !== 'core' && compile[key]) {
+// Compile packages
+Object.keys(compile).forEach((key) => {
+	if (compile[key]) {
 		commands.push({
 			cmd: 'npm',
 			args: ['run', 'build:' + key],

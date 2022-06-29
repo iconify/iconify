@@ -1,9 +1,5 @@
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import {
-	IconifyIconName,
-	IconifyIconSource,
-	stringToIcon,
-} from '@iconify/utils/lib/icon/name';
+import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
 import type { SortedIcons } from '../icon/sort';
 import { sortIcons } from '../icon/sort';
 import { storeCallback, updateCallbacks } from './callbacks';
@@ -13,6 +9,7 @@ import { listToIcons } from '../icon/list';
 import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
 import { storeInBrowserStorage } from '../browser-storage/store';
+import type { IconStorageWithIcons } from './types';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {
@@ -50,125 +47,45 @@ export type IconifyLoadIcons = (
 export type IsPending = (icon: IconifyIconName) => boolean;
 
 /**
- * List of icons that are being loaded.
- *
- * Icons are added to this list when they are being checked and
- * removed from this list when they are added to storage as
- * either an icon or a missing icon. This way same icon should
- * never be requested twice.
- *
- * [provider][prefix][icon] = time when icon was added to queue
- */
-type PrefixPendingIcons = Record<string, number>;
-type ProviderPendingIcons = Record<string, PrefixPendingIcons>;
-
-const pendingIcons = Object.create(null) as Record<
-	string,
-	ProviderPendingIcons
->;
-
-/**
- * List of icons that are waiting to be loaded.
- *
- * List is passed to API module, then cleared.
- *
- * This list should not be used for any checks, use pendingIcons to check
- * if icons is being loaded.
- *
- * [provider][prefix] = array of icon names
- */
-type IconsToLoadPrefixItem = string[];
-type IconsToLoadProviderItem = Record<string, IconsToLoadPrefixItem>;
-
-const iconsToLoad = Object.create(null) as Record<
-	string,
-	IconsToLoadProviderItem
->;
-
-// Flags to merge multiple synchronous icon requests in one asynchronous request
-type FlagsItem = Record<string, boolean>;
-
-const loaderFlags = Object.create(null) as Record<string, FlagsItem>;
-const queueFlags = Object.create(null) as Record<string, FlagsItem>;
-
-/**
  * Function called when new icons have been loaded
  */
-function loadedNewIcons(provider: string, prefix: string): void {
+function loadedNewIcons(storage: IconStorageWithIcons): void {
 	// Run only once per tick, possibly joining multiple API responses in one call
-	if (loaderFlags[provider] === void 0) {
-		loaderFlags[provider] = Object.create(null) as FlagsItem;
-	}
-	const providerLoaderFlags = loaderFlags[provider];
-	if (!providerLoaderFlags[prefix]) {
-		providerLoaderFlags[prefix] = true;
+	if (!storage.iconsLoaderFlag) {
+		storage.iconsLoaderFlag = true;
 		setTimeout(() => {
-			providerLoaderFlags[prefix] = false;
-			updateCallbacks(provider, prefix);
+			storage.iconsLoaderFlag = false;
+			updateCallbacks(storage);
 		});
 	}
 }
 
-// Storage for errors for loadNewIcons(). Used to avoid spamming log with identical errors.
-const errorsCache = Object.create(null) as Record<string, number>;
-
 /**
  * Load icons
  */
-function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
-	function err(): void {
-		const key = (provider === '' ? '' : '@' + provider + ':') + prefix;
-		const time = Math.floor(Date.now() / 60000); // log once in a minute
-		if (errorsCache[key] < time) {
-			errorsCache[key] = time;
-			console.error(
-				'Unable to retrieve icons for "' +
-					key +
-					'" because API is not configured properly.'
-			);
-		}
-	}
-
-	// Create nested objects if needed
-	if (iconsToLoad[provider] === void 0) {
-		iconsToLoad[provider] = Object.create(null) as IconsToLoadProviderItem;
-	}
-	const providerIconsToLoad = iconsToLoad[provider];
-
-	if (queueFlags[provider] === void 0) {
-		queueFlags[provider] = Object.create(null) as FlagsItem;
-	}
-	const providerQueueFlags = queueFlags[provider];
-
-	if (pendingIcons[provider] === void 0) {
-		pendingIcons[provider] = Object.create(null) as ProviderPendingIcons;
-	}
-	const providerPendingIcons = pendingIcons[provider];
-
+function loadNewIcons(storage: IconStorageWithIcons, icons: string[]): void {
 	// Add icons to queue
-	if (providerIconsToLoad[prefix] === void 0) {
-		providerIconsToLoad[prefix] = icons;
+	if (!storage.iconsToLoad) {
+		storage.iconsToLoad = icons;
 	} else {
-		providerIconsToLoad[prefix] = providerIconsToLoad[prefix]
-			.concat(icons)
-			.sort();
+		storage.iconsToLoad = storage.iconsToLoad.concat(icons).sort();
 	}
 
 	// Trigger update on next tick, mering multiple synchronous requests into one asynchronous request
-	if (!providerQueueFlags[prefix]) {
-		providerQueueFlags[prefix] = true;
+	if (!storage.iconsQueueFlag) {
+		storage.iconsQueueFlag = true;
 		setTimeout(() => {
-			providerQueueFlags[prefix] = false;
+			storage.iconsQueueFlag = false;
+			const { provider, prefix } = storage;
 
 			// Get icons and delete queue
-			const icons = providerIconsToLoad[prefix];
-			delete providerIconsToLoad[prefix];
+			const icons = storage.iconsToLoad;
+			delete storage.iconsToLoad;
 
 			// Get API module
-			const api = getAPIModule(provider);
-			if (!api) {
-				// No way to load icons!
-				err();
+			let api: ReturnType<typeof getAPIModule>;
+			if (!icons || !(api = getAPIModule(provider))) {
+				// No icons or no way to load icons!
 				return;
 			}
 
@@ -176,8 +93,6 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 			const params = api.prepare(provider, prefix, icons);
 			params.forEach((item) => {
 				sendAPIQuery(provider, item, (data, error) => {
-					const storage = getStorage(provider, prefix);
-
 					// Check for error
 					if (typeof data !== 'object') {
 						if (error !== 404) {
@@ -201,10 +116,12 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 							}
 
 							// Remove added icons from pending list
-							const pending = providerPendingIcons[prefix];
-							parsed.forEach((name) => {
-								delete pending[name];
-							});
+							const pending = storage.pendingIcons;
+							if (pending) {
+								parsed.forEach((name) => {
+									pending.delete(name);
+								});
+							}
 
 							// Cache API response
 							storeInBrowserStorage(
@@ -217,7 +134,7 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
 					}
 
 					// Trigger update on next tick
-					loadedNewIcons(provider, prefix);
+					loadedNewIcons(storage);
 				});
 			});
 		});
@@ -228,13 +145,12 @@ function loadNewIcons(provider: string, prefix: string, icons: string[]): void {
  * Check if icon is being loaded
  */
 export const isPending: IsPending = (icon: IconifyIconName): boolean => {
-	const provider = icon.provider;
-	const prefix = icon.prefix;
-	return (
-		pendingIcons[provider] &&
-		pendingIcons[provider][prefix] &&
-		pendingIcons[provider][prefix][icon.name] !== void 0
-	);
+	const storage = getStorage(
+		icon.provider,
+		icon.prefix
+	) as IconStorageWithIcons;
+	const pending = storage.pendingIcons;
+	return !!(pending && pending.has(icon.name));
 };
 
 /**
@@ -280,59 +196,41 @@ export const loadIcons: IconifyLoadIcons = (
 		string,
 		ProviderNewIconsList
 	>;
-	const sources: IconifyIconSource[] = [];
+	const sources: IconStorageWithIcons[] = [];
 	let lastProvider: string, lastPrefix: string;
 
 	sortedIcons.pending.forEach((icon) => {
-		const provider = icon.provider;
-		const prefix = icon.prefix;
+		const { provider, prefix } = icon;
 		if (prefix === lastPrefix && provider === lastProvider) {
 			return;
 		}
 
 		lastProvider = provider;
 		lastPrefix = prefix;
-		sources.push({
-			provider,
-			prefix,
-		});
+		sources.push(getStorage(provider, prefix));
 
-		if (pendingIcons[provider] === void 0) {
-			pendingIcons[provider] = Object.create(
-				null
-			) as ProviderPendingIcons;
-		}
-		const providerPendingIcons = pendingIcons[provider];
-		if (providerPendingIcons[prefix] === void 0) {
-			providerPendingIcons[prefix] = Object.create(
-				null
-			) as PrefixPendingIcons;
-		}
-
-		if (newIcons[provider] === void 0) {
-			newIcons[provider] = Object.create(null) as ProviderNewIconsList;
-		}
-		const providerNewIcons = newIcons[provider];
-		if (providerNewIcons[prefix] === void 0) {
+		const providerNewIcons =
+			newIcons[provider] ||
+			(newIcons[provider] = Object.create(null) as ProviderNewIconsList);
+		if (!providerNewIcons[prefix]) {
 			providerNewIcons[prefix] = [];
 		}
 	});
 
 	// List of new icons
-	const time = Date.now();
-
 	// Filter pending icons list: find icons that are not being loaded yet
 	// If icon was called before, it must exist in pendingIcons or storage, but because this
 	// function is called right after sortIcons() that checks storage, icon is definitely not in storage.
 	sortedIcons.pending.forEach((icon) => {
-		const provider = icon.provider;
-		const prefix = icon.prefix;
-		const name = icon.name;
+		const { provider, prefix, name } = icon;
 
-		const pendingQueue = pendingIcons[provider][prefix];
-		if (pendingQueue[name] === void 0) {
+		const storage = getStorage(provider, prefix) as IconStorageWithIcons;
+		const pendingQueue =
+			storage.pendingIcons || (storage.pendingIcons = new Set());
+
+		if (!pendingQueue.has(name)) {
 			// New icon - add to pending queue to mark it as being loaded
-			pendingQueue[name] = time;
+			pendingQueue.add(name);
 			// Add it to new icons list to pass it to API module for loading
 			newIcons[provider][prefix].push(name);
 		}
@@ -340,11 +238,10 @@ export const loadIcons: IconifyLoadIcons = (
 
 	// Load icons on next tick to make sure result is not returned before callback is stored and
 	// to consolidate multiple synchronous loadIcons() calls into one asynchronous API call
-	sources.forEach((source) => {
-		const provider = source.provider;
-		const prefix = source.prefix;
+	sources.forEach((storage) => {
+		const { provider, prefix } = storage;
 		if (newIcons[provider][prefix].length) {
-			loadNewIcons(provider, prefix, newIcons[provider][prefix]);
+			loadNewIcons(storage, newIcons[provider][prefix]);
 		}
 	});
 

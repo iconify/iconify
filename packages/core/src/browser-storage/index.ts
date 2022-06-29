@@ -23,10 +23,10 @@ import type { BrowserStorageConfig, BrowserStorageItem } from './types';
  * Load icons from cache
  */
 export function initBrowserStorage() {
-	if (browserStorageStatus === true) {
+	if (browserStorageStatus) {
 		return;
 	}
-	setBrowserStorageStatus('loading');
+	setBrowserStorageStatus(true);
 
 	// Minimum time
 	const minTime =
@@ -66,10 +66,12 @@ export function initBrowserStorage() {
 					valid = false;
 				} else {
 					// Add icon set
+					const iconSet = data.data;
+
 					const provider = data.provider;
-					const prefix = data.data.prefix;
+					const prefix = iconSet.prefix;
 					const storage = getStorage(provider, prefix);
-					valid = addIconSet(storage, data.data).length > 0;
+					valid = addIconSet(storage, iconSet).length > 0;
 				}
 			} catch (err) {
 				valid = false;
@@ -129,9 +131,10 @@ export function initBrowserStorage() {
 		}
 	}
 
+	// Load each storage
 	for (const key in browserStorageConfig) {
 		load(key as keyof BrowserStorageConfig);
 	}
 
-	setBrowserStorageStatus(true);
+	// Check for update
 }

@@ -1,16 +1,12 @@
 /* eslint-disable */
 const fs = require('fs');
-const path = require('path');
 const child_process = require('child_process');
-
-const coreDir = path.dirname(require.resolve('@iconify/core/package.json'));
 
 // List of commands to run
 const commands = [];
 
 // Parse command line
 const compile = {
-	core: false,
 	lib: true,
 	rollup: true,
 	api: true,
@@ -58,22 +54,9 @@ const fileExists = (file) => {
 	return true;
 };
 
-if (compile.lib && !fileExists(coreDir + '/lib/cache.mjs')) {
-	compile.core = true;
-}
-
-// Compile core before compiling this package
-if (compile.core) {
-	commands.push({
-		cmd: 'npm',
-		args: ['run', 'build'],
-		cwd: coreDir,
-	});
-}
-
-// Compile other packages
+// Compile packages
 Object.keys(compile).forEach((key) => {
-	if (key !== 'core' && compile[key]) {
+	if (compile[key]) {
 		commands.push({
 			cmd: 'npm',
 			args: ['run', 'build:' + key],

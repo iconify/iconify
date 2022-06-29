@@ -57,6 +57,10 @@
 			"require": "./lib/api/query.cjs",
 			"import": "./lib/api/query.mjs"
 		},
+		"./lib/api/types": {
+			"require": "./lib/api/types.cjs",
+			"import": "./lib/api/types.mjs"
+		},
 		"./lib/browser-storage/config": {
 			"require": "./lib/browser-storage/config.cjs",
 			"import": "./lib/browser-storage/config.mjs"
