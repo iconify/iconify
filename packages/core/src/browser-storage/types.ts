@@ -19,3 +19,12 @@ export interface BrowserStorageItem {
 	provider: string;
 	data: IconifyJSON;
 }
+
+/**
+ * Add custom stuff to storage
+ */
+export interface IconStorageWithCache extends IconStorage {
+	// Last modified from browser cache, minimum of available values
+	// If not set, but icons are cached, value is -1
+	lastModifiedCached?: number;
+}

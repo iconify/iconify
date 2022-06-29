@@ -1,5 +1,8 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { BrowserStorageItem } from '../../lib/browser-storage/types';
+import type {
+	BrowserStorageItem,
+	IconStorageWithCache,
+} from '../../lib/browser-storage/types';
 import { initBrowserStorage } from '../../lib/browser-storage';
 import {
 	browserStorageConfig,
@@ -17,6 +20,7 @@ import {
 	browserStorageHour,
 	browserStorageCacheExpiration,
 } from '../../lib/browser-storage/config';
+import { getStoredItem } from '../../lib/browser-storage/item';
 
 describe('Testing loading from localStorage', () => {
 	const provider = '';
@@ -24,6 +28,7 @@ describe('Testing loading from localStorage', () => {
 	it('Valid icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -59,14 +64,15 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Load localStorage
 		initBrowserStorage();
 
-		// Icon should exist now
-		expect(iconExists(icons, 'foo')).toBe(true);
+		// Icon should exist now and lastModified should be set
+		expect(iconExists(storage, 'foo')).toBe(true);
+		expect(storage.lastModifiedCached).toBe(-1);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -83,6 +89,9 @@ describe('Testing loading from localStorage', () => {
 		const provider = nextPrefix();
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
+		const defaultStorage = getStorage('', prefix) as IconStorageWithCache;
+		const lastModified = 12345;
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -93,6 +102,7 @@ describe('Testing loading from localStorage', () => {
 			provider,
 			data: {
 				prefix: prefix,
+				lastModified,
 				icons: {
 					foo: {
 						body: '<g></g>',
@@ -101,6 +111,7 @@ describe('Testing loading from localStorage', () => {
 			},
 		};
 		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
+		expect(getStoredItem(cache, browserCachePrefix + '0')).toBeTruthy();
 
 		// Set cache
 		reset({
@@ -108,19 +119,19 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Check default provider
-		const icons2 = getStorage('', prefix);
-		expect(iconExists(icons2, 'foo')).toBe(false);
+		expect(iconExists(defaultStorage, 'foo')).toBe(false);
+		expect(defaultStorage.lastModifiedCached).toBeUndefined();
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icon should exist now
-		expect(iconExists(icons, 'foo')).toBe(true);
-		expect(iconExists(icons2, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(true);
+		expect(iconExists(defaultStorage, 'foo')).toBe(false);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -131,11 +142,16 @@ describe('Testing loading from localStorage', () => {
 			local: new Set(),
 			session: new Set(),
 		});
+
+		expect(storage.lastModifiedCached).toBe(lastModified);
+		expect(defaultStorage.lastModifiedCached).toBeUndefined();
 	});
 
 	it('Expired icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
+		const lastModified = 12345;
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -150,6 +166,7 @@ describe('Testing loading from localStorage', () => {
 			provider,
 			data: {
 				prefix: prefix,
+				lastModified,
 				icons: {
 					foo: {
 						body: '<g></g>',
@@ -158,6 +175,7 @@ describe('Testing loading from localStorage', () => {
 			},
 		};
 		cache.setItem(browserCachePrefix + '0', JSON.stringify(item));
+		expect(getStoredItem(cache, browserCachePrefix + '0')).toBeTruthy();
 
 		// Set cache
 		reset({
@@ -171,14 +189,14 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -200,6 +218,7 @@ describe('Testing loading from localStorage', () => {
 	it('Bad icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -220,6 +239,7 @@ describe('Testing loading from localStorage', () => {
 				},
 			})
 		);
+		expect(getStoredItem(cache, browserCachePrefix + '0')).toBeTruthy();
 
 		// Set cache
 		reset({
@@ -233,14 +253,13 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -257,11 +276,15 @@ describe('Testing loading from localStorage', () => {
 		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
 			0
 		);
+
+		// Item should have been deleted
+		expect(getStoredItem(cache, browserCachePrefix + '0')).toBeFalsy();
 	});
 
 	it('Wrong counter', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -293,14 +316,13 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icon should not have loaded
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -316,6 +338,7 @@ describe('Testing loading from localStorage', () => {
 	it('Missing entries at the end', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add one icon set
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -347,14 +370,13 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo')).toBe(false);
+		expect(iconExists(storage, 'foo')).toBe(false);
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icon should exist now
-		expect(iconExists(icons, 'foo')).toBe(true);
+		expect(iconExists(storage, 'foo')).toBe(true);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -376,6 +398,7 @@ describe('Testing loading from localStorage', () => {
 	it('Missing entries', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add two icon sets
 		cache.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -422,16 +445,15 @@ describe('Testing loading from localStorage', () => {
 		);
 
 		// Check icon storage
-		const icons = getStorage(provider, prefix);
-		expect(iconExists(icons, 'foo1')).toBe(false);
-		expect(iconExists(icons, 'foo4')).toBe(false);
+		expect(iconExists(storage, 'foo1')).toBe(false);
+		expect(iconExists(storage, 'foo4')).toBe(false);
 
 		// Load localStorage
 		initBrowserStorage();
 
 		// Icons should exist now
-		expect(iconExists(icons, 'foo1')).toBe(true);
-		expect(iconExists(icons, 'foo4')).toBe(true);
+		expect(iconExists(storage, 'foo1')).toBe(true);
+		expect(iconExists(storage, 'foo4')).toBe(true);
 
 		// Check data
 		expect(browserStorageConfig).toEqual({
@@ -454,6 +476,7 @@ describe('Testing loading from localStorage', () => {
 		const prefix = nextPrefix();
 		const cache1 = createCache();
 		const cache2 = createCache();
+		const storage = getStorage(provider, prefix);
 
 		// Add few icon sets
 		cache1.setItem(browserCacheVersionKey, browserCacheVersion);
@@ -507,9 +530,8 @@ describe('Testing loading from localStorage', () => {
 		});
 
 		// Check icon storage
-		const iconsStorage = getStorage(provider, prefix);
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(false);
+			expect(iconExists(storage, 'foo' + i.toString())).toBe(false);
 		}
 
 		// Load localStorage
@@ -517,9 +539,7 @@ describe('Testing loading from localStorage', () => {
 
 		// Icons should exist now, except for number 4
 		for (let i = 0; i < 6; i++) {
-			expect(iconExists(iconsStorage, 'foo' + i.toString())).toBe(
-				i !== 4
-			);
+			expect(iconExists(storage, 'foo' + i.toString())).toBe(i !== 4);
 		}
 
 		// Check data

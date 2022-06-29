@@ -1,5 +1,8 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { BrowserStorageItem } from '../../lib/browser-storage/types';
+import type {
+	BrowserStorageItem,
+	IconStorageWithCache,
+} from '../../lib/browser-storage/types';
 import { storeInBrowserStorage } from '../../lib/browser-storage/store';
 import { initBrowserStorage } from '../../lib/browser-storage';
 import {
@@ -25,7 +28,7 @@ describe('Testing saving to localStorage', () => {
 	it('One icon set', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
-		const storage = getStorage(provider, prefix);
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
 
 		// Add one icon set
 		const icon: IconifyJSON = {
@@ -49,6 +52,7 @@ describe('Testing saving to localStorage', () => {
 
 		// Check icon storage
 		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Counter should be 0
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -61,6 +65,9 @@ describe('Testing saving to localStorage', () => {
 
 		// Storing in cache should not add item to storage
 		expect(iconExists(storage, 'foo')).toBe(false);
+
+		// lastModified is missing, so should not have updated
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -89,11 +96,13 @@ describe('Testing saving to localStorage', () => {
 	it('Multiple icon sets', () => {
 		const prefix = nextPrefix();
 		const cache = createCache();
-		const storage = getStorage(provider, prefix);
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
+		const lastModified = 12345;
 
 		// Add icon sets
 		const icon0: IconifyJSON = {
 			prefix: prefix,
+			lastModified,
 			icons: {
 				foo0: {
 					body: '<g></g>',
@@ -107,6 +116,7 @@ describe('Testing saving to localStorage', () => {
 		};
 		const icon1: IconifyJSON = {
 			prefix: prefix,
+			lastModified,
 			icons: {
 				foo: {
 					body: '<g></g>',
@@ -128,6 +138,7 @@ describe('Testing saving to localStorage', () => {
 		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
 			0
 		);
+		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Save items
 		storeInBrowserStorage(storage, icon0);
@@ -144,6 +155,9 @@ describe('Testing saving to localStorage', () => {
 			session: new Set(),
 		});
 
+		// lastModified should be set
+		expect(storage.lastModifiedCached).toBe(lastModified);
+
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
 			2
@@ -157,6 +171,166 @@ describe('Testing saving to localStorage', () => {
 			JSON.stringify(item1)
 		);
 		expect(cache.getItem(browserCacheCountKey)).toBe('2');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
+	});
+
+	it('Multiple icon sets, first is outdated', () => {
+		const prefix = nextPrefix();
+		const cache = createCache();
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
+		const lastModified1 = 1234;
+		const lastModified2 = 12345;
+
+		// Add icon sets
+		const icon0: IconifyJSON = {
+			prefix: prefix,
+			lastModified: lastModified1,
+			icons: {
+				foo0: {
+					body: '<g></g>',
+				},
+			},
+		};
+		const item0: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
+			provider,
+			data: icon0,
+		};
+
+		// lastModified is newer than first entry: first entry should be deleted
+		const icon1: IconifyJSON = {
+			prefix: prefix,
+			lastModified: lastModified2,
+			icons: {
+				foo: {
+					body: '<g></g>',
+				},
+			},
+		};
+		const item1: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
+			provider,
+			data: icon1,
+		};
+
+		// Set cache
+		reset({
+			localStorage: cache,
+		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
+		expect(storage.lastModifiedCached).toBeUndefined();
+
+		// Save items
+		storeInBrowserStorage(storage, icon0);
+		storeInBrowserStorage(storage, icon1);
+
+		// Check data that should have been updated because storeCache()
+		// should call load function before first execution
+		expect(browserStorageConfig).toEqual({
+			local: true,
+			session: false,
+		});
+		expect(browserStorageEmptyItems).toEqual({
+			local: new Set(),
+			session: new Set(),
+		});
+
+		// lastModified should be set to max value
+		expect(storage.lastModifiedCached).toBe(lastModified2);
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
+
+		// Check cache
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			// Second item!
+			JSON.stringify(item1)
+		);
+		expect(cache.getItem(browserCachePrefix + '1')).toBeFalsy();
+		expect(cache.getItem(browserCacheCountKey)).toBe('1');
+		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
+	});
+
+	it('Multiple icon sets, second set is outdated', () => {
+		const prefix = nextPrefix();
+		const cache = createCache();
+		const storage = getStorage(provider, prefix) as IconStorageWithCache;
+		const lastModified1 = 12345;
+		const lastModified2 = 1234;
+
+		// Add icon sets
+		const icon0: IconifyJSON = {
+			prefix: prefix,
+			lastModified: lastModified1,
+			icons: {
+				foo0: {
+					body: '<g></g>',
+				},
+			},
+		};
+		const item0: BrowserStorageItem = {
+			cached: Math.floor(Date.now() / browserStorageHour),
+			provider,
+			data: icon0,
+		};
+
+		// Icon set with lastModified lower than previous entry should not be stored
+		const icon1: IconifyJSON = {
+			prefix: prefix,
+			lastModified: lastModified2,
+			icons: {
+				foo: {
+					body: '<g></g>',
+				},
+			},
+		};
+
+		// Set cache
+		reset({
+			localStorage: cache,
+		});
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			0
+		);
+		expect(storage.lastModifiedCached).toBeUndefined();
+
+		// Save items
+		storeInBrowserStorage(storage, icon0);
+		storeInBrowserStorage(storage, icon1);
+
+		// Check data that should have been updated because storeCache()
+		// should call load function before first execution
+		expect(browserStorageConfig).toEqual({
+			local: true,
+			session: false,
+		});
+		expect(browserStorageEmptyItems).toEqual({
+			local: new Set(),
+			session: new Set(),
+		});
+
+		// lastModified should be set to maximum value
+		expect(storage.lastModifiedCached).toBe(lastModified1);
+
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		expect(getBrowserStorageItemsCount(getBrowserStorage('local')!)).toBe(
+			1
+		);
+
+		// Check cache
+		expect(cache.getItem(browserCachePrefix + '0')).toBe(
+			JSON.stringify(item0)
+		);
+		expect(cache.getItem(browserCachePrefix + '1')).toBeFalsy();
+		expect(cache.getItem(browserCacheCountKey)).toBe('1');
 		expect(cache.getItem(browserCacheVersionKey)).toBe(browserCacheVersion);
 	});
 

@@ -10,6 +10,7 @@ import {
 	browserStorageEmptyItems,
 	browserStorageStatus,
 } from './data';
+import { iterateBrowserStorage } from './foreach';
 import { getBrowserStorage } from './global';
 import { initBrowserStorage } from './index';
 import { setStoredItem } from './item';
@@ -17,7 +18,47 @@ import type {
 	BrowserStorageInstance,
 	BrowserStorageItem,
 	BrowserStorageType,
+	IconStorageWithCache,
 } from './types';
+
+/**
+ * Update lastModified in storage
+ *
+ * Returns false if item should not be added to storage because lastModified is too low
+ */
+export function updateLastModified(
+	storage: IconStorageWithCache,
+	lastModified: number
+): boolean {
+	const lastValue = storage.lastModifiedCached;
+	if (
+		// Matches or newer
+		lastValue &&
+		lastValue >= lastModified
+	) {
+		// Nothing to update
+		return lastValue === lastModified;
+	}
+
+	// Update value
+	storage.lastModifiedCached = lastModified;
+	if (lastValue) {
+		// Old value was set: possibly items are in browser cache
+		for (const key in browserStorageConfig) {
+			iterateBrowserStorage(key as BrowserStorageType, (item) => {
+				const iconSet = item.data;
+				// Delete items with same provider and prefix
+				return (
+					item.provider !== storage.provider ||
+					iconSet.prefix !== storage.prefix ||
+					iconSet.lastModified === lastModified
+				);
+			});
+		}
+	}
+
+	return true;
+}
 
 /**
  * Function to cache icons
@@ -59,6 +100,11 @@ export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 			browserCachePrefix + index.toString(),
 			JSON.stringify(item)
 		);
+	}
+
+	// Update lastModified
+	if (data.lastModified && !updateLastModified(storage, data.lastModified)) {
+		return;
 	}
 
 	// Do not store empty sets
