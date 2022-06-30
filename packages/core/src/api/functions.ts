@@ -74,7 +74,7 @@ export interface IconifyAPIInternalFunctions {
 	 * Set and get fetch()
 	 */
 	setFetch: (item: typeof fetch) => void;
-	getFetch: () => typeof fetch | null;
+	getFetch: () => typeof fetch | undefined;
 
 	/**
 	 * List all API providers (from config)

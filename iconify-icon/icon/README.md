@@ -21,13 +21,13 @@ Iconify Icon web component renders icons.
 Add this line to your page to load IconifyIcon (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/iconify-icon/0.0.7/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.0-beta.1/iconify-icon.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.7/dist/iconify-icon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.0-beta.1/dist/iconify-icon.min.js"></script>
 ```
 
 or, if you are building a project with a bundler, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:

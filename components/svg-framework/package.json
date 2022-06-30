@@ -2,7 +2,7 @@
 	"name": "@iconify/iconify",
 	"description": "Unified SVG framework with over 100,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "3.0.0-beta.1",
+	"version": "3.0.0-beta.2",
 	"license": "MIT",
 	"main": "./dist/iconify.min.js",
 	"types": "./dist/iconify.d.ts",
