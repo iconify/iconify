@@ -55,37 +55,14 @@ export interface Redundancy {
 }
 
 /**
- * Set configuration
- */
-function setConfig(config: Partial<RedundancyConfig>): RedundancyConfig {
-	if (
-		typeof config !== 'object' ||
-		typeof (config as RedundancyConfig).resources !== 'object' ||
-		!((config as RedundancyConfig).resources instanceof Array) ||
-		!(config as RedundancyConfig).resources.length
-	) {
-		throw new Error('Invalid Reduncancy configuration');
-	}
-
-	const newConfig = Object.create(null);
-	let key: keyof RedundancyConfig;
-	for (key in defaultConfig) {
-		if (config[key] !== void 0) {
-			newConfig[key] = config[key];
-		} else {
-			newConfig[key] = defaultConfig[key];
-		}
-	}
-
-	return newConfig;
-}
-
-/**
  * Redundancy instance
  */
 export function initRedundancy(cfg: Partial<RedundancyConfig>): Redundancy {
 	// Configuration
-	const config: RedundancyConfig = setConfig(cfg);
+	const config: RedundancyConfig = {
+		...defaultConfig,
+		...cfg,
+	};
 
 	// List of queries
 	let queries: GetQueryStatus[] = [];
@@ -127,10 +104,11 @@ export function initRedundancy(cfg: Partial<RedundancyConfig>): Redundancy {
 	 * Find instance
 	 */
 	function find(callback: FilterCallback): GetQueryStatus | null {
-		const result = queries.find((value) => {
-			return callback(value);
-		});
-		return result !== void 0 ? result : null;
+		return (
+			queries.find((value) => {
+				return callback(value);
+			}) || null
+		);
 	}
 
 	// Create and return functions
