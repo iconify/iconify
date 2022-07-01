@@ -1,5 +1,8 @@
-import type { FullIconifyIcon } from '../icon/defaults';
-import type { FullIconCustomisations } from '../customisations/defaults';
+import { defaultIconProps, IconifyIcon } from '../icon/defaults';
+import {
+	defaultIconCustomisations,
+	IconifyIconCustomisations,
+} from '../customisations/defaults';
 import { calculateSize } from './size';
 
 /**
@@ -38,22 +41,31 @@ interface ViewBox {
  * Use replaceIDs to generate unique IDs for body.
  */
 export function iconToSVG(
-	icon: FullIconifyIcon,
-	customisations: FullIconCustomisations
+	icon: IconifyIcon,
+	customisations?: IconifyIconCustomisations
 ): IconifyIconBuildResult {
+	const fullIcon = {
+		...defaultIconProps,
+		...icon,
+	};
+	const fullCustomisations = {
+		...defaultIconCustomisations,
+		...customisations,
+	};
+
 	// viewBox
 	const box: ViewBox = {
-		left: icon.left,
-		top: icon.top,
-		width: icon.width,
-		height: icon.height,
+		left: fullIcon.left,
+		top: fullIcon.top,
+		width: fullIcon.width,
+		height: fullIcon.height,
 	};
 
 	// Body
-	let body = icon.body;
+	let body = fullIcon.body;
 
 	// Apply transformations
-	[icon, customisations].forEach((props) => {
+	[fullIcon, fullCustomisations].forEach((props) => {
 		const transformations: string[] = [];
 		const hFlip = props.hFlip;
 		const vFlip = props.vFlip;
@@ -155,8 +167,8 @@ export function iconToSVG(
 	});
 
 	// Calculate dimensions
-	const customisationsWidth = customisations.width;
-	const customisationsHeight = customisations.height;
+	const customisationsWidth = fullCustomisations.width;
+	const customisationsHeight = fullCustomisations.height;
 	const boxWidth = box.width;
 	const boxHeight = box.height;
 

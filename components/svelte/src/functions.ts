@@ -15,7 +15,7 @@ import {
 } from '@iconify/core/lib/storage/functions';
 import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
-import { buildIcon } from '@iconify/core/lib/builder/functions';
+import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';

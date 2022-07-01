@@ -67,6 +67,10 @@ export function getIconData(
 ): ExtendedIconifyIcon | null;
 export function getIconData(
 	data: IconifyJSON,
+	name: string
+): ExtendedIconifyIcon | null;
+export function getIconData(
+	data: IconifyJSON,
 	name: string,
 	full = false
 ): FullExtendedIconifyIcon | ExtendedIconifyIcon | null {

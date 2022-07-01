@@ -1,15 +1,12 @@
 import type { IconifyIconBuildResult } from '../lib/svg/build';
 import { iconToSVG } from '../lib/svg/build';
-import type { FullIconifyIcon } from '../lib/icon/defaults';
-import { defaultIconProps } from '../lib/icon/defaults';
-import type { FullIconCustomisations } from '../lib/customisations/defaults';
-import { defaultIconCustomisations } from '../lib/customisations/defaults';
+import type { IconifyIcon } from '../lib/icon/defaults';
+import type { IconifyIconCustomisations } from '../lib/customisations/defaults';
 import { iconToHTML } from '../lib/svg/html';
 
 describe('Testing iconToSVG', () => {
 	test('Empty icon', () => {
-		const custom: FullIconCustomisations = defaultIconCustomisations;
-		const icon: FullIconifyIcon = { ...defaultIconProps, body: '' };
+		const icon: IconifyIcon = { body: '' };
 		const expected: IconifyIconBuildResult = {
 			attributes: {
 				width: '1em',
@@ -19,7 +16,7 @@ describe('Testing iconToSVG', () => {
 			body: '',
 		};
 
-		const result = iconToSVG(icon, custom);
+		const result = iconToSVG(icon);
 		expect(result).toEqual(expected);
 
 		// Test HTML
@@ -30,12 +27,10 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Auto size, body', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: 'auto',
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			body: '<path d="" />',
 		};
 		const expected: IconifyIconBuildResult = {
@@ -63,12 +58,10 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Auto size, body', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: 'auto',
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			body: '<path d="" />',
 		};
 		const expected: IconifyIconBuildResult = {
@@ -85,12 +78,10 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Custom size', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: 'auto',
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -109,13 +100,11 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Rotation', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: '40px',
 			rotate: 1,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -134,13 +123,11 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Negative rotation', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: '40px',
 			rotate: -1,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -159,13 +146,11 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Flip', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			height: '32',
 			hFlip: true,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -184,13 +169,11 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Flip, rotation', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			hFlip: true,
 			rotate: 1,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -209,12 +192,10 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Flip icon that is rotated by default', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			hFlip: true,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -237,16 +218,14 @@ describe('Testing iconToSVG', () => {
 	});
 
 	test('Flip and rotation canceling eachother', () => {
-		const custom: FullIconCustomisations = {
-			...defaultIconCustomisations,
+		const custom: IconifyIconCustomisations = {
 			width: '1em',
 			height: 'auto',
 			hFlip: true,
 			vFlip: true,
 			rotate: 2,
 		};
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			width: 20,
 			height: 16,
 			body: '<path d="..." />',
@@ -264,13 +243,11 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('Flip with real icon', () => {
+	test('Flip with icon, no customisations', () => {
 		const iconBody =
 			'<g stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" fill-rule="evenodd"><path d="M40 64l48-48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/><path d="M40 64l48 48" class="animation-delay-0 animation-duration-10 animate-stroke stroke-length-102"/></g>';
 
-		const custom: FullIconCustomisations = defaultIconCustomisations;
-		const icon: FullIconifyIcon = {
-			...defaultIconProps,
+		const icon: IconifyIcon = {
 			body: iconBody,
 			width: 128,
 			height: 128,
@@ -288,7 +265,7 @@ describe('Testing iconToSVG', () => {
 				'</g>',
 		};
 
-		const result = iconToSVG(icon, custom);
+		const result = iconToSVG(icon);
 		expect(result).toEqual(expected);
 	});
 });
