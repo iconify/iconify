@@ -69,3 +69,8 @@ export { loadIcon } from './loader/loader';
 
 // Misc
 export { camelize, camelToKebab, snakelize, pascalize } from './misc/strings';
+export {
+	commonObjectProps,
+	compareObjects,
+	unmergeObjects,
+} from './misc/objects';
