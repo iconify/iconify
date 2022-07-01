@@ -1,5 +1,4 @@
 import type { ExtendedIconifyIcon, IconifyJSON } from '@iconify/types';
-import { defaultIconProps, FullExtendedIconifyIcon } from '../icon/defaults';
 import { mergeIconData } from '../icon/merge';
 import { getIconsTree } from './tree';
 
@@ -9,21 +8,8 @@ import { getIconsTree } from './tree';
 export function internalGetIconData(
 	data: IconifyJSON,
 	name: string,
-	tree: string[],
-	full: true
-): FullExtendedIconifyIcon;
-export function internalGetIconData(
-	data: IconifyJSON,
-	name: string,
-	tree: string[],
-	full: false
-): ExtendedIconifyIcon;
-export function internalGetIconData(
-	data: IconifyJSON,
-	name: string,
-	tree: string[],
-	full: boolean
-): FullExtendedIconifyIcon | ExtendedIconifyIcon {
+	tree: string[]
+): ExtendedIconifyIcon {
 	const icons = data.icons;
 	const aliases = data.aliases || {};
 
@@ -41,15 +27,7 @@ export function internalGetIconData(
 	tree.forEach(parse);
 
 	// Add default values
-	currentProps = mergeIconData(
-		data,
-		currentProps
-	) as unknown as ExtendedIconifyIcon;
-
-	// Return icon
-	return full
-		? Object.assign({}, defaultIconProps, currentProps)
-		: currentProps;
+	return mergeIconData(data, currentProps) as unknown as ExtendedIconifyIcon;
 }
 
 /**
@@ -57,29 +35,14 @@ export function internalGetIconData(
  */
 export function getIconData(
 	data: IconifyJSON,
-	name: string,
-	full: true
-): FullExtendedIconifyIcon | null;
-export function getIconData(
-	data: IconifyJSON,
-	name: string,
-	full: false
-): ExtendedIconifyIcon | null;
-export function getIconData(
-	data: IconifyJSON,
 	name: string
-): ExtendedIconifyIcon | null;
-export function getIconData(
-	data: IconifyJSON,
-	name: string,
-	full = false
-): FullExtendedIconifyIcon | ExtendedIconifyIcon | null {
+): ExtendedIconifyIcon | null {
 	if (data.icons[name]) {
 		// Parse only icon
-		return internalGetIconData(data, name, [], full as true);
+		return internalGetIconData(data, name, []);
 	}
 
 	// Resolve tree
 	const tree = getIconsTree(data, [name])[name];
-	return tree ? internalGetIconData(data, name, tree, full as true) : null;
+	return tree ? internalGetIconData(data, name, tree) : null;
 }

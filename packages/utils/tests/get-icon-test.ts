@@ -2,8 +2,7 @@ import { getIconData } from '../lib/icon-set/get-icon';
 
 describe('Testing getting icon data', () => {
 	test('Simple icon', () => {
-		// Short icon
-		const result1 = getIconData(
+		const result = getIconData(
 			{
 				prefix: 'foo',
 				icons: {
@@ -13,43 +12,16 @@ describe('Testing getting icon data', () => {
 					},
 				},
 			},
-			'bar',
-			false
+			'bar'
 		);
-		expect(result1).toEqual({
+		expect(result).toEqual({
 			body: '<g />',
 			width: 24,
-		});
-
-		// Full icon
-		const result2 = getIconData(
-			{
-				prefix: 'foo',
-				icons: {
-					bar: {
-						body: '<g />',
-						width: 24,
-					},
-				},
-			},
-			'bar',
-			true
-		);
-		expect(result2).toEqual({
-			body: '<g />',
-			left: 0,
-			top: 0,
-			width: 24,
-			height: 16,
-			rotate: 0,
-			vFlip: false,
-			hFlip: false,
 		});
 	});
 
 	test('Minified icon set', () => {
-		// Short icon
-		const result1 = getIconData(
+		const result = getIconData(
 			{
 				prefix: 'foo',
 				icons: {
@@ -60,39 +32,12 @@ describe('Testing getting icon data', () => {
 				width: 24,
 				height: 24,
 			},
-			'bar',
-			false
+			'bar'
 		);
-		expect(result1).toEqual({
+		expect(result).toEqual({
 			body: '<g />',
 			width: 24,
 			height: 24,
-		});
-
-		// Full icon
-		const result2 = getIconData(
-			{
-				prefix: 'foo',
-				icons: {
-					bar: {
-						body: '<g />',
-					},
-				},
-				width: 24,
-				height: 24,
-			},
-			'bar',
-			true
-		);
-		expect(result2).toEqual({
-			body: '<g />',
-			left: 0,
-			top: 0,
-			width: 24,
-			height: 24,
-			rotate: 0,
-			vFlip: false,
-			hFlip: false,
 		});
 	});
 });

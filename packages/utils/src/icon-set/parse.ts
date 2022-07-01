@@ -1,5 +1,5 @@
 import type { IconifyJSON } from '@iconify/types';
-import type { FullExtendedIconifyIcon } from '../icon/defaults';
+import { defaultIconProps, FullExtendedIconifyIcon } from '../icon/defaults';
 import { internalGetIconData } from './get-icon';
 import { getIconsTree } from './tree';
 
@@ -43,7 +43,10 @@ export function parseIconSet(
 	for (const name in tree) {
 		const item = tree[name];
 		if (item) {
-			callback(name, internalGetIconData(data, name, item, true));
+			callback(name, {
+				...defaultIconProps,
+				...internalGetIconData(data, name, item),
+			});
 			names.push(name);
 		}
 	}
