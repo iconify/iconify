@@ -1,5 +1,5 @@
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
 
 /**
  * Convert icons list from string/icon mix to icons and validate them
@@ -12,11 +12,11 @@ export function listToIcons(
 	const result: IconifyIconName[] = [];
 
 	list.forEach((item) => {
-		const icon: IconifyIconName =
+		const icon =
 			typeof item === 'string'
-				? (stringToIcon(item, false, simpleNames) as IconifyIconName)
+				? (stringToIcon(item, validate, simpleNames) as IconifyIconName)
 				: { ...item };
-		if (!validate || validateIcon(icon, simpleNames)) {
+		if (icon) {
 			result.push(icon);
 		}
 	});

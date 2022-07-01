@@ -3,7 +3,7 @@ import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { stringToIcon, validateIcon } from '@iconify/utils/lib/icon/name';
+import { stringToIcon, validateIconName } from '@iconify/utils/lib/icon/name';
 import { getStorage, addIconToStorage, addIconSet } from './storage';
 
 /**
@@ -124,7 +124,7 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 	// Validate provider and prefix
 	if (
 		typeof data.prefix !== 'string' ||
-		!validateIcon({
+		!validateIconName({
 			provider,
 			prefix: data.prefix,
 			name: 'a',
