@@ -1,5 +1,5 @@
+import type { ExtendedIconifyIcon } from '@iconify/types';
 import { parseIconSet } from '../lib/icon-set/parse';
-import type { FullIconifyIcon } from '../lib/icon/defaults';
 
 describe('Testing parsing icon set', () => {
 	test('Simple icon set', () => {
@@ -7,26 +7,16 @@ describe('Testing parsing icon set', () => {
 		const names: string[] = ['missing', 'icon1', 'icon2'];
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected: Record<string, ExtendedIconifyIcon | null> = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
-				vFlip: false,
-				rotate: 0,
 			},
 			icon2: {
 				body: '<path d="icon2" />',
 				width: 24,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
-				vFlip: false,
-				rotate: 0,
 			},
 			missing: null,
 		};
@@ -70,24 +60,16 @@ describe('Testing parsing icon set', () => {
 		const expectedNames = names.slice(0).sort((a, b) => a.localeCompare(b));
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected: Record<string, ExtendedIconifyIcon | null> = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
-				vFlip: false,
-				rotate: 0,
 			},
 			icon2: {
 				body: '<path d="icon2" />',
 				width: 24,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 3,
 			},
@@ -95,18 +77,11 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon1" />',
 				width: 20,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
-				vFlip: false,
-				rotate: 0,
 			},
 			alias2: {
 				body: '<path d="icon2" />',
 				width: 20,
 				height: 24,
-				top: 0,
-				left: 0,
 				hFlip: true,
 				vFlip: true,
 				rotate: 3,
@@ -179,25 +154,17 @@ describe('Testing parsing icon set', () => {
 		const expectedNames = names.slice(0).sort((a, b) => a.localeCompare(b));
 
 		// Resolved data
-		const expected: Record<string, FullIconifyIcon | null> = {
+		const expected: Record<string, ExtendedIconifyIcon | null> = {
 			icon1: {
 				body: '<path d="icon1" />',
 				width: 20,
 				height: 20,
-				top: 0,
-				left: 0,
-				hFlip: false,
-				vFlip: false,
-				rotate: 0,
 			},
 			icon2: {
 				body: '<path d="icon2" />',
 				width: 24,
 				height: 24,
-				top: 0,
-				left: 0,
 				hFlip: true,
-				vFlip: false,
 				rotate: 1,
 			},
 			alias2f: {
@@ -205,9 +172,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 22,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 2,
 			},
@@ -216,9 +180,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 20,
 				height: 20,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 2,
 			},
@@ -227,9 +188,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},
@@ -238,9 +196,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},
@@ -249,9 +204,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},
@@ -260,9 +212,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},
@@ -271,9 +220,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},
@@ -282,9 +228,6 @@ describe('Testing parsing icon set', () => {
 				body: '<path d="icon2" />',
 				width: 21,
 				height: 24,
-				top: 0,
-				left: 0,
-				hFlip: false,
 				vFlip: true,
 				rotate: 1,
 			},

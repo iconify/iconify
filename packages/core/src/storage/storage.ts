@@ -70,9 +70,12 @@ export function addIconSet(storage: IconStorage, data: IconifyJSON): string[] {
 		return [];
 	}
 
-	return parseIconSet(data, (name: string, icon: FullIconifyIcon | null) => {
+	return parseIconSet(data, (name: string, icon: IconifyIcon | null) => {
 		if (icon) {
-			storage.icons[name] = icon;
+			storage.icons[name] = {
+				...defaultIconProps,
+				...icon,
+			};
 		} else {
 			storage.missing.add(name);
 		}
