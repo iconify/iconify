@@ -3,6 +3,12 @@ export {
 	defaultIconCustomisations,
 	defaultIconSizeCustomisations,
 } from './customisations/defaults';
+export type {
+	IconifyIconSize,
+	IconifyIconSizeCustomisations,
+	IconifyIconCustomisations,
+	FullIconCustomisations,
+} from './customisations/defaults';
 export { mergeCustomisations } from './customisations/merge';
 
 // Customisations: converting attributes in components
@@ -11,11 +17,8 @@ export { flipFromString } from './customisations/flip';
 export { rotateFromString } from './customisations/rotate';
 
 // Icon names
-export {
-	matchIconName,
-	stringToIcon,
-	validateIcon as validateIconName,
-} from './icon/name';
+export { matchIconName, stringToIcon, validateIconName } from './icon/name';
+export type { IconifyIconName, IconifyIconSource } from './icon/name';
 
 // Icon data
 export { mergeIconData } from './icon/merge';
@@ -24,10 +27,18 @@ export {
 	defaultIconProps,
 	defaultIconDimensions,
 	defaultIconTransformations,
+	defaultExtendedIconProps,
+} from './icon/defaults';
+export type {
+	IconifyIcon,
+	FullIconifyIcon,
+	PartialExtendedIconifyIcon,
+	FullExtendedIconifyIcon,
 } from './icon/defaults';
 
 // Icon set functions
 export { getIconsTree } from './icon-set/tree';
+export type { ParentIconsList, ParentIconsTree } from './icon-set/tree';
 export { parseIconSet } from './icon-set/parse';
 export { validateIconSet } from './icon-set/validate';
 export { quicklyValidateIconSet } from './icon-set/validate-basic';
@@ -41,6 +52,7 @@ export { convertIconSetInfo } from './icon-set/convert-info';
 
 // Build SVG
 export { iconToSVG } from './svg/build';
+export type { IconifyIconBuildResult } from './svg/build';
 export { replaceIDs } from './svg/id';
 export { calculateSize } from './svg/size';
 export { encodeSvgForCss } from './svg/encode-svg-for-css';

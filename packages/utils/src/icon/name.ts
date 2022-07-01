@@ -52,7 +52,7 @@ export const stringToIcon = (
 			prefix,
 			name,
 		};
-		return validate && !validateIcon(result) ? null : result;
+		return validate && !validateIconName(result) ? null : result;
 	}
 
 	// Attempt to split by dash: "prefix-name"
@@ -64,7 +64,7 @@ export const stringToIcon = (
 			prefix: dashSeparated.shift() as string,
 			name: dashSeparated.join('-'),
 		};
-		return validate && !validateIcon(result) ? null : result;
+		return validate && !validateIconName(result) ? null : result;
 	}
 
 	// If allowEmpty is set, allow empty provider and prefix, allowing names like "home"
@@ -74,7 +74,7 @@ export const stringToIcon = (
 			prefix: '',
 			name,
 		};
-		return validate && !validateIcon(result, allowSimpleName)
+		return validate && !validateIconName(result, allowSimpleName)
 			? null
 			: result;
 	}
@@ -87,7 +87,7 @@ export const stringToIcon = (
  *
  * This function is not part of stringToIcon because validation is not needed for most code.
  */
-export const validateIcon = (
+export const validateIconName = (
 	icon: IconifyIconName | null,
 	allowSimpleName?: boolean
 ): boolean => {
