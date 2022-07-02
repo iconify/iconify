@@ -15,7 +15,7 @@ export function listToIcons(
 		const icon =
 			typeof item === 'string'
 				? (stringToIcon(item, validate, simpleNames) as IconifyIconName)
-				: { ...item };
+				: item;
 		if (icon) {
 			result.push(icon);
 		}

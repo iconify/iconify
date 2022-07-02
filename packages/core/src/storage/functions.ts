@@ -95,15 +95,11 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 
 	// Get provider
 	if (typeof provider !== 'string') {
-		provider = typeof data.provider === 'string' ? data.provider : '';
+		provider = data.provider || '';
 	}
 
 	// Check for simple names: requires empty provider and prefix
-	if (
-		simpleNames &&
-		provider === '' &&
-		(typeof data.prefix !== 'string' || data.prefix === '')
-	) {
+	if (simpleNames && !provider && !data.prefix) {
 		// Simple names: add icons one by one
 		let added = false;
 
@@ -121,18 +117,18 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 	}
 
 	// Validate provider and prefix
+	const prefix = data.prefix;
 	if (
-		typeof data.prefix !== 'string' ||
 		!validateIconName({
 			provider,
-			prefix: data.prefix,
+			prefix,
 			name: 'a',
 		})
 	) {
 		return false;
 	}
 
-	const storage = getStorage(provider, data.prefix);
+	const storage = getStorage(provider, prefix);
 	return !!addIconSet(storage, data);
 }
 
