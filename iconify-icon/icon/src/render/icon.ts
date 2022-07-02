@@ -1,3 +1,4 @@
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import type { RenderedState } from '../state';
 import { renderSPAN } from './span';
@@ -25,7 +26,14 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 			break;
 
 		default:
-			node = renderSPAN(renderData, iconData, mode === 'mask');
+			node = renderSPAN(
+				renderData,
+				{
+					...defaultIconProps,
+					...iconData,
+				},
+				mode === 'mask'
+			);
 	}
 
 	// Set element

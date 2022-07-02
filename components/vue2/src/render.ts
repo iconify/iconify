@@ -1,14 +1,12 @@
 import type _Vue from 'vue';
 import type { VNode, VNodeData, RenderContext } from 'vue';
 import type { IconifyIcon } from '@iconify/types';
-import {
-	mergeCustomisations,
-} from '@iconify/utils/lib/customisations/merge';
+import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
 import { rotateFromString } from '@iconify/utils/lib/customisations/rotate';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
-import type { IconifyIconCustomisations, IconProps } from './props';
+import type { IconProps } from './props';
 import { defaultExtendedIconCustomisations } from './props';
 
 /**
@@ -25,18 +23,17 @@ const svgDefaults: Record<string, unknown> = {
  * Aliases for customisations.
  * In Vue 'v-' properties are reserved, so v-flip must be renamed
  */
- const customisationAliases: Record<string, string> = {};
- ['horizontal', 'vertical'].forEach((prefix) => {
-	 const attr = prefix.slice(0, 1) + 'Flip';
- 
-	 // vertical-flip
-	 customisationAliases[prefix + '-flip'] = attr;
-	 // v-flip
-	 customisationAliases[prefix.slice(0, 1) + '-flip'] = attr;
-	 // verticalFlip
-	 customisationAliases[prefix + 'Flip'] = attr;
- });
- 
+const customisationAliases: Record<string, string> = {};
+['horizontal', 'vertical'].forEach((prefix) => {
+	const attr = prefix.slice(0, 1) + 'Flip';
+
+	// vertical-flip
+	customisationAliases[prefix + '-flip'] = attr;
+	// v-flip
+	customisationAliases[prefix.slice(0, 1) + '-flip'] = attr;
+	// verticalFlip
+	customisationAliases[prefix + 'Flip'] = attr;
+});
 
 /**
  * Render icon
@@ -51,7 +48,7 @@ export const render = (
 	contextData: VNodeData,
 
 	// Icon must be validated before calling this function
-	icon: Required<IconifyIcon>
+	icon: IconifyIcon
 ): VNode => {
 	// Split properties
 	const customisations = mergeCustomisations(

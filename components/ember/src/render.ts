@@ -26,7 +26,7 @@ export interface RenderResult {
  */
 export const render = (
 	// Icon must be validated before calling this function
-	icon: Required<IconifyIcon>,
+	icon: IconifyIcon,
 
 	// Partial properties
 	props: IconifyIconProps,

@@ -9,7 +9,7 @@ import type { IconProps } from './props';
 /**
  * Storage for icons referred by name
  */
-const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
+const storage: Record<string, IconifyIcon> = Object.create(null);
 
 /**
  * Generate icon
@@ -32,7 +32,13 @@ export function generateIcon(props: IconProps): RenderResult | null {
 		return null;
 	}
 
-	return render(icon, props);
+	return render(
+		{
+			...defaultIconProps,
+			...icon,
+		},
+		props
+	);
 }
 
 /**
@@ -42,7 +48,7 @@ export function generateIcon(props: IconProps): RenderResult | null {
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = { ...defaultIconProps, ...data };
+	storage[name] = data;
 }
 
 /**

@@ -26,7 +26,7 @@ export { IconifyIcon, IconifyJSON, IconifyIconSize, IconifyRenderMode };
 /**
  * Storage for icons referred by name
  */
-const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
+const storage: Record<string, IconifyIcon> = Object.create(null);
 
 /**
  * Generate icon
@@ -37,11 +37,12 @@ function component(
 	ref?: React.ForwardedRef<IconRef>
 ): JSX.Element {
 	// Split properties
+	const propsIcon = props.icon;
 	const icon =
-		typeof props.icon === 'string'
-			? storage[props.icon]
-			: typeof props.icon === 'object'
-			? { ...defaultIconProps, ...props.icon }
+		typeof propsIcon === 'string'
+			? storage[propsIcon]
+			: typeof propsIcon === 'object'
+			? propsIcon
 			: null;
 
 	// Validate icon object
@@ -56,7 +57,15 @@ function component(
 	}
 
 	// Valid icon: render it
-	return render(icon, props, inline, ref as IconRef);
+	return render(
+		{
+			...defaultIconProps,
+			...icon,
+		},
+		props,
+		inline,
+		ref as IconRef
+	);
 }
 
 /**
@@ -89,7 +98,7 @@ export const InlineIcon = React.forwardRef<IconRef, IconProps>(
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = { ...defaultIconProps, ...data };
+	storage[name] = data;
 }
 
 /**

@@ -1,4 +1,4 @@
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
+import type { IconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
@@ -17,7 +17,7 @@ import { applyStyle } from './style';
 export function renderInlineSVG(
 	element: IconifyElement,
 	props: IconifyElementProps,
-	iconData: FullIconifyIcon
+	iconData: IconifyIcon
 ): IconifyElement {
 	// Create placeholder. Why placeholder? innerHTML setter on SVG does not work in some environments.
 	let span: HTMLSpanElement;

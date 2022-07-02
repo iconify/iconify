@@ -7,7 +7,7 @@
 		"start": "node .output/server/index.mjs"
 	},
 	"devDependencies": {
-		"nuxt3": "latest",
+		"nuxt": "npm:nuxt3@latest",
 		"ufo": "^0.8.4"
 	},
 	"dependencies": {

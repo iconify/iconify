@@ -1,5 +1,4 @@
 import { fakeAPI, nextPrefix, mockAPIData } from './helpers';
-import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { addCollection } from '@iconify/core/lib/storage/functions';
 import { parseIconValue } from '../src/attributes/icon/index';
 
@@ -41,7 +40,6 @@ describe('Testing parseIconValue with API', () => {
 				name,
 			});
 			expect(data).toEqual({
-				...defaultIconProps,
 				body: '<g />',
 			});
 
@@ -111,7 +109,6 @@ describe('Testing parseIconValue with API', () => {
 				name,
 			},
 			data: {
-				...defaultIconProps,
 				body: '<g id="test" />',
 			},
 		});

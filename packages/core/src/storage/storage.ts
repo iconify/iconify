@@ -1,13 +1,11 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
-import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 
 /**
  * List of icons
  */
-type IconRecords = Record<string, FullIconifyIcon>;
+type IconRecords = Record<string, IconifyIcon>;
 
 /**
  * Storage type
@@ -72,10 +70,7 @@ export function addIconSet(storage: IconStorage, data: IconifyJSON): string[] {
 
 	return parseIconSet(data, (name: string, icon: IconifyIcon | null) => {
 		if (icon) {
-			storage.icons[name] = {
-				...defaultIconProps,
-				...icon,
-			};
+			storage.icons[name] = icon;
 		} else {
 			storage.missing.add(name);
 		}
@@ -92,11 +87,8 @@ export function addIconToStorage(
 ): boolean {
 	try {
 		if (typeof icon.body === 'string') {
-			// Freeze icon to make sure it will not be modified
-			storage.icons[name] = Object.freeze({
-				...defaultIconProps,
-				...icon,
-			});
+			// Make a copy of object to make sure it will not be not modified
+			storage.icons[name] = { ...icon };
 			return true;
 		}
 	} catch (err) {

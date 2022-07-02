@@ -12,7 +12,7 @@ import type { CurrentIconData } from './state';
 export type IconOnLoadCallback = (
 	value: unknown,
 	name: IconifyIconName,
-	data?: Required<IconifyIcon> | null
+	data?: IconifyIcon | null
 ) => void;
 
 /**

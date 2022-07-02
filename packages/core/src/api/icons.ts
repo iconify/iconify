@@ -10,6 +10,7 @@ import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
 import { storeInBrowserStorage } from '../browser-storage/store';
 import type { IconStorageWithAPI } from './types';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // Empty abort callback for loadIcons()
 function emptyCallback(): void {
@@ -249,7 +250,7 @@ export const loadIcons: IconifyLoadIcons = (
 };
 
 /**
- * Cache for loadIcon promises
+ * Load one icon using Promise
  */
 export const loadIcon = (
 	icon: IconifyIconName | string
@@ -261,6 +262,7 @@ export const loadIcon = (
 				const data = getIconData(iconObj);
 				if (data) {
 					fulfill({
+						...defaultIconProps,
 						...data,
 					});
 					return;

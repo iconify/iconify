@@ -217,7 +217,7 @@ interface IconLoadingState {
 	abort: IconifyIconLoaderAbort;
 }
 
-type IconComponentData = Required<IconifyIcon> | null;
+type IconComponentData = IconifyIcon | null;
 
 interface IconState {
 	// Last icon name
@@ -330,7 +330,15 @@ export function generateIcon(
 	icon: IconComponentData,
 	props: IconProps
 ): RenderResult | null {
-	return icon ? render(icon, props) : null;
+	return icon
+		? render(
+				{
+					...defaultIconProps,
+					...icon,
+				},
+				props
+		  )
+		: null;
 }
 
 /**

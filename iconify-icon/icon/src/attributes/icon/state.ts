@@ -10,7 +10,7 @@ export interface CurrentIconData {
 	value: unknown;
 
 	// Data, if available. Can be null if icon is missing in API
-	data?: Required<IconifyIcon> | null;
+	data?: IconifyIcon | null;
 
 	// Icon name as object, if `value` is a valid icon name
 	name?: IconifyIconName | null;
@@ -20,9 +20,9 @@ export interface CurrentIconData {
 }
 
 /**
- * Same as above, if
+ * Same as above, used if icon is currenly being rendered
  */
 export interface RenderedCurrentIconData extends CurrentIconData {
-	// Full icon data
-	data: Required<IconifyIcon>;
+	// Icon data
+	data: IconifyIcon;
 }

@@ -34,7 +34,7 @@ export { IconifyIcon, IconifyJSON, IconifyIconSize, IconifyRenderMode };
 /**
  * Storage for icons referred by name
  */
-const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
+const storage: Record<string, IconifyIcon> = Object.create(null);
 
 /**
  * Add icon to storage, allowing to call it by name
@@ -43,7 +43,7 @@ const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = { ...defaultIconProps, ...data };
+	storage[name] = data;
 }
 
 /**
@@ -82,11 +82,12 @@ export const Icon = defineComponent({
 		const props = this.$attrs;
 
 		// Check icon
-		const icon =
-			typeof props.icon === 'string'
-				? storage[props.icon]
-				: typeof props.icon === 'object'
-				? { ...defaultIconProps, ...props.icon }
+		const propsIcon = props.icon;
+		const icon: IconifyIcon | null =
+			typeof propsIcon === 'string'
+				? storage[propsIcon]
+				: typeof propsIcon === 'object'
+				? propsIcon
 				: null;
 
 		// Validate icon object
@@ -99,6 +100,12 @@ export const Icon = defineComponent({
 		}
 
 		// Valid icon: render it
-		return render(icon, props);
+		return render(
+			{
+				...defaultIconProps,
+				...icon,
+			},
+			props
+		);
 	},
 });

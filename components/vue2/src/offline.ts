@@ -3,7 +3,6 @@ import type { CreateElement, VNode } from 'vue';
 import type { ExtendedVue } from 'vue/types/vue';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
-import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
 import type {
@@ -21,16 +20,12 @@ export { IconifyIconCustomisations, IconifyIconProps, IconProps };
 /**
  * Export types that could be used in component
  */
-export {
-	IconifyIcon,
-	IconifyJSON,
-	IconifyIconSize,
-};
+export { IconifyIcon, IconifyJSON, IconifyIconSize };
 
 /**
  * Storage for icons referred by name
  */
-const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
+const storage: Record<string, IconifyIcon> = Object.create(null);
 
 /**
  * Add icon to storage, allowing to call it by name
@@ -39,7 +34,7 @@ const storage: Record<string, Required<IconifyIcon>> = Object.create(null);
  * @param data
  */
 export function addIcon(name: string, data: IconifyIcon): void {
-	storage[name] = {...defaultIconProps, ...data};
+	storage[name] = data;
 }
 
 /**
@@ -58,11 +53,12 @@ export function addCollection(
 			: prefix !== false && typeof data.prefix === 'string'
 			? data.prefix + ':'
 			: '';
-	quicklyValidateIconSet(data) && parseIconSet(data, (name, icon) => {
-		if (icon) {
-			storage[iconPrefix + name] = icon;
-		}
-	});
+	quicklyValidateIconSet(data) &&
+		parseIconSet(data, (name, icon) => {
+			if (icon) {
+				storage[iconPrefix + name] = icon;
+			}
+		});
 }
 
 /**
@@ -78,11 +74,12 @@ export const Icon = Vue.extend({
 		const props = this.$attrs;
 
 		// Check icon
+		const propsIcon = props.icon;
 		const icon =
-			typeof props.icon === 'string'
-				? storage[props.icon]
-				: typeof props.icon === 'object'
-				? {...defaultIconProps, ...props.icon}
+			typeof propsIcon === 'string'
+				? storage[propsIcon]
+				: typeof propsIcon === 'object'
+				? propsIcon
 				: null;
 
 		// Validate icon object

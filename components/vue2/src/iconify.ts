@@ -22,7 +22,6 @@ import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // API
 import type {
@@ -215,7 +214,6 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
  * Empty icon data, rendered when icon is not available
  */
 const emptyIcon = {
-	...defaultIconProps,
 	body: '',
 };
 
@@ -223,7 +221,7 @@ const emptyIcon = {
  * Component
  */
 interface IconComponentData {
-	data: Required<IconifyIcon>;
+	data: IconifyIcon;
 	classes?: string[];
 }
 
@@ -277,7 +275,7 @@ export const Icon = Vue.extend({
 				this._name = '';
 				this.abortLoading();
 				return {
-					data: { ...defaultIconProps, ...icon },
+					data: icon,
 				};
 			}
 

@@ -8,7 +8,7 @@
 	},
 	"devDependencies": {
 		"iconify-icon": "workspace:*",
-		"nuxt3": "latest",
+		"nuxt": "npm:nuxt3@latest",
 		"ufo": "^0.8.4"
 	}
 }

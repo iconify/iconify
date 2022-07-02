@@ -20,7 +20,6 @@ import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
-import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 // API
 import type {
@@ -77,6 +76,7 @@ import type {
 
 // Render SVG
 import { render } from './render';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 /**
  * Export required types
@@ -221,7 +221,7 @@ interface InternalIconProps extends IconProps {
 }
 
 interface IconComponentData {
-	data: Required<IconifyIcon>;
+	data: IconifyIcon;
 	classes?: string[];
 }
 
@@ -290,7 +290,7 @@ class IconComponent extends React.Component<
 			if (changed || state.icon === null) {
 				// Set data if it was changed
 				this._setData({
-					data: { ...defaultIconProps, ...icon },
+					data: icon,
 				});
 			}
 			return;
@@ -406,7 +406,15 @@ class IconComponent extends React.Component<
 		}
 
 		// Render icon
-		return render(icon.data, newProps, props._inline, props._ref);
+		return render(
+			{
+				...defaultIconProps,
+				...icon.data,
+			},
+			newProps,
+			props._inline,
+			props._ref
+		);
 	}
 }
 

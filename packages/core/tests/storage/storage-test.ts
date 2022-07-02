@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import type { IconifyIcon } from '@iconify/types';
 import {
 	newStorage,
 	addIconToStorage,
@@ -7,10 +8,6 @@ import {
 	getStorage,
 	listIcons,
 } from '../../lib/storage/storage';
-import type {
-	IconifyIcon,
-	FullIconifyIcon,
-} from '@iconify/utils/lib/icon/defaults';
 
 describe('Testing storage', () => {
 	it('Adding icon', () => {
@@ -57,37 +54,18 @@ describe('Testing storage', () => {
 		expect(iconExists(storage, 'not-really-missing')).toBe(true);
 
 		// Test getIcon
-		let expected: FullIconifyIcon = {
+		let expected: IconifyIcon = {
 			body: '<path d="" />',
 			width: 20,
 			height: 16,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
-			rotate: 0,
 		};
 		const icon = storage.icons['test'];
 		expect(icon).toEqual(expected);
-
-		// Test icon mutation
-		let thrown = false;
-		try {
-			// @ts-ignore
-			icon.width = 12;
-		} catch (err) {
-			thrown = true;
-		}
-		expect(thrown).toBe(true);
 
 		expected = {
 			body: '<g></g>',
 			width: 24,
 			height: 24,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
 			rotate: 1,
 		};
 		expect(storage.icons['constructor']).toEqual(expected);
@@ -125,26 +103,16 @@ describe('Testing storage', () => {
 		expect(iconExists(storage, 'missing')).toBe(false);
 
 		// Test getIcon
-		let expected: FullIconifyIcon = {
+		let expected: IconifyIcon = {
 			body: '<path d="icon1" />',
 			width: 20,
 			height: 24,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
-			rotate: 0,
 		};
 		expect(storage.icons['icon1']).toEqual(expected);
 		expected = {
 			body: '<path d="icon2" />',
 			width: 24,
 			height: 24,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
-			rotate: 0,
 		};
 		expect(storage.icons['icon2']).toEqual(expected);
 	});
@@ -179,15 +147,10 @@ describe('Testing storage', () => {
 		]);
 
 		// Test icon
-		let expected: FullIconifyIcon = {
+		let expected: IconifyIcon = {
 			body: iconBody,
 			width: 128,
 			height: 128,
-			top: 0,
-			left: 0,
-			hFlip: false,
-			vFlip: false,
-			rotate: 0,
 		};
 		expect(storage.icons['16-chevron-left']).toEqual(expected);
 
@@ -196,11 +159,7 @@ describe('Testing storage', () => {
 			body: iconBody,
 			width: 128,
 			height: 128,
-			top: 0,
-			left: 0,
 			hFlip: true,
-			vFlip: false,
-			rotate: 0,
 		};
 		expect(storage.icons['16-chevron-right']).toEqual(expected);
 	});

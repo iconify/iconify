@@ -10,8 +10,8 @@ import {
 	IconifyElementProps,
 } from './config';
 import { scanRootNode } from './find';
-import type { IconifyIconName } from '../iconify';
-import type { FullIconifyIcon } from '@iconify/utils/lib/icon/defaults';
+import type { IconifyIconName, IconifyIcon } from '../iconify';
+import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import {
 	observe,
 	pauseObservingNode,
@@ -56,7 +56,7 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 	 */
 	interface GetIconResult {
 		status: IconifyElementData['status'];
-		icon?: FullIconifyIcon;
+		icon?: IconifyIcon;
 	}
 	function getIcon(icon: IconifyIconName, load: boolean): GetIconResult {
 		const { provider, prefix, name } = icon;
@@ -114,7 +114,7 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 		function render(
 			element: IconifyElement,
 			props: IconifyElementProps,
-			iconData: FullIconifyIcon
+			iconData: IconifyIcon
 		) {
 			if (!paused) {
 				paused = true;
@@ -133,7 +133,15 @@ export function scanDOM(rootNode?: ObservedNode, addTempNode = false): void {
 						: null);
 
 				if (typeof isMask === 'boolean') {
-					renderBackground(element, props, iconData, isMask);
+					renderBackground(
+						element,
+						props,
+						{
+							...defaultIconProps,
+							...iconData,
+						},
+						isMask
+					);
 					return;
 				}
 			}

@@ -232,7 +232,7 @@ const emptyIcon = {
  * Component
  */
 interface IconComponentData {
-	data: Required<IconifyIcon>;
+	data: IconifyIcon;
 	classes?: string[];
 }
 
@@ -289,7 +289,7 @@ export const Icon = defineComponent({
 				this._name = '';
 				this.abortLoading();
 				return {
-					data: { ...defaultIconProps, ...icon },
+					data: icon,
 				};
 			}
 
@@ -376,7 +376,13 @@ export const Icon = defineComponent({
 		}
 
 		// Render icon
-		return render(icon.data, newProps);
+		return render(
+			{
+				...defaultIconProps,
+				...icon.data,
+			},
+			newProps
+		);
 	},
 });
 
