@@ -21,7 +21,7 @@ export function expandIconSet(data: IconifyJSON): void {
 
 		icons.forEach((name) => {
 			const item = data.icons[name];
-			if (item[prop] === void 0) {
+			if (!(prop in item)) {
 				item[prop] = value;
 			}
 		});

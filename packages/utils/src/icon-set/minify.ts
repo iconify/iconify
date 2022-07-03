@@ -120,12 +120,11 @@ export function minifyIconSet(data: IconifyJSON): void {
 		icons.forEach((key) => {
 			const item = data.icons[key];
 			const value =
-				item[prop] === void 0
-					? hasMinifiedDefault
-						? oldDefault
-						: defaultValue
-					: item[prop];
-
+				prop in item
+					? item[prop]
+					: hasMinifiedDefault
+					? oldDefault
+					: defaultValue;
 			if (
 				value === newDefault ||
 				(newDefault === null && value === defaultValue)
@@ -136,7 +135,7 @@ export function minifyIconSet(data: IconifyJSON): void {
 				return;
 			}
 
-			if (canMinify && item[prop] === void 0) {
+			if (canMinify && !(prop in item)) {
 				// Value matches old minified value
 				item[prop as 'height'] = value as number;
 			}

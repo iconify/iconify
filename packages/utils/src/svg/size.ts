@@ -16,7 +16,7 @@ export function calculateSize(
 		return size;
 	}
 
-	precision = precision === void 0 ? 100 : precision;
+	precision = precision || 100;
 	if (typeof size === 'number') {
 		return Math.ceil(size * ratio * precision) / precision;
 	}

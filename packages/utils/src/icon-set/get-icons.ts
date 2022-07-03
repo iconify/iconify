@@ -61,7 +61,7 @@ export function getIcons(
 
 	// Copy common properties
 	propsToCopy.forEach((attr) => {
-		if (data[attr] !== void 0) {
+		if (attr in data) {
 			(result as unknown as Record<string, unknown>)[attr] = data[attr];
 		}
 	});

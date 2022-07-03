@@ -22,10 +22,7 @@ const optionalPropertyDefaults = {
  */
 function checkOptionalProps(item: PropsList, defaults: PropsList): boolean {
 	for (const prop in defaults) {
-		if (
-			item[prop] !== void 0 &&
-			typeof item[prop] !== typeof defaults[prop]
-		) {
+		if (prop in item && typeof item[prop] !== typeof defaults[prop]) {
 			return false;
 		}
 	}

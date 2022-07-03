@@ -25,7 +25,7 @@ export function getIconsTree(
 			return (resolved[name] = []);
 		}
 
-		if (resolved[name] === void 0) {
+		if (!(name in resolved)) {
 			// Mark as failed if parent alias points to this icon to avoid infinite loop
 			resolved[name] = null;
 

@@ -1,4 +1,3 @@
-import type { IconifyTransformations } from '@iconify/types';
 import {
 	defaultExtendedIconProps,
 	defaultIconTransformations,
@@ -21,21 +20,15 @@ export function mergeIconData<T extends PartialExtendedIconifyIcon>(
 	// Merge icon properties that aren't transformations
 	for (const key in defaultExtendedIconProps) {
 		// Add default transformations if needed
-		if (
-			defaultIconTransformations[key as keyof IconifyTransformations] !==
-			void 0
-		) {
-			if (
-				result[key as 'rotate'] === void 0 &&
-				parent[key as keyof T] !== void 0
-			) {
+		if (key in defaultIconTransformations) {
+			if (key in parent && !(key in result)) {
 				result[key as 'rotate'] =
 					defaultIconTransformations[key as 'rotate'];
 			}
 			// Not transformation
-		} else if (child[key as 'width'] !== void 0) {
+		} else if (key in child) {
 			result[key as 'width'] = child[key as 'width'];
-		} else if (parent[key as 'width'] !== void 0) {
+		} else if (key in parent) {
 			result[key as 'width'] = parent[key as 'width'];
 		}
 	}
