@@ -41,7 +41,7 @@ export class Storage {
 		if (!this.canRead) {
 			throw new Error('Restricted storage');
 		}
-		return this.items[name] === void 0 ? null : this.items[name];
+		return name in this.items ? this.items[name] : null;
 	}
 
 	/**

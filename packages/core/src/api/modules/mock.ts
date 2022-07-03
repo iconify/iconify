@@ -109,35 +109,45 @@ export function mockAPIData(data: IconifyMockAPI): void {
 	switch (data.type) {
 		case 'icons': {
 			const provider = data.provider;
-			if (iconsStorage[provider] === void 0) {
-				iconsStorage[provider] = {};
-			}
-			const providerStorage = iconsStorage[provider];
-
 			const prefix = data.prefix;
-			if (providerStorage[prefix] === void 0) {
-				providerStorage[prefix] = [];
-			}
 
-			iconsStorage[provider][prefix].push(data);
+			const providerStorage =
+				iconsStorage[provider] ||
+				(iconsStorage[provider] = Object.create(null) as Record<
+					string,
+					IconifyMockIconsAPI[]
+				>);
+
+			(providerStorage[prefix] || (providerStorage[prefix] = [])).push(
+				data
+			);
 			break;
 		}
 
 		case 'custom': {
 			const provider = data.provider;
-			if (customProviderStorage[provider] === void 0) {
-				customProviderStorage[provider] = {};
-			}
-			customProviderStorage[provider][data.uri] = data;
+
+			const providerStorage =
+				customProviderStorage[provider] ||
+				(customProviderStorage[provider] = Object.create(
+					null
+				) as Record<string, IconifyMockCustomAPI>);
+
+			providerStorage[data.uri] = data;
 			break;
 		}
 
 		case 'host': {
 			const host = data.host;
-			if (customHostStorage[host] === void 0) {
-				customHostStorage[host] = {};
-			}
-			customHostStorage[host][data.uri] = data;
+
+			const hostStorage =
+				customHostStorage[host] ||
+				(customHostStorage[host] = Object.create(null) as Record<
+					string,
+					IconifyMockCustomHostAPI
+				>);
+
+			hostStorage[data.uri] = data;
 			break;
 		}
 	}

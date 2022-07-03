@@ -38,7 +38,7 @@ const redundancyCache = Object.create(null) as Record<
 function getRedundancyCache(
 	provider: string
 ): IconifyAPIInternalStorage | undefined {
-	if (redundancyCache[provider] === void 0) {
+	if (!redundancyCache[provider]) {
 		const config = getAPIConfig(provider);
 		if (!config) {
 			// Configuration is not set!

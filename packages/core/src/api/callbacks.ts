@@ -49,7 +49,7 @@ export function updateCallbacks(storage: IconStorageWithAPI): void {
 					}
 
 					const name = icon.name;
-					if (storage.icons[name] !== void 0) {
+					if (storage.icons[name]) {
 						// Loaded
 						icons.loaded.push({
 							provider,

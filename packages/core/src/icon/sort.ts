@@ -56,21 +56,19 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 		const prefix = icon.prefix;
 		const name = icon.name;
 
-		if (storage[provider] === void 0) {
-			storage[provider] = Object.create(null) as Record<
+		const providerStorage =
+			storage[provider] ||
+			(storage[provider] = Object.create(null) as Record<
 				string,
 				IconStorage
-			>;
-		}
-		const providerStorage = storage[provider];
+			>);
 
-		if (providerStorage[prefix] === void 0) {
-			providerStorage[prefix] = getStorage(provider, prefix);
-		}
-		const localStorage = providerStorage[prefix];
+		const localStorage =
+			providerStorage[prefix] ||
+			(providerStorage[prefix] = getStorage(provider, prefix));
 
 		let list;
-		if (localStorage.icons[name] !== void 0) {
+		if (name in localStorage.icons) {
 			list = result.loaded;
 		} else if (prefix === '' || localStorage.missing.has(name)) {
 			// Mark icons without prefix as missing because they cannot be loaded from API
