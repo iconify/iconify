@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/typescript-node
 {
-	"name": "Node.js & TypeScript",
+	"name": "Iconify Development",
 	"build": {
 		"dockerfile": "Dockerfile",
 		// Update 'VARIANT' to pick a Node version: 18, 16, 14.
@@ -27,7 +27,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "echo \"Run 'npm install' to install dependencies and build packages\"",
+	"postCreateCommand": "sudo corepack enable && sudo npm i -g @antfu/ni && ni",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"

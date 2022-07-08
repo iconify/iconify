@@ -5,3 +5,4 @@ debug_packages/
 lerna-debug.log
 .pnpm-debug.log
 .idea/
+.pnpm-store/
