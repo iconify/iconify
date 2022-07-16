@@ -65,15 +65,9 @@ Main advantage of web component over other implementations is shadow DOM. Using 
 
 ## Full documentation
 
-This package is in development, documentation for it is not ready yet.
+Below is a shortened version of documentation.
 
-Until it is ready, you can look at SVG framework documentation instead:
-
--   [SVG framework documentation](https://docs.iconify.design/icon-components/svg-framework/).
--   [React component documentation](https://docs.iconify.design/icon-components/react/).
--   [Iconify API documentation](https://docs.iconify.design/api/).
--   [Creating icon bundles](https://docs.iconify.design/icon-components/bundles/).
--   [Iconify Tools documentation](https://docs.iconify.design/tools/tools2/).
+Full documentation is [available on Iconify documentation website](https://docs.iconify.design/iconify-icon/).
 
 ## How does it work?
 
@@ -175,7 +169,7 @@ addIcon('dashicons:admin-users', adminUsers);
 <iconify-icon icon="dashicons:admin-users"></iconify-icon>
 ```
 
-See [Iconify for React](https://docs.iconify.design/icon-components/react/) documentation for more details.
+See [icon packages documentation](https://docs.iconify.design/icons/icons.html) for more details.
 
 ## Color
 
