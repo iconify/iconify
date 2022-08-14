@@ -375,7 +375,7 @@ export function defineIconifyIcon(
 
 	// Add getters and setters
 	attributes.forEach((attr) => {
-		if (!Object.hasOwn(IconifyIcon.prototype, attr)) {
+		if (!(attr in IconifyIcon.prototype)) {
 			Object.defineProperty(IconifyIcon.prototype, attr, {
 				get: function () {
 					return this.getAttribute(attr);
