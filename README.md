@@ -158,48 +158,9 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 -   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
 
-## Installation
+## Installation, debugging and contributing
 
-This monorepo uses [pnpm](https://pnpm.io) package manager.
-
-Why pnpm? Because, unlike npm, it can handle multiple versions of the same dependency in one monorepo, which is required when using multiple versions of the same framework, such as Vue 2 and Vue 3.
-
-To install dependencies in all packages, run
-
-```bash
-pnpm install
-```
-
-This will install all dependencies and create symbolic links to packages.
-
-To build everything, run `pnpm run build` (this excludes demo packages).
-
-To run unit tests, run `pnpm run test` (this excludes demo packages).
-
-### Other commands
-
-You can run any commands on any package from that package's directory.
-
-For example, to build only `@iconify/utils` package, you can either:
-
--   Change directory to `packages/utils`
--   Run `pnpm build`
-
-or you can use pnpm filters from root directory:
-
-`pnpm --filter @iconify/utils run build`
-
-or
-
-`pnpm --filter ./packages/utils run build`
-
-### NI
-
-I suggest to install [NI](https://github.com/antfu/ni), it makes it easy to work with any repository regardless of what package manager it uses.
-
-Instead of figuring out if you should run `npm install` or `pnpm install` or `yarn install`, just run `ni` and it will execute current package manager, `nr build` to build, `nr test` to run tests test.
-
-It is automatically installed if you are using Dev Container.
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Documentation
 
