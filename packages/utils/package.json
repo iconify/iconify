@@ -17,12 +17,9 @@
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
 		"build": "unbuild",
-		"test:jest-cjs": "jest --clearCache --config=jest.config.cjs && jest --runInBand --config=jest.config.cjs",
-		"test:jest-esm": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --clearCache --config=jest.config.mjs && cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand --config=jest.config.mjs",
-		"test": "pnpm run test:jest-cjs && pnpm run test:jest-esm",
-		"vitest:cjs": "vitest --config vitest.config.cjs",
-		"vitest:esm": "vitest --config vitest.config.mjs",
-		"vitest": "pnpm run vitest:cjs && pnpm run vitest:esm"
+		"test:cjs": "vitest --config vitest.config.cjs",
+		"test:esm": "vitest --config vitest.config.mjs",
+		"test": "pnpm run test:cjs && pnpm run test:esm"
 	},
 	"sideEffects": false,
 	"main": "lib/index.cjs",
@@ -233,10 +230,7 @@
 		"eslint": "^8.18.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.0.0",
-		"jest": "28.0.0-alpha.11",
 		"rimraf": "^3.0.2",
-		"ts-jest": "28.0.0-next.3",
-		"ts-node": "^10.8.1",
 		"typescript": "^4.7.4",
 		"unbuild": "^0.7.4",
 		"vitest": "^0.7.13"
