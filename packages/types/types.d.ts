@@ -154,6 +154,9 @@ export interface IconifyInfo {
 	// Category on Iconify collections list.
 	category?: string;
 
+	// List of tags to group similar icon sets.
+	tags?: string[];
+
 	// Palette status. True if icons have predefined color scheme, false if icons use currentColor.
 	// Ideally, icon set should not mix icons with and without palette to simplify search.
 	palette?: boolean;
