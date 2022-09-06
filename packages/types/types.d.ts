@@ -220,7 +220,7 @@ export interface IconifyMetaData {
 	suffixes?: Record<string, string>;
 	
 	// Time of last modification 
-	lastModified: number
+	lastModified: number;
 }
 
 /**
