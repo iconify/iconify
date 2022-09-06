@@ -218,6 +218,9 @@ export interface IconifyMetaData {
 	// Optional themes (new format). Key is prefix or suffix, value is title.
 	prefixes?: Record<string, string>;
 	suffixes?: Record<string, string>;
+	
+	// Time of last modification 
+	lastModified: number
 }
 
 /**
