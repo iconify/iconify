@@ -25,18 +25,18 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.25.2",
-		"@rollup/plugin-node-resolve": "^13.3.0",
-		"@rollup/plugin-typescript": "^8.3.3",
-		"rollup": "^2.75.6",
-		"typescript": "^4.7.4"
+		"@microsoft/api-extractor": "^7.30.0",
+		"@rollup/plugin-node-resolve": "^14.0.0",
+		"@rollup/plugin-typescript": "^8.5.0",
+		"rollup": "^2.79.0",
+		"typescript": "^4.8.2"
 	},
 	"dependencies": {
 		"@glimmer/component": "^1.1.2",
 		"@glimmer/tracking": "^1.1.2",
 		"@iconify/types": "workspace:^",
 		"ember-cli-babel": "^7.26.11",
-		"ember-cli-htmlbars": "^6.0.1"
+		"ember-cli-htmlbars": "^6.1.0"
 	},
 	"ember": {
 		"edition": "octane"
