@@ -4,7 +4,7 @@ import {
 	expectedBlock,
 	expectedInline,
 	setupDOM,
-} from './helpers';
+} from '../src/tests/helpers';
 import { updateStyle } from '../src/render/style';
 import { renderIcon } from '../src/render/icon';
 import { defaultCustomisations } from '../src/attributes/customisations';

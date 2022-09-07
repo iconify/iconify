@@ -1,14 +1,13 @@
 import {
 	cleanupGlobals,
 	expectedBlock,
-	expectedInline,
 	setupDOM,
 	nextTick,
 	nextPrefix,
 	fakeAPI,
 	mockAPIData,
 	awaitUntil,
-} from './helpers';
+} from '../src/tests/helpers';
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
 import type { IconifyMockAPIDelayDoneCallback } from '@iconify/core/lib/api/modules/mock';

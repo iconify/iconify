@@ -4,7 +4,7 @@ import {
 	defaultCustomisations,
 } from '../src/attributes/customisations';
 import { getInline } from '../src/attributes/inline';
-import { cleanupGlobals, setupDOM } from './helpers';
+import { cleanupGlobals, setupDOM } from '../src/tests/helpers';
 
 describe('Testing customisations', () => {
 	afterEach(cleanupGlobals);

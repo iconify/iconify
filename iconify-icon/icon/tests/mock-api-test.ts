@@ -1,7 +1,7 @@
 import { iconExists } from '@iconify/core/lib/storage/functions';
 import { loadIcon } from '@iconify/core/lib/api/icons';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
-import { fakeAPI, nextPrefix, mockAPIData } from './helpers';
+import { fakeAPI, nextPrefix, mockAPIData } from '../src/tests/helpers';
 
 describe('Testing mock API', () => {
 	it('Setting up API', async () => {

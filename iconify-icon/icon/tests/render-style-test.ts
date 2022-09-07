@@ -4,7 +4,7 @@ import {
 	expectedBlock,
 	expectedInline,
 	setupDOM,
-} from './helpers';
+} from '../src/tests/helpers';
 
 describe('Testing rendering style', () => {
 	afterEach(cleanupGlobals);

@@ -3,6 +3,7 @@
 	"include": ["src/**/*.ts", ".eslintrc.js"],
 	"compilerOptions": {
 		"rootDir": "./src",
-		"outDir": "./lib"
+		"outDir": "./lib",
+		"lib": ["ESNext", "DOM"]
 	}
 }

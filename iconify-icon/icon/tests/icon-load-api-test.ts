@@ -1,219 +1,227 @@
-import { fakeAPI, nextPrefix, mockAPIData } from './helpers';
+import { fakeAPI, nextPrefix, mockAPIData } from '../src/tests/helpers';
 import { addCollection } from '@iconify/core/lib/storage/functions';
 import { parseIconValue } from '../src/attributes/icon/index';
 
 describe('Testing parseIconValue with API', () => {
-	it('Loading icon from API', (done) => {
-		// Set config
-		const provider = nextPrefix();
-		const prefix = nextPrefix();
-		fakeAPI(provider);
+	it('Loading icon from API', () => {
+		return new Promise((fulfill) => {
+			// Set config
+			const provider = nextPrefix();
+			const prefix = nextPrefix();
+			fakeAPI(provider);
 
-		// Mock data
-		const name = 'mock-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
+			// Mock data
+			const name = 'mock-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					[name]: {
-						body: '<g />',
+				response: {
+					prefix,
+					icons: {
+						[name]: {
+							body: '<g />',
+						},
 					},
 				},
-			},
-		});
+			});
 
-		// Test
-		let callbackCalled = false;
-		const result = parseIconValue(iconName, (value, icon, data) => {
+			// Test
+			let callbackCalled = false;
+			const result = parseIconValue(iconName, (value, icon, data) => {
+				expect(callbackCalled).toBe(false);
+				callbackCalled = true;
+
+				expect(value).toBe(iconName);
+				expect(icon).toEqual({
+					provider,
+					prefix,
+					name,
+				});
+				expect(data).toEqual({
+					body: '<g />',
+				});
+
+				fulfill(true);
+			});
+			expect(result.loading).toBeDefined();
+			expect(result).toEqual({
+				value: iconName,
+				name: {
+					provider,
+					prefix,
+					name,
+				},
+				loading: result.loading,
+			});
 			expect(callbackCalled).toBe(false);
-			callbackCalled = true;
-
-			expect(value).toBe(iconName);
-			expect(icon).toEqual({
-				provider,
-				prefix,
-				name,
-			});
-			expect(data).toEqual({
-				body: '<g />',
-			});
-
-			done();
 		});
-		expect(result.loading).toBeDefined();
-		expect(result).toEqual({
-			value: iconName,
-			name: {
-				provider,
-				prefix,
-				name,
-			},
-			loading: result.loading,
-		});
-		expect(callbackCalled).toBe(false);
 	});
 
-	it('Already exists', (done) => {
-		// Set config
-		const provider = nextPrefix();
-		const prefix = nextPrefix();
-		fakeAPI(provider);
+	it('Already exists', () => {
+		return new Promise((fulfill, reject) => {
+			// Set config
+			const provider = nextPrefix();
+			const prefix = nextPrefix();
+			fakeAPI(provider);
 
-		const name = 'mock-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
+			const name = 'mock-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
 
-		addCollection(
-			{
-				prefix,
-				icons: {
-					[name]: {
-						body: '<g id="test" />',
+			addCollection(
+				{
+					prefix,
+					icons: {
+						[name]: {
+							body: '<g id="test" />',
+						},
 					},
 				},
-			},
-			provider
-		);
+				provider
+			);
 
-		// Mock data
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
-				prefix,
-				icons: {
-					[name]: {
-						body: '<g />',
-					},
-				},
-			},
-			delay: () => {
-				done('This function should not have been called');
-			},
-		});
-
-		// Test
-		const result = parseIconValue(iconName, () => {
-			done('Callback should not have been called');
-		});
-		expect(result).toEqual({
-			value: iconName,
-			name: {
+			// Mock data
+			mockAPIData({
+				type: 'icons',
 				provider,
 				prefix,
-				name,
-			},
-			data: {
-				body: '<g id="test" />',
-			},
+				response: {
+					prefix,
+					icons: {
+						[name]: {
+							body: '<g />',
+						},
+					},
+				},
+				delay: () => {
+					reject('This function should not have been called');
+				},
+			});
+
+			// Test
+			const result = parseIconValue(iconName, () => {
+				reject('Callback should not have been called');
+			});
+			expect(result).toEqual({
+				value: iconName,
+				name: {
+					provider,
+					prefix,
+					name,
+				},
+				data: {
+					body: '<g id="test" />',
+				},
+			});
+			fulfill(true);
 		});
-		done();
 	});
 
-	it('Failing to load', (done) => {
-		// Set config
-		const provider = nextPrefix();
-		const prefix = nextPrefix();
-		fakeAPI(provider);
+	it('Failing to load', () => {
+		return new Promise((fulfill) => {
+			// Set config
+			const provider = nextPrefix();
+			const prefix = nextPrefix();
+			fakeAPI(provider);
 
-		// Mock data
-		const name = 'mock-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
+			// Mock data
+			const name = 'mock-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {},
-				not_found: [name],
-			},
-		});
+				response: {
+					prefix,
+					icons: {},
+					not_found: [name],
+				},
+			});
 
-		// Test
-		let callbackCalled = false;
-		const result = parseIconValue(iconName, (value, icon, data) => {
+			// Test
+			let callbackCalled = false;
+			const result = parseIconValue(iconName, (value, icon, data) => {
+				expect(callbackCalled).toBe(false);
+				callbackCalled = true;
+
+				expect(value).toBe(iconName);
+				expect(icon).toEqual({
+					provider,
+					prefix,
+					name,
+				});
+				expect(data).toBeFalsy();
+
+				fulfill(true);
+			});
+			expect(result.loading).toBeDefined();
+			expect(result).toEqual({
+				value: iconName,
+				name: {
+					provider,
+					prefix,
+					name,
+				},
+				loading: result.loading,
+			});
 			expect(callbackCalled).toBe(false);
-			callbackCalled = true;
-
-			expect(value).toBe(iconName);
-			expect(icon).toEqual({
-				provider,
-				prefix,
-				name,
-			});
-			expect(data).toBeFalsy();
-
-			done();
 		});
-		expect(result.loading).toBeDefined();
-		expect(result).toEqual({
-			value: iconName,
-			name: {
-				provider,
-				prefix,
-				name,
-			},
-			loading: result.loading,
-		});
-		expect(callbackCalled).toBe(false);
 	});
 
-	it('Already marked as missing', (done) => {
-		// Set config
-		const provider = nextPrefix();
-		const prefix = nextPrefix();
-		fakeAPI(provider);
+	it('Already marked as missing', () => {
+		return new Promise((fulfill, reject) => {
+			// Set config
+			const provider = nextPrefix();
+			const prefix = nextPrefix();
+			fakeAPI(provider);
 
-		const name = 'mock-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
+			const name = 'mock-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
 
-		addCollection(
-			{
-				prefix,
-				icons: {},
-				not_found: [name],
-			},
-			provider
-		);
-
-		// Mock data
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
-				prefix,
-				icons: {
-					[name]: {
-						body: '<g />',
-					},
+			addCollection(
+				{
+					prefix,
+					icons: {},
+					not_found: [name],
 				},
-			},
-			delay: () => {
-				done('This function should not have been called');
-			},
-		});
+				provider
+			);
 
-		// Test
-		const result = parseIconValue(iconName, () => {
-			done('Callback should not have been called');
-		});
-		expect(result).toEqual({
-			value: iconName,
-			name: {
+			// Mock data
+			mockAPIData({
+				type: 'icons',
 				provider,
 				prefix,
-				name,
-			},
-			data: null,
+				response: {
+					prefix,
+					icons: {
+						[name]: {
+							body: '<g />',
+						},
+					},
+				},
+				delay: () => {
+					reject('This function should not have been called');
+				},
+			});
+
+			// Test
+			const result = parseIconValue(iconName, () => {
+				reject('Callback should not have been called');
+			});
+			expect(result).toEqual({
+				value: iconName,
+				name: {
+					provider,
+					prefix,
+					name,
+				},
+				data: null,
+			});
+			fulfill(true);
 		});
-		done();
 	});
 });

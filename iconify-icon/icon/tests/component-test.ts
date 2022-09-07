@@ -4,7 +4,7 @@ import {
 	expectedInline,
 	setupDOM,
 	nextTick,
-} from './helpers';
+} from '../src/tests/helpers';
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
 
