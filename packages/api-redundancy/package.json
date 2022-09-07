@@ -28,13 +28,13 @@
 		"directory": "packages/api-redundancy"
 	},
 	"devDependencies": {
-		"@types/jest": "^27.5.2",
-		"@types/node": "^17.0.45",
-		"@typescript-eslint/eslint-plugin": "^5.28.0",
-		"@typescript-eslint/parser": "^5.28.0",
+		"@types/jest": "^29.0.0",
+		"@types/node": "^18.7.15",
+		"@typescript-eslint/eslint-plugin": "^5.36.2",
+		"@typescript-eslint/parser": "^5.36.2",
 		"cross-env": "^7.0.3",
-		"eslint": "^8.18.0",
-		"tsup": "^5.12.9",
-		"vitest": "^0.17.1"
+		"eslint": "^8.23.0",
+		"tsup": "^6.2.3",
+		"vitest": "^0.23.1"
 	}
 }

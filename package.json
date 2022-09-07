@@ -24,6 +24,11 @@
 				"peerDependencies": {
 					"vue": "^2.6.14"
 				}
+			},
+			"tsutils": {
+				"peerDependencies": {
+					"typescript": "*"
+				}
 			}
 		}
 	}
