@@ -11,44 +11,119 @@ const iconData = {
 };
 
 describe('Testing references', () => {
-	test('reference for preloaded icon', (done) => {
-		const prefix = nextPrefix();
-		const name = 'render-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
+	test('reference for preloaded icon', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
+			const name = 'render-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					[name]: iconData,
-				},
-			},
-		});
-
-		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
-
-		// Load icon
-		loadIcons([iconName], (loaded, missing, pending) => {
-			let gotRef = false;
-			let gotInlineRef = false;
-
-			// Make sure icon has been loaded
-			expect(loaded).toMatchObject([
-				{
-					provider,
+				response: {
 					prefix,
-					name,
+					icons: {
+						[name]: iconData,
+					},
 				},
-			]);
-			expect(missing).toMatchObject([]);
-			expect(pending).toMatchObject([]);
-			expect(iconExists(iconName)).toEqual(true);
+			});
 
-			// Render components
+			// Check if icon has been loaded
+			expect(iconExists(iconName)).toEqual(false);
+
+			// Load icon
+			loadIcons([iconName], (loaded, missing, pending) => {
+				let gotRef = false;
+				let gotInlineRef = false;
+
+				// Make sure icon has been loaded
+				expect(loaded).toMatchObject([
+					{
+						provider,
+						prefix,
+						name,
+					},
+				]);
+				expect(missing).toMatchObject([]);
+				expect(pending).toMatchObject([]);
+				expect(iconExists(iconName)).toEqual(true);
+
+				// Render components
+				renderer.create(
+					<Icon
+						icon={iconName}
+						ref={(element) => {
+							gotRef = true;
+						}}
+					/>
+				);
+
+				renderer.create(
+					<InlineIcon
+						icon={iconName}
+						ref={(element) => {
+							gotInlineRef = true;
+						}}
+					/>
+				);
+
+				// References should be called immediately in test
+				expect(gotRef).toEqual(true);
+				expect(gotInlineRef).toEqual(true);
+
+				fulfill(true);
+			});
+		});
+	});
+
+	test('reference to pending icon', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
+			const name = 'mock-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
+			let gotRef = false;
+
+			mockAPIData({
+				type: 'icons',
+				provider,
+				prefix,
+				response: {
+					prefix,
+					icons: {
+						[name]: iconData,
+					},
+				},
+				delay: (next) => {
+					// Icon should not have loaded yet
+					expect(iconExists(iconName)).toEqual(false);
+
+					// Reference should not have been called yet
+					expect(gotRef).toEqual(false);
+
+					// Send icon data
+					next();
+
+					// Test it again
+					expect(iconExists(iconName)).toEqual(true);
+					expect(gotRef).toEqual(false);
+
+					// Check if state was changed
+					// Wrapped in double setTimeout() because re-render takes 2 ticks
+					setTimeout(() => {
+						setTimeout(() => {
+							expect(gotRef).toEqual(true);
+
+							fulfill(true);
+						}, 0);
+					}, 0);
+				},
+			});
+
+			// Check if icon has been loaded
+			expect(iconExists(iconName)).toEqual(false);
+
+			// Render component
 			renderer.create(
 				<Icon
 					icon={iconName}
@@ -58,134 +133,65 @@ describe('Testing references', () => {
 				/>
 			);
 
-			renderer.create(
-				<InlineIcon
+			// Reference should not have been called yet
+			expect(gotRef).toEqual(false);
+		});
+	});
+
+	test('missing icon', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
+			const name = 'missing-icon';
+			const iconName = `@${provider}:${prefix}:${name}`;
+			let gotRef = false;
+
+			mockAPIData({
+				type: 'icons',
+				provider,
+				prefix,
+				response: 404,
+				delay: (next) => {
+					// Icon should not have loaded yet
+					expect(iconExists(iconName)).toEqual(false);
+
+					// Reference should not have been called
+					expect(gotRef).toEqual(false);
+
+					// Send icon data
+					next();
+
+					// Test it again
+					expect(iconExists(iconName)).toEqual(false);
+					expect(gotRef).toEqual(false);
+
+					// Check if state was changed
+					// Wrapped in double setTimeout() because re-render takes 2 ticks
+					setTimeout(() => {
+						setTimeout(() => {
+							// Reference should not have been called
+							expect(gotRef).toEqual(false);
+
+							fulfill(true);
+						}, 0);
+					}, 0);
+				},
+			});
+
+			// Check if icon has been loaded
+			expect(iconExists(iconName)).toEqual(false);
+
+			// Render component
+			const component = renderer.create(
+				<Icon
 					icon={iconName}
 					ref={(element) => {
-						gotInlineRef = true;
+						gotRef = true;
 					}}
-				/>
+				></Icon>
 			);
 
-			// References should be called immediately in test
-			expect(gotRef).toEqual(true);
-			expect(gotInlineRef).toEqual(true);
-
-			done();
+			// Reference should not have been called
+			expect(gotRef).toEqual(false);
 		});
-	});
-
-	test('reference to pending icon', (done) => {
-		const prefix = nextPrefix();
-		const name = 'mock-test';
-		const iconName = `@${provider}:${prefix}:${name}`;
-		let gotRef = false;
-
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
-				prefix,
-				icons: {
-					[name]: iconData,
-				},
-			},
-			delay: (next) => {
-				// Icon should not have loaded yet
-				expect(iconExists(iconName)).toEqual(false);
-
-				// Reference should not have been called yet
-				expect(gotRef).toEqual(false);
-
-				// Send icon data
-				next();
-
-				// Test it again
-				expect(iconExists(iconName)).toEqual(true);
-				expect(gotRef).toEqual(false);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						expect(gotRef).toEqual(true);
-
-						done();
-					}, 0);
-				}, 0);
-			},
-		});
-
-		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
-
-		// Render component
-		renderer.create(
-			<Icon
-				icon={iconName}
-				ref={(element) => {
-					gotRef = true;
-				}}
-			/>
-		);
-
-		// Reference should not have been called yet
-		expect(gotRef).toEqual(false);
-	});
-
-	test('missing icon', (done) => {
-		const prefix = nextPrefix();
-		const name = 'missing-icon';
-		const iconName = `@${provider}:${prefix}:${name}`;
-		let gotRef = false;
-
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: 404,
-			delay: (next) => {
-				// Icon should not have loaded yet
-				expect(iconExists(iconName)).toEqual(false);
-
-				// Reference should not have been called
-				expect(gotRef).toEqual(false);
-
-				// Send icon data
-				next();
-
-				// Test it again
-				expect(iconExists(iconName)).toEqual(false);
-				expect(gotRef).toEqual(false);
-
-				// Check if state was changed
-				// Wrapped in double setTimeout() because re-render takes 2 ticks
-				setTimeout(() => {
-					setTimeout(() => {
-						// Reference should not have been called
-						expect(gotRef).toEqual(false);
-
-						done();
-					}, 0);
-				}, 0);
-			},
-		});
-
-		// Check if icon has been loaded
-		expect(iconExists(iconName)).toEqual(false);
-
-		// Render component
-		const component = renderer.create(
-			<Icon
-				icon={iconName}
-				ref={(element) => {
-					gotRef = true;
-				}}
-			></Icon>
-		);
-
-		// Reference should not have been called
-		expect(gotRef).toEqual(false);
 	});
 });
