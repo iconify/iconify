@@ -54,45 +54,25 @@ describe('Testing validating icon', () => {
 	});
 
 	// Required string
-	test('body', (done) => {
-		// Missing body
-		try {
-			validateIconSet({
-				prefix: 'foo',
-				icons: {
-					bar: {
-						width: 16,
-					},
-				},
-			});
-			done('Expected to throw error when body is missing');
-		} catch (err) {
-			//
-		}
-
-		try {
-			validateIconSet(
-				{
+	test('body', () => {
+		return new Promise((fulfill, reject) => {
+			// Missing body
+			try {
+				validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
 							width: 16,
 						},
 					},
-				},
-				{
-					fix: true,
-				}
-			);
-			done(
-				'Expected to throw error when body is missing and cannot be fixed'
-			);
-		} catch (err) {
-			//
-		}
+				});
+				reject('Expected to throw error when body is missing');
+				return;
+			} catch {
+				//
+			}
 
-		try {
-			expect(
+			try {
 				validateIconSet(
 					{
 						prefix: 'foo',
@@ -100,140 +80,86 @@ describe('Testing validating icon', () => {
 							bar: {
 								width: 16,
 							},
-							baz: {
-								body: '<g />',
-							},
 						},
 					},
 					{
 						fix: true,
 					}
-				)
-			).toEqual({
-				prefix: 'foo',
-				icons: {
-					baz: {
-						body: '<g />',
-					},
-				},
-			});
-		} catch (err) {
-			done(
-				'Expected to not throw error when body is missing, but icon set can be fixed'
-			);
-			//
-		}
+				);
+				reject(
+					'Expected to throw error when body is missing and cannot be fixed'
+				);
+				return;
+			} catch {
+				//
+			}
 
-		validationValues.forEach((item, value) => {
-			// Validate without fixing
 			try {
-				validateIconSet({
+				expect(
+					validateIconSet(
+						{
+							prefix: 'foo',
+							icons: {
+								bar: {
+									width: 16,
+								},
+								baz: {
+									body: '<g />',
+								},
+							},
+						},
+						{
+							fix: true,
+						}
+					)
+				).toEqual({
 					prefix: 'foo',
 					icons: {
-						bar: {
-							body: value,
+						baz: {
+							body: '<g />',
 						},
 					},
 				});
-
-				if (item.type !== 'string') {
-					done(`Expected to throw error when body is ${item.text}`);
-				}
-			} catch (err) {
-				if (item.type === 'string') {
-					done(`Expected to pass when body is ${item.text}`);
-				}
-			}
-
-			// Attempt to fix (will fail because icon set is empty after failing icon is removed)
-			try {
-				validateIconSet(
-					{
-						prefix: 'foo',
-						icons: {
-							bar: {
-								body: value,
-							},
-						},
-					},
-					{
-						fix: true,
-					}
+			} catch {
+				reject(
+					'Expected to not throw error when body is missing, but icon set can be fixed'
 				);
-
-				if (item.type !== 'string') {
-					done(`Expected to throw error when body is ${item.text}`);
-				}
-			} catch (err) {
-				if (item.type === 'string') {
-					done(`Expected to pass when body is ${item.text}`);
-				}
+				return;
 			}
 
-			// Attempt to fix (will not fail because another icon is valid)
-			try {
-				validateIconSet(
-					{
-						prefix: 'foo',
-						icons: {
-							bar: {
-								body: value,
-							},
-							baz: {
-								body: '<g />',
-							},
-						},
-					},
-					{
-						fix: true,
-					}
-				);
-			} catch (err) {
-				done('Expected to pass when another icon is valid');
-			}
-		});
-
-		done();
-	});
-
-	// Numbers
-	['width', 'height', 'left', 'top', 'rotate'].forEach((prop) => {
-		test(prop, (done) => {
-			// Validate without fixing
 			validationValues.forEach((item, value) => {
+				// Validate without fixing
 				try {
 					validateIconSet({
 						prefix: 'foo',
 						icons: {
 							bar: {
-								body: '<g />',
-								[prop]: value,
+								body: value,
 							},
 						},
 					});
 
-					if (item.type !== 'number') {
-						done(
-							`Expected to throw error when ${prop} is ${item.text}`
+					if (item.type !== 'string') {
+						reject(
+							`Expected to throw error when body is ${item.text}`
 						);
+						return;
 					}
-				} catch (err) {
-					if (item.type === 'number') {
-						done(`Expected to pass when ${prop} is ${item.text}`);
+				} catch {
+					if (item.type === 'string') {
+						reject(`Expected to pass when body is ${item.text}`);
+						return;
 					}
 				}
-			});
 
-			// Fix
-			validationValues.forEach((item, value) => {
+				// Attempt to fix (will fail because icon set is empty after failing icon is removed)
 				try {
-					const result = validateIconSet(
+					validateIconSet(
 						{
 							prefix: 'foo',
 							icons: {
 								bar: {
-									body: '<g />',
-									[prop]: value,
+									body: value,
 								},
 							},
 						},
@@ -242,37 +168,212 @@ describe('Testing validating icon', () => {
 						}
 					);
 
-					const icon =
-						item.type === 'number'
-							? {
-									body: '<g />',
-									[prop]: value,
-							  }
-							: {
-									// [prop] should be deleted
-									body: '<g />',
-							  };
+					if (item.type !== 'string') {
+						reject(
+							`Expected to throw error when body is ${item.text}`
+						);
+						return;
+					}
+				} catch {
+					if (item.type === 'string') {
+						reject(`Expected to pass when body is ${item.text}`);
+						return;
+					}
+				}
 
-					expect(result).toEqual({
-						prefix: 'foo',
-						icons: {
-							bar: icon,
+				// Attempt to fix (will not fail because another icon is valid)
+				try {
+					validateIconSet(
+						{
+							prefix: 'foo',
+							icons: {
+								bar: {
+									body: value,
+								},
+								baz: {
+									body: '<g />',
+								},
+							},
 						},
-					});
-				} catch (err) {
-					done(
-						`Expected to not throw error when ${prop} is being fixed`
+						{
+							fix: true,
+						}
 					);
+				} catch {
+					reject('Expected to pass when another icon is valid');
+					return;
 				}
 			});
 
-			done();
+			fulfill(true);
+		});
+	});
+
+	// Numbers
+	['width', 'height', 'left', 'top', 'rotate'].forEach((prop) => {
+		test(prop, () => {
+			return new Promise((fulfill, reject) => {
+				// Validate without fixing
+				validationValues.forEach((item, value) => {
+					try {
+						validateIconSet({
+							prefix: 'foo',
+							icons: {
+								bar: {
+									body: '<g />',
+									[prop]: value,
+								},
+							},
+						});
+
+						if (item.type !== 'number') {
+							reject(
+								`Expected to throw error when ${prop} is ${item.text}`
+							);
+							return;
+						}
+					} catch {
+						if (item.type === 'number') {
+							reject(
+								`Expected to pass when ${prop} is ${item.text}`
+							);
+							return;
+						}
+					}
+				});
+
+				// Fix
+				validationValues.forEach((item, value) => {
+					try {
+						const result = validateIconSet(
+							{
+								prefix: 'foo',
+								icons: {
+									bar: {
+										body: '<g />',
+										[prop]: value,
+									},
+								},
+							},
+							{
+								fix: true,
+							}
+						);
+
+						const icon =
+							item.type === 'number'
+								? {
+										body: '<g />',
+										[prop]: value,
+								  }
+								: {
+										// [prop] should be deleted
+										body: '<g />',
+								  };
+
+						expect(result).toEqual({
+							prefix: 'foo',
+							icons: {
+								bar: icon,
+							},
+						});
+					} catch {
+						reject(
+							`Expected to not throw error when ${prop} is being fixed`
+						);
+						return;
+					}
+				});
+
+				fulfill(true);
+			});
 		});
 	});
 
 	// Boolean
 	['hFlip', 'vFlip', 'hidden'].forEach((prop) => {
-		test(prop, (done) => {
+		test(prop, () => {
+			return new Promise((fulfill, reject) => {
+				validationValues.forEach((item, value) => {
+					// Validate
+					try {
+						validateIconSet({
+							prefix: 'foo',
+							icons: {
+								bar: {
+									body: '<g />',
+									[prop]: value,
+								},
+							},
+						});
+
+						if (item.type !== 'boolean') {
+							reject(
+								`Expected to throw error when ${prop} is ${item.text}`
+							);
+							return;
+						}
+					} catch {
+						if (item.type === 'boolean') {
+							reject(
+								`Expected to pass when ${prop} is ${item.text}`
+							);
+							return;
+						}
+					}
+				});
+
+				// Fix
+				validationValues.forEach((item, value) => {
+					try {
+						const result = validateIconSet(
+							{
+								prefix: 'foo',
+								icons: {
+									bar: {
+										body: '<g />',
+										[prop]: value,
+									},
+								},
+							},
+							{
+								fix: true,
+							}
+						);
+
+						const icon =
+							item.type === 'boolean'
+								? {
+										body: '<g />',
+										[prop]: value,
+								  }
+								: {
+										// [prop] should be deleted
+										body: '<g />',
+								  };
+
+						expect(result).toEqual({
+							prefix: 'foo',
+							icons: {
+								bar: icon,
+							},
+						});
+					} catch {
+						reject(
+							`Expected to not throw error when ${prop} is being fixed`
+						);
+						return;
+					}
+				});
+
+				fulfill(true);
+			});
+		});
+	});
+
+	// Unexpected field
+	test('foo', () => {
+		return new Promise((fulfill, reject) => {
 			validationValues.forEach((item, value) => {
 				// Validate
 				try {
@@ -281,19 +382,21 @@ describe('Testing validating icon', () => {
 						icons: {
 							bar: {
 								body: '<g />',
-								[prop]: value,
+								foo: value,
 							},
 						},
 					});
 
-					if (item.type !== 'boolean') {
-						done(
-							`Expected to throw error when ${prop} is ${item.text}`
+					if (item.type === 'object') {
+						reject(
+							`Expected to throw error when value is ${item.text}`
 						);
+						return;
 					}
-				} catch (err) {
-					if (item.type === 'boolean') {
-						done(`Expected to pass when ${prop} is ${item.text}`);
+				} catch {
+					if (item.type !== 'object') {
+						reject(`Expected to pass when value is ${item.text}`);
+						return;
 					}
 				}
 			});
@@ -307,7 +410,7 @@ describe('Testing validating icon', () => {
 							icons: {
 								bar: {
 									body: '<g />',
-									[prop]: value,
+									foo: value,
 								},
 							},
 						},
@@ -317,13 +420,13 @@ describe('Testing validating icon', () => {
 					);
 
 					const icon =
-						item.type === 'boolean'
+						item.type !== 'object'
 							? {
 									body: '<g />',
-									[prop]: value,
+									foo: value,
 							  }
 							: {
-									// [prop] should be deleted
+									// should be deleted
 									body: '<g />',
 							  };
 
@@ -333,82 +436,15 @@ describe('Testing validating icon', () => {
 							bar: icon,
 						},
 					});
-				} catch (err) {
-					done(
-						`Expected to not throw error when ${prop} is being fixed`
+				} catch {
+					reject(
+						`Expected to not throw error when value is being fixed`
 					);
+					return;
 				}
 			});
 
-			done();
+			fulfill(true);
 		});
-	});
-
-	// Unexpected field
-	test('foo', (done) => {
-		validationValues.forEach((item, value) => {
-			// Validate
-			try {
-				validateIconSet({
-					prefix: 'foo',
-					icons: {
-						bar: {
-							body: '<g />',
-							foo: value,
-						},
-					},
-				});
-
-				if (item.type === 'object') {
-					done(`Expected to throw error when value is ${item.text}`);
-				}
-			} catch (err) {
-				if (item.type !== 'object') {
-					done(`Expected to pass when value is ${item.text}`);
-				}
-			}
-		});
-
-		// Fix
-		validationValues.forEach((item, value) => {
-			try {
-				const result = validateIconSet(
-					{
-						prefix: 'foo',
-						icons: {
-							bar: {
-								body: '<g />',
-								foo: value,
-							},
-						},
-					},
-					{
-						fix: true,
-					}
-				);
-
-				const icon =
-					item.type !== 'object'
-						? {
-								body: '<g />',
-								foo: value,
-						  }
-						: {
-								// should be deleted
-								body: '<g />',
-						  };
-
-				expect(result).toEqual({
-					prefix: 'foo',
-					icons: {
-						bar: icon,
-					},
-				});
-			} catch (err) {
-				done(`Expected to not throw error when value is being fixed`);
-			}
-		});
-
-		done();
 	});
 });

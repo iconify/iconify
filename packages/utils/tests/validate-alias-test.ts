@@ -46,26 +46,10 @@ describe('Testing validating alias', () => {
 		});
 	});
 
-	test('Null', (done) => {
-		try {
-			validateIconSet({
-				prefix: 'foo',
-				icons: {
-					bar: {
-						body: '<g />',
-					},
-				},
-				aliases: null,
-			});
-			done('Expected to throw error when aliases is null');
-		} catch (err) {
-			//
-		}
-
-		// Fix it
-		expect(
-			validateIconSet(
-				{
+	test('Null', () => {
+		return new Promise((fulfill, reject) => {
+			try {
+				validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
@@ -73,48 +57,44 @@ describe('Testing validating alias', () => {
 						},
 					},
 					aliases: null,
-				},
-				{ fix: true }
-			)
-		).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-		});
+				});
+				reject('Expected to throw error when aliases is null');
+				return;
+			} catch {
+				//
+			}
 
-		done();
-	});
-
-	test('Invalid parent', (done) => {
-		try {
-			const result = validateIconSet({
+			// Fix it
+			expect(
+				validateIconSet(
+					{
+						prefix: 'foo',
+						icons: {
+							bar: {
+								body: '<g />',
+							},
+						},
+						aliases: null,
+					},
+					{ fix: true }
+				)
+			).toEqual({
 				prefix: 'foo',
 				icons: {
 					bar: {
 						body: '<g />',
 					},
 				},
-				aliases: {
-					baz: {
-						parent: 'missing',
-					},
-				},
 			});
-			done(
-				'Expected to throw error when alias has missing parent, got ' +
-					JSON.stringify(result)
-			);
-		} catch (err) {
-			//
-		}
 
-		// Fix it
-		expect(
-			validateIconSet(
-				{
+			fulfill(true);
+		});
+	});
+
+	test('Invalid parent', () => {
+		return new Promise((fulfill, reject) => {
+			try {
+				const result = validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
@@ -126,51 +106,51 @@ describe('Testing validating alias', () => {
 							parent: 'missing',
 						},
 					},
-				},
-				{ fix: true }
-			)
-		).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-		});
+				});
+				reject(
+					'Expected to throw error when alias has missing parent, got ' +
+						JSON.stringify(result)
+				);
+				return;
+			} catch {
+				//
+			}
 
-		done();
-	});
-
-	test('Invalid parent, 2 levels', (done) => {
-		try {
-			const result = validateIconSet({
+			// Fix it
+			expect(
+				validateIconSet(
+					{
+						prefix: 'foo',
+						icons: {
+							bar: {
+								body: '<g />',
+							},
+						},
+						aliases: {
+							baz: {
+								parent: 'missing',
+							},
+						},
+					},
+					{ fix: true }
+				)
+			).toEqual({
 				prefix: 'foo',
 				icons: {
 					bar: {
 						body: '<g />',
 					},
 				},
-				aliases: {
-					baz: {
-						parent: 'missing',
-					},
-					baz2: {
-						parent: 'baz',
-					},
-				},
 			});
-			done(
-				'Expected to throw error when alias has missing parent, got ' +
-					JSON.stringify(result)
-			);
-		} catch (err) {
-			//
-		}
 
-		// Fix it
-		expect(
-			validateIconSet(
-				{
+			fulfill(true);
+		});
+	});
+
+	test('Invalid parent, 2 levels', () => {
+		return new Promise((fulfill, reject) => {
+			try {
+				const result = validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
@@ -185,51 +165,54 @@ describe('Testing validating alias', () => {
 							parent: 'baz',
 						},
 					},
-				},
-				{ fix: true }
-			)
-		).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-		});
+				});
+				reject(
+					'Expected to throw error when alias has missing parent, got ' +
+						JSON.stringify(result)
+				);
+				return;
+			} catch {
+				//
+			}
 
-		done();
-	});
-
-	test('Invalid parent, 2 levels, reverse order', (done) => {
-		try {
-			const result = validateIconSet({
+			// Fix it
+			expect(
+				validateIconSet(
+					{
+						prefix: 'foo',
+						icons: {
+							bar: {
+								body: '<g />',
+							},
+						},
+						aliases: {
+							baz: {
+								parent: 'missing',
+							},
+							baz2: {
+								parent: 'baz',
+							},
+						},
+					},
+					{ fix: true }
+				)
+			).toEqual({
 				prefix: 'foo',
 				icons: {
 					bar: {
 						body: '<g />',
 					},
 				},
-				aliases: {
-					baz: {
-						parent: 'baz2',
-					},
-					baz2: {
-						parent: 'missing',
-					},
-				},
 			});
-			done(
-				'Expected to throw error when alias has missing parent, got ' +
-					JSON.stringify(result)
-			);
-		} catch (err) {
-			//
-		}
 
-		// Fix it
-		expect(
-			validateIconSet(
-				{
+			fulfill(true);
+		});
+	});
+
+	test('Invalid parent, 2 levels, reverse order', () => {
+		return new Promise((fulfill, reject) => {
+			try {
+				const result = validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
@@ -244,54 +227,54 @@ describe('Testing validating alias', () => {
 							parent: 'missing',
 						},
 					},
-				},
-				{ fix: true }
-			)
-		).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-		});
+				});
+				reject(
+					'Expected to throw error when alias has missing parent, got ' +
+						JSON.stringify(result)
+				);
+				return;
+			} catch {
+				//
+			}
 
-		done();
-	});
-
-	test('Parent loop', (done) => {
-		try {
-			const result = validateIconSet({
+			// Fix it
+			expect(
+				validateIconSet(
+					{
+						prefix: 'foo',
+						icons: {
+							bar: {
+								body: '<g />',
+							},
+						},
+						aliases: {
+							baz: {
+								parent: 'baz2',
+							},
+							baz2: {
+								parent: 'missing',
+							},
+						},
+					},
+					{ fix: true }
+				)
+			).toEqual({
 				prefix: 'foo',
 				icons: {
 					bar: {
 						body: '<g />',
 					},
 				},
-				aliases: {
-					baz: {
-						parent: 'baz2',
-					},
-					baz2: {
-						parent: 'baz',
-					},
-					baz3: {
-						parent: 'bar',
-					},
-				},
 			});
-			done(
-				'Expected to throw error when alias has missing parent, got ' +
-					JSON.stringify(result)
-			);
-		} catch (err) {
-			//
-		}
 
-		// Fix it
-		expect(
-			validateIconSet(
-				{
+			fulfill(true);
+		});
+	});
+
+	test('Parent loop', () => {
+		return new Promise((fulfill, reject) => {
+			try {
+				const result = validateIconSet({
 					prefix: 'foo',
 					icons: {
 						bar: {
@@ -309,23 +292,55 @@ describe('Testing validating alias', () => {
 							parent: 'bar',
 						},
 					},
-				},
-				{ fix: true }
-			)
-		).toEqual({
-			prefix: 'foo',
-			icons: {
-				bar: {
-					body: '<g />',
-				},
-			},
-			aliases: {
-				baz3: {
-					parent: 'bar',
-				},
-			},
-		});
+				});
+				reject(
+					'Expected to throw error when alias has missing parent, got ' +
+						JSON.stringify(result)
+				);
+				return;
+			} catch {
+				//
+			}
 
-		done();
+			// Fix it
+			expect(
+				validateIconSet(
+					{
+						prefix: 'foo',
+						icons: {
+							bar: {
+								body: '<g />',
+							},
+						},
+						aliases: {
+							baz: {
+								parent: 'baz2',
+							},
+							baz2: {
+								parent: 'baz',
+							},
+							baz3: {
+								parent: 'bar',
+							},
+						},
+					},
+					{ fix: true }
+				)
+			).toEqual({
+				prefix: 'foo',
+				icons: {
+					bar: {
+						body: '<g />',
+					},
+				},
+				aliases: {
+					baz3: {
+						parent: 'bar',
+					},
+				},
+			});
+
+			fulfill(true);
+		});
 	});
 });
