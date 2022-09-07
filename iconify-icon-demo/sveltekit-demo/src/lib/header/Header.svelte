@@ -21,12 +21,18 @@
 		</a>
 	</div>
 
-	<nav>
+	<nav data-sveltekit-prefetch>
 		<iconify-icon icon="corner-left" />
 		<ul>
-			<li class:active={$page.url.pathname === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.url.pathname === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.url.pathname === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
+			<li class:active={$page.url.pathname === '/'}>
+				<a href="/">Home</a>
+			</li>
+			<li class:active={$page.url.pathname === '/about'}>
+				<a href="/about">About</a>
+			</li>
+			<li class:active={$page.url.pathname === '/todos'}>
+				<a href="/todos">Todos</a>
+			</li>
 		</ul>
 		<iconify-icon icon="corner-right" />
 	</nav>
