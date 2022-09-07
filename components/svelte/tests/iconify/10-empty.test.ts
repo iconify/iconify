@@ -10,6 +10,6 @@ describe('Empty icon', () => {
 		const html = component.container.innerHTML;
 
 		// Empty container div
-		expect(html).toBe('<div></div>');
+		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('<div></div>');
 	});
 });

@@ -158,7 +158,7 @@ describe('Rendering icon', () => {
 
 		// Should render empty icon
 		const html = component.container.innerHTML;
-		expect(html).toBe('<div></div>');
+		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('<div></div>');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toBe('');
@@ -259,7 +259,7 @@ describe('Rendering icon', () => {
 
 		// Should render empty icon
 		const html = component.container.innerHTML;
-		expect(html).toBe('<div></div>');
+		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('<div></div>');
 
 		// Fixture callback should have been called
 		expect(typeof triggerSwap).toBe('function');
@@ -363,7 +363,7 @@ describe('Rendering icon', () => {
 
 		// Should render empty icon
 		const html = component.container.innerHTML;
-		expect(html).toBe('<div></div>');
+		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('<div></div>');
 
 		// onLoad should not have been called yet
 		expect(onLoadCalled).toBe(false);
