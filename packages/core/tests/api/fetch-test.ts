@@ -23,60 +23,66 @@ describe('Testing live API with fetch', () => {
 		setAPIModule('', mockAPIModule);
 	});
 
-	it('Missing API configuration', (done) => {
-		const provider = nextProvider();
-		sendAPIQuery(
-			provider,
-			{
-				type: 'custom',
+	it('Missing API configuration', () => {
+		return new Promise((fulfill) => {
+			const provider = nextProvider();
+			sendAPIQuery(
 				provider,
-				uri: '/collections',
-			},
-			(data, error) => {
-				expect(error).toBe(424);
-				expect(data).toBeUndefined();
-				done();
-			}
-		);
+				{
+					type: 'custom',
+					provider,
+					uri: '/collections',
+				},
+				(data, error) => {
+					expect(error).toBe(424);
+					expect(data).toBeUndefined();
+					fulfill(true);
+				}
+			);
+		});
 	});
 
-	it('Custom request with provider', (done) => {
-		const provider = nextProvider();
-		expect(
-			addAPIProvider(provider, {
-				resources: [host],
-			})
-		).toBe(true);
+	it('Custom request with provider', () => {
+		return new Promise((fulfill) => {
+			const provider = nextProvider();
+			expect(
+				addAPIProvider(provider, {
+					resources: [host],
+				})
+			).toBe(true);
 
-		sendAPIQuery(
-			provider,
-			{
-				type: 'custom',
+			sendAPIQuery(
 				provider,
-				uri: '/collections',
-			},
-			(data, error) => {
-				expect(error).toBeUndefined();
-				expect(typeof data).toBe('object');
-				done();
-			}
-		);
+				{
+					type: 'custom',
+					provider,
+					uri: '/collections',
+				},
+				(data, error) => {
+					expect(error).toBeUndefined();
+					expect(typeof data).toBe('object');
+					fulfill(true);
+				}
+			);
+		});
 	});
 
-	it('Custom request with host', (done) => {
-		sendAPIQuery(
-			{
-				resources: [host],
-			},
-			{
-				type: 'custom',
-				uri: '/collections',
-			},
-			(data, error) => {
-				expect(error).toBeUndefined();
-				expect(typeof data).toBe('object');
-				done();
-			}
-		);
+	it('Custom request with host', () => {
+		return new Promise((fulfill) => {
+			sendAPIQuery(
+				{
+					resources: [host],
+				},
+				{
+					type: 'custom',
+					uri: '/collections',
+				},
+				(data, error) => {
+					expect(error).toBeUndefined();
+					expect(typeof data).toBe('object');
+					fulfill(true);
+				}
+			);
+		});
 	});
 });

@@ -28,100 +28,88 @@ describe('Testing mock API module', () => {
 	});
 
 	// Tests
-	it('404 response', (done) => {
-		const prefix = nextPrefix();
+	it('404 response', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			icons: ['test1', 'test2'],
-			response: 404,
-		});
+			mockAPIData({
+				type: 'icons',
+				provider,
+				prefix,
+				icons: ['test1', 'test2'],
+				response: 404,
+			});
 
-		let isSync = true;
+			let isSync = true;
 
-		loadIcons(
-			[
-				{
-					provider,
-					prefix,
-					name: 'test1',
-				},
-			],
-			(loaded, missing, pending) => {
-				expect(isSync).toBe(false);
-				expect(loaded).toEqual([]);
-				expect(pending).toEqual([]);
-				expect(missing).toEqual([
+			loadIcons(
+				[
 					{
 						provider,
 						prefix,
 						name: 'test1',
 					},
-				]);
-				done();
-			}
-		);
+				],
+				(loaded, missing, pending) => {
+					expect(isSync).toBe(false);
+					expect(loaded).toEqual([]);
+					expect(pending).toEqual([]);
+					expect(missing).toEqual([
+						{
+							provider,
+							prefix,
+							name: 'test1',
+						},
+					]);
+					fulfill(true);
+				}
+			);
 
-		isSync = false;
+			isSync = false;
+		});
 	});
 
-	it('Load few icons', (done) => {
-		const prefix = nextPrefix();
+	it('Load few icons', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					test10: {
-						body: '<g />',
-					},
-					test11: {
-						body: '<g />',
+				response: {
+					prefix,
+					icons: {
+						test10: {
+							body: '<g />',
+						},
+						test11: {
+							body: '<g />',
+						},
 					},
 				},
-			},
-		});
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			});
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					test20: {
-						body: '<g />',
-					},
-					test21: {
-						body: '<g />',
-					},
-				},
-			},
-		});
-
-		let isSync = true;
-
-		loadIcons(
-			[
-				{
-					provider,
+				response: {
 					prefix,
-					name: 'test10',
+					icons: {
+						test20: {
+							body: '<g />',
+						},
+						test21: {
+							body: '<g />',
+						},
+					},
 				},
-				{
-					provider,
-					prefix,
-					name: 'test20',
-				},
-			],
-			(loaded, missing, pending) => {
-				expect(isSync).toBe(false);
-				// All icons should have been loaded because API waits one tick before sending response, during which both queries are processed
-				expect(loaded).toEqual([
+			});
+
+			let isSync = true;
+
+			loadIcons(
+				[
 					{
 						provider,
 						prefix,
@@ -132,272 +120,300 @@ describe('Testing mock API module', () => {
 						prefix,
 						name: 'test20',
 					},
-				]);
-				expect(pending).toEqual([]);
-				expect(missing).toEqual([]);
-				done();
-			}
-		);
+				],
+				(loaded, missing, pending) => {
+					expect(isSync).toBe(false);
+					// All icons should have been loaded because API waits one tick before sending response, during which both queries are processed
+					expect(loaded).toEqual([
+						{
+							provider,
+							prefix,
+							name: 'test10',
+						},
+						{
+							provider,
+							prefix,
+							name: 'test20',
+						},
+					]);
+					expect(pending).toEqual([]);
+					expect(missing).toEqual([]);
+					fulfill(true);
+				}
+			);
 
-		isSync = false;
+			isSync = false;
+		});
 	});
 
-	it('Load in batches and testing delay', (done) => {
-		const prefix = nextPrefix();
-		let next: IconifyMockAPIDelayDoneCallback | undefined;
+	it('Load in batches and testing delay', () => {
+		return new Promise((fulfill, reject) => {
+			const prefix = nextPrefix();
+			let next: IconifyMockAPIDelayDoneCallback | undefined;
 
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					test10: {
-						body: '<g />',
-					},
-					test11: {
-						body: '<g />',
+				response: {
+					prefix,
+					icons: {
+						test10: {
+							body: '<g />',
+						},
+						test11: {
+							body: '<g />',
+						},
 					},
 				},
-			},
-		});
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			});
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					test20: {
-						body: '<g />',
-					},
-					test21: {
-						body: '<g />',
-					},
-				},
-			},
-			delay: (callback) => {
-				next = callback;
-			},
-		});
-
-		let callbackCounter = 0;
-
-		loadIcons(
-			[
-				{
-					provider,
+				response: {
 					prefix,
-					name: 'test10',
+					icons: {
+						test20: {
+							body: '<g />',
+						},
+						test21: {
+							body: '<g />',
+						},
+					},
 				},
-				{
-					provider,
-					prefix,
-					name: 'test20',
+				delay: (callback) => {
+					next = callback;
 				},
-			],
-			(loaded, missing, pending) => {
-				callbackCounter++;
-				switch (callbackCounter) {
-					case 1:
-						// First load: only 'test10'
-						expect(loaded).toEqual([
-							{
-								provider,
-								prefix,
-								name: 'test10',
-							},
-						]);
-						expect(pending).toEqual([
-							{
-								provider,
-								prefix,
-								name: 'test20',
-							},
-						]);
+			});
 
-						// Send second response
-						expect(typeof next).toBe('function');
-						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-						next!();
-						break;
+			let callbackCounter = 0;
 
-					case 2:
-						// All icons should have been loaded
-						expect(loaded).toEqual([
-							{
-								provider,
-								prefix,
-								name: 'test10',
-							},
-							{
-								provider,
-								prefix,
-								name: 'test20',
-							},
-						]);
-						expect(missing).toEqual([]);
-						done();
-						break;
+			loadIcons(
+				[
+					{
+						provider,
+						prefix,
+						name: 'test10',
+					},
+					{
+						provider,
+						prefix,
+						name: 'test20',
+					},
+				],
+				(loaded, missing, pending) => {
+					callbackCounter++;
+					switch (callbackCounter) {
+						case 1:
+							// First load: only 'test10'
+							expect(loaded).toEqual([
+								{
+									provider,
+									prefix,
+									name: 'test10',
+								},
+							]);
+							expect(pending).toEqual([
+								{
+									provider,
+									prefix,
+									name: 'test20',
+								},
+							]);
 
-					default:
-						done('Callback was called more times than expected');
+							// Send second response
+							expect(typeof next).toBe('function');
+							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+							next!();
+							break;
+
+						case 2:
+							// All icons should have been loaded
+							expect(loaded).toEqual([
+								{
+									provider,
+									prefix,
+									name: 'test10',
+								},
+								{
+									provider,
+									prefix,
+									name: 'test20',
+								},
+							]);
+							expect(missing).toEqual([]);
+							fulfill(true);
+							break;
+
+						default:
+							reject(
+								'Callback was called more times than expected'
+							);
+					}
 				}
-			}
-		);
+			);
+		});
 	});
 
 	// This is useful for testing component where loadIcons() cannot be accessed
-	it('Using timer in callback for second test', (done) => {
-		const prefix = nextPrefix();
-		const name = 'test1';
+	it('Using timer in callback for second test', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
+			const name = 'test1';
 
-		// Mock data
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			response: {
+			// Mock data
+			mockAPIData({
+				type: 'icons',
+				provider,
 				prefix,
-				icons: {
-					[name]: {
-						body: '<g />',
+				response: {
+					prefix,
+					icons: {
+						[name]: {
+							body: '<g />',
+						},
 					},
 				},
-			},
-			delay: (next) => {
-				// Icon should not be loaded yet
-				const storage = getStorage(provider, prefix);
-				expect(iconExists(storage, name)).toBe(false);
+				delay: (next) => {
+					// Icon should not be loaded yet
+					const storage = getStorage(provider, prefix);
+					expect(iconExists(storage, name)).toBe(false);
 
-				// Set data
-				next();
+					// Set data
+					next();
 
-				// Icon should be loaded now
-				expect(iconExists(storage, name)).toBe(true);
+					// Icon should be loaded now
+					expect(iconExists(storage, name)).toBe(true);
 
-				done();
-			},
-		});
+					fulfill(true);
+				},
+			});
 
-		// Load icons
-		loadIcons([
-			{
-				provider,
-				prefix,
-				name,
-			},
-		]);
-	});
-
-	it('Custom query', (done) => {
-		mockAPIData({
-			type: 'custom',
-			provider,
-			uri: '/test',
-			response: {
-				foo: true,
-			},
-		});
-
-		let isSync = true;
-
-		sendAPIQuery(
-			provider,
-			{
-				type: 'custom',
-				provider,
-				uri: '/test',
-			},
-			(data, error) => {
-				expect(error).toBeUndefined();
-				expect(data).toEqual({
-					foo: true,
-				});
-				expect(isSync).toBe(false);
-				done();
-			}
-		);
-
-		isSync = false;
-	});
-
-	it('Custom query with host', (done) => {
-		const host = 'http://' + nextPrefix();
-		setAPIModule(host, mockAPIModule);
-		mockAPIData({
-			type: 'host',
-			host,
-			uri: '/test',
-			response: {
-				foo: 2,
-			},
-		});
-
-		let isSync = true;
-
-		sendAPIQuery(
-			{
-				resources: [host],
-			},
-			{
-				type: 'custom',
-				uri: '/test',
-			},
-			(data, error) => {
-				expect(error).toBeUndefined();
-				expect(data).toEqual({
-					foo: 2,
-				});
-				expect(isSync).toBe(false);
-				done();
-			}
-		);
-
-		isSync = false;
-	});
-
-	it('not_found response', (done) => {
-		const prefix = nextPrefix();
-
-		mockAPIData({
-			type: 'icons',
-			provider,
-			prefix,
-			icons: ['test1', 'test2'],
-			response: {
-				prefix,
-				icons: {},
-				not_found: ['test1', 'test2'],
-			},
-		});
-
-		let isSync = true;
-
-		loadIcons(
-			[
+			// Load icons
+			loadIcons([
 				{
 					provider,
 					prefix,
-					name: 'test1',
+					name,
 				},
-			],
-			(loaded, missing, pending) => {
-				expect(isSync).toBe(false);
-				expect(loaded).toEqual([]);
-				expect(pending).toEqual([]);
-				expect(missing).toEqual([
+			]);
+		});
+	});
+
+	it('Custom query', () => {
+		return new Promise((fulfill) => {
+			mockAPIData({
+				type: 'custom',
+				provider,
+				uri: '/test',
+				response: {
+					foo: true,
+				},
+			});
+
+			let isSync = true;
+
+			sendAPIQuery(
+				provider,
+				{
+					type: 'custom',
+					provider,
+					uri: '/test',
+				},
+				(data, error) => {
+					expect(error).toBeUndefined();
+					expect(data).toEqual({
+						foo: true,
+					});
+					expect(isSync).toBe(false);
+					fulfill(true);
+				}
+			);
+
+			isSync = false;
+		});
+	});
+
+	it('Custom query with host', () => {
+		return new Promise((fulfill) => {
+			const host = 'http://' + nextPrefix();
+			setAPIModule(host, mockAPIModule);
+			mockAPIData({
+				type: 'host',
+				host,
+				uri: '/test',
+				response: {
+					foo: 2,
+				},
+			});
+
+			let isSync = true;
+
+			sendAPIQuery(
+				{
+					resources: [host],
+				},
+				{
+					type: 'custom',
+					uri: '/test',
+				},
+				(data, error) => {
+					expect(error).toBeUndefined();
+					expect(data).toEqual({
+						foo: 2,
+					});
+					expect(isSync).toBe(false);
+					fulfill(true);
+				}
+			);
+
+			isSync = false;
+		});
+	});
+
+	it('not_found response', () => {
+		return new Promise((fulfill) => {
+			const prefix = nextPrefix();
+
+			mockAPIData({
+				type: 'icons',
+				provider,
+				prefix,
+				icons: ['test1', 'test2'],
+				response: {
+					prefix,
+					icons: {},
+					not_found: ['test1', 'test2'],
+				},
+			});
+
+			let isSync = true;
+
+			loadIcons(
+				[
 					{
 						provider,
 						prefix,
 						name: 'test1',
 					},
-				]);
-				done();
-			}
-		);
+				],
+				(loaded, missing, pending) => {
+					expect(isSync).toBe(false);
+					expect(loaded).toEqual([]);
+					expect(pending).toEqual([]);
+					expect(missing).toEqual([
+						{
+							provider,
+							prefix,
+							name: 'test1',
+						},
+					]);
+					fulfill(true);
+				}
+			);
 
-		isSync = false;
+			isSync = false;
+		});
 	});
 });
