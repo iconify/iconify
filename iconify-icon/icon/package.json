@@ -2,7 +2,7 @@
 	"name": "iconify-icon",
 	"description": "Icon web component that loads icon data on demand. Over 100,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.0.0-beta.3",
+	"version": "1.0.0",
 	"license": "MIT",
 	"main": "./dist/iconify-icon.cjs",
 	"types": "./dist/iconify-icon.d.ts",
@@ -11,7 +11,7 @@
 	"module": "./dist/iconify-icon.mjs",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
-	"funding": "http://github.com/sponsors/cyberalien",
+	"funding": "https://github.com/sponsors/cyberalien",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
