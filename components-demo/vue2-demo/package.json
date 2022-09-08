@@ -8,15 +8,15 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"vue": "^2.6.14",
+		"vue": "^2.7.10",
 		"vue-class-component": "^7.2.6",
 		"vue-property-decorator": "^9.1.2"
 	},
 	"devDependencies": {
-		"@iconify-icons/bx": "^1.2.3",
-		"@iconify-icons/dashicons": "^1.2.2",
+		"@iconify-icons/bx": "^1.2.4",
+		"@iconify-icons/dashicons": "^1.2.3",
 		"@iconify/vue2": "workspace:*",
-		"vite": "^2.9.12",
-		"vite-plugin-vue2": "^2.0.1"
+		"vite": "^2.9.15",
+		"vite-plugin-vue2": "^2.0.2"
 	}
 }

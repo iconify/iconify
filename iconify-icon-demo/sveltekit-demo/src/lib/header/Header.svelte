@@ -38,7 +38,7 @@
 	</nav>
 
 	<div class="corner">
-		<a href="https://github.com/iconify/iconify/tree/master/packages/svelte">
+		<a href="https://github.com/iconify/iconify/tree/main/iconify-icon/icon">
 			<iconify-icon icon="line-md:iconify1" title="Iconify" />
 		</a>
 	</div>

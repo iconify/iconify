@@ -1,29 +1,28 @@
 {
 	"name": "@iconify-demo/sveltekit",
 	"version": "0.0.1",
-	"private": true,
 	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
-		"preview": "svelte-kit preview",
-		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.1",
+		"@iconify-icons/mdi-light": "^1.2.2",
 		"@iconify/svelte": "workspace:*",
+		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
-		"@types/cookie": "^0.4.1",
-		"svelte": "^3.48.0",
-		"svelte-check": "^2.7.2",
-		"svelte-preprocess": "^4.10.7",
-		"tslib": "^2.4.0",
-		"typescript": "^4.7.4"
+		"@types/cookie": "^0.5.1",
+		"svelte": "^3.46.0",
+		"svelte-check": "^2.7.1",
+		"svelte-preprocess": "^4.10.6",
+		"tslib": "^2.3.1",
+		"typescript": "^4.7.4",
+		"vite": "^3.1.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^4.5.8",
-		"@lukeed/uuid": "^2.0.0",
-		"cookie": "^0.4.2"
+		"@fontsource/fira-mono": "^4.5.0"
 	}
 }

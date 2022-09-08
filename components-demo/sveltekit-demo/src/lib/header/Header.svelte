@@ -21,18 +21,24 @@
 		</a>
 	</div>
 
-	<nav>
+	<nav data-sveltekit-prefetch>
 		<Icon icon="corner-left" height="auto" />
 		<ul>
-			<li class:active={$page.url.pathname === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.url.pathname === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.url.pathname === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
+			<li class:active={$page.url.pathname === '/'}>
+				<a href="/">Home</a>
+			</li>
+			<li class:active={$page.url.pathname === '/about'}>
+				<a href="/about">About</a>
+			</li>
+			<li class:active={$page.url.pathname === '/todos'}>
+				<a href="/todos">Todos</a>
+			</li>
 		</ul>
 		<Icon icon="corner-right" height="auto" />
 	</nav>
 
 	<div class="corner">
-		<a href="https://github.com/iconify/iconify/tree/master/packages/svelte">
+		<a href="https://github.com/iconify/iconify/tree/main/components/svelte">
 			<Icon icon="line-md:iconify1" title="Iconify" />
 		</a>
 	</div>
