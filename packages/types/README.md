@@ -281,7 +281,7 @@ Example:
 		"license": {
 			"title": "GPL 2.0",
 			"spdx": "GPL-2.0-only",
-			"url": "http://www.gnu.org/licenses/gpl-2.0.html"
+			"url": "https://www.gnu.org/licenses/gpl-2.0.html"
 		},
 		"version": "0.9.0",
 		"samples": ["shortcode", "businessperson", "editor-expand"],
