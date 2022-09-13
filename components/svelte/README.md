@@ -399,8 +399,6 @@ This example adds an icon stored in `postIcon` to every list item. If it was ren
 
 Instead of using `<Icon />`, you must use `<svelte:component />` to make sure component is rendered dynamically.
 
-This example is based on the Iconify Sapper demo: https://github.com/iconify/iconify/blob/master/packages/sapper-demo/src/routes/blog/index.svelte
-
 ## Full documentation
 
 For extended documentation visit [Iconify for Svelte documentation](https://docs.iconify.design/icon-components/svelte/).
