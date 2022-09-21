@@ -256,7 +256,13 @@ export const loadIcon = (
 	icon: IconifyIconName | string
 ): Promise<Required<IconifyIcon>> => {
 	return new Promise((fulfill, reject) => {
-		const iconObj = typeof icon === 'string' ? stringToIcon(icon) : icon;
+		const iconObj =
+			typeof icon === 'string' ? stringToIcon(icon, true) : icon;
+		if (!iconObj) {
+			reject(icon);
+			return;
+		}
+
 		loadIcons([iconObj || icon], (loaded) => {
 			if (loaded.length && iconObj) {
 				const data = getIconData(iconObj);

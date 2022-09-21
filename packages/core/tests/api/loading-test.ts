@@ -233,6 +233,89 @@ describe('Testing API loadIcons', () => {
 		expect(isPending({ provider, prefix, name: 'icon1' })).toBe(false);
 	});
 
+	it('Loading icon with bad name', async () => {
+		const provider = nextPrefix();
+		const prefix = nextPrefix();
+
+		// Set config
+		addAPIProvider(provider, {
+			resources: ['https://api1.local', 'https://api2.local'],
+		});
+
+		// Icon loader
+		const prepareQuery = (
+			provider: string,
+			prefix: string,
+			icons: string[]
+		): IconifyAPIIconsQueryParams[] => {
+			const item: IconifyAPIIconsQueryParams = {
+				type: 'icons',
+				provider,
+				prefix,
+				icons,
+			};
+
+			// Test input and return as one item
+			const expected: IconifyAPIIconsQueryParams = {
+				type: 'icons',
+				provider,
+				prefix,
+				icons: ['BadIconName'],
+			};
+			expect(item).toEqual(expected);
+
+			return [item];
+		};
+
+		const sendQuery = (
+			host: string,
+			params: IconifyAPIQueryParams,
+			callback: QueryModuleResponse
+		): void => {
+			expect(params.type).toBe('icons');
+
+			// Test input
+			expect(host).toBe('https://api1.local');
+			const expected: IconifyAPIQueryParams = {
+				type: 'icons',
+				provider,
+				prefix,
+				icons: ['BadIconName'],
+			};
+			expect(params).toEqual(expected);
+
+			// Send data
+			callback('success', {
+				prefix,
+				icons: {
+					BadIconName: {
+						body: '<path d="" />',
+					},
+				},
+			});
+		};
+
+		setAPIModule(provider, {
+			prepare: prepareQuery,
+			send: sendQuery,
+		});
+
+		// Load icon: should throw an error
+		let loadedIcon = false;
+		try {
+			await loadIcon(provider + ':' + prefix + ':BadIconName');
+			loadedIcon = true;
+		} catch {
+			// Do nothing
+		}
+		expect(loadedIcon).toBe(false);
+
+		// Test isPending
+		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(
+			false
+		);
+	});
+
 	it('Loading one icon twice with Promise', () => {
 		return new Promise((fulfill, reject) => {
 			const provider = nextPrefix();
