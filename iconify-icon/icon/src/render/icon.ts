@@ -37,16 +37,22 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 	}
 
 	// Set element
-	// Assumes first node is a style node created with updateStyle()
-	if (parent.childNodes.length > 1) {
-		const lastChild = parent.lastChild as HTMLElement;
-		if (node.tagName === 'SPAN' && lastChild.tagName === node.tagName) {
+	const oldNode = Array.from(parent.childNodes).find((node) => {
+		const tag =
+			(node as HTMLElement).tagName &&
+			(node as HTMLElement).tagName.toUpperCase();
+		return tag === 'SPAN' || tag === 'SVG';
+	}) as HTMLElement | undefined;
+	if (oldNode) {
+		// Replace old element
+		if (node.tagName === 'SPAN' && oldNode.tagName === node.tagName) {
 			// Swap style instead of whole node
-			lastChild.setAttribute('style', node.getAttribute('style'));
+			oldNode.setAttribute('style', node.getAttribute('style'));
 		} else {
-			parent.replaceChild(node, lastChild);
+			parent.replaceChild(node, oldNode);
 		}
 	} else {
+		// Add new element
 		parent.appendChild(node);
 	}
 }

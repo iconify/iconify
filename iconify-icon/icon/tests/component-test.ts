@@ -4,6 +4,7 @@ import {
 	expectedInline,
 	setupDOM,
 	nextTick,
+	styleOpeningTag,
 } from '../src/tests/helpers';
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
@@ -73,7 +74,7 @@ describe('Testing icon component', () => {
 
 		// Should be empty
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 
@@ -96,7 +97,7 @@ describe('Testing icon component', () => {
 
 		// Should still be empty: waiting for next tick
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 		await nextTick();
@@ -105,7 +106,7 @@ describe('Testing icon component', () => {
 		const blankSVG =
 			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g></g></svg>';
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>${blankSVG}`
+			`${styleOpeningTag}${expectedBlock}</style>${blankSVG}`
 		);
 		expect(node.status).toBe('rendered');
 
@@ -119,7 +120,7 @@ describe('Testing icon component', () => {
 		expect(node.getAttribute('inline')).toBe('true');
 
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedInline}</style>${blankSVG}`
+			`${styleOpeningTag}${expectedInline}</style>${blankSVG}`
 		);
 		expect(node.status).toBe('rendered');
 	});
@@ -145,7 +146,7 @@ describe('Testing icon component', () => {
 
 		// Should be empty with block style
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 
 		// Check inline
@@ -157,7 +158,7 @@ describe('Testing icon component', () => {
 		node.inline = true;
 
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedInline}</style>`
+			`${styleOpeningTag}${expectedInline}</style>`
 		);
 		expect(node.inline).toBe(true);
 		expect(node.hasAttribute('inline')).toBe(true);
@@ -167,7 +168,7 @@ describe('Testing icon component', () => {
 		node.removeAttribute('inline');
 
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.inline).toBe(false);
 		expect(node.hasAttribute('inline')).toBe(false);
@@ -177,7 +178,7 @@ describe('Testing icon component', () => {
 		node.setAttribute('inline', 'inline');
 
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedInline}</style>`
+			`${styleOpeningTag}${expectedInline}</style>`
 		);
 		expect(node.inline).toBe(true);
 		expect(node.hasAttribute('inline')).toBe(true);
@@ -229,7 +230,7 @@ describe('Testing icon component', () => {
 			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect width='10' height='10'%3E%3Canimate attributeName='width' values='10;5;10' dur='10s' repeatCount='indefinite' /%3E%3C/rect%3E%3C!-- --%3E%3C/svg%3E&quot;); width: 1em; height: 1em; background-color: transparent; background-repeat: no-repeat; background-size: 100% 100%;\"></span>";
 		const html1 = node._shadowRoot.innerHTML;
 		expect(html1.replace(/-- [0-9]+ --/, '-- --')).toBe(
-			`<style>${expectedBlock}</style>${renderedIconWithComment}`
+			`${styleOpeningTag}${expectedBlock}</style>${renderedIconWithComment}`
 		);
 
 		// Restart animation, test icon again
@@ -238,7 +239,7 @@ describe('Testing icon component', () => {
 		const html2 = node._shadowRoot.innerHTML;
 		expect(html2).not.toBe(html1);
 		expect(html2.replace(/-- [0-9]+ --/, '-- --')).toBe(
-			`<style>${expectedBlock}</style>${renderedIconWithComment}`
+			`${styleOpeningTag}${expectedBlock}</style>${renderedIconWithComment}`
 		);
 		expect(node.status).toBe('rendered');
 
@@ -252,7 +253,7 @@ describe('Testing icon component', () => {
 
 		const html3 = node._shadowRoot.innerHTML;
 		expect(html3.replace(/-- [0-9]+ --/, '-- --')).toBe(
-			`<style>${expectedBlock}</style>${renderedIconWithComment}`
+			`${styleOpeningTag}${expectedBlock}</style>${renderedIconWithComment}`
 		);
 		expect(html3).not.toBe(html1);
 		expect(html3).not.toBe(html2);
@@ -306,7 +307,9 @@ describe('Testing icon component', () => {
 		const html1 = node._shadowRoot.innerHTML;
 		const svg1 = node._shadowRoot.lastChild as SVGSVGElement;
 		const setCurrentTimeSupported = !!svg1.setCurrentTime;
-		expect(html1).toBe(`<style>${expectedBlock}</style>${renderedIcon}`);
+		expect(html1).toBe(
+			`${styleOpeningTag}${expectedBlock}</style>${renderedIcon}`
+		);
 		expect(svg1.outerHTML).toBe(renderedIcon);
 
 		// Restart animation, test icon again

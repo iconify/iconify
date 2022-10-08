@@ -7,6 +7,7 @@ import {
 	fakeAPI,
 	mockAPIData,
 	awaitUntil,
+	styleOpeningTag,
 } from '../src/tests/helpers';
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
@@ -44,7 +45,7 @@ describe('Testing icon component with API', () => {
 
 		// Should be empty
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 
@@ -78,7 +79,7 @@ describe('Testing icon component with API', () => {
 		// Should not have sent query to API yet
 		expect(sendQuery).toBeUndefined();
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 
@@ -97,7 +98,7 @@ describe('Testing icon component with API', () => {
 		const blankSVG =
 			'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g></g></svg>';
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>${blankSVG}`
+			`${styleOpeningTag}${expectedBlock}</style>${blankSVG}`
 		);
 		expect(node.status).toBe('rendered');
 	});
@@ -121,7 +122,7 @@ describe('Testing icon component with API', () => {
 
 		// Should be empty
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 
@@ -147,7 +148,7 @@ describe('Testing icon component with API', () => {
 
 		// Should not have sent query to API yet
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('loading');
 
@@ -157,7 +158,7 @@ describe('Testing icon component with API', () => {
 
 		// Should fail to render
 		expect(node._shadowRoot.innerHTML).toBe(
-			`<style>${expectedBlock}</style>`
+			`${styleOpeningTag}${expectedBlock}</style>`
 		);
 		expect(node.status).toBe('failed');
 	});

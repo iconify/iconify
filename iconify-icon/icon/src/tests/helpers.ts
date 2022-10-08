@@ -4,6 +4,13 @@ import { addAPIProvider } from '@iconify/core/lib/api/config';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 
 /**
+ * <style> tag with extra attribute
+ *
+ * Attribute is used to allow developers inject custom styles, so there could be multiple style tags
+ */
+export const styleOpeningTag = '<style data-style="data-style">';
+
+/**
  * Generate next prefix
  */
 let counter = 0;
