@@ -117,7 +117,7 @@ export function defineIconifyIcon(
 
 			// Attach shadow DOM
 			const root = (this._shadowRoot = this.attachShadow({
-				mode: 'closed',
+				mode: 'open',
 			}));
 
 			// Add style
