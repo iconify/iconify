@@ -1,4 +1,4 @@
-import type { IconifyJSON } from '@iconify/types';
+import type { IconifyAliases, IconifyJSON } from '@iconify/types';
 
 // Parent icons, first is direct parent, last is icon. Does not include self
 export type ParentIconsList = string[];
@@ -16,7 +16,7 @@ export function getIconsTree(
 	names?: string[]
 ): ParentIconsTree {
 	const icons = data.icons;
-	const aliases = data.aliases || {};
+	const aliases = data.aliases || (Object.create(null) as IconifyAliases);
 
 	const resolved = Object.create(null) as ParentIconsTree;
 

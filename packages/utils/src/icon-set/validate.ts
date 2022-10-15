@@ -1,5 +1,6 @@
 import type {
 	ExtendedIconifyIcon,
+	IconifyAliases,
 	IconifyJSON,
 	IconifyOptional,
 } from '@iconify/types';
@@ -135,7 +136,7 @@ export function validateIconSet(
 	// Validate all icons and aliases
 	const tree = getIconsTree(data);
 	const icons = data.icons;
-	const aliases = data.aliases || {};
+	const aliases = data.aliases || (Object.create(null) as IconifyAliases);
 	for (const name in tree) {
 		const treeItem = tree[name];
 		const isAlias = !icons[name];

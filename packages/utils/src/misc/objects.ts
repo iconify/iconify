@@ -41,7 +41,7 @@ export function commonObjectProps<T extends Record<string, unknown>>(
 	item: unknown,
 	reference: T
 ): Partial<T> {
-	const result = {} as T;
+	const result = Object.create(null) as T;
 	for (const key in reference) {
 		if (key in (item as T)) {
 			result[key] = (item as T)[key];

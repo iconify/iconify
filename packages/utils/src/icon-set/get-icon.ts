@@ -1,4 +1,8 @@
-import type { ExtendedIconifyIcon, IconifyJSON } from '@iconify/types';
+import type {
+	ExtendedIconifyIcon,
+	IconifyAliases,
+	IconifyJSON,
+} from '@iconify/types';
 import { mergeIconData } from '../icon/merge';
 import { getIconsTree } from './tree';
 
@@ -11,7 +15,7 @@ export function internalGetIconData(
 	tree: string[]
 ): ExtendedIconifyIcon {
 	const icons = data.icons;
-	const aliases = data.aliases || {};
+	const aliases = data.aliases || (Object.create(null) as IconifyAliases);
 
 	let currentProps = {} as ExtendedIconifyIcon;
 

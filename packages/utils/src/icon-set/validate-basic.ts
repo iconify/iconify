@@ -1,4 +1,4 @@
-import type { IconifyJSON } from '@iconify/types';
+import type { IconifyAliases, IconifyJSON } from '@iconify/types';
 import { matchIconName } from '../icon/name';
 import {
 	defaultIconDimensions,
@@ -75,7 +75,7 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 	}
 
 	// Check all aliases
-	const aliases = data.aliases || {};
+	const aliases = data.aliases || (Object.create(null) as IconifyAliases);
 	for (const name in aliases) {
 		const icon = aliases[name];
 		const parent = icon.parent;
