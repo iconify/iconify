@@ -162,6 +162,14 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
+## Sponsors
+
+<p align="center">
+  <a href="https://github.com/sponsors/cyberalien">
+    <img src='https://cyberalien.github.io/static/sponsors.svg'/>
+  </a>
+</p>
+
 ## Documentation
 
 Documentation for all packages is available on [Iconify documentation website](https://docs.iconify.design/icon-components/):
