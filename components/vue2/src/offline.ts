@@ -71,7 +71,7 @@ export const Icon = Vue.extend({
 
 	// Render icon
 	render(createElement: CreateElement): VNode {
-		const props = this.$attrs;
+		const props = Object.assign({}, this.$attrs);
 
 		// Check icon
 		const propsIcon = props.icon;

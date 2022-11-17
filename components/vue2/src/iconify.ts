@@ -334,7 +334,7 @@ export const Icon = Vue.extend({
 
 	// Render icon
 	render(createElement: CreateElement): VNode {
-		const props = this.$attrs;
+		const props = Object.assign({}, this.$attrs);
 		let context = this.$data;
 
 		// Get icon data
