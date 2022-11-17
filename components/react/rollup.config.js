@@ -26,6 +26,7 @@ names.forEach((name) => {
 			{
 				file: `dist/${name}.js`,
 				format: 'cjs',
+				interop: false,
 			},
 		],
 		external: ['react'],
