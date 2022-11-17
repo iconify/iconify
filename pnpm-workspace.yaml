@@ -8,4 +8,4 @@ packages:
     - 'components/*'
     - 'components-demo/*'
     - 'iconify-icon-demo/*'
-    - 'debug/*'
+    # - 'debug/*'
