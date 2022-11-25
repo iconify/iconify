@@ -8,6 +8,21 @@ const unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
  * Calculate second dimension when only 1 dimension is set
  */
 export function calculateSize(
+	size: string,
+	ratio: number,
+	precision?: number
+): string;
+export function calculateSize(
+	size: number,
+	ratio: number,
+	precision?: number
+): number;
+export function calculateSize(
+	size: string | number,
+	ratio: number,
+	precision?: number
+): string | number;
+export function calculateSize(
 	size: string | number,
 	ratio: number,
 	precision?: number
