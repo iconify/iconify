@@ -52,6 +52,31 @@
 			"import": "./lib/colors/types.mjs",
 			"types": "./lib/colors/types.d.ts"
 		},
+		"./lib/css/common": {
+			"require": "./lib/css/common.cjs",
+			"import": "./lib/css/common.mjs",
+			"types": "./lib/css/common.d.ts"
+		},
+		"./lib/css/format": {
+			"require": "./lib/css/format.cjs",
+			"import": "./lib/css/format.mjs",
+			"types": "./lib/css/format.d.ts"
+		},
+		"./lib/css/icon": {
+			"require": "./lib/css/icon.cjs",
+			"import": "./lib/css/icon.mjs",
+			"types": "./lib/css/icon.d.ts"
+		},
+		"./lib/css/icons": {
+			"require": "./lib/css/icons.cjs",
+			"import": "./lib/css/icons.mjs",
+			"types": "./lib/css/icons.d.ts"
+		},
+		"./lib/css/types": {
+			"require": "./lib/css/types.cjs",
+			"import": "./lib/css/types.mjs",
+			"types": "./lib/css/types.d.ts"
+		},
 		"./lib/customisations/bool": {
 			"require": "./lib/customisations/bool.cjs",
 			"import": "./lib/customisations/bool.mjs",

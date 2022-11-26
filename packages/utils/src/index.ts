@@ -64,6 +64,10 @@ export { svgToURL } from './svg/url';
 export { colorKeywords } from './colors/keywords';
 export { stringToColor, compareColors, colorToString } from './colors/index';
 
+// CSS generator
+export { getIconCSS } from './css/icon';
+export { getIconsCSS } from './css/icons';
+
 // SVG Icon loader
 export type {
 	CustomIconLoader,
