@@ -93,14 +93,9 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			// Prepare parameters and run queries
 			const params = api.prepare(provider, prefix, icons);
 			params.forEach((item) => {
-				sendAPIQuery(provider, item, (data, error) => {
+				sendAPIQuery(provider, item, (data) => {
 					// Check for error
 					if (typeof data !== 'object') {
-						if (error !== 404) {
-							// Do not handle error unless it is 404
-							return;
-						}
-
 						// Not found: mark as missing
 						item.icons.forEach((name) => {
 							storage.missing.add(name);

@@ -206,7 +206,11 @@ const send: IconifyAPISendQuery = (
 			if (typeof data !== 'object' || data === null) {
 				setTimeout(() => {
 					// Complete on next tick to get out of try...catch
-					callback('next', defaultError);
+					if (data === 404) {
+						callback('abort', data);
+					} else {
+						callback('next', defaultError);
+					}
 				});
 				return;
 			}
