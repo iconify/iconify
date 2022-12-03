@@ -1,13 +1,11 @@
-import { convertEmojiSequenceToUTF32, getEmojiCodePoint } from './convert';
+import { getEmojiCodePoint } from './convert';
 import { emojiTones, joinerEmoji, vs16Emoji } from './data';
 
 /**
  * Get emoji sequence from string
  */
 export function getEmojiSequenceFromString(value: string): number[] {
-	return convertEmojiSequenceToUTF32(
-		value.trim().split(/[\s-]/).map(getEmojiCodePoint)
-	);
+	return value.trim().split(/[\s-]/).map(getEmojiCodePoint);
 }
 
 /**

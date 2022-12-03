@@ -1,4 +1,5 @@
 import { getEmojiSequenceFromString } from './cleanup';
+import { convertEmojiSequenceToUTF32 } from './convert';
 
 // Emoji types
 type EmojiType =
@@ -19,7 +20,7 @@ const allowedTypes: Set<EmojiType> = new Set([
 /**
  * Get all emoji sequences from test file
  *
- * Returns dash-separated hexadecimal codes
+ * Returns all emojis as UTF-32 sequences
  */
 export function parseEmojiTestFile(data: string): number[][] {
 	const emojis: Set<string> = new Set();
@@ -56,6 +57,8 @@ export function parseEmojiTestFile(data: string): number[][] {
 		emojis.add(code);
 	});
 
-	// Return all emojis as sequences
-	return Array.from(emojis).map(getEmojiSequenceFromString);
+	// Return all emojis as sequences, converted to UTF-32
+	return Array.from(emojis).map((item) =>
+		convertEmojiSequenceToUTF32(getEmojiSequenceFromString(item))
+	);
 }

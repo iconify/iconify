@@ -127,6 +127,11 @@
 			"import": "./lib/emoji/parse-test.mjs",
 			"types": "./lib/emoji/parse-test.d.ts"
 		},
+		"./lib/emoji/variations": {
+			"require": "./lib/emoji/variations.cjs",
+			"import": "./lib/emoji/variations.mjs",
+			"types": "./lib/emoji/variations.d.ts"
+		},
 		"./lib/icon-set/convert-info": {
 			"require": "./lib/icon-set/convert-info.cjs",
 			"import": "./lib/icon-set/convert-info.mjs",
