@@ -102,6 +102,26 @@
 			"import": "./lib/customisations/rotate.mjs",
 			"types": "./lib/customisations/rotate.d.ts"
 		},
+		"./lib/emoji/cleanup": {
+			"require": "./lib/emoji/cleanup.cjs",
+			"import": "./lib/emoji/cleanup.mjs",
+			"types": "./lib/emoji/cleanup.d.ts"
+		},
+		"./lib/emoji/convert": {
+			"require": "./lib/emoji/convert.cjs",
+			"import": "./lib/emoji/convert.mjs",
+			"types": "./lib/emoji/convert.d.ts"
+		},
+		"./lib/emoji/data": {
+			"require": "./lib/emoji/data.cjs",
+			"import": "./lib/emoji/data.mjs",
+			"types": "./lib/emoji/data.d.ts"
+		},
+		"./lib/emoji/format": {
+			"require": "./lib/emoji/format.cjs",
+			"import": "./lib/emoji/format.mjs",
+			"types": "./lib/emoji/format.d.ts"
+		},
 		"./lib/icon-set/convert-info": {
 			"require": "./lib/icon-set/convert-info.cjs",
 			"import": "./lib/icon-set/convert-info.mjs",
