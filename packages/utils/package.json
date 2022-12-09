@@ -107,6 +107,11 @@
 			"import": "./lib/emoji/regex/base.mjs",
 			"types": "./lib/emoji/regex/base.d.ts"
 		},
+		"./lib/emoji/regex/create": {
+			"require": "./lib/emoji/regex/create.cjs",
+			"import": "./lib/emoji/regex/create.mjs",
+			"types": "./lib/emoji/regex/create.d.ts"
+		},
 		"./lib/emoji/regex/numbers": {
 			"require": "./lib/emoji/regex/numbers.cjs",
 			"import": "./lib/emoji/regex/numbers.mjs",
