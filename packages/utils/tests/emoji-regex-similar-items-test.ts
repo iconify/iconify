@@ -91,6 +91,7 @@ describe('Similar chunks of regex', () => {
 				]),
 				items[2],
 			],
+			length: 1,
 			group: false,
 		});
 	});
@@ -163,6 +164,7 @@ describe('Similar chunks of regex', () => {
 					]),
 				]),
 			],
+			length: 4,
 			group: false,
 		});
 	});
@@ -226,6 +228,7 @@ describe('Similar chunks of regex', () => {
 				]),
 				items[2],
 			],
+			length: 1,
 			group: false,
 		});
 	});
@@ -277,6 +280,7 @@ describe('Similar chunks of regex', () => {
 					),
 				]),
 			],
+			length: 4,
 			group: false,
 		});
 	});
@@ -340,6 +344,7 @@ describe('Similar chunks of regex', () => {
 				]),
 				items[2],
 			],
+			length: 1,
 			group: false,
 		});
 	});
@@ -427,16 +432,17 @@ describe('Similar chunks of regex', () => {
 		expect(set).toEqual({
 			type: 'set',
 			regex:
-				// last 2 items (set items are sorted alphabetically),
 				//  6 numbers from common chunks, grouped mix
-				'\\uD83D\\uDE4F|\\uD83D\\uDE4F\\uD83C\\uDFFB|\\uD83E\\uDEF1\\uD83C\\uDFFB\\u200D\\uD83E(?:' +
+				// last 2 items (set items are sorted by length, then alphabetically),
+				'\\uD83E\\uDEF1\\uD83C\\uDFFB\\u200D\\uD83E(?:' +
 				slicedSet.regex +
-				')',
+				')|\\uD83D\\uDE4F\\uD83C\\uDFFB|\\uD83D\\uDE4F',
 			sets: [
-				items[4],
-				items[5],
 				createSequenceEmojiRegexItem([...slicedSequence, slicedSet]),
+				items[5],
+				items[4],
 			],
+			length: 2,
 			group: false,
 		});
 	});

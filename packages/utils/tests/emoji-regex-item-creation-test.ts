@@ -12,6 +12,7 @@ describe('Creating chunks of regex', () => {
 			type: 'utf16',
 			regex: '\\u2763',
 			numbers: [0x2763],
+			length: 1,
 			group: true,
 		});
 
@@ -20,6 +21,7 @@ describe('Creating chunks of regex', () => {
 			type: 'utf16',
 			regex: '[\\u2762-\\u2764]',
 			numbers: [0x2762, 0x2763, 0x2764],
+			length: 1,
 			group: true,
 		});
 
@@ -28,6 +30,7 @@ describe('Creating chunks of regex', () => {
 			type: 'utf16',
 			regex: '[\\u2760\\u2764\\uFE0F]',
 			numbers: [0x2760, 0x2764, 0xfe0f],
+			length: 1,
 			group: true,
 		});
 
@@ -44,6 +47,7 @@ describe('Creating chunks of regex', () => {
 				0x2000, 0x2001, 0x2100, 0x2101, 0x2102, 0x2760, 0x2761, 0x2762,
 				0x2763, 0x2765, 0xfe0e, 0xfe0f, 0xfe0f,
 			],
+			length: 1,
 			group: true,
 		});
 	});
@@ -58,6 +62,7 @@ describe('Creating chunks of regex', () => {
 			regex: '[\\u2000\\u2001]',
 			numbers: [0x2000, 0x2001],
 			items: [num1],
+			length: 1,
 			group: true,
 		});
 
@@ -66,6 +71,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '[\\u2000\\u2001][\\u2000\\u2100]',
 			items: [num1, num2],
+			length: 2,
 			group: false,
 		});
 	});
@@ -80,6 +86,7 @@ describe('Creating chunks of regex', () => {
 			regex: '[\\u2000\\u2001]',
 			numbers: [0x2000, 0x2001],
 			sets: [num1],
+			length: 1,
 			group: true,
 		});
 
@@ -89,6 +96,7 @@ describe('Creating chunks of regex', () => {
 			regex: '[\\u2000\\u2001]|[\\u2000\\u2100]',
 			numbers: [0x2000, 0x2001, 0x2000, 0x2100],
 			sets: [num1, num2],
+			length: 1,
 			group: false,
 		});
 	});
@@ -102,6 +110,7 @@ describe('Creating chunks of regex', () => {
 			type: 'optional',
 			regex: '\\uFE0F?',
 			item: num1,
+			length: 1,
 			group: true,
 		});
 
@@ -110,6 +119,7 @@ describe('Creating chunks of regex', () => {
 			type: 'optional',
 			regex: '[\\uFE0E\\uFE0F]?',
 			item: num2,
+			length: 1,
 			group: true,
 		});
 	});
@@ -126,6 +136,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '\\uFE0F?',
 			items: [fe0f],
+			length: 1,
 			group: true,
 		});
 
@@ -134,6 +145,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '[\\u2000\\u2001]\\uFE0F?',
 			items: [num1, fe0f],
+			length: 2,
 			group: false,
 		});
 
@@ -142,6 +154,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '[\\u2000\\u2001]\\uFE0F?[\\u2000\\u2100]',
 			items: [num1, fe0f, num2],
+			length: 3,
 			group: false,
 		});
 
@@ -150,6 +163,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '[\\u2000\\u2100][\\u2000\\u2001]\\uFE0F?',
 			items: [num2, num1, fe0f],
+			length: 3,
 			group: false,
 		});
 	});
@@ -167,6 +181,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '\\uD83D\\uDC9A',
 			items: [utf32a1, utf32a2],
+			length: 2,
 			group: false,
 		});
 		utf32a.numbers = [0x1f49a];
@@ -176,6 +191,7 @@ describe('Creating chunks of regex', () => {
 			type: 'optional',
 			regex: '(?:\\uD83D\\uDC9A)?',
 			item: utf32a,
+			length: 2,
 			group: true,
 		});
 
@@ -183,17 +199,19 @@ describe('Creating chunks of regex', () => {
 		const set = createSetEmojiRegexItem([num1, utf32a]);
 		expect(set).toEqual({
 			type: 'set',
-			regex: '[\\u1234-\\u1237]|\\uD83D\\uDC9A',
-			sets: [num1, utf32a],
+			regex: '\\uD83D\\uDC9A|[\\u1234-\\u1237]',
+			sets: [utf32a, num1],
 			numbers: [0x1234, 0x1235, 0x1236, 0x1237, 0x1f49a],
+			length: 1,
 			group: false,
 		});
 
 		// Make it optional
 		expect(createOptionalEmojiRegexItem(set)).toEqual({
 			type: 'optional',
-			regex: '(?:[\\u1234-\\u1237]|\\uD83D\\uDC9A)?',
+			regex: '(?:\\uD83D\\uDC9A|[\\u1234-\\u1237])?',
 			item: set,
+			length: 1,
 			group: true,
 		});
 
@@ -206,6 +224,7 @@ describe('Creating chunks of regex', () => {
 			type: 'sequence',
 			regex: '\\u2000(?:\\u2100|\\u2101)',
 			items: [utf16a, set1],
+			length: 2,
 			group: false,
 		});
 	});

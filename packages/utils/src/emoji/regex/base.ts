@@ -17,6 +17,9 @@ interface BaseEmojiItemRegex {
 
 	// True if regex can be treated as a group (does not require wrapping in `(?:` + `)`)
 	group: boolean;
+
+	// Number of characters, minimum value
+	length: number;
 }
 
 interface EmojiItemRegexWithNumbers {
@@ -196,6 +199,7 @@ export function createUTF16EmojiRegexItem(
 		type: 'utf16',
 		regex: '',
 		numbers,
+		length: 1,
 		group: true,
 	};
 	updateUTF16EmojiRegexItem(result);
@@ -243,6 +247,7 @@ export function createSequenceEmojiRegexItem(
 		type: 'sequence',
 		items,
 		regex: '',
+		length: items.reduce((length, item) => item.length + length, 0),
 		group: false,
 	};
 
@@ -311,13 +316,23 @@ export function createSetEmojiRegexItem(
 	});
 
 	// Sort items to guarantee same results regardless of order
-	sets.sort((a, b) => a.regex.localeCompare(b.regex));
+	sets.sort((a, b) => {
+		if (a.length === b.length) {
+			return a.regex.localeCompare(b.regex);
+		}
+		return b.length - a.length;
+	});
 
 	// Create item
 	const result: SetEmojiItemRegex = {
 		type: 'set',
 		sets,
 		regex: '',
+		length: sets.reduce(
+			(length, item) =>
+				length ? Math.min(length, item.length) : item.length,
+			0
+		),
 		group: false,
 	};
 	if (numbers) {
@@ -361,6 +376,7 @@ export function createOptionalEmojiRegexItem(
 		type: 'optional',
 		item,
 		regex: '',
+		length: item.length,
 		group: true,
 	};
 	updateOptionalEmojiRegexItem(result);

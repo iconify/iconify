@@ -42,7 +42,7 @@ describe('Emoji regex tree', () => {
 		]);
 
 		expect(parseEmojiTree(tree).regex).toEqual(
-			'\\uD83C(?:(?:\\uDFF3|\\uDFF4\\u200D\\u2620)\\uFE0F?|[\\uDFC1\\uDFF3])'
+			'\\uD83C(?:(?:\\uDFF4\\u200D\\u2620|\\uDFF3)\\uFE0F?|[\\uDFC1\\uDFF3])'
 		);
 	});
 
