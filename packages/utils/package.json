@@ -102,6 +102,26 @@
 			"import": "./lib/customisations/rotate.mjs",
 			"types": "./lib/customisations/rotate.d.ts"
 		},
+		"./lib/emoji/regex/base": {
+			"require": "./lib/emoji/regex/base.cjs",
+			"import": "./lib/emoji/regex/base.mjs",
+			"types": "./lib/emoji/regex/base.d.ts"
+		},
+		"./lib/emoji/regex/numbers": {
+			"require": "./lib/emoji/regex/numbers.cjs",
+			"import": "./lib/emoji/regex/numbers.mjs",
+			"types": "./lib/emoji/regex/numbers.d.ts"
+		},
+		"./lib/emoji/regex/similar": {
+			"require": "./lib/emoji/regex/similar.cjs",
+			"import": "./lib/emoji/regex/similar.mjs",
+			"types": "./lib/emoji/regex/similar.d.ts"
+		},
+		"./lib/emoji/regex/tree": {
+			"require": "./lib/emoji/regex/tree.cjs",
+			"import": "./lib/emoji/regex/tree.mjs",
+			"types": "./lib/emoji/regex/tree.d.ts"
+		},
 		"./lib/emoji/cleanup": {
 			"require": "./lib/emoji/cleanup.cjs",
 			"import": "./lib/emoji/cleanup.mjs",

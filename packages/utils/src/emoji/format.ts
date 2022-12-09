@@ -3,7 +3,7 @@ import {
 	convertEmojiSequenceToUTF32,
 } from './convert';
 
-interface UnicodeOptions {
+export interface UnicodeFormattingOptions {
 	// Prefix before each character '\\u'
 	prefix: string;
 
@@ -23,7 +23,7 @@ interface UnicodeOptions {
 	throwOnError: boolean;
 }
 
-const defaultUnicodeOptions: UnicodeOptions = {
+const defaultUnicodeOptions: UnicodeFormattingOptions = {
 	prefix: '',
 	separator: '',
 	case: 'lower',
@@ -35,7 +35,10 @@ const defaultUnicodeOptions: UnicodeOptions = {
 /**
  * Convert number to string
  */
-function convert(sequence: number[], options: UnicodeOptions): string {
+function convert(
+	sequence: number[],
+	options: UnicodeFormattingOptions
+): string {
 	const prefix = options.prefix;
 	const func = options.case === 'upper' ? 'toUpperCase' : 'toLowerCase';
 
@@ -60,7 +63,7 @@ function convert(sequence: number[], options: UnicodeOptions): string {
  */
 export function getEmojiUnicodeString(
 	code: number,
-	options: Partial<UnicodeOptions> = {}
+	options: Partial<UnicodeFormattingOptions> = {}
 ): string {
 	return convert([code], {
 		...defaultUnicodeOptions,
@@ -68,7 +71,7 @@ export function getEmojiUnicodeString(
 	});
 }
 
-const defaultSequenceOptions: UnicodeOptions = {
+const defaultSequenceOptions: UnicodeFormattingOptions = {
 	...defaultUnicodeOptions,
 	separator: '-',
 };
@@ -78,7 +81,7 @@ const defaultSequenceOptions: UnicodeOptions = {
  */
 export function getEmojiSequenceString(
 	sequence: number[],
-	options: Partial<UnicodeOptions> = {}
+	options: Partial<UnicodeFormattingOptions> = {}
 ): string {
 	return convert(sequence, {
 		...defaultSequenceOptions,
@@ -86,7 +89,7 @@ export function getEmojiSequenceString(
 	});
 }
 
-const regexOptions: UnicodeOptions = {
+const regexOptions: UnicodeFormattingOptions = {
 	prefix: '\\u',
 	separator: '',
 	case: 'upper',
@@ -108,7 +111,7 @@ export function emojiSequenceToRegex(
 	});
 }
 
-const keywordOptions: UnicodeOptions = {
+const keywordOptions: UnicodeFormattingOptions = {
 	prefix: '',
 	separator: '-',
 	case: 'lower',
