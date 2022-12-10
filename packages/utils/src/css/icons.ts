@@ -24,7 +24,7 @@ const defaultSelectors: IconCSSSelectorOptions = {
 export function getIconsCSS(
 	iconSet: IconifyJSON,
 	names: string[],
-	options: IconCSSIconSetOptions
+	options: IconCSSIconSetOptions = {}
 ): string {
 	const css: CSSUnformattedItem[] = [];
 	const errors: string[] = [];

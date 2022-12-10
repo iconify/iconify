@@ -9,7 +9,7 @@ import type { IconCSSIconOptions } from './types';
  */
 export function getIconCSS(
 	icon: IconifyIcon,
-	options: IconCSSIconOptions
+	options: IconCSSIconOptions = {}
 ): string {
 	// Get mode
 	const mode =
