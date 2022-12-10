@@ -5,7 +5,11 @@ import { emojiTones, joinerEmoji, vs16Emoji } from './data';
  * Get emoji sequence from string
  */
 export function getEmojiSequenceFromString(value: string): number[] {
-	return value.trim().split(/[\s-]/).map(getEmojiCodePoint);
+	return value
+		.trim()
+		.split(/[^0-9A-F]+/i)
+		.filter((item) => item.length > 0)
+		.map(getEmojiCodePoint);
 }
 
 /**

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { convertEmojiSequenceToUTF32 } from '../lib';
 import {
 	getEmojiSequenceFromString,
 	joinEmojiSequences,
@@ -15,6 +16,18 @@ describe('Testing formatting emoji cleanup', () => {
 			'1F441 FE0F 200D 1F5E8 FE0F '
 		);
 		expect(sequence).toEqual([0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f]);
+
+		// Various representations of the same sequence
+		expect(
+			getEmojiSequenceFromString('1f441-fe0f-200d-1f5e8-fe0f')
+		).toEqual(sequence);
+		expect(
+			convertEmojiSequenceToUTF32(
+				getEmojiSequenceFromString(
+					'\\uD83D\\uDC41\\uFE0F\\u200D\\uD83D\\uDDE8\\uFE0F'
+				)
+			)
+		).toEqual(sequence);
 
 		// Split
 		const split = splitEmojiSequences(sequence);
