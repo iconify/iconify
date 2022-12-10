@@ -89,28 +89,6 @@ export function getEmojiSequenceString(
 	});
 }
 
-const regexOptions: UnicodeFormattingOptions = {
-	prefix: '\\u',
-	separator: '',
-	case: 'upper',
-	format: 'utf-16',
-	add0: false,
-	throwOnError: true,
-};
-
-/**
- * Merge unicode numbers sequence as regex
- */
-export function emojiSequenceToRegex(
-	sequence: number[],
-	throwOnError = true
-): string {
-	return convert(sequence, {
-		...regexOptions,
-		throwOnError,
-	});
-}
-
 const keywordOptions: UnicodeFormattingOptions = {
 	prefix: '',
 	separator: '-',

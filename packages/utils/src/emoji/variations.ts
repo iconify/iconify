@@ -16,7 +16,7 @@ import { getEmojiSequenceString } from './format';
  * `testData`, returned by parseEmojiTestFile() is used to check which emojis have `FE0F` variations.
  * If missing or emoji is missing in test data, `FE0F` is added to every single code emoji.
  */
-export function addOptionalVariations(
+export function addOptionalEmojiVariations(
 	sequences: number[][],
 	testData?: number[][]
 ): number[][] {

@@ -3,7 +3,7 @@ import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { getEmojiSequenceFromString } from '../lib/emoji/cleanup';
 import { getEmojiSequenceString } from '../lib/emoji/format';
 import { parseEmojiTestFile } from '../lib/emoji/parse-test';
-import { addOptionalVariations } from '../lib/emoji/variations';
+import { addOptionalEmojiVariations } from '../lib/emoji/variations';
 
 describe('Optional variations of emoji sequences', () => {
 	it('Variations without data', () => {
@@ -25,7 +25,7 @@ describe('Optional variations of emoji sequences', () => {
 			'1F9D7 1F3FE 200D 2640 FE0F',
 			'1F9D7 1F3FF 200D 2642 ',
 		].map(getEmojiSequenceFromString);
-		const results = addOptionalVariations(sequences);
+		const results = addOptionalEmojiVariations(sequences);
 		expect(
 			results.map((sequence) =>
 				getEmojiSequenceString(sequence, {
@@ -106,7 +106,7 @@ describe('Optional variations of emoji sequences', () => {
 			// fake keycap, not in test file
 			'2345 20E3 200D 1235',
 		].map(getEmojiSequenceFromString);
-		const results = addOptionalVariations(sequences, testData);
+		const results = addOptionalEmojiVariations(sequences, testData);
 		expect(
 			results.map((sequence) =>
 				getEmojiSequenceString(sequence, {

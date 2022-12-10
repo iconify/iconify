@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
 	getEmojiSequenceString,
-	emojiSequenceToRegex,
 	emojiSequenceToKeyword,
 } from '../lib/emoji/format';
 
@@ -9,7 +8,6 @@ describe('Testing formatting emoji code points', () => {
 	it('Empty sequence', () => {
 		const sequence: number[] = [];
 		expect(getEmojiSequenceString(sequence)).toBe('');
-		expect(emojiSequenceToRegex(sequence)).toBe('');
 		expect(emojiSequenceToKeyword(sequence)).toBe('');
 	});
 
@@ -17,7 +15,6 @@ describe('Testing formatting emoji code points', () => {
 		const sequence: number[] = [0x23, 0xfe0f, 0x20e3];
 
 		expect(getEmojiSequenceString(sequence)).toBe('23-fe0f-20e3');
-		expect(emojiSequenceToRegex(sequence)).toBe('\\u23\\uFE0F\\u20E3');
 		expect(emojiSequenceToKeyword(sequence)).toBe('0023-fe0f-20e3');
 	});
 
@@ -30,9 +27,6 @@ describe('Testing formatting emoji code points', () => {
 		expect(getEmojiSequenceString(sequence)).toBe(
 			'1f441-fe0f-200d-1f5e8-fe0f'
 		);
-		expect(emojiSequenceToRegex(sequence)).toBe(
-			'\\uD83D\\uDC41\\uFE0F\\u200D\\uD83D\\uDDE8\\uFE0F'
-		);
 		expect(emojiSequenceToKeyword(sequence)).toBe(
 			'1f441-fe0f-200d-1f5e8-fe0f'
 		);
@@ -44,9 +38,6 @@ describe('Testing formatting emoji code points', () => {
 		// UTF-16 = 0xd83d, 0xdc41, 0xfe0f, 0x200d, 0xd83d, 0xdde8, 0xfe0f,
 		expect(getEmojiSequenceString(sequence)).toBe(
 			'1f441-fe0f-200d-1f5e8-fe0f'
-		);
-		expect(emojiSequenceToRegex(sequence)).toBe(
-			'\\uD83D\\uDC41\\uFE0F\\u200D\\uD83D\\uDDE8\\uFE0F'
 		);
 		expect(emojiSequenceToKeyword(sequence)).toBe(
 			'1f441-fe0f-200d-1f5e8-fe0f'

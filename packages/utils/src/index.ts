@@ -83,6 +83,36 @@ export { getCustomIcon } from './loader/custom';
 export { searchForIcon } from './loader/modern';
 export { loadIcon } from './loader/loader';
 
+// Emojis
+export {
+	getEmojiSequenceFromString,
+	splitEmojiSequences,
+	joinEmojiSequences,
+	removeEmojiVariations,
+	removeEmojiTones,
+	mapEmojiSequences,
+} from './emoji/cleanup';
+export {
+	getEmojiCodePoint,
+	splitUTF32Number,
+	isUTF32SplitNumber,
+	mergeUTF32Numbers,
+	getEmojiUnicode,
+	convertEmojiSequenceToUTF16,
+	convertEmojiSequenceToUTF32,
+} from './emoji/convert';
+export {
+	getEmojiUnicodeString,
+	getEmojiSequenceString,
+	emojiSequenceToKeyword,
+} from './emoji/format';
+export { parseEmojiTestFile } from './emoji/parse-test';
+export { addOptionalEmojiVariations } from './emoji/variations';
+export {
+	createOptimisedRegex,
+	createOptimisedRegexForEmojiSequences,
+} from './emoji/regex/create';
+
 // Misc
 export { camelize, camelToKebab, snakelize, pascalize } from './misc/strings';
 export {
