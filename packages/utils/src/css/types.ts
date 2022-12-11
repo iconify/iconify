@@ -66,7 +66,6 @@ export interface IconCSSCommonCodeOptions
  */
 export interface IconCSSItemOptions
 	extends IconCSSSharedOptions,
-		IconCSSSelectorOptions,
 		Required<IconCSSModeOptions> {
 	//
 }
