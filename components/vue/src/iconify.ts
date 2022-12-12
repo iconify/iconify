@@ -236,7 +236,7 @@ interface IconComponentData {
 	classes?: string[];
 }
 
-export const Icon = defineComponent<IconProps>({
+export const Icon = defineComponent({
 	// Do not inherit other attributes: it is handled by render()
 	inheritAttrs: false,
 
