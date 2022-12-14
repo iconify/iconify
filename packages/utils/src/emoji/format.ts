@@ -60,6 +60,9 @@ function convert(
 
 /**
  * Convert unicode number to string
+ *
+ * Example:
+ * 	0x1F600 => '1F600'
  */
 export function getEmojiUnicodeString(
 	code: number,
@@ -78,6 +81,9 @@ const defaultSequenceOptions: UnicodeFormattingOptions = {
 
 /**
  * Convert unicode numbers sequence to string
+ *
+ * Example:
+ * 	[0x1f441, 0xfe0f] => '1f441-fe0f'
  */
 export function getEmojiSequenceString(
 	sequence: number[],
@@ -86,27 +92,5 @@ export function getEmojiSequenceString(
 	return convert(sequence, {
 		...defaultSequenceOptions,
 		...options,
-	});
-}
-
-const keywordOptions: UnicodeFormattingOptions = {
-	prefix: '',
-	separator: '-',
-	case: 'lower',
-	format: 'utf-32',
-	add0: true,
-	throwOnError: true,
-};
-
-/**
- * Merge unicode numbers sequence as icon keyword
- */
-export function emojiSequenceToKeyword(
-	sequence: number[],
-	throwOnError = true
-): string {
-	return convert(sequence, {
-		...keywordOptions,
-		throwOnError,
 	});
 }

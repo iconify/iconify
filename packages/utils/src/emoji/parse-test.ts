@@ -1,5 +1,7 @@
 import { getEmojiSequenceFromString } from './cleanup';
 import { convertEmojiSequenceToUTF32 } from './convert';
+import { getEmojiSequenceString } from './format';
+import { getUnqualifiedEmojiSequence } from './variations';
 
 // Emoji types
 type EmojiType =
@@ -61,4 +63,51 @@ export function parseEmojiTestFile(data: string): number[][] {
 	return Array.from(emojis).map((item) =>
 		convertEmojiSequenceToUTF32(getEmojiSequenceFromString(item))
 	);
+}
+
+/**
+ * Get qualified variations from parsed test file
+ *
+ * Key is unqualified emoji, value is longest fully qualified emoji
+ */
+export function getQualifiedEmojiSequencesMap(
+	sequences: number[][]
+): Map<number[], number[]>;
+export function getQualifiedEmojiSequencesMap(
+	sequences: number[][],
+	toString: (value: number[]) => string
+): Record<string, string>;
+export function getQualifiedEmojiSequencesMap(
+	sequences: number[][],
+	toString?: (value: number[]) => string
+): Map<number[], number[]> | Record<string, string> {
+	const convert = toString || getEmojiSequenceString;
+	const results = Object.create(null) as Record<string, string>;
+
+	for (let i = 0; i < sequences.length; i++) {
+		const value = convert(sequences[i]);
+		const unqualified = convert(getUnqualifiedEmojiSequence(sequences[i]));
+		// Check if values mismatch, set results to longest value
+		if (
+			!results[unqualified] ||
+			results[unqualified].length < value.length
+		) {
+			results[unqualified] = value;
+		}
+	}
+
+	// Return
+	if (toString) {
+		return results;
+	}
+
+	const map: Map<number[], number[]> = new Map();
+	for (const key in results) {
+		const value = results[key];
+		map.set(
+			getEmojiSequenceFromString(key),
+			getEmojiSequenceFromString(value)
+		);
+	}
+	return map;
 }

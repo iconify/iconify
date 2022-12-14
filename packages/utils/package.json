@@ -127,6 +127,16 @@
 			"import": "./lib/emoji/regex/tree.mjs",
 			"types": "./lib/emoji/regex/tree.d.ts"
 		},
+		"./lib/emoji/replace/find": {
+			"require": "./lib/emoji/replace/find.cjs",
+			"import": "./lib/emoji/replace/find.mjs",
+			"types": "./lib/emoji/replace/find.d.ts"
+		},
+		"./lib/emoji/replace/replace": {
+			"require": "./lib/emoji/replace/replace.cjs",
+			"import": "./lib/emoji/replace/replace.mjs",
+			"types": "./lib/emoji/replace/replace.d.ts"
+		},
 		"./lib/emoji/cleanup": {
 			"require": "./lib/emoji/cleanup.cjs",
 			"import": "./lib/emoji/cleanup.mjs",

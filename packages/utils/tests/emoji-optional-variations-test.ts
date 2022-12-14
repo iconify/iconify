@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { getEmojiSequenceFromString } from '../lib/emoji/cleanup';
 import { getEmojiSequenceString } from '../lib/emoji/format';
-import { parseEmojiTestFile } from '../lib/emoji/parse-test';
+import {
+	getQualifiedEmojiSequencesMap,
+	parseEmojiTestFile,
+} from '../lib/emoji/parse-test';
 import { addOptionalEmojiVariations } from '../lib/emoji/variations';
 
 describe('Optional variations of emoji sequences', () => {
@@ -88,6 +90,23 @@ describe('Optional variations of emoji sequences', () => {
 		}
 		const testData = parseEmojiTestFile(data);
 
+		// Make sure testData contains both fully-qualified and unqualified emojis
+		const testDataStrings = new Set(
+			testData.map((sequence) => getEmojiSequenceString(sequence))
+		);
+		expect(testDataStrings.has('1f600')).toBe(true);
+		expect(testDataStrings.has('263a')).toBe(true);
+		expect(testDataStrings.has('263a-fe0f')).toBe(true);
+
+		// Test getQualifiedEmojiSequencesMap
+		const unqualifiedTest = getQualifiedEmojiSequencesMap(
+			testData,
+			getEmojiSequenceString
+		);
+		expect(unqualifiedTest['1f600']).toBe('1f600');
+		expect(unqualifiedTest['263a']).toBe('263a-fe0f');
+
+		// Sequences to test
 		const sequences = [
 			// emoji without variation in test file
 			'1F601',

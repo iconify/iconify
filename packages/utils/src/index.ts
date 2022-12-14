@@ -86,8 +86,6 @@ export { loadIcon } from './loader/loader';
 // Emojis
 export {
 	getEmojiSequenceFromString,
-	splitEmojiSequences,
-	joinEmojiSequences,
 	removeEmojiVariations,
 	removeEmojiTones,
 	mapEmojiSequences,
@@ -101,17 +99,20 @@ export {
 	convertEmojiSequenceToUTF16,
 	convertEmojiSequenceToUTF32,
 } from './emoji/convert';
+export { getEmojiUnicodeString, getEmojiSequenceString } from './emoji/format';
 export {
-	getEmojiUnicodeString,
-	getEmojiSequenceString,
-	emojiSequenceToKeyword,
-} from './emoji/format';
-export { parseEmojiTestFile } from './emoji/parse-test';
-export { addOptionalEmojiVariations } from './emoji/variations';
+	parseEmojiTestFile,
+	getQualifiedEmojiSequencesMap,
+} from './emoji/parse-test';
+export {
+	getUnqualifiedEmojiSequence,
+	addOptionalEmojiVariations,
+} from './emoji/variations';
 export {
 	createOptimisedRegex,
 	createOptimisedRegexForEmojiSequences,
 } from './emoji/regex/create';
+export { findAndReplaceEmojisInText } from './emoji/replace/replace';
 
 // Misc
 export { camelize, camelToKebab, snakelize, pascalize } from './misc/strings';

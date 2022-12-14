@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { convertEmojiSequenceToUTF32 } from '../lib';
+import { convertEmojiSequenceToUTF32 } from '../lib/emoji/convert';
 import {
 	getEmojiSequenceFromString,
 	joinEmojiSequences,
