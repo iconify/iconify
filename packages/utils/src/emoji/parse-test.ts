@@ -1,31 +1,59 @@
 import { getEmojiSequenceFromString } from './cleanup';
-import { convertEmojiSequenceToUTF32 } from './convert';
 import { getEmojiSequenceString } from './format';
 import { getUnqualifiedEmojiSequence } from './variations';
 
 // Emoji types
-type EmojiType =
+type EmojiStatus =
 	| 'component'
 	| 'fully-qualified'
 	| 'minimally-qualified'
 	| 'unqualified';
-const componentType: EmojiType = 'component';
+const componentStatus: EmojiStatus = 'component';
 
-// Allowed types, in order of conversion
-const allowedTypes: Set<EmojiType> = new Set([
-	componentType,
+// Allowed status values, in order of conversion
+const allowedStatus: Set<EmojiStatus> = new Set([
+	componentStatus,
 	'fully-qualified',
 	'minimally-qualified',
 	'unqualified',
 ]);
 
 /**
+ * Test data item
+ */
+export interface EmojiTestDataItem {
+	// Group and subgroup
+	group: string;
+	subgroup: string;
+
+	// Code points as string, lower case, dash separated
+	code: string;
+
+	// Code points as numbers, UTF-32
+	sequence: number[];
+
+	// Emoji string
+	emoji: string;
+
+	// Status
+	status: EmojiStatus;
+
+	// Version when emoji was added
+	version: string;
+
+	// Emoji name
+	name: string;
+}
+
+/**
  * Get all emoji sequences from test file
  *
  * Returns all emojis as UTF-32 sequences
  */
-export function parseEmojiTestFile(data: string): number[][] {
-	const emojis: Set<string> = new Set();
+export function parseEmojiTestFile(data: string): EmojiTestDataItem[] {
+	const results: EmojiTestDataItem[] = [];
+	let group: string | undefined;
+	let subgroup: string | undefined;
 
 	// Parse all lines
 	data.split('\n').forEach((line) => {
@@ -37,32 +65,81 @@ export function parseEmojiTestFile(data: string): number[][] {
 
 		// Get code and type from first chunk
 		const firstChunk = (parts.shift() as string).trim();
+		const secondChunk = parts.join('#').trim();
 		if (!firstChunk) {
 			// Empty first chunk: a comment
+			const commentParts = secondChunk.split(':');
+			if (commentParts.length === 2) {
+				const key = commentParts[0].trim();
+				const value = commentParts[1].trim();
+
+				switch (key) {
+					case 'group':
+						group = value;
+						subgroup = void 0;
+						break;
+
+					case 'subgroup':
+						subgroup = value;
+						break;
+				}
+			}
+
 			return;
 		}
+
+		if (!group || !subgroup) {
+			// Cannot parse emojis until group and subgroup are set
+			return;
+		}
+
+		// Possible emoji line
 		const firstChunkParts = firstChunk.split(';');
 		if (firstChunkParts.length !== 2) {
 			return;
 		}
-		const text = firstChunkParts[0].trim();
-		const code = text.toLowerCase().replace(/\s+/g, '-');
+
+		const code = firstChunkParts[0]
+			.trim()
+			.replace(/\s+/g, '-')
+			.toLowerCase();
 		if (!code || !code.match(/^[a-f0-9]+[a-f0-9-]*[a-f0-9]+$/)) {
 			return;
 		}
-		const type = firstChunkParts[1].trim() as EmojiType;
-		if (!allowedTypes.has(type)) {
-			throw new Error(`Bad emoji type: ${type}`);
+
+		const status = firstChunkParts[1].trim() as EmojiStatus;
+		if (!allowedStatus.has(status)) {
+			throw new Error(`Bad emoji type: ${status}`);
 		}
 
-		// Add code
-		emojis.add(code);
+		// Parse second chunk
+		const secondChunkParts = secondChunk.split(/\s+/);
+		if (secondChunkParts.length < 3) {
+			throw new Error(`Bad emoji comment for: ${code}`);
+		}
+
+		// Comment stuff
+		const emoji = secondChunkParts.shift() as string;
+		const version = secondChunkParts.shift() as string;
+		if (version.slice(0, 1) !== 'E') {
+			throw new Error(`Bad unicode version "${version}" for: ${code}`);
+		}
+		const name = secondChunkParts.join(' ');
+
+		// Add item
+		results.push({
+			group,
+			subgroup,
+			code,
+			sequence: getEmojiSequenceFromString(code),
+			emoji,
+			status,
+			version,
+			name,
+		});
 	});
 
-	// Return all emojis as sequences, converted to UTF-32
-	return Array.from(emojis).map((item) =>
-		convertEmojiSequenceToUTF32(getEmojiSequenceFromString(item))
-	);
+	return results;
 }
 
 /**

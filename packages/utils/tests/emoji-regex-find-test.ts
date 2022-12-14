@@ -68,37 +68,47 @@ describe('Finding emojis in text', () => {
 		expect(sortedMatches).toEqual([
 			// Same order as in content
 			{
-				match: emoji1,
-				sequence: [0x1f600],
-				keyword: '1f600',
+				match: {
+					match: emoji1,
+					sequence: [0x1f600],
+					keyword: '1f600',
+				},
 				prev: text1,
 				next: text2,
 			},
 			{
-				match: emoji2,
-				sequence: [0x1f603],
-				keyword: '1f603',
+				match: {
+					match: emoji2,
+					sequence: [0x1f603],
+					keyword: '1f603',
+				},
 				prev: text2,
 				next: text3,
 			},
 			{
-				match: emoji3,
-				sequence: [0x1f600],
-				keyword: '1f600',
+				match: {
+					match: emoji3,
+					sequence: [0x1f600],
+					keyword: '1f600',
+				},
 				prev: text3,
 				next: text4,
 			},
 			{
-				match: emoji4,
-				sequence: [0x263a],
-				keyword: '263a',
+				match: {
+					match: emoji4,
+					sequence: [0x263a],
+					keyword: '263a',
+				},
 				prev: text4,
 				next: text5,
 			},
 			{
-				match: emoji5,
-				sequence: [0x263a],
-				keyword: '263a',
+				match: {
+					match: emoji5,
+					sequence: [0x263a],
+					keyword: '263a',
+				},
 				prev: text5,
 				next: text6,
 			},

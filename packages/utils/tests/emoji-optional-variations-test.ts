@@ -89,18 +89,17 @@ describe('Optional variations of emoji sequences', () => {
 			return;
 		}
 		const testData = parseEmojiTestFile(data);
+		const testDataSequences = testData.map((item) => item.sequence);
 
 		// Make sure testData contains both fully-qualified and unqualified emojis
-		const testDataStrings = new Set(
-			testData.map((sequence) => getEmojiSequenceString(sequence))
-		);
+		const testDataStrings = new Set(testData.map((item) => item.code));
 		expect(testDataStrings.has('1f600')).toBe(true);
 		expect(testDataStrings.has('263a')).toBe(true);
 		expect(testDataStrings.has('263a-fe0f')).toBe(true);
 
 		// Test getQualifiedEmojiSequencesMap
 		const unqualifiedTest = getQualifiedEmojiSequencesMap(
-			testData,
+			testDataSequences,
 			getEmojiSequenceString
 		);
 		expect(unqualifiedTest['1f600']).toBe('1f600');
@@ -125,7 +124,10 @@ describe('Optional variations of emoji sequences', () => {
 			// fake keycap, not in test file
 			'2345 20E3 200D 1235',
 		].map(getEmojiSequenceFromString);
-		const results = addOptionalEmojiVariations(sequences, testData);
+		const results = addOptionalEmojiVariations(
+			sequences,
+			testDataSequences
+		);
 		expect(
 			results.map((sequence) =>
 				getEmojiSequenceString(sequence, {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { readFile, writeFile, unlink } from 'node:fs/promises';
-import { getEmojiCodePoint, splitUTF32Number } from '../lib/emoji/convert';
+import { splitUTF32Number } from '../lib/emoji/convert';
 import {
 	startUTF32Pair1,
 	startUTF32Pair2,
@@ -47,8 +47,8 @@ describe('Testing emoji code points', () => {
 		const utf16: Set<number> = new Set();
 		const utf32: Set<number> = new Set();
 
-		parseEmojiTestFile(data).forEach((sequence) => {
-			sequence.forEach((code) => {
+		parseEmojiTestFile(data).forEach((item) => {
+			item.sequence.forEach((code) => {
 				if (code < minUTF32) {
 					utf16.add(code);
 				} else {
