@@ -1,4 +1,5 @@
 import { readFile, writeFile, unlink } from 'node:fs/promises';
+import { emojiVersion } from '../lib/emoji/data';
 import { getEmojiSequenceFromString } from '../lib/emoji/cleanup';
 import { getEmojiSequenceString } from '../lib/emoji/format';
 import {
@@ -8,7 +9,41 @@ import {
 import { addQualifiedEmojiVariations } from '../lib/emoji/test/variations';
 
 describe('Qualified variations of emoji sequences', () => {
-	it('Variations without data', () => {
+	async function fetchEmojiTestData(): Promise<string | undefined> {
+		// Fetch emojis, cache it
+		const source = `tests/fixtures/download-emoji-${emojiVersion}.txt`;
+
+		let data: string | undefined;
+		try {
+			data = await readFile(source, 'utf8');
+		} catch {
+			//
+		}
+
+		if (!data) {
+			data = (
+				await fetch(
+					`https://unicode.org/Public/emoji/${emojiVersion}/emoji-test.txt`
+				)
+			)
+				.text()
+				.toString();
+			await writeFile(source, data, 'utf8');
+		}
+
+		// Test content, unlink cache on failure
+		if (data.indexOf(`# Version: ${emojiVersion}`) === -1) {
+			try {
+				await unlink(source);
+			} catch {
+				//
+			}
+			return;
+		}
+		return data;
+	}
+
+	it('Variations without test data', () => {
 		const sequences = [
 			// simple emoji, twice to check duplicates
 			'1F601',
@@ -56,38 +91,14 @@ describe('Qualified variations of emoji sequences', () => {
 		]);
 	});
 
-	it('Variations with data', async () => {
+	it('Variations with test data', async () => {
 		// Fetch emojis, cache it
-		const version = '15.0';
-		const source = `tests/fixtures/download-emoji-${version}.txt`;
-
-		let data: string | undefined;
-		try {
-			data = await readFile(source, 'utf8');
-		} catch {
-			//
-		}
-
+		const data = await fetchEmojiTestData();
 		if (!data) {
-			data = (
-				await (
-					await fetch(
-						`https://unicode.org/Public/emoji/${version}/emoji-test.txt`
-					)
-				).text()
-			).toString();
-			await writeFile(source, data, 'utf8');
-		}
-
-		// Test content, unlink cache on failure
-		if (data.indexOf(`# Version: ${version}`) === -1) {
-			try {
-				await unlink(source);
-			} catch {
-				//
-			}
+			console.warn('Test skipped: test data is not available');
 			return;
 		}
+
 		const testData = parseEmojiTestFile(data);
 		const testDataSequences = testData.map((item) => item.sequence);
 

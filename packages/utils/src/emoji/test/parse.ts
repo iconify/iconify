@@ -5,7 +5,7 @@ import {
 import { getEmojiSequenceString } from '../format';
 
 // Emoji types
-type EmojiStatus =
+export type EmojiStatus =
 	| 'component'
 	| 'fully-qualified'
 	| 'minimally-qualified'
@@ -19,6 +19,11 @@ const allowedStatus: Set<EmojiStatus> = new Set([
 	'minimally-qualified',
 	'unqualified',
 ]);
+
+/**
+ * Callback for converting sequence to string
+ */
+export type EmojiSequenceToStringCallback = (value: number[]) => string;
 
 /**
  * Test data item
@@ -189,4 +194,26 @@ export function getQualifiedEmojiSequencesMap(
 		);
 	}
 	return map;
+}
+
+/**
+ * Map data by sequence
+ */
+export function mapEmojiTestDataBySequence(
+	testData: EmojiTestDataItem[],
+	convert: EmojiSequenceToStringCallback
+): Record<string, EmojiTestDataItem> {
+	const testSequences = Object.create(null) as Record<
+		string,
+		EmojiTestDataItem
+	>;
+	for (let i = 0; i < testData.length; i++) {
+		const item = testData[i];
+		const keyword = convert(item.sequence);
+		if (testSequences[keyword]) {
+			throw new Error(`Duplicate entries for "${keyword}"`);
+		}
+		testSequences[keyword] = item;
+	}
+	return testSequences;
 }

@@ -137,6 +137,16 @@
 			"import": "./lib/emoji/replace/replace.mjs",
 			"types": "./lib/emoji/replace/replace.d.ts"
 		},
+		"./lib/emoji/test/components": {
+			"require": "./lib/emoji/test/components.cjs",
+			"import": "./lib/emoji/test/components.mjs",
+			"types": "./lib/emoji/test/components.d.ts"
+		},
+		"./lib/emoji/test/name": {
+			"require": "./lib/emoji/test/name.cjs",
+			"import": "./lib/emoji/test/name.mjs",
+			"types": "./lib/emoji/test/name.d.ts"
+		},
 		"./lib/emoji/test/parse": {
 			"require": "./lib/emoji/test/parse.cjs",
 			"import": "./lib/emoji/test/parse.mjs",

@@ -16,13 +16,13 @@ export const keycapEmoji = 0x20e3;
  *
  * First value in array is minimum, second value is maximum+1
  */
-type ToneType = 'skin' | 'hair';
+export type EmojiComponentType = 'skin-tone' | 'hair-style';
 type Range = [number, number];
-export const emojiTones: Record<ToneType, Range> = {
+export const emojiComponents: Record<EmojiComponentType, Range> = {
 	// Skin tones
-	skin: [0x1f3fb, 0x1f400],
-	// Hair tones
-	hair: [0x1f9b0, 0x1f9b4],
+	'skin-tone': [0x1f3fb, 0x1f400],
+	// Hair styles
+	'hair-style': [0x1f9b0, 0x1f9b4],
 };
 
 /**
@@ -39,3 +39,8 @@ export const minUTF32 = 0x10000;
 export const startUTF32Pair1 = 0xd800;
 export const startUTF32Pair2 = 0xdc00;
 export const endUTF32Pair = 0xe000;
+
+/**
+ * Emoji version as string
+ */
+export const emojiVersion = '15.0';

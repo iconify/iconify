@@ -1,5 +1,5 @@
 import { getEmojiCodePoint } from './convert';
-import { emojiTones, joinerEmoji, vs16Emoji } from './data';
+import { emojiComponents, joinerEmoji, vs16Emoji } from './data';
 import { getEmojiSequenceString } from './format';
 
 /**
@@ -75,8 +75,8 @@ export function removeEmojiVariations(sequence: number[]): number[] {
  */
 export function removeEmojiTones(sequence: number[]): number[] {
 	return sequence.filter((code) => {
-		for (const key in emojiTones) {
-			const range = emojiTones[key as keyof typeof emojiTones];
+		for (const key in emojiComponents) {
+			const range = emojiComponents[key as keyof typeof emojiComponents];
 			if (code >= range[0] && code < range[1]) {
 				return false;
 			}
