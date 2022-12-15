@@ -105,7 +105,7 @@ export {
 	parseEmojiTestFile,
 	getQualifiedEmojiSequencesMap,
 } from './emoji/test/parse';
-export { addOptionalEmojiVariations } from './emoji/test/variations';
+export { addQualifiedEmojiVariations as addOptionalEmojiVariations } from './emoji/test/variations';
 export {
 	createOptimisedRegex,
 	createOptimisedRegexForEmojiSequences,

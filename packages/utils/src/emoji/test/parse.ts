@@ -10,7 +10,7 @@ type EmojiStatus =
 	| 'fully-qualified'
 	| 'minimally-qualified'
 	| 'unqualified';
-const componentStatus: EmojiStatus = 'component';
+export const componentStatus: EmojiStatus = 'component';
 
 // Allowed status values, in order of conversion
 const allowedStatus: Set<EmojiStatus> = new Set([

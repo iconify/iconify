@@ -5,9 +5,9 @@ import {
 	getQualifiedEmojiSequencesMap,
 	parseEmojiTestFile,
 } from '../lib/emoji/test/parse';
-import { addOptionalEmojiVariations } from '../lib/emoji/test/variations';
+import { addQualifiedEmojiVariations } from '../lib/emoji/test/variations';
 
-describe('Optional variations of emoji sequences', () => {
+describe('Qualified variations of emoji sequences', () => {
 	it('Variations without data', () => {
 		const sequences = [
 			// simple emoji, twice to check duplicates
@@ -27,7 +27,7 @@ describe('Optional variations of emoji sequences', () => {
 			'1F9D7 1F3FE 200D 2640 FE0F',
 			'1F9D7 1F3FF 200D 2642 ',
 		].map(getEmojiSequenceFromString);
-		const results = addOptionalEmojiVariations(sequences);
+		const results = addQualifiedEmojiVariations(sequences);
 		expect(
 			results.map((sequence) =>
 				getEmojiSequenceString(sequence, {
@@ -124,7 +124,7 @@ describe('Optional variations of emoji sequences', () => {
 			// fake keycap, not in test file
 			'2345 20E3 200D 1235',
 		].map(getEmojiSequenceFromString);
-		const results = addOptionalEmojiVariations(
+		const results = addQualifiedEmojiVariations(
 			sequences,
 			testDataSequences
 		);

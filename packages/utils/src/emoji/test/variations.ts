@@ -37,7 +37,7 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
 }
 
 /**
- * Add optional variations to emojis
+ * Add qualified variations to emojis
  *
  * Also converts list to UTF-32 as needed
  *
@@ -45,16 +45,16 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
  * If missing or emoji is missing in test data, `FE0F` is added to every single code emoji.
  * It can also be an array of sequences.
  */
-export function addOptionalEmojiVariations(
+export function addQualifiedEmojiVariations(
 	sequences: number[][],
 	testData?: (number[] | EmojiTestDataItem)[]
 ): number[][];
-export function addOptionalEmojiVariations(
+export function addQualifiedEmojiVariations(
 	sequences: number[][],
 	testData: (number[] | EmojiTestDataItem)[],
 	toString: (value: number[]) => string
 ): string[];
-export function addOptionalEmojiVariations(
+export function addQualifiedEmojiVariations(
 	sequences: number[][],
 	testData: (number[] | EmojiTestDataItem)[] = [],
 	toString?: (value: number[]) => string
