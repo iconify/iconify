@@ -75,14 +75,21 @@ export function removeEmojiVariations(sequence: number[]): number[] {
  */
 export function removeEmojiTones(sequence: number[]): number[] {
 	return sequence.filter((code) => {
-		for (let i = 0; i < emojiTones.length; i++) {
-			const range = emojiTones[i];
+		for (const key in emojiTones) {
+			const range = emojiTones[key as keyof typeof emojiTones];
 			if (code >= range[0] && code < range[1]) {
 				return false;
 			}
 		}
 		return true;
 	});
+}
+
+/**
+ * Get unqualified sequence
+ */
+export function getUnqualifiedEmojiSequence(sequence: number[]): number[] {
+	return sequence.filter((num) => num !== vs16Emoji);
 }
 
 /**

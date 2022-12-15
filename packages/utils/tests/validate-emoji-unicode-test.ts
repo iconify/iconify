@@ -7,7 +7,7 @@ import {
 	endUTF32Pair,
 	minUTF32,
 } from '../lib/emoji/data';
-import { parseEmojiTestFile } from '../lib/emoji/parse-test';
+import { parseEmojiTestFile } from '../lib/emoji/test/parse';
 
 describe('Testing emoji code points', () => {
 	it('Checking available ranges', async () => {

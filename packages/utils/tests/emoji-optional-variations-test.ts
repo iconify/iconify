@@ -4,8 +4,8 @@ import { getEmojiSequenceString } from '../lib/emoji/format';
 import {
 	getQualifiedEmojiSequencesMap,
 	parseEmojiTestFile,
-} from '../lib/emoji/parse-test';
-import { addOptionalEmojiVariations } from '../lib/emoji/variations';
+} from '../lib/emoji/test/parse';
+import { addOptionalEmojiVariations } from '../lib/emoji/test/variations';
 
 describe('Optional variations of emoji sequences', () => {
 	it('Variations without data', () => {

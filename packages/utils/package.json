@@ -137,6 +137,16 @@
 			"import": "./lib/emoji/replace/replace.mjs",
 			"types": "./lib/emoji/replace/replace.d.ts"
 		},
+		"./lib/emoji/test/parse": {
+			"require": "./lib/emoji/test/parse.cjs",
+			"import": "./lib/emoji/test/parse.mjs",
+			"types": "./lib/emoji/test/parse.d.ts"
+		},
+		"./lib/emoji/test/variations": {
+			"require": "./lib/emoji/test/variations.cjs",
+			"import": "./lib/emoji/test/variations.mjs",
+			"types": "./lib/emoji/test/variations.d.ts"
+		},
 		"./lib/emoji/cleanup": {
 			"require": "./lib/emoji/cleanup.cjs",
 			"import": "./lib/emoji/cleanup.mjs",
@@ -156,16 +166,6 @@
 			"require": "./lib/emoji/format.cjs",
 			"import": "./lib/emoji/format.mjs",
 			"types": "./lib/emoji/format.d.ts"
-		},
-		"./lib/emoji/parse-test": {
-			"require": "./lib/emoji/parse-test.cjs",
-			"import": "./lib/emoji/parse-test.mjs",
-			"types": "./lib/emoji/parse-test.d.ts"
-		},
-		"./lib/emoji/variations": {
-			"require": "./lib/emoji/variations.cjs",
-			"import": "./lib/emoji/variations.mjs",
-			"types": "./lib/emoji/variations.d.ts"
 		},
 		"./lib/icon-set/convert-info": {
 			"require": "./lib/icon-set/convert-info.cjs",

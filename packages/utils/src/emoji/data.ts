@@ -16,13 +16,14 @@ export const keycapEmoji = 0x20e3;
  *
  * First value in array is minimum, second value is maximum+1
  */
+type ToneType = 'skin' | 'hair';
 type Range = [number, number];
-export const emojiTones: Range[] = [
+export const emojiTones: Record<ToneType, Range> = {
 	// Skin tones
-	[0x1f3fb, 0x1f400],
+	skin: [0x1f3fb, 0x1f400],
 	// Hair tones
-	[0x1f9b0, 0x1f9b4],
-];
+	hair: [0x1f9b0, 0x1f9b4],
+};
 
 /**
  * Minimum UTF-32 number

@@ -3,18 +3,11 @@ import {
 	joinEmojiSequences,
 	removeEmojiVariations,
 	splitEmojiSequences,
-} from './cleanup';
-import { convertEmojiSequenceToUTF32 } from './convert';
-import { keycapEmoji, vs16Emoji } from './data';
-import { getEmojiSequenceString } from './format';
-import { getQualifiedEmojiSequencesMap } from './parse-test';
-
-/**
- * Get unqualified sequence
- */
-export function getUnqualifiedEmojiSequence(sequence: number[]): number[] {
-	return sequence.filter((num) => num !== vs16Emoji);
-}
+} from '../cleanup';
+import { convertEmojiSequenceToUTF32 } from '../convert';
+import { keycapEmoji, vs16Emoji } from '../data';
+import { getEmojiSequenceString } from '../format';
+import { EmojiTestDataItem, getQualifiedEmojiSequencesMap } from './parse';
 
 /**
  * Get qualified sequence, adding optional `FE0F` wherever it might exist
@@ -50,25 +43,29 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
  *
  * `testData`, returned by parseEmojiTestFile() is used to check which emojis have `FE0F` variations.
  * If missing or emoji is missing in test data, `FE0F` is added to every single code emoji.
+ * It can also be an array of sequences.
  */
 export function addOptionalEmojiVariations(
 	sequences: number[][],
-	testData?: number[][]
+	testData?: (number[] | EmojiTestDataItem)[]
 ): number[][];
 export function addOptionalEmojiVariations(
 	sequences: number[][],
-	testData: number[][],
+	testData: (number[] | EmojiTestDataItem)[],
 	toString: (value: number[]) => string
 ): string[];
 export function addOptionalEmojiVariations(
 	sequences: number[][],
-	testData: number[][] = [],
+	testData: (number[] | EmojiTestDataItem)[] = [],
 	toString?: (value: number[]) => string
 ): number[][] | string[] {
 	const convert = toString || getEmojiSequenceString;
+	const testSequences = testData.map((item) =>
+		item instanceof Array ? item : item.sequence
+	);
 
 	// Map test data
-	const testDataMap = getQualifiedEmojiSequencesMap(testData, convert);
+	const testDataMap = getQualifiedEmojiSequencesMap(testSequences, convert);
 
 	// Parse all sequences
 	const set: Set<string> = new Set();

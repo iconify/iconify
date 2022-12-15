@@ -1,6 +1,8 @@
-import { getEmojiSequenceFromString } from './cleanup';
-import { getEmojiSequenceString } from './format';
-import { getUnqualifiedEmojiSequence } from './variations';
+import {
+	getEmojiSequenceFromString,
+	getUnqualifiedEmojiSequence,
+} from '../cleanup';
+import { getEmojiSequenceString } from '../format';
 
 // Emoji types
 type EmojiStatus =

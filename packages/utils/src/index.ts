@@ -86,6 +86,7 @@ export { loadIcon } from './loader/loader';
 // Emojis
 export {
 	getEmojiSequenceFromString,
+	getUnqualifiedEmojiSequence,
 	removeEmojiVariations,
 	removeEmojiTones,
 	mapEmojiSequences,
@@ -103,11 +104,8 @@ export { getEmojiUnicodeString, getEmojiSequenceString } from './emoji/format';
 export {
 	parseEmojiTestFile,
 	getQualifiedEmojiSequencesMap,
-} from './emoji/parse-test';
-export {
-	getUnqualifiedEmojiSequence,
-	addOptionalEmojiVariations,
-} from './emoji/variations';
+} from './emoji/test/parse';
+export { addOptionalEmojiVariations } from './emoji/test/variations';
 export {
 	createOptimisedRegex,
 	createOptimisedRegexForEmojiSequences,

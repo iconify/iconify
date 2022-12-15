@@ -1,6 +1,6 @@
 import { getEmojiSequenceFromString } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
-import { addOptionalEmojiVariations } from '../variations';
+import { addOptionalEmojiVariations } from '../test/variations';
 import { createEmojisTree, parseEmojiTree } from './tree';
 
 /**
