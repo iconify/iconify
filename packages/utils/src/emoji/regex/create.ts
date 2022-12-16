@@ -1,6 +1,6 @@
 import { getEmojiSequenceFromString } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
-import { addQualifiedEmojiVariations } from '../test/variations';
+import { getQualifiedEmojiVariations } from '../test/variations';
 import { createEmojisTree, parseEmojiTree } from './tree';
 
 /**
@@ -46,7 +46,7 @@ export function createOptimisedRegex(
 	);
 
 	// Add variations
-	sequences = addQualifiedEmojiVariations(sequences, testData);
+	sequences = getQualifiedEmojiVariations(sequences, testData);
 
 	// Parse
 	return createOptimisedRegexForEmojiSequences(sequences);

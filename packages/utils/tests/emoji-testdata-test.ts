@@ -22,6 +22,8 @@ import {
 	SplitEmojiName,
 	getEmojiComponentsMap,
 } from '../lib/emoji/test/name';
+import { getEmojisSequencesToCopy } from '../lib/emoji/test/copy';
+import { getQualifiedEmojiVariations } from '../lib/emoji/test/variations';
 
 describe('Testing unicode test data', () => {
 	async function fetchEmojiTestData(): Promise<string | undefined> {
@@ -547,7 +549,7 @@ describe('Testing unicode test data', () => {
 					sequence: [0x1f469, 'skin-tone'],
 					children: {
 						'hair-style': {
-							name: 'woman: {skin-tone-0}, {hair-style-1}',
+							name: 'woman: {skin-tone-0}, {hair-style-0}',
 							sequence: [
 								0x1f469,
 								'skin-tone',
@@ -560,8 +562,108 @@ describe('Testing unicode test data', () => {
 				'hair-style': {
 					name: 'woman: {hair-style-0}',
 					sequence: [0x1f469, 0x200d, 'hair-style'],
+					children: {
+						'skin-tone': {
+							name: 'woman: {skin-tone-0}, {hair-style-0}',
+							sequence: [
+								0x1f469,
+								'skin-tone',
+								0x200d,
+								'hair-style',
+							],
+						},
+					},
 				},
 			},
+		});
+
+		// Item with multiple skin tones
+		const item4 = map.find(
+			(item) => sequenceToString(item.sequence) === '1f46b'
+		);
+		expect(item4).toEqual({
+			name: 'woman and man holding hands',
+			sequence: [0x1f46b],
+			children: {
+				'skin-tone': {
+					name: 'woman and man holding hands: {skin-tone-0}',
+					sequence: [0x1f46b, 'skin-tone'],
+					children: {
+						'skin-tone': {
+							name: 'woman and man holding hands: {skin-tone-0}, {skin-tone-1}',
+							sequence: [
+								0x1f469,
+								'skin-tone',
+								0x200d,
+								0x1f91d,
+								0x200d,
+								0x1f468,
+								'skin-tone',
+							],
+						},
+					},
+				},
+			},
+		});
+	});
+
+	it('Checking for missing sequences', () => {
+		if (!data) {
+			console.warn('Test skipped: test data is not available');
+			return;
+		}
+
+		const testData = parseEmojiTestFile(data);
+		const sequences = getQualifiedEmojiVariations(
+			testData.map((item) => item.sequence),
+			testData
+		);
+
+		const missing = getEmojisSequencesToCopy(sequences, testData);
+
+		// Should be 30 entries for 15.0
+		// TODO: update for newer versions
+		expect(missing.length).toBe(30);
+
+		// Two identical tones. Not a valid emoji, but optimises regex
+		expect(
+			missing.find(
+				(item) => item.sourceName === 'handshake: light skin tone'
+			)
+		).toEqual({
+			source: [0x1f91d, 0x1f3fb],
+			sourceName: 'handshake: light skin tone',
+			target: [0x1faf1, 0x1f3fb, 0x200d, 0x1faf2, 0x1f3fb],
+			targetName: 'handshake: light skin tone, light skin tone',
+		});
+
+		// Check with custom data: only base icon
+		const missing2 = getEmojisSequencesToCopy([[0x1f91d]], testData);
+
+		// Missing icons: [skin-tone], [skin-tone, skin-tone]
+		expect(missing2.length).toBe(5 + 5 * 5);
+		expect(
+			missing2.find(
+				(item) => item.targetName === 'handshake: light skin tone'
+			)
+		).toEqual({
+			source: [0x1f91d],
+			sourceName: 'handshake',
+			target: [0x1f91d, 0x1f3fb],
+			targetName: 'handshake: light skin tone',
+		});
+		expect(
+			missing2.find(
+				(item) =>
+					item.targetName ===
+					'handshake: medium-light skin tone, light skin tone'
+			)
+		).toEqual({
+			// Should be copied from first component match
+			source: [0x1f91d, 0x1f3fc],
+			sourceName: 'handshake: medium-light skin tone',
+			target: [0x1faf1, 0x1f3fc, 0x200d, 0x1faf2, 0x1f3fb],
+			targetName: 'handshake: medium-light skin tone, light skin tone',
 		});
 	});
 });

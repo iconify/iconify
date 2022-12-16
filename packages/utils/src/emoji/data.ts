@@ -19,10 +19,10 @@ export const keycapEmoji = 0x20e3;
 export type EmojiComponentType = 'skin-tone' | 'hair-style';
 type Range = [number, number];
 export const emojiComponents: Record<EmojiComponentType, Range> = {
-	// Skin tones
-	'skin-tone': [0x1f3fb, 0x1f400],
 	// Hair styles
 	'hair-style': [0x1f9b0, 0x1f9b4],
+	// Skin tones
+	'skin-tone': [0x1f3fb, 0x1f400],
 };
 
 /**

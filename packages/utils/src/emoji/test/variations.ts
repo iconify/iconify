@@ -37,24 +37,24 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
 }
 
 /**
- * Add qualified variations to emojis
+ * Get qualified variations for emojis
  *
- * Also converts list to UTF-32 as needed
+ * Also converts list to UTF-32 as needed and removes duplicate items
  *
  * `testData`, returned by parseEmojiTestFile() is used to check which emojis have `FE0F` variations.
  * If missing or emoji is missing in test data, `FE0F` is added to every single code emoji.
  * It can also be an array of sequences.
  */
-export function addQualifiedEmojiVariations(
+export function getQualifiedEmojiVariations(
 	sequences: number[][],
 	testData?: (number[] | EmojiTestDataItem)[]
 ): number[][];
-export function addQualifiedEmojiVariations(
+export function getQualifiedEmojiVariations(
 	sequences: number[][],
 	testData: (number[] | EmojiTestDataItem)[],
 	toString: (value: number[]) => string
 ): string[];
-export function addQualifiedEmojiVariations(
+export function getQualifiedEmojiVariations(
 	sequences: number[][],
 	testData: (number[] | EmojiTestDataItem)[] = [],
 	toString?: (value: number[]) => string

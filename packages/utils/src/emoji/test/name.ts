@@ -113,11 +113,24 @@ function mergeComponentTypes(value: EmojiComponentType[]) {
 	return '[' + value.join(',') + ']';
 }
 
+type ComponentsCount = Required<Record<EmojiComponentType, number>>;
+
+function mergeComponentsCount(value: ComponentsCount) {
+	const keys: EmojiComponentType[] = [];
+	for (const key in emojiComponents) {
+		const type = key as EmojiComponentType;
+		for (let i = 0; i < value[type]; i++) {
+			keys.push(type);
+		}
+	}
+	return keys.length ? mergeComponentTypes(keys) : '';
+}
+
 /**
  * Map item
  */
 type EmojiComponentsMapItemSequence = (EmojiComponentType | number)[];
-interface EmojiComponentsMapItem {
+export interface EmojiComponentsMapItem {
 	// Name, with `{skin-tone-1}` (type + index) placeholders
 	name: string;
 
@@ -135,17 +148,16 @@ interface EmojiComponentsMapItem {
  * Only sequences with components are returned
  */
 export function getEmojiComponentsMap(
-	testData: EmojiTestDataItem[]
+	testData: EmojiTestDataItem[],
+	componentsMap?: EmojiTestDataComponentsMap
 ): EmojiComponentsMapItem[] {
 	// Prepare stuff
-	const mappedTestData = mapEmojiTestDataBySequence(
-		testData,
-		getEmojiSequenceString
-	);
-	const components = mapEmojiTestDataComponents(
-		mappedTestData,
-		getEmojiSequenceString
-	);
+	const components =
+		componentsMap ||
+		mapEmojiTestDataComponents(
+			mapEmojiTestDataBySequence(testData, getEmojiSequenceString),
+			getEmojiSequenceString
+		);
 
 	// Function to clean sequence
 	const cleanSequence = (sequence: number[]): string => {
@@ -160,7 +172,7 @@ export function getEmojiComponentsMap(
 	interface SplitListItem {
 		item: EmojiTestDataItem;
 		split: SplitEmojiName;
-		components: EmojiComponentType[];
+		components: ComponentsCount;
 	}
 	type SplitList = Record<string, SplitListItem>;
 	const splitData = Object.create(null) as Record<string, SplitList>;
@@ -179,16 +191,18 @@ export function getEmojiComponentsMap(
 
 		// Create unique key based on component types
 		let sequenceKey = defaultSplitDataKey;
-		const itemComponents: EmojiComponentType[] = [];
+		const itemComponents: ComponentsCount = {
+			'hair-style': 0,
+			'skin-tone': 0,
+		};
 		if (split.components) {
 			split.variations?.forEach((item) => {
 				if (typeof item !== 'string') {
-					itemComponents.push(item.type);
+					itemComponents[item.type]++;
 				}
 			});
-			if (itemComponents.length) {
-				sequenceKey = mergeComponentTypes(itemComponents);
-			}
+			sequenceKey =
+				mergeComponentsCount(itemComponents) || defaultSplitDataKey;
 		}
 
 		// Get item if already exists
@@ -228,11 +242,9 @@ export function getEmojiComponentsMap(
 
 		// Function to get item
 		const getItem = (
-			components: EmojiComponentType[]
+			components: ComponentsCount
 		): EmojiComponentsMapItem | undefined => {
-			const key = components.length
-				? mergeComponentTypes(components)
-				: defaultSplitDataKey;
+			const key = mergeComponentsCount(components) || defaultSplitDataKey;
 			const item = items[key];
 			if (!item) {
 				return;
@@ -253,15 +265,19 @@ export function getEmojiComponentsMap(
 			});
 
 			// Get name
-			let counter = 0;
+			const counter: ComponentsCount = {
+				'hair-style': 0,
+				'skin-tone': 0,
+			};
 			const nameVariations = variations?.map((chunk) => {
 				if (typeof chunk === 'string') {
 					return chunk;
 				}
-				if (components[counter] !== chunk.type) {
+				const count = counter[chunk.type]++;
+				if (components[chunk.type] < count) {
 					throw new Error('Bad variations order');
 				}
-				return `{${chunk.type}-${counter++}}`;
+				return `{${chunk.type}-${count}}`;
 			});
 			const name =
 				split.base +
@@ -277,16 +293,21 @@ export function getEmojiComponentsMap(
 
 		const checkChildren = (
 			parent: EmojiComponentsMapItem,
-			components: EmojiComponentType[]
+			components: ComponentsCount
 		): boolean => {
 			// Attempt to add each type
 			let found = false;
 			for (const key in emojiComponents) {
 				const type = key as EmojiComponentType;
-				const childComponents = components.concat([type]);
+
+				// Find child item
+				const childComponents = {
+					...components,
+				};
+				childComponents[type]++;
+				const childItem = getItem(childComponents);
 
 				// Get sequence for child item
-				const childItem = getItem(childComponents);
 				if (childItem) {
 					found = true;
 
@@ -305,9 +326,17 @@ export function getEmojiComponentsMap(
 		};
 
 		// Get main item
-		const mainItem = getItem([]);
+		const mainItem = getItem({
+			'hair-style': 0,
+			'skin-tone': 0,
+		});
 		if (mainItem) {
-			if (checkChildren(mainItem, [])) {
+			if (
+				checkChildren(mainItem, {
+					'hair-style': 0,
+					'skin-tone': 0,
+				})
+			) {
 				// Found item with children
 				results.push(mainItem);
 			}
