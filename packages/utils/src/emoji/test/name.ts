@@ -1,5 +1,5 @@
 import { emojiComponents, EmojiComponentType, vs16Emoji } from '../data';
-import { getEmojiSequenceString } from '../format';
+import { getEmojiSequenceKeyword } from '../format';
 import {
 	EmojiTestDataComponentsMap,
 	mapEmojiTestDataComponents,
@@ -155,13 +155,13 @@ export function getEmojiComponentsMap(
 	const components =
 		componentsMap ||
 		mapEmojiTestDataComponents(
-			mapEmojiTestDataBySequence(testData, getEmojiSequenceString),
-			getEmojiSequenceString
+			mapEmojiTestDataBySequence(testData, getEmojiSequenceKeyword),
+			getEmojiSequenceKeyword
 		);
 
 	// Function to clean sequence
 	const cleanSequence = (sequence: number[]): string => {
-		return getEmojiSequenceString(
+		return getEmojiSequenceKeyword(
 			sequence.filter(
 				(num) => num !== vs16Emoji && !components.converted.has(num)
 			)

@@ -2,7 +2,7 @@ import {
 	getEmojiSequenceFromString,
 	getUnqualifiedEmojiSequence,
 } from '../cleanup';
-import { getEmojiSequenceString } from '../format';
+import { getEmojiSequenceKeyword } from '../format';
 
 // Emoji types
 export type EmojiStatus =
@@ -165,7 +165,7 @@ export function getQualifiedEmojiSequencesMap(
 	sequences: number[][],
 	toString?: (value: number[]) => string
 ): Map<number[], number[]> | Record<string, string> {
-	const convert = toString || getEmojiSequenceString;
+	const convert = toString || getEmojiSequenceKeyword;
 	const results = Object.create(null) as Record<string, string>;
 
 	for (let i = 0; i < sequences.length; i++) {

@@ -1,6 +1,6 @@
 import { getUnqualifiedEmojiSequence } from '../cleanup';
 import { emojiComponents, EmojiComponentType } from '../data';
-import { getEmojiSequenceString } from '../format';
+import { getEmojiSequenceKeyword } from '../format';
 import { mapEmojiTestDataComponents } from './components';
 import { EmojiComponentsMapItem, getEmojiComponentsMap } from './name';
 import { EmojiTestDataItem, mapEmojiTestDataBySequence } from './parse';
@@ -58,7 +58,7 @@ function getSequence(sequence: number[]): Sequences {
 	const qualified: SequenceData = {
 		type: 'qualified',
 		sequence,
-		key: getEmojiSequenceString(sequence),
+		key: getEmojiSequenceKeyword(sequence),
 	};
 
 	const unqualifiedSequence = getUnqualifiedEmojiSequence(sequence);
@@ -71,7 +71,7 @@ function getSequence(sequence: number[]): Sequences {
 			: {
 					type: 'unqualified',
 					sequence: unqualifiedSequence,
-					key: getEmojiSequenceString(unqualifiedSequence),
+					key: getEmojiSequenceKeyword(unqualifiedSequence),
 			  };
 
 	return {
@@ -106,8 +106,8 @@ export function getEmojisSequencesToCopy(
 
 	// Prepare stuff
 	const componentsMap = mapEmojiTestDataComponents(
-		mapEmojiTestDataBySequence(testData, getEmojiSequenceString),
-		getEmojiSequenceString
+		mapEmojiTestDataBySequence(testData, getEmojiSequenceKeyword),
+		getEmojiSequenceKeyword
 	);
 	const componentsMapItems = getEmojiComponentsMap(testData, componentsMap);
 
@@ -115,7 +115,7 @@ export function getEmojisSequencesToCopy(
 	const existingItems = Object.create(null) as Record<string, number[]>;
 	const copiedItems = Object.create(null) as Record<string, number[]>;
 	sequences.forEach((sequence) => {
-		existingItems[getEmojiSequenceString(sequence)] = sequence;
+		existingItems[getEmojiSequenceKeyword(sequence)] = sequence;
 	});
 
 	// Check if item exists

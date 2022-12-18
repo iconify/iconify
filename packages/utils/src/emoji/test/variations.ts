@@ -6,7 +6,7 @@ import {
 } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
 import { keycapEmoji, vs16Emoji } from '../data';
-import { getEmojiSequenceString } from '../format';
+import { getEmojiSequenceKeyword } from '../format';
 import { EmojiTestDataItem, getQualifiedEmojiSequencesMap } from './parse';
 
 /**
@@ -59,7 +59,7 @@ export function getQualifiedEmojiVariations(
 	testData: (number[] | EmojiTestDataItem)[] = [],
 	toString?: (value: number[]) => string
 ): number[][] | string[] {
-	const convert = toString || getEmojiSequenceString;
+	const convert = toString || getEmojiSequenceKeyword;
 	const testSequences = testData.map((item) =>
 		item instanceof Array ? item : item.sequence
 	);

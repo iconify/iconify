@@ -94,3 +94,12 @@ export function getEmojiSequenceString(
 		...options,
 	});
 }
+
+/**
+ * Convert unicode numbers sequence to string
+ *
+ * Simple version of `getEmojiSequenceString()` without options that otherwise add to bundle
+ */
+export function getEmojiSequenceKeyword(sequence: number[]): string {
+	return sequence.map((code) => code.toString(16)).join('-');
+}

@@ -1,6 +1,6 @@
 import { convertEmojiSequenceToUTF32 } from '../convert';
 import { vs16Emoji } from '../data';
-import { getEmojiSequenceString } from '../format';
+import { getEmojiSequenceKeyword } from '../format';
 
 /**
  * Create regular expression instance
@@ -81,7 +81,7 @@ export function getEmojiMatchesInText(
 			}
 
 			// Get keyword
-			const keyword = getEmojiSequenceString(
+			const keyword = getEmojiSequenceKeyword(
 				convertEmojiSequenceToUTF32(sequence)
 			);
 

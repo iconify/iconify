@@ -1,6 +1,6 @@
 import { getEmojiCodePoint } from './convert';
 import { emojiComponents, joinerEmoji, vs16Emoji } from './data';
-import { getEmojiSequenceString } from './format';
+import { getEmojiSequenceKeyword } from './format';
 
 /**
  * Get emoji sequence from string
@@ -133,7 +133,7 @@ export function mapEmojiSequences(
 
 		// Check for duplicate
 		if (fullOptions.removeDuplicates) {
-			const value = getEmojiSequenceString(result);
+			const value = getEmojiSequenceKeyword(result);
 			if (values.has(value)) {
 				// duplicate
 				return;

@@ -100,7 +100,11 @@ export {
 	convertEmojiSequenceToUTF16,
 	convertEmojiSequenceToUTF32,
 } from './emoji/convert';
-export { getEmojiUnicodeString, getEmojiSequenceString } from './emoji/format';
+export {
+	getEmojiUnicodeString,
+	getEmojiSequenceString,
+	getEmojiSequenceKeyword,
+} from './emoji/format';
 export {
 	parseEmojiTestFile,
 	getQualifiedEmojiSequencesMap,
