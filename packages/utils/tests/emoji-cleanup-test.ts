@@ -2,8 +2,6 @@ import { convertEmojiSequenceToUTF32 } from '../lib/emoji/convert';
 import {
 	getEmojiSequenceFromString,
 	joinEmojiSequences,
-	mapEmojiSequences,
-	removeEmojiTones,
 	removeEmojiVariations,
 	splitEmojiSequences,
 } from '../lib/emoji/cleanup';
@@ -42,14 +40,6 @@ describe('Testing formatting emoji cleanup', () => {
 		expect(removeEmojiVariations(sequence)).toEqual([
 			0x1f441, 0x200d, 0x1f5e8,
 		]);
-		expect(mapEmojiSequences(split, removeEmojiVariations)).toEqual([
-			[0x1f441],
-			[0x1f5e8],
-		]);
-
-		// Remove tones (does nothing for this sequence)
-		expect(removeEmojiTones(sequence)).toEqual(sequence);
-		expect(mapEmojiSequences(split, removeEmojiTones)).toEqual(split);
 	});
 
 	it('UTF-32 sequence with tones', () => {
@@ -74,26 +64,5 @@ describe('Testing formatting emoji cleanup', () => {
 
 		// Remove variations (does nothing for this sequence)
 		expect(removeEmojiVariations(sequence)).toEqual(sequence);
-		expect(mapEmojiSequences(split, removeEmojiVariations)).toEqual(split);
-
-		// Remove tones
-		expect(removeEmojiTones(sequence)).toEqual([
-			0x1f9d1, 0x200d, 0x1f91d, 0x200d, 0x1f9d1,
-		]);
-		expect(mapEmojiSequences(split, removeEmojiTones)).toEqual([
-			[0x1f9d1],
-			[0x1f91d],
-			[0x1f9d1],
-		]);
-
-		// Hair tones (bad emoji, second chunk only has tone without emoji)
-		const sequence2 = getEmojiSequenceFromString('1F471 1F3FC-200D 1F3FF');
-		expect(sequence2).toEqual([0x1f471, 0x1f3fc, 0x200d, 0x1f3ff]);
-		const split2 = splitEmojiSequences(sequence2);
-
-		expect(removeEmojiTones(sequence2)).toEqual([0x1f471, 0x200d]);
-		expect(mapEmojiSequences(split2, removeEmojiTones)).toEqual([
-			[0x1f471],
-		]);
 	});
 });

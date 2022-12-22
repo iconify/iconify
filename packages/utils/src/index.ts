@@ -88,8 +88,6 @@ export {
 	getEmojiSequenceFromString,
 	getUnqualifiedEmojiSequence,
 	removeEmojiVariations,
-	removeEmojiTones,
-	mapEmojiSequences,
 } from './emoji/cleanup';
 export {
 	getEmojiCodePoint,
