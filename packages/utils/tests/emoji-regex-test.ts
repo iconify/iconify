@@ -16,6 +16,23 @@ E1.0 grinning face: ${String.fromCodePoint(0x1f600)}
 		expect(matches?.[1]).toBe(String.fromCodePoint(0x1f603));
 	});
 
+	it('Keywords', () => {
+		const regexValue = createOptimisedRegex([
+			':cat:',
+			':gray_cat:',
+			':tabby_cat:',
+		]);
+
+		const matches = `
+Cat: :cat:
+Tabby cat: :tabby_cat:
+`.match(new RegExp(regexValue, 'g'));
+
+		expect(matches?.length).toBe(2);
+		expect(matches?.[0]).toBe(':cat:');
+		expect(matches?.[1]).toBe(':tabby_cat:');
+	});
+
 	it('Sequences', () => {
 		const regexValue = createOptimisedRegex([
 			// Emoji with optional variation

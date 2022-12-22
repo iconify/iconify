@@ -1,4 +1,4 @@
-import { getEmojiSequenceFromString } from '../cleanup';
+import { getSequenceFromEmojiStringOrKeyword } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
 import { getQualifiedEmojiVariations } from '../test/variations';
 import { createEmojisTree, parseEmojiTree } from './tree';
@@ -42,7 +42,9 @@ export function createOptimisedRegex(
 ): string {
 	// Convert to numbers
 	let sequences = emojis.map((item) =>
-		typeof item === 'string' ? getEmojiSequenceFromString(item) : item
+		typeof item === 'string'
+			? getSequenceFromEmojiStringOrKeyword(item)
+			: item
 	);
 
 	// Add variations

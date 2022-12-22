@@ -1,5 +1,3 @@
-import { getEmojiUnicodeString, UnicodeFormattingOptions } from '../format';
-
 /**
  * Regex in item
  */
@@ -91,21 +89,33 @@ export type EmojiItemRegex =
 	| OptionalEmojiItemRegex;
 
 /**
- * Options for converting number to string
- */
-const numberToStringOptions: Partial<UnicodeFormattingOptions> = {
-	prefix: '\\u',
-	separator: '',
-	case: 'upper',
-	format: 'utf-16',
-	add0: true,
-};
-
-/**
  * Convert number to string
  */
 function toString(number: number): string {
-	return getEmojiUnicodeString(number, numberToStringOptions);
+	if (number < 255) {
+		// Hex or character
+		if (number > 32 && number < 127) {
+			// Character
+			const char = String.fromCharCode(number);
+			if (
+				// 0-9
+				(number > 47 && number < 58) ||
+				// A-Z
+				(number > 64 && number < 91) ||
+				// _`a-z
+				(number > 94 && number < 123)
+			) {
+				return char;
+			}
+			return '\\' + char;
+		}
+		return (
+			'\\x' + (number < 16 ? '0' : '') + number.toString(16).toUpperCase()
+		);
+	}
+
+	// Unicode
+	return '\\u' + number.toString(16).toUpperCase();
 }
 
 /**

@@ -1,6 +1,5 @@
 import { getEmojiCodePoint } from './convert';
-import { emojiComponents, joinerEmoji, vs16Emoji } from './data';
-import { getEmojiSequenceKeyword } from './format';
+import { joinerEmoji, vs16Emoji } from './data';
 
 /**
  * Get emoji sequence from string
@@ -16,6 +15,32 @@ export function getEmojiSequenceFromString(value: string): number[] {
 		.split(/[^0-9A-F]+/i)
 		.filter((item) => item.length > 0)
 		.map(getEmojiCodePoint);
+}
+
+/**
+ * Convert emoji sequence or keyword
+ *
+ * If sequence is characters list, like '1f441-fe0f', it will be converted to [0x1f441, 0xfe0f]
+ * If sequence contains anything other than [0-9A-F-\s], it will be converted character by character
+ *
+ * This is used to treat keywords, like ':cat:' differently when converting strings to sequences
+ */
+export function getSequenceFromEmojiStringOrKeyword(value: string): number[] {
+	if (!value.match(/^[0-9a-fA-F-\s]+$/)) {
+		// Treat as string
+		const results: number[] = [];
+		for (const codePoint of value) {
+			const code = codePoint.codePointAt(0);
+			if (code) {
+				results.push(code);
+			} else {
+				// Something went wrong
+				return getEmojiSequenceFromString(value);
+			}
+		}
+		return results;
+	}
+	return getEmojiSequenceFromString(value);
 }
 
 /**
