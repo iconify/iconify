@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { readFile, writeFile, unlink } from 'node:fs/promises';
-import { getEmojiSequenceString } from '../lib/emoji/format';
 import { splitUTF32Number } from '../lib/emoji/convert';
 import {
 	startUTF32Pair1,
@@ -8,22 +7,16 @@ import {
 	endUTF32Pair,
 	minUTF32,
 	emojiVersion,
-	vs16Emoji,
-	EmojiComponentType,
 } from '../lib/emoji/data';
+import { parseEmojiTestFile } from '../lib/emoji/test/parse';
 import {
-	parseEmojiTestFile,
-	mapEmojiTestDataBySequence,
-	EmojiTestDataItem,
-} from '../lib/emoji/test/parse';
-import { mapEmojiTestDataComponents } from '../lib/emoji/test/components';
-import {
-	splitEmojiNameVariations,
-	SplitEmojiName,
-	getEmojiComponentsMap,
-} from '../lib/emoji/test/name';
-import { getEmojisSequencesToCopy } from '../lib/emoji/test/copy';
-import { getQualifiedEmojiVariations } from '../lib/emoji/test/variations';
+	mapEmojiTestDataComponents,
+	replaceEmojiComponentsInCombinedSequence,
+} from '../lib/emoji/test/components';
+import { splitEmojiNameVariations } from '../lib/emoji/test/name';
+import { combineSimilarEmojiTestData } from '../lib/emoji/test/similar';
+import { getEmojiTestDataTree } from '../lib/emoji/test/tree';
+import { findMissingEmojis } from '../lib/emoji/test/missing';
 
 describe('Testing unicode test data', () => {
 	async function fetchEmojiTestData(): Promise<string | undefined> {
@@ -60,18 +53,6 @@ describe('Testing unicode test data', () => {
 		return data;
 	}
 
-	function sequenceToString(
-		sequence: (EmojiComponentType | number)[]
-	): string {
-		return sequence
-			.map((item) =>
-				typeof item === 'string'
-					? item
-					: item.toString(16).toLowerCase()
-			)
-			.join('-');
-	}
-
 	let data: string | undefined;
 
 	beforeAll(async () => {
@@ -88,7 +69,7 @@ describe('Testing unicode test data', () => {
 		const utf16: Set<number> = new Set();
 		const utf32: Set<number> = new Set();
 
-		parseEmojiTestFile(data).forEach((item) => {
+		Object.values(parseEmojiTestFile(data)).forEach((item) => {
 			item.sequence.forEach((code) => {
 				if (code < minUTF32) {
 					utf16.add(code);
@@ -166,192 +147,197 @@ describe('Testing unicode test data', () => {
 		expect(utf32SecondRange!.max).toBeLessThan(endUTF32Pair);
 	});
 
-	it('Splitting emoji names', () => {
+	it('Splitting emoji names and variations', () => {
 		if (!data) {
 			console.warn('Test skipped: test data is not available');
 			return;
 		}
 
 		const testData = parseEmojiTestFile(data);
-		const mappedTestData = mapEmojiTestDataBySequence(
-			testData,
-			getEmojiSequenceString
-		);
-		const components = mapEmojiTestDataComponents(
-			mappedTestData,
-			getEmojiSequenceString
-		);
+		const components = mapEmojiTestDataComponents(testData);
 
-		// Few items without variations
-		let item: EmojiTestDataItem;
-		let baseItem: EmojiTestDataItem;
-		[
-			'1f600',
-			'1f636-200d-1f32b-fe0f',
-			'1f62e-200d-1f4a8',
-			'1f5ef-fe0f',
-			'1f44b',
-		].forEach((key) => {
-			item = mappedTestData[key];
-			expect(
-				splitEmojiNameVariations(item.name, item.sequence, components)
-			).toEqual({
-				base: item.name,
-				key: item.name,
-			});
+		// Test splitting name
+		expect(
+			splitEmojiNameVariations(
+				'people holding hands: medium-light skin tone',
+				[129489, 127996, 8205, 129309, 8205, 129489, 127996],
+				components
+			)
+		).toEqual({
+			base: 'people holding hands',
+			key: 'people holding hands',
+			variations: [
+				{
+					index: 1,
+					type: 'skin-tone',
+				},
+				{
+					index: 6,
+					type: 'skin-tone',
+				},
+			],
+			components: 2,
 		});
+
+		// Split data
+		const splitTestData = combineSimilarEmojiTestData(testData, components);
+
+		// Check basic items
+		expect(testData['1f600']).toBeDefined();
+		const sourceItem1 = testData['1f600'];
+
+		expect(splitTestData['1f600']).toEqual({
+			...sourceItem1,
+			sequence: [0x1f600],
+			sequenceKey: '1f600',
+			name: {
+				// Same name and key
+				base: sourceItem1.name,
+				key: sourceItem1.name,
+			},
+		});
+
+		// Basic item with variation
+		expect(testData['263a']).toBeDefined();
+		const sourceItem2 = testData['263a'];
+
+		expect(splitTestData['263a']).toEqual({
+			...sourceItem2,
+			// Make sure sequence contains 'FE0F', but key does not
+			sequence: [0x263a, 0xfe0f],
+			sequenceKey: '263a',
+			name: {
+				// Same name and key
+				base: sourceItem2.name,
+				key: sourceItem2.name,
+			},
+		});
+
+		// Skin tone
+		expect(testData['1f44b-1f3fb']).toBeDefined();
+		expect(splitTestData['1f44b-1f3fb']).toBeUndefined();
+		expect(splitTestData['1f44b-skin-tone']).toBeDefined();
+		const sourceItem3 = testData['1f44b-1f3ff'];
+
+		expect(splitTestData['1f44b-skin-tone']).toEqual({
+			...sourceItem3,
+			// Sequence should contain 'skin-tone'
+			sequence: [0x1f44b, 'skin-tone'],
+			sequenceKey: '1f44b-skin-tone',
+			name: {
+				// Name without skin tone
+				base: 'waving hand',
+				key: 'waving hand',
+				components: 1,
+				variations: [
+					{
+						index: 1,
+						type: 'skin-tone',
+					},
+				],
+			},
+		});
+
+		// Not a skin tone
+		expect(testData['30-20e3']).toBeDefined();
+		const sourceItem4 = testData['30-20e3'];
+
+		expect(splitTestData['30-20e3']).toEqual({
+			...sourceItem4,
+			sequenceKey: '30-20e3',
+			name: {
+				// Name without number tone
+				base: 'keycap',
+				// Key should contain variation
+				key: 'keycap: 0',
+				variations: ['0'],
+			},
+		});
+
+		// Items should not have skin tones
+		for (const key in splitTestData) {
+			const item = splitTestData[key];
+			if (item.sequenceKey.indexOf('1f3fc') !== -1) {
+				console.error(key, item);
+				expect(item.sequenceKey.indexOf('1f3fc')).toBe(-1);
+			}
+		}
+	});
+
+	it('Merging variations', () => {
+		// Nothing to replace
+		expect(replaceEmojiComponentsInCombinedSequence([0x1f3c3], {})).toEqual(
+			[0x1f3c3]
+		);
 
 		// One skin tone
-		baseItem = mappedTestData['1f590'];
-		item = mappedTestData['1f590-1f3fb'];
 		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 1,
-			variations: [
-				{
-					index: 1,
-					type: 'skin-tone',
-				},
-			],
-		});
-		item = mappedTestData['1f590-1f3ff'];
-		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 1,
-			variations: [
-				{
-					index: 1,
-					type: 'skin-tone',
-				},
-			],
-		});
+			replaceEmojiComponentsInCombinedSequence([0x1f3c3, 'skin-tone'], {
+				'skin-tone': [0x1f3fe],
+			})
+		).toEqual([0x1f3c3, 0x1f3fe]);
 
-		// Flag, no base item
-		item = mappedTestData['1f1e6-1f1f6'];
+		// Hair style
 		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: 'flag',
-			key: item.name,
-			components: 0,
-			variations: ['Antarctica'],
-		});
+			replaceEmojiComponentsInCombinedSequence(
+				[0x1f468, 0x200d, 'hair-style'],
+				{
+					'skin-tone': [0x1f3fe], // unused
+					'hair-style': [0x1f9b2],
+				}
+			)
+		).toEqual([0x1f468, 0x200d, 0x1f9b2]);
 
-		// Keycap, no base item
-		item = mappedTestData['23-fe0f-20e3'];
+		// Mix
 		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: 'keycap',
-			key: item.name,
-			components: 0,
-			variations: ['#'],
-		});
+			replaceEmojiComponentsInCombinedSequence(
+				[0x1f468, 'skin-tone', 0x200d, 'hair-style'],
+				{
+					'skin-tone': [0x1f3fe],
+					'hair-style': [0x1f9b1],
+				}
+			)
+		).toEqual([0x1f468, 0x1f3fe, 0x200d, 0x1f9b1]);
 
-		// Variations of same base item
-		baseItem = mappedTestData['1f468'];
-		item = mappedTestData['1f468-1f3fd'];
+		// Mutiple skin tones
 		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 1,
-			variations: [
+			replaceEmojiComponentsInCombinedSequence(
+				[
+					0x1f469,
+					'skin-tone',
+					0x200d,
+					0x1f91d,
+					0x200d,
+					0x1f468,
+					'skin-tone',
+				],
 				{
-					index: 1,
-					type: 'skin-tone',
-				},
-			],
-		});
-		item = mappedTestData['1f468-200d-1f9b0'];
-		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 1,
-			variations: [
-				{
-					index: 2,
-					type: 'hair-style',
-				},
-			],
-		});
-		item = mappedTestData['1f468-1f3fd-200d-1f9b0'];
-		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 2,
-			variations: [
-				{
-					index: 1,
-					type: 'skin-tone',
-				},
-				{
-					index: 3,
-					type: 'hair-style',
-				},
-			],
-		});
+					'skin-tone': [0x1f3fc, 0x1f3ff],
+				}
+			)
+		).toEqual([
+			0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3ff,
+		]);
 
-		// Variations of same base item with custom stuff
-		baseItem = mappedTestData['1f48f'];
-		item = mappedTestData['1f48f-1f3fd'];
+		// Double skin tones
 		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			components: 1,
-			variations: [
+			replaceEmojiComponentsInCombinedSequence(
+				[
+					0x1f469,
+					'skin-tone',
+					0x200d,
+					0x1f91d,
+					0x200d,
+					0x1f468,
+					'skin-tone',
+				],
 				{
-					index: 1,
-					type: 'skin-tone',
-				},
-			],
-		});
-		item = mappedTestData['1f469-200d-2764-200d-1f48b-200d-1f468'];
-		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: item.name,
-			components: 0,
-			variations: ['woman', 'man'],
-		});
-		item =
-			mappedTestData[
-				'1f9d1-1f3fb-200d-2764-fe0f-200d-1f48b-200d-1f9d1-1f3fd'
-			];
-		expect(
-			splitEmojiNameVariations(item.name, item.sequence, components)
-		).toEqual({
-			base: baseItem.name,
-			key: baseItem.name,
-			// key: baseItem.name + ': person, person',
-			components: 2,
-			variations: [
-				'person',
-				'person',
-				{
-					index: 1,
-					type: 'skin-tone',
-				},
-				{
-					index: 9,
-					type: 'skin-tone',
-				},
-			],
-		});
+					'skin-tone': [0x1f3fc],
+				}
+			)
+		).toEqual([
+			0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3fc,
+		]);
 	});
 
 	it('Checking parent items for all variations', () => {
@@ -361,245 +347,351 @@ describe('Testing unicode test data', () => {
 		}
 
 		const testData = parseEmojiTestFile(data);
-		const mappedTestData = mapEmojiTestDataBySequence(
-			testData,
-			getEmojiSequenceString
-		);
-		const components = mapEmojiTestDataComponents(
-			mappedTestData,
-			getEmojiSequenceString
-		);
+		const components = mapEmojiTestDataComponents(testData);
 
-		// Parse all items
-		// [key][sequence] = sample item
-		interface Item {
-			item: EmojiTestDataItem;
-			split: SplitEmojiName;
-			components: EmojiComponentType[];
-		}
-		type ItemsList = Record<string, Item>;
-		const results = Object.create(null) as Record<string, ItemsList>;
-		testData.forEach((item) => {
-			const split = splitEmojiNameVariations(
-				item.name,
-				item.sequence,
-				components
-			);
-			const parent =
-				results[split.key] ||
-				(results[split.key] = Object.create(null) as ItemsList);
+		// Split data and get tree
+		const splitTestData = combineSimilarEmojiTestData(testData, components);
+		const tree = getEmojiTestDataTree(splitTestData);
 
-			// Create unique key based on component types
-			let sequenceKey = 'default';
-			const itemComponents: EmojiComponentType[] = [];
-			if (split.components) {
-				split.variations?.forEach((item) => {
-					if (typeof item !== 'string') {
-						itemComponents.push(item.type);
-					}
-				});
-				if (itemComponents.length) {
-					sequenceKey = '[' + itemComponents.join(', ') + ']';
-				}
-			}
-
-			const prevItem = parent[sequenceKey];
-			if (!prevItem) {
-				parent[sequenceKey] = {
-					item,
-					split,
-					components: itemComponents,
-				};
-				return;
-			}
-
-			// Compare items
-			const cleanSequence = (sequence: number[]): string => {
-				return getEmojiSequenceString(
-					sequence.filter(
-						(num) =>
-							num !== vs16Emoji && !components.converted.has(num)
-					)
-				);
-			};
-
-			if (
-				cleanSequence(prevItem.item.sequence) !==
-				cleanSequence(item.sequence)
-			) {
-				console.log(prevItem.item);
-				console.log(item);
-				throw new Error(
-					`Mismatched items with same key: ${sequenceKey}`
-				);
-			}
-
-			if (item.sequence.length > prevItem.item.sequence.length) {
-				// Keep longer sequence
-				parent[sequenceKey] = {
-					item,
-					split,
-					components: itemComponents,
-				};
-			}
-		});
-
-		// Validate all items
-		const allVariations: Set<string> = new Set();
-		for (const key in results) {
-			const items = results[key];
-			const stringify = (value: EmojiComponentType[]) =>
-				'[' + value.join(',') + ']';
-
-			const itemComponents = Object.create(null) as Record<
-				string,
-				EmojiComponentType[]
-			>;
-			const tested: Set<string> = new Set();
-			for (const key2 in items) {
-				const item = items[key2];
-				const componentsValue = stringify(item.components);
-				allVariations.add(componentsValue);
-				if (componentsValue in itemComponents) {
-					console.log(items);
-					throw new Error(
-						`Duplicate "${componentsValue}" variations`
-					);
-				}
-				itemComponents[componentsValue] = item.components;
-			}
-
-			// Make sure all items exist
-			const checkParents = (list: EmojiComponentType[]) => {
-				const skippedTypes = new Set();
-				for (let i = 0; i < list.length; i++) {
-					const sequence = list.slice(0, i).concat(list.slice(i + 1));
-					const key = stringify(sequence);
-					const skipped = list[i];
-					const parent = itemComponents[key];
-					if (!parent) {
-						// Missing parent
-						console.log(items);
-						throw new Error(
-							`Missing parent for "${key}" variation`
-						);
-					}
-
-					if (!skippedTypes.has(skipped)) {
-						skippedTypes.add(skipped);
-						const testKey = key + ':' + skipped;
-						if (tested.has(testKey)) {
-							// Multiple child variations ???
-							console.log(items);
-							throw new Error(
-								`Multiple parents for "${testKey}" variation`
-							);
-						}
-						tested.add(testKey);
-					}
-				}
-			};
-			for (const stringified in itemComponents) {
-				checkParents(itemComponents[stringified]);
-			}
-		}
-		// console.log(allVariations);
-	});
-
-	it('Testing emoji components map', () => {
-		if (!data) {
-			console.warn('Test skipped: test data is not available');
-			return;
-		}
-
-		const testData = parseEmojiTestFile(data);
-		const map = getEmojiComponentsMap(testData);
-
-		// Simple item: should not exists
-		const item1 = map.find(
-			(item) => sequenceToString(item.sequence) === '1f601'
-		);
-		expect(item1).toBeUndefined();
-
-		// Item with skin tones
-		const item2 = map.find(
-			(item) => sequenceToString(item.sequence) === '1f596'
-		);
-		expect(item2).toEqual({
-			name: 'vulcan salute',
-			sequence: [0x1f596],
+		// Simple item
+		expect(tree['person running']).toEqual({
+			item: {
+				group: 'People & Body',
+				subgroup: 'person-activity',
+				sequence: [0x1f3c3],
+				emoji: String.fromCodePoint(0x1f3c3),
+				status: 'fully-qualified',
+				version: 'E0.6',
+				name: {
+					base: 'person running',
+					key: 'person running',
+				},
+				sequenceKey: '1f3c3',
+				components: {
+					'skin-tone': 0,
+					'hair-style': 0,
+				},
+				componentsKey: '',
+			},
 			children: {
 				'skin-tone': {
-					name: 'vulcan salute: {skin-tone-0}',
-					sequence: [0x1f596, 'skin-tone'],
+					item: {
+						group: 'People & Body',
+						subgroup: 'person-activity',
+						sequence: [0x1f3c3, 'skin-tone'],
+						emoji:
+							String.fromCodePoint(0x1f3c3) +
+							String.fromCodePoint(0x1f3ff),
+						status: 'fully-qualified',
+						version: 'E1.0',
+						name: {
+							base: 'person running',
+							key: 'person running',
+							components: 1,
+							variations: [
+								{
+									type: 'skin-tone',
+									index: 1,
+								},
+							],
+						},
+						sequenceKey: '1f3c3-skin-tone',
+						components: {
+							'skin-tone': 1,
+							'hair-style': 0,
+						},
+						componentsKey: '[skin-tone]',
+					},
 				},
 			},
 		});
 
-		// Item with hair style and skin tones
-		const item3 = map.find(
-			(item) => sequenceToString(item.sequence) === '1f469'
-		);
-		expect(item3).toEqual({
-			name: 'woman',
-			sequence: [0x1f469],
+		// Skin tone and hair style
+		expect(tree['man']).toEqual({
+			item: {
+				group: 'People & Body',
+				subgroup: 'person',
+				sequence: [0x1f468],
+				emoji: String.fromCodePoint(0x1f468),
+				status: 'fully-qualified',
+				version: 'E0.6',
+				name: {
+					base: 'man',
+					key: 'man',
+				},
+				sequenceKey: '1f468',
+				components: {
+					'skin-tone': 0,
+					'hair-style': 0,
+				},
+				componentsKey: '',
+			},
 			children: {
+				'hair-style': {
+					item: {
+						group: 'People & Body',
+						subgroup: 'person',
+						sequence: [0x1f468, 0x200d, 'hair-style'],
+						emoji:
+							String.fromCodePoint(0x1f468) +
+							String.fromCodePoint(0x200d) +
+							String.fromCodePoint(0x1f9b2),
+						status: 'fully-qualified',
+						version: 'E11.0',
+						name: {
+							base: 'man',
+							key: 'man',
+							components: 1,
+							variations: [
+								{
+									type: 'hair-style',
+									index: 2,
+								},
+							],
+						},
+						sequenceKey: '1f468-200d-hair-style',
+						components: {
+							'skin-tone': 0,
+							'hair-style': 1,
+						},
+						componentsKey: '[hair-style]',
+					},
+					children: {
+						'skin-tone': {
+							item: {
+								group: 'People & Body',
+								subgroup: 'person',
+								sequence: [
+									0x1f468,
+									'skin-tone',
+									0x200d,
+									'hair-style',
+								],
+								emoji:
+									String.fromCodePoint(0x1f468) +
+									String.fromCodePoint(0x1f3ff) +
+									String.fromCodePoint(0x200d) +
+									String.fromCodePoint(0x1f9b2),
+								status: 'fully-qualified',
+								version: 'E11.0',
+								name: {
+									base: 'man',
+									key: 'man',
+									components: 2,
+									variations: [
+										{
+											type: 'skin-tone',
+											index: 1,
+										},
+										{
+											type: 'hair-style',
+											index: 3,
+										},
+									],
+								},
+								sequenceKey: '1f468-skin-tone-200d-hair-style',
+								components: {
+									'skin-tone': 1,
+									'hair-style': 1,
+								},
+								componentsKey: '[hair-style,skin-tone]',
+							},
+						},
+					},
+				},
 				'skin-tone': {
-					name: 'woman: {skin-tone-0}',
-					sequence: [0x1f469, 'skin-tone'],
+					item: {
+						group: 'People & Body',
+						subgroup: 'person',
+						sequence: [0x1f468, 'skin-tone'],
+						emoji:
+							String.fromCodePoint(0x1f468) +
+							String.fromCodePoint(0x1f3ff),
+						status: 'fully-qualified',
+						version: 'E1.0',
+						name: {
+							base: 'man',
+							key: 'man',
+							components: 1,
+							variations: [
+								{
+									type: 'skin-tone',
+									index: 1,
+								},
+							],
+						},
+						sequenceKey: '1f468-skin-tone',
+						components: {
+							'skin-tone': 1,
+							'hair-style': 0,
+						},
+						componentsKey: '[skin-tone]',
+					},
 					children: {
 						'hair-style': {
-							name: 'woman: {skin-tone-0}, {hair-style-0}',
-							sequence: [
-								0x1f469,
-								'skin-tone',
-								0x200d,
-								'hair-style',
-							],
-						},
-					},
-				},
-				'hair-style': {
-					name: 'woman: {hair-style-0}',
-					sequence: [0x1f469, 0x200d, 'hair-style'],
-					children: {
-						'skin-tone': {
-							name: 'woman: {skin-tone-0}, {hair-style-0}',
-							sequence: [
-								0x1f469,
-								'skin-tone',
-								0x200d,
-								'hair-style',
-							],
+							item: {
+								group: 'People & Body',
+								subgroup: 'person',
+								sequence: [
+									0x1f468,
+									'skin-tone',
+									0x200d,
+									'hair-style',
+								],
+								emoji:
+									String.fromCodePoint(0x1f468) +
+									String.fromCodePoint(0x1f3ff) +
+									String.fromCodePoint(0x200d) +
+									String.fromCodePoint(0x1f9b2),
+								status: 'fully-qualified',
+								version: 'E11.0',
+								name: {
+									base: 'man',
+									key: 'man',
+									components: 2,
+									variations: [
+										{
+											type: 'skin-tone',
+											index: 1,
+										},
+										{
+											type: 'hair-style',
+											index: 3,
+										},
+									],
+								},
+								sequenceKey: '1f468-skin-tone-200d-hair-style',
+								components: {
+									'skin-tone': 1,
+									'hair-style': 1,
+								},
+								componentsKey: '[hair-style,skin-tone]',
+							},
 						},
 					},
 				},
 			},
 		});
 
-		// Item with multiple skin tones
-		const item4 = map.find(
-			(item) => sequenceToString(item.sequence) === '1f46b'
-		);
-		expect(item4).toEqual({
-			name: 'woman and man holding hands',
-			sequence: [0x1f46b],
+		// Double skin tone
+		expect(tree['people holding hands']).toEqual({
+			item: {
+				group: 'People & Body',
+				subgroup: 'family',
+				sequence: [0x1f9d1, 0x200d, 0x1f91d, 0x200d, 0x1f9d1],
+				emoji:
+					String.fromCodePoint(0x1f9d1) +
+					String.fromCodePoint(0x200d) +
+					String.fromCodePoint(0x1f91d) +
+					String.fromCodePoint(0x200d) +
+					String.fromCodePoint(0x1f9d1),
+				status: 'fully-qualified',
+				version: 'E12.0',
+				name: {
+					base: 'people holding hands',
+					key: 'people holding hands',
+				},
+				sequenceKey: '1f9d1-200d-1f91d-200d-1f9d1',
+				components: {
+					'skin-tone': 0,
+					'hair-style': 0,
+				},
+				componentsKey: '',
+			},
 			children: {
 				'skin-tone': {
-					name: 'woman and man holding hands: {skin-tone-0}',
-					sequence: [0x1f46b, 'skin-tone'],
+					item: {
+						group: 'People & Body',
+						subgroup: 'family',
+						sequence: [
+							0x1f9d1,
+							'skin-tone',
+							0x200d,
+							0x1f91d,
+							0x200d,
+							0x1f9d1,
+							'skin-tone',
+						],
+						emoji:
+							String.fromCodePoint(0x1f9d1) +
+							String.fromCodePoint(0x1f3ff) +
+							String.fromCodePoint(0x200d) +
+							String.fromCodePoint(0x1f91d) +
+							String.fromCodePoint(0x200d) +
+							String.fromCodePoint(0x1f9d1) +
+							String.fromCodePoint(0x1f3ff),
+						status: 'fully-qualified',
+						version: 'E12.0',
+						name: {
+							base: 'people holding hands',
+							key: 'people holding hands',
+							components: 2,
+							variations: [
+								{
+									type: 'skin-tone',
+									index: 1,
+								},
+								{
+									type: 'skin-tone',
+									index: 6,
+								},
+							],
+						},
+						sequenceKey:
+							'1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
+						components: {
+							'skin-tone': 2,
+							'hair-style': 0,
+						},
+						componentsKey: '[skin-tone,skin-tone]',
+					},
 					children: {
 						'skin-tone': {
-							name: 'woman and man holding hands: {skin-tone-0}, {skin-tone-1}',
-							sequence: [
-								0x1f469,
-								'skin-tone',
-								0x200d,
-								0x1f91d,
-								0x200d,
-								0x1f468,
-								'skin-tone',
-							],
+							item: {
+								group: 'People & Body',
+								subgroup: 'family',
+								sequence: [
+									0x1f9d1,
+									'skin-tone',
+									0x200d,
+									0x1f91d,
+									0x200d,
+									0x1f9d1,
+									'skin-tone',
+								],
+								emoji:
+									String.fromCodePoint(0x1f9d1) +
+									String.fromCodePoint(0x1f3ff) +
+									String.fromCodePoint(0x200d) +
+									String.fromCodePoint(0x1f91d) +
+									String.fromCodePoint(0x200d) +
+									String.fromCodePoint(0x1f9d1) +
+									String.fromCodePoint(0x1f3ff),
+								status: 'fully-qualified',
+								version: 'E12.0',
+								name: {
+									base: 'people holding hands',
+									key: 'people holding hands',
+									components: 2,
+									variations: [
+										{
+											type: 'skin-tone',
+											index: 1,
+										},
+										{
+											type: 'skin-tone',
+											index: 6,
+										},
+									],
+								},
+								sequenceKey:
+									'1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
+								components: {
+									'skin-tone': 2,
+									'hair-style': 0,
+								},
+								componentsKey: '[skin-tone,skin-tone]',
+							},
 						},
 					},
 				},
@@ -607,63 +699,94 @@ describe('Testing unicode test data', () => {
 		});
 	});
 
-	it('Checking for missing sequences', () => {
+	it('Finding missing emojis', () => {
 		if (!data) {
 			console.warn('Test skipped: test data is not available');
 			return;
 		}
 
 		const testData = parseEmojiTestFile(data);
-		const sequences = getQualifiedEmojiVariations(
-			testData.map((item) => item.sequence),
-			testData
+		const components = mapEmojiTestDataComponents(testData);
+
+		// Split data and get tree
+		const splitTestData = combineSimilarEmojiTestData(testData, components);
+		const tree = getEmojiTestDataTree(splitTestData);
+
+		// Use test data
+		const testList = [];
+		for (const sequenceKey in testData) {
+			testList.push({
+				...testData[sequenceKey],
+				sequenceKey,
+			});
+		}
+		const missing = new Set(
+			findMissingEmojis(testList, tree).map((item) => item.sequenceKey)
+		);
+		expect(missing.size).toBe(30);
+		expect(missing.has('1faf1-1f3fb-200d-1faf2-1f3fb')).toBe(true);
+		expect(missing.has('1faf1-1f3fb-200d-1faf2-1f3fc')).toBe(false);
+
+		// Only one emoji
+		const missing2 = findMissingEmojis(
+			[
+				// Main icon
+				{
+					iconName: 'kiss',
+					sequence: [0x1f48f],
+					sequenceKey: '1f48f',
+				},
+				// Only one skin tone to test sources for double skin tone
+				{
+					iconName: 'kiss-medium-skin-tone',
+					sequence: [0x1f48f, 0x1f3fd],
+					sequenceKey: '1f48f-1f3fd',
+				},
+			],
+			tree
 		);
 
-		const missing = getEmojisSequencesToCopy(sequences, testData);
-
-		// Should be 30 entries for 15.0
-		// TODO: update for newer versions
-		expect(missing.length).toBe(30);
-
-		// Two identical tones. Not a valid emoji, but optimises regex
-		expect(
-			missing.find(
-				(item) => item.sourceName === 'handshake: light skin tone'
-			)
-		).toEqual({
-			source: [0x1f91d, 0x1f3fb],
-			sourceName: 'handshake: light skin tone',
-			target: [0x1faf1, 0x1f3fb, 0x200d, 0x1faf2, 0x1f3fb],
-			targetName: 'handshake: light skin tone, light skin tone',
+		// Should be 29 missing emojis
+		expect(missing2.length).toBe(29);
+		const missing2Map = {} as Record<string, string>;
+		missing2.forEach((item) => {
+			missing2Map[item.sequenceKey] = item.iconName;
 		});
-
-		// Check with custom data: only base icon
-		const missing2 = getEmojisSequencesToCopy([[0x1f91d]], testData);
-
-		// Missing icons: [skin-tone], [skin-tone, skin-tone]
-		expect(missing2.length).toBe(5 + 5 * 5);
-		expect(
-			missing2.find(
-				(item) => item.targetName === 'handshake: light skin tone'
-			)
-		).toEqual({
-			source: [0x1f91d],
-			sourceName: 'handshake',
-			target: [0x1f91d, 0x1f3fb],
-			targetName: 'handshake: light skin tone',
-		});
-		expect(
-			missing2.find(
-				(item) =>
-					item.targetName ===
-					'handshake: medium-light skin tone, light skin tone'
-			)
-		).toEqual({
-			// Should be copied from first component match
-			source: [0x1f91d, 0x1f3fc],
-			sourceName: 'handshake: medium-light skin tone',
-			target: [0x1faf1, 0x1f3fc, 0x200d, 0x1faf2, 0x1f3fb],
-			targetName: 'handshake: medium-light skin tone, light skin tone',
+		expect(missing2Map).toEqual({
+			'1f48f-1f3fb': 'kiss',
+			'1f48f-1f3fc': 'kiss',
+			'1f9d1-1f3fd-200d-2764-200d-1f48b-200d-1f9d1-1f3fb':
+				'kiss-medium-skin-tone',
+			'1f9d1-1f3fd-200d-2764-200d-1f48b-200d-1f9d1-1f3fc':
+				'kiss-medium-skin-tone',
+			'1f9d1-1f3fd-200d-2764-200d-1f48b-200d-1f9d1-1f3fd':
+				'kiss-medium-skin-tone',
+			'1f9d1-1f3fd-200d-2764-200d-1f48b-200d-1f9d1-1f3fe':
+				'kiss-medium-skin-tone',
+			'1f9d1-1f3fd-200d-2764-200d-1f48b-200d-1f9d1-1f3ff':
+				'kiss-medium-skin-tone',
+			'1f48f-1f3fe': 'kiss',
+			'1f48f-1f3ff': 'kiss',
+			'1f9d1-1f3fb-200d-2764-200d-1f48b-200d-1f9d1-1f3fb': 'kiss',
+			'1f9d1-1f3fb-200d-2764-200d-1f48b-200d-1f9d1-1f3fc': 'kiss',
+			'1f9d1-1f3fb-200d-2764-200d-1f48b-200d-1f9d1-1f3fd': 'kiss',
+			'1f9d1-1f3fb-200d-2764-200d-1f48b-200d-1f9d1-1f3fe': 'kiss',
+			'1f9d1-1f3fb-200d-2764-200d-1f48b-200d-1f9d1-1f3ff': 'kiss',
+			'1f9d1-1f3fc-200d-2764-200d-1f48b-200d-1f9d1-1f3fb': 'kiss',
+			'1f9d1-1f3fc-200d-2764-200d-1f48b-200d-1f9d1-1f3fc': 'kiss',
+			'1f9d1-1f3fc-200d-2764-200d-1f48b-200d-1f9d1-1f3fd': 'kiss',
+			'1f9d1-1f3fc-200d-2764-200d-1f48b-200d-1f9d1-1f3fe': 'kiss',
+			'1f9d1-1f3fc-200d-2764-200d-1f48b-200d-1f9d1-1f3ff': 'kiss',
+			'1f9d1-1f3fe-200d-2764-200d-1f48b-200d-1f9d1-1f3fb': 'kiss',
+			'1f9d1-1f3fe-200d-2764-200d-1f48b-200d-1f9d1-1f3fc': 'kiss',
+			'1f9d1-1f3fe-200d-2764-200d-1f48b-200d-1f9d1-1f3fd': 'kiss',
+			'1f9d1-1f3fe-200d-2764-200d-1f48b-200d-1f9d1-1f3fe': 'kiss',
+			'1f9d1-1f3fe-200d-2764-200d-1f48b-200d-1f9d1-1f3ff': 'kiss',
+			'1f9d1-1f3ff-200d-2764-200d-1f48b-200d-1f9d1-1f3fb': 'kiss',
+			'1f9d1-1f3ff-200d-2764-200d-1f48b-200d-1f9d1-1f3fc': 'kiss',
+			'1f9d1-1f3ff-200d-2764-200d-1f48b-200d-1f9d1-1f3fd': 'kiss',
+			'1f9d1-1f3ff-200d-2764-200d-1f48b-200d-1f9d1-1f3fe': 'kiss',
+			'1f9d1-1f3ff-200d-2764-200d-1f48b-200d-1f9d1-1f3ff': 'kiss',
 		});
 	});
 });

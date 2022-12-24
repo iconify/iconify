@@ -21,21 +21,21 @@ const allowedStatus: Set<EmojiStatus> = new Set([
 ]);
 
 /**
- * Callback for converting sequence to string
+ * Base item
  */
-export type EmojiSequenceToStringCallback = (value: number[]) => string;
-
-/**
- * Test data item
- */
-export interface EmojiTestDataItem {
+export interface BaseEmojiTestDataItem {
 	// Group and subgroup
 	group: string;
 	subgroup: string;
 
-	// Code points as string, lower case, dash separated
-	code: string;
+	// Version when emoji was added
+	version: string;
+}
 
+/**
+ * Test data item
+ */
+export interface EmojiTestDataItem extends BaseEmojiTestDataItem {
 	// Code points as numbers, UTF-32
 	sequence: number[];
 
@@ -45,20 +45,62 @@ export interface EmojiTestDataItem {
 	// Status
 	status: EmojiStatus;
 
-	// Version when emoji was added
-	version: string;
-
 	// Emoji name
 	name: string;
+}
+
+export type EmojiTestData = Record<string, EmojiTestDataItem>;
+
+/**
+ * Get qualified variations from parsed test file
+ *
+ * Key is unqualified emoji, value is longest fully qualified emoji
+ */
+function getQualifiedTestData(data: EmojiTestData): EmojiTestData {
+	const results = Object.create(null) as EmojiTestData;
+
+	for (const key in data) {
+		const item = data[key];
+		const sequence = getUnqualifiedEmojiSequence(item.sequence);
+		const shortKey = getEmojiSequenceKeyword(sequence);
+
+		// Check if values mismatch, set results to longest value
+		if (
+			!results[shortKey] ||
+			results[shortKey].sequence.length < sequence.length
+		) {
+			results[shortKey] = item;
+		}
+	}
+
+	return results;
 }
 
 /**
  * Get all emoji sequences from test file
  *
- * Returns all emojis as UTF-32 sequences
+ * Returns all emojis as UTF-32 sequences, where:
+ * 	key = unqualified sequence (without \uFE0F)
+ * 	value = qualified sequence (with \uFE0F)
+ *
+ * Duplicate items that have different versions with and without \uFE0F are
+ * listed only once, with unqualified sequence as key and longest possible
+ * qualified sequence as value
+ *
+ * Example of 3 identical entries:
+ *  '1F441 FE0F 200D 1F5E8 FE0F'
+ *  '1F441 200D 1F5E8 FE0F'
+ *  '1F441 FE0F 200D 1F5E8'
+ * 	'1F441 200D 1F5E8'
+ *
+ * Out of these entries, only one item will be returned with:
+ * 	key = '1f441-200d-1f5e8' (converted to lower case, separated with dash)
+ * 	value.sequence = [0x1F441, 0xFE0F, 0x200D, 0x1F5E8, 0xFE0F]
+ * 	value.status = 'fully-qualified'
+ * 	other properties in value are identical for all versions
  */
-export function parseEmojiTestFile(data: string): EmojiTestDataItem[] {
-	const results: EmojiTestDataItem[] = [];
+export function parseEmojiTestFile(data: string): EmojiTestData {
+	const results = Object.create(null) as EmojiTestData;
 	let group: string | undefined;
 	let subgroup: string | undefined;
 
@@ -106,11 +148,8 @@ export function parseEmojiTestFile(data: string): EmojiTestDataItem[] {
 			return;
 		}
 
-		const code = firstChunkParts[0]
-			.trim()
-			.replace(/\s+/g, '-')
-			.toLowerCase();
-		if (!code || !code.match(/^[a-f0-9]+[a-f0-9-]*[a-f0-9]+$/)) {
+		const code = firstChunkParts[0].trim();
+		if (!code || !code.match(/^[A-F0-9]+[A-F0-9\s]*[A-F0-9]+$/)) {
 			return;
 		}
 
@@ -133,87 +172,24 @@ export function parseEmojiTestFile(data: string): EmojiTestDataItem[] {
 		}
 		const name = secondChunkParts.join(' ');
 
+		// Get sequence and convert it to cleaned up string
+		const sequence = getEmojiSequenceFromString(code);
+		const key = getEmojiSequenceKeyword(sequence);
+
 		// Add item
-		results.push({
+		if (results[key]) {
+			throw new Error(`Duplicate entry for "${code}"`);
+		}
+		results[key] = {
 			group,
 			subgroup,
-			code,
-			sequence: getEmojiSequenceFromString(code),
+			sequence,
 			emoji,
 			status,
 			version,
 			name,
-		});
+		};
 	});
 
-	return results;
-}
-
-/**
- * Get qualified variations from parsed test file
- *
- * Key is unqualified emoji, value is longest fully qualified emoji
- */
-export function getQualifiedEmojiSequencesMap(
-	sequences: number[][]
-): Map<number[], number[]>;
-export function getQualifiedEmojiSequencesMap(
-	sequences: number[][],
-	toString: (value: number[]) => string
-): Record<string, string>;
-export function getQualifiedEmojiSequencesMap(
-	sequences: number[][],
-	toString?: (value: number[]) => string
-): Map<number[], number[]> | Record<string, string> {
-	const convert = toString || getEmojiSequenceKeyword;
-	const results = Object.create(null) as Record<string, string>;
-
-	for (let i = 0; i < sequences.length; i++) {
-		const value = convert(sequences[i]);
-		const unqualified = convert(getUnqualifiedEmojiSequence(sequences[i]));
-		// Check if values mismatch, set results to longest value
-		if (
-			!results[unqualified] ||
-			results[unqualified].length < value.length
-		) {
-			results[unqualified] = value;
-		}
-	}
-
-	// Return
-	if (toString) {
-		return results;
-	}
-
-	const map: Map<number[], number[]> = new Map();
-	for (const key in results) {
-		const value = results[key];
-		map.set(
-			getEmojiSequenceFromString(key),
-			getEmojiSequenceFromString(value)
-		);
-	}
-	return map;
-}
-
-/**
- * Map data by sequence
- */
-export function mapEmojiTestDataBySequence(
-	testData: EmojiTestDataItem[],
-	convert: EmojiSequenceToStringCallback
-): Record<string, EmojiTestDataItem> {
-	const testSequences = Object.create(null) as Record<
-		string,
-		EmojiTestDataItem
-	>;
-	for (let i = 0; i < testData.length; i++) {
-		const item = testData[i];
-		const keyword = convert(item.sequence);
-		if (testSequences[keyword]) {
-			throw new Error(`Duplicate entries for "${keyword}"`);
-		}
-		testSequences[keyword] = item;
-	}
-	return testSequences;
+	return getQualifiedTestData(results);
 }

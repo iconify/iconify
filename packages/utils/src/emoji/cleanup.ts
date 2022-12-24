@@ -93,13 +93,6 @@ export function joinEmojiSequences(
 }
 
 /**
- * Remove variations
- */
-export function removeEmojiVariations(sequence: number[]): number[] {
-	return sequence.filter((code) => code !== vs16Emoji);
-}
-
-/**
  * Get unqualified sequence
  */
 export function getUnqualifiedEmojiSequence(sequence: number[]): number[] {

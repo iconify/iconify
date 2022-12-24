@@ -2,10 +2,7 @@ import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { emojiVersion } from '../lib/emoji/data';
 import { getEmojiSequenceFromString } from '../lib/emoji/cleanup';
 import { getEmojiSequenceString } from '../lib/emoji/format';
-import {
-	getQualifiedEmojiSequencesMap,
-	parseEmojiTestFile,
-} from '../lib/emoji/test/parse';
+import { parseEmojiTestFile } from '../lib/emoji/test/parse';
 import { getQualifiedEmojiVariations } from '../lib/emoji/test/variations';
 
 describe('Qualified variations of emoji sequences', () => {
@@ -61,11 +58,18 @@ describe('Qualified variations of emoji sequences', () => {
 			// mix of simple and complex, with and without variation
 			'1F9D7 1F3FE 200D 2640 FE0F',
 			'1F9D7 1F3FF 200D 2642 ',
-		].map(getEmojiSequenceFromString);
+		].map((source) => {
+			const sequence = getEmojiSequenceFromString(source);
+			return {
+				source,
+				sequence,
+			};
+		});
+
 		const results = getQualifiedEmojiVariations(sequences);
 		expect(
-			results.map((sequence) =>
-				getEmojiSequenceString(sequence, {
+			results.map((item) =>
+				getEmojiSequenceString(item.sequence, {
 					separator: ' ',
 					case: 'upper',
 					format: 'utf-32',
@@ -98,23 +102,17 @@ describe('Qualified variations of emoji sequences', () => {
 			console.warn('Test skipped: test data is not available');
 			return;
 		}
-
 		const testData = parseEmojiTestFile(data);
-		const testDataSequences = testData.map((item) => item.sequence);
 
-		// Make sure testData contains both fully-qualified and unqualified emojis
-		const testDataStrings = new Set(testData.map((item) => item.code));
+		// Make sure testData keys contain only unqualified emojis
+		const testDataStrings = new Set(Object.keys(testData));
 		expect(testDataStrings.has('1f600')).toBe(true);
 		expect(testDataStrings.has('263a')).toBe(true);
-		expect(testDataStrings.has('263a-fe0f')).toBe(true);
+		expect(testDataStrings.has('263a-fe0f')).toBe(false);
 
-		// Test getQualifiedEmojiSequencesMap
-		const unqualifiedTest = getQualifiedEmojiSequencesMap(
-			testDataSequences,
-			getEmojiSequenceString
-		);
-		expect(unqualifiedTest['1f600']).toBe('1f600');
-		expect(unqualifiedTest['263a']).toBe('263a-fe0f');
+		// Make sure values contain qualified emojis
+		expect(testData['1f600'].sequence).toEqual([0x1f600]);
+		expect(testData['263a'].sequence).toEqual([0x263a, 0xfe0f]);
 
 		// Sequences to test
 		const sequences = [
@@ -131,17 +129,20 @@ describe('Qualified variations of emoji sequences', () => {
 			// complex emoji, exists in file
 			'1F9D1 1F3FE 200D 2764 200D 1F9D1 1F3FB',
 			// simple emoji, not in test file
-			'1234',
+			'25F0',
 			// fake keycap, not in test file
 			'2345 20E3 200D 1235',
-		].map(getEmojiSequenceFromString);
-		const results = getQualifiedEmojiVariations(
-			sequences,
-			testDataSequences
-		);
+		].map((source) => {
+			const sequence = getEmojiSequenceFromString(source);
+			return {
+				source,
+				sequence,
+			};
+		});
+		const results = getQualifiedEmojiVariations(sequences, testData);
 		expect(
-			results.map((sequence) =>
-				getEmojiSequenceString(sequence, {
+			results.map((item) =>
+				getEmojiSequenceString(item.sequence, {
 					separator: ' ',
 					case: 'upper',
 					format: 'utf-32',
@@ -162,7 +163,7 @@ describe('Qualified variations of emoji sequences', () => {
 			// complex emoji, exists in file
 			'1F9D1 1F3FE 200D 2764 FE0F 200D 1F9D1 1F3FB',
 			// simple emoji, not in test file
-			'1234 FE0F',
+			'25F0 FE0F',
 			// fake keycap, not in test file
 			'2345 FE0F 20E3 200D 1235 FE0F',
 		]);

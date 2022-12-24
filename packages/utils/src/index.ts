@@ -87,7 +87,6 @@ export { loadIcon } from './loader/loader';
 export {
 	getEmojiSequenceFromString,
 	getUnqualifiedEmojiSequence,
-	removeEmojiVariations,
 } from './emoji/cleanup';
 export {
 	getEmojiCodePoint,
@@ -103,12 +102,9 @@ export {
 	getEmojiSequenceString,
 	getEmojiSequenceKeyword,
 } from './emoji/format';
-export {
-	parseEmojiTestFile,
-	getQualifiedEmojiSequencesMap,
-} from './emoji/test/parse';
+export { parseEmojiTestFile } from './emoji/test/parse';
 export { getQualifiedEmojiVariations } from './emoji/test/variations';
-export { getEmojisSequencesToCopy } from './emoji/test/copy';
+// export { getEmojisSequencesToCopy } from './emoji/test/copy';
 export {
 	createOptimisedRegex,
 	createOptimisedRegexForEmojiSequences,

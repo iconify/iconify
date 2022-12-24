@@ -1,5 +1,6 @@
 import { getSequenceFromEmojiStringOrKeyword } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
+import type { EmojiTestData } from '../test/parse';
 import { getQualifiedEmojiVariations } from '../test/variations';
 import { createEmojisTree, parseEmojiTree } from './tree';
 
@@ -38,7 +39,7 @@ export function createOptimisedRegexForEmojiSequences(
  */
 export function createOptimisedRegex(
 	emojis: (string | number[])[],
-	testData?: number[][]
+	testData?: EmojiTestData
 ): string {
 	// Convert to numbers
 	let sequences = emojis.map((item) =>
@@ -48,7 +49,15 @@ export function createOptimisedRegex(
 	);
 
 	// Add variations
-	sequences = getQualifiedEmojiVariations(sequences, testData);
+	// Temporary convert to object with 'sequence' property
+	sequences = getQualifiedEmojiVariations(
+		sequences.map((sequence) => {
+			return {
+				sequence,
+			};
+		}),
+		testData
+	).map((item) => item.sequence);
 
 	// Parse
 	return createOptimisedRegexForEmojiSequences(sequences);

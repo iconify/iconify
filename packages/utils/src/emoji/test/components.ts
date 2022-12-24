@@ -1,5 +1,6 @@
 import { emojiComponents, EmojiComponentType } from '../data';
-import type { EmojiSequenceToStringCallback, EmojiTestDataItem } from './parse';
+import { getEmojiSequenceKeyword } from '../format';
+import type { EmojiTestData, EmojiTestDataItem } from './parse';
 
 export interface EmojiTestDataComponentsMap {
 	// Keywords
@@ -20,8 +21,7 @@ export interface EmojiTestDataComponentsMap {
  * Map components from test data
  */
 export function mapEmojiTestDataComponents(
-	testSequences: Record<string, EmojiTestDataItem>,
-	convert: EmojiSequenceToStringCallback
+	testSequences: EmojiTestData
 ): EmojiTestDataComponentsMap {
 	const results: EmojiTestDataComponentsMap = {
 		converted: new Map(),
@@ -35,7 +35,7 @@ export function mapEmojiTestDataComponents(
 		const type = key as EmojiComponentType;
 		const range = emojiComponents[type];
 		for (let number = range[0]; number <= range[1]; number++) {
-			const keyword = convert([number]);
+			const keyword = getEmojiSequenceKeyword([number]);
 			const item = testSequences[keyword];
 			if (!item) {
 				throw new Error(
@@ -56,4 +56,88 @@ export function mapEmojiTestDataComponents(
 	}
 
 	return results;
+}
+
+/**
+ * Sequence with components
+ */
+export type EmojiSequenceWithComponents = (EmojiComponentType | number)[];
+
+/**
+ * Convert to string
+ */
+export function emojiSequenceWithComponentsToString(
+	sequence: EmojiSequenceWithComponents
+): string {
+	return sequence
+		.map((item) => (typeof item === 'number' ? item.toString(16) : item))
+		.join('-');
+}
+
+/**
+ * Entry in sequence
+ */
+export interface EmojiSequenceComponentEntry {
+	// Index in sequence
+	index: number;
+
+	// Component type
+	type: EmojiComponentType;
+}
+
+/**
+ * Find variations in sequence
+ */
+export function findEmojiComponentsInSequence(
+	sequence: number[]
+): EmojiSequenceComponentEntry[] {
+	const components: EmojiSequenceComponentEntry[] = [];
+
+	for (let index = 0; index < sequence.length; index++) {
+		const code = sequence[index];
+		for (const key in emojiComponents) {
+			const type = key as EmojiComponentType;
+			const range = emojiComponents[type];
+			if (code >= range[0] && code < range[1]) {
+				components.push({
+					index,
+					type,
+				});
+				break;
+			}
+		}
+	}
+
+	return components;
+}
+
+/**
+ * Component values
+ */
+export type EmojiSequenceComponentValues = Partial<
+	Record<EmojiComponentType, number[]>
+>;
+
+/**
+ * Replace components in sequence
+ */
+export function replaceEmojiComponentsInCombinedSequence(
+	sequence: EmojiSequenceWithComponents,
+	values: EmojiSequenceComponentValues
+): number[] {
+	const indexes: Record<EmojiComponentType, number> = {
+		'hair-style': 0,
+		'skin-tone': 0,
+	};
+	return sequence.map((item) => {
+		if (typeof item === 'number') {
+			return item;
+		}
+		const index = indexes[item]++;
+		const list = values[item];
+		if (!list || !list.length) {
+			throw new Error(`Cannot replace ${item}: no valid values provided`);
+		}
+		return list[index >= list.length ? list.length - 1 : index];
+	});
 }

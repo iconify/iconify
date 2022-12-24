@@ -2,7 +2,7 @@ import { convertEmojiSequenceToUTF32 } from '../lib/emoji/convert';
 import {
 	getEmojiSequenceFromString,
 	joinEmojiSequences,
-	removeEmojiVariations,
+	getUnqualifiedEmojiSequence,
 	splitEmojiSequences,
 } from '../lib/emoji/cleanup';
 
@@ -37,7 +37,7 @@ describe('Testing formatting emoji cleanup', () => {
 		expect(joinEmojiSequences(split)).toEqual(sequence);
 
 		// Remove variations
-		expect(removeEmojiVariations(sequence)).toEqual([
+		expect(getUnqualifiedEmojiSequence(sequence)).toEqual([
 			0x1f441, 0x200d, 0x1f5e8,
 		]);
 	});
@@ -63,6 +63,6 @@ describe('Testing formatting emoji cleanup', () => {
 		expect(joinEmojiSequences(split)).toEqual(sequence);
 
 		// Remove variations (does nothing for this sequence)
-		expect(removeEmojiVariations(sequence)).toEqual(sequence);
+		expect(getUnqualifiedEmojiSequence(sequence)).toEqual(sequence);
 	});
 });

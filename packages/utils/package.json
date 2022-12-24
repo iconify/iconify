@@ -142,10 +142,10 @@
 			"import": "./lib/emoji/test/components.mjs",
 			"types": "./lib/emoji/test/components.d.ts"
 		},
-		"./lib/emoji/test/copy": {
-			"require": "./lib/emoji/test/copy.cjs",
-			"import": "./lib/emoji/test/copy.mjs",
-			"types": "./lib/emoji/test/copy.d.ts"
+		"./lib/emoji/test/missing": {
+			"require": "./lib/emoji/test/missing.cjs",
+			"import": "./lib/emoji/test/missing.mjs",
+			"types": "./lib/emoji/test/missing.d.ts"
 		},
 		"./lib/emoji/test/name": {
 			"require": "./lib/emoji/test/name.cjs",
@@ -156,6 +156,16 @@
 			"require": "./lib/emoji/test/parse.cjs",
 			"import": "./lib/emoji/test/parse.mjs",
 			"types": "./lib/emoji/test/parse.d.ts"
+		},
+		"./lib/emoji/test/tree": {
+			"require": "./lib/emoji/test/tree.cjs",
+			"import": "./lib/emoji/test/tree.mjs",
+			"types": "./lib/emoji/test/tree.d.ts"
+		},
+		"./lib/emoji/test/similar": {
+			"require": "./lib/emoji/test/similar.cjs",
+			"import": "./lib/emoji/test/similar.mjs",
+			"types": "./lib/emoji/test/similar.d.ts"
 		},
 		"./lib/emoji/test/variations": {
 			"require": "./lib/emoji/test/variations.cjs",
