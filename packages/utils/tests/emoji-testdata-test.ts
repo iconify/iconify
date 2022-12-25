@@ -8,7 +8,7 @@ import {
 	minUTF32,
 	emojiVersion,
 } from '../lib/emoji/data';
-import { parseEmojiTestFile } from '../lib/emoji/test/parse';
+import { EmojiTestDataItem, parseEmojiTestFile } from '../lib/emoji/test/parse';
 import {
 	mapEmojiTestDataComponents,
 	replaceEmojiComponentsInCombinedSequence,
@@ -713,7 +713,11 @@ describe('Testing unicode test data', () => {
 		const tree = getEmojiTestDataTree(splitTestData);
 
 		// Use test data
-		const testList = [];
+		interface TestListItem extends EmojiTestDataItem {
+			// Add it for easier testing
+			sequenceKey: string;
+		}
+		const testList: TestListItem[] = [];
 		for (const sequenceKey in testData) {
 			testList.push({
 				...testData[sequenceKey],

@@ -22,7 +22,7 @@ export type FindAndReplaceEmojisInTextCallback = (
  * Returns null if nothing was replaced
  */
 export function findAndReplaceEmojisInText(
-	regexp: string | RegExp,
+	regexp: string | RegExp | (string | RegExp)[],
 	content: string,
 	callback: FindAndReplaceEmojisInTextCallback
 ): string | null {

@@ -21,6 +21,9 @@ export interface EmojiRegexMatch {
 
 	// Icon name
 	keyword: string;
+
+	// Regex index, used if multiple regular expressions were provided
+	regexp: number;
 }
 
 /**
@@ -45,54 +48,56 @@ interface PrevNextMatch extends PrevMatch {
  * Returns only one entry per match
  */
 export function getEmojiMatchesInText(
-	regexp: string | RegExp,
+	regexp: string | RegExp | (string | RegExp)[],
 	content: string
 ): EmojiRegexMatch[] {
 	const results: EmojiRegexMatch[] = [];
-	const matches = content.match(
-		typeof regexp === 'string' ? createEmojiRegExp(regexp) : regexp
-	);
+	const found: Set<string> = new Set();
+	(regexp instanceof Array ? regexp : [regexp]).forEach((regexp, index) => {
+		const matches = content.match(
+			typeof regexp === 'string' ? createEmojiRegExp(regexp) : regexp
+		);
 
-	if (matches) {
-		// Sort matches by length to make sure longest matches get replaced first
-		matches.sort((a, b) => {
-			if (b.length === a.length) {
-				return a.localeCompare(b);
-			}
-			return b.length - a.length;
-		});
-
-		// Add all matches
-		let lastMatch: EmojiRegexMatch | undefined;
-		for (let i = 0; i < matches.length; i++) {
-			const match = matches[i];
-
-			if (lastMatch && lastMatch.match === match) {
-				continue;
-			}
-
-			// Get sequence
-			const sequence: number[] = [];
-			for (const codePoint of match) {
-				const num = codePoint.codePointAt(0) as number;
-				if (num !== vs16Emoji) {
-					sequence.push(num);
+		if (matches) {
+			// Add all matches
+			for (let i = 0; i < matches.length; i++) {
+				const match = matches[i];
+				if (found.has(match)) {
+					continue;
 				}
+				found.add(match);
+
+				// Get sequence
+				const sequence: number[] = [];
+				for (const codePoint of match) {
+					const num = codePoint.codePointAt(0) as number;
+					if (num !== vs16Emoji) {
+						sequence.push(num);
+					}
+				}
+
+				// Add result
+				results.push({
+					match,
+					sequence,
+					keyword: getEmojiSequenceKeyword(
+						convertEmojiSequenceToUTF32(sequence)
+					),
+					regexp: index,
+				});
 			}
-
-			// Get keyword
-			const keyword = getEmojiSequenceKeyword(
-				convertEmojiSequenceToUTF32(sequence)
-			);
-
-			lastMatch = {
-				match,
-				sequence,
-				keyword,
-			};
-			results.push(lastMatch);
 		}
-	}
+	});
+
+	// Sort matches by length to make sure longest matches get replaced first
+	results.sort((a, b) => {
+		const match1 = a.match;
+		const match2 = b.match;
+		if (match2.length === match1.length) {
+			return match1.localeCompare(match2);
+		}
+		return match2.length - match1.length;
+	});
 
 	return results;
 }

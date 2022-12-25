@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.4",
+	"version": "2.0.5",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -191,6 +191,11 @@
 			"require": "./lib/emoji/format.cjs",
 			"import": "./lib/emoji/format.mjs",
 			"types": "./lib/emoji/format.d.ts"
+		},
+		"./lib/emoji/parse": {
+			"require": "./lib/emoji/parse.cjs",
+			"import": "./lib/emoji/parse.mjs",
+			"types": "./lib/emoji/parse.d.ts"
 		},
 		"./lib/icon-set/convert-info": {
 			"require": "./lib/icon-set/convert-info.cjs",

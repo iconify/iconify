@@ -104,11 +104,15 @@ export {
 } from './emoji/format';
 export { parseEmojiTestFile } from './emoji/test/parse';
 export { getQualifiedEmojiVariations } from './emoji/test/variations';
-// export { getEmojisSequencesToCopy } from './emoji/test/copy';
+export { findMissingEmojis } from './emoji/test/missing';
 export {
 	createOptimisedRegex,
 	createOptimisedRegexForEmojiSequences,
 } from './emoji/regex/create';
+export {
+	prepareEmojiForIconsList,
+	prepareEmojiForIconSet,
+} from './emoji/parse';
 export { findAndReplaceEmojisInText } from './emoji/replace/replace';
 
 // Misc
