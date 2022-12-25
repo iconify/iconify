@@ -18,7 +18,7 @@
 	"scripts": {
 		"build": "node build",
 		"build:lib": "tsc -b",
-		"build:rollup": "rollup -c rollup.config.js",
+		"build:rollup": "rollup -c rollup.config.mjs",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.json",
 		"build:cleanup": "node cleanup"
 	},

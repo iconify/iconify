@@ -431,7 +431,7 @@ export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
 		...props,
 		_ref: ref,
 		_inline: false,
-	};
+	} as InternalIconProps;
 	return React.createElement(IconComponent, newProps);
 });
 
@@ -442,7 +442,11 @@ export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
  */
 export const InlineIcon = React.forwardRef<IconRef, IconProps>(
 	function InlineIcon(props, ref) {
-		const newProps = { ...props, _ref: ref, _inline: true };
+		const newProps = {
+			...props,
+			_ref: ref,
+			_inline: true,
+		} as InternalIconProps;
 		return React.createElement(IconComponent, newProps);
 	}
 );

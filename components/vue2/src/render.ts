@@ -58,7 +58,7 @@ export const render = (
 	const componentProps = { ...svgDefaults };
 
 	// Style in Vue 2 components is always passed to rendered component, so no point in parsing it
-	const style: Record<string, unknown> = {};
+	const style = {} as Record<string, string>;
 
 	// Get element properties
 	for (let key in props) {

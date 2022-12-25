@@ -108,7 +108,7 @@ export const render = (
 	const mode: IconifyRenderMode = props.mode || 'svg';
 
 	// Copy style
-	const style: VStyle = {};
+	const style = {} as VStyle;
 	const propsStyle = props.style;
 	const customStyle =
 		typeof propsStyle === 'object' && !(propsStyle instanceof Array)

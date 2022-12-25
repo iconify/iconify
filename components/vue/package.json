@@ -15,7 +15,7 @@
 	"scripts": {
 		"build": "node build",
 		"build:lib": "tsc -b",
-		"build:dist": "rollup -c rollup.config.js",
+		"build:dist": "rollup -c rollup.config.mjs",
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"test": "vitest"
@@ -45,19 +45,19 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.19.0",
+		"@babel/preset-env": "^7.20.2",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.30.0",
-		"@rollup/plugin-node-resolve": "^14.0.0",
-		"@types/jest": "^29.0.0",
-		"@vitejs/plugin-vue": "^3.1.0",
-		"@vue/test-utils": "^2.0.2",
-		"jsdom": "^20.0.0",
-		"rollup": "^2.79.0",
-		"typescript": "^4.8.2",
-		"vitest": "^0.23.1",
-		"vue": "^3.2.38"
+		"@microsoft/api-extractor": "^7.33.7",
+		"@rollup/plugin-node-resolve": "^15.0.1",
+		"@types/jest": "^29.2.4",
+		"@vitejs/plugin-vue": "^4.0.0",
+		"@vue/test-utils": "^2.2.6",
+		"jsdom": "^20.0.3",
+		"rollup": "^3.8.1",
+		"typescript": "^4.9.4",
+		"vitest": "^0.26.2",
+		"vue": "^3.2.45"
 	},
 	"peerDependencies": {
 		"vue": ">=3"
