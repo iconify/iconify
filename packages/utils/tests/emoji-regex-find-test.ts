@@ -238,4 +238,91 @@ describe('Finding emojis in text', () => {
 			},
 		]);
 	});
+
+	it('Sequences without spaces', () => {
+		const regex = createOptimisedRegex(['1F63A', '1F638', '1F639']);
+
+		const emoji1 = String.fromCodePoint(0x1f63a);
+		const emoji2 = String.fromCodePoint(0x1f638);
+		const emoji3 = String.fromCodePoint(0x1f639);
+
+		const content = emoji1 + emoji2 + emoji3 + emoji1 + emoji2;
+		const matches = getEmojiMatchesInText(regex, content);
+
+		expect(matches).toEqual([
+			{
+				match: '\uD83D\uDE38',
+				sequence: [0x1f638],
+				keyword: '1f638',
+				regexp: 0,
+			},
+			{
+				match: '\uD83D\uDE39',
+				sequence: [0x1f639],
+				keyword: '1f639',
+				regexp: 0,
+			},
+			{
+				match: '\uD83D\uDE3A',
+				sequence: [0x1f63a],
+				keyword: '1f63a',
+				regexp: 0,
+			},
+		]);
+
+		const sortedMatches = sortEmojiMatchesInText(content, matches);
+		expect(sortedMatches).toEqual([
+			// Same order as in content
+			{
+				match: {
+					match: '\uD83D\uDE3A',
+					sequence: [0x1f63a],
+					keyword: '1f63a',
+					regexp: 0,
+				},
+				prev: '',
+				next: '',
+			},
+			{
+				match: {
+					match: '\uD83D\uDE38',
+					sequence: [0x1f638],
+					keyword: '1f638',
+					regexp: 0,
+				},
+				prev: '',
+				next: '',
+			},
+			{
+				match: {
+					match: '\uD83D\uDE39',
+					sequence: [0x1f639],
+					keyword: '1f639',
+					regexp: 0,
+				},
+				prev: '',
+				next: '',
+			},
+			{
+				match: {
+					match: '\uD83D\uDE3A',
+					sequence: [0x1f63a],
+					keyword: '1f63a',
+					regexp: 0,
+				},
+				prev: '',
+				next: '',
+			},
+			{
+				match: {
+					match: '\uD83D\uDE38',
+					sequence: [0x1f638],
+					keyword: '1f638',
+					regexp: 0,
+				},
+				prev: '',
+				next: '',
+			},
+		]);
+	});
 });

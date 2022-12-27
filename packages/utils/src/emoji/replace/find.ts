@@ -119,7 +119,7 @@ export function sortEmojiMatchesInText(
 
 	const check = (start: number, end: number): boolean => {
 		for (let i = 0; i < ranges.length; i++) {
-			if (start < ranges[i].end && end >= ranges[i].start) {
+			if (start < ranges[i].end && end > ranges[i].start) {
 				return false;
 			}
 		}
