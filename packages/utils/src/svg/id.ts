@@ -49,6 +49,10 @@ export function replaceIDs(
 		return body;
 	}
 
+	// Random text to make sure there are no conflicts between old and new ids
+	const suffix =
+		'suffix' + ((Math.random() * 0x1000000) | Date.now()).toString(16);
+
 	// Replace with unique ids
 	ids.forEach((id) => {
 		const newID =
@@ -62,9 +66,10 @@ export function replaceIDs(
 			// Allowed characters before id: [#;"]
 			// Allowed characters after id: [)"], .[a-z]
 			new RegExp('([#;"])(' + escapedID + ')([")]|\\.[a-z])', 'g'),
-			'$1' + newID + '$3'
+			'$1' + newID + suffix + '$3'
 		);
 	});
+	body = body.replace(new RegExp(suffix, 'g'), '');
 
 	return body;
 }

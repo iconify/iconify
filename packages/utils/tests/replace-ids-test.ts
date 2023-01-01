@@ -25,9 +25,12 @@ describe('Testing replaceIDs', () => {
 
 		// Using callback
 		let counter = 0;
-		expect(
-			replaceIDs(body, () => 'callbackID' + (counter++).toString())
-		).toBe(
+		const replaced = replaceIDs(
+			body,
+			() => 'callbackID' + (counter++).toString()
+		);
+
+		expect(replaced).toBe(
 			body
 				.replace(/ssvg-id-1st-place-medala/g, 'callbackID0')
 				.replace(/ssvg-id-1st-place-medalb/g, 'callbackID7')
@@ -45,6 +48,30 @@ describe('Testing replaceIDs', () => {
 				.replace(/ssvg-id-1st-place-medaln/g, 'callbackID15')
 				.replace(/ssvg-id-1st-place-medalo/g, 'callbackID9')
 				.replace(/ssvg-id-1st-place-medalp/g, 'callbackID6')
+		);
+
+		// Replacing it again to test double replacement with overlapping numbers
+		counter = 10;
+		expect(
+			replaceIDs(replaced, () => 'callbackID' + (counter++).toString())
+		).toBe(
+			body
+				.replace(/ssvg-id-1st-place-medala/g, 'callbackID10')
+				.replace(/ssvg-id-1st-place-medalb/g, 'callbackID17')
+				.replace(/ssvg-id-1st-place-medalc/g, 'callbackID20')
+				.replace(/ssvg-id-1st-place-medald/g, 'callbackID11')
+				.replace(/ssvg-id-1st-place-medale/g, 'callbackID21')
+				.replace(/ssvg-id-1st-place-medalf/g, 'callbackID12')
+				.replace(/ssvg-id-1st-place-medalg/g, 'callbackID22')
+				.replace(/ssvg-id-1st-place-medalh/g, 'callbackID13')
+				.replace(/ssvg-id-1st-place-medali/g, 'callbackID23')
+				.replace(/ssvg-id-1st-place-medalj/g, 'callbackID14')
+				.replace(/ssvg-id-1st-place-medalk/g, 'callbackID18')
+				.replace(/ssvg-id-1st-place-medall/g, 'callbackID24')
+				.replace(/ssvg-id-1st-place-medalm/g, 'callbackID15')
+				.replace(/ssvg-id-1st-place-medaln/g, 'callbackID25')
+				.replace(/ssvg-id-1st-place-medalo/g, 'callbackID19')
+				.replace(/ssvg-id-1st-place-medalp/g, 'callbackID16')
 		);
 	});
 
