@@ -96,25 +96,7 @@ describe('Testing unicode test data', () => {
 			return;
 		}
 
-		// One emoji without variation
-		expect(
-			prepareEmojiForIconsList(
-				{
-					'2615': 'hot-beverage',
-				},
-				data
-			)
-		).toEqual({
-			icons: [
-				{
-					icon: 'hot-beverage',
-					sequence: '2615',
-				},
-			],
-			regex: '\\u2615',
-		});
-
-		// One emoji with variation
+		// One emoji
 		expect(
 			prepareEmojiForIconsList(
 				{
@@ -169,7 +151,7 @@ describe('Testing unicode test data', () => {
 					sequence: '270b-1f3ff',
 				},
 			],
-			regex: '\\u270B(?:\\uD83C[\\uDFFB-\\uDFFF])?',
+			regex: '\\u270B(?:\\uD83C[\\uDFFB-\\uDFFF]|\\uFE0F?)',
 		});
 
 		// Multiple emojis, all without variations
@@ -202,7 +184,7 @@ describe('Testing unicode test data', () => {
 					sequence: '1f1e6-1f1ea',
 				},
 			],
-			regex: '\\uD83C\\uDDE6\\uD83C[\\uDDE8-\\uDDEA]|\\u2615',
+			regex: '\\uD83C\\uDDE6\\uD83C[\\uDDE8-\\uDDEA]|\\u2615\\uFE0F?',
 		});
 	});
 });

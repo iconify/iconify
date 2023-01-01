@@ -4,9 +4,8 @@ import {
 	splitEmojiSequences,
 } from '../cleanup';
 import { convertEmojiSequenceToUTF32 } from '../convert';
-import { keycapEmoji, vs16Emoji } from '../data';
+import { emojiComponents, keycapEmoji, vs16Emoji } from '../data';
 import { getEmojiSequenceKeyword } from '../format';
-import type { EmojiTestData } from './parse';
 
 /**
  * Get qualified sequence, adding optional `FE0F` wherever it might exist
@@ -24,9 +23,21 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
 			return part;
 		}
 
-		// Check for keycap
-		if (part.length === 2 && part[1] === keycapEmoji) {
-			return [part[0], vs16Emoji, part[1]];
+		// Check for keycap and components
+		if (part.length === 2) {
+			const lastNum = part[1];
+			if (lastNum === keycapEmoji) {
+				// emoji + keycap
+				return [part[0], vs16Emoji, lastNum];
+			}
+			for (const key in emojiComponents) {
+				const range =
+					emojiComponents[key as keyof typeof emojiComponents];
+				if (lastNum >= range[0] && lastNum < range[1]) {
+					// emoji + component
+					return [part[0], vs16Emoji, lastNum];
+				}
+			}
 		}
 
 		// Add `FE0F` to 1 character emojis
@@ -50,33 +61,21 @@ interface BaseSequenceItem {
  * Get qualified variations for emojis
  *
  * Also converts list to UTF-32 as needed and removes duplicate items
- *
- * `testData`, returned by parseEmojiTestFile() is used to check which emojis have `FE0F` variations.
- * If missing or emoji is missing in test data, `FE0F` is added to every single code emoji.
- * It can also be an array of sequences.
  */
-
 export function getQualifiedEmojiVariation<T extends BaseSequenceItem>(
-	item: T,
-	testData?: EmojiTestData
+	item: T
 ): T {
 	// Convert to UTF-32, get unqualified sequence
 	const unqualifiedSequence = getUnqualifiedEmojiSequence(
 		convertEmojiSequenceToUTF32(item.sequence)
 	);
 
-	// Check test data. Key is unqualified sequence
-	const key = getEmojiSequenceKeyword(unqualifiedSequence);
-	const testDataItem = testData?.[key];
-
 	const result: T = {
 		...item,
-		sequence: testDataItem
-			? testDataItem.sequence
-			: guessQualifiedEmojiSequence(unqualifiedSequence),
+		sequence: guessQualifiedEmojiSequence(unqualifiedSequence),
 	};
 	if (result.sequenceKey) {
-		result.sequenceKey = key;
+		result.sequenceKey = getEmojiSequenceKeyword(unqualifiedSequence);
 	}
 	return result;
 }
@@ -85,14 +84,13 @@ export function getQualifiedEmojiVariation<T extends BaseSequenceItem>(
  * Get qualified emoji variations for set of emojis, ignoring duplicate entries
  */
 export function getQualifiedEmojiVariations<T extends BaseSequenceItem>(
-	items: T[],
-	testData?: EmojiTestData
+	items: T[]
 ): T[] {
 	// Parse all sequences
 	const results = Object.create(null) as Record<string, T>;
 
 	for (let i = 0; i < items.length; i++) {
-		const result = getQualifiedEmojiVariation(items[i], testData);
+		const result = getQualifiedEmojiVariation(items[i]);
 		const key = getEmojiSequenceKeyword(
 			getUnqualifiedEmojiSequence(result.sequence)
 		);

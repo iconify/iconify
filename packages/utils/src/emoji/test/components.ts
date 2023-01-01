@@ -34,7 +34,7 @@ export function mapEmojiTestDataComponents(
 	for (const key in emojiComponents) {
 		const type = key as EmojiComponentType;
 		const range = emojiComponents[type];
-		for (let number = range[0]; number <= range[1]; number++) {
+		for (let number = range[0]; number < range[1]; number++) {
 			const keyword = getEmojiSequenceKeyword([number]);
 			const item = testSequences[keyword];
 			if (!item) {

@@ -389,7 +389,7 @@ describe('Finding emojis in text', () => {
 		});
 
 		// Get all icons
-		const iconsList = getQualifiedEmojiVariations(sequences, testData);
+		const iconsList = getQualifiedEmojiVariations(sequences);
 
 		// Get regex
 		const regexValue = createOptimisedRegexForEmojiSequences(

@@ -61,7 +61,7 @@ export function prepareEmojiForIconsList(
 	}
 
 	// Get fully-qualified versions of emojis
-	iconsList = getQualifiedEmojiVariations(iconsList, testData);
+	iconsList = getQualifiedEmojiVariations(iconsList);
 
 	// Find and add missing emojis if test data is available
 	if (testData) {
