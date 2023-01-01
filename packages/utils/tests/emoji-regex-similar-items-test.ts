@@ -446,4 +446,44 @@ describe('Similar chunks of regex', () => {
 			group: false,
 		});
 	});
+
+	it('Same end match', () => {
+		const items = [
+			createRegexForNumbersSequence([128139, 8205, 129489, 127996]),
+			createRegexForNumbersSequence([129489, 127996]),
+		];
+
+		const merge = findSimilarRegexItemSequences(items);
+		expect(merge).toEqual({
+			score: 24,
+			sequences: [
+				{
+					type: 'end',
+					slices: [
+						{
+							index: 0,
+							slice: 3,
+						},
+						{
+							index: 1,
+							slice: 'full',
+						},
+					],
+				},
+			],
+		});
+
+		const sequence = merge?.sequences[0];
+		if (!sequence) {
+			throw new Error('Unexpected undefined sequence');
+		}
+
+		// Merge items
+		const merged = mergeSimilarRegexItemSequences(items, sequence);
+
+		expect(merged.length).toBe(1);
+		expect(merged[0].regex).toBe(
+			'(?:\\uD83D\\uDC8B\\u200D)?\\uD83E\\uDDD1\\uD83C\\uDFFC'
+		);
+	});
 });

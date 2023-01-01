@@ -1,6 +1,18 @@
-import { createOptimisedRegex } from '../lib/emoji/regex/create';
+import {
+	getEmojiSequenceFromString,
+	getSequenceFromEmojiStringOrKeyword,
+} from '../lib/emoji/cleanup';
+import {
+	createOptimisedRegex,
+	createOptimisedRegexForEmojiSequences,
+} from '../lib/emoji/regex/create';
 
 describe('Emoji regex matching', () => {
+	function code(value: string): string {
+		const sequence = getSequenceFromEmojiStringOrKeyword(value);
+		return sequence.map((code) => String.fromCodePoint(code)).join('');
+	}
+
 	it('Simple regex', () => {
 		const regexValue = createOptimisedRegex(['1F600', '1F603', '1F604']);
 
@@ -50,29 +62,17 @@ Tabby cat: :tabby_cat:
 
 		const matches = `
 E0.6 dashing away: ${String.fromCodePoint(0x1f4a8)}
-E13.1 face exhaling: ${
-			String.fromCodePoint(0x1f62e) +
-			String.fromCodePoint(0x200d) +
-			String.fromCodePoint(0x1f4a8)
-		}
+E13.1 face exhaling: ${code('1f62e-200d-1f4a8')}
 E1.0 face with open mouth: ${String.fromCodePoint(0x1f62e)}
-E0.6 smiling face: ${
-			String.fromCodePoint(0x263a) + String.fromCodePoint(0xfe0f)
-		} (icon)
+E0.6 smiling face: ${code('263a-fe0f')} (icon)
 E0.6 smiling face: ${String.fromCodePoint(0x263a)} (text)
 `.match(new RegExp(regexValue, 'g'));
 
 		expect(matches?.length).toBe(5);
-		expect(matches?.[0]).toBe(String.fromCodePoint(0x1f4a8));
-		expect(matches?.[1]).toBe(
-			String.fromCodePoint(0x1f62e) +
-				String.fromCodePoint(0x200d) +
-				String.fromCodePoint(0x1f4a8)
-		);
+		expect(matches?.[0]).toBe(code('1f4a8'));
+		expect(matches?.[1]).toBe(code('1f62e 200d 1f4a8'));
 		expect(matches?.[2]).toBe(String.fromCodePoint(0x1f62e));
-		expect(matches?.[3]).toBe(
-			String.fromCodePoint(0x263a) + String.fromCodePoint(0xfe0f)
-		);
+		expect(matches?.[3]).toBe(code('263a fe0f'));
 		expect(matches?.[4]).toBe(String.fromCodePoint(0x263a));
 	});
 
@@ -114,6 +114,26 @@ E1.0 waving hand: medium skin tone: ${
 		expect(matches?.length).toBe(1);
 		expect(matches?.[0]).toBe(
 			String.fromCodePoint(0x1f44b) + String.fromCodePoint(0x1f3fd)
+		);
+	});
+
+	it('Bugged mix of sequences', () => {
+		const fullList = [
+			'1f9d1-1f3fb-200d-2764-fe0f-200d-1f48b-200d-1f9d1-1f3fc',
+			'1f9d1-1f3fb-200d-2764-fe0f-200d-1f9d1-1f3fc',
+		];
+
+		const regexValue = createOptimisedRegexForEmojiSequences(
+			fullList.map((code) => getEmojiSequenceFromString(code))
+		);
+
+		const matches = code(
+			'1f9d1-1f3fb-200d-2764-fe0f-200d-1f48b-200d-1f9d1-1f3fc'
+		).match(new RegExp(regexValue, 'g'));
+
+		expect(matches?.length).toBe(1);
+		expect(matches?.[0]).toBe(
+			code('1f9d1-1f3fb-200d-2764-fe0f-200d-1f48b-200d-1f9d1-1f3fc')
 		);
 	});
 });

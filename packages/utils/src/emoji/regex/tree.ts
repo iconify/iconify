@@ -156,7 +156,9 @@ export function parseEmojiTree(items: TreeItem[]): EmojiItemRegex {
 		if (parsedItems.length === 1) {
 			return parsedItems[0];
 		}
-		return mergeSimilarItemsInSet(createSetEmojiRegexItem(parsedItems));
+		const set = createSetEmojiRegexItem(parsedItems);
+		const result = mergeSimilarItemsInSet(set);
+		return result;
 	}
 
 	function parseItemChildren(item: TreeItem): ParsedTreeItem {

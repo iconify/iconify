@@ -1,10 +1,58 @@
-import { createOptimisedRegex } from '../lib/emoji/regex/create';
+import { readFile, writeFile, unlink } from 'node:fs/promises';
+import { parseEmojiTestFile } from '../lib/emoji/test/parse';
+import { emojiVersion } from '../lib/emoji/data';
+import {
+	createOptimisedRegex,
+	createOptimisedRegexForEmojiSequences,
+} from '../lib/emoji/regex/create';
 import {
 	getEmojiMatchesInText,
 	sortEmojiMatchesInText,
 } from '../lib/emoji/replace/find';
+import { getQualifiedEmojiVariations } from '../lib/emoji/test/variations';
+import { getEmojiSequenceString } from '../lib/emoji/format';
 
 describe('Finding emojis in text', () => {
+	async function fetchEmojiTestData(): Promise<string | undefined> {
+		// Fetch emojis, cache it
+		const source = `tests/fixtures/download-emoji-${emojiVersion}.txt`;
+
+		let data: string | undefined;
+		try {
+			data = await readFile(source, 'utf8');
+		} catch {
+			//
+		}
+
+		if (!data) {
+			data = (
+				await fetch(
+					`https://unicode.org/Public/emoji/${emojiVersion}/emoji-test.txt`
+				)
+			)
+				.text()
+				.toString();
+			await writeFile(source, data, 'utf8');
+		}
+
+		// Test content, unlink cache on failure
+		if (data.indexOf(`# Version: ${emojiVersion}`) === -1) {
+			try {
+				await unlink(source);
+			} catch {
+				//
+			}
+			return;
+		}
+		return data;
+	}
+
+	let data: string | undefined;
+
+	beforeAll(async () => {
+		data = await fetchEmojiTestData();
+	});
+
 	it('Simple regex', () => {
 		const regexValue = createOptimisedRegex([
 			'1F600',
@@ -324,5 +372,88 @@ describe('Finding emojis in text', () => {
 				next: '',
 			},
 		]);
+	});
+
+	it('Finding all test emojis', () => {
+		if (!data) {
+			console.warn('Test skipped: test data is not available');
+			return;
+		}
+
+		// Parse test data
+		const testData = parseEmojiTestFile(data);
+		const sequences = Object.values(testData).map(({ sequence }) => {
+			return {
+				sequence,
+			};
+		});
+
+		// Get all icons
+		const iconsList = getQualifiedEmojiVariations(sequences, testData);
+
+		// Get regex
+		const regexValue = createOptimisedRegexForEmojiSequences(
+			iconsList.map((item) => item.sequence)
+		);
+		const regex = new RegExp(regexValue, 'g');
+
+		sequences.forEach((sequence) => {
+			const text = sequence.sequence
+				.map((code) => String.fromCodePoint(code))
+				.join('');
+
+			// Test finding match
+			const result = getEmojiMatchesInText(regex, text);
+
+			// Must have only 1 item
+			if (result.length !== 1) {
+				console.log(
+					getEmojiSequenceString(sequence.sequence),
+					`(\\u${getEmojiSequenceString(sequence.sequence, {
+						format: 'utf-16',
+						separator: '\\u',
+						case: 'upper',
+					})})`,
+					text
+				);
+				result.forEach((match) => {
+					const sequence: number[] = [];
+					for (const codePoint of match.match) {
+						const num = codePoint.codePointAt(0) as number;
+						sequence.push(num);
+					}
+					console.log(
+						getEmojiSequenceString(sequence),
+						`(\\u${getEmojiSequenceString(sequence, {
+							format: 'utf-16',
+							separator: '\\u',
+							case: 'upper',
+						})})`
+					);
+				});
+				console.log(result);
+				expect(result.length).toBe(1);
+			}
+
+			const firstMatch = result[0];
+			const resultSequence = [];
+			for (const codePoint of firstMatch.match) {
+				const num = codePoint.codePointAt(0) as number;
+				resultSequence.push(num);
+			}
+
+			if (resultSequence.length !== sequence.sequence.length) {
+				console.log(
+					getEmojiSequenceString(sequence.sequence),
+					`(\\u${getEmojiSequenceString(sequence.sequence, {
+						format: 'utf-16',
+						separator: '\\u',
+						case: 'upper',
+					})})`,
+					result
+				);
+			}
+			expect(resultSequence).toEqual(sequence.sequence);
+		});
 	});
 });

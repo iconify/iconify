@@ -222,13 +222,12 @@ export function mergeSimilarRegexItemSequences(
 				length = 1;
 			}
 		} else {
-			length = slice;
-
 			if (item.type !== 'sequence') {
 				throw new Error(
 					`Unexpected partial match for type "${item.type}"`
 				);
 			}
+			length = type === 'start' ? slice : item.items.length - slice;
 
 			// Copy remaining chunks
 			differentSequences.push(
@@ -267,7 +266,9 @@ export function mergeSimilarRegexItemSequences(
 		sequence =
 			type === 'start'
 				? commonItem.items.slice(0, longestMatch)
-				: commonItem.items.slice(longestMatch);
+				: commonItem.items.slice(
+						commonItem.items.length - longestMatch
+				  );
 	}
 
 	// Merge other chunks
