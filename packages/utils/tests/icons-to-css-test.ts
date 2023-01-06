@@ -320,17 +320,13 @@ describe('Testing CSS for multiple icons', () => {
 			})
 		).toBe(`.test--activity {
   display: inline-block;
-  width: 1em;
+  width: 1.5em;
   height: 1em;
   background-color: currentColor;
   -webkit-mask: no-repeat center / 100%;
   mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
-}
-
-.test--activity {
-  width: 1.5em;
   --svg: ${expectedURL('activity')};
 }
 `);

@@ -120,10 +120,20 @@ export function getIconsCSS(
 		const selector = Array.from(commonSelectors).join(
 			newOptions.format === 'compressed' ? ',' : ', '
 		);
-		css.unshift({
-			selector,
-			rules: commonRules,
-		});
+
+		// Check for same selector
+		if (css.length === 1 && css[0].selector === selector) {
+			css[0].rules = {
+				// Common first, override later
+				...commonRules,
+				...css[0].rules,
+			};
+		} else {
+			css.unshift({
+				selector,
+				rules: commonRules,
+			});
+		}
 	}
 
 	// Format
