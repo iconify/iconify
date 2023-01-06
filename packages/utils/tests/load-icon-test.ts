@@ -51,7 +51,7 @@ describe('Testing loadIcon', () => {
 			customizations: {
 				transform(svg) {
 					return svg.replace(
-						'<svg ',
+						/<svg\s+/,
 						'<svg width="1em" height="1em" '
 					);
 				},

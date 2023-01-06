@@ -3,6 +3,7 @@ import type { IconifyLoaderOptions } from './types';
 
 const svgWidthRegex = /width\s*=\s*["'](\w+)["']/;
 const svgHeightRegex = /height\s*=\s*["'](\w+)["']/;
+const svgTagRegex = /<svg\s+/;
 
 function configureSvgSize(
 	svg: string,
@@ -59,12 +60,12 @@ export async function mergeIconProps(
 	// add xml namespaces if necessary
 	if (addXmlNs) {
 		// add svg xmlns if missing
-		if (!svg.includes(' xmlns=') && !props['xmlns']) {
+		if (!svg.includes('xmlns=') && !props['xmlns']) {
 			props['xmlns'] = 'http://www.w3.org/2000/svg';
 		}
 		// add xmlns:xlink if xlink present and the xmlns missing
 		if (
-			!svg.includes(' xmlns:xlink=') &&
+			!svg.includes('xmlns:xlink=') &&
 			svg.includes('xlink:') &&
 			!props['xmlns:xlink']
 		) {
@@ -80,18 +81,18 @@ export async function mergeIconProps(
 		)
 		.filter((p) => p != null);
 	if (propsToAdd.length) {
-		svg = svg.replace('<svg ', `<svg ${propsToAdd.join(' ')} `);
+		svg = svg.replace(svgTagRegex, `<svg ${propsToAdd.join(' ')} `);
 	}
 
 	if (options) {
 		const { defaultStyle, defaultClass } = options;
 		// additional props and iconCustomizer takes precedence
-		if (defaultClass && !svg.includes(' class=')) {
-			svg = svg.replace('<svg ', `<svg class="${defaultClass}" `);
+		if (defaultClass && !svg.includes('class=')) {
+			svg = svg.replace(svgTagRegex, `<svg class="${defaultClass}" `);
 		}
 		// additional props and iconCustomizer takes precedence
-		if (defaultStyle && !svg.includes(' style=')) {
-			svg = svg.replace('<svg ', `<svg style="${defaultStyle}" `);
+		if (defaultStyle && !svg.includes('style=')) {
+			svg = svg.replace(svgTagRegex, `<svg style="${defaultStyle}" `);
 		}
 	}
 
