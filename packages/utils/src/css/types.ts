@@ -40,6 +40,9 @@ export interface IconCSSSharedOptions {
 
 	// If true, result will always be square item
 	forceSquare?: boolean;
+
+	// Set color for monotone icons
+	color?: string;
 }
 
 /**

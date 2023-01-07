@@ -60,11 +60,14 @@ export function generateItemCSSRules(
 	}
 
 	// Get SVG
-	const svg = iconToHTML(icon.body.replace(/currentColor/g, '#000'), {
-		viewBox: `${icon.left} ${icon.top} ${icon.width} ${icon.height}`,
-		width: icon.width.toString(),
-		height: icon.height.toString(),
-	});
+	const svg = iconToHTML(
+		icon.body.replace(/currentColor/g, options.color || 'black'),
+		{
+			viewBox: `${icon.left} ${icon.top} ${icon.width} ${icon.height}`,
+			width: icon.width.toString(),
+			height: icon.height.toString(),
+		}
+	);
 
 	// Generate URL
 	const url = svgToURL(svg);

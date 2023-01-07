@@ -14,7 +14,9 @@ export function getIconCSS(
 	// Get mode
 	const mode =
 		options.mode ||
-		(icon.body.indexOf('currentColor') === -1 ? 'background' : 'mask');
+		(options.color || icon.body.indexOf('currentColor') === -1
+			? 'background'
+			: 'mask');
 
 	// Get variable name
 	let varName = options.varName;

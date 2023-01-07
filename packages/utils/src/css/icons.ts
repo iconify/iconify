@@ -30,7 +30,7 @@ export function getIconsCSS(
 	const errors: string[] = [];
 
 	// Get mode
-	const palette = iconSet.info?.palette;
+	const palette = options.color ? true : iconSet.info?.palette;
 	let mode =
 		options.mode ||
 		(typeof palette === 'boolean' && (palette ? 'background' : 'mask'));

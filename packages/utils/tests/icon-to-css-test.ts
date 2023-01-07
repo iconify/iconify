@@ -63,7 +63,7 @@ describe('Testing CSS for icon', () => {
 		const expectedURL = svgToURL(
 			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">${icon.body.replace(
 				/currentColor/g,
-				'#000'
+				'black'
 			)}</svg>`
 		);
 
@@ -81,6 +81,32 @@ describe('Testing CSS for icon', () => {
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
   --svg: ${expectedURL};
+}
+`);
+	});
+
+	test('Change color', () => {
+		const icon: IconifyIcon = {
+			body: '<path d="M0 0h16v16z" fill="currentColor" stroke="currentColor" stroke-width="1" />',
+		};
+		const expectedURL = svgToURL(
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">${icon.body.replace(
+				/currentColor/g,
+				'purple'
+			)}</svg>`
+		);
+
+		expect(
+			getIconCSS(icon, {
+				format: 'expanded',
+				color: 'purple',
+			})
+		).toBe(`.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: no-repeat center / 100%;
+  background-image: ${expectedURL};
 }
 `);
 	});

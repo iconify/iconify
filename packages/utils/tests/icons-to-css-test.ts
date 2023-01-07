@@ -24,11 +24,11 @@ describe('Testing CSS for multiple icons', () => {
 				},
 			},
 		};
-		const expectedURL = (name: string) =>
+		const expectedURL = (name: string, color = 'black') =>
 			svgToURL(
 				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">${iconSet.icons[
 					name
-				].body.replace(/currentColor/g, '#000')}</svg>`
+				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
 		expect(
@@ -53,6 +53,24 @@ describe('Testing CSS for multiple icons', () => {
 
 .icon--test-prefix--airplane {
   background-image: ${expectedURL('airplane')};
+}
+`);
+
+		// Force background by setting color
+		expect(
+			getIconsCSS(iconSet, ['empty'], {
+				format: 'expanded',
+				color: 'red',
+			})
+		).toBe(`.icon--test-prefix {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: no-repeat center / 100%;
+}
+
+.icon--test-prefix--empty {
+  background-image: ${expectedURL('empty', 'red')};
 }
 `);
 	});
@@ -93,11 +111,11 @@ describe('Testing CSS for multiple icons', () => {
 				},
 			},
 		};
-		const expectedURL = (name: string) =>
+		const expectedURL = (name: string, color = 'black') =>
 			svgToURL(
 				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">${iconSet.icons[
 					name
-				].body.replace(/currentColor/g, '#000')}</svg>`
+				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
 		expect(
@@ -162,11 +180,11 @@ describe('Testing CSS for multiple icons', () => {
 			},
 			width: 24,
 		};
-		const expectedURL = (name: string) =>
+		const expectedURL = (name: string, color = 'black') =>
 			svgToURL(
 				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="24" height="16">${iconSet.icons[
 					name
-				].body.replace(/currentColor/g, '#000')}</svg>`
+				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
 		expect(
@@ -234,11 +252,11 @@ describe('Testing CSS for multiple icons', () => {
 			},
 			width: 24,
 		};
-		const expectedURL = (name: string) =>
+		const expectedURL = (name: string, color = 'black') =>
 			svgToURL(
 				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="24" height="16">${iconSet.icons[
 					name
-				].body.replace(/currentColor/g, '#000')}</svg>`
+				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
 		expect(
@@ -306,11 +324,11 @@ describe('Testing CSS for multiple icons', () => {
 			},
 			width: 24,
 		};
-		const expectedURL = (name: string) =>
+		const expectedURL = (name: string, color = 'black') =>
 			svgToURL(
 				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="24" height="16">${iconSet.icons[
 					name
-				].body.replace(/currentColor/g, '#000')}</svg>`
+				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
 		expect(
