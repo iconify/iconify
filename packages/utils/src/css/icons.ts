@@ -18,14 +18,20 @@ const defaultSelectors: IconCSSSelectorOptions = {
 	overrideSelector: commonSelector + iconSelector,
 };
 
+interface CSSData {
+	common?: CSSUnformattedItem;
+	css: CSSUnformattedItem[];
+	errors: string[];
+}
+
 /**
- * Get CSS for icon
+ * Get data for getIconsCSS()
  */
-export function getIconsCSS(
+export function getIconsCSSData(
 	iconSet: IconifyJSON,
 	names: string[],
 	options: IconCSSIconSetOptions = {}
-): string {
+): CSSData {
 	const css: CSSUnformattedItem[] = [];
 	const errors: string[] = [];
 
@@ -115,30 +121,53 @@ export function getIconsCSS(
 		}
 	}
 
+	// Result
+	const result: CSSData = {
+		css,
+		errors,
+	};
+
 	// Add common stuff
 	if (!hasCommonRules && commonSelectors.size) {
 		const selector = Array.from(commonSelectors).join(
 			newOptions.format === 'compressed' ? ',' : ', '
 		);
+		result.common = {
+			selector,
+			rules: commonRules,
+		};
+	}
 
+	return result;
+}
+
+/**
+ * Get CSS for icon
+ */
+export function getIconsCSS(
+	iconSet: IconifyJSON,
+	names: string[],
+	options: IconCSSIconSetOptions = {}
+): string {
+	const { css, errors, common } = getIconsCSSData(iconSet, names, options);
+
+	// Add common stuff
+	if (common) {
 		// Check for same selector
-		if (css.length === 1 && css[0].selector === selector) {
+		if (css.length === 1 && css[0].selector === common.selector) {
 			css[0].rules = {
 				// Common first, override later
-				...commonRules,
+				...common.rules,
 				...css[0].rules,
 			};
 		} else {
-			css.unshift({
-				selector,
-				rules: commonRules,
-			});
+			css.unshift(common);
 		}
 	}
 
 	// Format
 	return (
-		formatCSS(css, newOptions.format) +
+		formatCSS(css, options.format) +
 		(errors.length ? '\n' + errors.join('\n') + '\n' : '')
 	);
 }
