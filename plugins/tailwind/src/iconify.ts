@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import type { IconifyJSON } from '@iconify/types';
 import { getIconsCSSData } from '@iconify/utils/lib/css/icons';
 import { matchIconName } from '@iconify/utils/lib/icon/name';
-import type { IconifyPluginOptions } from './options';
+import type { IconifyPluginFileOptions, IconifyPluginOptions } from './options';
 
 const missingIconsListError =
 	'TailwindCSS cannot dynamically find all used icons. Need to pass list of used icons to Iconify plugin.';
@@ -10,7 +10,13 @@ const missingIconsListError =
 /**
  * Locate icon set
  */
-function locateIconSet(prefix: string): string | undefined {
+function locateIconSet(
+	prefix: string,
+	options: IconifyPluginFileOptions
+): string | undefined {
+	if (options.files?.[prefix]) {
+		return options.files?.[prefix];
+	}
 	try {
 		return require.resolve(`@iconify-json/${prefix}/icons.json`);
 	} catch {}
@@ -22,8 +28,11 @@ function locateIconSet(prefix: string): string | undefined {
 /**
  * Load icon set
  */
-function loadIconSet(prefix: string): IconifyJSON | undefined {
-	const filename = locateIconSet(prefix);
+function loadIconSet(
+	prefix: string,
+	options: IconifyPluginFileOptions
+): IconifyJSON | undefined {
+	const filename = locateIconSet(prefix, options);
 	if (filename) {
 		try {
 			return JSON.parse(readFileSync(filename, 'utf8'));
@@ -115,7 +124,7 @@ export function getCSSRules(
 
 	// Parse all icon sets
 	for (const prefix in prefixes) {
-		const iconSet = loadIconSet(prefix);
+		const iconSet = loadIconSet(prefix, options);
 		if (!iconSet) {
 			throw new Error(`Cannot load icon set for "${prefix}"`);
 		}

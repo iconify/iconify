@@ -13,18 +13,20 @@ This plugin creates CSS for over 100k open source icons.
 
 To use icon in HTML, it is as easy as adding 2 class names:
 
--   Class name for icon set.
--   Class name for icon.
+-   Class name for icon set: `icon--{prefix}`.
+-   Class name for icon: `icon--{prefix}--{name}`.
 
 ```html
 <span class="icon--mdi icon--mdi--home"></span>
 ```
 
-Why 2 class names? It reduces duplication and makes it easy to change all icons from one icon set.
+Why 2 class names? It reduces duplication and makes it easy to target all icons from one icon set.
 
 You can change that with options: you can change class names format, you can disable common selector. See [options for function used by plugin](https://docs.iconify.design/tools/utils/get-icons-css.html).
 
 ### Color, size, alignment
+
+Monoton icons can change color! See [Iconify documentation](https://docs.iconify.design/icon-components/css.html#mask) for longer explanation.
 
 To change icon size or color, change font size or text color, like you would with any text.
 
@@ -49,8 +51,6 @@ See [Iconify icon sets](https://icon-sets.iconify.design/) for list of available
 See [Iconify documentation](https://docs.iconify.design/icons/json.html) for list of packages.
 
 ## Tailwind config
-
-Then you need to add and configure plugin.
 
 Add this to `tailwind.config.js`:
 

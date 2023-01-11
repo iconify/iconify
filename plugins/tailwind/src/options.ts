@@ -1,5 +1,18 @@
 import type { IconCSSIconSetOptions } from '@iconify/utils/lib/css/types';
 
-export interface IconifyPluginOptions extends IconCSSIconSetOptions {
+/**
+ * Options for locating icon sets
+ */
+export interface IconifyPluginFileOptions {
+	// Files
+	files?: Record<string, string>;
+}
+
+/**
+ * All options
+ */
+export interface IconifyPluginOptions
+	extends IconCSSIconSetOptions,
+		IconifyPluginFileOptions {
 	//
 }
