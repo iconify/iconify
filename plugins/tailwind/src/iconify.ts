@@ -148,3 +148,47 @@ export function getCSSRules(
 
 	return rules;
 }
+
+/**
+ * Get dynamic CSS rule
+ */
+export function getDynamicCSSRules(
+	selector: string,
+	icon: string,
+	options: IconifyPluginOptions = {}
+): Record<string, string> {
+	const nameParts = icon.split('--');
+	let nameError = `Invalid icon name: "${icon}"`;
+	if (nameParts.length !== 2) {
+		if (nameParts.length === 1 && icon.indexOf(':') !== -1) {
+			nameError += `. "{prefix}:{name}" is not supported because of Tailwind limitations, use "{prefix}--{name}" (use double dash!) instead.`;
+		}
+		throw new Error(nameError);
+	}
+
+	const [prefix, name] = nameParts;
+	if (!prefix.match(matchIconName) || !name.match(matchIconName)) {
+		throw new Error(nameError);
+	}
+
+	const iconSet = loadIconSet(prefix, options);
+	if (!iconSet) {
+		throw new Error(`Cannot load icon set for "${prefix}"`);
+	}
+
+	console.log('Selector:', selector);
+	const generated = getIconsCSSData(iconSet, [name], {
+		...options,
+		// One selector
+		iconSelector: selector,
+		commonSelector: selector,
+		overrideSelector: selector,
+	});
+	if (generated.css.length !== 1) {
+		throw new Error(`Something went wrong generating "${icon}"`);
+	}
+	return {
+		...(generated.common?.rules || {}),
+		...generated.css[0].rules,
+	};
+}
