@@ -176,7 +176,6 @@ export function getDynamicCSSRules(
 		throw new Error(`Cannot load icon set for "${prefix}"`);
 	}
 
-	console.log('Selector:', selector);
 	const generated = getIconsCSSData(iconSet, [name], {
 		...options,
 		// One selector
