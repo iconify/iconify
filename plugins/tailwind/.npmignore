@@ -1,0 +1,17 @@
+.DS_Store
+.eslintignore
+.eslintrc.js
+api-extractor*.json
+tsconfig*.json
+rollup.config.js
+build.js
+npm-debug.log
+yarn.lock
+tsconfig.tsbuildinfo
+jest.config.js
+node_modules
+src
+lib
+tests
+tests-compiled
+demo

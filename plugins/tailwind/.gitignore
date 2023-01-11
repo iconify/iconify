@@ -1,0 +1,8 @@
+.DS_Store
+npm-debug.log
+yarn.lock
+tsconfig.tsbuildinfo
+node_modules
+dist
+lib
+tests-compiled
