@@ -6,6 +6,7 @@ packages:
     - 'iconify-icon/icon'
     - 'iconify-icon/*'
     - 'components/*'
+    - 'plugins/*'
     - 'components-demo/*'
     - 'iconify-icon-demo/*'
     # - 'debug/*'

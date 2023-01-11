@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig-base.json",
+	"include": ["src/**/*.ts", ".eslintrc.js"],
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"lib": ["ESNext", "DOM"]
+	}
+}

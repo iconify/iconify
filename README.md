@@ -17,6 +17,7 @@ What is included in this repository?
 -   Directory `packages` contains main reusable packages: types, utilities, reusable functions used by various components.
 -   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
 -   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
+-   Directory `plugins` contains plugins for various frameworks, which generate icons.
 
 Other repositories you might want to look at:
 
@@ -157,6 +158,14 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 -   [Sapper demo](./components-demo/sapper-demo/) - demo for Sapper, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo (deprecated, use SvelteKit instead of Sapper).
 -   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
+
+### Plugins
+
+Directory `plugins` contains plugins.
+
+| Package                                    | Usage        |
+| ------------------------------------------ | ------------ |
+| [Tailwind CSS plugin](./plugins/tailwind/) | Tailwind CSS |
 
 ## Installation, debugging and contributing
 
