@@ -9,8 +9,8 @@ function iconifyPlugin(
 	icons: string[] | string,
 	options: IconifyPluginOptions = {}
 ) {
+	const rules = getCSSRules(icons, options);
 	return plugin(({ addUtilities }) => {
-		const rules = getCSSRules(icons, options);
 		addUtilities(rules);
 	});
 }
