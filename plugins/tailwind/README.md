@@ -7,22 +7,23 @@ This plugin creates CSS for over 100k open source icons.
 ## Usage
 
 1. Install packages icon sets.
-2. In `tailwind.config.js` import plugin and specify list of icons you want to load.
+2. In `tailwind.config.js` import `addDynamicIconSelectors` from `@iconify/tailwind`.
 
 ## HTML
 
-To use icon in HTML, it is as easy as adding 2 class names:
-
--   Class name for icon set: `icon--{prefix}`.
--   Class name for icon: `icon--{prefix}--{name}`.
+To use icon in HTML, add class with class name like this: `icon-[mdi-light--home]`
 
 ```html
-<span class="icon--mdi icon--mdi--home"></span>
+<span class="icon-[mdi-light--home]"></span>
 ```
 
-Why 2 class names? It reduces duplication and makes it easy to target all icons from one icon set.
+Class name has 3 parts:
 
-You can change that with options: you can change class names format, you can disable common selector. See [options for function used by plugin](https://docs.iconify.design/tools/utils/get-icons-css.html).
+-   Selectot prefix, which can be set in `prefix` option of plugin. Default value is `icon`.
+-   `-` to tell Tailwind that class name is not complete.
+-   `[{prefix}--{name}]` for icon name, where `{prefix}` is icon set prefix, `{name}` is icon name.
+
+In Iconify all icon names use the following format: `{prefix}:{name}`. Due to limitations of Tailwind CSS, same format cannot be used with plugin, so instead, prefix and name are separated by double dash: `{prefix}--{name}`.
 
 ### Color, size, alignment
 
@@ -35,7 +36,7 @@ Icon color cannot be changed for icons with hardcoded palette, such as most emoj
 To align icon below baseline, add negative vertical alignment, like this (you can also use Tailwind class for that):
 
 ```html
-<span class="icon--mdi icon--mdi--home" style="vertical-align: -0.125em"></span>
+<span class="icon-[mdi--home]" style="vertical-align: -0.125em"></span>
 ```
 
 ## Installing icon sets
@@ -55,10 +56,10 @@ See [Iconify documentation](https://docs.iconify.design/icons/json.html) for lis
 Add this to `tailwind.config.js`:
 
 ```js
-const iconifyPlugin = require('@iconify/tailwind');
+const { addDynamicIconSelectors } = require('@iconify/tailwind');
 ```
 
-Then in plugins section add `iconifyPlugin` with list of icons you want to load.
+Then in plugins section add `addDynamicIconSelectors`.
 
 Example:
 
@@ -69,22 +70,45 @@ module.exports = {
 		extend: {},
 	},
 	plugins: [
-		// Iconify plugin with list of icons you need
-		iconifyPlugin(['mdi:home', 'mdi-light:account']),
+		// Iconify plugin
+		addDynamicIconSelectors(),
 	],
 	presets: [],
 };
 ```
 
-### Icon names
-
-Unfortunately Tailwind CSS cannot dynamically find all icon names. You need to specify list of icons you want to use.
-
 ### Options
 
-Plugin accepts options as a second parameter. You can use it to change selectors.
+Plugin accepts options as a second parameter:
 
-See [documentation for function used by plugin](https://docs.iconify.design/tools/utils/get-icons-css.html) for list of options.
+-   `prefix` is class name prefix. Default value is `icon`. Make sure there is no `-` at the end: it is added in classes, but not in plugin parameter.
+-   `overrideOnly`: set to `true` to generate rules that override only icon data. See below.
+-   `files`: list of custom files for icon sets. Key is icon set prefix, value is location of `.json` file with icon set in IconifyJSON format.
+-   `iconSet`: list of custom icon sets. Key is prefix, value is either icon set data in `IconifyJSON` format or a synchronous callback that returns `IconifyJSON` data.
+
+#### overrideOnly
+
+You can use `overrideOnly` to load some icons without full rules, such as changing icon on hover when main and hover icons are from the same icon set and have same width/height ratio.
+
+Example of config:
+
+```js
+plugins: [
+	// `icon-`
+    addDynamicIconSelectors(),
+	// `icon-hover-`
+    addDynamicIconSelectors({
+      prefix: "icon-hover",
+      overrideOnly: true,
+    }),
+  ],
+```
+
+and usage in HTML:
+
+```html
+<span class="icon-[mdi--arrow-left] hover:icon-hover-[mdi--arrow-right]"></span>
+```
 
 ## License
 

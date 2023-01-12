@@ -1,13 +1,29 @@
 import plugin from 'tailwindcss/plugin';
-import { getCSSRules, getDynamicCSSRules } from './iconify';
-import type { IconifyPluginOptions } from './options';
+import { getCSSRulesForIcons } from './clean';
+import { getDynamicCSSRules } from './dynamic';
+import type {
+	CleanIconifyPluginOptions,
+	DynamicIconifyPluginOptions,
+} from './options';
 
 /**
- * Iconify plugin
+ * Generate styles for dynamic selector: class="icon-[mdi-light--home]"
  */
-function iconifyPlugin(
+export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
+	const prefix = options?.prefix || 'icon';
+	return plugin(({ matchComponents }) => {
+		matchComponents({
+			[prefix]: (icon: string) => getDynamicCSSRules(icon, options),
+		});
+	});
+}
+
+/**
+ * Generate styles for preset list of icons
+ */
+export function addCleanIconSelectors(
 	icons?: string[] | string,
-	options?: IconifyPluginOptions
+	options?: CleanIconifyPluginOptions
 ) {
 	const passedOptions =
 		typeof icons === 'object' && !(icons instanceof Array)
@@ -16,32 +32,17 @@ function iconifyPlugin(
 	const passedIcons =
 		typeof icons !== 'object' || icons instanceof Array ? icons : void 0;
 
-	// Get selector for dynamic classes
-	const dynamicSelector = passedOptions.dynamicPrefix || 'icon';
-
 	// Get hardcoded list of icons
 	const rules = passedIcons
-		? getCSSRules(passedIcons, passedOptions)
+		? getCSSRulesForIcons(passedIcons, passedOptions)
 		: void 0;
 
 	return plugin(({ addUtilities, matchComponents }) => {
-		if (rules) {
-			addUtilities(rules);
-		}
-		matchComponents({
-			[dynamicSelector]: (icon: string) =>
-				getDynamicCSSRules(
-					`.${dynamicSelector}-[${icon}]`,
-					icon,
-					passedOptions
-				),
-		});
+		addUtilities(rules);
 	});
 }
 
 /**
- * Export stuff
+ * Export types
  */
-export default iconifyPlugin;
-
-export type { IconifyPluginOptions };
+export type { CleanIconifyPluginOptions, DynamicIconifyPluginOptions };

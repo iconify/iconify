@@ -1,8 +1,8 @@
-import { getCSSRules } from '../src/iconify';
+import { getCSSRulesForIcons } from '../src/clean';
 
-describe('Testing CSS rules', () => {
+describe('Testing clean CSS rules', () => {
 	it('One icon', () => {
-		const data = getCSSRules('mdi-light:home');
+		const data = getCSSRulesForIcons('mdi-light:home');
 		expect(Object.keys(data)).toEqual([
 			'.icon--mdi-light',
 			'.icon--mdi-light--home',
@@ -11,7 +11,7 @@ describe('Testing CSS rules', () => {
 	});
 
 	it('Multiple icons from same icon set', () => {
-		const data = getCSSRules([
+		const data = getCSSRulesForIcons([
 			// By name
 			'mdi-light:home',
 			// By selector
@@ -32,7 +32,7 @@ describe('Testing CSS rules', () => {
 	});
 
 	it('Multiple icon sets', () => {
-		const data = getCSSRules([
+		const data = getCSSRulesForIcons([
 			// MDI Light
 			'mdi-light:home',
 			// Line MD
@@ -49,7 +49,7 @@ describe('Testing CSS rules', () => {
 	it('Bad class name', () => {
 		let threw = false;
 		try {
-			getCSSRules(['icon--mdi-light--home test']);
+			getCSSRulesForIcons(['icon--mdi-light--home test']);
 		} catch {
 			threw = true;
 		}
@@ -59,7 +59,7 @@ describe('Testing CSS rules', () => {
 	it('Bad icon set', () => {
 		let threw = false;
 		try {
-			getCSSRules('test123:home');
+			getCSSRulesForIcons('test123:home');
 		} catch {
 			threw = true;
 		}
