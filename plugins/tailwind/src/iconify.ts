@@ -1,44 +1,10 @@
-import { readFileSync } from 'fs';
-import type { IconifyJSON } from '@iconify/types';
 import { getIconsCSSData } from '@iconify/utils/lib/css/icons';
 import { matchIconName } from '@iconify/utils/lib/icon/name';
-import type { IconifyPluginFileOptions, IconifyPluginOptions } from './options';
+import { loadIconSet } from './loader';
+import type { IconifyPluginOptions } from './options';
 
 const missingIconsListError =
 	'TailwindCSS cannot dynamically find all used icons. Need to pass list of used icons to Iconify plugin.';
-
-/**
- * Locate icon set
- */
-function locateIconSet(
-	prefix: string,
-	options: IconifyPluginFileOptions
-): string | undefined {
-	if (options.files?.[prefix]) {
-		return options.files?.[prefix];
-	}
-	try {
-		return require.resolve(`@iconify-json/${prefix}/icons.json`);
-	} catch {}
-	try {
-		return require.resolve(`@iconify/json/json/${prefix}.json`);
-	} catch {}
-}
-
-/**
- * Load icon set
- */
-function loadIconSet(
-	prefix: string,
-	options: IconifyPluginFileOptions
-): IconifyJSON | undefined {
-	const filename = locateIconSet(prefix, options);
-	if (filename) {
-		try {
-			return JSON.parse(readFileSync(filename, 'utf8'));
-		} catch {}
-	}
-}
 
 /**
  * Get icon names from list
