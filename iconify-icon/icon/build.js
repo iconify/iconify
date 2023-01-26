@@ -72,11 +72,56 @@ Object.keys(compile).forEach((key) => {
 });
 
 /**
+ * Update types before exit
+ */
+function updateTypes() {
+	const filename = 'dist/iconify-icon.d.ts';
+	const search = 'HTMLElementTagNameMap';
+	const search2 = 'interface IconifyIconHTMLElement extends';
+	const code = `
+/**
+ * Add custom element to global elements list
+ */
+declare global {
+	interface HTMLElementTagNameMap {
+		'iconify-icon': IconifyIconHTMLElement;
+	}
+}
+`;
+
+	let data;
+	try {
+		data = fs.readFileSync(filename, 'utf8');
+	} catch {
+		// Missing
+		if (compile.api) {
+			throw new Error('Cannot clean up types file');
+		}
+		return;
+	}
+
+	// Check if code already exists
+	if (data.indexOf(search) !== -1) {
+		return;
+	}
+
+	// Check if required type exists
+	if (data.indexOf(search2) === -1) {
+		throw new Error('Cannot find required interface');
+	}
+
+	// Add code
+	fs.writeFileSync(filename, data + code, 'utf8');
+	console.log('Updated', filename);
+}
+
+/**
  * Run next command
  */
 const next = () => {
 	const item = commands.shift();
 	if (item === void 0) {
+		updateTypes();
 		process.exit(0);
 	}
 
