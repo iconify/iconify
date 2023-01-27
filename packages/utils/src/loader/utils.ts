@@ -1,4 +1,5 @@
 import type { Awaitable } from '@antfu/utils';
+import { isUnsetKeyword } from '../svg/build';
 import type { IconifyLoaderOptions } from './types';
 
 const svgWidthRegex = /width\s*=\s*["'](\w+)["']/;
@@ -12,27 +13,40 @@ function configureSvgSize(
 ): [boolean, boolean] {
 	const svgNode = svg.slice(0, svg.indexOf('>'));
 
-	let result = svgWidthRegex.exec(svgNode);
-	const w = result != null;
-	if (typeof props.width === 'undefined' || props.width === null) {
-		if (typeof scale === 'number') {
-			props.width = `${scale}em`;
-		} else if (result) {
-			props.width = result[1];
-		}
-	}
+	const check = (prop: 'width' | 'height', regex: RegExp): boolean => {
+		const result = regex.exec(svgNode);
+		const w = result != null;
 
-	result = svgHeightRegex.exec(svgNode);
-	const h = result != null;
-	if (typeof props.height === 'undefined' || props.height === null) {
-		if (typeof scale === 'number') {
-			props.height = `${scale}em`;
-		} else if (result) {
-			props.height = result[1];
-		}
-	}
+		const propValue = props[prop];
+		let value: string | undefined;
 
-	return [w, h];
+		if (!isUnsetKeyword(propValue)) {
+			if (propValue) {
+				// Do not change it
+				return w;
+			}
+
+			if (typeof scale === 'number') {
+				// Scale icon, unless scale is 0
+				if (scale) {
+					value = `${scale}em`;
+				}
+			} else if (result) {
+				// Use result from iconToSVG()
+				value = result[1];
+			}
+		}
+
+		// Change / unset
+		if (!value) {
+			delete props[prop];
+			return false;
+		}
+		props[prop] = value;
+		return true;
+	};
+
+	return [check('width', svgWidthRegex), check('height', svgHeightRegex)];
 }
 
 export async function mergeIconProps(

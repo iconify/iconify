@@ -1,5 +1,5 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
-import { iconToSVG } from '../svg/build';
+import { iconToSVG, isUnsetKeyword } from '../svg/build';
 import { getIconData } from '../icon-set/get-icon';
 import { mergeIconProps } from './utils';
 import createDebugger from 'debug';
@@ -39,26 +39,40 @@ export async function searchForIcon(
 					return { ...restAttributes };
 				},
 				(props) => {
-					if (
-						typeof props.width === 'undefined' ||
-						props.width === null
-					) {
-						if (typeof scale === 'number') {
-							props.width = `${scale}em`;
-						} else {
-							props.width = width;
+					// Check if value has 'unset' keyword
+					const check = (
+						prop: 'width' | 'height',
+						defaultValue: string | undefined
+					) => {
+						const propValue = props[prop];
+						let value: string | undefined;
+
+						if (!isUnsetKeyword(propValue)) {
+							if (propValue) {
+								// Do not change it
+								return;
+							}
+
+							if (typeof scale === 'number') {
+								// Scale icon, unless scale is 0
+								if (scale) {
+									value = `${scale}em`;
+								}
+							} else {
+								// Use result from iconToSVG()
+								value = defaultValue;
+							}
 						}
-					}
-					if (
-						typeof props.height === 'undefined' ||
-						props.height === null
-					) {
-						if (typeof scale === 'number') {
-							props.height = `${scale}em`;
+
+						// Change / unset
+						if (!value) {
+							delete props[prop];
 						} else {
-							props.height = height;
+							props[prop] = value;
 						}
-					}
+					};
+					check('width', width);
+					check('height', height);
 				}
 			);
 		}

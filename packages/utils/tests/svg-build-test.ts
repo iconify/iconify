@@ -99,6 +99,51 @@ describe('Testing iconToSVG', () => {
 		expect(result).toEqual(expected);
 	});
 
+	test('Unset height', () => {
+		const custom: IconifyIconCustomisations = {
+			// Testing 'unset' keyword
+			height: 'unset',
+			width: 'auto',
+		};
+		const icon: IconifyIcon = {
+			width: 20,
+			height: 16,
+			body: '<path d="..." />',
+		};
+		const expected: IconifyIconBuildResult = {
+			attributes: {
+				width: '20',
+				viewBox: '0 0 20 16',
+			},
+			body: '<path d="..." />',
+		};
+
+		const result = iconToSVG(icon, custom);
+		expect(result).toEqual(expected);
+	});
+
+	test('Unset size', () => {
+		const custom: IconifyIconCustomisations = {
+			// Testing 'undefined' and 'none' keywords
+			width: 'undefined',
+			height: 'none',
+		};
+		const icon: IconifyIcon = {
+			width: 20,
+			height: 16,
+			body: '<path d="..." />',
+		};
+		const expected: IconifyIconBuildResult = {
+			attributes: {
+				viewBox: '0 0 20 16',
+			},
+			body: '<path d="..." />',
+		};
+
+		const result = iconToSVG(icon, custom);
+		expect(result).toEqual(expected);
+	});
+
 	test('Rotation', () => {
 		const custom: IconifyIconCustomisations = {
 			height: '40px',

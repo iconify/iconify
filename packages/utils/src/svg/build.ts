@@ -11,8 +11,8 @@ import { calculateSize } from './size';
 export interface IconifyIconBuildResult {
 	attributes: {
 		// Attributes for <svg>
-		width: string;
-		height: string;
+		width?: string;
+		height?: string;
 		viewBox: string;
 	};
 
@@ -29,6 +29,12 @@ interface ViewBox {
 	width: number;
 	height: number;
 }
+
+/**
+ * Check if value should be unset. Allows multiple keywords
+ */
+export const isUnsetKeyword = (value: unknown) =>
+	value === 'unset' || value === 'undefined' || value === 'none';
 
 /**
  * Get SVG attributes and content from icon + customisations
@@ -194,22 +200,28 @@ export function iconToSVG(
 				: customisationsHeight;
 	}
 
-	// Result
-	const result: IconifyIconBuildResult = {
-		attributes: {
-			width: width.toString(),
-			height: height.toString(),
-			viewBox:
-				box.left.toString() +
-				' ' +
-				box.top.toString() +
-				' ' +
-				boxWidth.toString() +
-				' ' +
-				boxHeight.toString(),
-		},
+	// Attributes for result
+	const attributes = {} as IconifyIconBuildResult['attributes'];
+
+	const setAttr = (prop: 'width' | 'height', value: string | number) => {
+		if (!isUnsetKeyword(value)) {
+			attributes[prop] = value.toString();
+		}
+	};
+	setAttr('width', width);
+	setAttr('height', height);
+
+	attributes.viewBox =
+		box.left.toString() +
+		' ' +
+		box.top.toString() +
+		' ' +
+		boxWidth.toString() +
+		' ' +
+		boxHeight.toString();
+
+	return {
+		attributes,
 		body,
 	};
-
-	return result;
 }
