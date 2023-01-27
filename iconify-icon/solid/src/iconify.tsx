@@ -68,6 +68,7 @@ export {
 	loadIcons,
 	loadIcon,
 	addAPIProvider,
+	appendCustomStyle,
 	_api,
 } from 'iconify-icon';
 
