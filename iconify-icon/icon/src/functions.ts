@@ -43,6 +43,7 @@ import type {
 	IconifyBrowserCacheType,
 	IconifyBrowserCacheFunctions,
 } from '@iconify/core/lib/browser-storage/functions';
+import { appendCustomStyle } from './render/style';
 
 /**
  * Interface for exported functions
@@ -52,7 +53,11 @@ export interface IconifyExportedFunctions
 		IconifyBuilderFunctions,
 		IconifyBrowserCacheFunctions,
 		IconifyAPIFunctions {
+	// API internal functions
 	_api: IconifyAPIInternalFunctions;
+
+	// Append custom style to all components
+	appendCustomStyle: (value: string) => void;
 }
 
 /**
@@ -164,6 +169,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 		loadIcons,
 		loadIcon,
 		addAPIProvider,
+		appendCustomStyle,
 		_api,
 	};
 }

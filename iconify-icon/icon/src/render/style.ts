@@ -4,6 +4,20 @@
 const nodeAttr = 'data-style';
 
 /**
+ * Custom style to add to each node
+ */
+let customStyle = '';
+
+/**
+ * Set custom style to add to all components
+ *
+ * Affects only components rendered after function call
+ */
+export function appendCustomStyle(style: string) {
+	customStyle = style;
+}
+
+/**
  * Add/update style node
  */
 export function updateStyle(parent: Element | ShadowRoot, inline: boolean) {
@@ -24,5 +38,6 @@ export function updateStyle(parent: Element | ShadowRoot, inline: boolean) {
 	styleNode.textContent =
 		':host{display:inline-block;vertical-align:' +
 		(inline ? '-0.125em' : '0') +
-		'}span,svg{display:block}';
+		'}span,svg{display:block}' +
+		customStyle;
 }

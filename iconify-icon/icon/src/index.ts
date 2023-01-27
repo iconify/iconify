@@ -50,6 +50,7 @@ import type {
 	IconifyIconHTMLElementClass,
 } from './component';
 import { exportFunctions } from './functions';
+import { appendCustomStyle } from './render/style';
 
 /**
  * Export used types
@@ -135,5 +136,6 @@ export {
 	loadIcons,
 	loadIcon,
 	addAPIProvider,
+	appendCustomStyle,
 	_api,
 };
