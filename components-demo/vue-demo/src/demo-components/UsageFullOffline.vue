@@ -21,6 +21,10 @@
 			<Icon :icon="alertIcon" mode="style" />Important notice with alert
 			icon!
 		</div>
+		<div>
+			Icon without size, scaled to 48px with CSS:
+			<Icon :icon="demoIcon" height="unset" style="height: 48px" />
+		</div>
 	</section>
 </template>
 

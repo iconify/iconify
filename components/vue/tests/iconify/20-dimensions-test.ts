@@ -71,4 +71,23 @@ describe('Dimensions', () => {
 		expect(html).not.toContain('height="1em"');
 		expect(html).not.toContain('width="1em"');
 	});
+
+	test('unset', async () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" height="unset" />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
+		const html = wrapper.html();
+		expect(html).not.toContain('height="');
+		expect(html).not.toContain('width="');
+	});
 });

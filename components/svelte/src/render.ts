@@ -93,6 +93,9 @@ export function render(
 		string,
 		unknown
 	>;
+	if (icon.body.indexOf('xlink:') === -1) {
+		delete componentProps['xmlns:xlink'];
+	}
 
 	// Create style if missing
 	let style = typeof props.style === 'string' ? props.style : '';
@@ -229,11 +232,16 @@ export function render(
 	const url = svgToURL(html);
 	const styles: Record<string, string> = {
 		'--svg': url,
-		'width': fixSize(renderAttribs.width),
-		'height': fixSize(renderAttribs.height),
-		...commonProps,
-		...(useMask ? monotoneProps : coloredProps),
 	};
+	const size = (prop: 'width' | 'height') => {
+		const value = renderAttribs[prop];
+		if (value) {
+			styles[prop] = fixSize(value);
+		}
+	};
+	size('width');
+	size('height');
+	Object.assign(styles, commonProps, useMask ? monotoneProps : coloredProps);
 
 	let customStyle = '';
 	for (const key in styles) {

@@ -24,6 +24,10 @@ export function FullOfflineUsageDemo() {
 				<Icon icon={alertIcon} mode="mask" />
 				Important notice with alert icon!
 			</div>
+			<div>
+				Icon without size, scaled to 48px with CSS:
+				<Icon icon="demo" height="unset" style={{ height: '48px' }} />
+			</div>
 		</section>
 	);
 }

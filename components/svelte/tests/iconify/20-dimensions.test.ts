@@ -40,6 +40,16 @@ describe('Dimensions', () => {
 		expect(node.getAttribute('width')).toBe('24');
 	});
 
+	test('unset', () => {
+		const component = render(Icon, {
+			icon: iconData,
+			width: 'unset',
+		});
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('height')).toBe(null);
+		expect(node.getAttribute('width')).toBe(null);
+	});
+
 	test('invalid values', () => {
 		const component = render(Icon, {
 			icon: iconData,

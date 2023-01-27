@@ -13,8 +13,8 @@ import { defaultExtendedIconCustomisations } from './props';
  * Render result
  */
 export interface RenderResult {
-	width: string | number;
-	height: string | number;
+	width?: string | number;
+	height?: string | number;
 	viewBox: string;
 	style?: string;
 	className: string;

@@ -39,4 +39,14 @@ describe('Dimensions', () => {
 		expect(node.getAttribute('height')).toBe('24');
 		expect(node.getAttribute('width')).toBe('24');
 	});
+
+	test('none', () => {
+		const component = render(Icon, {
+			icon: iconData,
+			height: 'none',
+		});
+		const node = component.container.querySelector('svg')!;
+		expect(node.getAttribute('height')).toBe(null);
+		expect(node.getAttribute('width')).toBe(null);
+	});
 });
