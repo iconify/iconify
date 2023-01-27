@@ -2,7 +2,7 @@
 	"name": "@iconify/ember",
 	"description": "Iconify icon component for Ember.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.0.1",
+	"version": "2.1.0",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
