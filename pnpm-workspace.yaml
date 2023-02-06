@@ -9,4 +9,5 @@ packages:
     - 'plugins/*'
     - 'components-demo/*'
     - 'iconify-icon-demo/*'
+    - 'plugins-demo/*'
     # - 'debug/*'

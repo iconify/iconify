@@ -167,6 +167,12 @@ Directory `plugins` contains plugins.
 | ------------------------------------------ | ------------ |
 | [Tailwind CSS plugin](./plugins/tailwind/) | Tailwind CSS |
 
+#### Demo
+
+Directory `plugins-demo` contains demo packages that show usage of plugins.
+
+-   [Tailwind demo](./plugins-demo/tailwind-demo/) - demo for Tailwind CSS plugin. Run `npm run build` to build demo, open `src/index.html` in browser to see result.
+
 ## Installation, debugging and contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).

@@ -16,7 +16,7 @@ export function getDynamicCSSRules(
 	}
 
 	const [prefix, name] = nameParts;
-	if (!prefix.match(matchIconName) || !name.match(matchIconName)) {
+	if (!(prefix.match(matchIconName) && name.match(matchIconName))) {
 		throw new Error(`Invalid icon name: "${icon}"`);
 	}
 

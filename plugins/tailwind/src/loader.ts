@@ -21,18 +21,32 @@ export interface IconifyPluginLoaderOptions {
 /**
  * Locate icon set
  */
+interface LocatedIconSet {
+	main: string;
+	info?: string;
+}
 export function locateIconSet(
 	prefix: string,
 	options: IconifyPluginLoaderOptions
-): string | undefined {
+): LocatedIconSet | undefined {
 	if (options.files?.[prefix]) {
-		return options.files?.[prefix];
+		return {
+			main: options.files?.[prefix],
+		};
 	}
 	try {
-		return require.resolve(`@iconify-json/${prefix}/icons.json`);
+		const main = require.resolve(`@iconify-json/${prefix}/icons.json`);
+		const info = require.resolve(`@iconify-json/${prefix}/info.json`);
+		return {
+			main,
+			info,
+		};
 	} catch {}
 	try {
-		return require.resolve(`@iconify/json/json/${prefix}.json`);
+		const main = require.resolve(`@iconify/json/json/${prefix}.json`);
+		return {
+			main,
+		};
 	} catch {}
 }
 
@@ -66,17 +80,25 @@ export function loadIconSet(
 	}
 
 	const filename = options.files?.[prefix] || locateIconSet(prefix, options);
-	if (filename) {
-		// Check for cache
-		if (cache[filename]) {
-			return cache[filename];
-		}
-
-		// Attempt to load it
-		try {
-			const result = JSON.parse(readFileSync(filename, 'utf8'));
-			cache[filename] = result;
-			return result;
-		} catch {}
+	if (!filename) {
+		return;
 	}
+
+	const main = typeof filename === 'string' ? filename : filename.main;
+
+	// Check for cache
+	if (cache[main]) {
+		return cache[main];
+	}
+
+	// Attempt to load it
+	try {
+		const result = JSON.parse(readFileSync(main, 'utf8'));
+		if (!result.info && typeof filename === 'object' && filename.info) {
+			// Load info from a separate file
+			result.info = JSON.parse(readFileSync(filename.info, 'utf8'));
+		}
+		cache[main] = result;
+		return result;
+	} catch {}
 }

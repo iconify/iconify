@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.demo {
+	color: #16a34a;
+	vertical-align: -6px;
+}
+.demo:hover {
+	color: #b91c1c;
+}

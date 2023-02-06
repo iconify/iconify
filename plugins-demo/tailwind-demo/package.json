@@ -1,0 +1,17 @@
+{
+	"name": "@iconify-demo/tailwind",
+	"version": "1.0.0",
+	"private": true,
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "tailwindcss -i ./src/input.css -o ./dist/output.css"
+	},
+	"keywords": [],
+	"devDependencies": {
+		"@iconify/tailwind": "workspace:*",
+		"@iconify-json/mdi-light": "^1.1.5",
+		"@iconify-json/vscode-icons": "^1.1.21",
+		"tailwindcss": "^3.2.4"
+	}
+}
