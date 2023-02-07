@@ -22,22 +22,11 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
  * Generate styles for preset list of icons
  */
 export function addCleanIconSelectors(
-	icons?: string[] | string,
+	icons: string[] | string,
 	options?: CleanIconifyPluginOptions
 ) {
-	const passedOptions =
-		typeof icons === 'object' && !(icons instanceof Array)
-			? icons
-			: options || {};
-	const passedIcons =
-		typeof icons !== 'object' || icons instanceof Array ? icons : void 0;
-
-	// Get hardcoded list of icons
-	const rules = passedIcons
-		? getCSSRulesForIcons(passedIcons, passedOptions)
-		: void 0;
-
-	return plugin(({ addUtilities, matchComponents }) => {
+	const rules = getCSSRulesForIcons(icons, options);
+	return plugin(({ addUtilities }) => {
 		addUtilities(rules);
 	});
 }
