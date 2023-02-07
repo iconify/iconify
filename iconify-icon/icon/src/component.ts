@@ -210,9 +210,9 @@ export function defineIconifyIcon(
 		}
 
 		set inline(value: boolean) {
-			if(value){
+			if (value) {
 				this.setAttribute('inline', 'true');
-			}else{
+			} else {
 				this.removeAttribute('inline');
 			}
 		}
