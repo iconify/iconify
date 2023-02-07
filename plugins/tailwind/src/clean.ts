@@ -19,7 +19,9 @@ export function getCSSRulesForIcons(
 	for (const prefix in prefixes) {
 		const iconSet = loadIconSet(prefix, options);
 		if (!iconSet) {
-			throw new Error(`Cannot load icon set for "${prefix}"`);
+			throw new Error(
+				`Cannot load icon set for "${prefix}". Install "@iconify-json/${prefix}" as dev dependency?`
+			);
 		}
 		const generated = getIconsCSSData(
 			iconSet,

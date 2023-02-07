@@ -22,14 +22,16 @@ export function getDynamicCSSRules(
 
 	const iconSet = loadIconSet(prefix, options);
 	if (!iconSet) {
-		throw new Error(`Cannot load icon set for "${prefix}"`);
+		throw new Error(
+			`Cannot load icon set for "${prefix}". Install "@iconify-json/${prefix}" as dev dependency?`
+		);
 	}
 
 	const generated = getIconsCSSData(iconSet, [name], {
 		iconSelector: '.icon',
 	});
 	if (generated.css.length !== 1) {
-		throw new Error(`Something went wrong generating "${icon}"`);
+		throw new Error(`Cannot find "${icon}". Bad icon name?`);
 	}
 
 	return {
