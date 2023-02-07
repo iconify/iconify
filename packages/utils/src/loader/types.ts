@@ -156,6 +156,7 @@ export type IconifyLoaderOptions = {
 	 */
 	autoInstall?: boolean;
 
+	customInstall?: Function;
 	/**
 	 * The additional icon properties applied to the svg.
 	 *

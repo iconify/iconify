@@ -14,10 +14,7 @@ export const loadNodeIcon: UniversalIconLoader = async (
 		return result;
 	}
 
-	const iconSet = await loadCollectionFromFS(
-		collection,
-		options?.autoInstall
-	);
+	const iconSet = await loadCollectionFromFS(collection, options);
 	if (iconSet) {
 		// possible icon names
 		const ids = [
