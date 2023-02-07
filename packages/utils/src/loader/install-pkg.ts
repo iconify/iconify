@@ -8,7 +8,7 @@ const tasks: Record<string, Promise<void> | undefined> = {};
 
 export async function tryInstallPkg(
 	name: string,
-	autoInstall = true
+	autoInstall: boolean | ((name: string) => Promise<void | undefined>)
 ): Promise<void | undefined> {
 	if (pending) {
 		await pending;
@@ -18,8 +18,7 @@ export async function tryInstallPkg(
 		// eslint-disable-next-line no-console
 		console.log(cyan(`Installing ${name}...`));
 		if (typeof autoInstall === 'function') {
-			tasks[name] = pending = autoInstall
-				.customInstall(name)
+			tasks[name] = pending = autoInstall(name)
 				.then(() => sleep(300))
 				.finally(() => {
 					pending = undefined;
