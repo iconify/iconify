@@ -385,7 +385,11 @@ export function defineIconifyIcon(
 					return this.getAttribute(attr);
 				},
 				set: function (value) {
-					this.setAttribute(attr, value);
+					if(value !== null){
+						this.setAttribute(attr, value);
+					}else{
+						this.removeAttribute(attr);
+					}
 				},
 			});
 		}
