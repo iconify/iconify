@@ -2,14 +2,13 @@ import { installPackage } from '@antfu/install-pkg';
 import { sleep } from '@antfu/utils';
 import { cyan } from 'kolorist';
 import { warnOnce } from './warn';
-import type { IconifyLoaderOptions } from './types';
 
 let pending: Promise<void> | undefined;
 const tasks: Record<string, Promise<void> | undefined> = {};
 
 export async function tryInstallPkg(
 	name: string,
-	options?: IconifyLoaderOptions
+	autoInstall = true
 ): Promise<void | undefined> {
 	if (pending) {
 		await pending;
@@ -18,8 +17,8 @@ export async function tryInstallPkg(
 	if (!tasks[name]) {
 		// eslint-disable-next-line no-console
 		console.log(cyan(`Installing ${name}...`));
-		if (options?.customInstall) {
-			tasks[name] = pending = options
+		if (typeof autoInstall === 'function') {
+			tasks[name] = pending = autoInstall
 				.customInstall(name)
 				.then(() => sleep(300))
 				.finally(() => {

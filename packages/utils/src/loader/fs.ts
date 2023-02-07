@@ -1,5 +1,4 @@
 import { promises as fs, Stats } from 'fs';
-import type { IconifyLoaderOptions } from './types';
 import { isPackageExists, resolveModule } from 'local-pkg';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
@@ -9,7 +8,7 @@ const isLegacyExists = isPackageExists('@iconify/json');
 
 export async function loadCollectionFromFS(
 	name: string,
-	options?: IconifyLoaderOptions
+	autoInstall = false
 ): Promise<IconifyJSON | undefined> {
 	if (!(await _collections[name])) {
 		_collections[name] = task();
@@ -22,8 +21,8 @@ export async function loadCollectionFromFS(
 			jsonPath = resolveModule(`@iconify/json/json/${name}.json`);
 		}
 
-		if (!jsonPath && !isLegacyExists && options?.autoInstall) {
-			await tryInstallPkg(`@iconify-json/${name}`, options);
+		if (!jsonPath && !isLegacyExists && autoInstall) {
+			await tryInstallPkg(`@iconify-json/${name}`, autoInstall);
 			jsonPath = resolveModule(`@iconify-json/${name}/icons.json`);
 		}
 
