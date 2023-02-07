@@ -10,12 +10,9 @@ type IconifyJSONLoaderCallback = () => IconifyJSON;
  * Options for icon set loaders
  */
 export interface IconifyPluginLoaderOptions {
-	// Location of icon set files. Key is icon set prefix
-	files?: Record<string, string>;
-
 	// Custom icon sets
 	// Value can be loaded icon set or callback that loads icon set
-	iconSets?: Record<string, IconifyJSON | IconifyJSONLoaderCallback>;
+	iconSets?: Record<string, IconifyJSON | string | IconifyJSONLoaderCallback>;
 }
 
 /**
@@ -25,15 +22,7 @@ interface LocatedIconSet {
 	main: string;
 	info?: string;
 }
-export function locateIconSet(
-	prefix: string,
-	options: IconifyPluginLoaderOptions
-): LocatedIconSet | undefined {
-	if (options.files?.[prefix]) {
-		return {
-			main: options.files?.[prefix],
-		};
-	}
+export function locateIconSet(prefix: string): LocatedIconSet | undefined {
 	try {
 		const main = require.resolve(`@iconify-json/${prefix}/icons.json`);
 		const info = require.resolve(`@iconify-json/${prefix}/info.json`);
@@ -67,19 +56,35 @@ export function loadIconSet(
 	prefix: string,
 	options: IconifyPluginLoaderOptions
 ): IconifyJSON | undefined {
+	let filename: LocatedIconSet;
+
 	// Check for custom icon set
 	const customIconSet = options.iconSets?.[prefix];
 	if (customIconSet) {
-		if (typeof customIconSet === 'function') {
-			// Callback. Store result in options to avoid loading it again
-			const result = customIconSet();
-			options.iconSets[prefix] = result;
-			return result;
+		switch (typeof customIconSet) {
+			case 'function': {
+				// Callback. Store result in options to avoid loading it again
+				const result = customIconSet();
+				options.iconSets[prefix] = result;
+				return result;
+			}
+
+			case 'string': {
+				// Filename to load it from
+				filename = {
+					main: customIconSet,
+				};
+				break;
+			}
+
+			default:
+				return customIconSet;
 		}
-		return customIconSet;
+	} else {
+		// Find icon set
+		filename = locateIconSet(prefix);
 	}
 
-	const filename = options.files?.[prefix] || locateIconSet(prefix, options);
 	if (!filename) {
 		return;
 	}
