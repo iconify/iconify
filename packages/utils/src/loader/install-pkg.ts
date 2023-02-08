@@ -1,6 +1,7 @@
 import { installPackage } from '@antfu/install-pkg';
 import { sleep } from '@antfu/utils';
 import { cyan } from 'kolorist';
+import type { AutoInstall } from './types';
 import { warnOnce } from './warn';
 
 let pending: Promise<void> | undefined;
@@ -8,7 +9,7 @@ const tasks: Record<string, Promise<void> | undefined> = {};
 
 export async function tryInstallPkg(
 	name: string,
-	autoInstall: boolean | ((name: string) => Promise<void | undefined>)
+	autoInstall: AutoInstall
 ): Promise<void | undefined> {
 	if (pending) {
 		await pending;
@@ -29,8 +30,7 @@ export async function tryInstallPkg(
 				preferOffline: true,
 			})
 				.then(() => sleep(300))
-				// eslint-disable-next-line
-				.catch((e: any) => {
+				.catch((e) => {
 					warnOnce(`Failed to install ${name}`);
 					console.error(e);
 				})

@@ -17,6 +17,13 @@ export type UniversalIconLoader = (
 export type CustomIconLoader = (name: string) => Awaitable<string | undefined>;
 
 /**
+ * Auto-install options
+ */
+export type AutoInstall =
+	| boolean
+	| ((name: string) => Promise<void | undefined>);
+
+/**
  * Custom icon customizer, it will allow to customize all icons on a collection or individual icons.
  */
 export type IconCustomizer = (
@@ -154,7 +161,8 @@ export type IconifyLoaderOptions = {
 	 *
 	 * @default false
 	 */
-	autoInstall?: boolean | ((name: string) => Promise<void | undefined>);
+	autoInstall?: AutoInstall;
+
 	/**
 	 * The additional icon properties applied to the svg.
 	 *
