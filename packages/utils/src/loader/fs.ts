@@ -22,7 +22,7 @@ export async function loadCollectionFromFS(
 		}
 
 		if (!jsonPath && !isLegacyExists && autoInstall) {
-			await tryInstallPkg(`@iconify-json/${name}`);
+			await tryInstallPkg(`@iconify-json/${name}`, autoInstall);
 			jsonPath = resolveModule(`@iconify-json/${name}/icons.json`);
 		}
 
