@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
-import { getCustomIcon } from '../lib';
-import type { IconifyLoaderOptions } from '../lib';
+import { getCustomIcon } from '../lib/loader/custom';
+import type { IconifyLoaderOptions } from '../lib/loader/types';
 
 const fixturesDir = './tests/fixtures';
 

@@ -6,12 +6,12 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result).toBeTruthy();
 	});
 
-	test('loadIcon adds xmlns:xlink', async () => {
+	test('loadIcon should not add xmlns:xlink', async () => {
 		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
 			addXmlNs: true,
 		});
 		expect(result).toBeTruthy();
-		expect(result && result.indexOf('xmlns:xlink=') > -1).toBeTruthy();
+		expect(result && result.indexOf('xmlns:xlink=') === -1).toBeTruthy();
 	});
 
 	test('loadIcon with customize with default style and class', async () => {
