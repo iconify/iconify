@@ -2,8 +2,8 @@ import type { Awaitable } from '@antfu/utils';
 import { isUnsetKeyword } from '../svg/build';
 import type { IconifyLoaderOptions } from './types';
 
-const svgWidthRegex = /width\s*=\s*["'](\w+)["']/;
-const svgHeightRegex = /height\s*=\s*["'](\w+)["']/;
+const svgWidthRegex = /\swidth\s*=\s*["'](\w+)["']/;
+const svgHeightRegex = /\sheight\s*=\s*["'](\w+)["']/;
 const svgTagRegex = /<svg\s+/;
 
 function configureSvgSize(
@@ -15,35 +15,23 @@ function configureSvgSize(
 
 	const check = (prop: 'width' | 'height', regex: RegExp): boolean => {
 		const result = regex.exec(svgNode);
-		const w = result != null;
+		const isSet = result != null;
 
 		const propValue = props[prop];
-		let value: string | undefined;
 
-		if (!isUnsetKeyword(propValue)) {
-			if (propValue) {
-				// Do not change it
-				return w;
-			}
-
+		if (!propValue && !isUnsetKeyword(propValue)) {
 			if (typeof scale === 'number') {
 				// Scale icon, unless scale is 0
-				if (scale) {
-					value = `${scale}em`;
+				if (scale > 0) {
+					props[prop] = `${scale}em`;
 				}
 			} else if (result) {
 				// Use result from iconToSVG()
-				value = result[1];
+				props[prop] = result[1];
 			}
 		}
 
-		// Change / unset
-		if (!value) {
-			delete props[prop];
-			return false;
-		}
-		props[prop] = value;
-		return true;
+		return isSet;
 	};
 
 	return [check('width', svgWidthRegex), check('height', svgHeightRegex)];

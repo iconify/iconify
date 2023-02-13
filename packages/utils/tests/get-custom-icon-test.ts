@@ -81,7 +81,7 @@ describe('Testing getCustomIcon', () => {
 		expect(usedProps.height).toEqual('4em');
 	});
 
-	test.skip('Icon with XML heading', async () => {
+	test('Icon with XML heading', async () => {
 		// Intercept console.warn
 		let warned = false;
 		const warn = console.warn;
@@ -96,7 +96,27 @@ describe('Testing getCustomIcon', () => {
 		// Restore console.warn
 		console.warn = warn;
 
-		expect(svg).toEqual(result);
-		expect(warned).toEqual(true);
+		expect(result).toEqual(
+			svg.replace(
+				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+				''
+			)
+		);
+		expect(warned).toEqual(false);
+	});
+
+	test('Scale custom icon', async () => {
+		const svg = `<?xml version="1.0" standalone="no"?>
+		<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+		  stroke="currentColor">
+		  <path d="M12 14V20M10 12L4 10M14 12L20 10M21 12a9 9 0 11-18 0 9 9 0 0118 0zM14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+		</svg>`;
+
+		const options: IconifyLoaderOptions = {
+			scale: 1.2,
+		};
+		const result = await getCustomIcon(() => svg, 'a', 'b', options);
+		expect(result && result.indexOf(' width="1.2em"') > -1).toBeTruthy();
+		expect(result && result.indexOf(' height="1.2em"') > -1).toBeTruthy();
 	});
 });
