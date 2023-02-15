@@ -39,7 +39,7 @@ export type {
 // Icon set functions
 export { getIconsTree } from './icon-set/tree';
 export type { ParentIconsList, ParentIconsTree } from './icon-set/tree';
-export { parseIconSet } from './icon-set/parse';
+export { parseIconSet, parseIconSetAsync } from './icon-set/parse';
 export { validateIconSet } from './icon-set/validate';
 export { quicklyValidateIconSet } from './icon-set/validate-basic';
 export { expandIconSet } from './icon-set/expand';

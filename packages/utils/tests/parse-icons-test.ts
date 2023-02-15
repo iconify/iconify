@@ -1,5 +1,5 @@
 import type { ExtendedIconifyIcon } from '@iconify/types';
-import { parseIconSet } from '../lib/icon-set/parse';
+import { parseIconSet, parseIconSetAsync } from '../lib/icon-set/parse';
 
 describe('Testing parsing icon set', () => {
 	test('Simple icon set', () => {
@@ -137,7 +137,7 @@ describe('Testing parsing icon set', () => {
 		expect(parsedNames).toEqual(expectedNames);
 	});
 
-	test('Nested aliases', () => {
+	test('Nested aliases', async () => {
 		// Names list
 		let names: string[] = [
 			'icon1',
@@ -234,7 +234,7 @@ describe('Testing parsing icon set', () => {
 		};
 
 		// Do stuff
-		const parsedNames = parseIconSet(
+		const parsedNames = await parseIconSetAsync(
 			{
 				prefix: 'foo',
 				icons: {
@@ -298,13 +298,19 @@ describe('Testing parsing icon set', () => {
 				height: 24,
 			},
 			(name, data) => {
-				// Make sure name exists in array of pending names
-				const index = names.indexOf(name);
-				expect(index).not.toBe(-1);
-				names = names.slice(0, index).concat(names.slice(index + 1));
+				return new Promise((fulfill) => {
+					// Make sure name exists in array of pending names
+					const index = names.indexOf(name);
+					expect(index).not.toBe(-1);
+					names = names
+						.slice(0, index)
+						.concat(names.slice(index + 1));
 
-				// Check icon data
-				expect(data).toEqual(expected[name]);
+					// Check icon data
+					expect(data).toEqual(expected[name]);
+
+					fulfill(void 0);
+				});
 			}
 		);
 
