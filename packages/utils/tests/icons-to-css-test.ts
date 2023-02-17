@@ -3,7 +3,7 @@ import { getIconsCSS } from '../lib/css/icons';
 import type { IconifyJSON } from '@iconify/types';
 
 describe('Testing CSS for multiple icons', () => {
-	test('Background', () => {
+	test('Monotone icons', () => {
 		const iconSet: IconifyJSON = {
 			prefix: 'test-prefix',
 			icons: {
@@ -31,8 +31,38 @@ describe('Testing CSS for multiple icons', () => {
 				].body.replace(/currentColor/g, color)}</svg>`
 			);
 
+		// Detect mode: mask
 		expect(
-			getIconsCSS(iconSet, ['empty', '123', 'airplane'], {
+			getIconsCSS(iconSet, ['activity', '123', 'airplane'], {
+				format: 'expanded',
+			})
+		).toBe(`.icon--test-prefix {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / 100%;
+  mask: no-repeat center / 100%;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+}
+
+.icon--test-prefix--activity {
+  --svg: ${expectedURL('activity')};
+}
+
+.icon--test-prefix--123 {
+  --svg: ${expectedURL('123')};
+}
+
+.icon--test-prefix--airplane {
+  --svg: ${expectedURL('airplane')};
+}
+`);
+
+		// Force mode: background
+		expect(
+			getIconsCSS(iconSet, ['123'], {
 				format: 'expanded',
 				mode: 'background',
 			})
@@ -43,16 +73,8 @@ describe('Testing CSS for multiple icons', () => {
   background: no-repeat center / 100%;
 }
 
-.icon--test-prefix--empty {
-  background-image: ${expectedURL('empty')};
-}
-
 .icon--test-prefix--123 {
   background-image: ${expectedURL('123')};
-}
-
-.icon--test-prefix--airplane {
-  background-image: ${expectedURL('airplane')};
 }
 `);
 

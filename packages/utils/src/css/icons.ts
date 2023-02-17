@@ -41,13 +41,26 @@ export function getIconsCSSData(
 		options.mode ||
 		(typeof palette === 'boolean' && (palette ? 'background' : 'mask'));
 	if (!mode) {
-		// Cannot get mode: need either mode set in options or icon set with info
-		mode = 'mask';
-		errors.push(
-			'/* cannot detect icon mode: not set in options and icon set is missing info, rendering as ' +
-				mode +
-				' */'
-		);
+		// Attempt to detect mode from first available icon
+		for (let i = 0; i < names.length; i++) {
+			const icon = getIconData(iconSet, names[i]);
+			if (icon) {
+				mode = icon.body.includes('currentColor')
+					? 'mask'
+					: 'background';
+				break;
+			}
+		}
+
+		if (!mode) {
+			// Failed to detect mode
+			mode = 'mask';
+			errors.push(
+				'/* cannot detect icon mode: not set in options and icon set is missing info, rendering as ' +
+					mode +
+					' */'
+			);
+		}
 	}
 
 	// Get variable name

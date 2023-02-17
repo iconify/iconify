@@ -14,7 +14,7 @@ export function getIconCSS(
 	// Get mode
 	const mode =
 		options.mode ||
-		(options.color || icon.body.indexOf('currentColor') === -1
+		(options.color || !icon.body.includes('currentColor')
 			? 'background'
 			: 'mask');
 
