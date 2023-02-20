@@ -7,10 +7,9 @@ Iconify tries to unify all icon sets. You can use the same code no matter what i
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 100+ icon sets with more than 100,000 icons.
+-   Out of the box includes 100+ icon sets with more than 150,000 icons.
 -   Embed icons in HTML with Iconify icon web component and components for various front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
--   Add icon search to your applications with Iconify Icon Finder.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
@@ -21,13 +20,13 @@ Iconify Icon web component renders icons.
 Add this line to your page to load IconifyIcon (you can add it to `<head>` section of the page or before `</body>`):
 
 ```html
-<script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.6/iconify-icon.min.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.5/dist/iconify-icon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.6/dist/iconify-icon.min.js"></script>
 ```
 
 or, if you are building a project with a bundler, you can include the script by installing `iconify-icon` as a dependency and importing it in your project:
@@ -44,7 +43,7 @@ To add any icon, write something like this:
 
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/assets/images/eva-people-outline.svg)
 
-That is it. Change `icon` attribute to the name of the icon you want to use. There are over 100,000 premade icons to choose from, including Material Symbols, Photphor, Remix Icons, Carbon, Unicons, Bootstrap Icons and even several emoji sets.
+That is it. Change `icon` attribute to the name of the icon you want to use. There are over 150,000 premade icons to choose from, including Material Symbols, Photphor, Remix Icons, Carbon, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
 
@@ -79,34 +78,27 @@ Web component uses the following logic to render icon:
 2. Checks if icon exists. If not, it sends a request to Iconify API to retrieve icon data.
 3. Renders icon in shadow DOM in web component.
 
-### Inline mode
+### Vertical alignment
 
 Usually, icon fonts do not render like normal images, they render like text. Text is aligned slightly below the baseline.
 
-Visual example to show the difference between inline and block modes:
+Visual example to show the difference:
 
 &nbsp;&nbsp;&nbsp; ![Inline icon](https://iconify.design/assets/images/inline.png)
 
-To help developers, Iconify Icon has inline mode.
-
-Why is the inline mode needed?
-
--   To easily align icons within the text, such as emojis.
--   To make the transition from outdated icon fonts to SVG easier.
-
-You can toggle inline mode by adding `inline` attribute:
-
-```html
-<iconify-icon inline icon="material-symbols:account-circle"></iconify-icon>
-```
-
-You can also do that by applying style:
+You can change that behavior by applying style:
 
 ```html
 <iconify-icon
 	icon="material-symbols:account-circle"
 	style="vertical-align: -0.125em"
 ></iconify-icon>
+```
+
+Web component also has `inline` attribute that does the same, to make it easier for developers:
+
+```html
+<iconify-icon inline icon="material-symbols:account-circle"></iconify-icon>
 ```
 
 ## Render modes
@@ -181,7 +173,7 @@ There are 2 types of icons: monotone and coloured.
 Monotone icons use font colour, just like glyph fonts. To change colour, you can do this:
 
 ```html
-<iconify-icon class="icon-bell" icon="vaadin-bell"></iconify-icon>
+<iconify-icon class="icon-bell" icon="vaadin:bell"></iconify-icon>
 ```
 
 and add this to CSS:
@@ -204,7 +196,7 @@ Sample:
 By default all icons are scaled to 1em height. To control icon height use font-size:
 
 ```html
-<iconify-icon class="icon-clipboard" icon="emojione-clipboard"></iconify-icon>
+<iconify-icon class="icon-clipboard" icon="emojione:clipboard"></iconify-icon>
 ```
 
 and add this to css:
@@ -231,12 +223,29 @@ you might also need to set line-height:
 You can also set custom dimensions using `width` and `height` attributes:
 
 ```html
-<iconify-icon icon="twemoji-ice-cream" width="32" height="32"></iconify-icon>
+<iconify-icon icon="twemoji:ice-cream" width="32" height="32"></iconify-icon>
 ```
 
 Sample:
 
 &nbsp;&nbsp;&nbsp; ![Sample](https://iconify.design/samples/icon-size2.png)
+
+If you want to control icon dimensions with CSS, do the following:
+
+-   Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
+-   In CSS or inline style set both `width` and `height` for iconify-icon.
+
+Example:
+
+```html
+<iconify-icon
+	icon="twemoji:ice-cream"
+	height="unset"
+	style="width: 40px; height: 40px;"
+></iconify-icon>
+```
+
+This allows easily changing width and height separately in CSS instead of relying on font-size. In some use cases you might need to add `display: block;` to CSS.
 
 ## Transformations
 
@@ -270,7 +279,7 @@ Samples:
 
 ## Available icons
 
-There are over 100,000 icons to choose from.
+There are over 150,000 icons to choose from.
 
 Few popular icon sets (monotone icons):
 

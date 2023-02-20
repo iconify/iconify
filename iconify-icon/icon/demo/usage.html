@@ -30,6 +30,39 @@
 			iconify-icon:hover {
 				color: red;
 			}
+
+			.unset-size {
+				display: flex;
+				gap: 8px;
+				background: #f0f0f0;
+			}
+			.unset-size iconify-icon {
+				/* display: block; */
+				width: 24px;
+				height: 24px;
+				animation: animate-unset 5s linear infinite;
+				background: #fff;
+			}
+			.unset-size:hover iconify-icon {
+				color: red !important;
+			}
+
+			@keyframes animate-unset {
+				0% {
+					width: 24px;
+					color: #000;
+				}
+				50% {
+					width: 64px;
+					height: 64px;
+					color: #800;
+				}
+				100% {
+					width: 24px;
+					height: 24px;
+					color: #000;
+				}
+			}
 		</style>
 		<script>
 			// Add icon before loading component: it will be added to IconifyPreload global
@@ -284,14 +317,19 @@
 				mode="style"
 			></iconify-icon>
 		</p>
-		<h2>Bad usage</h2>
-		<p>
-			Unset size (should be empty):
+		<h2>Scale icon</h2>
+		<p>Using height="none" and CSS, animating width/height and color</p>
+		<div class="unset-size">
 			<iconify-icon
-				inline
 				icon="bi:person-lines-fill"
 				height="none"
+				mode="svg"
 			></iconify-icon>
-		</p>
+			<iconify-icon
+				icon="bi:person-lines-fill"
+				height="unset"
+				mode="style"
+			></iconify-icon>
+		</div>
 	</body>
 </html>

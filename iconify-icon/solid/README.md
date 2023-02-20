@@ -34,7 +34,7 @@ Then use `Icon` component with icon name or data as "icon" parameter:
 <Icon icon="mdi-light:home" />
 ```
 
-Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 100,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 150,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
 
 ## Offline Usage
 
@@ -78,33 +78,13 @@ function renderHomeIcon() {
 
 See [icon packages documentation](https://docs.iconify.design/sources/npm/) for more details.
 
-### Next.js notice
-
-Example above might fail with Next.js. This is because Next.js uses outdated packaging software that does not support ES modules. But do not worry, there is a simple solution: switch to CommonJS icon packages.
-
-To switch to CommonJS package, replace this line in example above:
-
-```js
-import home from '@iconify-icons/mdi-light/home';
-```
-
-with
-
-```js
-import home from '@iconify/icons-mdi-light/home';
-```
-
-All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers. ES modules use format `@iconify-icons/{prefix}`, CommonJS modules use `@iconify/icons-{prefix}`.
-
-For more details, see [icon packages documentation](https://docs.iconify.design/sources/npm/).
-
 ## Icon component properties
 
 `icon` property is mandatory. It tells component what icon to render. The value can be a string containing the icon name or an object containing the icon data.
 
 The icon component has the following optional properties:
 
--   `inline`. Changes icon behaviour to match icon fonts. If set to `true`, it adds vertical alignment to icon to render it below text baseline, so it fits nicely in text.
+-   `inline`. Adds `vertical-align: -0.125em` to style to render it below text baseline, so it fits nicely in text.
 -   `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
 -   `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
 -   `flip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
@@ -122,6 +102,7 @@ There are several ways to change icon dimensions:
 
 -   Setting `font-size` in style (or `fontSize` if you are using inline style).
 -   Setting `width` and/or `height` property.
+-   Setting `height="none"` to remove dimensions from SVG and using CSS to resize icon.
 
 Values for `width` and `height` can be numbers or strings.
 
@@ -161,7 +142,7 @@ You can use units in width and height values:
 <Icon icon="mdi-light:home" height="2em" />
 ```
 
-Be careful when using `calc`, view port based units or percentages. In SVG element they might not behave the way you expect them to behave and when using such units, you should consider settings both width and height.
+Be careful when using `calc`, view port based units or percentages. In SVG element they might not behave the way you expect them to behave and when using such units, you should consider settings both width and height. Use `height="none"` and control dimensions with CSS instead (see below).
 
 #### Dimensions as 'auto'
 
@@ -170,6 +151,19 @@ Keyword "auto" sets dimensions to the icon's `viewBox` dimensions. For example, 
 ```jsx
 <Icon icon="mdi-light:home" height="auto" />
 ```
+
+#### Dimensions with CSS
+
+If you want to control icon dimensions with CSS, do the following:
+
+-   Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
+-   In CSS or inline style set both `width` and `height` for iconify-icon.
+
+```jsx
+<Icon icon="mdi-light:home" height="none" style={{width: '40px'; height: '40px'}} />
+```
+
+This allows easily changing width and height separately in CSS instead of relying on font-size. In some use cases you might need to add `display: block;` to CSS.
 
 ### Icon colour
 
@@ -266,4 +260,4 @@ SolidJS component is released with MIT license.
 
 © 2022 Vjacheslav Trushkin / Iconify OÜ
 
-See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.
+See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of icon sets and their licenses.

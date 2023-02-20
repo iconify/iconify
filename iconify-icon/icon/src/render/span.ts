@@ -33,8 +33,8 @@ for (const prefix in propsToAddTo) {
 /**
  * Fix size: add 'px' to numbers
  */
-function fixSize(value: string): string {
-	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
+function fixSize(value: string | undefined): string {
+	return value ? value + (value.match(/^[-0-9.]+$/) ? 'px' : '') : 'inherit';
 }
 
 /**
