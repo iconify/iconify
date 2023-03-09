@@ -19,8 +19,15 @@ export function encodeSVGforURL(svg: string): string {
 }
 
 /**
+ * Generate data: URL from SVG
+ */
+export function svgToData(svg: string): string {
+	return 'data:image/svg+xml,' + encodeSVGforURL(svg);
+}
+
+/**
  * Generate url() from SVG
  */
 export function svgToURL(svg: string): string {
-	return 'url("data:image/svg+xml,' + encodeSVGforURL(svg) + '")';
+	return 'url("' + svgToData(svg) + '")';
 }
