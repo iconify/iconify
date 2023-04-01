@@ -75,7 +75,6 @@
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.33.7",
-		"@rollup/plugin-buble": "^1.0.1",
 		"@rollup/plugin-node-resolve": "^15.0.1",
 		"@rollup/plugin-replace": "^5.0.2",
 		"@types/jest": "^29.2.4",
