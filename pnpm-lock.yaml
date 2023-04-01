@@ -422,7 +422,6 @@ importers:
       '@iconify/types': workspace:^
       '@iconify/utils': workspace:^
       '@microsoft/api-extractor': ^7.33.7
-      '@rollup/plugin-buble': ^1.0.1
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-replace': ^5.0.2
       '@types/jest': ^29.2.4
@@ -444,7 +443,6 @@ importers:
       '@iconify/core': link:../../packages/core
       '@iconify/utils': link:../../packages/utils
       '@microsoft/api-extractor': 7.33.7
-      '@rollup/plugin-buble': 1.0.1_rollup@3.8.1
       '@rollup/plugin-node-resolve': 15.0.1_rollup@3.8.1
       '@rollup/plugin-replace': 5.0.2_rollup@3.8.1
       '@types/jest': 29.2.4
@@ -7619,21 +7617,6 @@ packages:
       rollup: 2.79.0
     dev: true
 
-  /@rollup/plugin-buble/1.0.1_rollup@3.8.1:
-    resolution: {integrity: sha512-4srowx9TM2C2m5qDz72E9eOY7jC2Z0R5jw27tYanm1tEwi22Bl1Sh0ccubGIF3v30wmXWiH0dpvwO7+F5cPiWg==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 5.0.2_rollup@3.8.1
-      '@types/buble': 0.19.2
-      buble: 0.20.0
-      rollup: 3.8.1
-    dev: true
-
   /@rollup/plugin-commonjs/22.0.2_rollup@2.79.0:
     resolution: {integrity: sha512-//NdP6iIwPbMTcazYsiBMbJW7gfmpHom33u1beiIoHDEM0Q9clvtQB1T0efvMqHeKsGohiHo97BCPCkBXdscwg==}
     engines: {node: '>= 12.0.0'}
@@ -8480,12 +8463,6 @@ packages:
       broccoli-plugin: 4.0.7
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@types/buble/0.19.2:
-    resolution: {integrity: sha512-uUD8zIfXMKThmFkahTXDGI3CthFH1kMg2dOm3KLi4GlC5cbARA64bEcUMbbWdWdE73eoc/iBB9PiTMqH0dNS2Q==}
-    dependencies:
-      magic-string: 0.25.9
     dev: true
 
   /@types/chai-as-promised/7.1.5:
@@ -10406,15 +10383,6 @@ packages:
       acorn: 5.7.4
     dev: true
 
-  /acorn-dynamic-import/4.0.0_acorn@6.4.2:
-    resolution: {integrity: sha512-d3OEjQV4ROpoflsnUA8HozoIR504TFxNivYEUi6uwz0IYhBkTDXGuWlNdMtybRt3nqVx/L6XqMt0FxkXuWKZhw==}
-    deprecated: This is probably built in to whatever tool you're using. If you still need it... idk
-    peerDependencies:
-      acorn: ^6.0.0
-    dependencies:
-      acorn: 6.4.2
-    dev: true
-
   /acorn-globals/7.0.1:
     resolution: {integrity: sha512-umOSDSDrfHbTNPuNpC2NSnnA3LUrqpevPb4T9jRx4MagXNS0rs+gwiTcAvqCRmsD6utzsrzNt+ebm00SNWiC3Q==}
     dependencies:
@@ -10428,14 +10396,6 @@ packages:
       acorn: ^8
     dependencies:
       acorn: 8.8.0
-    dev: true
-
-  /acorn-jsx/5.3.2_acorn@6.4.2:
-    resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
-    peerDependencies:
-      acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
-    dependencies:
-      acorn: 6.4.2
     dev: true
 
   /acorn-jsx/5.3.2_acorn@8.8.1:
@@ -12369,19 +12329,6 @@ packages:
     resolution: {integrity: sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==}
     dependencies:
       node-int64: 0.4.0
-    dev: true
-
-  /buble/0.20.0:
-    resolution: {integrity: sha512-/1gnaMQE8xvd5qsNBl+iTuyjJ9XxeaVxAMF86dQ4EyxFJOZtsgOS8Ra+7WHgZTam5IFDtt4BguN0sH0tVTKrOw==}
-    hasBin: true
-    dependencies:
-      acorn: 6.4.2
-      acorn-dynamic-import: 4.0.0_acorn@6.4.2
-      acorn-jsx: 5.3.2_acorn@6.4.2
-      chalk: 2.4.2
-      magic-string: 0.25.9
-      minimist: 1.2.6
-      regexpu-core: 4.5.4
     dev: true
 
   /buffer-crc32/0.2.13:
@@ -23295,13 +23242,6 @@ packages:
     dependencies:
       regenerate: 1.4.2
 
-  /regenerate-unicode-properties/8.2.0:
-    resolution: {integrity: sha512-F9DjY1vKLo/tPePDycuH3dn9H1OTPIkVD9Kz4LODu+F2C75mgjAJ7x/gwy6ZcSNRAAkhNlJSOHRe8k3p+K9WhA==}
-    engines: {node: '>=4'}
-    dependencies:
-      regenerate: 1.4.2
-    dev: true
-
   /regenerate/1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
 
@@ -23338,18 +23278,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /regexpu-core/4.5.4:
-    resolution: {integrity: sha512-BtizvGtFQKGPUcTy56o3nk1bGRp4SZOTYrDtGNlqCQufptV5IkkLN6Emw+yunAJjzf+C9FQFtvq7IoA3+oMYHQ==}
-    engines: {node: '>=4'}
-    dependencies:
-      regenerate: 1.4.2
-      regenerate-unicode-properties: 8.2.0
-      regjsgen: 0.5.2
-      regjsparser: 0.6.9
-      unicode-match-property-ecmascript: 1.0.4
-      unicode-match-property-value-ecmascript: 1.2.0
-    dev: true
-
   /regexpu-core/5.1.0:
     resolution: {integrity: sha512-bb6hk+xWd2PEOkj5It46A16zFMs2mv86Iwpdu94la4S3sJ7C973h2dHpYKwIBGaWSO7cIRJ+UX0IeMaWcO4qwA==}
     engines: {node: '>=4'}
@@ -23372,22 +23300,11 @@ packages:
       unicode-match-property-ecmascript: 2.0.0
       unicode-match-property-value-ecmascript: 2.1.0
 
-  /regjsgen/0.5.2:
-    resolution: {integrity: sha512-OFFT3MfrH90xIW8OOSyUrk6QHD5E9JOTeGodiJeBS3J6IwlgzJMNE/1bZklWz5oTg+9dCMyEetclvCVXOPoN3A==}
-    dev: true
-
   /regjsgen/0.6.0:
     resolution: {integrity: sha512-ozE883Uigtqj3bx7OhL1KNbCzGyW2NQZPl6Hs09WTvCuZD5sTI4JY58bkbQWa/Y9hxIsvJ3M8Nbf7j54IqeZbA==}
 
   /regjsgen/0.7.1:
     resolution: {integrity: sha512-RAt+8H2ZEzHeYWxZ3H2z6tF18zyyOnlcdaafLrm21Bguj7uZy6ULibiAFdXEtKQY4Sy7wDTwDiOazasMLc4KPA==}
-
-  /regjsparser/0.6.9:
-    resolution: {integrity: sha512-ZqbNRz1SNjLAiYuwY0zoXW8Ne675IX5q+YHioAGbCw4X96Mjl2+dcX9B2ciaeyYjViDAfvIjFpQjJgLttTEERQ==}
-    hasBin: true
-    dependencies:
-      jsesc: 0.5.0
-    dev: true
 
   /regjsparser/0.8.4:
     resolution: {integrity: sha512-J3LABycON/VNEu3abOviqGHuB/LOtOQj8SKmfP9anY5GfAVw/SPjwzSjxGjbZXIxbGfqTHtJw58C2Li/WkStmA==}
@@ -26273,22 +26190,9 @@ packages:
       hookable: 5.5.2
     dev: true
 
-  /unicode-canonical-property-names-ecmascript/1.0.4:
-    resolution: {integrity: sha512-jDrNnXWHd4oHiTZnx/ZG7gtUTVp+gCcTTKr8L0HjlwphROEW3+Him+IpvC+xcJEFegapiMZyZe02CyuOnRmbnQ==}
-    engines: {node: '>=4'}
-    dev: true
-
   /unicode-canonical-property-names-ecmascript/2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
     engines: {node: '>=4'}
-
-  /unicode-match-property-ecmascript/1.0.4:
-    resolution: {integrity: sha512-L4Qoh15vTfntsn4P1zqnHulG0LdXgjSO035fEpdtp6YxXhMT51Q6vgM5lYdG/5X3MjS+k/Y9Xw4SFCY9IkR0rg==}
-    engines: {node: '>=4'}
-    dependencies:
-      unicode-canonical-property-names-ecmascript: 1.0.4
-      unicode-property-aliases-ecmascript: 1.1.0
-    dev: true
 
   /unicode-match-property-ecmascript/2.0.0:
     resolution: {integrity: sha512-5kaZCrbp5mmbz5ulBkDkbY0SsPOjKqVS35VpL9ulMPfSl0J0Xsm+9Evphv9CoIZFwre7aJoa94AY6seMKGVN5Q==}
@@ -26297,11 +26201,6 @@ packages:
       unicode-canonical-property-names-ecmascript: 2.0.0
       unicode-property-aliases-ecmascript: 2.0.0
 
-  /unicode-match-property-value-ecmascript/1.2.0:
-    resolution: {integrity: sha512-wjuQHGQVofmSJv1uVISKLE5zO2rNGzM/KCYZch/QQvez7C1hUhBIuZ701fYXExuufJFMPhv2SyL8CyoIfMLbIQ==}
-    engines: {node: '>=4'}
-    dev: true
-
   /unicode-match-property-value-ecmascript/2.0.0:
     resolution: {integrity: sha512-7Yhkc0Ye+t4PNYzOGKedDhXbYIBe1XEQYQxOPyhcXNMJ0WCABqqj6ckydd6pWRZTHV4GuCPKdBAUiMc60tsKVw==}
     engines: {node: '>=4'}
@@ -26309,11 +26208,6 @@ packages:
   /unicode-match-property-value-ecmascript/2.1.0:
     resolution: {integrity: sha512-qxkjQt6qjg/mYscYMC0XKRn3Rh0wFPlfxB0xkt9CfyTvpX1Ra0+rAmdX2QyAobptSEvuy4RtpPRui6XkV+8wjA==}
     engines: {node: '>=4'}
-
-  /unicode-property-aliases-ecmascript/1.1.0:
-    resolution: {integrity: sha512-PqSoPh/pWetQ2phoj5RLiaqIk4kCNwoV3CI+LfGmWLKI3rE3kl1h59XpX2BjgDrmbxD9ARtQobPGU1SguCYuQg==}
-    engines: {node: '>=4'}
-    dev: true
 
   /unicode-property-aliases-ecmascript/2.0.0:
     resolution: {integrity: sha512-5Zfuy9q/DFr4tfO7ZPeVXb1aPoeQSdeFMLpYuFebehDAhbuevLs5yxSZmIFN1tP5F9Wl4IpJrYojg85/zgyZHQ==}

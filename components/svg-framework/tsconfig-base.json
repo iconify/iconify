@@ -10,7 +10,6 @@
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"importsNotUsedAsValues": "error",
 		"skipLibCheck": true
 	}
 }

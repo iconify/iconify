@@ -7,7 +7,6 @@
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"importsNotUsedAsValues": "error",
 		"resolveJsonModule": true,
 		"jsx": "react-jsx"
 	}
