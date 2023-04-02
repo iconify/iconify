@@ -31,21 +31,21 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.33.7",
+		"@microsoft/api-extractor": "^7.34.4",
 		"@rollup/plugin-node-resolve": "^15.0.1",
-		"@rollup/plugin-typescript": "^10.0.1",
-		"@sveltejs/vite-plugin-svelte": "^2.0.2",
+		"@rollup/plugin-typescript": "^11.0.0",
+		"@sveltejs/vite-plugin-svelte": "^2.0.4",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/svelte": "^3.2.2",
-		"@tsconfig/svelte": "^3.0.0",
-		"@types/jest": "^29.2.4",
-		"@types/node": "^18.11.17",
-		"rimraf": "^3.0.2",
-		"rollup": "^3.8.1",
-		"rollup-plugin-svelte": "^7.1.0",
-		"svelte": "3.55.0",
-		"svelte-preprocess": "^5.0.0",
-		"vitest": "^0.26.2"
+		"@tsconfig/svelte": "^4.0.1",
+		"@types/jest": "^29.5.0",
+		"@types/node": "^18.15.11",
+		"rimraf": "^4.4.1",
+		"rollup": "^3.20.2",
+		"rollup-plugin-svelte": "^7.1.4",
+		"svelte": "3.58.0",
+		"svelte-preprocess": "^5.0.3",
+		"vitest": "^0.29.8"
 	},
 	"peerDependencies": {
 		"svelte": ">=3"

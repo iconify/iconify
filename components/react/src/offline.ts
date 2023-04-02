@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
