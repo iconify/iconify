@@ -25,8 +25,8 @@
 	},
 	"devDependencies": {
 		"rimraf": "^4.4.1",
-		"solid-js": "^1.7.0",
-		"typescript": "^5.0.2"
+		"solid-js": "^1.7.1",
+		"typescript": "^5.0.3"
 	},
 	"peerDependencies": {
 		"solid-js": ">=1"

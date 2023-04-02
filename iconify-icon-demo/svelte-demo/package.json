@@ -10,15 +10,15 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.2",
-		"@sveltejs/vite-plugin-svelte": "^1.0.5",
-		"@tsconfig/svelte": "^3.0.0",
+		"@iconify-icons/mdi-light": "^1.2.5",
+		"@sveltejs/vite-plugin-svelte": "^2.0.4",
+		"@tsconfig/svelte": "^4.0.1",
 		"iconify-icon": "workspace:*",
-		"svelte": "^3.50.0",
-		"svelte-check": "^2.9.0",
-		"svelte-preprocess": "^4.10.7",
-		"tslib": "^2.4.0",
-		"typescript": "^4.8.2",
-		"vite": "^3.1.0"
+		"svelte": "^3.58.0",
+		"svelte-check": "^3.1.4",
+		"svelte-preprocess": "^5.0.3",
+		"tslib": "^2.5.0",
+		"typescript": "^5.0.3",
+		"vite": "^4.2.1"
 	}
 }
