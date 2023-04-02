@@ -73,7 +73,7 @@ export function addCollection(
 /**
  * Component
  */
-export const Icon = defineComponent({
+export const Icon = defineComponent<IconProps>({
 	// Do not inherit other attributes: it is handled by render()
 	inheritAttrs: false,
 
