@@ -9,9 +9,9 @@
 	},
 	"keywords": [],
 	"devDependencies": {
+		"@iconify-json/mdi-light": "^1.1.6",
+		"@iconify-json/vscode-icons": "^1.1.22",
 		"@iconify/tailwind": "workspace:*",
-		"@iconify-json/mdi-light": "^1.1.5",
-		"@iconify-json/vscode-icons": "^1.1.21",
-		"tailwindcss": "^3.2.4"
+		"tailwindcss": "^3.3.1"
 	}
 }
