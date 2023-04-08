@@ -1,6 +1,7 @@
 {
 	"extends": "./tsconfig-base.json",
 	"include": ["src/**/*.ts", ".eslintrc.js"],
+	"exclude": ["src/svelte.d.ts"],
 	"compilerOptions": {
 		"rootDir": "./src",
 		"outDir": "./lib"
