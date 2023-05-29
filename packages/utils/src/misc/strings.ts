@@ -25,7 +25,7 @@ export function camelToKebab(key: string): string {
 }
 
 /**
- * Convert string string to snake-case
+ * Convert camelCase string to snake-case
  */
 export function snakelize(str: string): string {
 	const kebab = camelToKebab(str);
