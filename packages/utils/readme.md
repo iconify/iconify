@@ -14,10 +14,10 @@ npm install @iconify/utils --save
 
 ## Documentation
 
-Documentation is available at [Iconify documentation website](https://docs.iconify.design/tools/utils/).
+Documentation is available at [Iconify documentation website](https://iconify.design/docs/libraries/utils/).
 
 ## License
 
 The library is released with MIT license.
 
-© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2021-PRESENT Vjacheslav Trushkin

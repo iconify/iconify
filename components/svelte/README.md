@@ -11,13 +11,13 @@ Iconify icon component is nothing like that. Component does not include any icon
 
 That means:
 
--   One syntax for over 100,000 icons from 100+ icon sets.
+-   One syntax for over 150,000 icons from 100+ icon sets.
 -   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
 -   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
 
 For more information about Iconify project visit [https://iconify.design/](https://iconify.design/).
 
-For extended documentation visit [Iconify for Svelte documentation](https://docs.iconify.design/icon-components/svelte/).
+For extended documentation visit [Iconify for Svelte documentation](https://iconify.design/docs/icon-components/svelte/).
 
 ## Installation
 
@@ -47,19 +47,22 @@ Then use component with icon data as "icon" parameter:
 <Icon icon="mdi-light:home" />
 ```
 
-Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 100,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 150,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
 
-## Offline Usage
+## Offline usage
 
-Retrieving icon data from Iconify API requires visitor to be online. What if you want to use component offline or on local network?
+This icon component is designed to be used with Iconify API, loading icon data on demand instead of bundling it.
 
-If you want to use icon component without relying on public Iconify API, there are several options:
+If you want to use icons without Iconify API, [there are many other options available](https://iconify.design/docs/usage/).
 
-1. You can import icon data from Iconify Icons packages.
-2. You can create custom icon bundles (more efficient, but requires more coding).
-3. You can host your own Iconify API instead of relying on third party service.
+## Web component
 
-See [Iconify for Svelte offline use documentation](https://docs.iconify.design/icon-components/svelte/offline.html) or [Iconify API documentation](https://docs.iconify.design/sources/api/).
+If you are experiencing issues with SSR hydration, there is an alternative solution available: [Iconify Icon web component](https://iconify.design/docs/iconify-icon/).
+
+Web component is preferred to this component if:
+
+-   Your page is performing slowly. Web component separates icon rendering in shadow DOM, improving performance.
+-   You are experiencing CSS conflicts.
 
 ## Icon Names
 
@@ -74,7 +77,7 @@ It has 3 parts, separated by ":":
 -   prefix is name of icon set.
 -   name is name of icon.
 
-See [Iconify for Svelte icon names documentation](https://docs.iconify.design/icon-components/svelte/icon-name.html) for more detailed explanation.
+See [Iconify for Svelte icon names documentation](https://iconify.design/docs/icon-components/svelte/icon-name.html) for more detailed explanation.
 
 ## Using icon data
 
@@ -89,7 +92,7 @@ function renderHomeIcon() {
 }
 ```
 
-See [icon packages documentation](https://docs.iconify.design/sources/npm/) for more details.
+See [icon packages documentation](https://iconify.design/docs/icons/) for more details.
 
 ### ES / CommonJS packages
 
@@ -109,9 +112,9 @@ import home from '@iconify/icons-mdi-light/home';
 
 All icons are available as ES modules for modern bundler and as CommonJS modules for outdated bundlers. ES modules use format `@iconify-icons/{prefix}`, CommonJS modules use `@iconify/icons-{prefix}`.
 
-For more details, see [icon packages documentation](https://docs.iconify.design/sources/npm/).
+For more details, see [icon packages documentation](https://iconify.design/docs/icons/).
 
-## Inline icon
+## Vertical alignment
 
 Icons have 2 modes: inline and block. Difference between modes is `vertical-align` that is added to inline icons.
 
@@ -291,7 +294,7 @@ Rotating 16x24 icon by 90 degrees results in:
 -   CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
 -   Icon transformation changes bounding box to 24x16, rotating content inside an icon.
 
-See [icon transformations documentation](https://docs.iconify.design/icon-components/svelte/transform.html) for more details.
+See [icon transformations documentation](https://iconify.design/docs/icon-components/svelte/transform.html) for more details.
 
 #### Flipping an icon
 
@@ -401,12 +404,12 @@ Instead of using `<Icon />`, you must use `<svelte:component />` to make sure co
 
 ## Full documentation
 
-For extended documentation visit [Iconify for Svelte documentation](https://docs.iconify.design/icon-components/svelte/).
+For extended documentation visit [Iconify for Svelte documentation](https://iconify.design/docs/icon-components/svelte/).
 
 ## License
 
 The Svelte component is released with MIT license.
 
-© 2020 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2020-PRESENT Vjacheslav Trushkin
 
 See [Iconify icon sets page](https://icon-sets.iconify.design/) for list of collections and their licenses.

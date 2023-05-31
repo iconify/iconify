@@ -11,7 +11,7 @@
 		"test": "tsc --noEmit --strict --typeRoots '[]' types.d.ts"
 	},
 	"bugs": "https://github.com/iconify/iconify/issues",
-	"homepage": "https://github.com/iconify/iconify",
+	"homepage": "https://iconify.design/docs/types/",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",

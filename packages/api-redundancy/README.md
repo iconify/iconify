@@ -2,15 +2,13 @@
 
 This package provides redundancy management for scripts that use API. It detects API connection timeouts and re-sends queries to backup API host(s).
 
-It was designed to be used with Iconify version 2.
+It was designed to be used with Iconify icon components and plugins. It ensures that icon data is automatically retrieved from backup API in case main API server is unreachable, improving API uptime.
 
 ## Usage
 
-TODO
-
 Due to time constraints, documentation is not available.
 
-See `@iconify/iconify` version 2 and `@iconify/icon-finder` source code for usage examples.
+See `lib/api/` in `core` package in sibling directory of this repository for usage.
 
 ## License
 
@@ -20,4 +18,4 @@ This package is licensed under MIT license.
 
 Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
 
-© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2021-PRESENT Vjacheslav Trushkin

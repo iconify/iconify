@@ -66,7 +66,7 @@ Main advantage of web component over other implementations is shadow DOM. Using 
 
 Below is a shortened version of documentation.
 
-Full documentation is [available on Iconify documentation website](https://docs.iconify.design/iconify-icon/).
+Full documentation is [available on Iconify documentation website](https://iconify.design/docs/iconify-icon/).
 
 ## How does it work?
 
@@ -130,38 +130,15 @@ Relying on a third party service is often not an option. Many companies and deve
 
 Iconify API and icon sets are all [available on GitHub](https://github.com/iconify), making it easy to host API on your own server.
 
-For more details see [Iconify API documentation](https://docs.iconify.design/api/).
+For more details see [Iconify API documentation](https://iconify.design/docs/api/).
 
-You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://docs.iconify.design/api/hosting.html).
+You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://iconify.design/docs/api/hosting.html).
 
-### Using Iconify offline
+## Offline usage
 
-While the default method of retrieving icons is to retrieve them from API, there are other options. Iconify Icon web component is designed to be as flexible as possible.
+Iconify Icon web component is designed to be used with Iconify API, loading icon data on demand instead of bundling it..
 
-Easiest option to serve icons without API is by creating icon bundles.
-
-Icon bundles are small scripts that you can load after Iconify Icon web component or bundle it together in one file.
-
-For more details see [icon bundles in Iconify documentation](https://docs.iconify.design/icon-components/bundles/).
-
-Another option is to import icons and bundle them with Iconify, similar to React and Vue components. Example:
-
-```js
-// Installation: npm install --save-dev iconify-icon
-import 'iconify-icon';
-// Installation: npm install --save-dev @iconify/icons-dashicons
-import adminUsers from '@iconify/icons-dashicons/admin-users';
-
-// Unlike React and Vue components, in SVG framework each icon added with addIcon() name must have a
-// prefix and a name. In this example prefix is "dashicons" and name is "admin-users".
-addIcon('dashicons:admin-users', adminUsers);
-```
-
-```html
-<iconify-icon icon="dashicons:admin-users"></iconify-icon>
-```
-
-See [icon packages documentation](https://docs.iconify.design/icons/icons.html) for more details.
+If you want to use icons without Iconify API, [there are many other options available](https://iconify.design/docs/usage/).
 
 ## Color
 
@@ -323,4 +300,4 @@ This package is licensed under MIT license.
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2022-PRESENT Vjacheslav Trushkin

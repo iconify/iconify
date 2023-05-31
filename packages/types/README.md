@@ -456,4 +456,4 @@ This package is licensed under MIT license.
 
 Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
 
-© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2021-PRESENT Vjacheslav Trushkin

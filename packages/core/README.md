@@ -18,7 +18,7 @@ Documentation is currently not available because there is no demand for it.
 
 If anyone would like to create custom Iconify implementation and needs documentation for Iconify Core, please create an issue on Iconify repository on GitHub.
 
-You can browse [icon components documentation](https://docs.iconify.design/icon-components/), which explains how most functions exported by core package work. Components mostly just re-export functions from this package.
+You can browse [icon components documentation](https://iconify.design/docs/icon-components/), which explains how most functions exported by core package work. Components mostly just re-export functions from this package.
 
 ## License
 
@@ -28,4 +28,4 @@ This package is licensed under MIT license.
 
 Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.0 licence, which was messy and confusing. This was later changed to MIT for simplicity.
 
-© 2021 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2021-PRESENT Vjacheslav Trushkin

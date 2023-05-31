@@ -3,7 +3,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 100+ icon sets with more than 100,000 icons.
+-   Out of the box includes 100+ icon sets with more than 150,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -53,20 +53,27 @@ or this:
 
 &nbsp;&nbsp;&nbsp; ![Screenshot](https://iconify.design/assets/images/inline-sample.png)
 
-That is it. Change `data-icon` value to the name of the icon you want to use. There are over 100,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
+That is it. Change `data-icon` value to the name of the icon you want to use. There are over 150,000 premade icons to choose from, including FontAwesome, Material Design Icons, Tabler Icons, Box Icons, Unicons, Bootstrap Icons and even several emoji sets.
 
 Do you want to make your own icon sets? Everything you need is [available on GitHub](https://github.com/iconify): tools for creating custom icon sets, Iconify API application and documentation to help you.
+
+## Web component
+
+SVG framework was designed a while ago, when browsers had poor support for web components.
+
+However, this is no longer an issue. All modern browsers support web components.
+
+A newer replacement for SVG framework is available: [Iconify Icon web component](https://iconify.design/docs/iconify-icon/). Consider switching to it.
 
 ## Full documentation
 
 Below is a shortened version of documentation.
 
-Full documentation is available on Iconify website:
+Full documentation is available on [Iconify website](https://iconify.design/docs/):
 
--   [SVG framework documentation](https://docs.iconify.design/icon-components/svg-framework/).
--   [Iconify API documentation](https://docs.iconify.design/api/).
--   [Creating icon bundles](https://docs.iconify.design/icon-components/bundles/).
--   [Iconify Tools documentation](https://docs.iconify.design/tools/tools2/).
+-   [SVG framework documentation](https://iconify.design/docs/icon-components/svg-framework/).
+-   [Iconify API documentation](https://iconify.design/docs/api/).
+-   [Iconify Tools documentation](https://iconify.design/docs/libraries/tools/).
 
 ## How does it work?
 
@@ -80,7 +87,17 @@ Iconify SVG framework finds those placeholders and uses the following logic to p
 
 This is done in a fraction of a second. Iconify SVG framework watches DOM for changes, so whenever you add new placeholders, it immediately replaces them with `SVG`, making it easy to use with dynamic content, such as AJAX forms.
 
-### Inline mode
+## Offline usage
+
+SVG framework is designed to be used with Iconify API, loading icon data on demand instead of bundling it.
+
+If you want to use icons without Iconify API, [there are many other options available](https://iconify.design/docs/usage/).
+
+## Attributes
+
+There are optional attributes to customise icon appearance.
+
+### Vertical alignment
 
 Code examples above use different class names: the first example uses "iconify", the second example uses "iconify-inline".
 
@@ -139,38 +156,9 @@ Relying on a third party service is often not an option. Many companies and deve
 
 Iconify API and icon sets are all [available on GitHub](https://github.com/iconify), making it easy to host API on your own server.
 
-For more details see [Iconify API documentation](https://docs.iconify.design/api/).
+For more details see [Iconify API documentation](https://iconify.design/docs/api/).
 
-You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://docs.iconify.design/api/hosting.html).
-
-### Using Iconify offline
-
-While the default method of retrieving icons is to retrieve them from API, there are other options. Iconify SVG framework is designed to be as flexible as possible.
-
-Easiest option to serve icons without API is by creating icon bundles.
-
-Icon bundles are small scripts that you can load after Iconify SVG framework or bundle it together in one file.
-
-For more details see [icon bundles in Iconify documentation](https://docs.iconify.design/icon-components/bundles/).
-
-Another option is to import icons and bundle them with Iconify, similar to React and Vue components. Example:
-
-```js
-// Installation: npm install --save-dev @iconify/iconify
-import Iconify from '@iconify/iconify/offline';
-// Installation: npm install --save-dev @iconify/icons-dashicons
-import adminUsers from '@iconify/icons-dashicons/admin-users';
-
-// Unlike React and Vue components, in SVG framework each icon added with addIcon() name must have a
-// prefix and a name. In this example prefix is "dashicons" and name is "admin-users".
-Iconify.addIcon('dashicons:admin-users', adminUsers);
-```
-
-```html
-<span class="iconify" data-icon="dashicons:admin-users"></span>
-```
-
-See [Iconify for React](https://docs.iconify.design/icon-components/react/) documentation for more details.
+You can also create custom Iconify API to serve your own icons. For more details see [hosting custom icons in Iconify documentation](https://iconify.design/docs/api/hosting.html).
 
 ## Color
 
@@ -280,7 +268,7 @@ Samples:
 
 ## Available icons
 
-There are over 100,000 icons to choose from.
+There are over 150,000 icons to choose from.
 
 General collections (monotone icons):
 
@@ -325,4 +313,4 @@ Previous versions of this package were dual-licensed under Apache 2.0 and GPL 2.
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2019 - 2022 Vjacheslav Trushkin / Iconify OÜ
+© 2019-PRESENT Vjacheslav Trushkin

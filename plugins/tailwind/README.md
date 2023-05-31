@@ -1,6 +1,6 @@
 # Iconify for Tailwind CSS
 
-This plugin creates CSS for over 100k open source icons.
+This plugin creates CSS for over 150k open source icons.
 
 [Browse icons at Iconify](https://icon-sets.iconify.design/) to see all icons.
 
@@ -27,7 +27,7 @@ In Iconify all icon names use the following format: `{prefix}:{name}`. Due to li
 
 ### Color, size, alignment
 
-Monoton icons can change color! See [Iconify documentation](https://docs.iconify.design/icon-components/css.html#mask) for longer explanation.
+Monoton icons can change color! See [Iconify documentation](https://iconify.design/docs/usage/css/#monotone) for longer explanation.
 
 To change icon size or color, change font size or text color, like you would with any text.
 
@@ -43,13 +43,13 @@ To align icon below baseline, add negative vertical alignment, like this (you ca
 
 Plugin does not include icon sets. You need to install icon sets separately.
 
-To install all 100k+ icons, install `@iconify/json` as a dev dependency.
+To install all 150k+ icons, install `@iconify/json` as a dev dependency.
 
 If you do not want to install big package, install `@iconify-json/` packages for icon sets that you use.
 
 See [Iconify icon sets](https://icon-sets.iconify.design/) for list of available icon sets and icons.
 
-See [Iconify documentation](https://docs.iconify.design/icons/json.html) for list of packages.
+See [Iconify documentation](https://iconify.design/docs/icons/json.html) for list of packages.
 
 ## Tailwind config
 
@@ -119,4 +119,4 @@ This package is licensed under MIT license.
 This license does not apply to icons. Icons are released under different licenses, see each icon set for details.
 Icons available by default are all licensed under some kind of open-source or free license.
 
-© 2023 Vjacheslav Trushkin / Iconify OÜ
+© 2023-PRESENT Vjacheslav Trushkin
