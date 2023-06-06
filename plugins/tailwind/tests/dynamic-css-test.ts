@@ -9,10 +9,12 @@ describe('Testing dynamic CSS rules', () => {
 			'width': '1em',
 			'height': '1em',
 			'background-color': 'currentColor',
-			'-webkit-mask': 'no-repeat center / 100%',
-			'mask': 'no-repeat center / 100%',
 			'-webkit-mask-image': 'var(--svg)',
 			'mask-image': 'var(--svg)',
+			'-webkit-mask-repeat': 'no-repeat',
+			'mask-repeat': 'no-repeat',
+			'-webkit-mask-size': '100% 100%',
+			'mask-size': '100% 100%',
 			'--svg': data['--svg'],
 		});
 	});

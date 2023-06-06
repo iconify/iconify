@@ -23,19 +23,21 @@ export function getCommonCSSRules(
 
 	switch (options.mode) {
 		case 'background':
-			result['background'] = 'no-repeat center / 100%';
 			if (varName) {
 				result['background-image'] = 'var(--' + varName + ')';
 			}
+			result['background-repeat'] = 'no-repeat';
+			result['background-size'] = '100% 100%';
 			break;
 
 		case 'mask':
 			result['background-color'] = 'currentColor';
-			result['mask'] = result['-webkit-mask'] = 'no-repeat center / 100%';
 			if (varName) {
 				result['mask-image'] = result['-webkit-mask-image'] =
 					'var(--' + varName + ')';
 			}
+			result['mask-repeat'] = result['-webkit-mask-repeat'] = 'no-repeat';
+			result['mask-size'] = result['-webkit-mask-size'] = '100% 100%';
 			break;
 	}
 

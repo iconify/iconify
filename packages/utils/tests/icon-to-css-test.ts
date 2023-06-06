@@ -21,7 +21,8 @@ describe('Testing CSS for icon', () => {
   display: inline-block;
   width: 1.5em;
   height: 1em;
-  background: no-repeat center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   background-image: ${expectedURL};
 }
 `);
@@ -50,7 +51,8 @@ describe('Testing CSS for icon', () => {
   width: 1em;
   height: 1em;
   content: '';
-  background: no-repeat center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   background-image: ${expectedURL};
 }
 `);
@@ -76,10 +78,12 @@ describe('Testing CSS for icon', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   --svg: ${expectedURL};
 }
 `);
@@ -105,7 +109,8 @@ describe('Testing CSS for icon', () => {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background: no-repeat center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   background-image: ${expectedURL};
 }
 `);
@@ -130,8 +135,10 @@ describe('Testing CSS for icon', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   -webkit-mask-image: ${expectedURL};
   mask-image: ${expectedURL};
 }

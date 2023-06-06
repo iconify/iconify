@@ -41,10 +41,12 @@ describe('Testing CSS for multiple icons', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .icon--test-prefix--activity {
@@ -70,7 +72,8 @@ describe('Testing CSS for multiple icons', () => {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background: no-repeat center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .icon--test-prefix--123 {
@@ -88,7 +91,8 @@ describe('Testing CSS for multiple icons', () => {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background: no-repeat center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .icon--test-prefix--empty {
@@ -149,10 +153,12 @@ describe('Testing CSS for multiple icons', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .icon--bi--activity {
@@ -219,8 +225,10 @@ describe('Testing CSS for multiple icons', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .icon--bi.icon--bi--activity {
@@ -291,10 +299,12 @@ describe('Testing CSS for multiple icons', () => {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .test--activity {
@@ -363,10 +373,12 @@ describe('Testing CSS for multiple icons', () => {
   width: 1.5em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask: no-repeat center / 100%;
-  mask: no-repeat center / 100%;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   --svg: ${expectedURL('activity')};
 }
 `);
