@@ -1,5 +1,6 @@
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { cleanUpInnerHTML } from '@iconify/utils/lib/svg/inner-html';
 
 /**
  * Render node as <svg>
@@ -21,6 +22,7 @@ export function renderSVG(data: IconifyIconBuildResult): Element {
 	}
 
 	// Generate SVG
-	node.innerHTML = iconToHTML(data.body, attr);
+	const html = iconToHTML(data.body, attr);
+	node.innerHTML = cleanUpInnerHTML(html);
 	return node.firstChild as HTMLElement;
 }

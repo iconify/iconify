@@ -352,6 +352,11 @@
 			"import": "./lib/svg/id.mjs",
 			"types": "./lib/svg/id.d.ts"
 		},
+		"./lib/svg/inner-html": {
+			"require": "./lib/svg/inner-html.cjs",
+			"import": "./lib/svg/inner-html.mjs",
+			"types": "./lib/svg/inner-html.d.ts"
+		},
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs",

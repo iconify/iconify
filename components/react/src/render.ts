@@ -8,6 +8,7 @@ import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
+import { cleanUpInnerHTML } from '@iconify/utils/lib/svg/inner-html';
 import type {
 	IconifyIconCustomisations,
 	IconifyRenderMode,
@@ -48,7 +49,7 @@ const propsToAdd: Record<string, string> = {
 	Size: '100% 100%',
 };
 const propsToAddTo: Record<string, Record<string, string>> = {
-	webkitMask: monotoneProps,
+	WebkitMask: monotoneProps,
 	mask: monotoneProps,
 	background: coloredProps,
 };
@@ -202,9 +203,11 @@ export const render = (
 
 		// Add icon stuff
 		componentProps.dangerouslySetInnerHTML = {
-			__html: replaceIDs(
-				item.body,
-				id ? () => id + 'ID' + localCounter++ : 'iconifyReact'
+			__html: cleanUpInnerHTML(
+				replaceIDs(
+					item.body,
+					id ? () => id + 'ID' + localCounter++ : 'iconifyReact'
+				)
 			),
 		};
 		return React.createElement('svg', componentProps);

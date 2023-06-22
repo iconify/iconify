@@ -2,6 +2,7 @@ import type { IconifyIcon } from '@iconify/utils/lib/icon/defaults';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { cleanUpInnerHTML } from '@iconify/utils/lib/svg/inner-html';
 import {
 	elementDataProperty,
 	IconifyElement,
@@ -40,7 +41,7 @@ export function renderInlineSVG(
 		'role': 'img',
 		...renderData.attributes,
 	});
-	span.innerHTML = html;
+	span.innerHTML = cleanUpInnerHTML(html);
 
 	// Get SVG element
 	const svg = span.childNodes[0] as IconifyElement;

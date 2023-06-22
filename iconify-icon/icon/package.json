@@ -2,7 +2,7 @@
 	"name": "iconify-icon",
 	"description": "Icon web component that loads icon data on demand. Over 150,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"license": "MIT",
 	"main": "./dist/iconify-icon.cjs",
 	"types": "./dist/iconify-icon.d.ts",
