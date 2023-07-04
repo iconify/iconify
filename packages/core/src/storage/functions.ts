@@ -11,7 +11,14 @@ import { getStorage, addIconToStorage, addIconSet } from './storage';
  */
 export interface IconifyStorageFunctions {
 	/**
-	 * Check if icon exists
+	 * Check if icon data is available
+	 */
+	iconLoaded: (name: string) => boolean;
+
+	/**
+	 * Older, badly named, version of iconLoaded()
+	 *
+	 * @deprecated
 	 */
 	iconExists: (name: string) => boolean;
 
@@ -133,9 +140,9 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 }
 
 /**
- * Check if icon exists
+ * Check if icon data is available
  */
-export function iconExists(name: string): boolean {
+export function iconLoaded(name: string): boolean {
 	return !!getIconData(name);
 }
 

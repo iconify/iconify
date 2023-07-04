@@ -110,7 +110,8 @@ export const IconifyIconComponent = defineIconifyIcon() || exportFunctions();
 const {
 	enableCache,
 	disableCache,
-	iconExists,
+	iconLoaded,
+	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,
@@ -126,7 +127,8 @@ const {
 export {
 	enableCache,
 	disableCache,
-	iconExists,
+	iconLoaded,
+	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

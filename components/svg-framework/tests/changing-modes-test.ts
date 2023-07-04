@@ -1,4 +1,4 @@
-import { iconExists } from '@iconify/core/lib/storage/functions';
+import { iconLoaded } from '@iconify/core/lib/storage/functions';
 import {
 	fakeAPI,
 	nextPrefix,
@@ -27,7 +27,7 @@ describe('Changing render modes', () => {
 		const iconName = `@${provider}:${prefix}:home`;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,

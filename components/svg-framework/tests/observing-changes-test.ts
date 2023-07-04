@@ -1,4 +1,4 @@
-import { iconExists } from '@iconify/core/lib/storage/functions';
+import { iconLoaded } from '@iconify/core/lib/storage/functions';
 import {
 	fakeAPI,
 	nextPrefix,
@@ -28,7 +28,7 @@ describe('Observing DOM changes', () => {
 		const iconName = `@${provider}:${prefix}:home`;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,
@@ -89,8 +89,8 @@ describe('Observing DOM changes', () => {
 		let sendSecondIcon = null;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
-		expect(iconExists(iconName2)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
+		expect(iconLoaded(iconName2)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,
@@ -185,8 +185,8 @@ describe('Observing DOM changes', () => {
 		let sendSecondIcon = null;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
-		expect(iconExists(iconName2)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
+		expect(iconLoaded(iconName2)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,
@@ -263,7 +263,7 @@ describe('Observing DOM changes', () => {
 
 		// Send first API query
 		sendFirstIcon();
-		await awaitUntil(() => iconExists(iconName));
+		await awaitUntil(() => iconLoaded(iconName));
 
 		// Wait a bit more
 		await nextTick([0, 0, 0]);

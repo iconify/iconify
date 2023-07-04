@@ -1,4 +1,4 @@
-import { iconExists } from '@iconify/core/lib/storage/functions';
+import { iconLoaded } from '@iconify/core/lib/storage/functions';
 import { loadIcon } from '@iconify/core/lib/api/icons';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { fakeAPI, nextPrefix, mockAPIData } from '../src/tests/helpers';
@@ -29,7 +29,7 @@ describe('Testing mock API', () => {
 		});
 
 		// Check if icon has been loaded
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 
 		// Load icon
 		const data = await loadIcon(iconName);

@@ -88,8 +88,8 @@ describe('Testing icon component with API', () => {
 		sendQuery();
 
 		// Wait until icon exists
-		const iconExists = node.iconExists;
-		await awaitUntil(() => iconExists(iconName));
+		const iconLoaded = node.iconLoaded;
+		await awaitUntil(() => iconLoaded(iconName));
 
 		// Wait for render
 		await nextTick();

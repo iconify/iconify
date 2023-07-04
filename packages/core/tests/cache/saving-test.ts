@@ -11,7 +11,7 @@ import {
 } from '../../lib/browser-storage/data';
 import { getBrowserStorageItemsCount } from '../../lib/browser-storage/count';
 import { getBrowserStorage } from '../../lib/browser-storage/global';
-import { getStorage, iconExists } from '../../lib/storage/storage';
+import { getStorage, iconInStorage } from '../../lib/storage/storage';
 import { nextPrefix, createCache, reset } from '../../lib/browser-storage/mock';
 import {
 	browserCacheCountKey,
@@ -51,7 +51,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(iconInStorage(storage, 'foo')).toBe(false);
 		expect(storage.lastModifiedCached).toBeUndefined();
 
 		// Counter should be 0
@@ -64,7 +64,7 @@ describe('Testing saving to localStorage', () => {
 		storeInBrowserStorage(storage, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(iconInStorage(storage, 'foo')).toBe(false);
 
 		// lastModified is missing, so should not have updated
 		expect(storage.lastModifiedCached).toBeUndefined();
@@ -571,7 +571,7 @@ describe('Testing saving to localStorage', () => {
 		});
 
 		// Check icon storage
-		expect(iconExists(storage, 'foo1')).toBe(false);
+		expect(iconInStorage(storage, 'foo1')).toBe(false);
 
 		// Load cache
 		initBrowserStorage();
@@ -604,7 +604,7 @@ describe('Testing saving to localStorage', () => {
 		storeInBrowserStorage(storage, icon);
 
 		// Storing in cache should not add item to storage
-		expect(iconExists(storage, 'foo')).toBe(false);
+		expect(iconInStorage(storage, 'foo')).toBe(false);
 
 		// Check data that should have been updated because storeCache()
 		// should call load function before first execution
@@ -708,10 +708,10 @@ describe('Testing saving to localStorage', () => {
 
 		// Check icon storage
 		for (let i = 0; i < 3; i++) {
-			expect(iconExists(storage, 'foo' + i.toString())).toBe(true);
+			expect(iconInStorage(storage, 'foo' + i.toString())).toBe(true);
 		}
 		for (let i = 0; i < 4; i++) {
-			expect(iconExists(storage, 'bar' + i.toString())).toBe(true);
+			expect(iconInStorage(storage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Add new item to localStorage
@@ -833,10 +833,10 @@ describe('Testing saving to localStorage', () => {
 
 		// Check icon storage
 		for (let i = 0; i < 3; i++) {
-			expect(iconExists(storage, 'foo' + i.toString())).toBe(true);
+			expect(iconInStorage(storage, 'foo' + i.toString())).toBe(true);
 		}
 		for (let i = 0; i < 4; i++) {
-			expect(iconExists(storage, 'bar' + i.toString())).toBe(true);
+			expect(iconInStorage(storage, 'bar' + i.toString())).toBe(true);
 		}
 
 		// Set localStorage to read-only

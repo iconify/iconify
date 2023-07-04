@@ -3,7 +3,7 @@
  */
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import { Icon, loadIcons, iconExists } from '../../';
+import { Icon, loadIcons, iconLoaded } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock.cjs';
 import { provider, nextPrefix } from './load';
 import { defaultIconResult } from '../empty';
@@ -36,7 +36,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Load icon
 			loadIcons([iconName], (loaded, missing, pending) => {
@@ -50,7 +50,7 @@ describe('Rendering icon', () => {
 				]);
 				expect(missing).toMatchObject([]);
 				expect(pending).toMatchObject([]);
-				expect(iconExists(iconName)).toBe(true);
+				expect(iconLoaded(iconName)).toBe(true);
 
 				// Render component
 				const Wrapper = {
@@ -105,7 +105,7 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toBe(false);
@@ -114,12 +114,12 @@ describe('Rendering icon', () => {
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toBe(true);
+					expect(iconLoaded(iconName)).toBe(true);
 				},
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const Wrapper = {
@@ -179,13 +179,13 @@ describe('Rendering icon', () => {
 				response: 404,
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// Send icon data
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// Check if state was changed after few ticks
 					Vue.nextTick(() => {
@@ -201,7 +201,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const Wrapper = {

@@ -98,9 +98,9 @@ export function addIconToStorage(
 }
 
 /**
- * Check if icon exists
+ * Check if icon is available in storage
  */
-export function iconExists(storage: IconStorage, name: string): boolean {
+export function iconInStorage(storage: IconStorage, name: string): boolean {
 	return !!storage.icons[name];
 }
 

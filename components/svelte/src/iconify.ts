@@ -50,7 +50,8 @@ export { IconifyIconOnLoad } from './functions';
 export { enableCache, disableCache } from './functions';
 
 export {
-	iconExists,
+	iconLoaded,
+	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

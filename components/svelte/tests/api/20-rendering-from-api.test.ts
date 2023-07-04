@@ -3,7 +3,7 @@
  */
 import { tick } from 'svelte';
 import { render } from '@testing-library/svelte';
-import Icon, { loadIcons, iconExists } from '../../dist';
+import Icon, { loadIcons, iconLoaded } from '../../dist';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
@@ -35,7 +35,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Load icon
 			loadIcons([iconName], (loaded, missing, pending) => {
@@ -49,7 +49,7 @@ describe('Rendering icon', () => {
 				]);
 				expect(missing).toMatchObject([]);
 				expect(pending).toMatchObject([]);
-				expect(iconExists(iconName)).toBe(true);
+				expect(iconLoaded(iconName)).toBe(true);
 
 				// Render component
 				const component = render(Icon, {
@@ -98,7 +98,7 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toBe(false);
@@ -107,12 +107,12 @@ describe('Rendering icon', () => {
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toBe(true);
+					expect(iconLoaded(iconName)).toBe(true);
 				},
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const component = render(Icon, {
@@ -167,13 +167,13 @@ describe('Rendering icon', () => {
 				response: 404,
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// Send icon data
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// Check if state was changed on next few ticks
 					tick()
@@ -203,7 +203,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const component = render(Icon, {

@@ -1,4 +1,4 @@
-import { iconExists, addIcon } from '@iconify/core/lib/storage/functions';
+import { iconLoaded, addIcon } from '@iconify/core/lib/storage/functions';
 import {
 	fakeAPI,
 	nextPrefix,
@@ -26,11 +26,11 @@ describe('Scanning DOM', () => {
 		const iconName = `@${provider}:${prefix}:home`;
 
 		// Add icon
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 		addIcon(iconName, {
 			body: '<g />',
 		});
-		expect(iconExists(iconName)).toBe(true);
+		expect(iconLoaded(iconName)).toBe(true);
 
 		// Setup DOM and wait for it to be ready
 		setupDOM(`<span class="iconify" data-icon="${iconName}"></span>`);
@@ -64,7 +64,7 @@ describe('Scanning DOM', () => {
 		const iconName = `@${provider}:${prefix}:home`;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,
@@ -123,7 +123,7 @@ describe('Scanning DOM', () => {
 		const iconName = `@${provider}:${prefix}:home`;
 
 		// Add icon with API
-		expect(iconExists(iconName)).toBe(false);
+		expect(iconLoaded(iconName)).toBe(false);
 		mockAPIData({
 			type: 'icons',
 			provider,

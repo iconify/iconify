@@ -3,7 +3,7 @@ import { setAPIModule } from '../../lib/api/modules';
 import { loadIcons } from '../../lib/api/icons';
 import type { IconifyMockAPIDelayDoneCallback } from '../../lib/api/modules/mock';
 import { mockAPIModule, mockAPIData } from '../../lib/api/modules/mock';
-import { getStorage, iconExists } from '../../lib/storage/storage';
+import { getStorage, iconInStorage } from '../../lib/storage/storage';
 import { sendAPIQuery } from '../../lib/api/query';
 
 describe('Testing mock API module', () => {
@@ -278,13 +278,13 @@ describe('Testing mock API module', () => {
 				delay: (next) => {
 					// Icon should not be loaded yet
 					const storage = getStorage(provider, prefix);
-					expect(iconExists(storage, name)).toBe(false);
+					expect(iconInStorage(storage, name)).toBe(false);
 
 					// Set data
 					next();
 
 					// Icon should be loaded now
-					expect(iconExists(storage, name)).toBe(true);
+					expect(iconInStorage(storage, name)).toBe(true);
 
 					fulfill(true);
 				},

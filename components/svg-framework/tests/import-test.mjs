@@ -7,7 +7,7 @@ import { loadIcons } from '../dist/iconify.mjs';
 
 // Shortcut for offline module
 import IconifyOffline from '@iconify/iconify/offline';
-import { iconExists } from '@iconify/iconify/offline';
+import { iconLoaded, iconExists } from '@iconify/iconify/offline';
 
 // Direct link to offline module
 import { addCollection } from '../dist/iconify.without-api.mjs';
@@ -37,9 +37,14 @@ test(typeof Iconify.addIcon, 'function', 'Testing addIcon in default export');
  */
 test(typeof IconifyOffline, 'object', 'Testing default offline export');
 test(
+	typeof IconifyOffline.iconLoaded,
+	'function',
+	'Testing iconLoaded in default offline export'
+);
+test(
 	typeof IconifyOffline.iconExists,
 	'function',
-	'Testing iconExists in default offline export'
+	'Testing deprecated iconExists in default offline export'
 );
 test(
 	typeof IconifyOffline.loadIcons,
@@ -56,5 +61,10 @@ test(typeof loadIcons, 'function', 'Testing loadIcons named export');
 /**
  * Test exports without API
  */
-test(typeof iconExists, 'function', 'Testing iconExists named export');
+test(typeof iconLoaded, 'function', 'Testing iconLoaded named export');
+test(
+	typeof iconExists,
+	'function',
+	'Testing deprecated iconExists named export'
+);
 test(typeof addCollection, 'function', 'Testing addCollection named export');

@@ -5,7 +5,7 @@ import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
-	iconExists,
+	iconLoaded,
 	getIcon,
 	addIcon,
 	addCollection,
@@ -206,7 +206,8 @@ const Iconify: IconifyGlobal = {
 	loadIcon,
 
 	// IconifyStorageFunctions
-	iconExists,
+	iconLoaded,
+	iconExists: iconLoaded, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,
@@ -248,7 +249,14 @@ export { _api };
 export { addAPIProvider, loadIcons, loadIcon };
 
 // IconifyStorageFunctions
-export { iconExists, getIcon, listIcons, addIcon, addCollection };
+export {
+	iconLoaded,
+	iconLoaded as iconExists, // deprecated, kept to avoid breaking changes
+	getIcon,
+	listIcons,
+	addIcon,
+	addCollection,
+};
 
 // IconifyBuilderFunctions
 export { replaceIDs, calculateSize, buildIcon };

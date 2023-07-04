@@ -6,7 +6,7 @@ import {
 	IconifyStorageFunctions,
 } from '@iconify/core/lib/storage/functions';
 import {
-	iconExists,
+	iconLoaded,
 	getIcon,
 	addIcon,
 	addCollection,
@@ -159,7 +159,8 @@ export function exportFunctions(): IconifyExportedFunctions {
 			toggleBrowserCache(storage, true),
 		disableCache: (storage: IconifyBrowserCacheType) =>
 			toggleBrowserCache(storage, false),
-		iconExists,
+		iconLoaded,
+		iconExists: iconLoaded, // deprecated, kept to avoid breaking changes
 		getIcon,
 		listIcons,
 		addIcon,

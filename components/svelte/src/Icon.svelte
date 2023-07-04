@@ -5,7 +5,8 @@
 import { 
 	enableCache,
 	disableCache, 
-	iconExists,
+	iconLoaded,
+	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,
@@ -22,7 +23,8 @@ import {
 export { 
 	enableCache,
 	disableCache, 
-	iconExists,
+	iconLoaded,
+	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

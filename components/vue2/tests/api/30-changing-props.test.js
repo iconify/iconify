@@ -3,7 +3,7 @@
  */
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import { Icon, iconExists } from '../../';
+import { Icon, iconLoaded } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock.cjs';
 import { provider, nextPrefix } from './load';
 import { defaultIconResult } from '../empty';
@@ -96,7 +96,7 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toBe('');
@@ -105,7 +105,7 @@ describe('Rendering icon', () => {
 					next();
 
 					// Make sure icon data is available
-					expect(iconExists(iconName)).toBe(true);
+					expect(iconLoaded(iconName)).toBe(true);
 				},
 			});
 
@@ -121,7 +121,7 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName2)).toBe(false);
+					expect(iconLoaded(iconName2)).toBe(false);
 
 					// onLoad should have been called only once for previous icon
 					expect(onLoadCalled).toBe(iconName);
@@ -130,12 +130,12 @@ describe('Rendering icon', () => {
 					next();
 
 					// Make sure icon data is available
-					expect(iconExists(iconName2)).toBe(true);
+					expect(iconLoaded(iconName2)).toBe(true);
 				},
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const wrapper = mount(Icon, {
@@ -224,18 +224,18 @@ describe('Rendering icon', () => {
 					expect(isSync).toBe(false);
 
 					// Icon should not have loaded yet
-					expect(iconExists(iconName2)).toBe(false);
+					expect(iconLoaded(iconName2)).toBe(false);
 
 					// Send icon data
 					next();
 
 					// Test it again
-					expect(iconExists(iconName2)).toBe(true);
+					expect(iconLoaded(iconName2)).toBe(true);
 				},
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component
 			const wrapper = mount(Icon, {
@@ -310,18 +310,18 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toBe(false);
+					expect(iconLoaded(iconName)).toBe(false);
 
 					// Send icon data
 					next();
 
 					// Make sure icon was loaded
-					expect(iconExists(iconName)).toBe(true);
+					expect(iconLoaded(iconName)).toBe(true);
 				},
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toBe(false);
+			expect(iconLoaded(iconName)).toBe(false);
 
 			// Render component with placeholder text
 			const wrapper = mount(Icon, {

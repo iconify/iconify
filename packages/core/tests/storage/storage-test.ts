@@ -3,7 +3,7 @@ import type { IconifyIcon } from '@iconify/types';
 import {
 	newStorage,
 	addIconToStorage,
-	iconExists,
+	iconInStorage,
 	addIconSet,
 	getStorage,
 	listIcons,
@@ -46,12 +46,12 @@ describe('Testing storage', () => {
 			'constructor',
 		]);
 
-		// Test iconExists
-		expect(iconExists(storage, 'test')).toBe(true);
-		expect(iconExists(storage, 'constructor')).toBe(true);
-		expect(iconExists(storage, 'invalid')).toBe(false);
-		expect(iconExists(storage, 'missing')).toBe(false);
-		expect(iconExists(storage, 'not-really-missing')).toBe(true);
+		// Test iconInStorage
+		expect(iconInStorage(storage, 'test')).toBe(true);
+		expect(iconInStorage(storage, 'constructor')).toBe(true);
+		expect(iconInStorage(storage, 'invalid')).toBe(false);
+		expect(iconInStorage(storage, 'missing')).toBe(false);
+		expect(iconInStorage(storage, 'not-really-missing')).toBe(true);
 
 		// Test getIcon
 		let expected: IconifyIcon = {
@@ -96,11 +96,11 @@ describe('Testing storage', () => {
 
 		expect(Object.keys(storage.icons)).toEqual(['icon1', 'icon2']);
 
-		// Test iconExists
-		expect(iconExists(storage, 'icon1')).toBe(true);
-		expect(iconExists(storage, 'icon2')).toBe(true);
-		expect(iconExists(storage, 'invalid')).toBe(false);
-		expect(iconExists(storage, 'missing')).toBe(false);
+		// Test iconInStorage
+		expect(iconInStorage(storage, 'icon1')).toBe(true);
+		expect(iconInStorage(storage, 'icon2')).toBe(true);
+		expect(iconInStorage(storage, 'invalid')).toBe(false);
+		expect(iconInStorage(storage, 'missing')).toBe(false);
 
 		// Test getIcon
 		let expected: IconifyIcon = {

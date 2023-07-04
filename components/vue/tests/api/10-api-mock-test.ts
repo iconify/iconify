@@ -1,4 +1,4 @@
-import { loadIcons, iconExists } from '../../';
+import { loadIcons, iconLoaded } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 
@@ -23,7 +23,7 @@ describe('Testing fake API', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Load icon
 			loadIcons([iconName], (loaded, missing, pending) => {
