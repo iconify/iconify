@@ -1,4 +1,3 @@
-import crossFetch from 'cross-fetch';
 import { sendAPIQuery } from '../../lib/api/query';
 import { setAPIModule } from '../../lib/api/modules';
 import { fetchAPIModule, setFetch } from '../../lib/api/modules/fetch';
@@ -15,7 +14,7 @@ describe('Testing live API with fetch', () => {
 
 	// Set fetch module
 	beforeEach(() => {
-		setFetch(crossFetch);
+		setFetch(fetch);
 		setAPIModule('', fetchAPIModule);
 	});
 
