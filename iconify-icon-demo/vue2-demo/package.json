@@ -16,7 +16,7 @@
 		"@iconify-icons/bx": "^1.2.6",
 		"@iconify-icons/dashicons": "^1.2.4",
 		"iconify-icon": "workspace:*",
-		"vite": "^2.9.15",
+		"vite": "^4.4.8",
 		"vite-plugin-vue2": "^2.0.3"
 	}
 }

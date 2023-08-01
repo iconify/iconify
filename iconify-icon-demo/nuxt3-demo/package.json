@@ -2,13 +2,16 @@
 	"name": "@iconify-icon/nuxt3-demo",
 	"private": true,
 	"scripts": {
-		"dev": "nuxi dev",
-		"build": "nuxi build",
-		"start": "node .output/server/index.mjs"
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
+		"@types/node": "^18.17.1",
 		"iconify-icon": "workspace:*",
-		"nuxt": "npm:nuxt3@latest",
-		"ufo": "^1.1.1"
+		"nuxt": "^3.6.5",
+		"vue": "^3.3.4"
 	}
 }

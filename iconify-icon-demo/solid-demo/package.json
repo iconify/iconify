@@ -11,13 +11,13 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@iconify-icon/solid": "workspace:*",
-		"@iconify-icons/line-md": "^1.2.21",
+		"@iconify-icons/line-md": "^1.2.23",
 		"iconify-icon": "workspace:*",
-		"typescript": "^5.0.3",
-		"vite": "^4.2.1",
-		"vite-plugin-solid": "^2.6.1"
+		"typescript": "^5.1.6",
+		"vite": "^4.4.8",
+		"vite-plugin-solid": "^2.7.0"
 	},
 	"dependencies": {
-		"solid-js": "^1.7.1"
+		"solid-js": "^1.7.8"
 	}
 }
