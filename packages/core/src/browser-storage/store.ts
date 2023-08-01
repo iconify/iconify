@@ -1,6 +1,10 @@
 import type { IconifyJSON } from '@iconify/types';
 import type { IconStorage } from '../storage/storage';
-import { browserCachePrefix, browserStorageHour } from './config';
+import {
+	browserCachePrefix,
+	browserStorageHour,
+	browserStorageLimit,
+} from './config';
 import {
 	getBrowserStorageItemsCount,
 	setBrowserStorageItemsCount,
@@ -13,7 +17,7 @@ import {
 import { iterateBrowserStorage } from './foreach';
 import { getBrowserStorage } from './global';
 import { initBrowserStorage } from './index';
-import { setStoredItem } from './item';
+import { getStoredItem, setStoredItem } from './item';
 import type {
 	BrowserStorageInstance,
 	BrowserStorageItem,
@@ -81,9 +85,12 @@ export function storeInBrowserStorage(storage: IconStorage, data: IconifyJSON) {
 			// Remove item from set
 			set.delete((index = Array.from(set).shift() as number));
 		} else {
-			// Create new index
+			// Append new item, unless exceeded storage limit
 			index = getBrowserStorageItemsCount(func);
-			if (!setBrowserStorageItemsCount(func, index + 1)) {
+			if (
+				index >= browserStorageLimit ||
+				!setBrowserStorageItemsCount(func, index + 1)
+			) {
 				return;
 			}
 		}
