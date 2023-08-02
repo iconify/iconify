@@ -1,16 +1,15 @@
 import { BuildEntry, defineBuildConfig } from 'unbuild';
-import packageJSON from './package.json';
+import { exports } from './package.json';
 
 const entries: BuildEntry[] = [];
-const exportsList = packageJSON['exports'];
 const match = './lib/';
 
-Object.keys(exportsList).forEach((key) => {
+Object.keys(exports).forEach((key) => {
 	if (key.slice(0, match.length) !== match) {
 		return;
 	}
 
-	const importValue = exportsList[key]['import'];
+	const importValue = exports[key]['import'];
 	if (importValue === key + '.mjs') {
 		const name = key.slice(match.length);
 		entries.push({

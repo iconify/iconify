@@ -123,3 +123,16 @@ export {
 	compareObjects,
 	unmergeObjects,
 } from './misc/objects';
+
+// SVG CSS Sprite
+export type {
+	AsyncSpriteIcons,
+	SpriteIcons,
+	SpriteEntry,
+	Sprites,
+} from './svg-css-sprite/types';
+export {
+	createAndPipeReadableStreamSprite,
+	createSprite,
+	createReadableStreamSprite,
+} from './svg-css-sprite/create-sprite';
