@@ -376,6 +376,16 @@
 			"require": "./lib/svg/url.cjs",
 			"import": "./lib/svg/url.mjs",
 			"types": "./lib/svg/url.d.ts"
+		},
+		"./lib/svg-css-sprite/types": {
+			"require": "./lib/svg-css-sprite/types.cjs",
+			"import": "./lib/svg-css-sprite/types.mjs",
+			"types": "./lib/svg-css-sprite/types.d.ts"
+		},
+		"./lib/svg-css-sprite/create-sprite": {
+			"require": "./lib/svg-css-sprite/create-sprite.cjs",
+			"import": "./lib/svg-css-sprite/create-sprite.mjs",
+			"types": "./lib/svg-css-sprite/create-sprite.d.ts"
 		}
 	},
 	"files": [
