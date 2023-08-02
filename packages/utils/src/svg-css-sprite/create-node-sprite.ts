@@ -1,7 +1,11 @@
 import { AsyncSpriteIcons } from './types';
-import { createAndPipeReadableStreamSprite } from './create-sprite';
+import {
+	createAndPipeReadableStreamSprite,
+	createReadableStreamSprite,
+} from './create-sprite';
 import { createWriteStream } from 'fs';
-import { Writable } from 'stream';
+import { Readable, Writable } from 'stream';
+import { ServerResponse } from 'http';
 import { loadNodeIcon } from '../loader/node-loader';
 
 export function createAndSaveSprite(
@@ -20,6 +24,32 @@ export function createAndSaveSprite(
 		),
 		warn
 	);
+}
+
+export function createSpriteAndPipeToResponse(
+	spriteName: string,
+	icons: AsyncSpriteIcons,
+	response: ServerResponse,
+	warn = true
+) {
+	const readable = Readable.fromWeb(
+		createReadableStreamSprite(spriteName, icons, warn)
+	);
+	readable.on('open', () => {
+		response.writeHead(200, {
+			'Content-Type': 'image/svg+xml',
+		});
+		readable.pipe(response);
+	});
+	readable.on('error', (err) => {
+		console.error(
+			`error creating/writing SVG icon sprite "${spriteName}"`,
+			err
+		);
+		response.setHeader('Content-Type', 'text/plain');
+		response.statusCode = 404;
+		response.end('Not found');
+	});
 }
 
 async function test() {

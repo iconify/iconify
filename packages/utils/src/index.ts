@@ -132,7 +132,7 @@ export type {
 	Sprites,
 } from './svg-css-sprite/types';
 export {
-	createSprite,
 	createAndPipeReadableStreamSprite,
+	createSprite,
 	createReadableStreamSprite,
 } from './svg-css-sprite/create-sprite';

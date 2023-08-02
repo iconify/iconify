@@ -1,6 +1,7 @@
 import { AsyncSpriteIcons, SpriteEntry, SpriteIcons, Sprites } from './types';
 import { yellow } from 'kolorist';
 import { loadNodeIcon } from '../loader/node-loader';
+import { ReadableStream } from 'stream/web';
 
 const warned = new Set<string>();
 
