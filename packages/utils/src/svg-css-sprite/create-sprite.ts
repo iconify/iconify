@@ -31,18 +31,31 @@ export function createSprite(
 </svg>`;
 }
 
-export async function createReadableStreamSprite(
+export function createAndPipeReadableStreamSprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons,
 	writableStream: WritableStream,
+	warn = true,
+	options?: StreamPipeOptions
+) {
+	return createReadableStreamSprite(spriteName, icons, warn).pipeTo(
+		writableStream,
+		options
+	);
+}
+
+export function createReadableStreamSprite(
+	spriteName: string,
+	icons: AsyncSpriteIcons,
 	warn = true
 ) {
 	const context: Sprites = { content: '' };
-	await new ReadableStream({
+	return new ReadableStream({
 		start(controller) {
 			controller.enqueue('<svg xmlns="http://www.w3.org/2000/svg">');
 		},
 		async pull(controller) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const { value, done } = await icons.next();
 			if (done) {
 				controller.enqueue('</svg>');
@@ -71,7 +84,7 @@ export async function createReadableStreamSprite(
 				}
 			}
 		},
-	}).pipeTo(writableStream, { preventClose: true });
+	});
 }
 
 function parseSVGData(
@@ -122,15 +135,15 @@ function parseSVGData(
 
 async function test() {
 	async function* icons() {
-		yield await loadNodeIcon('flat-color-icons', 'about').then((i) => ({
-			name: 'about',
-			svg: i!,
-		}));
-		yield await loadNodeIcon('flat-color-icons', 'accept-database').then(
-			(i) => ({ name: 'accept-database', svg: i! })
-		);
+		const icons = ['about', 'accept-database'];
+		for (const name of icons) {
+			yield await loadNodeIcon('flat-color-icons', name).then((i) => ({
+				name,
+				svg: i!,
+			}));
+		}
 	}
-	await createReadableStreamSprite(
+	await createAndPipeReadableStreamSprite(
 		'xx',
 		icons(),
 		new WritableStream({

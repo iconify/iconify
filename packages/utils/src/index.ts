@@ -133,5 +133,6 @@ export type {
 } from './svg-css-sprite/types';
 export {
 	createSprite,
+	createAndPipeReadableStreamSprite,
 	createReadableStreamSprite,
 } from './svg-css-sprite/create-sprite';
