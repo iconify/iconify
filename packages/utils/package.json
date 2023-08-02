@@ -16,7 +16,7 @@
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild",
+		"build": "unbuild && rimraf lib/svg-css-sprite/cli.d.ts && rimraf lib/svg-css-sprite/cli.cjs",
 		"test:cjs": "vitest --config vitest.config.cjs",
 		"test:esm": "vitest --config vitest.config.mjs",
 		"test": "pnpm run test:cjs && pnpm run test:esm"
