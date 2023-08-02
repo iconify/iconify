@@ -1,4 +1,10 @@
-import { AsyncSpriteIcons, SpriteEntry, SpriteIcons, Sprites } from './types';
+import {
+	AsyncSpriteIcons,
+	AsyncSpriteIconsFactory,
+	SpriteEntry,
+	SpriteIcons,
+	Sprites,
+} from './types';
 import { yellow } from 'kolorist';
 import { loadNodeIcon } from '../loader/node-loader';
 import { ReadableStream } from 'stream/web';
@@ -34,7 +40,7 @@ export function createSprite(
 
 export function createAndPipeReadableStreamSprite(
 	spriteName: string,
-	icons: AsyncSpriteIcons,
+	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	writableStream: WritableStream,
 	warn = true,
 	options?: StreamPipeOptions
@@ -47,19 +53,20 @@ export function createAndPipeReadableStreamSprite(
 
 export function createReadableStreamSprite(
 	spriteName: string,
-	icons: AsyncSpriteIcons,
+	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	warn = true
 ) {
 	const context: Sprites = { content: '' };
+	const iterator = typeof icons === 'function' ? icons() : icons;
 	return new ReadableStream({
 		start(controller) {
 			controller.enqueue('<svg xmlns="http://www.w3.org/2000/svg">');
 		},
 		async pull(controller) {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const { value, done } = await icons.next();
+			const { value, done } = await iterator.next();
 			if (done) {
-				controller.enqueue('</svg>');
+				controller.enqueue('\n</svg>');
 				controller.close();
 			} else {
 				const data = parseSVGData(

@@ -1,4 +1,4 @@
-import { AsyncSpriteIcons } from './types';
+import { AsyncSpriteIcons, AsyncSpriteIconsFactory } from './types';
 import {
 	createAndPipeReadableStreamSprite,
 	createReadableStreamSprite,
@@ -11,7 +11,7 @@ import { loadNodeIcon } from '../loader/node-loader';
 export function createAndSaveSprite(
 	fileName: string,
 	spriteName: string,
-	icons: AsyncSpriteIcons,
+	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	warn = true
 ) {
 	return createAndPipeReadableStreamSprite(
@@ -28,7 +28,7 @@ export function createAndSaveSprite(
 
 export function createSpriteAndPipeToResponse(
 	spriteName: string,
-	icons: AsyncSpriteIcons,
+	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	response: ServerResponse,
 	warn = true
 ) {
@@ -52,17 +52,57 @@ export function createSpriteAndPipeToResponse(
 	});
 }
 
-async function test() {
-	async function* icons() {
-		const icons = ['about', 'accept-database'];
-		for (const name of icons) {
-			yield await loadNodeIcon('flat-color-icons', name).then((i) => ({
-				name,
-				svg: i!,
-			}));
+export function createIconifyCollectionsIconsFactory(
+	collections: Record<string, string | string[]>,
+	mapName: (collection: string, icon: string) => string = (_, icon) => icon
+) {
+	return async function* () {
+		const entries = Object.entries(collections);
+		for (const [collection, icons] of entries) {
+			if (typeof icons === 'string') {
+				yield await loadNodeIcon(collection, icons)
+					.then((svg) => ({
+						name: mapName(collection, icons),
+						svg: svg ?? '',
+					}))
+					.catch((err) => {
+						console.error(
+							`error loading icon "${icons}" from collection "${collection}"`,
+							err
+						);
+						return {
+							name: mapName(collection, icons),
+							svg: '',
+						};
+					});
+			} else {
+				for (const icon of icons) {
+					yield await loadNodeIcon(collection, icon)
+						.then((svg) => ({
+							name: mapName(collection, icon),
+							svg: svg ?? '',
+						}))
+						.catch((err) => {
+							console.error(
+								`error loading icon "${icon}" from collection "${collection}"`,
+								err
+							);
+							return {
+								name: mapName(collection, icon),
+								svg: '',
+							};
+						});
+				}
+			}
 		}
-	}
-	await createAndSaveSprite('my-sprite.svg', 'my-sprite', icons(), true);
+	};
+}
+
+async function test() {
+	const factory = createIconifyCollectionsIconsFactory({
+		'flat-color-icons': ['about', 'accept-database'],
+	});
+	await createAndSaveSprite('my-sprite.svg', 'my-sprite', factory, true);
 }
 
 test();

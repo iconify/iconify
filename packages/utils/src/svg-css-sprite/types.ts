@@ -1,3 +1,5 @@
+import { CustomIconLoader } from '../loader/types';
+
 export interface SpriteEntry {
 	content: string;
 	rawViewBox: string;
@@ -21,3 +23,5 @@ export type AsyncSpriteIcons = AsyncIterableIterator<{
 	name: string;
 	svg: string;
 }>;
+
+export type AsyncSpriteIconsFactory = () => AsyncSpriteIcons;
