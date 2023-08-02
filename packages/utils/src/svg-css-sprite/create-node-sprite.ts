@@ -96,7 +96,7 @@ export function createIconifyCollectionsIconsFactory(
 		}
 	};
 }
-
+/*
 async function test() {
 	const factory = createIconifyCollectionsIconsFactory({
 		'flat-color-icons': ['about', 'accept-database'],
@@ -105,3 +105,4 @@ async function test() {
 }
 
 test();
+*/

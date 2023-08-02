@@ -144,7 +144,7 @@ function parseSVGData(
 		height,
 	};
 }
-
+/*
 async function test() {
 	async function* icons() {
 		const icons = ['about', 'accept-database'];
@@ -168,3 +168,4 @@ async function test() {
 }
 
 test();
+*/

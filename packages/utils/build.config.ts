@@ -19,26 +19,15 @@ Object.keys(exports).forEach((key) => {
 	}
 });
 
-export default defineBuildConfig([
-	{
-		outDir: './lib',
-		entries,
-		clean: true,
-		declaration: true,
-		rollup: {
-			emitCJS: true,
-		},
+entries.push({ input: 'src/svg-css-sprite/cli', name: 'svg-css-sprite/cli' });
+
+export default defineBuildConfig({
+	outDir: './lib',
+	entries,
+	clean: true,
+	declaration: true,
+	failOnWarn: false,
+	rollup: {
+		emitCJS: true,
 	},
-	{
-		outDir: './lib',
-		entries: [
-			{ input: 'src/svg-css-sprite/cli', name: 'svg-css-sprite/cli' },
-		],
-		clean: false,
-		declaration: false,
-		rollup: {
-			emitCJS: false,
-			inlineDependencies: true,
-		},
-	},
-]);
+});

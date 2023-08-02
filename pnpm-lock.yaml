@@ -1319,8 +1319,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       unbuild:
-        specifier: ^2.0.0-rc.0
-        version: 2.0.0-rc.0(typescript@5.1.6)
+        specifier: ^1.2.1
+        version: 1.2.1
       unconfig:
         specifier: ^0.3.10
         version: 0.3.10
@@ -10073,7 +10073,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.0.0-next.587
     dependencies:
-      '@sveltejs/kit': 1.0.0-next.589(svelte@3.58.0)(vite@4.2.1)
+      '@sveltejs/kit': 1.0.0-next.589(svelte@4.1.2)(vite@4.4.8)
       import-meta-resolve: 2.2.0
     dev: true
 
@@ -14349,12 +14349,6 @@ packages:
 
   /citty@0.1.1:
     resolution: {integrity: sha512-fL/EEp9TyXlNkgYFQYNqtMJhnAk2tAq8lCST7O5LPn1NrzWPsOKE5wafR7J+8W87oxqolpxNli+w7khq5WP7tg==}
-    dev: true
-
-  /citty@0.1.2:
-    resolution: {integrity: sha512-Me9nf0/BEmMOnuQzMOVXgpzkMUNbd0Am8lTl/13p0aRGAoLGk5T5sdet/42CrIGmWdG67BgHUhcKK1my1ujUEg==}
-    dependencies:
-      consola: 3.2.3
     dev: true
 
   /cjs-module-lexer@1.2.2:
@@ -23012,30 +23006,6 @@ packages:
       typescript: 5.1.6
     dev: true
 
-  /mkdist@1.3.0(typescript@5.1.6):
-    resolution: {integrity: sha512-ZQrUvcL7LkRdzMREpDyg9AT18N9Tl5jc2qeKAUeEw0KGsgykbHbuRvysGAzTuGtwuSg0WQyNit5jh/k+Er3JEg==}
-    hasBin: true
-    peerDependencies:
-      sass: ^1.63.6
-      typescript: '>=5.1.6'
-    peerDependenciesMeta:
-      sass:
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      citty: 0.1.2
-      defu: 6.1.2
-      esbuild: 0.18.17
-      fs-extra: 11.1.1
-      globby: 13.2.2
-      jiti: 1.19.1
-      mlly: 1.4.0
-      mri: 1.2.0
-      pathe: 1.1.1
-      typescript: 5.1.6
-    dev: true
-
   /mktemp@0.4.0:
     resolution: {integrity: sha512-IXnMcJ6ZyTuhRmJSjzvHSRhlVPiN9Jwc6e59V0bEJ0ba6OBeX2L0E+mRN1QseeOF4mM+F1Rit6Nh7o+rl2Yn/A==}
     engines: {node: '>0.9'}
@@ -23321,7 +23291,7 @@ packages:
       pathe: 0.3.9
       perfect-debounce: 0.1.3
       pkg-types: 0.3.6
-      pretty-bytes: 6.1.0
+      pretty-bytes: 6.1.1
       radix3: 0.2.1
       rollup: 2.79.1
       rollup-plugin-terser: 7.0.2(rollup@2.79.1)
@@ -28662,45 +28632,6 @@ packages:
       pathe: 1.1.0
       pkg-types: 1.0.2
       pretty-bytes: 6.1.0
-      rollup: 3.27.0
-      rollup-plugin-dts: 5.3.0(rollup@3.27.0)(typescript@5.1.6)
-      scule: 1.0.0
-      typescript: 5.1.6
-      untyped: 1.3.2
-    transitivePeerDependencies:
-      - sass
-      - supports-color
-    dev: true
-
-  /unbuild@2.0.0-rc.0(typescript@5.1.6):
-    resolution: {integrity: sha512-JuOaQHOd7pa+9l/DtgGTJutXjYtbaD0qvDVo/qudB2ESZ5Z1RKR1y0G1nApySzgUSjfFLVWQtp3rXGpE6Dqpqw==}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.1.6
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@rollup/plugin-alias': 5.0.0(rollup@3.27.0)
-      '@rollup/plugin-commonjs': 25.0.3(rollup@3.27.0)
-      '@rollup/plugin-json': 6.0.0(rollup@3.27.0)
-      '@rollup/plugin-node-resolve': 15.1.0(rollup@3.27.0)
-      '@rollup/plugin-replace': 5.0.2(rollup@3.27.0)
-      '@rollup/pluginutils': 5.0.2(rollup@3.27.0)
-      chalk: 5.3.0
-      citty: 0.1.2
-      consola: 3.2.3
-      defu: 6.1.2
-      esbuild: 0.18.17
-      globby: 13.2.2
-      hookable: 5.5.3
-      jiti: 1.19.1
-      magic-string: 0.30.2
-      mkdist: 1.3.0(typescript@5.1.6)
-      mlly: 1.4.0
-      pathe: 1.1.1
-      pkg-types: 1.0.3
-      pretty-bytes: 6.1.1
       rollup: 3.27.0
       rollup-plugin-dts: 5.3.0(rollup@3.27.0)(typescript@5.1.6)
       scule: 1.0.0
