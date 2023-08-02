@@ -20,8 +20,26 @@ export type SpriteIcons =
 export interface SpriteIcon {
 	name: string;
 	svg: string;
+	collection?: string;
 }
 
 export type AsyncSpriteIcons = AsyncIterableIterator<SpriteIcon>;
-
 export type AsyncSpriteIconsFactory = () => AsyncSpriteIcons;
+
+export type SpriteCollection =
+	| SpriteIcon
+	| SpriteIcon[]
+	| AsyncSpriteIcons
+	| AsyncSpriteIconsFactory;
+
+export interface SpritesConfig {
+	sprites: Record<
+		string,
+		{
+			name: string;
+			collection: SpriteCollection | SpriteCollection[];
+			outdir?: string;
+			mapIconName?: (icon: string, collection?: string) => string;
+		}
+	>;
+}

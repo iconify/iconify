@@ -127,12 +127,17 @@ export {
 // SVG CSS Sprite
 export type {
 	AsyncSpriteIcons,
+	AsyncSpriteIconsFactory,
+	SpritesConfig,
+	SpriteIcon,
 	SpriteIcons,
+	SpriteCollection,
 	SpriteEntry,
 	Sprites,
 } from './svg-css-sprite/types';
 export {
 	createAndPipeReadableStreamSprite,
+	createAsyncSpriteIconsFactory,
 	createSprite,
 	createReadableStreamSprite,
 } from './svg-css-sprite/create-sprite';

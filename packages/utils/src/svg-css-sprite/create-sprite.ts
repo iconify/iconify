@@ -1,6 +1,7 @@
 import {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
+	SpriteCollection,
 	SpriteEntry,
 	SpriteIcon,
 	SpriteIcons,
@@ -81,6 +82,48 @@ export function createReadableStreamSprite(
 			}
 		},
 	});
+}
+
+export function createAsyncSpriteIconsFactory(
+	collections: SpriteCollection | SpriteCollection[],
+	mapIconName: (icon: string, collection?: string) => string = (icon) => icon
+) {
+	const collectionsArray = Array.isArray(collections)
+		? collections
+		: [collections];
+
+	return <AsyncSpriteIconsFactory>async function* () {
+		for (const collection of collectionsArray) {
+			if (Array.isArray(collection)) {
+				for (const icon of collection) {
+					yield {
+						name: mapIconName(icon.name, icon.collection),
+						svg: icon.svg,
+					};
+				}
+			} else if ('svg' in collection) {
+				yield {
+					name: mapIconName(collection.name, collection.collection),
+					svg: collection.svg,
+				};
+			} else if (typeof collection === 'function') {
+				const iterator = collection();
+				for await (const icon of iterator) {
+					yield {
+						name: mapIconName(icon.name, icon.collection),
+						svg: icon.svg,
+					};
+				}
+			} else {
+				for await (const icon of collection) {
+					yield {
+						name: mapIconName(icon.name, icon.collection),
+						svg: icon.svg,
+					};
+				}
+			}
+		}
+	};
 }
 
 function generateSpriteEntry(

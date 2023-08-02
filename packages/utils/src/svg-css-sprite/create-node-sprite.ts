@@ -1,4 +1,4 @@
-import { AsyncSpriteIcons, AsyncSpriteIconsFactory } from './types';
+import { AsyncSpriteIcons, AsyncSpriteIconsFactory, SpriteIcon } from './types';
 import {
 	createAndPipeReadableStreamSprite,
 	createReadableStreamSprite,
@@ -6,7 +6,11 @@ import {
 import { createWriteStream } from 'node:fs';
 import { Readable, Writable } from 'node:stream';
 import { ServerResponse } from 'node:http';
-import { loadNodeIcon } from '../loader/node-loader';
+import { loadCollectionFromFS } from '../loader/fs';
+import { AutoInstall } from '../loader/types';
+import { getIconData } from '../icon-set/get-icon';
+import { opendir, readFile } from 'node:fs/promises';
+import { basename, dirname, extname } from 'node:path';
 
 export function createAndSaveSprite(
 	fileName: string,
@@ -51,51 +55,63 @@ export function createSpriteAndPipeToResponse(
 	});
 }
 
-export function createIconifyCollectionsIconsFactory(
-	collections: Record<string, string | string[]>,
-	mapName: (collection: string, icon: string) => string = (_, icon) => icon
-): AsyncSpriteIconsFactory {
-	return async function* () {
-		const entries = Object.entries(collections);
-		for (const [collection, icons] of entries) {
-			if (typeof icons === 'string') {
-				yield await loadNodeIcon(collection, icons)
-					.then((svg) => ({
-						name: mapName(collection, icons),
-						svg: svg ?? '',
-					}))
-					.catch((err) => {
-						console.error(
-							`error loading icon "${icons}" from collection "${collection}"`,
-							err
-						);
-						return {
-							name: mapName(collection, icons),
-							svg: '',
-						};
-					});
-			} else {
-				for (const icon of icons) {
-					yield await loadNodeIcon(collection, icon)
-						.then((svg) => ({
-							name: mapName(collection, icon),
-							svg: svg ?? '',
-						}))
-						.catch((err) => {
-							console.error(
-								`error loading icon "${icon}" from collection "${collection}"`,
-								err
-							);
-							return {
-								name: mapName(collection, icon),
-								svg: '',
-							};
-						});
+export function createLoadCollectionFromFSAsyncIterator(
+	collection: string,
+	options: {
+		autoInstall?: AutoInstall;
+		include?: string[] | ((icon: string) => boolean);
+	} = { autoInstall: false }
+) {
+	const include = options.include ?? (() => true);
+	const useInclude: (icon: string) => boolean =
+		typeof include === 'function'
+			? include
+			: (icon: string) => include.includes(icon);
+
+	return <AsyncSpriteIconsFactory>async function* () {
+		const iconSet = await loadCollectionFromFS(collection);
+		if (iconSet) {
+			const icons = Object.keys(iconSet.icons).filter(useInclude);
+			for (const id of icons) {
+				const iconData = getIconData(iconSet, id);
+				if (iconData) {
+					yield {
+						name: id,
+						svg: iconData.body,
+						collection,
+					};
 				}
 			}
 		}
 	};
 }
+export function createFileSystemIconLoaderAsyncIterator(
+	dir: string,
+	collection = dirname(dir),
+	include: string[] | ((icon: string) => boolean) = () => true
+) {
+	const useInclude: (icon: string) => boolean =
+		typeof include === 'function'
+			? include
+			: (icon: string) => include.includes(icon);
+
+	return <AsyncSpriteIconsFactory>async function* () {
+		const stream = await opendir(dir);
+		for await (const file of stream) {
+			if (!file.isFile() || extname(file.name) !== '.svg') continue;
+
+			const name = basename(file.name).slice(0, -4);
+			if (useInclude(name)) {
+				yield {
+					name,
+					svg: await readFile(file.name, 'utf-8'),
+					collection,
+				};
+			}
+		}
+	};
+}
+
 /*
 async function test() {
 	const factory = createIconifyCollectionsIconsFactory({
