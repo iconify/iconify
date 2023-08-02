@@ -54,7 +54,7 @@ export function createSpriteAndPipeToResponse(
 export function createIconifyCollectionsIconsFactory(
 	collections: Record<string, string | string[]>,
 	mapName: (collection: string, icon: string) => string = (_, icon) => icon
-) {
+): AsyncSpriteIconsFactory {
 	return async function* () {
 		const entries = Object.entries(collections);
 		for (const [collection, icons] of entries) {
