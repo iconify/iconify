@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"lib": ["ESNext", "DOM"],
+		"target": "ES2019",
+		"module": "ESNext",
+		"strict": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*.ts"]
+}

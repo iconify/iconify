@@ -19,14 +19,11 @@ Object.keys(exports).forEach((key) => {
 	}
 });
 
-entries.push({ input: 'src/svg-css-sprite/cli', name: 'svg-css-sprite/cli' });
-
 export default defineBuildConfig({
 	outDir: './lib',
 	entries,
 	clean: true,
 	declaration: true,
-	failOnWarn: false,
 	rollup: {
 		emitCJS: true,
 	},

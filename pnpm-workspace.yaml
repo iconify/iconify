@@ -2,6 +2,7 @@ packages:
     - 'packages/types'
     - 'packages/api-redundancy'
     - 'packages/utils'
+    - 'packages/utils-cli'
     - 'packages/core'
     - 'iconify-icon/icon'
     - 'iconify-icon/*'

@@ -16,7 +16,7 @@
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild && rimraf lib/svg-css-sprite/cli.d.ts && rimraf lib/svg-css-sprite/cli.cjs",
+		"build": "unbuild",
 		"test:cjs": "vitest --config vitest.config.cjs",
 		"test:esm": "vitest --config vitest.config.mjs",
 		"test": "pnpm run test:cjs && pnpm run test:esm"
@@ -377,28 +377,24 @@
 			"import": "./lib/svg/url.mjs",
 			"types": "./lib/svg/url.d.ts"
 		},
-    "./lib/svg-css-sprite/create-sprite": {
-      "require": "./lib/svg-css-sprite/create-sprite.cjs",
-      "import": "./lib/svg-css-sprite/create-sprite.mjs",
-      "types": "./lib/svg-css-sprite/create-sprite.d.ts"
-    },
-    "./lib/svg-css-sprite/create-node-sprite": {
-      "require": "./lib/svg-css-sprite/create-node-sprite.cjs",
-      "import": "./lib/svg-css-sprite/create-node-sprite.mjs",
-      "types": "./lib/svg-css-sprite/create-node-sprite.d.ts"
-    },
-    "./lib/svg-css-sprite/types": {
-      "require": "./lib/svg-css-sprite/types.cjs",
-      "import": "./lib/svg-css-sprite/types.mjs",
-      "types": "./lib/svg-css-sprite/types.d.ts"
-    }
+		"./lib/svg-css-sprite/create-sprite": {
+			"require": "./lib/svg-css-sprite/create-sprite.cjs",
+			"import": "./lib/svg-css-sprite/create-sprite.mjs",
+			"types": "./lib/svg-css-sprite/create-sprite.d.ts"
+		},
+		"./lib/svg-css-sprite/create-node-sprite": {
+			"require": "./lib/svg-css-sprite/create-node-sprite.cjs",
+			"import": "./lib/svg-css-sprite/create-node-sprite.mjs",
+			"types": "./lib/svg-css-sprite/create-node-sprite.d.ts"
+		},
+		"./lib/svg-css-sprite/types": {
+			"require": "./lib/svg-css-sprite/types.cjs",
+			"import": "./lib/svg-css-sprite/types.mjs",
+			"types": "./lib/svg-css-sprite/types.d.ts"
+		}
 	},
-  "bin": {
-    "svg-css-sprite-generator": "./bin/svg-css-sprite-generator.mjs"
-  },
 	"files": [
-    "bin",
-    "lib",
+		"lib",
 		"*.d.ts"
 	],
 	"dependencies": {
@@ -415,15 +411,12 @@
 		"@types/jest": "^29.5.3",
 		"@types/node": "^18.17.1",
 		"@typescript-eslint/eslint-plugin": "^6.2.1",
-		"cac": "^6.7.14",
-		"consola": "^3.2.3",
 		"eslint": "^8.46.0",
 		"eslint-config-prettier": "^8.9.0",
 		"eslint-plugin-prettier": "^5.0.0",
 		"rimraf": "^5.0.1",
 		"typescript": "^5.1.6",
 		"unbuild": "^1.2.1",
-    	"unconfig": "^0.3.10",
 		"vitest": "^0.34.1"
 	}
 }

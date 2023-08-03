@@ -128,7 +128,8 @@ export {
 export type {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
-	SpritesConfig,
+	SpriteConfiguration,
+	SpritesConfiguration,
 	SpriteIcon,
 	SpriteIcons,
 	SpriteCollection,
@@ -138,6 +139,6 @@ export type {
 export {
 	createAndPipeReadableStreamSprite,
 	createAsyncSpriteIconsFactory,
-	createSprite,
 	createReadableStreamSprite,
+	createSprite,
 } from './svg-css-sprite/create-sprite';

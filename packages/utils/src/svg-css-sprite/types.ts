@@ -32,14 +32,13 @@ export type SpriteCollection =
 	| AsyncSpriteIcons
 	| AsyncSpriteIconsFactory;
 
-export interface SpritesConfig {
-	sprites: Record<
-		string,
-		{
-			name: string;
-			collection: SpriteCollection | SpriteCollection[];
-			outdir?: string;
-			mapIconName?: (icon: string, collection?: string) => string;
-		}
-	>;
+export interface SpriteConfiguration {
+	name: string;
+	collection: SpriteCollection | SpriteCollection[];
+	outdir?: string;
+	mapIconName?: (icon: string, collection?: string) => string;
+}
+
+export interface SpritesConfiguration {
+	sprites: Record<string, SpriteConfiguration>;
 }
