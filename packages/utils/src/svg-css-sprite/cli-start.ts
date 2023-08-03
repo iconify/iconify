@@ -64,7 +64,7 @@ async function run(cliOptions: CliOptions = { silent: false }) {
 				sprite.outdir ?? cliOptions.outdir ?? './',
 				`${sprite.name}.svg`
 			);
-			return createAndSaveSprite(
+			return await createAndSaveSprite(
 				path,
 				sprite.name,
 				createAsyncSpriteIconsFactory(

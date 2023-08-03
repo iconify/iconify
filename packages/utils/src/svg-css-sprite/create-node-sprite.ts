@@ -11,6 +11,7 @@ import { AutoInstall } from '../loader/types';
 import { getIconData } from '../icon-set/get-icon';
 import { opendir, readFile } from 'node:fs/promises';
 import { basename, dirname, extname } from 'node:path';
+import { searchForIcon } from '../loader/modern';
 
 export function createAndSaveSprite(
 	fileName: string,
@@ -73,11 +74,16 @@ export function createLoadCollectionFromFSAsyncIterator(
 		if (iconSet) {
 			const icons = Object.keys(iconSet.icons).filter(useInclude);
 			for (const id of icons) {
-				const iconData = getIconData(iconSet, id);
+				const iconData = await searchForIcon(
+					iconSet,
+					collection,
+					[id],
+					options
+				);
 				if (iconData) {
 					yield {
 						name: id,
-						svg: iconData.body,
+						svg: iconData,
 						collection,
 					};
 				}

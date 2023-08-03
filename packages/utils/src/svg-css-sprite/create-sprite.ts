@@ -74,11 +74,9 @@ export function createReadableStreamSprite(
 					value.svg,
 					warn
 				);
-				if (data) {
-					controller.enqueue(
-						generateSpriteEntry(context, data, value)
-					);
-				}
+				controller.enqueue(
+					data ? generateSpriteEntry(context, data, value) : ''
+				);
 			}
 		},
 	});
