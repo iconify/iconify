@@ -5,8 +5,12 @@ export default <SpritesConfig>{
 	sprites: {
 		'flat-color-icons': {
 			name: 'flat-color-icons',
-			collection:
-				createLoadCollectionFromFSAsyncIterator('flat-color-icons'),
+			collection: createLoadCollectionFromFSAsyncIterator(
+				'flat-color-icons',
+				{
+					include: ['about', 'accept-database'],
+				}
+			),
 			outdir: './',
 		},
 	},
