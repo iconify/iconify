@@ -40,5 +40,5 @@ export interface SpriteConfiguration {
 }
 
 export interface SpritesConfiguration {
-	sprites: Record<string, SpriteConfiguration>;
+	sprites: SpriteConfiguration | SpriteConfiguration[];
 }

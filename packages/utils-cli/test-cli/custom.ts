@@ -4,7 +4,7 @@ import { createLoadCollectionFromFSAsyncIterator } from '@iconify/utils/lib/svg-
 export default <SpritesConfiguration>{
 	sprites: [
 		{
-			name: 'flat-color-icons',
+			name: 'flat-color-icons-custom',
 			collection: createLoadCollectionFromFSAsyncIterator(
 				'flat-color-icons',
 				{

@@ -13,6 +13,8 @@
 		"directory": "packages/utils-cli"
 	},
 	"scripts": {
+		"test": "node ./bin/svg-css-sprite-generator.mjs --root test-cli",
+		"test-custom": "node ./bin/svg-css-sprite-generator.mjs --root test-cli --config custom.ts",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
 		"build": "unbuild"

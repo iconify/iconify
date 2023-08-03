@@ -6,7 +6,8 @@ import { createConfigLoader } from 'unconfig';
 import type { SpritesConfiguration } from '@iconify/utils/lib/svg-css-sprite/types';
 import { createAsyncSpriteIconsFactory } from '@iconify/utils/lib/svg-css-sprite/create-sprite';
 import { createAndSaveSprite } from '@iconify/utils/lib/svg-css-sprite/create-node-sprite';
-import { resolve } from 'node:path';
+import { dirname, isAbsolute, relative, resolve } from 'node:path';
+import { existsSync, statSync } from 'node:fs';
 
 interface CliOptions {
 	root?: string;
@@ -43,43 +44,57 @@ async function run(cliOptions: CliOptions = { silent: false }) {
 
 	const { cwd, config } = await loadConfig(cliOptions);
 
+	const sprites = Array.isArray(config.sprites)
+		? config.sprites
+		: [config.sprites];
+
 	consola.ready('CSS SVG Sprites ready to be generated');
+	consola.ready(
+		`cwd: ${
+			isAbsolute(cwd)
+				? cwd.replace(/\\/g, '/')
+				: resolve(cwd).replace(/\\/g, '/')
+		}`
+	);
 	consola.start(
-		`Generating CSS SVG Sprites: ${Object.keys(config.sprites).join(', ')}`
+		`Generating CSS SVG Sprites: ${sprites.map((s) => s.name).join(', ')}`
 	);
 
 	const generationResult = await Promise.all<Error | undefined>(
-		Object.values(config.sprites).map(async (sprite) => {
+		sprites.map(async (sprite) => {
 			const path = resolve(
 				cwd,
 				sprite.outdir ?? cliOptions.outdir ?? './',
-				`${sprite.name}.svg`
+				`${sprite.name}${sprite.name.endsWith('.svg') ? '' : '.svg'}`
 			);
-			return createAndSaveSprite(
-				path,
-				sprite.name,
-				createAsyncSpriteIconsFactory(
-					sprite.collection,
-					sprite.mapIconName
-				),
-				!cliOptions.silent
-			)
-				.then(() => {
-					consola.ready(
-						green(
-							`CSS SVG Sprite ${sprite.name} generated: ${path}`
-						)
-					);
-					return Promise.resolve(undefined);
-				})
-				.catch((err) => {
-					consola.error(
-						red(
-							`CSS SVG Sprite ${sprite.name} failed to generate: ${path}`
-						)
-					);
-					return Promise.resolve(err);
-				});
+			try {
+				await createAndSaveSprite(
+					path,
+					sprite.name,
+					createAsyncSpriteIconsFactory(
+						sprite.collection,
+						sprite.mapIconName
+					),
+					!cliOptions.silent
+				);
+				consola.ready(
+					green(
+						`CSS SVG Sprite ${sprite.name} generated: ${relative(
+							cwd,
+							path
+						)}`
+					)
+				);
+			} catch (e) {
+				consola.error(
+					red(
+						`CSS SVG Sprite ${sprite.name} failed to generate: ${path}`
+					)
+				);
+				return Promise.resolve(e as unknown as Error);
+			}
+
+			return Promise.resolve(undefined);
 		})
 	);
 
@@ -94,21 +109,34 @@ async function run(cliOptions: CliOptions = { silent: false }) {
 }
 
 async function loadConfig(cliOptions: CliOptions) {
-	console.log(cliOptions);
+	let cwd = cliOptions?.root ?? process.cwd();
 
-	const cwd = cliOptions?.root ?? process.cwd();
+	const resolved = cliOptions.config
+		? resolve(cwd, cliOptions.config)
+		: undefined;
 
-	// todo: load configuration file properly
+	let isFile = false;
+	if (resolved && existsSync(resolved) && statSync(resolved).isFile()) {
+		isFile = true;
+		cwd = dirname(resolved).replace(/\\/g, '/');
+	}
 
 	const loader = createConfigLoader<SpritesConfiguration>({
-		sources: [
-			{
-				files: ['svg-css-sprite.config'],
-				extensions: ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts'],
-			},
-		],
+		sources: isFile
+			? [
+					{
+						files: resolved!,
+						extensions: [],
+					},
+			  ]
+			: [
+					{
+						files: ['svg-css-sprite.config'],
+						extensions: ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts'],
+					},
+			  ],
 		cwd,
-		defaults: { sprites: {} },
+		defaults: { sprites: [] },
 	});
 
 	const result = await loader.load();
