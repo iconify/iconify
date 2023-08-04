@@ -6,7 +6,7 @@ import {
 	createLoadCollectionFromFSAsyncIterator,
 } from '../lib/svg-css-sprite/create-node-sprite';
 import { expect } from 'vitest';
-import { AsyncSpriteIcons } from '../src';
+import { type AsyncSpriteIcons, createSprite } from '../lib';
 
 const fixturesDir = './tests/fixtures';
 
@@ -15,6 +15,16 @@ const loader: CustomIconLoader = async (name) => {
 };
 
 describe('Testing CSS SVG Sprites', () => {
+	test('CustomCollection static object', async () => {
+		const circle = await loader('circle');
+		const spriteString = createSprite('test', {
+			circle: circle!,
+		});
+		expect(spriteString).toMatch(/<svg/);
+		expect(spriteString).toMatch(/<symbol id="shapes-circle"/);
+		expect(spriteString).toMatch(/<view id="shapes-circle-view"/);
+		expect(spriteString).toMatch(/<use href="#shapes-circle"/);
+	});
 	test('CustomCollection with async iterator', async () => {
 		const sprite: string[] = [];
 		await createAndPipeReadableStreamSprite(
