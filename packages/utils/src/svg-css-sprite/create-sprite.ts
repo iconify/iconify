@@ -56,7 +56,8 @@ export function createReadableStreamSprite(
 	warn = true
 ) {
 	const context: Sprites = { content: '' };
-	const iterator = typeof icons === 'function' ? icons() : icons;
+	const iterator =
+		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
 	return new ReadableStream({
 		start(controller) {
 			controller.enqueue('<svg xmlns="http://www.w3.org/2000/svg">');

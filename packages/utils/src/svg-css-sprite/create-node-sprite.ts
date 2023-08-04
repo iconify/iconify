@@ -1,4 +1,4 @@
-import { AsyncSpriteIcons, AsyncSpriteIconsFactory, SpriteIcon } from './types';
+import { AsyncSpriteIcons, AsyncSpriteIconsFactory } from './types';
 import {
 	createAndPipeReadableStreamSprite,
 	createReadableStreamSprite,
@@ -8,9 +8,8 @@ import { Readable, Writable } from 'node:stream';
 import { ServerResponse } from 'node:http';
 import { loadCollectionFromFS } from '../loader/fs';
 import { AutoInstall } from '../loader/types';
-import { getIconData } from '../icon-set/get-icon';
 import { opendir, readFile } from 'node:fs/promises';
-import { basename, dirname, extname } from 'node:path';
+import { basename, dirname, extname, resolve } from 'node:path';
 import { searchForIcon } from '../loader/modern';
 
 export function createAndSaveSprite(
@@ -110,7 +109,7 @@ export function createFileSystemIconLoaderAsyncIterator(
 			if (useInclude(name)) {
 				yield {
 					name,
-					svg: await readFile(file.name, 'utf-8'),
+					svg: await readFile(resolve(dir, file.name), 'utf-8'),
 					collection,
 				};
 			}
