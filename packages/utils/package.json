@@ -342,6 +342,11 @@
 			"import": "./lib/svg/build.mjs",
 			"types": "./lib/svg/build.d.ts"
 		},
+		"./lib/svg/defs": {
+			"require": "./lib/svg/defs.cjs",
+			"import": "./lib/svg/defs.mjs",
+			"types": "./lib/svg/defs.d.ts"
+		},
 		"./lib/svg/encode-svg-for-css": {
 			"require": "./lib/svg/encode-svg-for-css.cjs",
 			"import": "./lib/svg/encode-svg-for-css.mjs",
@@ -396,6 +401,16 @@
 			"require": "./lib/svg-css-sprite/create-node-sprite.cjs",
 			"import": "./lib/svg-css-sprite/create-node-sprite.mjs",
 			"types": "./lib/svg-css-sprite/create-node-sprite.d.ts"
+		},
+		"./lib/svg-css-sprite/create": {
+			"require": "./lib/svg-css-sprite/create.cjs",
+			"import": "./lib/svg-css-sprite/create.mjs",
+			"types": "./lib/svg-css-sprite/create.d.ts"
+		},
+		"./lib/svg-css-sprite/prepare": {
+			"require": "./lib/svg-css-sprite/prepare.cjs",
+			"import": "./lib/svg-css-sprite/prepare.mjs",
+			"types": "./lib/svg-css-sprite/prepare.d.ts"
 		},
 		"./lib/svg-css-sprite/types": {
 			"require": "./lib/svg-css-sprite/types.cjs",

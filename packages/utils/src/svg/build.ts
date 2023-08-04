@@ -5,6 +5,7 @@ import {
 } from '../customisations/defaults';
 import { calculateSize } from './size';
 import { SVGViewBox } from './viewbox';
+import { wrapSVGContent } from './defs';
 
 /**
  * Interface for getSVGData() result
@@ -167,12 +168,11 @@ export function iconToSVG(
 		}
 
 		if (transformations.length) {
-			body =
-				'<g transform="' +
-				transformations.join(' ') +
-				'">' +
-				body +
-				'</g>';
+			body = wrapSVGContent(
+				body,
+				'<g transform="' + transformations.join(' ') + '">',
+				'</g>'
+			);
 		}
 	});
 

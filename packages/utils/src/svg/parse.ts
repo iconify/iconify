@@ -1,4 +1,5 @@
 import { IconifyIconBuildResult } from './build';
+import { wrapSVGContent } from './defs';
 import { getSVGViewBox } from './viewbox';
 
 /**
@@ -7,6 +8,7 @@ import { getSVGViewBox } from './viewbox';
 export interface ParsedSVGContent {
 	// Attributes for SVG element
 	attribs: Record<string, string>;
+
 	// Content
 	body: string;
 }
@@ -68,7 +70,12 @@ export function buildParsedSVG(
 
 	let body = data.body;
 	if (groupAttributes.length) {
-		body = '<g ' + groupAttributes.join(' ') + '>' + body + '</g>';
+		// Wrap content in group, except for defs
+		body = wrapSVGContent(
+			body,
+			'<g ' + groupAttributes.join(' ') + '>',
+			'</g>'
+		);
 	}
 
 	return {

@@ -2,10 +2,10 @@ import {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
 	SpriteCollection,
-	SpriteEntry,
+	SpriteEntry_v1,
 	SpriteIcon,
 	SpriteIcons,
-	SpritesContext,
+	SpritesContext_v1,
 } from './types';
 import { yellow } from 'kolorist';
 import { ReadableStream } from 'node:stream/web';
@@ -32,7 +32,7 @@ export function createSprite(
 
 				return acc;
 			},
-			<SpritesContext>{ content: '' }
+			<SpritesContext_v1>{ content: '' }
 		).content
 	}
 </svg>`;
@@ -56,7 +56,7 @@ export function createReadableStreamSprite(
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	warn = true
 ) {
-	const context: SpritesContext = { content: '' };
+	const context: SpritesContext_v1 = { content: '' };
 	const iterator =
 		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
 	return new ReadableStream({
@@ -127,8 +127,8 @@ export function createAsyncSpriteIconsFactory(
 }
 
 function generateSpriteEntry(
-	context: SpritesContext,
-	data: SpriteEntry,
+	context: SpritesContext_v1,
+	data: SpriteEntry_v1,
 	icon: SpriteIcon
 ) {
 	const y = context.minY ?? 0;
@@ -174,7 +174,7 @@ function parseSVGData(
 		}
 	}
 
-	return <SpriteEntry>{
+	return <SpriteEntry_v1>{
 		rawViewBox,
 		content: parsed.body,
 		x: viewBox[0],
