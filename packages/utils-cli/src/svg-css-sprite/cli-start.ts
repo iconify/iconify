@@ -91,7 +91,7 @@ async function run(cliOptions: CliOptions = { silent: false }) {
 						`CSS SVG Sprite ${sprite.name} failed to generate: ${path}`
 					)
 				);
-				return Promise.resolve(e as unknown as Error);
+				return Promise.resolve(e as Error);
 			}
 
 			return Promise.resolve(undefined);

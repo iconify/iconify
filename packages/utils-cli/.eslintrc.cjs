@@ -24,6 +24,8 @@ module.exports = {
 	rules: {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],
+		'@typescript-eslint/require-await': ['off'],
+		'@typescript-eslint/no-unsafe-argument': ['off'],
 	},
 	overrides: [
 		{
