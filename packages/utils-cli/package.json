@@ -1,7 +1,7 @@
 {
 	"name": "@iconify/utils-cli",
 	"type": "module",
-	"description": "Common functions for working with Iconify icon sets used by various packages.",
+	"description": "CLI utilities for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
 	"version": "2.1.7",
 	"license": "MIT",

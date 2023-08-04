@@ -7,7 +7,7 @@ This is a set of CLI that deal with Iconify icon sets.
 To install the library run this command:
 
 ```
-npm install -D  @iconify/utils-cli --save
+npm install @iconify/utils-cli --save-dev
 ```
 
 ## Documentation
