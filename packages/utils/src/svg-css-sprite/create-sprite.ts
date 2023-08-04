@@ -5,12 +5,12 @@ import {
 	SpriteEntry,
 	SpriteIcon,
 	SpriteIcons,
-	Sprites,
+	SpritesContext,
 } from './types';
 import { yellow } from 'kolorist';
-import { loadNodeIcon } from '../loader/node-loader';
 import { ReadableStream } from 'node:stream/web';
-import { getSVGViewBox, parseSVGContent } from '../svg/parse';
+import { parseSVGContent } from '../svg/parse';
+import { getSVGViewBox } from '../svg/viewbox';
 
 const warned = new Set<string>();
 
@@ -32,7 +32,7 @@ export function createSprite(
 
 				return acc;
 			},
-			<Sprites>{ content: '' }
+			<SpritesContext>{ content: '' }
 		).content
 	}
 </svg>`;
@@ -56,8 +56,9 @@ export function createReadableStreamSprite(
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
 	warn = true
 ) {
-	const context: Sprites = { content: '' };
-	const iterator = typeof icons === 'function' ? icons() : icons;
+	const context: SpritesContext = { content: '' };
+	const iterator =
+		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
 	return new ReadableStream({
 		start(controller) {
 			controller.enqueue('<svg xmlns="http://www.w3.org/2000/svg">');
@@ -126,18 +127,16 @@ export function createAsyncSpriteIconsFactory(
 }
 
 function generateSpriteEntry(
-	context: Sprites,
+	context: SpritesContext,
 	data: SpriteEntry,
 	icon: SpriteIcon
 ) {
-	const newY = context.previous ? context.previous.y + 1 : data.y;
+	const y = context.minY ?? 0;
 	const entry = `
   <symbol id="shapes-${icon.name}" viewBox="${data.rawViewBox}">${data.content}</symbol>
-  <view id="shapes-${icon.name}-view" viewBox="${data.x} ${newY} ${data.width} ${data.height}"/>
-  <use href="#shapes-${icon.name}" x="${data.x}" y="${newY}" id="${icon.name}"/>`;
-	context.previous = {
-		y: data.height + (context.previous ? context.previous.y : 0),
-	};
+  <view id="shapes-${icon.name}-view" viewBox="${data.x} ${y} ${data.width} ${data.height}"/>
+  <use href="#shapes-${icon.name}" x="${data.x}" y="${y}" id="${icon.name}"/>`;
+	context.minY = y + data.height + 1;
 	return entry;
 }
 

@@ -132,7 +132,7 @@ export type {
 	SpriteIcons,
 	SpriteCollection,
 	SpriteEntry,
-	Sprites,
+	SpritesContext as Sprites,
 } from './svg-css-sprite/types';
 export {
 	createAndPipeReadableStreamSprite,

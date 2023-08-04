@@ -8,9 +8,9 @@ export interface SpriteEntry {
 	entry: string;
 }
 
-export interface Sprites {
+export interface SpritesContext {
 	content: string;
-	previous?: Pick<SpriteEntry, 'y'>;
+	minY?: number;
 }
 
 export type SpriteIcons =
