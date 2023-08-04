@@ -3,7 +3,7 @@ import { consola } from 'consola';
 import { green, red } from 'colorette';
 import { version } from '../../package.json';
 import { createConfigLoader } from 'unconfig';
-import type { SpritesConfiguration } from '@iconify/utils/lib/svg-css-sprite/types';
+import type { SpritesConfiguration } from './types';
 import { createAsyncSpriteIconsFactory } from '@iconify/utils/lib/svg-css-sprite/create-sprite';
 import { createAndSaveSprite } from '@iconify/utils/lib/svg-css-sprite/create-node-sprite';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
@@ -121,22 +121,31 @@ async function loadConfig(cliOptions: CliOptions) {
 		cwd = dirname(resolved).replace(/\\/g, '/');
 	}
 
+	const rewrite = <U>(config: U) => {
+		if (typeof config === 'function') return config() as U;
+
+		return config;
+	};
+
 	const loader = createConfigLoader<SpritesConfiguration>({
 		sources: isFile
 			? [
 					{
 						files: resolved!,
 						extensions: [],
+						rewrite,
 					},
 			  ]
 			: [
 					{
 						files: ['svg-css-sprite.config'],
 						extensions: ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts'],
+						rewrite,
 					},
 			  ],
 		cwd,
 		defaults: { sprites: [] },
+		merge: false,
 	});
 
 	const result = await loader.load();

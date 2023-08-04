@@ -17,9 +17,19 @@
 		"test-custom": "node ./bin/svg-css-sprite-generator.mjs --root test-cli --config custom.ts",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild"
+		"build": "unbuild && rimraf lib/svg-css-sprite/cli.d.ts && rimraf lib/svg-css-sprite/cli.cjs"
 	},
 	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./lib/svg-css-sprite/index.d.ts",
+			"require": "./lib/svg-css-sprite/index.cjs",
+			"import": "./lib/svg-css-sprite/index.mjs"
+		}
+	},
+	"main": "lib/svg-css-sprite/index.mjs",
+	"module": "lib/svg-css-sprite/index.mjs",
+	"types": "lib/svg-css-sprite/index.d.ts",
 	"bin": {
 		"svg-css-sprite-generator": "./bin/svg-css-sprite-generator.mjs"
 	},

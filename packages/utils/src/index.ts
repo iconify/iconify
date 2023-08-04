@@ -128,8 +128,6 @@ export {
 export type {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
-	SpriteConfiguration,
-	SpritesConfiguration,
 	SpriteIcon,
 	SpriteIcons,
 	SpriteCollection,
