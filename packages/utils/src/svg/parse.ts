@@ -1,7 +1,7 @@
 /**
  * viewBox: x, y, width, height
  */
-export type SVGViewBox = [number, number, number, number];
+export type SVGViewBox = [x: number, y: number, width: number, height: number];
 
 /**
  * Parsed SVG content
@@ -14,7 +14,7 @@ export interface ParsedSVGContent {
 }
 
 /**
- * Extract viewBox from SVG
+ * Extract attributes and content from SVG
  */
 export function parseSVGContent(content: string): ParsedSVGContent | undefined {
 	// Split SVG attributes and body
@@ -45,7 +45,7 @@ export function parseSVGContent(content: string): ParsedSVGContent | undefined {
 }
 
 /**
- * Get viewBox from value
+ * Get viewBox from string
  */
 export function getSVGViewBox(value: string): SVGViewBox | undefined {
 	const result = value.trim().split(/\s+/).map(Number);
