@@ -362,6 +362,11 @@
 			"import": "./lib/svg/inner-html.mjs",
 			"types": "./lib/svg/inner-html.d.ts"
 		},
+		"./lib/svg/parse": {
+			"require": "./lib/svg/parse.cjs",
+			"import": "./lib/svg/parse.mjs",
+			"types": "./lib/svg/parse.d.ts"
+		},
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs",

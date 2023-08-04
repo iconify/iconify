@@ -10,6 +10,7 @@ import {
 import { yellow } from 'kolorist';
 import { loadNodeIcon } from '../loader/node-loader';
 import { ReadableStream } from 'node:stream/web';
+import { getSVGViewBox, parseSVGContent } from '../svg/parse';
 
 const warned = new Set<string>();
 
@@ -56,8 +57,7 @@ export function createReadableStreamSprite(
 	warn = true
 ) {
 	const context: Sprites = { content: '' };
-	const iterator =
-		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
+	const iterator = typeof icons === 'function' ? icons() : icons;
 	return new ReadableStream({
 		start(controller) {
 			controller.enqueue('<svg xmlns="http://www.w3.org/2000/svg">');
@@ -147,10 +147,10 @@ function parseSVGData(
 	data: string,
 	warn: boolean
 ) {
-	const match = data.match(
-		/<svg[^>]+viewBox="([^"]+)"[^>]*>([\s\S]+)<\/svg>/
-	);
-	if (!match) {
+	const parsed = parseSVGContent(data);
+	const rawViewBox = parsed?.attribs['viewBox'] ?? '';
+	const viewBox = getSVGViewBox(rawViewBox);
+	if (!parsed || !viewBox) {
 		const key = `${spriteName}:${name}`;
 		if (warn && !warned.has(key)) {
 			warned.add(key);
@@ -175,15 +175,13 @@ function parseSVGData(
 		}
 	}
 
-	const [, viewBox, path] = match;
-	const [x, y, width, height] = viewBox.split(' ').map(Number);
 	return <SpriteEntry>{
-		rawViewBox: match[1],
-		content: path,
-		x,
-		y,
-		width,
-		height,
+		rawViewBox,
+		content: parsed.body,
+		x: viewBox[0],
+		y: viewBox[1],
+		width: viewBox[2],
+		height: viewBox[3],
 	};
 }
 /*
