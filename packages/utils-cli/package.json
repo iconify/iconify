@@ -27,7 +27,7 @@
 			"import": "./lib/svg-css-sprite/index.mjs"
 		}
 	},
-	"main": "lib/svg-css-sprite/index.mjs",
+	"main": "lib/svg-css-sprite/index.cjs",
 	"module": "lib/svg-css-sprite/index.mjs",
 	"types": "lib/svg-css-sprite/index.d.ts",
 	"bin": {
