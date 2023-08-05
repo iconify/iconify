@@ -51,6 +51,48 @@ export function createAndPipeReadableStreamSprite(
 	);
 }
 
+export async function createUint8ArraySprite(
+	spriteName: string,
+	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
+	warn = true
+) {
+	const textEncoder = new TextEncoder();
+	const context: SpritesContext_v1 = { content: '' };
+	const iterator =
+		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
+	const chunks = [
+		textEncoder.encode('<svg xmlns="http://www.w3.org/2000/svg">').buffer,
+	];
+	for await (const value of iterator) {
+		const data = parseSVGData(spriteName, value.name, value.svg, warn);
+		if (data) {
+			chunks.push(
+				textEncoder.encode(generateSpriteEntry(context, data, value))
+					.buffer
+			);
+		}
+	}
+	chunks.push(textEncoder.encode('</svg>').buffer);
+	const totalByteLength = chunks.reduce(
+		(acc, chunk) => acc + chunk.byteLength,
+		0
+	);
+	const concatenatedBuffer = new ArrayBuffer(totalByteLength);
+	const dataView = new DataView(concatenatedBuffer);
+	let offset = 0;
+
+	chunks.forEach((chunk) => {
+		const chunkDataView = new DataView(chunk);
+		for (let i = 0; i < chunk.byteLength; i++) {
+			dataView.setUint8(offset + i, chunkDataView.getUint8(i));
+		}
+		offset += chunk.byteLength;
+	});
+
+	// Convert the concatenated ArrayBuffer to a Uint8Array
+	return new Uint8Array(concatenatedBuffer);
+}
+
 export function createReadableStreamSprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
@@ -183,28 +225,3 @@ function parseSVGData(
 		height: viewBox[3],
 	};
 }
-/*
-async function test() {
-	async function* icons() {
-		const icons = ['about', 'accept-database'];
-		for (const name of icons) {
-			yield await loadNodeIcon('flat-color-icons', name).then((i) => ({
-				name,
-				svg: i!,
-			}));
-		}
-	}
-	await createAndPipeReadableStreamSprite(
-		'xx',
-		icons(),
-		new WritableStream({
-			write(chunk) {
-				console.log(chunk);
-			},
-		}),
-		true
-	);
-}
-
-test();
-*/

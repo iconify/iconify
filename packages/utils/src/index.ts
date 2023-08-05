@@ -139,4 +139,5 @@ export {
 	createAsyncSpriteIconsFactory,
 	createReadableStreamSprite,
 	createSprite,
+	createUint8ArraySprite,
 } from './svg-css-sprite/create-sprite';

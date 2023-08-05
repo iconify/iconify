@@ -7,6 +7,7 @@ import {
 } from '../lib/svg-css-sprite/create-node-sprite';
 import { expect } from 'vitest';
 import { type AsyncSpriteIcons, createSprite } from '../lib';
+import { createUint8ArraySprite } from '../lib/svg-css-sprite/create-sprite';
 
 const fixturesDir = './tests/fixtures';
 
@@ -45,6 +46,22 @@ describe('Testing CSS SVG Sprites', () => {
 		);
 		expect(sprite.length > 0).toBeTruthy();
 		const spriteString = sprite.join('');
+		expect(spriteString).toMatch(/<svg/);
+		expect(spriteString).toMatch(/<symbol id="shapes-circle"/);
+		expect(spriteString).toMatch(/<view id="shapes-circle-view"/);
+		expect(spriteString).toMatch(/<use href="#shapes-circle"/);
+	});
+	test('CustomCollection with Uint8Array', async () => {
+		const result = await createUint8ArraySprite('test', <AsyncSpriteIcons>{
+			async *[Symbol.asyncIterator]() {
+				yield {
+					name: 'circle',
+					svg: await loader('circle'),
+				};
+			},
+		});
+		expect(result.length > 0).toBeTruthy();
+		const spriteString = new TextDecoder().decode(result);
 		expect(spriteString).toMatch(/<svg/);
 		expect(spriteString).toMatch(/<symbol id="shapes-circle"/);
 		expect(spriteString).toMatch(/<view id="shapes-circle-view"/);
@@ -125,7 +142,6 @@ describe('Testing CSS SVG Sprites', () => {
 		const spriteString = sprite.join('');
 		expect(spriteString).toMatch(/<svg/);
 		for (const icon of include) {
-			console.log(icon);
 			expect(
 				spriteString.includes(`<symbol id="shapes-${icon}"`)
 			).toBeTruthy();

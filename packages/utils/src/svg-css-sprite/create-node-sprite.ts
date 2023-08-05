@@ -116,14 +116,3 @@ export function createFileSystemIconLoaderAsyncIterator(
 		}
 	};
 }
-
-/*
-async function test() {
-	const factory = createIconifyCollectionsIconsFactory({
-		'flat-color-icons': ['about', 'accept-database'],
-	});
-	await createAndSaveSprite('my-sprite.svg', 'my-sprite', factory, true);
-}
-
-test();
-*/
