@@ -54,10 +54,19 @@ export function createAndPipeReadableStreamSprite(
 export async function createUint8ArraySprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
-	warn = true
+	options:
+		| boolean
+		| {
+				warn?: boolean;
+				callback?: (chunk: DataView) => void | Promise<void>;
+		  } = false
 ) {
 	const textEncoder = new TextEncoder();
 	const context: SpritesContext_v1 = { content: '' };
+	const warn =
+		typeof options === 'boolean' ? options : options?.warn === true;
+	const callback =
+		typeof options === 'object' ? options?.callback : undefined;
 	const iterator =
 		typeof icons === 'function' ? icons() : icons[Symbol.asyncIterator]();
 	const chunks = [
@@ -81,13 +90,15 @@ export async function createUint8ArraySprite(
 	const dataView = new DataView(concatenatedBuffer);
 	let offset = 0;
 
-	chunks.forEach((chunk) => {
+	// Concatenate the chunks into a single ArrayBuffer
+	for (const chunk of chunks) {
 		const chunkDataView = new DataView(chunk);
+		await callback?.(chunkDataView);
 		for (let i = 0; i < chunk.byteLength; i++) {
 			dataView.setUint8(offset + i, chunkDataView.getUint8(i));
 		}
 		offset += chunk.byteLength;
-	});
+	}
 
 	// Convert the concatenated ArrayBuffer to a Uint8Array
 	return new Uint8Array(concatenatedBuffer);

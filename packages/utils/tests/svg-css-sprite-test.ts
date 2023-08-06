@@ -8,6 +8,7 @@ import {
 import { expect } from 'vitest';
 import { type AsyncSpriteIcons, createSprite } from '../lib';
 import { createUint8ArraySprite } from '../lib/svg-css-sprite/create-sprite';
+import { createHash } from 'node:crypto';
 
 const fixturesDir = './tests/fixtures';
 
@@ -52,20 +53,33 @@ describe('Testing CSS SVG Sprites', () => {
 		expect(spriteString).toMatch(/<use href="#shapes-circle"/);
 	});
 	test('CustomCollection with Uint8Array', async () => {
-		const result = await createUint8ArraySprite('test', <AsyncSpriteIcons>{
-			async *[Symbol.asyncIterator]() {
-				yield {
-					name: 'circle',
-					svg: await loader('circle'),
-				};
+		let hash = createHash('sha1');
+		const result = await createUint8ArraySprite(
+			'test',
+			<AsyncSpriteIcons>{
+				async *[Symbol.asyncIterator]() {
+					yield {
+						name: 'circle',
+						svg: await loader('circle'),
+					};
+				},
 			},
-		});
+			{
+				callback(chunk) {
+					hash.update(chunk);
+				},
+			}
+		);
 		expect(result.length > 0).toBeTruthy();
 		const spriteString = new TextDecoder().decode(result);
 		expect(spriteString).toMatch(/<svg/);
 		expect(spriteString).toMatch(/<symbol id="shapes-circle"/);
 		expect(spriteString).toMatch(/<view id="shapes-circle-view"/);
 		expect(spriteString).toMatch(/<use href="#shapes-circle"/);
+		const hashResult = hash.digest('hex');
+		hash = createHash('sha1');
+		hash.update(spriteString);
+		expect(hash.digest('hex')).toBe(hashResult);
 	});
 	test('CustomCollection with async iterator factory', async () => {
 		const sprite: string[] = [];
