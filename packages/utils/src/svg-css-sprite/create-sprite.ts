@@ -93,12 +93,13 @@ export async function createUint8ArraySprite(
 	// Concatenate the chunks into a single ArrayBuffer
 	for (const chunk of chunks) {
 		const chunkDataView = new DataView(chunk);
-		await callback?.(chunkDataView);
 		for (let i = 0; i < chunk.byteLength; i++) {
 			dataView.setUint8(offset + i, chunkDataView.getUint8(i));
 		}
 		offset += chunk.byteLength;
 	}
+
+	await callback?.(dataView);
 
 	// Convert the concatenated ArrayBuffer to a Uint8Array
 	return new Uint8Array(concatenatedBuffer);
@@ -168,7 +169,7 @@ export function createAsyncSpriteIconsFactory(
 					};
 				}
 			} else {
-				for await (const icon of collection) {
+				for await (const icon of collection[Symbol.asyncIterator]()) {
 					yield {
 						name: mapIconName(icon.name, icon.collection),
 						svg: icon.svg,
