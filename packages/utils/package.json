@@ -416,6 +416,11 @@
 			"require": "./lib/svg-css-sprite/types.cjs",
 			"import": "./lib/svg-css-sprite/types.mjs",
 			"types": "./lib/svg-css-sprite/types.d.ts"
+		},
+		"./lib/svg-css-sprite/utils": {
+			"require": "./lib/svg-css-sprite/utils.cjs",
+			"import": "./lib/svg-css-sprite/utils.mjs",
+			"types": "./lib/svg-css-sprite/utils.d.ts"
 		}
 	},
 	"files": [

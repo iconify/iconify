@@ -2,6 +2,7 @@ import {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
 	SpriteCollection,
+	SpriteCollections,
 	SpriteEntry_v1,
 	SpriteIcon,
 	SpriteIcons,
@@ -139,7 +140,7 @@ export function createReadableStreamSprite(
 }
 
 export function createAsyncSpriteIconsFactory(
-	collections: SpriteCollection | SpriteCollection[],
+	collections: SpriteCollections,
 	mapIconName: (icon: string, collection?: string) => string = (icon) => icon
 ) {
 	const collectionsArray = Array.isArray(collections)

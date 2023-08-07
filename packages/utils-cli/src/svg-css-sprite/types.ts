@@ -1,8 +1,8 @@
-import { SpriteCollection } from '@iconify/utils';
+import { SpriteCollections } from '@iconify/utils';
 
 export interface SpriteConfiguration {
 	name: string;
-	collection: SpriteCollection | SpriteCollection[];
+	collection: SpriteCollections;
 	outdir?: string;
 	mapIconName?: (icon: string, collection?: string) => string;
 }

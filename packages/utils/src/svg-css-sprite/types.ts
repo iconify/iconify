@@ -55,6 +55,11 @@ export interface SpriteIcon {
 	collection?: string;
 }
 
+export interface GeneratedUint8ArraySprite {
+	name: string;
+	asset: Uint8Array;
+}
+
 export type AsyncSpriteIcons = AsyncIterableIterator<SpriteIcon>;
 export type AsyncSpriteIconsFactory = () => AsyncSpriteIcons;
 
@@ -63,3 +68,4 @@ export type SpriteCollection =
 	| SpriteIcon[]
 	| AsyncSpriteIcons
 	| AsyncSpriteIconsFactory;
+export type SpriteCollections = SpriteCollection | SpriteCollection[];

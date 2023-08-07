@@ -128,9 +128,11 @@ export {
 export type {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
+	GeneratedUint8ArraySprite,
 	SpriteIcon,
 	SpriteIcons,
 	SpriteCollection,
+	SpriteCollections,
 	SpriteEntry_v1 as SpriteEntry,
 	SpritesContext_v1 as Sprites,
 } from './svg-css-sprite/types';
@@ -141,3 +143,9 @@ export {
 	createSprite,
 	createUint8ArraySprite,
 } from './svg-css-sprite/create-sprite';
+export {
+	createCSSSVGUint8ArraySpriteLoader,
+	createUint8ArraySpriteFactory,
+	customizeSpriteIcon,
+	loadSvgFromSprite,
+} from './svg-css-sprite/utils';
