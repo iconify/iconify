@@ -7,6 +7,13 @@ import {
 	createUint8ArraySprite,
 } from './create-sprite';
 
+/**
+ * Apply customizations to SVG.
+ * @param collection The collection name.
+ * @param icon The icon name.
+ * @param svg The SVG icon.
+ * @param options The loader options.
+ */
 export async function customizeSpriteIcon(
 	collection: string,
 	icon: string,
@@ -40,6 +47,13 @@ export async function customizeSpriteIcon(
 	);
 }
 
+/**
+ * Utility helper to load SVG icon from the sprite collections.
+ * @param collectionName The collection name.
+ * @param icon The icon to load.
+ * @param collections The collection SVG icons sources.
+ * @param options The loader options: apply the customizations to the SVG.
+ */
 export async function loadSvgFromSprite(
 	collectionName: string,
 	icon: string,
@@ -97,6 +111,11 @@ export async function loadSvgFromSprite(
 	}
 }
 
+/**
+ * Utility helper to create a sprite loader.
+ * @param collectionResolver Sprite collections resolver.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ */
 export function createCSSSVGUint8ArraySpriteLoader(
 	collectionResolver: (collection: string) => SpriteCollections,
 	warn = true
@@ -113,6 +132,11 @@ export function createCSSSVGUint8ArraySpriteLoader(
 	};
 }
 
+/**
+ * Utility helper to create a factory to generate [Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) CSS SVG Sprites.
+ * @param sprites The sprites to generate.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ */
 export function createUint8ArraySpriteFactory(
 	sprites: Record<string, SpriteCollections>,
 	warn = true

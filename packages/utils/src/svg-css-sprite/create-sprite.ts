@@ -1,7 +1,6 @@
 import {
 	AsyncSpriteIcons,
 	AsyncSpriteIconsFactory,
-	SpriteCollection,
 	SpriteCollections,
 	SpriteEntry_v1,
 	SpriteIcon,
@@ -15,6 +14,12 @@ import { getSVGViewBox } from '../svg/viewbox';
 
 const warned = new Set<string>();
 
+/**
+ * Create CSS SVG Sprite from SVG sources icons.
+ * @param spriteName The name of the sprite.
+ * @param icons Icons to add to the sprite: record with icon names and SVG content.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ */
 export function createSprite(
 	spriteName: string,
 	icons: SpriteIcons,
@@ -39,6 +44,14 @@ export function createSprite(
 </svg>`;
 }
 
+/**
+ * Create CSS SVG Sprite using async iterables icons sources and streams.
+ * @param spriteName The sprite name.
+ * @param icons async iterable iterator icons sources to add to the sprite.
+ * @param writableStream The writable target stream.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ * @param options The options to use in the stream pipe.
+ */
 export function createAndPipeReadableStreamSprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
@@ -52,6 +65,12 @@ export function createAndPipeReadableStreamSprite(
 	);
 }
 
+/**
+ * Create [Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) CSS SVG Sprite using async iterables icon sources.
+ * @param spriteName The sprite name.
+ * @param icons async iterable iterator of icons to add to the sprite.
+ * @param options The options for creating the sprite.
+ */
 export async function createUint8ArraySprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
@@ -106,6 +125,12 @@ export async function createUint8ArraySprite(
 	return new Uint8Array(concatenatedBuffer);
 }
 
+/**
+ * Create a [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) CSS SVG Sprite using async iterables icon sources.
+ * @param spriteName The sprite name.
+ * @param icons async iterable iterator icon sources to add to the sprite.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ */
 export function createReadableStreamSprite(
 	spriteName: string,
 	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
@@ -139,6 +164,11 @@ export function createReadableStreamSprite(
 	});
 }
 
+/**
+ * Utility helper to convert sprite icons sources to async iterable icons source.
+ * @param collections The CSS SVG Sprite SVG icons sources.
+ * @param mapIconName A function to map the icon name, by default will use the icon name.
+ */
 export function createAsyncSpriteIconsFactory(
 	collections: SpriteCollections,
 	mapIconName: (icon: string, collection?: string) => string = (icon) => icon

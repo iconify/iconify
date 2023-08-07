@@ -4,14 +4,20 @@ import {
 	createReadableStreamSprite,
 } from './create-sprite';
 import { createWriteStream } from 'node:fs';
-import { Readable, Writable } from 'node:stream';
-import { ServerResponse } from 'node:http';
+import { Writable } from 'node:stream';
 import { loadCollectionFromFS } from '../loader/fs';
 import { AutoInstall } from '../loader/types';
 import { opendir, readFile } from 'node:fs/promises';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { searchForIcon } from '../loader/modern';
 
+/**
+ * Create CSS SVG Sprite from async iterable iterators icons sources and save the sprite to a file.
+ * @param fileName The file name to save the sprite to.
+ * @param spriteName The name of the sprite.
+ * @param icons async iterable iterator icons sources to add to the sprite.
+ * @param warn Display warning if icon contains code that can break other icons inside the sprite (animation, style).
+ */
 export function createAndSaveSprite(
 	fileName: string,
 	spriteName: string,
@@ -30,31 +36,13 @@ export function createAndSaveSprite(
 	);
 }
 
-export function createSpriteAndPipeToResponse(
-	spriteName: string,
-	icons: AsyncSpriteIcons | AsyncSpriteIconsFactory,
-	response: ServerResponse,
-	warn = true
-) {
-	const readable = Readable.fromWeb(
-		createReadableStreamSprite(spriteName, icons, warn)
-	);
-	readable.on('open', () => {
-		response.writeHead(200, {
-			'Content-Type': 'image/svg+xml',
-		});
-		readable.pipe(response);
-	});
-	readable.on('error', (err) => {
-		console.error(
-			`error creating/writing SVG icon sprite "${spriteName}"`,
-			err
-		);
-		response.statusCode = 500;
-		response.end();
-	});
-}
-
+/**
+ * Utility helper to create async iterable icon sources from Iconify JSON collection package.
+ * @param collection The collection name: for example, to create a sprite using `@iconify-json/mdi` package, just provide `mdi`.
+ * @param options The options to create the sprite:
+ * - `autoInstall`: should auto install the package if not found?
+ * - `include`: include only specific icons.
+ */
 export function createLoadCollectionFromFSAsyncIterator(
 	collection: string,
 	options: {
@@ -90,6 +78,13 @@ export function createLoadCollectionFromFSAsyncIterator(
 		}
 	};
 }
+
+/**
+ * Utility helper to create async iterable icon sources from a directory containing SVG files.
+ * @param dir The directory containing the SVG files.
+ * @param collection The collection name, if not provided, the directory name will be used.
+ * @param include include only specific icons.
+ */
 export function createFileSystemIconLoaderAsyncIterator(
 	dir: string,
 	collection = dirname(dir),
