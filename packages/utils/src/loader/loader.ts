@@ -1,6 +1,9 @@
 import { getCustomIcon } from './custom';
 import type { UniversalIconLoader } from './types';
 import { searchForIcon } from './modern';
+import { IconifyJSON } from '@iconify/types';
+
+const cache: Map<unknown, IconifyJSON | string> = new Map();
 
 export const loadIcon: UniversalIconLoader = async (
 	collection,
@@ -11,8 +14,13 @@ export const loadIcon: UniversalIconLoader = async (
 
 	if (custom) {
 		if (typeof custom === 'function') {
-			const result = await custom(icon);
+			const cachedResult = cache.get(custom);
+			const result = cachedResult ?? (await custom(icon));
 			if (result) {
+				if (!cachedResult) {
+					cache.set(custom, result);
+				}
+
 				if (typeof result === 'string') {
 					return await getCustomIcon(
 						() => result,
