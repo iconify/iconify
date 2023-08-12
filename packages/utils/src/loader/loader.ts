@@ -1,6 +1,7 @@
 import { getCustomIcon } from './custom';
 import type { UniversalIconLoader } from './types';
 import { searchForIcon } from './modern';
+import { IconifyJSON } from '@iconify/types';
 
 export const loadIcon: UniversalIconLoader = async (
 	collection,
@@ -11,11 +12,17 @@ export const loadIcon: UniversalIconLoader = async (
 
 	if (custom) {
 		if (typeof custom === 'function') {
-			const result = await custom(icon);
+			let result: string | IconifyJSON | undefined;
+			try {
+				result = await custom(icon);
+			} catch {
+				return;
+			}
+
 			if (result) {
 				if (typeof result === 'string') {
 					return await getCustomIcon(
-						() => result,
+						() => result as string,
 						collection,
 						icon,
 						options
@@ -42,6 +49,4 @@ export const loadIcon: UniversalIconLoader = async (
 			return await getCustomIcon(custom, collection, icon, options);
 		}
 	}
-
-	return undefined;
 };
