@@ -22,11 +22,15 @@ export async function getCustomIcon(
 
 	debug(`${collection}:${icon}`);
 
-	if (typeof custom === 'function') {
-		result = await custom(icon);
-	} else {
-		const inline = custom[icon];
-		result = typeof inline === 'function' ? await inline() : inline;
+	try {
+		if (typeof custom === 'function') {
+			result = await custom(icon);
+		} else {
+			const inline = custom[icon];
+			result = typeof inline === 'function' ? await inline() : inline;
+		}
+	} catch {
+		return;
 	}
 
 	if (result) {
