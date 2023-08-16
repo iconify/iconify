@@ -25,6 +25,6 @@ export interface DynamicIconifyPluginOptions
 	// Class prefix
 	prefix?: string;
 
-	// Inclue icon-specific selectors only
+	// Include icon-specific selectors only
 	overrideOnly?: true;
 }
