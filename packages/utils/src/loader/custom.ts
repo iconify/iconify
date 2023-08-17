@@ -29,7 +29,11 @@ export async function getCustomIcon(
 			const inline = custom[icon];
 			result = typeof inline === 'function' ? await inline() : inline;
 		}
-	} catch {
+	} catch (err) {
+		console.warn(
+			`Failed to load custom icon "${icon}" in "${collection}":`,
+			err
+		);
 		return;
 	}
 

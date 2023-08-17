@@ -15,7 +15,11 @@ export const loadIcon: UniversalIconLoader = async (
 			let result: string | IconifyJSON | undefined;
 			try {
 				result = await custom(icon);
-			} catch {
+			} catch (err) {
+				console.warn(
+					`Failed to load custom icon "${icon}" in "${collection}":`,
+					err
+				);
 				return;
 			}
 
