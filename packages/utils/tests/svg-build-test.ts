@@ -13,6 +13,7 @@ describe('Testing iconToSVG', () => {
 				height: '1em',
 				viewBox: '0 0 16 16',
 			},
+			viewBox: [0, 0, 16, 16],
 			body: '',
 		};
 
@@ -39,6 +40,7 @@ describe('Testing iconToSVG', () => {
 				height: '16',
 				viewBox: '0 0 16 16',
 			},
+			viewBox: [0, 0, 16, 16],
 			body: '<path d="" />',
 		};
 
@@ -70,6 +72,7 @@ describe('Testing iconToSVG', () => {
 				height: '16',
 				viewBox: '0 0 16 16',
 			},
+			viewBox: [0, 0, 16, 16],
 			body: '<path d="" />',
 		};
 
@@ -92,6 +95,7 @@ describe('Testing iconToSVG', () => {
 				height: '16',
 				viewBox: '0 0 20 16',
 			},
+			viewBox: [0, 0, 20, 16],
 			body: '<path d="..." />',
 		};
 
@@ -115,6 +119,7 @@ describe('Testing iconToSVG', () => {
 				width: '20',
 				viewBox: '0 0 20 16',
 			},
+			viewBox: [0, 0, 20, 16],
 			body: '<path d="..." />',
 		};
 
@@ -137,6 +142,7 @@ describe('Testing iconToSVG', () => {
 			attributes: {
 				viewBox: '0 0 20 16',
 			},
+			viewBox: [0, 0, 20, 16],
 			body: '<path d="..." />',
 		};
 
@@ -160,6 +166,7 @@ describe('Testing iconToSVG', () => {
 				height: '40px',
 				viewBox: '0 0 16 20',
 			},
+			viewBox: [0, 0, 16, 20],
 			body: '<g transform="rotate(90 8 8)"><path d="..." /></g>',
 		};
 
@@ -183,6 +190,7 @@ describe('Testing iconToSVG', () => {
 				height: '40px',
 				viewBox: '0 0 16 20',
 			},
+			viewBox: [0, 0, 16, 20],
 			body: '<g transform="rotate(-90 10 10)"><path d="..." /></g>',
 		};
 
@@ -206,6 +214,7 @@ describe('Testing iconToSVG', () => {
 				height: '32',
 				viewBox: '0 0 20 16',
 			},
+			viewBox: [0, 0, 20, 16],
 			body: '<g transform="translate(20 0) scale(-1 1)"><path d="..." /></g>',
 		};
 
@@ -229,6 +238,7 @@ describe('Testing iconToSVG', () => {
 				height: '1em',
 				viewBox: '0 0 16 20',
 			},
+			viewBox: [0, 0, 16, 20],
 			body: '<g transform="rotate(90 8 8) translate(20 0) scale(-1 1)"><path d="..." /></g>',
 		};
 
@@ -255,6 +265,7 @@ describe('Testing iconToSVG', () => {
 				height: '1em',
 				viewBox: '0 0 16 20',
 			},
+			viewBox: [0, 0, 16, 20],
 			body: '<g transform="translate(16 0) scale(-1 1)"><g transform="rotate(90 8 8)"><path d="..." /></g></g>',
 		};
 
@@ -281,6 +292,7 @@ describe('Testing iconToSVG', () => {
 				height: '16',
 				viewBox: '0 0 20 16',
 			},
+			viewBox: [0, 0, 20, 16],
 			body: '<path d="..." />',
 		};
 
@@ -304,6 +316,7 @@ describe('Testing iconToSVG', () => {
 				height: '1em',
 				viewBox: '0 0 128 128',
 			},
+			viewBox: [0, 0, 128, 128],
 			body:
 				'<g transform="translate(128 0) scale(-1 1)">' +
 				iconBody +

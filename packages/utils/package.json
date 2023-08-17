@@ -342,6 +342,11 @@
 			"import": "./lib/svg/build.mjs",
 			"types": "./lib/svg/build.d.ts"
 		},
+		"./lib/svg/defs": {
+			"require": "./lib/svg/defs.cjs",
+			"import": "./lib/svg/defs.mjs",
+			"types": "./lib/svg/defs.d.ts"
+		},
 		"./lib/svg/encode-svg-for-css": {
 			"require": "./lib/svg/encode-svg-for-css.cjs",
 			"import": "./lib/svg/encode-svg-for-css.mjs",
@@ -362,6 +367,11 @@
 			"import": "./lib/svg/inner-html.mjs",
 			"types": "./lib/svg/inner-html.d.ts"
 		},
+		"./lib/svg/parse": {
+			"require": "./lib/svg/parse.cjs",
+			"import": "./lib/svg/parse.mjs",
+			"types": "./lib/svg/parse.d.ts"
+		},
 		"./lib/svg/size": {
 			"require": "./lib/svg/size.cjs",
 			"import": "./lib/svg/size.mjs",
@@ -376,6 +386,11 @@
 			"require": "./lib/svg/url.cjs",
 			"import": "./lib/svg/url.mjs",
 			"types": "./lib/svg/url.d.ts"
+		},
+		"./lib/svg/viewbox": {
+			"require": "./lib/svg/viewbox.cjs",
+			"import": "./lib/svg/viewbox.mjs",
+			"types": "./lib/svg/viewbox.d.ts"
 		}
 	},
 	"files": [

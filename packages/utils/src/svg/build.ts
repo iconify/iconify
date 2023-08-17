@@ -4,6 +4,8 @@ import {
 	IconifyIconCustomisations,
 } from '../customisations/defaults';
 import { calculateSize } from './size';
+import { SVGViewBox } from './viewbox';
+import { wrapSVGContent } from './defs';
 
 /**
  * Interface for getSVGData() result
@@ -15,6 +17,9 @@ export interface IconifyIconBuildResult {
 		height?: string;
 		viewBox: string;
 	};
+
+	// viewBox as numbers
+	viewBox: SVGViewBox;
 
 	// Content
 	body: string;
@@ -163,12 +168,11 @@ export function iconToSVG(
 		}
 
 		if (transformations.length) {
-			body =
-				'<g transform="' +
-				transformations.join(' ') +
-				'">' +
-				body +
-				'</g>';
+			body = wrapSVGContent(
+				body,
+				'<g transform="' + transformations.join(' ') + '">',
+				'</g>'
+			);
 		}
 	});
 
@@ -211,17 +215,12 @@ export function iconToSVG(
 	setAttr('width', width);
 	setAttr('height', height);
 
-	attributes.viewBox =
-		box.left.toString() +
-		' ' +
-		box.top.toString() +
-		' ' +
-		boxWidth.toString() +
-		' ' +
-		boxHeight.toString();
+	const viewBox: SVGViewBox = [box.left, box.top, boxWidth, boxHeight];
+	attributes.viewBox = viewBox.join(' ');
 
 	return {
 		attributes,
+		viewBox,
 		body,
 	};
 }
