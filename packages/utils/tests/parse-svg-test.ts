@@ -188,4 +188,35 @@ describe('Testing parsing SVG content', () => {
 		};
 		expect(built).toEqual(expected);
 	});
+
+	test('Nested SVG', () => {
+		const body = `<circle cx="50" cy="50" r="40" />
+		<circle cx="150" cy="50" r="4" />
+	  
+		<svg viewBox="0 0 10 10" x="200" width="100">
+		  <circle cx="5" cy="5" r="4" />
+		</svg>`;
+
+		const parsed = parseSVGContent(`<svg
+		viewBox="0 0 300 100"
+		xmlns="http://www.w3.org/2000/svg"
+		stroke="red"
+		fill="grey">
+		${body}
+	  </svg>
+	  `);
+
+		expect(parsed).toBeTruthy();
+		if (!parsed) {
+			return;
+		}
+
+		expect(parsed.attribs).toEqual({
+			viewBox: '0 0 300 100',
+			xmlns: 'http://www.w3.org/2000/svg',
+			stroke: 'red',
+			fill: 'grey',
+		});
+		expect(parsed.body).toEqual(body);
+	});
 });
