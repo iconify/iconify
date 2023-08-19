@@ -1,8 +1,13 @@
 import { IconifyIconBuildResult } from '../lib/svg/build';
-import { parseSVGContent, buildParsedSVG } from '../lib/svg/parse';
+import {
+	parseSVGContent,
+	buildParsedSVG,
+	convertParsedSVG,
+} from '../lib/svg/parse';
 import { splitSVGDefs } from '../lib/svg/defs';
 import { getSVGViewBox } from '../lib/svg/viewbox';
 import { readFileSync } from 'node:fs';
+import { IconifyIcon } from '@iconify/types';
 
 const fixturesDir = './tests/fixtures';
 
@@ -54,6 +59,16 @@ describe('Testing parsing SVG content', () => {
 			body,
 		};
 		expect(built).toEqual(expected);
+
+		const icon = convertParsedSVG(parsed);
+		const expectedIcon: IconifyIcon = {
+			left: 0,
+			top: 0,
+			width: 24,
+			height: 24,
+			body,
+		};
+		expect(icon).toEqual(expectedIcon);
 
 		// Defs
 		expect(splitSVGDefs(body)).toEqual({
@@ -109,7 +124,7 @@ describe('Testing parsing SVG content', () => {
 		const body = `${body1}<defs id="defs6">${defs1}</defs>${body2}`;
 		const svg = `
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.5 47.5" style="enable-background:new 0 0 47.5 47.5;" xml:space="preserve" version="1.1" id="svg2">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 47.5 49.5" style="enable-background:new 0 -1 47.5 49.5;" xml:space="preserve" version="1.1" id="svg2">
     ${body}
 </svg>`;
 
@@ -125,8 +140,8 @@ describe('Testing parsing SVG content', () => {
 			'xmlns:rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
 			'xmlns:svg': 'http://www.w3.org/2000/svg',
 			'xmlns': 'http://www.w3.org/2000/svg',
-			'viewBox': '0 0 47.5 47.5',
-			'style': 'enable-background:new 0 0 47.5 47.5;',
+			'viewBox': '0 -1 47.5 49.5',
+			'style': 'enable-background:new 0 -1 47.5 49.5;',
 			'xml:space': 'preserve',
 			'version': '1.1',
 			'id': 'svg2',
@@ -137,12 +152,22 @@ describe('Testing parsing SVG content', () => {
 		const built = buildParsedSVG(parsed);
 		const expected: IconifyIconBuildResult = {
 			attributes: {
-				viewBox: '0 0 47.5 47.5',
+				viewBox: '0 -1 47.5 49.5',
 			},
-			viewBox: [0, 0, 47.5, 47.5],
-			body: `<defs>${defs1}</defs><g style="enable-background:new 0 0 47.5 47.5;">${body1}${body2}</g>`,
+			viewBox: [0, -1, 47.5, 49.5],
+			body: `<defs>${defs1}</defs><g style="enable-background:new 0 -1 47.5 49.5;">${body1}${body2}</g>`,
 		};
 		expect(built).toEqual(expected);
+
+		const icon = convertParsedSVG(parsed);
+		const expectedIcon: IconifyIcon = {
+			left: 0,
+			top: -1,
+			width: 47.5,
+			height: 49.5,
+			body: expected.body,
+		};
+		expect(icon).toEqual(expectedIcon);
 
 		// Defs
 		expect(splitSVGDefs(body)).toEqual({

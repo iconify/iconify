@@ -1,6 +1,7 @@
+import { IconifyIcon } from '@iconify/types';
 import { IconifyIconBuildResult } from './build';
 import { wrapSVGContent } from './defs';
-import { getSVGViewBox } from './viewbox';
+import { SVGViewBox, getSVGViewBox } from './viewbox';
 
 /**
  * Parsed SVG content
@@ -44,12 +45,14 @@ export function parseSVGContent(content: string): ParsedSVGContent | undefined {
 	};
 }
 
-/**
- * Convert parsed SVG to IconifyIconBuildResult
- */
-export function buildParsedSVG(
-	data: ParsedSVGContent
-): IconifyIconBuildResult | undefined {
+interface BuildResult {
+	width?: string;
+	height?: string;
+	viewBox: SVGViewBox;
+	body: string;
+}
+
+function build(data: ParsedSVGContent): BuildResult | undefined {
 	const attribs = data.attribs;
 	const viewBox = getSVGViewBox(attribs['viewBox'] ?? '');
 	if (!viewBox) {
@@ -79,14 +82,51 @@ export function buildParsedSVG(
 	}
 
 	return {
-		attributes: {
-			// Copy dimensions if exist
-			width: attribs.width,
-			height: attribs.height,
-			// Merge viewBox
-			viewBox: viewBox.join(' '),
-		},
+		// Copy dimensions if exist
+		width: attribs.width,
+		height: attribs.height,
 		viewBox,
 		body,
 	};
+}
+
+/**
+ * Convert parsed SVG to IconifyIconBuildResult
+ */
+export function buildParsedSVG(
+	data: ParsedSVGContent
+): IconifyIconBuildResult | undefined {
+	const result = build(data);
+	if (result) {
+		return {
+			attributes: {
+				// Copy dimensions if exist
+				width: result.width,
+				height: result.height,
+				// Merge viewBox
+				viewBox: result.viewBox.join(' '),
+			},
+			viewBox: result.viewBox,
+			body: result.body,
+		};
+	}
+}
+
+/**
+ * Convert parsed SVG to IconifyIcon
+ */
+export function convertParsedSVG(
+	data: ParsedSVGContent
+): IconifyIcon | undefined {
+	const result = build(data);
+	if (result) {
+		const viewBox = result.viewBox;
+		return {
+			left: viewBox[0],
+			top: viewBox[1],
+			width: viewBox[2],
+			height: viewBox[3],
+			body: result.body,
+		};
+	}
 }
