@@ -34,7 +34,7 @@ export function splitSVGDefs(content: string): SplitSVGDefsResult {
  * Merge defs and content
  */
 export function mergeDefsAndContent(defs: string, content: string): string {
-	return '<defs>' + defs + '</defs>' + content;
+	return defs ? '<defs>' + defs + '</defs>' + content : content;
 }
 
 /**
@@ -45,6 +45,6 @@ export function wrapSVGContent(
 	start: string,
 	end: string
 ): string {
-	const { defs, content } = splitSVGDefs(body);
-	return (defs ? '<defs>' + defs + '</defs>' : '') + start + content + end;
+	const split = splitSVGDefs(body);
+	return mergeDefsAndContent(split.defs, start + split.content + end);
 }
