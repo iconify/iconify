@@ -2,10 +2,14 @@ import type { IconifyIcon } from '@iconify/types';
 import { iconToHTML } from '../svg/html';
 import { calculateSize } from '../svg/size';
 import { svgToURL } from '../svg/url';
-import type { IconCSSCommonCodeOptions, IconCSSItemOptions } from './types';
+import type {
+	IconCSSCommonCodeOptions,
+	IconCSSItemOptions,
+	IconContentItemOptions,
+} from './types';
 
 /**
- * Generates common CSS rules for multiple icons
+ * Generates common CSS rules for multiple icons, rendered as background/mask
  */
 export function getCommonCSSRules(
 	options: IconCSSCommonCodeOptions
@@ -45,7 +49,7 @@ export function getCommonCSSRules(
 }
 
 /**
- * Generate CSS rules for one icon
+ * Generate CSS rules for one icon, rendered as background/mask
  *
  * This function excludes common rules
  */
@@ -90,4 +94,30 @@ export function generateItemCSSRules(
 	}
 
 	return result;
+}
+
+/**
+ * Generate content for one icon, rendered as content of pseudo-selector
+ */
+export function generateItemContent(
+	icon: Required<IconifyIcon>,
+	options: IconContentItemOptions
+): string {
+	// Get dimensions
+	const height = options.height;
+	const width =
+		options.width ?? calculateSize(height, icon.width / icon.height);
+
+	// Get SVG
+	const svg = iconToHTML(
+		icon.body.replace(/currentColor/g, options.color || 'black'),
+		{
+			viewBox: `${icon.left} ${icon.top} ${icon.width} ${icon.height}`,
+			width: width.toString(),
+			height: height.toString(),
+		}
+	);
+
+	// Generate URL
+	return svgToURL(svg);
 }

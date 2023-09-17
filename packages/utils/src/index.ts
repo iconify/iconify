@@ -71,8 +71,8 @@ export { colorKeywords } from './colors/keywords';
 export { stringToColor, compareColors, colorToString } from './colors/index';
 
 // CSS generator
-export { getIconCSS } from './css/icon';
-export { getIconsCSS } from './css/icons';
+export { getIconCSS, getIconContentCSS } from './css/icon';
+export { getIconsCSS, getIconsContentCSS } from './css/icons';
 
 // SVG Icon loader
 export type {

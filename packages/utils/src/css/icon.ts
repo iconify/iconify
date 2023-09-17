@@ -1,11 +1,15 @@
 import type { IconifyIcon } from '@iconify/types';
 import { defaultIconProps } from '../icon/defaults';
-import { generateItemCSSRules, getCommonCSSRules } from './common';
+import {
+	generateItemCSSRules,
+	generateItemContent,
+	getCommonCSSRules,
+} from './common';
 import { formatCSS } from './format';
-import type { IconCSSIconOptions } from './types';
+import type { IconCSSIconOptions, IconContentIconOptions } from './types';
 
 /**
- * Get CSS for icon
+ * Get CSS for icon, rendered as background or mask
  */
 export function getIconCSS(
 	icon: IconifyIcon,
@@ -38,10 +42,12 @@ export function getIconCSS(
 	}
 
 	const rules = {
+		...options.rules,
 		...getCommonCSSRules(newOptions),
 		...generateItemCSSRules({ ...defaultIconProps, ...icon }, newOptions),
 	};
 
+	// Get selector and format CSS
 	const selector = options.iconSelector || '.icon';
 	return formatCSS(
 		[
@@ -51,5 +57,34 @@ export function getIconCSS(
 			},
 		],
 		newOptions.format
+	);
+}
+
+/**
+ * Get CSS for icon, rendered as content
+ */
+export function getIconContentCSS(
+	icon: IconifyIcon,
+	options: IconContentIconOptions
+): string {
+	// Get content
+	const content = generateItemContent(
+		{ ...defaultIconProps, ...icon },
+		options
+	);
+
+	// Get selector and format CSS
+	const selector = options.iconSelector || '.icon::after';
+	return formatCSS(
+		[
+			{
+				selector,
+				rules: {
+					...options.rules,
+					content,
+				},
+			},
+		],
+		options.format
 	);
 }

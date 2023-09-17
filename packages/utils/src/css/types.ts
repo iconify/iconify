@@ -1,3 +1,9 @@
+/*
+ *
+ * Options for rendering icons as mask or background
+ *
+ */
+
 /**
  * Icon mode
  */
@@ -43,6 +49,9 @@ export interface IconCSSSharedOptions {
 
 	// Set color for monotone icons
 	color?: string;
+
+	// Custom rules
+	rules?: Record<string, string>;
 }
 
 /**
@@ -73,6 +82,48 @@ export interface IconCSSItemOptions
 	//
 }
 
+/*
+ *
+ * Options for rendering icons as content
+ *
+ */
+
+/**
+ * Selector for icon
+ */
+export interface IconContentIconSelectorOptions {
+	// Selector used for icon
+	iconSelector?: string;
+}
+
+/**
+ * Options common for both multiple icons and single icon
+ */
+export interface IconContentSharedOptions {
+	// Icon height
+	height: number;
+
+	// Icon width. If not set, it will be calculated using icon's width/height ratio
+	width?: number;
+
+	// Set color for monotone icons
+	color?: string;
+
+	// Custom rules
+	rules?: Record<string, string>;
+}
+
+/**
+ * Options for generating data for one icon
+ */
+export type IconContentItemOptions = IconContentSharedOptions;
+
+/*
+ *
+ * Options for formatting CSS
+ *
+ */
+
 /**
  * Formatting modes. Same as in SASS
  */
@@ -94,8 +145,14 @@ export interface IconCSSFormatOptions {
 	format?: CSSFormatMode;
 }
 
+/*
+ *
+ * Combined options for functions that render and format code
+ *
+ */
+
 /**
- * Options for generating data for one icon
+ * Options for generating data for one icon as background/mask
  */
 export interface IconCSSIconOptions
 	extends IconCSSSharedOptions,
@@ -106,12 +163,32 @@ export interface IconCSSIconOptions
 }
 
 /**
- * Options for generating multiple icons
+ * Options for generating data for one icon as content
+ */
+export interface IconContentIconOptions
+	extends IconContentSharedOptions,
+		IconContentIconSelectorOptions,
+		IconCSSFormatOptions {
+	//
+}
+
+/**
+ * Options for generating multiple icons as background/mask
  */
 export interface IconCSSIconSetOptions
 	extends IconCSSSharedOptions,
 		IconCSSSelectorOptions,
 		IconCSSModeOptions,
+		IconCSSFormatOptions {
+	//
+}
+
+/**
+ * Options for generating multiple icons as content
+ */
+export interface IconContentIconSetOptions
+	extends IconContentSharedOptions,
+		IconContentIconSelectorOptions,
 		IconCSSFormatOptions {
 	//
 }

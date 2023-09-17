@@ -1,17 +1,23 @@
 import type { IconifyJSON } from '@iconify/types';
 import { getIconData } from '../icon-set/get-icon';
 import { defaultIconProps } from '../icon/defaults';
-import { generateItemCSSRules, getCommonCSSRules } from './common';
+import {
+	generateItemCSSRules,
+	generateItemContent,
+	getCommonCSSRules,
+} from './common';
 import { formatCSS } from './format';
 import type {
 	CSSUnformattedItem,
 	IconCSSIconSetOptions,
 	IconCSSSelectorOptions,
+	IconContentIconSetOptions,
 } from './types';
 
 // Default selectors
 const commonSelector = '.icon--{prefix}';
 const iconSelector = '.icon--{prefix}--{name}';
+const contentSelector = '.icon--{prefix}--{name}::after';
 const defaultSelectors: IconCSSSelectorOptions = {
 	commonSelector,
 	iconSelector,
@@ -86,7 +92,10 @@ export function getIconsCSSData(
 	);
 
 	// Get common CSS
-	const commonRules = getCommonCSSRules(newOptions);
+	const commonRules = {
+		...options.rules,
+		...getCommonCSSRules(newOptions),
+	};
 	const hasCommonRules = commonSelector && commonSelector !== iconSelector;
 	const commonSelectors: Set<string> = new Set();
 	if (hasCommonRules) {
@@ -106,7 +115,10 @@ export function getIconsCSSData(
 		}
 
 		const rules = generateItemCSSRules(
-			{ ...defaultIconProps, ...iconData },
+			{
+				...defaultIconProps,
+				...iconData,
+			},
 			newOptions
 		);
 
@@ -155,7 +167,7 @@ export function getIconsCSSData(
 }
 
 /**
- * Get CSS for icon
+ * Get CSS for icons as background/mask
  */
 export function getIconsCSS(
 	iconSet: IconifyJSON,
@@ -176,6 +188,51 @@ export function getIconsCSS(
 		} else {
 			css.unshift(common);
 		}
+	}
+
+	// Format
+	return (
+		formatCSS(css, options.format) +
+		(errors.length ? '\n' + errors.join('\n') + '\n' : '')
+	);
+}
+
+/**
+ * Get CSS for icons as content
+ */
+export function getIconsContentCSS(
+	iconSet: IconifyJSON,
+	names: string[],
+	options: IconContentIconSetOptions
+): string {
+	const errors: string[] = [];
+	const css: CSSUnformattedItem[] = [];
+	const iconSelectorWithPrefix = (
+		options.iconSelector ?? contentSelector
+	).replace(/{prefix}/g, iconSet.prefix);
+
+	// Parse all icons
+	for (let i = 0; i < names.length; i++) {
+		const name = names[i];
+		const iconData = getIconData(iconSet, name);
+		if (!iconData) {
+			errors.push('/* Could not find icon: ' + name + ' */');
+			continue;
+		}
+
+		const content = generateItemContent(
+			{ ...defaultIconProps, ...iconData },
+			options
+		);
+		const selector = iconSelectorWithPrefix.replace(/{name}/g, name);
+
+		css.push({
+			selector,
+			rules: {
+				...options.rules,
+				content,
+			},
+		});
 	}
 
 	// Format

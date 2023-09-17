@@ -1,5 +1,5 @@
 import { svgToURL } from '../lib/svg/url';
-import { getIconCSS } from '../lib/css/icon';
+import { getIconCSS, getIconContentCSS } from '../lib/css/icon';
 import type { IconifyIcon } from '@iconify/types';
 
 describe('Testing CSS for icon', () => {
@@ -45,8 +45,12 @@ describe('Testing CSS for icon', () => {
 				varName: 'svg',
 				forceSquare: true,
 				format: 'expanded',
+				rules: {
+					visibility: 'visible',
+				},
 			})
 		).toBe(`.test-icon:after {
+  visibility: visible;
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -141,6 +145,56 @@ describe('Testing CSS for icon', () => {
   mask-size: 100% 100%;
   -webkit-mask-image: ${expectedURL};
   mask-image: ${expectedURL};
+}
+`);
+	});
+
+	test('Content', () => {
+		const icon: IconifyIcon = {
+			body: '<path d="M0 0h16v16z" fill="#f80" />',
+			width: 24,
+			height: 16,
+		};
+		const expectedURL = svgToURL(
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="48" height="32">${icon.body}</svg>`
+		);
+
+		expect(
+			getIconContentCSS(icon, {
+				height: 32,
+				format: 'expanded',
+			})
+		).toBe(`.icon::after {
+  content: ${expectedURL};
+}
+`);
+	});
+
+	test('Content with options', () => {
+		const icon: IconifyIcon = {
+			body: '<path d="M0 0h16v16z" fill="currentColor" stroke="currentColor" stroke-width="1" />',
+		};
+		const expectedURL = svgToURL(
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="24">${icon.body.replace(
+				/currentColor/g,
+				'purple'
+			)}</svg>`
+		);
+
+		expect(
+			getIconContentCSS(icon, {
+				width: 32,
+				height: 24,
+				format: 'expanded',
+				color: 'purple',
+				iconSelector: '.test-icon::before',
+				rules: {
+					visibility: 'visible',
+				},
+			})
+		).toBe(`.test-icon::before {
+  visibility: visible;
+  content: ${expectedURL};
 }
 `);
 	});
