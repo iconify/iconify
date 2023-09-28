@@ -372,6 +372,11 @@
 			"require": "./lib/svg/parse.cjs",
 			"import": "./lib/svg/parse.mjs"
 		},
+		"./lib/svg/pretty": {
+			"types": "./lib/svg/pretty.d.ts",
+			"require": "./lib/svg/pretty.cjs",
+			"import": "./lib/svg/pretty.mjs"
+		},
 		"./lib/svg/size": {
 			"types": "./lib/svg/size.d.ts",
 			"require": "./lib/svg/size.cjs",

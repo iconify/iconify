@@ -58,6 +58,7 @@ export { replaceIDs } from './svg/id';
 export { calculateSize } from './svg/size';
 export { encodeSvgForCss } from './svg/encode-svg-for-css';
 export { trimSVG } from './svg/trim';
+export { prettifySVG } from './svg/pretty';
 export { iconToHTML } from './svg/html';
 export { svgToURL, svgToData } from './svg/url';
 export { cleanUpInnerHTML } from './svg/inner-html';
