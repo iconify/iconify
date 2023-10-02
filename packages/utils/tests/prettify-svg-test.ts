@@ -47,6 +47,31 @@ describe('Prettify SVG', () => {
 		);
 	});
 
+	test('Style and script', () => {
+		// Basic CSS
+		expect(
+			prettifySVG('<svg><style>path { stroke-width: 1; }</style></svg>')
+		).toBe('<svg>\n\t<style>path { stroke-width: 1; }</style>\n</svg>\n');
+
+		// Basic script
+		expect(
+			prettifySVG(
+				'<svg><script lang="foo"> console.log(\'Alert\'); </script></svg>'
+			)
+		).toBe(
+			'<svg>\n\t<script lang="foo"> console.log(\'Alert\'); </script>\n</svg>\n'
+		);
+
+		// Selector with '>' and tag after that
+		expect(
+			prettifySVG(
+				'<svg><style>g > path { stroke-width: 1; }</style><g></g></svg>'
+			)
+		).toBe(
+			'<svg>\n\t<style>g > path { stroke-width: 1; }</style>\n\t<g>\n\t</g>\n</svg>\n'
+		);
+	});
+
 	test('Bad code', () => {
 		expect(prettifySVG('<svg><title>Incomplete SVG</title>')).toBeNull();
 		expect(

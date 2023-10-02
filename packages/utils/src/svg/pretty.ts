@@ -1,4 +1,9 @@
 /**
+ * Tags to skip
+ */
+const skipTags = ['script', 'style'];
+
+/**
  * Prettify SVG
  */
 export function prettifySVG(
@@ -39,20 +44,30 @@ export function prettifySVG(
 		content = content.slice(openIndex);
 		closeIndex -= openIndex;
 
-		// Check for bad tag
-		const nextOpenIndex = content.indexOf('<', 1);
-		if (nextOpenIndex !== -1 && nextOpenIndex < closeIndex) {
-			// Fail: unexpected '<'
-			return null;
-		}
-
 		// Check tag
 		const lastChar = content.slice(closeIndex - 1, closeIndex);
 		const isClosing = content.slice(0, 2) === '</';
-		const isSelfClosing = lastChar === '/' || lastChar === '?';
+		let isSelfClosing = lastChar === '/' || lastChar === '?';
 		if (isClosing && isSelfClosing) {
 			// Bad code
 			return null;
+		}
+
+		// Check if tag content should be added as is
+		const tagName = content
+			.slice(isClosing ? 2 : 1)
+			.split(/[\s>]/)
+			.shift() as string;
+		const ignoreTagContent =
+			!isSelfClosing && !isClosing && skipTags.includes(tagName);
+
+		// Check for bad content after tag
+		if (!ignoreTagContent) {
+			const nextOpenIndex = content.indexOf('<', 1);
+			if (nextOpenIndex !== -1 && nextOpenIndex < closeIndex) {
+				// Fail: unexpected '<'
+				return null;
+			}
 		}
 
 		// Add tag
@@ -64,6 +79,21 @@ export function prettifySVG(
 		}
 		result += content.slice(0, closeIndex + 1);
 		content = content.slice(closeIndex + 1);
+
+		// Add content after tag
+		if (ignoreTagContent) {
+			const closingIndex = content.indexOf('</' + tagName);
+			const closingEnd = content.indexOf('>', closingIndex);
+			if (closingIndex < 0 || closingEnd < 0) {
+				// Failed to find closing tag
+				return null;
+			}
+			result += content.slice(0, closingEnd + 1);
+			content = content.slice(closingEnd + 1);
+
+			// Mask as self-closing
+			isSelfClosing = true;
+		}
 
 		// Prepare for next tag
 		if (isClosing) {
