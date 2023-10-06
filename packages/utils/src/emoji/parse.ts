@@ -36,7 +36,7 @@ export interface PreparedEmojiResult {
 /**
  * Prepare emoji for icons list
  *
- * Test data should be fetched from 'https://unicode.org/Public/emoji/15.0/emoji-test.txt'
+ * Test data should be fetched from 'https://unicode.org/Public/emoji/15.1/emoji-test.txt'
  * It is used to detect missing emojis and optimise regular expression
  */
 export function prepareEmojiForIconsList(
@@ -98,7 +98,7 @@ export function prepareEmojiForIconsList(
 /**
  * Prepare emoji for an icon set
  *
- * Test data should be fetched from 'https://unicode.org/Public/emoji/15.0/emoji-test.txt'
+ * Test data should be fetched from 'https://unicode.org/Public/emoji/15.1/emoji-test.txt'
  * It is used to detect missing emojis and optimise regular expression
  */
 export function prepareEmojiForIconSet(

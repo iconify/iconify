@@ -43,4 +43,4 @@ export const endUTF32Pair = 0xe000;
 /**
  * Emoji version as string
  */
-export const emojiVersion = '15.0';
+export const emojiVersion = '15.1';
