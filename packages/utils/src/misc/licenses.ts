@@ -63,22 +63,22 @@ export const licensesData: Record<string, LicenseInfo> = {
 	},
 	'GPL-2.0-only': {
 		attribution: false,
-		commercial: false,
+		commercial: true,
 		sameLicense: true,
 	},
 	'GPL-2.0-or-later': {
 		attribution: false,
-		commercial: false,
+		commercial: true,
 		sameLicense: true,
 	},
 	'GPL-3.0': {
 		attribution: false,
-		commercial: false,
+		commercial: true,
 		sameLicense: true,
 	},
 	'GPL-3.0-or-later': {
 		attribution: false,
-		commercial: false,
+		commercial: true,
 		sameLicense: true,
 	},
 	'Unlicense': {
