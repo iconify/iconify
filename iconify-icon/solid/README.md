@@ -34,7 +34,7 @@ Then use `Icon` component with icon name or data as "icon" parameter:
 <Icon icon="mdi-light:home" />
 ```
 
-Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 150,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 200,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
 
 ## Offline usage
 

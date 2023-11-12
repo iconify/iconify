@@ -3,9 +3,9 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 90+ icon sets with 80,000 icons.
+-   Out of the box includes 150+ icon sets with 200,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
--   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
+-   Embed icons in designs with plug-ins for Figma and Sketch.
 -   Add icon search to your applications with Iconify Icon Finder.
 
 For more information visit [https://iconify.design/](https://iconify.design/).

@@ -11,7 +11,7 @@ Iconify icon component is nothing like that. Component does not include any icon
 
 That means:
 
--   One syntax for over 100,000 icons from 100+ icon sets.
+-   One syntax for over 200,000 icons from 150+ icon sets.
 -   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
 -   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
 
@@ -55,7 +55,7 @@ Then use `Icon` component in template with icon name or data as "icon" parameter
 <Icon icon="mdi-light:home" />
 ```
 
-Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 100,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
+Component will automatically retrieve data for "mdi-light:home" from Iconify API and render it. There are over 200,000 icons available on Iconify API from various free and open source icon sets, including all the most popular icon sets.
 
 ## Offline usage
 

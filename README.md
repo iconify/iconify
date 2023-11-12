@@ -1,7 +1,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 100+ icon sets with more than 100,000 icons.
+-   Out of the box includes 150+ icon sets with more than 200,000 icons.
 -   Embed icons in HTML with SVG framework or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -30,7 +30,7 @@ Main packages in this repository are various icon components.
 
 Why are those icon components needed? Iconify icon components are not just yet another set of icon components. Unlike other icon components, Iconify icon components do not include icon data. Instead, icon data is loaded on demand from Iconify API.
 
-Iconify API provides data for over 100,000 open source icons! API is hosted on publicly available servers, spread out geographically to make sure visitors from all over the world have the fastest possible connection with redundancies in place to make sure it is always online.
+Iconify API provides data for over 200,000 open source icons! API is hosted on publicly available servers, spread out geographically to make sure visitors from all over the world have the fastest possible connection with redundancies in place to make sure it is always online.
 
 #### Why is API needed?
 
