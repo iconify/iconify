@@ -13,7 +13,7 @@ export interface CommonIconifyPluginOptions extends IconifyPluginLoaderOptions {
  */
 export interface CleanIconifyPluginOptions
 	extends CommonIconifyPluginOptions,
-		IconCSSIconSetOptions {
+	IconCSSIconSetOptions {
 	//
 }
 
@@ -28,6 +28,6 @@ export interface DynamicIconifyPluginOptions
 	// Include icon-specific selectors only
 	overrideOnly?: true;
 
-	// Scale relative to the the default value, (ex. scale: 2 = 2em). Set to 0 to disable default value.
+	// Sets the default height/width value (ex. scale: 2 = 2em)
 	scale?: number
 }
