@@ -83,6 +83,7 @@ Plugin accepts options as a second parameter:
 
 -   `prefix` is class name prefix. Default value is `icon`. Make sure there is no `-` at the end: it is added in classes, but not in plugin parameter.
 -   `overrideOnly`: set to `true` to generate rules that override only icon data. See below.
+-   `scale`: sets the default icon height/width value. Can be set to 0 which removes the default height/width. Default is 1 (1em).
 -   `files`: list of custom files for icon sets. Key is icon set prefix, value is location of `.json` file with icon set in IconifyJSON format.
 -   `iconSet`: list of custom icon sets. Key is prefix, value is either icon set data in `IconifyJSON` format or a synchronous callback that returns `IconifyJSON` data.
 
