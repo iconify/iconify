@@ -27,4 +27,7 @@ export interface DynamicIconifyPluginOptions
 
 	// Include icon-specific selectors only
 	overrideOnly?: true;
+
+	// Scale relative to the the default value, (ex. scale: 2 = 2em). Set to 0 to disable default value.
+	scale?: number
 }
