@@ -72,5 +72,10 @@ module.exports = {
 			prefix: 'icon-hover',
 			overrideOnly: true,
 		}),
+		// Icons without size
+		addDynamicIconSelectors({
+			prefix: 'scaled-icon',
+			scale: 0,
+		}),
 	],
 };
