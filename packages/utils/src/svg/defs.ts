@@ -1,17 +1,23 @@
+/**
+ * Extract definitions from SVG
+ *
+ * Can be used with other tags, but name kept for backwards compatibility.
+ * Should be used only with tags that cannot be nested, such as masks, clip paths, etc.
+ */
 interface SplitSVGDefsResult {
 	defs: string;
 	content: string;
 }
 
-/**
- * Extract definitions from SVG
- */
-export function splitSVGDefs(content: string): SplitSVGDefsResult {
+export function splitSVGDefs(
+	content: string,
+	tag = 'defs'
+): SplitSVGDefsResult {
 	let defs = '';
-	const index = content.indexOf('<defs');
+	const index = content.indexOf('<' + tag);
 	while (index >= 0) {
 		const start = content.indexOf('>', index);
-		const end = content.indexOf('</defs');
+		const end = content.indexOf('</' + tag);
 		if (start === -1 || end === -1) {
 			// Fail
 			break;
