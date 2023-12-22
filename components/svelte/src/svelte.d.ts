@@ -5,5 +5,8 @@ import type { SvelteHTMLElements } from 'svelte/elements';
  * Svelte component
  */
 export default class Icon extends SvelteComponent<
-	IconProps & SvelteHTMLElements['svg'] & Record<`data-${string}`, string>
+	SvelteHTMLElements['svg'] &
+		SvelteHTMLElements['span'] &
+		IconProps &
+		Record<`data-${string}`, string>
 > {}
