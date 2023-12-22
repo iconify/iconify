@@ -1,9 +1,9 @@
-import { SvelteComponentTyped } from 'svelte';
-import { HTMLAttributes } from 'svelte/elements';
+import { SvelteComponent } from 'svelte';
+import type { SvelteHTMLElements } from 'svelte/elements';
 
 /**
  * Svelte component
  */
-export default class Icon extends SvelteComponentTyped<
-	IconProps & HTMLAttributes<SVGSVGElement> & Record<`data-${string}`, string>
+export default class Icon extends SvelteComponent<
+	IconProps & SvelteHTMLElements['svg'] & Record<`data-${string}`, string>
 > {}

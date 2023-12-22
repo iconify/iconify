@@ -153,7 +153,6 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 -   [Vue 3 demo](./components-demo/vue-demo/) - demo for Vue 3 component. Run `npm run dev` to start demo.
 -   [Nuxt 3 demo](./components-demo/nuxt3-demo/) - demo for Vue 3 component with Nuxt. Run `npm run dev` to start demo.
 -   [Vue 2 demo](./components-demo/vue2-demo/) - demo for Vue 2 component. Run `npm run build` to build demo and `npm run serve` to start it.
--   [Svelte demo](./components-demo/svelte-demo/) - demo for Svelte component. Run `npm run dev` to start demo.
 -   [Svelte demo with Vite](./components-demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
 -   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 -   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
