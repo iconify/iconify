@@ -10,6 +10,7 @@ const sourceDir = 'src';
 // Create bundle
 export default [
 	// Bundle everything
+	/*
 	{
 		input: sourceDir + '/Icon.svelte',
 		output: [
@@ -46,6 +47,7 @@ export default [
 			typescript(),
 		],
 	},
+	*/
 
 	// Files included in Icon.svelte as bundle
 	{
