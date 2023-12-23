@@ -10,7 +10,6 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.5",
 		"@iconify/svelte": "workspace:*",
 		"@sveltejs/vite-plugin-svelte": "^2.5.3",
 		"@tsconfig/svelte": "^5.0.2",

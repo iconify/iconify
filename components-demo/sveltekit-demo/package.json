@@ -9,7 +9,6 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.5",
 		"@iconify/svelte": "workspace:*",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",

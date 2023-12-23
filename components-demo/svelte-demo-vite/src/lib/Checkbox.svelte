@@ -11,7 +11,7 @@
         width: 24,
         height: 24
     })
-    
+
     export let checked = false;
     export let text = '';
     export let hint = '';
@@ -34,4 +34,5 @@
 <div class="checkbox-container">
     <a href="# " class={className} on:click|preventDefault={toggle}><Icon icon={icon} mode={checked ? 'svg' : 'style'} />{text}</a>
     <small>{hint}</small>
+	<Icon />
 </div>

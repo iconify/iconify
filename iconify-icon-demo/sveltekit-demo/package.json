@@ -2,6 +2,7 @@
 	"name": "@iconify-icon/sveltekit-demo",
 	"version": "0.0.1",
 	"scripts": {
+		"prepare": "svelte-kit sync",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -9,7 +10,6 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.5",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.6.0",
