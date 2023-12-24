@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "4.0.0-beta.2",
+	"version": "4.0.0-beta.3",
 	"publishConfig": {
 		"tag": "next"
 	},
@@ -19,6 +19,10 @@
 	"types": "dist/index.d.ts",
 	"exports": {
 		".": {
+			"svelte": "./dist/Icon.svelte",
+			"types": "./dist/index.d.ts"
+		},
+		"./dist/Icon.svelte": {
 			"svelte": "./dist/Icon.svelte",
 			"types": "./dist/index.d.ts"
 		},
