@@ -2,10 +2,11 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "4.0.0-beta.3",
+	"version": "4.0.0-beta.4",
 	"publishConfig": {
 		"tag": "next"
 	},
+	"type": "module",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://github.com/iconify/iconify",
@@ -30,6 +31,16 @@
 			"svelte": "./dist/OfflineIcon.svelte",
 			"types": "./dist/offline.d.ts"
 		},
+		"./dist/functions": {
+			"types": "./lib/dist/functions.d.ts",
+			"require": "./lib/dist/functions.cjs",
+			"import": "./lib/dist/functions.js"
+		},
+		"./dist/offline-functions": {
+			"types": "./lib/dist/offline-functions.d.ts",
+			"require": "./lib/dist/offline-functions.cjs",
+			"import": "./lib/dist/offline-functions.js"
+		},
 		"./*": "./*"
 	},
 	"scripts": {
@@ -37,7 +48,7 @@
 		"prebuild": "pnpm run cleanup",
 		"build": "node build",
 		"build:tsc": "tsc -b",
-		"build:bundles": "rollup -c rollup.config.mjs",
+		"build:bundles": "rollup -c rollup.config.js",
 		"build:api": "node build --only-api",
 		"test": "vitest"
 	},

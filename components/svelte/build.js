@@ -1,5 +1,5 @@
-const fs = require('fs');
-const child_process = require('child_process');
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 // List of commands to run
 const commands = [];
@@ -47,16 +47,6 @@ process.argv.slice(2).forEach((cmd) => {
 	}
 });
 
-// Check if required modules in same monorepo are available
-const fileExists = (file) => {
-	try {
-		fs.statSync(file);
-	} catch (e) {
-		return false;
-	}
-	return true;
-};
-
 // Compile packages
 Object.keys(compile).forEach((key) => {
 	if (!compile[key]) {
@@ -89,8 +79,7 @@ Object.keys(compile).forEach((key) => {
  * Get all api-extractor.*.json files
  */
 function apiFiles() {
-	return fs
-		.readdirSync(__dirname)
+	return readdirSync('.')
 		.map((item) => {
 			const parts = item.split('.');
 			if (parts.pop() !== 'json' || parts.shift() !== 'api-extractor') {
@@ -117,10 +106,10 @@ function next() {
 	}
 
 	if (item.cwd === void 0) {
-		item.cwd = __dirname;
+		item.cwd = '.';
 	}
 
-	const result = child_process.spawnSync(item.cmd, item.args, {
+	const result = spawnSync(item.cmd, item.args, {
 		cwd: item.cwd,
 		stdio: 'inherit',
 	});
@@ -138,13 +127,12 @@ next();
  */
 function cleanup() {
 	// Merge TypeScript files
-	const sourceDir = __dirname + '/src/';
-	const distDir = __dirname + '/dist/';
+	const sourceDir = './src/';
+	const distDir = './dist/';
 
 	function createTypes() {
 		// Get Svelte file, split it. Import and content should be separated by empty line
-		const svelteParts = fs
-			.readFileSync(sourceDir + 'svelte.d.ts', 'utf8')
+		const svelteParts = readFileSync(sourceDir + 'svelte.d.ts', 'utf8')
 			.trim()
 			.replace(/\r/g, '')
 			.split('\n\n');
@@ -179,20 +167,19 @@ function cleanup() {
 		].forEach((item) => {
 			const content =
 				svelteImport +
-				fs
-					.readFileSync(distDir + item.source, 'utf8')
+				readFileSync(distDir + item.source, 'utf8')
 					.replace('export { }', '')
 					.trim() +
 				svelteContent;
-			fs.writeFileSync(distDir + item.target, content, 'utf8');
+			writeFileSync(distDir + item.target, content, 'utf8');
 			console.log(`Created dist/${item.target}`);
 		});
 	}
 
 	function copyComponents() {
 		['Icon.svelte', 'OfflineIcon.svelte'].forEach((name) => {
-			const content = fs.readFileSync(sourceDir + name, 'utf8');
-			fs.writeFileSync(distDir + name, content, 'utf8');
+			const content = readFileSync(sourceDir + name, 'utf8');
+			writeFileSync(distDir + name, content, 'utf8');
 			console.log(`Copied dist/${name}`);
 		});
 	}
