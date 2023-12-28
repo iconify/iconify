@@ -33,7 +33,7 @@ describe('Testing generating url()', () => {
 </svg>`;
 		const url = svgToURL(trimSVG(html));
 		expect(url).toBe(
-			"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='10' fill='currentColor'%3E%3Canimate id='animation1' attributeName='height' values='10;5' dur='0.5s' fill='freeze' /%3E%3Canimate id='animation2' attributeName='width' values='20;5' dur='0.2s' begin='animation1.end+1s' fill='freeze' /%3E%3C/rect%3E%3Crect x='2' y='12' width='20' height='5' fill='currentColor'%3E%3Canimate attributeName='height' values='5;10;5' begin='animation1.end+0.2s;animation2.end-0.2s' dur='0.3s' /%3E%3C/rect%3E%3C/svg%3E\")"
+			"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='10' fill='currentColor'%3E%3Canimate id='animation1' attributeName='height' values='10;5' dur='0.5s' fill='freeze'/%3E%3Canimate id='animation2' attributeName='width' values='20;5' dur='0.2s' begin='animation1.end+1s' fill='freeze'/%3E%3C/rect%3E%3Crect x='2' y='12' width='20' height='5' fill='currentColor'%3E%3Canimate attributeName='height' values='5;10;5' begin='animation1.end+0.2s;animation2.end-0.2s' dur='0.3s'/%3E%3C/rect%3E%3C/svg%3E\")"
 		);
 	});
 });

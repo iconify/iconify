@@ -14,6 +14,9 @@ export function prettifySVG(
 	let result = '';
 	let level = 0;
 
+	// Add space for self closing tags
+	content = content.replace(/(\s)*\/>/g, ' />');
+
 	while (content.length > 0) {
 		const openIndex = content.indexOf('<');
 		let closeIndex = content.indexOf('>');

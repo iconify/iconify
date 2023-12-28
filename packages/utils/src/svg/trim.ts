@@ -13,6 +13,8 @@ export function trimSVG(str: string): string {
 			// Trim attribute values
 			.replace(/\s+"/g, '"')
 			.replace(/="\s+/g, '="')
+			// Self closing tags
+			.replace(/(\s)+\/>/g, '/>')
 			// Trim it
 			.trim()
 	);

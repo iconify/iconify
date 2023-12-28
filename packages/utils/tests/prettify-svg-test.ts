@@ -16,7 +16,7 @@ describe('Prettify SVG', () => {
 				'<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="50"/></svg>'
 			)
 		).toBe(
-			'<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">\n\t<circle cx="60" cy="60" r="50"/>\n</svg>\n'
+			'<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">\n\t<circle cx="60" cy="60" r="50" />\n</svg>\n'
 		);
 
 		// With xml tag
@@ -25,7 +25,7 @@ describe('Prettify SVG', () => {
 				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">\n<circle cx="60" cy="60" r="50"/>\n</svg>\n\t'
 			)
 		).toBe(
-			'<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">\n\t<circle cx="60" cy="60" r="50"/>\n</svg>\n'
+			'<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">\n\t<circle cx="60" cy="60" r="50" />\n</svg>\n'
 		);
 	});
 
