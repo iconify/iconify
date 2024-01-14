@@ -374,7 +374,10 @@ export function compareColors(color1: Color, color2: Color): boolean {
 /**
  * Color to hex
  */
-function colorToHex(color: RGBColor): string | null {
+export function colorToHexString(
+	color: RGBColor,
+	canCompact = true
+): string | null {
 	if (color.alpha !== 1) {
 		return null;
 	}
@@ -394,6 +397,7 @@ function colorToHex(color: RGBColor): string | null {
 
 	// Compact color
 	if (
+		canCompact &&
 		result[0] === result[1] &&
 		result[2] === result[3] &&
 		result[4] === result[5]
@@ -421,7 +425,7 @@ export function colorToString(color: Color): string {
 			return 'currentColor';
 
 		case 'rgb': {
-			const hex = colorToHex(color);
+			const hex = colorToHexString(color);
 			if (hex !== null) {
 				return hex;
 			}
