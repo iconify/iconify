@@ -1,9 +1,9 @@
 import type { IconifyAliases, IconifyJSON } from '@iconify/types';
 
-// Parent icons, first is direct parent, last is icon. Does not include self
+// Parent icons, first is direct parent, then parent of parent and so on. Does not include self
 export type ParentIconsList = string[];
 
-// Result
+// Result. Key is icon, value is list of parent icons
 export type ParentIconsTree = Record<string, ParentIconsList | null>;
 
 /**
