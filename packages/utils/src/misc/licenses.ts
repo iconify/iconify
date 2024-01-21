@@ -53,6 +53,11 @@ export const licensesData: Record<string, LicenseInfo> = {
 		attribution: true,
 		commercial: false,
 	},
+	'CC-BY-NC-SA-4.0': {
+		attribution: true,
+		commercial: false,
+		sameLicense: true,
+	},
 	'ISC': {
 		attribution: false,
 		commercial: true,
