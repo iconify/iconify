@@ -65,8 +65,8 @@ export interface IconifyExportedFunctions
 	appendCustomStyle: (value: string) => void;
 
 	// Render HTML
-	iconToHTML: typeof iconToHTML;
-	svgToURL: typeof svgToURL;
+	iconToHTML: (body: string, attributes: Record<string, string>) => string;
+	svgToURL: (svg: string) => string;
 }
 
 /**
