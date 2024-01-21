@@ -16,6 +16,11 @@ import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/function
 import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 
+// Custom additions used for building icons that are used by component
+// Can be reused for building icons in SSR and assigning it as content of component
+import { iconToHTML } from '@iconify/utils/lib/svg/html';
+import { svgToURL } from '@iconify/utils/lib/svg/url';
+
 // API
 import type {
 	IconifyAPIFunctions,
@@ -58,6 +63,10 @@ export interface IconifyExportedFunctions
 
 	// Append custom style to all components
 	appendCustomStyle: (value: string) => void;
+
+	// Render HTML
+	iconToHTML: typeof iconToHTML;
+	svgToURL: typeof svgToURL;
 }
 
 /**
@@ -167,6 +176,8 @@ export function exportFunctions(): IconifyExportedFunctions {
 		addCollection,
 		calculateSize,
 		buildIcon,
+		iconToHTML,
+		svgToURL,
 		loadIcons,
 		loadIcon,
 		addAPIProvider,

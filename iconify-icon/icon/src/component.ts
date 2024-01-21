@@ -103,7 +103,10 @@ export function defineIconifyIcon(
 		// Root
 		_shadowRoot: ShadowRoot;
 
-		// State
+		// Initialised
+		_initialised = false;
+
+		// Icon state
 		_state: IconState;
 
 		// Attributes check queued
@@ -115,25 +118,74 @@ export function defineIconifyIcon(
 		constructor() {
 			super();
 
-			// Attach shadow DOM
-			const root = (this._shadowRoot = this.attachShadow({
-				mode: 'open',
-			}));
+			// Render old content if no icon attribute is set
+			if (!this.getAttribute('icon')) {
+				try {
+					if (document.readyState == 'complete') {
+						// DOM already loaded
+						const html = this.innerHTML;
+						if (html) {
+							this._createShadowRoot().innerHTML = html;
+						}
+					} else {
+						// Do it when DOM is loaded
+						window.onload = () => {
+							if (!this.getAttribute('icon')) {
+								const html = this.innerHTML;
+								if (html) {
+									this._createShadowRoot().innerHTML = html;
+								}
+							}
+						};
+					}
+				} catch (err) {
+					//
+				}
+				return;
+			}
 
-			// Add style
-			const inline = getInline(this);
-			updateStyle(root, inline);
-
-			// Create empty state
-			this._state = setPendingState(
-				{
-					value: '',
-				},
-				inline
-			);
+			// Init DOM
+			this._init();
 
 			// Queue icon render
 			this._queueCheck();
+		}
+
+		/**
+		 * Create shadow root
+		 */
+		_createShadowRoot() {
+			// Attach shadow DOM
+			if (!this._shadowRoot) {
+				this._shadowRoot = this.attachShadow({
+					mode: 'open',
+				});
+			}
+			return this._shadowRoot;
+		}
+
+		/**
+		 * Init state
+		 */
+		_init() {
+			if (!this._initialised) {
+				this._initialised = true;
+
+				// Create root
+				const root = this._createShadowRoot();
+
+				// Add style
+				const inline = getInline(this);
+				updateStyle(root, inline);
+
+				// Create empty state
+				this._state = setPendingState(
+					{
+						value: '',
+					},
+					inline
+				);
+			}
 		}
 
 		/**
@@ -165,6 +217,8 @@ export function defineIconifyIcon(
 		 * Attribute has changed
 		 */
 		attributeChangedCallback(name: string) {
+			this._init();
+
 			if (name === 'inline') {
 				// Update immediately: not affected by other attributes
 				const newInline = getInline(this);
@@ -221,6 +275,8 @@ export function defineIconifyIcon(
 		 * Restart animation
 		 */
 		restartAnimation() {
+			this._init();
+
 			const state = this._state;
 			if (state.rendered) {
 				const root = this._shadowRoot;
@@ -241,6 +297,7 @@ export function defineIconifyIcon(
 		 * Get status
 		 */
 		get status(): IconifyIconStatus {
+			this._init();
 			const state = this._state;
 			return state.rendered
 				? 'rendered'
