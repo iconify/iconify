@@ -172,4 +172,11 @@ export type IconifyLoaderOptions = {
 	 * If you need that properties just add an empty object here, useful for example when using the `svg` on `CSS`.
 	 */
 	usedProps?: Record<string, string>;
+
+	/**
+	 * The scope of the icon sources package
+	 *
+	 * @default '@iconify-json'
+	 */
+	scope?: string;
 };
