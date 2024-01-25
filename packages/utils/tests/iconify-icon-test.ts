@@ -1,6 +1,22 @@
 import { loadNodeIcon } from '../lib/loader/node-loader';
+import cpy from 'cpy';
 
 describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
+	test.only('loadIcon works with importModule', async () => {
+		await cpy(
+			'./tests/@test-scope/test-color-icons',
+			'./node_modules/@test-scope/test-color-icons',
+			{
+				flat: true,
+			}
+		);
+		const result = await loadNodeIcon('test-color-icons', 'about', {
+			scope: '@test-scope',
+		});
+		console.log({ result });
+		expect(result).toBeTruthy();
+	});
+
 	test('loadIcon works', async () => {
 		const result = await loadNodeIcon('flat-color-icons', 'up-right');
 		expect(result).toBeTruthy();
