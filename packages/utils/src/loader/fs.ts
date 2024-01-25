@@ -10,9 +10,9 @@ const isLegacyExists = isPackageExists('@iconify/json');
 /**
  * Asynchronously loads a collection from the file system.
  *
- * @param {string} name - the name of the collection, e.g. 'mdi'
- * @param {AutoInstall} [autoInstall=false] - whether to automatically install
- * @param {string} [scope='@iconify-json'] - the scope of the collection, e.g. '@my-company-json'
+ * @param name {string} the name of the collection, e.g. 'mdi'
+ * @param autoInstall {AutoInstall} [autoInstall=false] - whether to automatically install
+ * @param scope {string} [scope='@iconify-json'] - the scope of the collection, e.g. '@my-company-json'
  * @return {Promise<IconifyJSON | undefined>} the loaded IconifyJSON or undefined
  */
 export async function loadCollectionFromFS(
@@ -30,19 +30,27 @@ export async function loadCollectionFromFS(
 		let jsonPath = resolveModule(`${packageName}/icons.json`);
 
 		// Legacy support for @iconify/json
-		if (!jsonPath && isLegacyExists) {
-			jsonPath = resolveModule(`@iconify/json/json/${name}.json`);
-		}
+		if (scope === '@iconify-json') {
+			if (!jsonPath && isLegacyExists) {
+				jsonPath = resolveModule(`@iconify/json/json/${name}.json`);
+			}
 
-		// Try to install the package if it doesn't exist
-		if (!jsonPath && !isLegacyExists && autoInstall) {
+			// Try to install the package if it doesn't exist
+			if (!jsonPath && !isLegacyExists && autoInstall) {
+				await tryInstallPkg(packageName, autoInstall);
+				jsonPath = resolveModule(`${packageName}/icons.json`);
+			}
+		} else if (!jsonPath && autoInstall) {
 			await tryInstallPkg(packageName, autoInstall);
 			jsonPath = resolveModule(`${packageName}/icons.json`);
 		}
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			const packagePath = resolveModule(packageName);
+			let packagePath = resolveModule(packageName);
+			if (packagePath?.match(/^[a-z]:/i)) {
+				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
+			}
 			if (packagePath) {
 				const { icons }: { icons?: IconifyJSON } = await importModule(
 					packagePath
