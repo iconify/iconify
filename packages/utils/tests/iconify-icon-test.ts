@@ -2,7 +2,7 @@ import { loadNodeIcon } from '../lib/loader/node-loader';
 import cpy from 'cpy';
 
 describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
-	test.only('loadIcon works with importModule', async () => {
+	test('loadIcon works with importModule', async () => {
 		await cpy(
 			'./tests/@test-scope/test-color-icons',
 			'./node_modules/@test-scope/test-color-icons',
@@ -13,7 +13,6 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		const result = await loadNodeIcon('test-color-icons', 'about', {
 			scope: '@test-scope',
 		});
-		console.log({ result });
 		expect(result).toBeTruthy();
 	});
 
