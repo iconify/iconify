@@ -4,7 +4,7 @@ import cpy from 'cpy';
 describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 	test('loadIcon works with importModule', async () => {
 		await cpy(
-			'./tests/@test-scope/test-color-icons',
+			'./tests/fixtures/@test-scope/test-color-icons',
 			'./node_modules/@test-scope/test-color-icons',
 			{
 				flat: true,
