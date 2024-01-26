@@ -114,3 +114,11 @@ export async function mergeIconProps(
 
 	return svg;
 }
+
+export function getPossibleIconNames(icon: string): string[] {
+	return [
+		icon,
+		icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
+		icon.replace(/([a-z])(\d+)/g, '$1-$2'),
+	];
+}

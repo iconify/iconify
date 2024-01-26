@@ -2,6 +2,7 @@ import { AutoInstall, CustomIconLoader, ExternalPkgName } from './types';
 import { loadCollectionFromFS } from './fs';
 import { searchForIcon } from './modern';
 import { warnOnce } from './warn';
+import { getPossibleIconNames } from './utils';
 
 /**
  * Creates a CustomIconLoader collection from an external package collection.
@@ -57,13 +58,11 @@ function createCustomIconLoader(
 		// copy/paste from ./node-loader.ts
 		let result: string | undefined;
 		if (iconSet) {
-			// possible icon names
-			const ids = [
-				icon,
-				icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
-				icon.replace(/([a-z])(\d+)/g, '$1-$2'),
-			];
-			result = await searchForIcon(iconSet, collection, ids);
+			result = await searchForIcon(
+				iconSet,
+				collection,
+				getPossibleIconNames(icon)
+			);
 		}
 
 		return result;

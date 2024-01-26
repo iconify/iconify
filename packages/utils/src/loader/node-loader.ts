@@ -3,6 +3,7 @@ import { searchForIcon } from './modern';
 import { loadCollectionFromFS } from './fs';
 import { warnOnce } from './warn';
 import { loadIcon } from './loader';
+import { getPossibleIconNames } from './utils';
 
 export const loadNodeIcon: UniversalIconLoader = async (
 	collection,
@@ -19,13 +20,12 @@ export const loadNodeIcon: UniversalIconLoader = async (
 		options?.autoInstall
 	);
 	if (iconSet) {
-		// possible icon names
-		const ids = [
-			icon,
-			icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
-			icon.replace(/([a-z])(\d+)/g, '$1-$2'),
-		];
-		result = await searchForIcon(iconSet, collection, ids, options);
+		result = await searchForIcon(
+			iconSet,
+			collection,
+			getPossibleIconNames(icon),
+			options
+		);
 	}
 
 	if (!result && options?.warn) {
