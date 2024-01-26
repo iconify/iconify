@@ -19,7 +19,7 @@
 		"build": "unbuild",
 		"test:cjs": "vitest --config vitest.config.cjs",
 		"test:esm": "vitest --config vitest.config.mjs",
-		"test": "pnpm run test:cjs && pnpm run test:esm"
+		"test": "node ./scripts/prepare-tests.mjs && pnpm run test:cjs && pnpm run test:esm"
 	},
 	"sideEffects": false,
 	"main": "lib/index.cjs",
@@ -413,11 +413,10 @@
 		"@iconify/types": "workspace:^",
 		"debug": "^4.3.4",
 		"kolorist": "^1.8.0",
-		"local-pkg": "^0.4.3"
+		"local-pkg": "^0.5.0"
   },
 	"devDependencies": {
 		"@iconify-json/flat-color-icons": "^1.1.6",
-    "@test-scope/test-color-icons": "file:./tests/fixtures/@test-scope/test-color-icons",
 		"@types/debug": "^4.1.8",
 		"@types/jest": "^29.5.3",
 		"@types/node": "^18.17.1",
@@ -425,7 +424,6 @@
 		"eslint": "^8.46.0",
 		"eslint-config-prettier": "^8.9.0",
 		"eslint-plugin-prettier": "^5.0.0",
-    "plain-color-icons": "file:./tests/fixtures/plain-color-icons",
 		"rimraf": "^5.0.1",
 		"typescript": "^5.1.6",
 		"unbuild": "^1.2.1",
