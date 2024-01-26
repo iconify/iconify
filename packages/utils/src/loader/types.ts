@@ -3,7 +3,7 @@ import type { FullIconCustomisations } from '../customisations/defaults';
 import type { IconifyJSON } from '@iconify/types';
 
 /**
- * The external scoped package name: e.g. @my-collections/collection-a.
+ * External package name: e.g. @my-collections/collection-a.
  */
 export type ExternalPkgName = string | [scope: string, collection: string];
 
