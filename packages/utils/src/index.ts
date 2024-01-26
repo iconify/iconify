@@ -79,7 +79,7 @@ export { getIconsCSS, getIconsContentCSS } from './css/icons';
 export type {
 	CustomIconLoader,
 	CustomCollections,
-	ExternalPkgInfo,
+	ExternalPkgName,
 	IconCustomizer,
 	IconCustomizations,
 	IconifyLoaderOptions,

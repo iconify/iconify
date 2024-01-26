@@ -1,16 +1,16 @@
-import type { AutoInstall, CustomIconLoader, ExternalPkgInfo } from './types';
+import { AutoInstall, CustomIconLoader, ExternalPkgName } from './types';
 import { loadCollectionFromFS } from './fs';
 import { searchForIcon } from './modern';
 import { warnOnce } from './warn';
 
 /**
- * Creates a CustomIconLoader collection from an external scoped package collection.
+ * Creates a CustomIconLoader collection from an external package collection.
  *
- * @param packageName The scoped package name.
+ * @param packageName The package name.
  * @param autoInstall {AutoInstall} [autoInstall=false] - whether to automatically install
  */
 export function createExternalPackageIconLoader(
-	packageName: ExternalPkgInfo,
+	packageName: ExternalPkgName,
 	autoInstall: AutoInstall = false
 ) {
 	let scope: string;
