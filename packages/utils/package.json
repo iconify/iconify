@@ -277,6 +277,11 @@
 			"require": "./lib/loader/custom.cjs",
 			"import": "./lib/loader/custom.mjs"
 		},
+		"./lib/loader/external-pkg": {
+			"types": "./lib/loader/external-pkg.d.ts",
+			"require": "./lib/loader/external-pkg.cjs",
+			"import": "./lib/loader/external-pkg.mjs"
+		},
 		"./lib/loader/fs": {
 			"types": "./lib/loader/fs.d.ts",
 			"require": "./lib/loader/fs.cjs",
@@ -409,9 +414,10 @@
 		"debug": "^4.3.4",
 		"kolorist": "^1.8.0",
 		"local-pkg": "^0.4.3"
-	},
+  },
 	"devDependencies": {
 		"@iconify-json/flat-color-icons": "^1.1.6",
+    "@test-scope/test-color-icons": "file:./tests/fixtures/@test-scope/test-color-icons",
 		"@types/debug": "^4.1.8",
 		"@types/jest": "^29.5.3",
 		"@types/node": "^18.17.1",
@@ -419,6 +425,7 @@
 		"eslint": "^8.46.0",
 		"eslint-config-prettier": "^8.9.0",
 		"eslint-plugin-prettier": "^5.0.0",
+    "plain-color-icons": "file:./tests/fixtures/plain-color-icons",
 		"rimraf": "^5.0.1",
 		"typescript": "^5.1.6",
 		"unbuild": "^1.2.1",

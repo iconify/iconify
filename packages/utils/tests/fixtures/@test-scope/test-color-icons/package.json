@@ -1,0 +1,13 @@
+{
+  "name": "@test-scope/test-color-icons",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    "./*": "./*",
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    }
+  }
+}

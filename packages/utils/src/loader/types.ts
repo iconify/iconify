@@ -3,6 +3,11 @@ import type { FullIconCustomisations } from '../customisations/defaults';
 import type { IconifyJSON } from '@iconify/types';
 
 /**
+ * The external scoped package name: e.g. @my-collections/collection-a.
+ */
+export type ExternalPkgInfo = string | [name: string, collection: string];
+
+/**
  * Type for universal icon loader.
  */
 export type UniversalIconLoader = (
