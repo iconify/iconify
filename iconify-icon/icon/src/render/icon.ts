@@ -5,6 +5,20 @@ import { renderSPAN } from './span';
 import { renderSVG } from './svg';
 
 /**
+ * Find icon node
+ */
+export function findIconElement(
+	parent: Element | ShadowRoot
+): HTMLElement | undefined {
+	return Array.from(parent.childNodes).find((node) => {
+		const tag =
+			(node as HTMLElement).tagName &&
+			(node as HTMLElement).tagName.toUpperCase();
+		return tag === 'SPAN' || tag === 'SVG';
+	}) as HTMLElement | undefined;
+}
+
+/**
  * Render icon
  */
 export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
@@ -37,12 +51,7 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 	}
 
 	// Set element
-	const oldNode = Array.from(parent.childNodes).find((node) => {
-		const tag =
-			(node as HTMLElement).tagName &&
-			(node as HTMLElement).tagName.toUpperCase();
-		return tag === 'SPAN' || tag === 'SVG';
-	}) as HTMLElement | undefined;
+	const oldNode = findIconElement(parent);
 	if (oldNode) {
 		// Replace old element
 		if (node.tagName === 'SPAN' && oldNode.tagName === node.tagName) {

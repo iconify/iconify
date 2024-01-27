@@ -13,7 +13,7 @@ import { getInline } from './attributes/inline';
 import { getRenderMode } from './attributes/mode';
 import type { IconifyIconProperties } from './attributes/types';
 import { exportFunctions, IconifyExportedFunctions } from './functions';
-import { renderIcon } from './render/icon';
+import { findIconElement, renderIcon } from './render/icon';
 import { updateStyle } from './render/style';
 import { IconState, setPendingState } from './state';
 
@@ -89,6 +89,7 @@ export function defineIconifyIcon(
 		// Mode
 		'mode',
 		'inline',
+		'observe',
 		// Customisations
 		'width',
 		'height',
@@ -112,80 +113,54 @@ export function defineIconifyIcon(
 		// Attributes check queued
 		_checkQueued = false;
 
+		// Connected
+		_connected = false;
+
+		// Observer
+		_observer: IntersectionObserver | null = null;
+		_visible = true;
+
 		/**
 		 * Constructor
 		 */
 		constructor() {
 			super();
 
-			// Render old content if no icon attribute is set
-			if (!this.getAttribute('icon')) {
-				try {
-					if (document.readyState == 'complete') {
-						// DOM already loaded
-						const html = this.innerHTML;
-						if (html) {
-							this._createShadowRoot().innerHTML = html;
-						}
-					} else {
-						// Do it when DOM is loaded
-						window.onload = () => {
-							if (!this.getAttribute('icon')) {
-								const html = this.innerHTML;
-								if (html) {
-									this._createShadowRoot().innerHTML = html;
-								}
-							}
-						};
-					}
-				} catch (err) {
-					//
-				}
-				return;
-			}
+			// Attach shadow DOM
+			const root = (this._shadowRoot = this.attachShadow({
+				mode: 'open',
+			}));
 
-			// Init DOM
-			this._init();
+			// Add style
+			const inline = getInline(this);
+			updateStyle(root, inline);
+
+			// Create empty state
+			this._state = setPendingState(
+				{
+					value: '',
+				},
+				inline
+			);
 
 			// Queue icon render
 			this._queueCheck();
 		}
 
 		/**
-		 * Create shadow root
+		 * Connected to DOM
 		 */
-		_createShadowRoot() {
-			// Attach shadow DOM
-			if (!this._shadowRoot) {
-				this._shadowRoot = this.attachShadow({
-					mode: 'open',
-				});
-			}
-			return this._shadowRoot;
+		connectedCallback() {
+			this._connected = true;
+			this.startObserver();
 		}
 
 		/**
-		 * Init state
+		 * Disconnected from DOM
 		 */
-		_init() {
-			if (!this._initialised) {
-				this._initialised = true;
-
-				// Create root
-				const root = this._createShadowRoot();
-
-				// Add style
-				const inline = getInline(this);
-				updateStyle(root, inline);
-
-				// Create empty state
-				this._state = setPendingState(
-					{
-						value: '',
-					},
-					inline
-				);
-			}
+		disconnectedCallback() {
+			this._connected = false;
+			this.stopObserver();
 		}
 
 		/**
@@ -217,20 +192,32 @@ export function defineIconifyIcon(
 		 * Attribute has changed
 		 */
 		attributeChangedCallback(name: string) {
-			this._init();
-
-			if (name === 'inline') {
-				// Update immediately: not affected by other attributes
-				const newInline = getInline(this);
-				const state = this._state;
-				if (newInline !== state.inline) {
-					// Update style if inline mode changed
-					state.inline = newInline;
-					updateStyle(this._shadowRoot, newInline);
+			switch (name) {
+				case 'inline': {
+					// Update immediately: not affected by other attributes
+					const newInline = getInline(this);
+					const state = this._state;
+					if (newInline !== state.inline) {
+						// Update style if inline mode changed
+						state.inline = newInline;
+						updateStyle(this._shadowRoot, newInline);
+					}
+					break;
 				}
-			} else {
-				// Queue check for other attributes
-				this._queueCheck();
+
+				case 'observer': {
+					const value = this.observer;
+					if (value) {
+						this.startObserver();
+					} else {
+						this.stopObserver();
+					}
+					break;
+				}
+
+				default:
+					// Queue check for other attributes
+					this._queueCheck();
 			}
 		}
 
@@ -272,11 +259,24 @@ export function defineIconifyIcon(
 		}
 
 		/**
+		 * Get/set observer
+		 */
+		get observer(): boolean {
+			return this.hasAttribute('observer');
+		}
+
+		set observer(value: boolean) {
+			if (value) {
+				this.setAttribute('observer', 'true');
+			} else {
+				this.removeAttribute('observer');
+			}
+		}
+
+		/**
 		 * Restart animation
 		 */
 		restartAnimation() {
-			this._init();
-
 			const state = this._state;
 			if (state.rendered) {
 				const root = this._shadowRoot;
@@ -297,7 +297,6 @@ export function defineIconifyIcon(
 		 * Get status
 		 */
 		get status(): IconifyIconStatus {
-			this._init();
 			const state = this._state;
 			return state.rendered
 				? 'rendered'
@@ -337,7 +336,7 @@ export function defineIconifyIcon(
 			}
 
 			// Ignore other attributes if icon is not rendered
-			if (!state.rendered) {
+			if (!state.rendered || !this._visible) {
 				return;
 			}
 
@@ -346,7 +345,11 @@ export function defineIconifyIcon(
 			const customisations = getCustomisations(this);
 			if (
 				state.attrMode !== mode ||
-				haveCustomisationsChanged(state.customisations, customisations)
+				haveCustomisationsChanged(
+					state.customisations,
+					customisations
+				) ||
+				!findIconElement(this._shadowRoot)
 			) {
 				this._renderIcon(state.icon, customisations, mode);
 			}
@@ -394,6 +397,23 @@ export function defineIconifyIcon(
 		}
 
 		/**
+		 * Force render icon on state change
+		 */
+		_forceRender() {
+			if (!this._visible) {
+				// Remove icon
+				const node = findIconElement(this._shadowRoot);
+				if (node) {
+					this._shadowRoot.removeChild(node);
+				}
+				return;
+			}
+
+			// Re-render icon
+			this._queueCheck();
+		}
+
+		/**
 		 * Got new icon data, icon is ready to (re)render
 		 */
 		_gotIconData(icon: RenderedCurrentIconData) {
@@ -431,6 +451,52 @@ export function defineIconifyIcon(
 					renderedMode,
 				})
 			);
+		}
+
+		/**
+		 * Start observer
+		 */
+		startObserver() {
+			if (!this._observer) {
+				try {
+					this._observer = new IntersectionObserver((entries) => {
+						const intersecting = entries.some(
+							(entry) => entry.isIntersecting
+						);
+						if (intersecting !== this._visible) {
+							this._visible = intersecting;
+							this._forceRender();
+						}
+					});
+					this._observer.observe(this);
+				} catch (err) {
+					// Something went wrong, possibly observer is not supported
+					if (this._observer) {
+						try {
+							this._observer.disconnect();
+						} catch (err) {
+							//
+						}
+						this._observer = null;
+					}
+				}
+			}
+		}
+
+		/**
+		 * Stop observer
+		 */
+		stopObserver() {
+			if (this._observer) {
+				this._observer.disconnect();
+				this._observer = null;
+				this._visible = true;
+
+				if (this._connected) {
+					// Render icon
+					this._forceRender();
+				}
+			}
 		}
 	};
 

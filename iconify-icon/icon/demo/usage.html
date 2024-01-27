@@ -35,6 +35,17 @@
 				color: red;
 			}
 
+			.observer-test {
+				display: flex;
+				width: 100px;
+				height: 32px;
+				overflow-y: auto;
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+			.observer-test > div {
+				margin-top: 100px;
+			}
+
 			.unset-size {
 				display: flex;
 				gap: 8px;
@@ -103,16 +114,6 @@
 						},
 					},
 				});
-
-				setTimeout(() => {
-					const span = document.querySelector('.test-2sec');
-					if (span) {
-						const icon =
-							span.parentElement.querySelector('iconify-icon');
-						span.remove();
-						icon.setAttribute('icon', 'test:icon');
-					}
-				}, 2000);
 			})();
 		</script>
 		<script src="../dist/iconify-icon.min.js"></script>
@@ -333,40 +334,22 @@
 			></iconify-icon>
 		</p>
 
-		<h2>Icon with innerHTML</h2>
-		<p>
-			Keeping innerHTML without icon attribute:
-			<iconify-icon>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="1em"
-					height="1em"
-					viewBox="0 0 24 24"
-				>
-					<path
-						fill="currentColor"
-						d="M16.5 12.5v1q0 .2.15.35T17 14q.2 0 .35-.15t.15-.35v-1h1q.2 0 .35-.15T19 12q0-.2-.15-.35t-.35-.15h-1v-1q0-.2-.15-.35T17 10q-.2 0-.35.15t-.15.35v1h-1q-.2 0-.35.15T15 12q0 .2.15.35t.35.15zm-4 .25l1.55 1.975q.05.075.55.275q.425 0 .625-.387t-.075-.738L13.75 12l1.425-1.9q.275-.35.075-.725T14.6 9q-.175 0-.312.075t-.238.2L12.5 11.25v-1.5q0-.325-.213-.538T11.75 9q-.325 0-.537.213T11 9.75v4.5q0 .325.213.538t.537.212q.325 0 .538-.213t.212-.537zm-5 .75v-1H9q.425 0 .713-.288T10 11.5V10q0-.425-.288-.712T9 9H6.75q-.325 0-.537.213T6 9.75q0 .325.213.538t.537.212H8.5v1H7q-.425 0-.712.288T6 12.5v1.75q0 .325.213.538T6.75 15h2.5q.325 0 .538-.213T10 14.25q0-.325-.213-.537T9.25 13.5zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21z"
-					/>
-				</svg>
-			</iconify-icon>
-		</p>
-		<p>
-			Keeping innerHTML,
-			<span class="test-2sec">updating after 2 seconds...</span>:
-			<iconify-icon>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="1em"
-					height="1em"
-					viewBox="0 0 24 24"
-				>
-					<path
-						fill="currentColor"
-						d="M16.5 12.5v1q0 .2.15.35T17 14q.2 0 .35-.15t.15-.35v-1h1q.2 0 .35-.15T19 12q0-.2-.15-.35t-.35-.15h-1v-1q0-.2-.15-.35T17 10q-.2 0-.35.15t-.15.35v1h-1q-.2 0-.35.15T15 12q0 .2.15.35t.35.15zm-4 .25l1.55 1.975q.05.075.55.275q.425 0 .625-.387t-.075-.738L13.75 12l1.425-1.9q.275-.35.075-.725T14.6 9q-.175 0-.312.075t-.238.2L12.5 11.25v-1.5q0-.325-.213-.538T11.75 9q-.325 0-.537.213T11 9.75v4.5q0 .325.213.538t.537.212q.325 0 .538-.213t.212-.537zm-5 .75v-1H9q.425 0 .713-.288T10 11.5V10q0-.425-.288-.712T9 9H6.75q-.325 0-.537.213T6 9.75q0 .325.213.538t.537.212H8.5v1H7q-.425 0-.712.288T6 12.5v1.75q0 .325.213.538T6.75 15h2.5q.325 0 .538-.213T10 14.25q0-.325-.213-.537T9.25 13.5zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21z"
-					/>
-				</svg>
-			</iconify-icon>
-		</p>
+		<h2>Hidden icons, appear on scroll</h2>
+		<div class="observer-test">
+			<div>
+				<iconify-icon
+					icon="test2:icon"
+					flip="horizontal,vertical"
+					mode="style"
+				></iconify-icon>
+				<iconify-icon
+					observe="false"
+					icon="test2:icon"
+					flip="horizontal,vertical"
+					mode="style"
+				></iconify-icon>
+			</div>
+		</div>
 
 		<h2>Scale icon</h2>
 		<p>Using height="none" and CSS, animating width/height and color</p>
