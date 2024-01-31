@@ -247,7 +247,7 @@ class IconComponent extends React.Component<
 		super(props);
 		this.state = {
 			// Render placeholder before component is mounted
-			icon: { data: props.icon },
+			icon: window ? { data: props.icon } : null,
 		};
 	}
 
