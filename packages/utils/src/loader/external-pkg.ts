@@ -12,7 +12,8 @@ import { getPossibleIconNames } from './utils';
  */
 export function createExternalPackageIconLoader(
 	packageName: ExternalPkgName,
-	autoInstall: AutoInstall = false
+	autoInstall: AutoInstall = false,
+	cwd?: string
 ) {
 	let scope: string;
 	let collection: string;
@@ -39,7 +40,8 @@ export function createExternalPackageIconLoader(
 	collections[collection] = createCustomIconLoader(
 		scope,
 		collection,
-		autoInstall
+		autoInstall,
+		cwd
 	);
 
 	return collections;
@@ -48,10 +50,16 @@ export function createExternalPackageIconLoader(
 function createCustomIconLoader(
 	scope: string,
 	collection: string,
-	autoInstall: AutoInstall
+	autoInstall: AutoInstall,
+	cwd?: string
 ) {
 	// create the custom collection loader
-	const iconSetPromise = loadCollectionFromFS(collection, autoInstall, scope);
+	const iconSetPromise = loadCollectionFromFS(
+		collection,
+		autoInstall,
+		scope,
+		cwd
+	);
 	return <CustomIconLoader>(async (icon) => {
 		// await until the collection is loaded
 		const iconSet = await iconSetPromise;
