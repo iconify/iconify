@@ -1,5 +1,5 @@
 import { promises as fs, Stats } from 'fs';
-import { isPackageExists, resolveModule, importModule } from 'local-pkg';
+import { isPackageExists, importModule } from 'local-pkg';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
@@ -60,7 +60,7 @@ export async function loadCollectionFromFS(
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			let packagePath = resolveModule(packageName);
+			let packagePath = await resolvePath(packageName, { url: cwd });
 			if (packagePath?.match(/^[a-z]:/i)) {
 				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
 			}
