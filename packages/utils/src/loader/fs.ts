@@ -60,7 +60,9 @@ export async function loadCollectionFromFS(
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			let packagePath = await resolvePath(packageName, { url: cwd });
+			let packagePath = await resolvePath(packageName, {
+				url: cwd,
+			}).catch(() => undefined);
 			if (packagePath?.match(/^[a-z]:/i)) {
 				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
 			}
