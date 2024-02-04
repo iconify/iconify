@@ -1,8 +1,9 @@
 import { promises as fs, Stats } from 'fs';
-import { isPackageExists, resolveModule, importModule } from 'local-pkg';
+import { isPackageExists, importModule } from 'local-pkg';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
+import { resolvePath } from 'mlly';
 
 const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
 const isLegacyExists = isPackageExists('@iconify/json');
@@ -18,7 +19,8 @@ const isLegacyExists = isPackageExists('@iconify/json');
 export async function loadCollectionFromFS(
 	name: string,
 	autoInstall: AutoInstall = false,
-	scope = '@iconify-json'
+	scope = '@iconify-json',
+	cwd = process.cwd()
 ): Promise<IconifyJSON | undefined> {
 	if (!(await _collections[name])) {
 		_collections[name] = task();
@@ -27,27 +29,38 @@ export async function loadCollectionFromFS(
 
 	async function task() {
 		const packageName = scope.length === 0 ? name : `${scope}/${name}`;
-		let jsonPath = resolveModule(`${packageName}/icons.json`);
+		let jsonPath = await resolvePath(`${packageName}/icons.json`, {
+			url: cwd,
+		}).catch(() => undefined);
 
 		// Legacy support for @iconify/json
 		if (scope === '@iconify-json') {
 			if (!jsonPath && isLegacyExists) {
-				jsonPath = resolveModule(`@iconify/json/json/${name}.json`);
+				jsonPath = await resolvePath(
+					`@iconify/json/json/${name}.json`,
+					{
+						url: cwd,
+					}
+				).catch(() => undefined);
 			}
 
 			// Try to install the package if it doesn't exist
 			if (!jsonPath && !isLegacyExists && autoInstall) {
 				await tryInstallPkg(packageName, autoInstall);
-				jsonPath = resolveModule(`${packageName}/icons.json`);
+				jsonPath = await resolvePath(`${packageName}/icons.json`, {
+					url: cwd,
+				}).catch(() => undefined);
 			}
 		} else if (!jsonPath && autoInstall) {
 			await tryInstallPkg(packageName, autoInstall);
-			jsonPath = resolveModule(`${packageName}/icons.json`);
+			jsonPath = await resolvePath(`${packageName}/icons.json`, {
+				url: cwd,
+			}).catch(() => undefined);
 		}
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			let packagePath = resolveModule(packageName);
+			let packagePath = await resolvePath(packageName, { url: cwd });
 			if (packagePath?.match(/^[a-z]:/i)) {
 				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
 			}

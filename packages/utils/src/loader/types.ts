@@ -179,4 +179,12 @@ export type IconifyLoaderOptions = {
 	 * If you need that properties just add an empty object here, useful for example when using the `svg` on `CSS`.
 	 */
 	usedProps?: Record<string, string>;
+
+	/**
+	 * Current working directory, used to resolve the @iconify-json package.
+	 *
+	 * Only used on `node` environment.
+	 * @default process.cwd()
+	 */
+	cwd?: string;
 };
