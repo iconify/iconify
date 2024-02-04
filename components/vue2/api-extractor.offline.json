@@ -1,9 +1,0 @@
-{
-	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-	"extends": "./api-extractor.iconify.json",
-	"mainEntryPointFilePath": "lib/offline.d.ts",
-	"dtsRollup": {
-		"enabled": true,
-		"untrimmedFilePath": "<projectFolder>/dist/offline.d.ts"
-	}
-}

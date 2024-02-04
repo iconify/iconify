@@ -2,7 +2,7 @@ Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
 -   Out of the box includes 150+ icon sets with more than 200,000 icons.
--   Embed icons in HTML with SVG framework or components for front-end frameworks.
+-   Embed icons in HTML with Iconify Icon web component or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
 
@@ -79,7 +79,6 @@ Frameworks that are confirmed to work with web components without custom wrapper
 
 Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
 
--   [Ember demo](./iconify-icon-demo/ember-icon-demo/) - demo using web component with Ember. Run `npm run build` to build demo and `npm run start` to start it.
 -   [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
 -   [Next.js demo](./iconify-icon-demo/nextjs-demo/) - demo for web component with Next.js. Run `npm run dev` to start demo.
 -   [Svelte demo with Vite](./iconify-icon-demo/svelte-demo/) - demo for web component with Svelte using Vite. Run `npm run dev` to start demo.
@@ -92,13 +91,11 @@ Directory `iconify-icon-demo` contains demo packages that show usage of `iconify
 
 #### Nuxt 3 usage
 
-When using web component with Nuxt 3, you need to tell Nuxt that `iconify-icon` is a custom element. Otherwise it will show few errors.
+When using web component with Nuxt 3, you need to tell Nuxt that `iconify-icon` is a custom element. Otherwise it will show few warnings in dev mode.
 
 Example `nuxt.config.ts`:
 
 ```ts
-import { defineNuxtConfig } from 'nuxt3';
-
 export default defineNuxtConfig({
 	vue: {
 		compilerOptions: {
@@ -112,16 +109,13 @@ This configuration change is not needed when using Vue with `@vitejs/plugin-vue`
 
 ### Iconify icon components
 
-Directory `components` contains Iconify icon components and SVG framework.
+Directory `components` contains native components for several frameworks:
 
 | Package                                  | Usage  |
 | ---------------------------------------- | ------ |
-| [SVG Framework](./components/iconify/)   | HTML   |
 | [React component](./components/react/)   | React  |
-| [Vue 3 component](./components/vue/)     | Vue 3  |
-| [Vue 2 component](./components/vue2/)    | Vue 2  |
+| [Vue component](./components/vue/)       | Vue    |
 | [Svelte component](./components/svelte/) | Svelte |
-| [Ember component](./components/ember/)   | Ember  |
 
 #### Deprecation notice
 
@@ -139,7 +133,7 @@ Deprecation status:
 -   React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
 -   Svelte component: can be replaced with `iconify-icon`, does not require Svelte specific wrapper.
 -   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper.
--   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
+-   Vue 2 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
 -   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
 
 To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
@@ -150,12 +144,10 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 -   [React demo](./components-demo/react-demo/) - demo for React component. Run `npm run dev` to start demo.
 -   [Next.js demo](./components-demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run dev` to start demo.
--   [Vue 3 demo](./components-demo/vue-demo/) - demo for Vue 3 component. Run `npm run dev` to start demo.
--   [Nuxt 3 demo](./components-demo/nuxt3-demo/) - demo for Vue 3 component with Nuxt. Run `npm run dev` to start demo.
--   [Vue 2 demo](./components-demo/vue2-demo/) - demo for Vue 2 component. Run `npm run build` to build demo and `npm run serve` to start it.
+-   [Vue demo](./components-demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+-   [Nuxt demo](./components-demo/nuxt3-demo/) - demo for Vue component with Nuxt. Run `npm run dev` to start demo.
 -   [Svelte demo with Vite](./components-demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
 -   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
--   [Ember demo](./components-demo/ember-demo/) - demo for Ember component. Run `npm run build` to build demo and `npm run start` to start it.
 
 ### Plugins
 
