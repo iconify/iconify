@@ -1,4 +1,6 @@
 import React from 'react';
+import 'iconify-icon';
+
 import type {
 	IconifyIcon,
 	IconifyIconProperties,
