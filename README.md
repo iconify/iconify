@@ -114,14 +114,14 @@ This configuration change is not needed when using Vue with `@vitejs/plugin-vue`
 
 Directory `components` contains Iconify icon components and SVG framework.
 
-| Package                                  | Usage  |
-| ---------------------------------------- | ------ |
-| [SVG Framework](./components/iconify/)   | HTML   |
-| [React component](./components/react/)   | React  |
-| [Vue 3 component](./components/vue/)     | Vue 3  |
-| [Vue 2 component](./components/vue2/)    | Vue 2  |
-| [Svelte component](./components/svelte/) | Svelte |
-| [Ember component](./components/ember/)   | Ember  |
+| Package                                     | Usage  |
+| ------------------------------------------- | ------ |
+| [SVG Framework](./components/svg-framework) | HTML   |
+| [React component](./components/react/)      | React  |
+| [Vue 3 component](./components/vue/)        | Vue 3  |
+| [Vue 2 component](./components/vue2/)       | Vue 2  |
+| [Svelte component](./components/svelte/)    | Svelte |
+| [Ember component](./components/ember/)      | Ember  |
 
 #### Deprecation notice
 
