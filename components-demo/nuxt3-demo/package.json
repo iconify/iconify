@@ -8,7 +8,7 @@
 	},
 	"devDependencies": {
 		"nuxt": "npm:nuxt3@latest",
-		"ufo": "^0.8.4"
+		"ufo": "^0.8.6"
 	},
 	"dependencies": {
 		"@iconify/vue": "workspace:*"

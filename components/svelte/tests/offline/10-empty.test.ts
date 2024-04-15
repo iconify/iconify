@@ -2,9 +2,7 @@
  * @jest-environment jsdom
  */
 import { render } from '@testing-library/svelte';
-
-// Test importing from offline.mjs
-import Icon from '../../dist/offline';
+import Icon from '../../offline';
 
 describe('Empty icon', () => {
 	test('basic test', () => {
@@ -12,6 +10,6 @@ describe('Empty icon', () => {
 		const html = component.container.innerHTML;
 
 		// Empty container div
-		expect(html).toBe('<div></div>');
+		expect(html.replaceAll('<!--<OfflineIcon>-->', '')).toBe('<div></div>');
 	});
 });

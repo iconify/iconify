@@ -12,12 +12,12 @@
 		"start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\""
 	},
 	"dependencies": {
-		"lit": "^2.7.6"
+		"lit": "^2.8.0"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.22.9",
+		"@babel/preset-env": "^7.24.4",
 		"@custom-elements-manifest/analyzer": "^0.6.9",
-		"@iconify-icons/line-md": "^1.2.23",
+		"@iconify-icons/line-md": "^1.2.30",
 		"@open-wc/building-rollup": "^2.2.3",
 		"@rollup/plugin-babel": "^5.3.1",
 		"@rollup/plugin-node-resolve": "^14.1.0",
@@ -32,8 +32,8 @@
 		"rollup": "^2.79.1",
 		"rollup-plugin-terser": "^7.0.2",
 		"rollup-plugin-workbox": "^6.2.2",
-		"tslib": "^2.6.1",
-		"typescript": "^5.1.6"
+		"tslib": "^2.6.2",
+		"typescript": "^5.4.5"
 	},
 	"customElements": "custom-elements.json"
 }
