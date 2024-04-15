@@ -51,8 +51,8 @@ export interface IconifyIconProperties
 	// Inline mode
 	inline?: boolean;
 
-	// Use intersection observer
-	observe?: boolean;
+	// Do not use intersection observer
+	noobserver?: boolean;
 }
 
 /**

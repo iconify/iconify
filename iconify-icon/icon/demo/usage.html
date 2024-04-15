@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -337,13 +337,21 @@
 		<h2>Hidden icons, appear on scroll</h2>
 		<div class="observer-test">
 			<div>
+				<!-- should not render when not visible -->
 				<iconify-icon
 					icon="test2:icon"
 					flip="horizontal,vertical"
 					mode="style"
 				></iconify-icon>
+				<!-- should always render: attribute is boolean, value does not matter -->
 				<iconify-icon
-					observe="false"
+					noobserver
+					icon="test2:icon"
+					flip="horizontal,vertical"
+					mode="style"
+				></iconify-icon>
+				<iconify-icon
+					noobserver="false"
 					icon="test2:icon"
 					flip="horizontal,vertical"
 					mode="style"

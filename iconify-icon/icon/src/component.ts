@@ -9,7 +9,6 @@ import type {
 	CurrentIconData,
 	RenderedCurrentIconData,
 } from './attributes/icon/state';
-import { getInline } from './attributes/inline';
 import { getRenderMode } from './attributes/mode';
 import type { IconifyIconProperties } from './attributes/types';
 import { exportFunctions, IconifyExportedFunctions } from './functions';
@@ -89,7 +88,7 @@ export function defineIconifyIcon(
 		// Mode
 		'mode',
 		'inline',
-		'observe',
+		'noobserver',
 		// Customisations
 		'width',
 		'height',
@@ -132,7 +131,7 @@ export function defineIconifyIcon(
 			}));
 
 			// Add style
-			const inline = getInline(this);
+			const inline = this.hasAttribute('inline');
 			updateStyle(root, inline);
 
 			// Create empty state
@@ -195,7 +194,7 @@ export function defineIconifyIcon(
 			switch (name) {
 				case 'inline': {
 					// Update immediately: not affected by other attributes
-					const newInline = getInline(this);
+					const newInline = this.hasAttribute('inline');
 					const state = this._state;
 					if (newInline !== state.inline) {
 						// Update style if inline mode changed
@@ -205,8 +204,8 @@ export function defineIconifyIcon(
 					break;
 				}
 
-				case 'observer': {
-					const value = this.observer;
+				case 'noobserver': {
+					const value = this.hasAttribute('noobserver');
 					if (value) {
 						this.startObserver();
 					} else {
@@ -247,7 +246,7 @@ export function defineIconifyIcon(
 		 * Get/set inline
 		 */
 		get inline(): boolean {
-			return getInline(this);
+			return this.hasAttribute('inline');
 		}
 
 		set inline(value: boolean) {
@@ -457,7 +456,7 @@ export function defineIconifyIcon(
 		 * Start observer
 		 */
 		startObserver() {
-			if (!this._observer) {
+			if (!this._observer && !this.hasAttribute('noobserver')) {
 				try {
 					this._observer = new IntersectionObserver((entries) => {
 						const intersecting = entries.some(
