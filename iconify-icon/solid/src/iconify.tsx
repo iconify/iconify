@@ -97,6 +97,7 @@ export function Icon(props: IconifyIconProps): JSX.Element {
 		width,
 		height,
 		preserveAspectRatio,
+		noobserver,
 	} = props;
 
 	// Convert icon to string
@@ -115,6 +116,7 @@ export function Icon(props: IconifyIconProps): JSX.Element {
 			attr:width={width}
 			attr:height={height}
 			attr:preserveAspectRatio={preserveAspectRatio}
+			attr:noobserver={noobserver}
 			{...props}
 		/>
 	);
