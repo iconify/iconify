@@ -67,4 +67,9 @@ interface IconifyElementProps {
 /**
  * Mix of icon properties and HTMLElement properties
  */
-export type IconProps = IconifyElementProps & IconifyIconProps;
+export interface IconProps extends IconifyElementProps, IconifyIconProps {
+	/**
+	 * Try load icon on first render during SSR
+	 */
+	ssr?: boolean
+}
