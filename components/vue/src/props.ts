@@ -70,6 +70,9 @@ interface IconifyElementProps {
 export interface IconProps extends IconifyElementProps, IconifyIconProps {
 	/**
 	 * Try load icon on first render during SSR
+	 *
+	 * This is a low-level API for framework integrations, you don't usually need to use it directly.
+	 * Note this might hydration mismatches if the icon data is not handled correctly, use with caution.
 	 */
 	ssr?: boolean
 }
