@@ -6,6 +6,12 @@
 			<Icon icon="mdi:home" />
 			<Icon icon="mdi:home" mode="style" />
 		</div>
+		<div>
+			SSR prop: <Icon icon="mdi:home" :ssr="true" /><Icon
+				icon="line-md:arrow-right"
+				:ssr="true"
+			/>
+		</div>
 		<div class="alert">
 			<Icon icon="mdi-light:alert" />Important notice with alert icon!
 		</div>
