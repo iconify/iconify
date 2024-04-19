@@ -243,6 +243,12 @@ export const Icon = defineComponent<IconProps>({
 	// Set initial data
 	data() {
 		return {
+			// Current icon name
+			_name: '',
+
+			// Loading
+			_loadingIcon: null,
+
 			// Mounted status
 			iconMounted: false,
 
@@ -252,12 +258,6 @@ export const Icon = defineComponent<IconProps>({
 	},
 
 	mounted() {
-		// Current icon name
-		this._name = '';
-
-		// Loading
-		this._loadingIcon = null;
-
 		// Mark as mounted
 		this.iconMounted = true;
 	},
@@ -354,7 +354,7 @@ export const Icon = defineComponent<IconProps>({
 		const props = this.$attrs;
 
 		// Get icon data
-		const icon: IconComponentData | null = this.iconMounted
+		const icon: IconComponentData | null = (this.iconMounted || props.ssr)
 			? this.getIcon(props.icon, props.onLoad)
 			: null;
 
