@@ -9,8 +9,6 @@ const commands = [];
 const compile = {
 	// Compile TypeScript src -> lib
 	lib: true,
-	// Fix types for icon components
-	cleanup: true,
 	// Generate bundle from compiled files lib -> dist
 	dist: true,
 	// Generate TypeScript definitions in dist

@@ -1,6 +1,4 @@
-'use client';
-
-import React from 'react';
+import { forwardRef, createElement, type Ref } from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
@@ -11,7 +9,7 @@ import type {
 	IconifyIconProps,
 	IconifyRenderMode,
 	IconProps,
-	IconRef,
+	IconElement,
 } from './props';
 import { render } from './render';
 
@@ -31,67 +29,59 @@ export { IconifyIcon, IconifyJSON, IconifyIconSize, IconifyRenderMode };
 const storage: Record<string, IconifyIcon> = Object.create(null);
 
 /**
- * Generate icon
+ * Component
  */
-function component(
-	props: IconProps,
-	inline: boolean,
-	ref?: React.ForwardedRef<IconRef>
-): JSX.Element {
-	// Split properties
-	const propsIcon = props.icon;
-	const icon =
-		typeof propsIcon === 'string'
-			? storage[propsIcon]
-			: typeof propsIcon === 'object'
-			? propsIcon
-			: null;
+interface InternalIconProps extends IconProps {
+	_ref?: Ref<IconElement> | null;
+}
 
-	// Validate icon object
-	if (
-		icon === null ||
-		typeof icon !== 'object' ||
-		typeof icon.body !== 'string'
-	) {
+function IconComponent(props: InternalIconProps): JSX.Element {
+	const icon = props.icon;
+	const data = typeof icon === 'string' ? storage[icon] : icon;
+
+	if (!data) {
 		return props.children
 			? (props.children as JSX.Element)
-			: React.createElement('span', {});
+			: createElement('span', {});
 	}
 
-	// Valid icon: render it
 	return render(
 		{
 			...defaultIconProps,
-			...icon,
+			...data,
 		},
 		props,
-		inline,
-		ref as IconRef
+		typeof icon === 'string' ? icon : undefined
 	);
 }
+
+// Component type
+type IconComponentType = (props: IconProps) => JSX.Element;
 
 /**
  * Block icon
  *
  * @param props - Component properties
  */
-export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
-	props,
-	ref
-) {
-	return component(props, false, ref);
-});
+export const Icon = forwardRef<IconElement, IconProps>((props, ref) =>
+	IconComponent({
+		...props,
+		_ref: ref,
+	})
+) as IconComponentType;
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon = React.forwardRef<IconRef, IconProps>(
-	function InlineIcon(props, ref) {
-		return component(props, true, ref);
-	}
-);
+export const InlineIcon = forwardRef<IconElement, IconProps>((props, ref) =>
+	IconComponent({
+		inline: true,
+		...props,
+		_ref: ref,
+	})
+) as IconComponentType;
 
 /**
  * Add icon to storage, allowing to call it by name

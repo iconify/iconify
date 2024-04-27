@@ -53,6 +53,9 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
 	id?: string;
 
+	// If true, icon will be rendered without waiting for component to mount, such as when rendering on server side
+	ssr?: boolean;
+
 	// Callback to call when icon data has been loaded. Used only for icons loaded from API
 	onLoad?: IconifyIconOnLoad;
 }
@@ -62,13 +65,12 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
  */
 type IconifyElementProps = SVGProps<SVGSVGElement>;
 
-export type IconRef = RefAttributes<SVGSVGElement>;
-
-export interface ReactRefProp {
-	ref?: IconRef;
-}
+/**
+ * Reference for SVG element
+ */
+export type IconElement = SVGSVGElement | HTMLSpanElement;
 
 /**
  * Mix of icon properties and SVGSVGElement properties
  */
-export type IconProps = IconifyElementProps & IconifyIconProps & ReactRefProp;
+export type IconProps = IconifyElementProps & IconifyIconProps;

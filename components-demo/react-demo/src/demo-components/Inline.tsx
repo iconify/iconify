@@ -12,7 +12,11 @@ export function InlineDemo() {
 					id="inline-demo-block-offline"
 					icon="experiment2"
 				/>
-				<FullIcon id="inline-demo-block-full" icon="experiment2" />
+				<FullIcon
+					id="inline-demo-block-full"
+					icon="experiment2"
+					ssr={true}
+				/>
 			</div>
 			<div>
 				Inline icon (behaving line text / icon font):
@@ -27,6 +31,7 @@ export function InlineDemo() {
 					icon="experiment2"
 					inline={true}
 					mode="style"
+					ssr={true}
 				/>
 			</div>
 		</section>

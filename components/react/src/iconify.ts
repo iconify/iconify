@@ -1,11 +1,14 @@
-'use client';
-
-import React from 'react';
+import {
+	useEffect,
+	useState,
+	forwardRef,
+	createElement,
+	type Ref,
+} from 'react';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { stringToIcon } from '@iconify/utils/lib/icon/name';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import type { IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
 import {
@@ -73,7 +76,7 @@ import type {
 	IconifyIconProps,
 	IconifyRenderMode,
 	IconProps,
-	IconRef,
+	IconElement,
 } from './props';
 
 // Render SVG
@@ -218,240 +221,129 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
  * Component
  */
 interface InternalIconProps extends IconProps {
-	_ref?: IconRef;
-	_inline: boolean;
+	_ref?: Ref<IconElement> | null;
 }
 
-interface IconComponentData {
-	data: IconifyIcon;
-	classes?: string[];
-}
+function IconComponent(props: InternalIconProps): JSX.Element {
+	interface State {
+		// Currently rendered icon
+		name: string;
 
-interface IconComponentState {
-	icon: IconComponentData | null;
-}
-
-interface ComponentAbortData {
-	name: string;
-	abort: IconifyIconLoaderAbort;
-}
-
-class IconComponent extends React.Component<
-	InternalIconProps,
-	IconComponentState
-> {
-	protected _icon: string;
-	protected _loading: ComponentAbortData | null;
-
-	constructor(props: InternalIconProps) {
-		super(props);
-		this.state = {
-			// Render placeholder before component is mounted
-			icon: null,
-		};
+		// Icon data, null if missing
+		data?: IconifyIcon | null;
 	}
+	const [mounted, setMounted] = useState(!!props.ssr);
 
-	/**
-	 * Abort loading icon
-	 */
-	_abortLoading() {
-		if (this._loading) {
-			this._loading.abort();
-			this._loading = null;
+	interface AbortState {
+		callback?: IconifyIconLoaderAbort;
+	}
+	const [abort, setAbort] = useState<AbortState>({});
+	const [state, setState] = useState<State>({
+		name: '',
+	});
+
+	// Cancel loading
+	function cleanup() {
+		const callback = abort.callback;
+		if (callback) {
+			callback();
+			setAbort({});
 		}
 	}
 
-	/**
-	 * Update state
-	 */
-	_setData(icon: IconComponentData | null) {
-		if (this.state.icon !== icon) {
-			this.setState({
-				icon,
+	// Update state
+	function updateState() {
+		const name = props.icon;
+		if (typeof name === 'object') {
+			// Icon as object
+			cleanup();
+			setState({
+				name: '',
+				data: name,
 			});
-		}
-	}
-
-	/**
-	 * Check if icon should be loaded
-	 */
-	_checkIcon(changed: boolean) {
-		const state = this.state;
-		const icon = this.props.icon;
-
-		// Icon is an object
-		if (
-			typeof icon === 'object' &&
-			icon !== null &&
-			typeof icon.body === 'string'
-		) {
-			// Stop loading
-			this._icon = '';
-			this._abortLoading();
-
-			if (changed || state.icon === null) {
-				// Set data if it was changed
-				this._setData({
-					data: icon,
-				});
-			}
 			return;
 		}
 
-		// Invalid icon?
-		let iconName: IconifyIconName | null;
-		if (
-			typeof icon !== 'string' ||
-			(iconName = stringToIcon(icon, false, true)) === null
-		) {
-			this._abortLoading();
-			this._setData(null);
-			return;
-		}
-
-		// Load icon
-		const data = getIconData(iconName);
-		if (!data) {
-			// Icon data is not available
-			if (!this._loading || this._loading.name !== icon) {
-				// New icon to load
-				this._abortLoading();
-				this._icon = '';
-				this._setData(null);
-				if (data !== null) {
-					// Icon was not loaded
-					this._loading = {
-						name: icon,
-						abort: loadIcons(
-							[iconName],
-							this._checkIcon.bind(this, false)
-						),
-					};
-				}
-			}
-			return;
-		}
-
-		// Icon data is available
-		if (this._icon !== icon || state.icon === null) {
-			// New icon or icon has been loaded
-			this._abortLoading();
-			this._icon = icon;
-
-			// Add classes
-			const classes: string[] = ['iconify'];
-			if (iconName.prefix !== '') {
-				classes.push('iconify--' + iconName.prefix);
-			}
-			if (iconName.provider !== '') {
-				classes.push('iconify--' + iconName.provider);
-			}
-
-			// Set data
-			this._setData({
+		// New icon or got icon data
+		const data = getIconData(name);
+		if (state.name !== name || data !== state.data) {
+			cleanup();
+			setState({
+				name,
 				data,
-				classes,
 			});
-			if (this.props.onLoad) {
-				this.props.onLoad(icon);
+			if (data === undefined) {
+				// Load icon, update state when done
+				const callback = loadIcons([name], updateState);
+				setAbort({
+					callback,
+				});
+			} else if (data) {
+				// Icon data is available: trigger onLoad callback if present
+				props.onLoad?.(name);
 			}
 		}
 	}
 
-	/**
-	 * Component mounted
-	 */
-	componentDidMount() {
-		this._checkIcon(false);
-	}
+	// Mounted state, cleanup for loader
+	useEffect(() => {
+		setMounted(true);
+		updateState();
+		return cleanup;
+	}, []);
 
-	/**
-	 * Component updated
-	 */
-	componentDidUpdate(oldProps) {
-		if (oldProps.icon !== this.props.icon) {
-			this._checkIcon(true);
+	// Icon changed
+	useEffect(() => {
+		if (mounted) {
+			updateState();
 		}
+	}, [props.icon]);
+
+	// Render icon
+	const { name, data } = state;
+	if (!data) {
+		return props.children
+			? (props.children as JSX.Element)
+			: createElement('span', {});
 	}
 
-	/**
-	 * Abort loading
-	 */
-	componentWillUnmount() {
-		this._abortLoading();
-	}
-
-	/**
-	 * Render
-	 */
-	render() {
-		const props = this.props;
-		const icon = this.state.icon;
-
-		if (icon === null) {
-			// Render placeholder
-			return props.children
-				? (props.children as JSX.Element)
-				: React.createElement('span', {});
-		}
-
-		// Add classes
-		let newProps = props;
-		if (icon.classes) {
-			newProps = {
-				...props,
-				className:
-					(typeof props.className === 'string'
-						? props.className + ' '
-						: '') + icon.classes.join(' '),
-			};
-		}
-
-		// Render icon
-		return render(
-			{
-				...defaultIconProps,
-				...icon.data,
-			},
-			newProps,
-			props._inline,
-			props._ref
-		);
-	}
+	return render(
+		{
+			...defaultIconProps,
+			...data,
+		},
+		props,
+		name
+	);
 }
+
+// Component type
+type IconComponentType = (props: IconProps) => JSX.Element;
 
 /**
  * Block icon
  *
  * @param props - Component properties
  */
-export const Icon = React.forwardRef<IconRef, IconProps>(function Icon(
-	props,
-	ref
-) {
-	const newProps = {
+export const Icon = forwardRef<IconElement, IconProps>((props, ref) =>
+	IconComponent({
 		...props,
 		_ref: ref,
-		_inline: false,
-	} as InternalIconProps;
-	return React.createElement(IconComponent, newProps);
-});
+	})
+) as IconComponentType;
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon = React.forwardRef<IconRef, IconProps>(
-	function InlineIcon(props, ref) {
-		const newProps = {
-			...props,
-			_ref: ref,
-			_inline: true,
-		} as InternalIconProps;
-		return React.createElement(IconComponent, newProps);
-	}
-);
+export const InlineIcon = forwardRef<IconElement, IconProps>((props, ref) =>
+	IconComponent({
+		inline: true,
+		...props,
+		_ref: ref,
+	})
+) as IconComponentType;
 
 /**
  * Internal API
