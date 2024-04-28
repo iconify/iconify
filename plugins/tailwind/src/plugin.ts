@@ -13,7 +13,14 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
 	const prefix = options?.prefix || 'icon';
 	return plugin(({ matchComponents }) => {
 		matchComponents({
-			[prefix]: (icon: string) => getDynamicCSSRules(icon, options),
+			[prefix]: (icon: string) => {
+				try {
+					return getDynamicCSSRules(icon, options);
+				} catch (err) {
+					// Log error, but do not throw it
+					console.error(err.message);
+				}
+			},
 		});
 	});
 }
