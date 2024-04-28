@@ -2,7 +2,7 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "5.0.0-beta.1",
+	"version": "5.0.0-beta.2",
 	"publishConfig": {
 		"access": "public",
 		"tag": "next"

@@ -288,16 +288,15 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 	// Mounted state, cleanup for loader
 	useEffect(() => {
 		setMounted(true);
-		updateState();
 		return cleanup;
 	}, []);
 
-	// Icon changed
+	// Icon changed or component mounted
 	useEffect(() => {
 		if (mounted) {
 			updateState();
 		}
-	}, [props.icon]);
+	}, [props.icon, mounted]);
 
 	// Render icon
 	const { name, data } = state;
