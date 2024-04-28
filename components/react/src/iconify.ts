@@ -225,6 +225,9 @@ interface InternalIconProps extends IconProps {
 }
 
 function IconComponent(props: InternalIconProps): JSX.Element {
+	interface AbortState {
+		callback?: IconifyIconLoaderAbort;
+	}
 	interface State {
 		// Currently rendered icon
 		name: string;
@@ -232,11 +235,8 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 		// Icon data, null if missing
 		data?: IconifyIcon | null;
 	}
-	const [mounted, setMounted] = useState(!!props.ssr);
 
-	interface AbortState {
-		callback?: IconifyIconLoaderAbort;
-	}
+	const [mounted, setMounted] = useState(!!props.ssr);
 	const [abort, setAbort] = useState<AbortState>({});
 	const [state, setState] = useState<State>({
 		name: '',
