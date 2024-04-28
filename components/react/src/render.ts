@@ -1,5 +1,5 @@
-import React from 'react';
-import type { SVGProps } from 'react';
+import { createElement } from 'react';
+import type { SVGProps, CSSProperties } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';
@@ -13,9 +13,9 @@ import type {
 	IconifyIconCustomisations,
 	IconifyRenderMode,
 	IconProps,
-	IconRef,
 } from './props';
 import { defaultExtendedIconCustomisations } from './props';
+import { stringToIcon } from '@iconify/utils/lib/icon/name';
 
 /**
  * Default SVG attributes
@@ -85,14 +85,11 @@ export const render = (
 	// Partial properties
 	props: IconProps,
 
-	// True if icon should have vertical-align added
-	inline: boolean,
-
-	// Optional reference for SVG/SPAN, extracted by React.forwardRef()
-	ref?: IconRef
+	// Icon name
+	name?: string
 ): JSX.Element => {
 	// Get default properties
-	const defaultProps = inline
+	const defaultProps = props.inline
 		? inlineDefaults
 		: defaultExtendedIconCustomisations;
 
@@ -103,14 +100,29 @@ export const render = (
 	const mode: IconifyRenderMode = props.mode || 'svg';
 
 	// Create style
-	const style: React.CSSProperties = {};
+	const style: CSSProperties = {};
 	const customStyle = props.style || {};
 
 	// Create SVG component properties
 	const componentProps = {
 		...(mode === 'svg' ? svgDefaults : {}),
-		ref,
 	};
+	if (name) {
+		const iconName = stringToIcon(name, false, true);
+		if (iconName) {
+			const classNames: string[] = ['iconify'];
+			const props: (keyof typeof iconName)[] = [
+				'provider',
+				'prefix',
+			] as const;
+			for (const prop of props) {
+				if (iconName[prop]) {
+					classNames.push('iconify--' + iconName[prop]);
+				}
+			}
+			componentProps.className = classNames.join(' ');
+		}
+	}
 
 	// Get element properties
 	for (let key in props) {
@@ -125,8 +137,19 @@ export const render = (
 			case 'children':
 			case 'onLoad':
 			case 'mode':
+			case 'ssr':
+				break;
+
+			// Forward ref
 			case '_ref':
-			case '_inline':
+				componentProps.ref = value;
+				break;
+
+			// Merge class names
+			case 'className':
+				componentProps[key] =
+					(componentProps[key] ? componentProps[key] + ' ' : '') +
+					value;
 				break;
 
 			// Boolean attributes
@@ -210,7 +233,7 @@ export const render = (
 				)
 			),
 		};
-		return React.createElement('svg', componentProps);
+		return createElement('svg', componentProps);
 	}
 
 	// Render <span> with style
@@ -235,7 +258,7 @@ export const render = (
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 		...customStyle,
-	} as React.CSSProperties;
+	} as CSSProperties;
 
-	return React.createElement('span', componentProps);
+	return createElement('span', componentProps);
 };
