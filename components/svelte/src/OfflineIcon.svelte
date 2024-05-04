@@ -30,6 +30,6 @@ export {
 			{@html data.body}
 		</svg>
 	{:else}
-		<span {...data.attributes} />
+		<span {...data.attributes}></span>
 	{/if}
 {/if}
