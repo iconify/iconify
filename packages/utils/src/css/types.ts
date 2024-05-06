@@ -159,7 +159,8 @@ export interface IconCSSIconOptions
 		IconCSSIconSelectorOptions,
 		IconCSSModeOptions,
 		IconCSSFormatOptions {
-	//
+	// Customise icon
+	customise?: (content: string) => string;
 }
 
 /**
@@ -169,7 +170,8 @@ export interface IconContentIconOptions
 	extends IconContentSharedOptions,
 		IconContentIconSelectorOptions,
 		IconCSSFormatOptions {
-	//
+	// Customise icon
+	customise?: (content: string) => string;
 }
 
 /**
@@ -180,7 +182,8 @@ export interface IconCSSIconSetOptions
 		IconCSSSelectorOptions,
 		IconCSSModeOptions,
 		IconCSSFormatOptions {
-	//
+	// Customise icon from icon set
+	customise?: (content: string, name: string) => string;
 }
 
 /**
@@ -190,5 +193,6 @@ export interface IconContentIconSetOptions
 	extends IconContentSharedOptions,
 		IconContentIconSelectorOptions,
 		IconCSSFormatOptions {
-	//
+	// Customise icon from icon set
+	customise?: (content: string, name: string) => string;
 }

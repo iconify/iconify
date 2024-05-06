@@ -73,6 +73,9 @@ describe('Testing CSS for multiple icons', () => {
 			getIconsCSS(iconSet, ['123'], {
 				format: 'expanded',
 				mode: 'background',
+				// Swap content
+				customise: (content, name) =>
+					name === '123' ? iconSet.icons['airplane'].body : content,
 			})
 		).toBe(`.icon--test-prefix {
   display: inline-block;
@@ -83,7 +86,7 @@ describe('Testing CSS for multiple icons', () => {
 }
 
 .icon--test-prefix--123 {
-  background-image: ${expectedURL('123')};
+  background-image: ${expectedURL('airplane')};
 }
 `);
 
@@ -103,6 +106,24 @@ describe('Testing CSS for multiple icons', () => {
 
 .icon--test-prefix--empty {
   background-image: ${expectedURL('empty', 'red')};
+}
+`);
+
+		expect(
+			getIconsCSS(iconSet, ['activity'], {
+				format: 'expanded',
+				customise: (content) => content.replace(/currentColor/g, 'red'),
+			})
+		).toBe(`.icon--test-prefix {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon--test-prefix--activity {
+  background-image: ${expectedURL('activity', 'red')};
 }
 `);
 	});

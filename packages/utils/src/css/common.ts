@@ -61,8 +61,21 @@ export function generateItemCSSRules(
 	const varName = options.varName;
 
 	// Calculate width
-	if (!options.forceSquare && icon.width !== icon.height) {
-		result['width'] = calculateSize('1em', icon.width / icon.height);
+	if (icon.width !== icon.height) {
+		if (options.forceSquare) {
+			// Change viewBox
+			const max = Math.max(icon.width, icon.height);
+			icon = {
+				...icon,
+				width: max,
+				height: max,
+				left: icon.left - (max - icon.width) / 2,
+				top: icon.top - (max - icon.height) / 2,
+			};
+		} else {
+			// Change width in result
+			result['width'] = calculateSize('1em', icon.width / icon.height);
+		}
 	}
 
 	// Get SVG

@@ -42,18 +42,20 @@ export function getIconsCSSData(
 	const errors: string[] = [];
 
 	// Get mode
-	const palette = options.color ? true : iconSet.info?.palette;
+	const palette = options.color ? true : undefined;
 	let mode =
 		options.mode ||
 		(typeof palette === 'boolean' && (palette ? 'background' : 'mask'));
 	if (!mode) {
 		// Attempt to detect mode from first available icon
 		for (let i = 0; i < names.length; i++) {
-			const icon = getIconData(iconSet, names[i]);
+			const name = names[i];
+			const icon = getIconData(iconSet, name);
 			if (icon) {
-				mode = icon.body.includes('currentColor')
-					? 'mask'
-					: 'background';
+				const body = options.customise
+					? options.customise(icon.body, name)
+					: icon.body;
+				mode = body.includes('currentColor') ? 'mask' : 'background';
 				break;
 			}
 		}
@@ -114,10 +116,14 @@ export function getIconsCSSData(
 			continue;
 		}
 
+		const body = options.customise
+			? options.customise(iconData.body, name)
+			: iconData.body;
 		const rules = generateItemCSSRules(
 			{
 				...defaultIconProps,
 				...iconData,
+				body,
 			},
 			newOptions
 		);
@@ -220,8 +226,15 @@ export function getIconsContentCSS(
 			continue;
 		}
 
+		const body = options.customise
+			? options.customise(iconData.body, name)
+			: iconData.body;
 		const content = generateItemContent(
-			{ ...defaultIconProps, ...iconData },
+			{
+				...defaultIconProps,
+				...iconData,
+				body,
+			},
 			options
 		);
 		const selector = iconSelectorWithPrefix.replace(/{name}/g, name);

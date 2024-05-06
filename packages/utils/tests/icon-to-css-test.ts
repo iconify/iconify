@@ -35,7 +35,10 @@ describe('Testing CSS for icon', () => {
 			height: 16,
 		};
 		const expectedURL = svgToURL(
-			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="24" height="16">${icon.body}</svg>`
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -4 24 24" width="24" height="24">${icon.body.replace(
+				'f80',
+				'fff'
+			)}</svg>`
 		);
 
 		expect(
@@ -48,6 +51,7 @@ describe('Testing CSS for icon', () => {
 				rules: {
 					visibility: 'visible',
 				},
+				customise: (content) => content.replace('f80', 'fff'),
 			})
 		).toBe(`.test-icon:after {
   visibility: visible;
@@ -104,10 +108,28 @@ describe('Testing CSS for icon', () => {
 			)}</svg>`
 		);
 
+		// Use color option
 		expect(
 			getIconCSS(icon, {
 				format: 'expanded',
 				color: 'purple',
+			})
+		).toBe(`.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: ${expectedURL};
+}
+`);
+
+		// Use customise option
+		expect(
+			getIconCSS(icon, {
+				format: 'expanded',
+				customise: (content) =>
+					content.replace(/currentColor/g, 'purple'),
 			})
 		).toBe(`.icon {
   display: inline-block;

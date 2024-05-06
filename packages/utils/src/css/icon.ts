@@ -15,10 +15,13 @@ export function getIconCSS(
 	icon: IconifyIcon,
 	options: IconCSSIconOptions = {}
 ): string {
+	// Get body
+	const body = options.customise ? options.customise(icon.body) : icon.body;
+
 	// Get mode
 	const mode =
 		options.mode ||
-		(options.color || !icon.body.includes('currentColor')
+		(options.color || !body.includes('currentColor')
 			? 'background'
 			: 'mask');
 
@@ -44,7 +47,14 @@ export function getIconCSS(
 	const rules = {
 		...options.rules,
 		...getCommonCSSRules(newOptions),
-		...generateItemCSSRules({ ...defaultIconProps, ...icon }, newOptions),
+		...generateItemCSSRules(
+			{
+				...defaultIconProps,
+				...icon,
+				body,
+			},
+			newOptions
+		),
 	};
 
 	// Get selector and format CSS
@@ -67,9 +77,16 @@ export function getIconContentCSS(
 	icon: IconifyIcon,
 	options: IconContentIconOptions
 ): string {
+	// Get body
+	const body = options.customise ? options.customise(icon.body) : icon.body;
+
 	// Get content
 	const content = generateItemContent(
-		{ ...defaultIconProps, ...icon },
+		{
+			...defaultIconProps,
+			...icon,
+			body,
+		},
 		options
 	);
 
