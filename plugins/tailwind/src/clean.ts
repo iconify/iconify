@@ -23,10 +23,15 @@ export function getCSSRulesForIcons(
 				`Cannot load icon set for "${prefix}". Install "@iconify-json/${prefix}" as dev dependency?`
 			);
 		}
+
 		const generated = getIconsCSSData(
 			iconSet,
 			Array.from(prefixes[prefix]),
-			options
+			{
+				...options,
+				customise: (content, name) =>
+					options.customise?.(content, name, prefix) ?? content,
+			}
 		);
 
 		const result = generated.common

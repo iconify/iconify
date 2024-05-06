@@ -66,6 +66,16 @@ module.exports = {
 			iconSets: {
 				custom: customSet.export(),
 			},
+			customise: (content, name, prefix) => {
+				switch (name) {
+					case 'spinner1':
+						return content.replace(
+							'animation:0.75s',
+							'animation:5s'
+						);
+				}
+				return content;
+			},
 		}),
 		// Plugin with dynamic selectors that contains only css for overriding icon
 		addDynamicIconSelectors({

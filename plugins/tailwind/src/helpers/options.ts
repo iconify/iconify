@@ -1,6 +1,13 @@
 import type { IconCSSIconSetOptions } from '@iconify/utils/lib/css/types';
 import type { IconifyJSON } from '@iconify/types';
 
+// Callback for customising icon
+type IconifyCustomiseCallback = (
+	content: string,
+	name: string,
+	prefix: string
+) => string;
+
 // Callback for loading icon set
 type IconifyJSONLoaderCallback = () => IconifyJSON;
 
@@ -17,6 +24,9 @@ export interface CommonIconifyPluginOptions {
 	// Custom icon sets
 	// Value can be loaded icon set or callback that loads icon set
 	iconSets?: Record<string, IconifyIconSetSource>;
+
+	// Replace icon content
+	customise?: IconifyCustomiseCallback;
 }
 
 /**
@@ -24,7 +34,7 @@ export interface CommonIconifyPluginOptions {
  */
 export interface CleanIconifyPluginOptions
 	extends CommonIconifyPluginOptions,
-		IconCSSIconSetOptions {
+		Omit<IconCSSIconSetOptions, 'customise'> {
 	//
 }
 
