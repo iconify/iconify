@@ -1,7 +1,7 @@
 import { getIconsCSSData } from '@iconify/utils/lib/css/icons';
-import { loadIconSet } from './loader';
-import { getIconNames } from './names';
-import type { CleanIconifyPluginOptions } from './options';
+import { loadIconSet } from './helpers/loader';
+import { getIconNames } from './helpers/names';
+import type { CleanIconifyPluginOptions } from './helpers/options';
 
 /**
  * Get CSS rules for icons list
@@ -17,7 +17,7 @@ export function getCSSRulesForIcons(
 
 	// Parse all icon sets
 	for (const prefix in prefixes) {
-		const iconSet = loadIconSet(prefix, options);
+		const iconSet = loadIconSet(options.iconSets?.[prefix] || prefix);
 		if (!iconSet) {
 			throw new Error(
 				`Cannot load icon set for "${prefix}". Install "@iconify-json/${prefix}" as dev dependency?`

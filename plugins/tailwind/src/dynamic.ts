@@ -1,7 +1,7 @@
 import { getIconsCSSData } from '@iconify/utils/lib/css/icons';
 import { matchIconName } from '@iconify/utils/lib/icon/name';
-import { loadIconSet } from './loader';
-import type { DynamicIconifyPluginOptions } from './options';
+import { loadIconSet } from './helpers/loader';
+import type { DynamicIconifyPluginOptions } from './helpers/options';
 
 /**
  * Get dynamic CSS rules
@@ -20,7 +20,7 @@ export function getDynamicCSSRules(
 		throw new Error(`Invalid icon name: "${icon}"`);
 	}
 
-	const iconSet = loadIconSet(prefix, options);
+	const iconSet = loadIconSet(options.iconSets?.[prefix] || prefix);
 	if (!iconSet) {
 		throw new Error(
 			`Cannot load icon set for "${prefix}". Install "@iconify-json/${prefix}" as dev dependency?`
@@ -35,11 +35,11 @@ export function getDynamicCSSRules(
 	}
 
 	if (scale) {
-		generated.common.rules.height = scale + 'em'
-		generated.common.rules.width = scale + 'em'
+		generated.common.rules.height = scale + 'em';
+		generated.common.rules.width = scale + 'em';
 	} else {
-		delete generated.common.rules.height
-		delete generated.common.rules.width
+		delete generated.common.rules.height;
+		delete generated.common.rules.width;
 	}
 
 	return {

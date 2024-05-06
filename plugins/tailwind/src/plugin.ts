@@ -4,7 +4,10 @@ import { getDynamicCSSRules } from './dynamic';
 import type {
 	CleanIconifyPluginOptions,
 	DynamicIconifyPluginOptions,
-} from './options';
+	IconifyPluginOptions,
+	IconifyPluginOptionsObject,
+} from './helpers/options';
+import { getCommonCSSRules } from '@iconify/utils/lib/css/common';
 
 /**
  * Generate styles for dynamic selector: class="icon-[mdi-light--home]"
@@ -39,6 +42,53 @@ export function addCleanIconSelectors(
 }
 
 /**
+ * Iconify plugin
+ *
+ * TODO: export it when ready
+ */
+function iconifyPlugin(options: IconifyPluginOptions) {
+	return plugin(({ addUtilities }) => {
+		const rules = Object.create(null) as Record<
+			string,
+			Record<string, string>
+		>;
+
+		// Convert options to object
+		const fullOptions: IconifyPluginOptionsObject = Array.isArray(options)
+			? {
+					prefixes: options,
+			  }
+			: options;
+
+		// Variable name, default to 'svg' (cannot be empty string)
+		const varName = fullOptions.varName || 'svg';
+
+		// Add common rules
+		const mask = fullOptions.mask ?? '.iconify';
+		const background = fullOptions.background ?? '.iconify-color';
+		if (mask) {
+			rules[mask] = getCommonCSSRules({
+				mode: 'mask',
+				varName,
+			});
+		}
+		if (background) {
+			rules[background] = getCommonCSSRules({
+				mode: 'background',
+				varName,
+			});
+		}
+		addUtilities(rules);
+
+		// TODO: add icon sets
+	});
+}
+
+/**
  * Export types
  */
-export type { CleanIconifyPluginOptions, DynamicIconifyPluginOptions };
+export type {
+	CleanIconifyPluginOptions,
+	DynamicIconifyPluginOptions,
+	IconifyPluginOptions,
+};
