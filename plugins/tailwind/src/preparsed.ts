@@ -29,12 +29,19 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 	const varName = fullOptions.varName || 'svg';
 
 	// Scale icons
-	const overrideRules: Record<string, string> = fullOptions.scale
-		? {
-				width: fullOptions.scale + 'em',
-				height: fullOptions.scale + 'em',
-		  }
-		: {};
+	const scale = fullOptions.scale ?? 1;
+	const adjustScale = (obj: Record<string, string>) => {
+		if (!scale) {
+			// Delete width and height
+			delete obj['width'];
+			delete obj['height'];
+		} else if (scale !== 1) {
+			// Set custom width and height
+			obj['width'] = scale + 'em';
+			obj['height'] = scale + 'em';
+		}
+		return obj;
+	};
 
 	// Add common rules
 	const maskSelector = fullOptions.maskSelector ?? '.iconify';
@@ -42,21 +49,23 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 		fullOptions.backgroundSelector ?? '.iconify-color';
 	if (maskSelector) {
 		rules[maskSelector] = Object.assign(
-			getCommonCSSRules({
-				mode: 'mask',
-				varName,
-			}),
-			overrideRules,
+			adjustScale(
+				getCommonCSSRules({
+					mode: 'mask',
+					varName,
+				})
+			),
 			fullOptions.extraMaskRules || {}
 		);
 	}
 	if (backgroundSelector) {
 		rules[backgroundSelector] = Object.assign(
-			getCommonCSSRules({
-				mode: 'background',
-				varName,
-			}),
-			overrideRules,
+			adjustScale(
+				getCommonCSSRules({
+					mode: 'background',
+					varName,
+				})
+			),
 			fullOptions.extraBackgroundRules || {}
 		);
 	}
