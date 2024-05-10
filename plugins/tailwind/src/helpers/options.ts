@@ -1,21 +1,8 @@
 import type { IconCSSIconSetOptions } from '@iconify/utils/lib/css/types';
 import type { IconifyJSON } from '@iconify/types';
 
-// Callback for customising icon
-type IconifyCustomiseCallback = (
-	content: string,
-	name: string,
-	prefix: string
-) => string;
-
-// Callback for loading icon set
-type IconifyJSONLoaderCallback = () => IconifyJSON;
-
-// Source for icon set: icon set, filename, or callback that loads icon set
-export type IconifyIconSetSource =
-	| IconifyJSON
-	| string
-	| IconifyJSONLoaderCallback;
+// Source for icon set: icon set, filename, or synchronous callback that loads icon set
+export type IconifyIconSetSource = IconifyJSON | string | (() => IconifyJSON);
 
 /**
  * Common options
@@ -26,7 +13,7 @@ export interface CommonIconifyPluginOptions {
 	iconSets?: Record<string, IconifyIconSetSource>;
 
 	// Replace icon content
-	customise?: IconifyCustomiseCallback;
+	customise?: (content: string, name: string, prefix: string) => string;
 }
 
 /**
@@ -54,25 +41,11 @@ export interface DynamicIconifyPluginOptions
 }
 
 /**
- * Options for reusable selectors
- */
-export interface ReusableIconifyPluginOptions {
-	// Selector for mask, defaults to ".iconify"
-	mask?: string;
-
-	// Selector for background, defaults to ".iconify-color"
-	background?: string;
-
-	// Variable name, defaults to "svg"
-	varName?: string;
-}
-
-/**
  * Options for main plugin
  */
 
 // Icons to include: array of names or callback
-type IconsListOption = string[] | ((name: string) => boolean);
+export type IconsListOption = string[] | ((name: string) => boolean);
 
 // Source filename or icon set
 type IconSetSource = string | IconifyJSON;
@@ -88,16 +61,44 @@ interface IconSetOptions {
 
 	// Icons to load
 	icons?: IconsListOption;
+
+	// Customise callback. If set, it will be used instead of global customise callback
+	customise?: (content: string, name: string) => string;
 }
 
 // Array of icon sets to load
 type IconifyPluginListOptions = (string | IconSetOptions)[];
 
 // Full object
-export interface IconifyPluginOptionsObject
-	extends ReusableIconifyPluginOptions {
+export interface IconifyPluginOptionsObject {
+	// Selector for mask, defaults to ".iconify"
+	// If empty string, mask selector will not be generated
+	maskSelector?: string;
+
+	// Extra rules to add to mask selector
+	extraMaskRules?: Record<string, string>;
+
+	// Selector for background, defaults to ".iconify-color"
+	// If empty string, background selector will not be generated
+	backgroundSelector?: string;
+
+	// Extra rules to add to background selector
+	extraBackgroundRules?: Record<string, string>;
+
+	// Selector for icons, default is `.{prefix}--{name}`
+	iconSelector?: string;
+
+	// Variable name that contains icon, defaults to "svg"
+	varName?: string;
+
+	// Scale for icons, defaults to 1
+	scale?: number;
+
 	// Prefixes to load
 	prefixes: IconifyPluginListOptions;
+
+	// Customise callback
+	customise?: (content: string, name: string, prefix: string) => string;
 }
 
 // Full options

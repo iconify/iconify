@@ -5,12 +5,13 @@ import type {
 	CleanIconifyPluginOptions,
 	DynamicIconifyPluginOptions,
 	IconifyPluginOptions,
-	IconifyPluginOptionsObject,
 } from './helpers/options';
-import { getCommonCSSRules } from '@iconify/utils/lib/css/common';
+import { getCSSRulesForPlugin } from './preparsed';
 
 /**
- * Generate styles for dynamic selector: class="icon-[mdi-light--home]"
+ * Generate styles for dynamic selector
+ *
+ * Usage in HTML: <span class="icon-[mdi-light--home]" />
  */
 export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
 	const prefix = options?.prefix || 'icon';
@@ -29,7 +30,29 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
 }
 
 /**
+ * Generate rules for mask, background and selected icon sets
+ *
+ * Icons should combine either mask or background selector and icon selector
+ *
+ * This plugin generates only square icons. Icons that are not square will be resized to fit square.
+ *
+ * Usage in HTML: <span class="iconify mdi-light--home" />
+ */
+export function addIconSelectors(options: IconifyPluginOptions) {
+	const rules = getCSSRulesForPlugin(options);
+	return plugin(({ addUtilities }) => {
+		addUtilities(rules);
+	});
+}
+
+/**
  * Generate styles for preset list of icons
+ *
+ * Requires knowing full list of icons
+ *
+ * Usage in HTML: <span class="icon--mdi-light icon--mdi-light--home" />
+ *
+ * @deprecated Use addIconSelectors instead
  */
 export function addCleanIconSelectors(
 	icons: string[] | string,
@@ -38,49 +61,6 @@ export function addCleanIconSelectors(
 	const rules = getCSSRulesForIcons(icons, options);
 	return plugin(({ addUtilities }) => {
 		addUtilities(rules);
-	});
-}
-
-/**
- * Iconify plugin
- *
- * TODO: export it when ready
- */
-function iconifyPlugin(options: IconifyPluginOptions) {
-	return plugin(({ addUtilities }) => {
-		const rules = Object.create(null) as Record<
-			string,
-			Record<string, string>
-		>;
-
-		// Convert options to object
-		const fullOptions: IconifyPluginOptionsObject = Array.isArray(options)
-			? {
-					prefixes: options,
-			  }
-			: options;
-
-		// Variable name, default to 'svg' (cannot be empty string)
-		const varName = fullOptions.varName || 'svg';
-
-		// Add common rules
-		const mask = fullOptions.mask ?? '.iconify';
-		const background = fullOptions.background ?? '.iconify-color';
-		if (mask) {
-			rules[mask] = getCommonCSSRules({
-				mode: 'mask',
-				varName,
-			});
-		}
-		if (background) {
-			rules[background] = getCommonCSSRules({
-				mode: 'background',
-				varName,
-			});
-		}
-		addUtilities(rules);
-
-		// TODO: add icon sets
 	});
 }
 

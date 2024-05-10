@@ -1,6 +1,7 @@
 const {
 	addCleanIconSelectors,
 	addDynamicIconSelectors,
+	addIconSelectors,
 } = require('@iconify/tailwind');
 const {
 	importDirectorySync,
@@ -59,6 +60,30 @@ customSet.forEachSync((name, type) => {
 module.exports = {
 	content: ['./src/*.html'],
 	plugins: [
+		// Main plugin, default options
+		addIconSelectors(['mdi-light', 'vscode-icons']),
+		// Main plugin, custom options
+		addIconSelectors({
+			maskSelector: '.custom-monotone',
+			backgroundSelector: '.custom-background',
+			// Like UnoCSS
+			iconSelector: '.i-{prefix}-{name}',
+			scale: 1.5,
+			prefixes: [
+				{
+					prefix: 'mdi-light',
+					icons: ['home'],
+					customise: (content) =>
+						content.replace(/currentColor/g, '#40f'),
+				},
+				{
+					prefix: 'custom',
+					source: customSet.export(),
+					customise: (content) =>
+						content.replace(/currentColor/g, '#f20'),
+				},
+			],
+		}),
 		// Plugin with clean selectors: requires writing all used icons in first parameter
 		addCleanIconSelectors(['mdi-light:home']),
 		// Plugin with dynamic selectors
