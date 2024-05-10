@@ -95,7 +95,7 @@ export interface IconifyPluginOptionsObject {
 	scale?: number;
 
 	// Prefixes to load
-	prefixes: IconifyPluginListOptions;
+	prefixes?: IconifyPluginListOptions;
 
 	// Customise callback
 	customise?: (content: string, name: string, prefix: string) => string;

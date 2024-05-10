@@ -89,8 +89,7 @@ module.exports = {
 			maskSelector: '.iconify-nosize',
 			backgroundSelector: '',
 			scale: 0,
-			// Empty prefixes list: reusing data from plugin above
-			prefixes: [],
+			// No prefixes list: reusing data from plugin above
 		}),
 		// Plugin with clean selectors: requires writing all used icons in first parameter
 		addCleanIconSelectors(['mdi-light:home']),

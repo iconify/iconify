@@ -73,7 +73,7 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 	// Add icon sets
 	const iconSelector = fullOptions.iconSelector || '.{prefix}--{name}';
 
-	fullOptions.prefixes.forEach((item) => {
+	fullOptions.prefixes?.forEach((item) => {
 		let prefix: string;
 		let iconSet: IconifyJSON | undefined;
 		let iconsList: IconsListOption | undefined;
