@@ -39,9 +39,23 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
  * Usage in HTML: <span class="iconify mdi-light--home" />
  */
 export function addIconSelectors(options: IconifyPluginOptions) {
-	const rules = getCSSRulesForPlugin(options);
-	return plugin(({ addUtilities }) => {
-		addUtilities(rules);
+	const maskSelector =
+		'maskSelector' in options ? options.maskSelector : '.iconify';
+	const backgroundSelector =
+		'backgroundSelector' in options
+			? options.backgroundSelector
+			: '.iconify-color';
+	const {
+		[maskSelector]: iconify,
+		[backgroundSelector]: iconifyColor,
+		...icons
+	} = getCSSRulesForPlugin(options);
+	return plugin(({ addComponents, addUtilities }) => {
+		addComponents({
+			[maskSelector]: iconify,
+			[backgroundSelector]: iconifyColor,
+		});
+		addUtilities(icons);
 	});
 }
 
