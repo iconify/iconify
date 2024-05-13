@@ -8,7 +8,7 @@ import type { DynamicIconifyPluginOptions } from './helpers/options';
  */
 export function getDynamicCSSRules(
 	icon: string,
-	{ scale = 1, ...options }: DynamicIconifyPluginOptions = {}
+	options: DynamicIconifyPluginOptions = {}
 ): Record<string, string> {
 	const nameParts = icon.split(/--|\:/);
 	if (nameParts.length !== 2) {
@@ -36,6 +36,7 @@ export function getDynamicCSSRules(
 		throw new Error(`Cannot find "${icon}". Bad icon name?`);
 	}
 
+	const scale = options.scale ?? 1;
 	if (scale) {
 		generated.common.rules.height = scale + 'em';
 		generated.common.rules.width = scale + 'em';
