@@ -6,7 +6,11 @@ import type {
 	DynamicIconifyPluginOptions,
 	IconifyPluginOptions,
 } from './helpers/options';
-import { getCSSRulesForPlugin } from './preparsed';
+import {
+	cleanupIconifyPluginOptions,
+	getCSSComponentsForPlugin,
+	getCSSRulesForPlugin,
+} from './preparsed';
 
 /**
  * Generate styles for dynamic selector
@@ -39,23 +43,11 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
  * Usage in HTML: <span class="iconify mdi-light--home" />
  */
 export function addIconSelectors(options: IconifyPluginOptions) {
-	const maskSelector =
-		'maskSelector' in options ? options.maskSelector : '.iconify';
-	const backgroundSelector =
-		'backgroundSelector' in options
-			? options.backgroundSelector
-			: '.iconify-color';
-	const {
-		[maskSelector]: iconify,
-		[backgroundSelector]: iconifyColor,
-		...icons
-	} = getCSSRulesForPlugin(options);
+	const fullOptions = cleanupIconifyPluginOptions(options);
+
 	return plugin(({ addComponents, addUtilities }) => {
-		addComponents({
-			[maskSelector]: iconify,
-			[backgroundSelector]: iconifyColor,
-		});
-		addUtilities(icons);
+		addComponents(getCSSComponentsForPlugin(fullOptions));
+		addUtilities(getCSSRulesForPlugin(fullOptions));
 	});
 }
 

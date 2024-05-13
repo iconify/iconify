@@ -2,7 +2,7 @@
 	"name": "@iconify/tailwind",
 	"description": "Iconify plugin for Tailwind CSS",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"license": "MIT",
 	"main": "./dist/plugin.js",
 	"types": "./dist/plugin.d.ts",

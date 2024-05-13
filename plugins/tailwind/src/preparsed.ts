@@ -13,23 +13,29 @@ import type {
 import { loadIconSet } from './helpers/loader';
 
 /**
- * Get CSS rules for main plugin
+ * Convert plugin options to object
  */
-export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
-	const rules = Object.create(null) as Record<string, Record<string, string>>;
-
-	// Convert options to object
-	const fullOptions: IconifyPluginOptionsObject = Array.isArray(options)
+export function cleanupIconifyPluginOptions(
+	options: IconifyPluginOptions
+): IconifyPluginOptionsObject {
+	return Array.isArray(options)
 		? {
 				prefixes: options,
 		  }
 		: options;
+}
+
+/**
+ * Get CSS rules for main plugin (components)
+ */
+export function getCSSComponentsForPlugin(options: IconifyPluginOptionsObject) {
+	const rules = Object.create(null) as Record<string, Record<string, string>>;
 
 	// Variable name, default to 'svg' (cannot be empty string)
-	const varName = fullOptions.varName || 'svg';
+	const varName = options.varName || 'svg';
 
 	// Scale icons
-	const scale = fullOptions.scale ?? 1;
+	const scale = options.scale ?? 1;
 	const adjustScale = (obj: Record<string, string>) => {
 		if (!scale) {
 			// Delete width and height
@@ -44,9 +50,8 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 	};
 
 	// Add common rules
-	const maskSelector = fullOptions.maskSelector ?? '.iconify';
-	const backgroundSelector =
-		fullOptions.backgroundSelector ?? '.iconify-color';
+	const maskSelector = options.maskSelector ?? '.iconify';
+	const backgroundSelector = options.backgroundSelector ?? '.iconify-color';
 	if (maskSelector) {
 		rules[maskSelector] = Object.assign(
 			adjustScale(
@@ -55,7 +60,7 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 					varName,
 				})
 			),
-			fullOptions.extraMaskRules || {}
+			options.extraMaskRules || {}
 		);
 	}
 	if (backgroundSelector) {
@@ -66,14 +71,26 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 					varName,
 				})
 			),
-			fullOptions.extraBackgroundRules || {}
+			options.extraBackgroundRules || {}
 		);
 	}
 
-	// Add icon sets
-	const iconSelector = fullOptions.iconSelector || '.{prefix}--{name}';
+	return rules;
+}
 
-	fullOptions.prefixes?.forEach((item) => {
+/**
+ * Get CSS rules for main plugin (utilities)
+ */
+export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
+	const rules = Object.create(null) as Record<string, Record<string, string>>;
+
+	// Variable name, default to 'svg' (cannot be empty string)
+	const varName = options.varName || 'svg';
+
+	// Add icon sets
+	const iconSelector = options.iconSelector || '.{prefix}--{name}';
+
+	options.prefixes?.forEach((item) => {
 		let prefix: string;
 		let iconSet: IconifyJSON | undefined;
 		let iconsList: IconsListOption | undefined;
@@ -131,8 +148,8 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptions) {
 			// Customise icon
 			const body = customise
 				? customise(data.body, name)
-				: fullOptions.customise
-				? fullOptions.customise(data.body, name, prefix)
+				: options.customise
+				? options.customise(data.body, name, prefix)
 				: data.body;
 
 			// Generate CSS
