@@ -6,6 +6,7 @@
 	"exports": {
 		"./*": "./*",
 		".": {
+			"require": "../dist/offline.js",
 			"import": "../dist/offline.mjs",
 			"types": "../dist/offline.d.ts",
 			"default": "../dist/offline.js"
