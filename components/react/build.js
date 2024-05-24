@@ -13,6 +13,8 @@ const compile = {
 	dist: true,
 	// Generate TypeScript definitions in dist
 	api: true,
+	// Clean up
+	cleanup: true,
 };
 
 process.argv.slice(2).forEach((cmd) => {
