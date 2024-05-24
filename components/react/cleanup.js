@@ -6,6 +6,7 @@ const text = "'use client'";
 
 // List of files to fix
 ['iconify', 'offline'].forEach((prefix) => {
+	// Add 'use client' to files
 	['js', 'cjs', 'mjs'].forEach((ext) => {
 		const file = `dist/${prefix}.${ext}`;
 		try {
@@ -18,4 +19,9 @@ const text = "'use client'";
 			//
 		}
 	});
+
+	// Copy .d.ts to .d.mts
+	const source = `dist/${prefix}.d.ts`;
+	const target = `dist/${prefix}.d.mts`;
+	writeFileSync(target, readFileSync(source, 'utf8'), 'utf8');
 });
