@@ -1,6 +1,5 @@
-/* eslint-disable */
-const fs = require('fs');
-const child_process = require('child_process');
+import { statSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 // List of commands to run
 const commands = [];
@@ -52,7 +51,7 @@ process.argv.slice(2).forEach((cmd) => {
 // Check if required modules in same monorepo are available
 const fileExists = (file) => {
 	try {
-		fs.statSync(file);
+		statSync(file);
 	} catch (e) {
 		return false;
 	}
@@ -86,11 +85,7 @@ const next = () => {
 		process.exit(0);
 	}
 
-	if (item.cwd === void 0) {
-		item.cwd = __dirname;
-	}
-
-	const result = child_process.spawnSync(item.cmd, item.args, {
+	const result = spawnSync(item.cmd, item.args, {
 		cwd: item.cwd,
 		stdio: 'inherit',
 	});

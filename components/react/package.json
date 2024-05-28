@@ -2,7 +2,8 @@
 	"name": "@iconify/react",
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
-	"version": "5.0.0-beta.5",
+	"type": "module",
+	"version": "5.0.0-beta.6",
 	"publishConfig": {
 		"access": "public",
 		"tag": "next"
@@ -21,32 +22,31 @@
 		"prebuild": "pnpm run clean",
 		"build": "node build",
 		"build:lib": "tsc -b",
-		"build:dist": "rollup -c rollup.config.mjs",
+		"build:dist": "rollup -c rollup.config.js",
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"build:cleanup": "node cleanup",
 		"test": "jest --runInBand"
 	},
 	"main": "dist/iconify.js",
-	"module": "dist/iconify.mjs",
 	"types": "dist/iconify.d.ts",
 	"exports": {
 		"./*": "./*",
 		".": {
-			"require": "./dist/iconify.js",
-			"import": "./dist/iconify.mjs",
+			"require": "./dist/iconify.cjs",
+			"import": "./dist/iconify.js",
 			"types": "./dist/iconify.d.ts",
 			"default": "./dist/iconify.js"
 		},
 		"./offline": {
-			"require": "./dist/offline.js",
-			"import": "./dist/offline.mjs",
+			"require": "./dist/offline.cjs",
+			"import": "./dist/offline.js",
 			"types": "./dist/offline.d.ts",
 			"default": "./dist/offline.js"
 		},
 		"./dist/offline": {
-			"require": "./dist/offline.js",
-			"import": "./dist/offline.mjs",
+			"require": "./dist/offline.cjs",
+			"import": "./dist/offline.js",
 			"types": "./dist/offline.d.ts",
 			"default": "./dist/offline.js"
 		}

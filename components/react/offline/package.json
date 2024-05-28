@@ -2,12 +2,11 @@
 	"name": "@iconify/react/offline",
 	"main": "../dist/offline.js",
 	"types": "../dist/offline.d.ts",
-	"module": "../dist/offline.mjs",
 	"exports": {
 		"./*": "./*",
 		".": {
-			"require": "../dist/offline.js",
-			"import": "../dist/offline.mjs",
+			"require": "../dist/offline.cjs",
+			"import": "../dist/offline.js",
 			"types": "../dist/offline.d.ts",
 			"default": "../dist/offline.js"
 		}

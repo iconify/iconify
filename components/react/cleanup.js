@@ -1,5 +1,4 @@
-/* eslint-disable */
-const { readFileSync, writeFileSync } = require('fs');
+import { readFileSync, writeFileSync } from 'node:fs';
 
 // Text to ad
 const text = "'use client'";
@@ -12,7 +11,7 @@ const text = "'use client'";
 		try {
 			const content = readFileSync(file, 'utf8');
 			if (!content.startsWith(text)) {
-				writeFileSync(file, text + '\n\n' + content, 'utf8');
+				writeFileSync(file, text + ';\n\n' + content, 'utf8');
 				console.log('Added client only statement to ' + file);
 			}
 		} catch {
@@ -22,6 +21,6 @@ const text = "'use client'";
 
 	// Copy .d.ts to .d.mts
 	const source = `dist/${prefix}.d.ts`;
-	const target = `dist/${prefix}.d.mts`;
+	const target = `dist/${prefix}.d.cts`;
 	writeFileSync(target, readFileSync(source, 'utf8'), 'utf8');
 });
