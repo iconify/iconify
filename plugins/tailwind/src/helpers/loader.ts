@@ -60,8 +60,6 @@ function loadIconSetFromFile(source: LocatedIconSet): IconifyJSON | undefined {
 export function loadIconSet(
 	source: IconifyIconSetSource
 ): IconifyJSON | undefined {
-	let filename: LocatedIconSet;
-
 	if (typeof source === 'function') {
 		// Callback
 		return source();
