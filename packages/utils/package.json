@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.1.23",
+	"version": "2.1.24",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/docs/libraries/utils/",
@@ -256,6 +256,11 @@
 			"types": "./lib/icon/name.d.ts",
 			"require": "./lib/icon/name.cjs",
 			"import": "./lib/icon/name.mjs"
+		},
+		"./lib/icon/square": {
+			"types": "./lib/icon/square.d.ts",
+			"require": "./lib/icon/square.cjs",
+			"import": "./lib/icon/square.mjs"
 		},
 		"./lib/icon/transformations": {
 			"types": "./lib/icon/transformations.d.ts",

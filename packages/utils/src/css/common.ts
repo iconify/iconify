@@ -7,6 +7,7 @@ import type {
 	IconCSSItemOptions,
 	IconContentItemOptions,
 } from './types';
+import { makeIconSquare } from '../icon/square';
 
 /**
  * Generates common CSS rules for multiple icons, rendered as background/mask
@@ -64,14 +65,7 @@ export function generateItemCSSRules(
 	if (icon.width !== icon.height) {
 		if (options.forceSquare) {
 			// Change viewBox
-			const max = Math.max(icon.width, icon.height);
-			icon = {
-				...icon,
-				width: max,
-				height: max,
-				left: icon.left - (max - icon.width) / 2,
-				top: icon.top - (max - icon.height) / 2,
-			};
+			icon = makeIconSquare(icon);
 		} else {
 			// Change width in result
 			result['width'] = calculateSize('1em', icon.width / icon.height);

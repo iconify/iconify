@@ -35,6 +35,7 @@ export type {
 	PartialExtendedIconifyIcon,
 	FullExtendedIconifyIcon,
 } from './icon/defaults';
+export { makeIconSquare } from './icon/square';
 
 // Icon set functions
 export { getIconsTree } from './icon-set/tree';
