@@ -3,11 +3,7 @@
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
 	"type": "module",
-	"version": "5.0.0-beta.6",
-	"publishConfig": {
-		"access": "public",
-		"tag": "next"
-	},
+	"version": "5.0.0",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -33,21 +29,21 @@
 	"exports": {
 		"./*": "./*",
 		".": {
+			"types": "./dist/iconify.d.ts",
 			"require": "./dist/iconify.cjs",
 			"import": "./dist/iconify.js",
-			"types": "./dist/iconify.d.ts",
 			"default": "./dist/iconify.js"
 		},
 		"./offline": {
+			"types": "./dist/offline.d.ts",
 			"require": "./dist/offline.cjs",
 			"import": "./dist/offline.js",
-			"types": "./dist/offline.d.ts",
 			"default": "./dist/offline.js"
 		},
 		"./dist/offline": {
+			"types": "./dist/offline.d.ts",
 			"require": "./dist/offline.cjs",
 			"import": "./dist/offline.js",
-			"types": "./dist/offline.d.ts",
 			"default": "./dist/offline.js"
 		}
 	},
