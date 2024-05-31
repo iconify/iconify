@@ -238,9 +238,32 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 
 	const [mounted, setMounted] = useState(!!props.ssr);
 	const [abort, setAbort] = useState<AbortState>({});
-	const [state, setState] = useState<State>({
-		name: '',
-	});
+
+	// Get initial state
+	function getInitialState(mounted: boolean): State {
+		if (mounted) {
+			const name = props.icon;
+			if (typeof name === 'object') {
+				// Icon as object
+				return {
+					name: '',
+					data: name,
+				};
+			}
+
+			const data = getIconData(name);
+			if (data) {
+				return {
+					name,
+					data,
+				};
+			}
+		}
+		return {
+			name: '',
+		};
+	}
+	const [state, setState] = useState<State>(getInitialState(!!props.ssr));
 
 	// Cancel loading
 	function cleanup() {
@@ -251,13 +274,21 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 		}
 	}
 
+	// Change state if it is different
+	function changeState(newState: State): boolean | undefined {
+		if (JSON.stringify(state) !== JSON.stringify(newState)) {
+			cleanup();
+			setState(newState);
+			return true;
+		}
+	}
+
 	// Update state
 	function updateState() {
 		const name = props.icon;
 		if (typeof name === 'object') {
 			// Icon as object
-			cleanup();
-			setState({
+			changeState({
 				name: '',
 				data: name,
 			});
@@ -266,12 +297,12 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 
 		// New icon or got icon data
 		const data = getIconData(name);
-		if (state.name !== name || data !== state.data) {
-			cleanup();
-			setState({
+		if (
+			changeState({
 				name,
 				data,
-			});
+			})
+		) {
 			if (data === undefined) {
 				// Load icon, update state when done
 				const callback = loadIcons([name], updateState);

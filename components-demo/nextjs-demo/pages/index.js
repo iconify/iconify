@@ -27,7 +27,7 @@ export default function Home() {
 			}
 		});
 		return unsubscribe;
-	});
+	}, []);
 
 	return (
 		<div className="container">
@@ -103,10 +103,11 @@ export default function Home() {
 						/>
 						<InlineIcon icon="flat-color-icons:home" />
 					</p>
-					<p>
+					<p className="ssr-test">
 						Icons to test unique ids:{' '}
-						<InlineIcon icon={iconDataWithID} />
-						<InlineIcon icon={iconDataWithID} />
+						<InlineIcon icon={iconDataWithID} ssr={true} />
+						<InlineIcon icon={iconDataWithID} ssr={true} />
+						followed by text
 					</p>
 					<p>
 						Testing 'carbon:home':
@@ -207,8 +208,14 @@ export default function Home() {
 					border-radius: 5px;
 					padding: 0.75rem;
 					font-size: 1.1rem;
-					font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-						DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+					font-family:
+						Menlo,
+						Monaco,
+						Lucida Console,
+						Liberation Mono,
+						DejaVu Sans Mono,
+						Bitstream Vera Sans Mono,
+						Courier New,
 						monospace;
 				}
 
@@ -231,7 +238,9 @@ export default function Home() {
 					text-decoration: none;
 					border: 1px solid #eaeaea;
 					border-radius: 10px;
-					transition: color 0.15s ease, border-color 0.15s ease;
+					transition:
+						color 0.15s ease,
+						border-color 0.15s ease;
 				}
 
 				.card:hover,
@@ -288,13 +297,29 @@ export default function Home() {
 				body {
 					padding: 0;
 					margin: 0;
-					font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-						Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-						Helvetica Neue, sans-serif;
+					font-family:
+						-apple-system,
+						BlinkMacSystemFont,
+						Segoe UI,
+						Roboto,
+						Oxygen,
+						Ubuntu,
+						Cantarell,
+						Fira Sans,
+						Droid Sans,
+						Helvetica Neue,
+						sans-serif;
 				}
 
 				* {
 					box-sizing: border-box;
+				}
+
+				.ssr-test span {
+					display: inline-block;
+					width: 1em;
+					height: 1em;
+					background: red;
 				}
 			`}</style>
 		</div>
