@@ -71,4 +71,6 @@ export const licensesData: Record<string, LicenseInfo> = {
 	'GPL-3.0': freeSameLicense,
 	'GPL-3.0-or-later': freeSameLicense,
 	'Unlicense': freeLicense,
+	'BSD-2-Clause': freeLicense,
+	'BSD-3-Clause': freeLicense,
 };
