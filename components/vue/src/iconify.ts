@@ -81,6 +81,7 @@ import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
 	IconifyRenderMode,
+	IconifyIconCustomiseCallback,
 } from './props';
 
 // Render SVG
@@ -277,7 +278,8 @@ export const Icon = defineComponent<IconProps>({
 		// Get data for icon to render or null
 		getIcon(
 			icon: IconifyIcon | string,
-			onload?: IconifyIconOnLoad
+			onload?: IconifyIconOnLoad,
+			customise?: IconifyIconCustomiseCallback
 		): IconComponentData | null {
 			// Icon is an object
 			if (
@@ -304,7 +306,7 @@ export const Icon = defineComponent<IconProps>({
 			}
 
 			// Load icon
-			const data = getIconData(iconName);
+			let data = getIconData(iconName);
 			if (!data) {
 				// Icon data is not available
 				if (!this._loadingIcon || this._loadingIcon.name !== icon) {
@@ -333,6 +335,21 @@ export const Icon = defineComponent<IconProps>({
 				}
 			}
 
+			// Customise icon
+			if (customise) {
+				// Clone data and customise it
+				data = Object.assign({}, data);
+				const customised = customise(
+					data.body,
+					iconName.name,
+					iconName.prefix,
+					iconName.provider
+				);
+				if (typeof customised === 'string') {
+					data.body = customised;
+				}
+			}
+
 			// Add classes
 			const classes: string[] = ['iconify'];
 			if (iconName.prefix !== '') {
@@ -354,9 +371,10 @@ export const Icon = defineComponent<IconProps>({
 		const props = this.$attrs;
 
 		// Get icon data
-		const icon: IconComponentData | null = (this.iconMounted || props.ssr)
-			? this.getIcon(props.icon, props.onLoad)
-			: null;
+		const icon: IconComponentData | null =
+			this.iconMounted || props.ssr
+				? this.getIcon(props.icon, props.onLoad, props.customise)
+				: null;
 
 		// Validate icon object
 		if (!icon) {

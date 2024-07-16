@@ -34,6 +34,16 @@ export const defaultExtendedIconCustomisations = {
 export type IconifyIconOnLoad = (name: string) => void;
 
 /**
+ * Customise callback
+ */
+export type IconifyIconCustomiseCallback = (
+	content: string,
+	name: string,
+	prefix: string,
+	provider: string
+) => string;
+
+/**
  * Icon properties
  */
 export interface IconifyIconProps extends IconifyIconCustomisations {
@@ -59,9 +69,6 @@ interface IconifyElementProps {
 
 	// Style
 	style?: unknown;
-
-	// Callback to call when icon data has been loaded. Used only for icons loaded from API
-	onLoad?: IconifyIconOnLoad;
 }
 
 /**
@@ -74,5 +81,12 @@ export interface IconProps extends IconifyElementProps, IconifyIconProps {
 	 * This is a low-level API for framework integrations, you don't usually need to use it directly.
 	 * Note this might hydration mismatches if the icon data is not handled correctly, use with caution.
 	 */
-	ssr?: boolean
+	ssr?: boolean;
+
+	// Callback to call when icon data has been loaded. Used only for icons loaded from API
+	onLoad?: IconifyIconOnLoad;
+
+	// Customise icon content (replace stroke-width, colors, etc...).
+	// Called only for icons loaded from API
+	customise?: IconifyIconCustomiseCallback;
 }

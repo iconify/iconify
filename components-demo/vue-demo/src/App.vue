@@ -38,7 +38,7 @@ import {
 	addIcon as addOnlineIcon,
 	addCollection as addOnlineCollection,
 	disableCache,
-} from '@iconify/vue/dist/iconify';
+} from '@iconify/vue';
 import bxBarChartAlt from '@iconify-icons/bx/bx-bar-chart-alt';
 import bxShapes from '@iconify-icons/bx/bxs-shapes';
 
