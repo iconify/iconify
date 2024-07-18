@@ -15,11 +15,7 @@ export const loadNodeIcon: UniversalIconLoader = async (
 		return result;
 	}
 
-	const cwds = options?.cwd
-		? Array.isArray(options.cwd)
-			? options.cwd
-			: [options.cwd]
-		: [];
+	const cwds = Array.isArray(options?.cwd) ? options.cwd : [options?.cwd];
 
 	for (const cwd of cwds) {
 		const iconSet = await loadCollectionFromFS(
