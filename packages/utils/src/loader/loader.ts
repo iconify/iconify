@@ -26,7 +26,7 @@ export const loadIcon: UniversalIconLoader = async (
 			if (result) {
 				if (typeof result === 'string') {
 					return await getCustomIcon(
-						() => result as string,
+						() => result,
 						collection,
 						icon,
 						options

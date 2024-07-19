@@ -8,8 +8,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
 	},
 	"devDependencies": {
 		"@iconify-icons/mdi-light": "^1.2.5",
@@ -17,9 +17,9 @@
 		"@iconify/core": "workspace:*",
 		"@iconify/react": "workspace:*",
 		"@types/react": "^17.0.80",
-		"@types/react-dom": "^18.2.25",
+		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^3.1.0",
-		"typescript": "^5.4.5",
+		"typescript": "^5.5.3",
 		"vite": "^4.5.3"
 	}
 }

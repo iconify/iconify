@@ -10,8 +10,8 @@
 	"dependencies": {
 		"@iconify/react": "workspace:*",
 		"next": "^13.5.6",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
 	},
 	"devDependencies": {
 		"@iconify-icons/mdi-light": "^1.2.5"

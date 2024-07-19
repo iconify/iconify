@@ -9,9 +9,9 @@
 		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"@types/node": "^18.19.31",
+		"@types/node": "^18.19.41",
 		"iconify-icon": "workspace:*",
-		"nuxt": "^3.11.2",
-		"vue": "^3.4.21"
+		"nuxt": "^3.12.4",
+		"vue": "^3.4.33"
 	}
 }

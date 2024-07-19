@@ -13,11 +13,11 @@
 		"@iconify-icon/solid": "workspace:*",
 		"@iconify-icons/line-md": "^1.2.30",
 		"iconify-icon": "workspace:*",
-		"typescript": "^5.4.5",
+		"typescript": "^5.5.3",
 		"vite": "^4.5.3",
 		"vite-plugin-solid": "^2.10.2"
 	},
 	"dependencies": {
-		"solid-js": "^1.8.16"
+		"solid-js": "^1.8.18"
 	}
 }

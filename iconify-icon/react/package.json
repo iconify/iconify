@@ -38,15 +38,15 @@
 		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.78",
-		"@types/react-test-renderer": "^18.0.7",
-		"@vitejs/plugin-react": "^4.2.1",
+		"@types/react": "^18.3.3",
+		"@types/react-test-renderer": "^18.3.0",
+		"@vitejs/plugin-react": "^4.3.1",
 		"jest": "^29.7.0",
-		"react": "^18.2.0",
-		"react-test-renderer": "^18.2.0",
-		"rimraf": "^5.0.5",
+		"react": "^18.3.1",
+		"react-test-renderer": "^18.3.1",
+		"rimraf": "^6.0.1",
 		"tsup": "^7.3.0",
-		"typescript": "^5.4.5",
+		"typescript": "^5.5.3",
 		"vitest": "^0.34.6"
 	},
 	"peerDependencies": {

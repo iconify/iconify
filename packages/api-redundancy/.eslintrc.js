@@ -11,7 +11,7 @@ module.exports = {
 		SharedArrayBuffer: 'readonly',
 	},
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'jasmine'],
+	plugins: ['@typescript-eslint'],
 	rules: {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'no-unused-vars': ['off'],

@@ -17,7 +17,7 @@ import {
 import { iterateBrowserStorage } from './foreach';
 import { getBrowserStorage } from './global';
 import { initBrowserStorage } from './index';
-import { getStoredItem, setStoredItem } from './item';
+import { setStoredItem } from './item';
 import type {
 	BrowserStorageInstance,
 	BrowserStorageItem,
