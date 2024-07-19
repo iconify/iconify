@@ -38,6 +38,6 @@ export function updateStyle(parent: Element | ShadowRoot, inline: boolean) {
 	styleNode.textContent =
 		':host{display:inline-block;vertical-align:' +
 		(inline ? '-0.125em' : '0') +
-		'}span,svg{display:block}' +
+		'}span,svg{display:block;margin:auto}' +
 		customStyle;
 }

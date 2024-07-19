@@ -151,6 +151,11 @@
 						icon: {
 							body: '<mask id="coffee-mask" x="0" y="0" width="16" height="16"><g fill="white"><path d="M5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M8.5-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12-2c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4" stroke="white" stroke-width="1" fill="none"><animateMotion path="M0 0v-8" calcMode="linear" dur="3s" repeatCount="indefinite" /></path></g><rect y="4" width="16" height="12" fill="black" /><path d="M2 5H13C14.1046 5 15 5.89543 15 7V8C15 9.10457 14.1046 10 13 10H12V14C12 15.1046 11.1046 16 10 16H4C2.89543 16 2 15.1046 2 14V5Z" fill="white" /><path d="M12 6H13C13.5523 6 14 6.44772 14 7V8C14 8.55228 13.5523 9 13 9H12V6Z" fill="black" /></mask><rect mask="url(#coffee-mask)" width="16" height="16" fill="currentColor" />',
 						},
+						animated: {
+							body: '<g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8L7.13 14" stroke-dasharray="10" stroke-dashoffset="10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.18s" values="10;0"></animate></path><path d="M5.5 16L2 13" stroke-dasharray="8" stroke-dashoffset="8"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="8;0" begin="0.2s"></animate></path></g>',
+							width: 14,
+							height: 24,
+						},
 					},
 				});
 			})();
@@ -331,6 +336,75 @@
 				icon="test2:icon"
 				flip="horizontal,vertical"
 				mode="style"
+			></iconify-icon>
+		</p>
+		<p>
+			Non-square animated icon (with border):
+			<iconify-icon
+				inline
+				icon="test2:animated"
+				mode="style"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				inline
+				icon="test2:animated"
+				mode="svg"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+		</p>
+		<p>
+			Making icon square with attributes (with border):
+			<iconify-icon
+				width="1em"
+				height="1em"
+				icon="test2:animated"
+				mode="style"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				width="1em"
+				height="1em"
+				icon="test2:animated"
+				mode="svg"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				width="1em"
+				height="1em"
+				icon="cif:ee"
+				mode="style"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				width="1em"
+				height="1em"
+				icon="cif:ee"
+				mode="svg"
+				style="border: 1px solid #ccc"
+			></iconify-icon>
+		</p>
+		<p>
+			Making icon square with style (with border):
+			<iconify-icon
+				icon="test2:animated"
+				mode="style"
+				style="width: 1em; height: 1em; border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				icon="test2:animated"
+				mode="svg"
+				style="width: 1em; height: 1em; border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				icon="cif:ee"
+				mode="style"
+				style="width: 1em; height: 1em; border: 1px solid #ccc"
+			></iconify-icon>
+			<iconify-icon
+				icon="cif:ee"
+				mode="svg"
+				style="width: 1em; height: 1em; border: 1px solid #ccc"
 			></iconify-icon>
 		</p>
 
