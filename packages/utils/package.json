@@ -423,6 +423,7 @@
 	},
 	"devDependencies": {
 		"@iconify-json/flat-color-icons": "^1.1.10",
+		"@iconify-json/logos": "^1.1.40",
 		"@types/debug": "^4.1.12",
 		"@types/jest": "^29.5.12",
 		"@types/node": "^18.19.31",

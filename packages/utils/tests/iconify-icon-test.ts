@@ -122,4 +122,13 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('width="')).toBeFalsy();
 		expect(result && result.includes('height="1em"')).toBeTruthy();
 	});
+
+	test(`loadIcon with scale should respect the icon's default width/height ratio`, async () => {
+		const result = await loadNodeIcon('logos', '100tb', {
+			scale: 2,
+		});
+		expect(result).toBeTruthy();
+		expect(result && result.includes('width="5.4em"')).toBeTruthy();
+		expect(result && result.includes('height="2em"')).toBeTruthy();
+	});
 });

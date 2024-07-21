@@ -23,7 +23,11 @@ function configureSvgSize(
 			if (typeof scale === 'number') {
 				// Scale icon, unless scale is 0
 				if (scale > 0) {
-					props[prop] = `${scale}em`;
+					const match = result?.[1]?.match(
+						/[-+]?(\d+(\.\d+)?)[a-z%]*?/i
+					);
+
+					props[prop] = `${scale * +(match?.[0] ?? 1)}em`;
 				}
 			} else if (result) {
 				// Use result from iconToSVG()
