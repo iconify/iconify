@@ -1,8 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { Icon, InlineIcon, loadIcons, iconExists } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { describe, test, expect } from 'vitest';
+import { render } from '@testing-library/react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -12,7 +13,7 @@ const iconData = {
 
 describe('Testing references', () => {
 	test('reference for preloaded icon', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve) => {
 			const prefix = nextPrefix();
 			const name = 'render-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
@@ -50,7 +51,7 @@ describe('Testing references', () => {
 				expect(iconExists(iconName)).toEqual(true);
 
 				// Render components
-				renderer.create(
+				render(
 					<Icon
 						icon={iconName}
 						ref={(element) => {
@@ -59,7 +60,7 @@ describe('Testing references', () => {
 					/>
 				);
 
-				renderer.create(
+				render(
 					<InlineIcon
 						icon={iconName}
 						ref={(element) => {
@@ -72,13 +73,13 @@ describe('Testing references', () => {
 				expect(gotRef).toEqual(true);
 				expect(gotInlineRef).toEqual(true);
 
-				fulfill(true);
+				resolve(true);
 			});
 		});
 	});
 
 	test('reference to pending icon', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'mock-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
@@ -108,15 +109,23 @@ describe('Testing references', () => {
 					expect(iconExists(iconName)).toEqual(true);
 					expect(gotRef).toEqual(false);
 
-					// Check if state was changed
-					// Wrapped in double setTimeout() because re-render takes 2 ticks
-					setTimeout(() => {
-						setTimeout(() => {
-							expect(gotRef).toEqual(true);
+					// Check if state was changed in next few ticks
+					let counter = 0;
+					const timer = setInterval(() => {
+						counter++;
+						if (!gotRef) {
+							// Test again
+							if (counter > 5) {
+								clearInterval(timer);
+								reject(new Error('Icon reference was not set'));
+							}
+							return;
+						}
 
-							fulfill(true);
-						}, 0);
-					}, 0);
+						// Success!
+						clearInterval(timer);
+						resolve(true);
+					});
 				},
 			});
 
@@ -124,7 +133,7 @@ describe('Testing references', () => {
 			expect(iconExists(iconName)).toEqual(false);
 
 			// Render component
-			renderer.create(
+			render(
 				<Icon
 					icon={iconName}
 					ref={(element) => {
@@ -139,7 +148,7 @@ describe('Testing references', () => {
 	});
 
 	test('missing icon', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'missing-icon';
 			const iconName = `@${provider}:${prefix}:${name}`;
@@ -164,16 +173,23 @@ describe('Testing references', () => {
 					expect(iconExists(iconName)).toEqual(false);
 					expect(gotRef).toEqual(false);
 
-					// Check if state was changed
-					// Wrapped in double setTimeout() because re-render takes 2 ticks
-					setTimeout(() => {
-						setTimeout(() => {
-							// Reference should not have been called
-							expect(gotRef).toEqual(false);
+					// Check if state was changed in next few ticks
+					let counter = 0;
+					const timer = setInterval(() => {
+						counter++;
+						if (gotRef) {
+							// Failed!
+							clearInterval(timer);
+							reject(new Error('Icon reference was set'));
+							return;
+						}
 
-							fulfill(true);
-						}, 0);
-					}, 0);
+						if (counter > 5) {
+							// Waited enough. Success
+							clearInterval(timer);
+							resolve(true);
+						}
+					});
 				},
 			});
 
@@ -181,7 +197,7 @@ describe('Testing references', () => {
 			expect(iconExists(iconName)).toEqual(false);
 
 			// Render component
-			const component = renderer.create(
+			render(
 				<Icon
 					icon={iconName}
 					ref={(element) => {

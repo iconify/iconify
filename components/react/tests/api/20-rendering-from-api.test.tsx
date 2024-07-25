@@ -1,8 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { Icon, loadIcons, iconExists } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { describe, test, expect } from 'vitest';
+import { render } from '@testing-library/react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -12,11 +13,11 @@ const iconData = {
 
 describe('Rendering icon', () => {
 	test('rendering icon after loading it', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve) => {
 			const prefix = nextPrefix();
 			const name = 'render-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
-			const className = `iconify iconify--${prefix} iconify--${provider}`;
+			const className = `iconify iconify--${provider} iconify--${prefix}`;
 			let onLoadCalled = false;
 
 			mockAPIData({
@@ -49,7 +50,7 @@ describe('Rendering icon', () => {
 				expect(iconExists(iconName)).toEqual(true);
 
 				// Render component
-				const component = renderer.create(
+				const renderResult = render(
 					<Icon
 						icon={iconName}
 						onLoad={(name) => {
@@ -59,42 +60,24 @@ describe('Rendering icon', () => {
 						}}
 					/>
 				);
-				const tree = component.toJSON();
-
-				expect(tree).toMatchObject({
-					type: 'svg',
-					props: {
-						'xmlns': 'http://www.w3.org/2000/svg',
-						'xmlnsXlink': 'http://www.w3.org/1999/xlink',
-						'aria-hidden': true,
-						'role': 'img',
-						'style': {},
-						'dangerouslySetInnerHTML': {
-							__html: iconData.body,
-						},
-						'width': '1em',
-						'height': '1em',
-						'viewBox':
-							'0 0 ' + iconData.width + ' ' + iconData.height,
-						className,
-					},
-					children: null,
-				});
+				expect(renderResult.container.innerHTML).toEqual(
+					`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="${className}" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>`
+				);
 
 				// Make sure onLoad has been called
 				expect(onLoadCalled).toEqual(true);
 
-				fulfill(true);
+				resolve(true);
 			});
 		});
 	});
 
 	test('rendering icon before loading it', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'mock-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
-			const className = `iconify iconify--${prefix} iconify--${provider}`;
+			const className = `iconify iconify--${provider} iconify--${prefix}`;
 			let onLoadCalled = false;
 
 			mockAPIData({
@@ -120,42 +103,32 @@ describe('Rendering icon', () => {
 					// Test it again
 					expect(iconExists(iconName)).toEqual(true);
 
-					// Check if state was changed
-					// Wrapped in double setTimeout() because re-render takes 2 ticks
-					setTimeout(() => {
-						setTimeout(() => {
-							const tree = component.toJSON();
+					// Check if state was changed in next few ticks
+					let counter = 0;
+					const timer = setInterval(() => {
+						counter++;
+						const html = renderResult.container.innerHTML;
+						if (html.includes('<span')) {
+							// Not rendered yet
+							if (counter > 5) {
+								clearInterval(timer);
+								reject(new Error('Icon not rendered'));
+							}
+							return;
+						}
 
-							expect(tree).toMatchObject({
-								type: 'svg',
-								props: {
-									'xmlns': 'http://www.w3.org/2000/svg',
-									'xmlnsXlink':
-										'http://www.w3.org/1999/xlink',
-									'aria-hidden': true,
-									'role': 'img',
-									'style': {},
-									'dangerouslySetInnerHTML': {
-										__html: iconData.body,
-									},
-									'width': '1em',
-									'height': '1em',
-									'viewBox':
-										'0 0 ' +
-										iconData.width +
-										' ' +
-										iconData.height,
-									'className': 'test ' + className,
-								},
-								children: null,
-							});
+						// Should be rendered: test it
+						clearInterval(timer);
 
-							// onLoad should have been called
-							expect(onLoadCalled).toEqual(true);
+						expect(html).toEqual(
+							`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="${className} test" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>`
+						);
 
-							fulfill(true);
-						}, 0);
-					}, 0);
+						// onLoad should have been called
+						expect(onLoadCalled).toEqual(true);
+
+						resolve(true);
+					});
 				},
 			});
 
@@ -163,7 +136,7 @@ describe('Rendering icon', () => {
 			expect(iconExists(iconName)).toEqual(false);
 
 			// Render component
-			const component = renderer.create(
+			const renderResult = render(
 				<Icon
 					icon={iconName}
 					className="test"
@@ -174,14 +147,9 @@ describe('Rendering icon', () => {
 					}}
 				/>
 			);
-			const tree = component.toJSON();
 
 			// Should render placeholder
-			expect(tree).toMatchObject({
-				type: 'span',
-				props: {},
-				children: null,
-			});
+			expect(renderResult.container.innerHTML).toEqual('<span></span>');
 
 			// onLoad should not have been called yet
 			expect(onLoadCalled).toEqual(false);
@@ -189,7 +157,7 @@ describe('Rendering icon', () => {
 	});
 
 	test('missing icon', () => {
-		return new Promise((fulfill) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'missing-icon';
 			const iconName = `@${provider}:${prefix}:${name}`;
@@ -208,21 +176,30 @@ describe('Rendering icon', () => {
 					// Test it again
 					expect(iconExists(iconName)).toEqual(false);
 
-					// Check if state was changed
-					// Wrapped in double setTimeout() because re-render takes 2 ticks
-					setTimeout(() => {
-						setTimeout(() => {
-							const tree = component.toJSON();
+					// Check if state was changed in next few ticks
+					let counter = 0;
+					const timer = setInterval(() => {
+						counter++;
+						const html = renderResult.container.innerHTML;
+						if (html.includes('<span')) {
+							// Not rendered yet
+							if (counter > 5) {
+								// Success
+								clearInterval(timer);
+								resolve(true);
+							}
+							return;
+						}
 
-							expect(tree).toMatchObject({
-								type: 'span',
-								props: {},
-								children: null,
-							});
-
-							fulfill(true);
-						}, 0);
-					}, 0);
+						// Content changed???
+						clearInterval(timer);
+						reject(
+							new Error(
+								'Bad icon content: ' +
+									renderResult.container.innerHTML
+							)
+						);
+					});
 				},
 			});
 
@@ -230,7 +207,7 @@ describe('Rendering icon', () => {
 			expect(iconExists(iconName)).toEqual(false);
 
 			// Render component
-			const component = renderer.create(
+			const renderResult = render(
 				<Icon
 					icon={iconName}
 					onLoad={() => {
@@ -238,14 +215,9 @@ describe('Rendering icon', () => {
 					}}
 				></Icon>
 			);
-			const tree = component.toJSON();
 
 			// Should render placeholder
-			expect(tree).toMatchObject({
-				type: 'span',
-				props: {},
-				children: null,
-			});
+			expect(renderResult.container.innerHTML).toEqual('<span></span>');
 		});
 	});
 });

@@ -7,7 +7,9 @@
 		"@cyberalien/redundancy",
 		"@iconify/api-redundancy"
 	],
-	"compiler": {},
+	"compiler": {
+		"tsconfigFilePath": "<projectFolder>/tsconfig.src.json"
+	},
 	"apiReport": {
 		"enabled": false
 	},

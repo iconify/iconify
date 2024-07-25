@@ -1,0 +1,18 @@
+{
+	"include": ["tests/**/*", "tests/**/*.tsx"],
+	"exclude": ["src/*"],
+	"compilerOptions": {
+		"rootDir": "./tests",
+		"target": "ES2019",
+		"module": "ESNext",
+		"declaration": false,
+		"sourceMap": false,
+		"strict": false,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"jsx": "react",
+		"noEmit": true
+	}
+}

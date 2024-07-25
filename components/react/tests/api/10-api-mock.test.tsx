@@ -1,6 +1,7 @@
 import { loadIcons, iconExists } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
+import { describe, test, expect } from 'vitest';
 
 describe('Testing fake API', () => {
 	test('using fake API to load icon', () => {
