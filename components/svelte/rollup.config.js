@@ -28,7 +28,12 @@ export default [
 				format: 'cjs',
 			},
 		],
-		plugins: [resolve(resolveParams), typescript()],
+		plugins: [
+			resolve(resolveParams),
+			typescript({
+				tsconfig: 'tsconfig.src.json',
+			}),
+		],
 	},
 	// Files included in OfflineIcon.svelte as bundle
 	{
@@ -43,6 +48,11 @@ export default [
 				format: 'cjs',
 			},
 		],
-		plugins: [resolve(resolveParams), typescript()],
+		plugins: [
+			resolve(resolveParams),
+			typescript({
+				tsconfig: 'tsconfig.src.json',
+			}),
+		],
 	},
 ];

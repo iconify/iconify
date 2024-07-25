@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../offline';
 

@@ -1,9 +1,0 @@
-{
-	"extends": "../tsconfig-base.json",
-	"compilerOptions": {
-		"types": ["node", "jest"],
-		"rootDir": ".",
-		"outDir": "../lib",
-		"module": "CommonJS"
-	}
-}

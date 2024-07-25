@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../';
 
@@ -13,8 +11,8 @@ const iconData = {
 describe('Creating component', () => {
 	test('basic icon', () => {
 		const component = render(Icon, {
-			icon: iconData,
-			onLoad: () => {
+			'icon': iconData,
+			'on:load': () => {
 				// Should be called only for icons loaded from API
 				throw new Error('onLoad called for object!');
 			},

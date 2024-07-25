@@ -1,0 +1,18 @@
+{
+	"include": ["src/**/*.ts", ".eslintrc.js"],
+	"exclude": ["src/svelte.d.ts"],
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"target": "esnext",
+		"module": "esnext",
+		"declaration": true,
+		"sourceMap": false,
+		"strict": true,
+		"types": ["svelte"],
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	}
+}

@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../';
 
@@ -22,7 +20,11 @@ describe('Rotation', () => {
 	});
 
 	test('string', () => {
-		const component = render(Icon, { icon: iconData, rotate: '180deg' });
+		const component = render(Icon, {
+			icon: iconData,
+			// @ts-expect-error
+			rotate: '180deg',
+		});
 		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
@@ -75,6 +77,7 @@ describe('Flip', () => {
 	test('string for boolean attribute', () => {
 		const component = render(Icon, {
 			icon: iconData,
+			// @ts-expect-error
 			hFlip: 'true',
 		});
 		const node = component.container.querySelector('svg')!;
@@ -121,6 +124,7 @@ describe('Flip', () => {
 	test('wrong case', () => {
 		const component = render(Icon, {
 			icon: iconData,
+			// @ts-expect-error
 			vflip: true,
 		});
 		const node = component.container.querySelector('svg')!;

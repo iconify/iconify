@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../offline';
 
@@ -12,66 +10,76 @@ const iconData = {
 
 describe('Padding attributes', () => {
 	test('title', () => {
-		const component = render(Icon, { icon: iconData, title: 'Icon!' });
-		const node = component.container.querySelector('svg')!;
-		expect(node.getAttribute('title')).toBe('Icon!');
+		const renderResult = render(Icon, {
+			icon: iconData,
+			// @ts-expect-error
+			title: 'Icon!',
+		});
+		expect(renderResult.container.innerHTML).toContain('title="Icon!"');
 	});
 
 	test('aria-hidden', () => {
 		// dashes, string value
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			'icon': iconData,
 			'aria-hidden': 'false',
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.getAttribute('aria-hidden')).toBeNull();
+		expect(renderResult.container.innerHTML).not.toContain('aria-hidden');
 	});
 
 	test('ariaHidden', () => {
 		// camelCase, boolean value
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			icon: iconData,
+			// @ts-expect-error
 			ariaHidden: false,
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.getAttribute('aria-hidden')).toBeNull();
+		expect(renderResult.container.innerHTML).not.toContain('aria-hidden');
 	});
 
 	test('style', () => {
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			icon: iconData,
 			style: 'vertical-align: 0; color: red;',
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.style.verticalAlign).toBe('0');
-		expect(node.style.color).toBe('red');
+		expect(renderResult.container.innerHTML).toContain(
+			'style="vertical-align: 0; color: red;"'
+		);
 	});
 
 	test('color', () => {
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			icon: iconData,
 			color: 'red',
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.style.color).toBe('red');
+		expect(renderResult.container.innerHTML).toContain(
+			'style="color: red;"'
+		);
 	});
 
 	test('color with style', () => {
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			icon: iconData,
 			color: 'red',
 			style: 'color: green;',
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.style.color).toBe('red');
+
+		// In Svelte component, `color` overrides `style`
+		expect(renderResult.container.innerHTML).toContain(
+			'style="color: red;"'
+		);
+		expect(renderResult.container.innerHTML).not.toContain('green');
 	});
 
 	test('attributes that cannot change', () => {
-		const component = render(Icon, {
+		const renderResult = render(Icon, {
 			icon: iconData,
 			viewBox: '0 0 0 0',
 		});
-		const node = component.container.querySelector('svg')!;
-		expect(node.getAttribute('viewBox')).toBe('0 0 24 24');
+
+		expect(renderResult.container.innerHTML).toContain(
+			'viewBox="0 0 24 24"'
+		);
+		expect(renderResult.container.innerHTML).not.toContain('0 0 0 0');
 	});
 });

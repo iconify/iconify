@@ -44,7 +44,7 @@
 		"cleanup": "rimraf lib dist",
 		"prebuild": "pnpm run cleanup",
 		"build": "node build",
-		"build:tsc": "tsc -b",
+		"build:tsc": "tsc -b tsconfig.src.json",
 		"build:bundles": "rollup -c rollup.config.js",
 		"build:api": "node build --only-api",
 		"test": "vitest"
@@ -55,21 +55,21 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.47.2",
+		"@microsoft/api-extractor": "^7.47.3",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-typescript": "^11.1.6",
 		"@sveltejs/vite-plugin-svelte": "^2.5.3",
-		"@testing-library/jest-dom": "^6.4.6",
-		"@testing-library/svelte": "^4.2.3",
+		"@testing-library/jest-dom": "^6.4.8",
+		"@testing-library/svelte": "5.2.0-next.3",
 		"@tsconfig/svelte": "^5.0.4",
 		"@types/jest": "^29.5.12",
-		"@types/node": "^20.14.11",
+		"@types/node": "^20.14.12",
 		"rimraf": "^6.0.1",
-		"rollup": "^4.18.1",
+		"rollup": "^4.19.0",
 		"rollup-plugin-svelte": "^7.2.2",
-		"svelte": "5.0.0-next.123",
+		"svelte": "5.0.0-next.199",
 		"svelte-preprocess": "^5.1.4",
-		"vitest": "^2.0.3"
+		"vitest": "^2.0.4"
 	},
 	"peerDependencies": {
 		"svelte": ">4.0.0"

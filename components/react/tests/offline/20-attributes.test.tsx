@@ -57,7 +57,7 @@ describe('Passing attributes', () => {
 			<Icon icon={iconData} color="red" style={{ color: 'green' }} />
 		);
 
-		// `style` overrides `color`
+		// In React component, `style` overrides `color`
 		expect(renderResult.container.innerHTML).toContain(
 			'style="color: green;"'
 		);

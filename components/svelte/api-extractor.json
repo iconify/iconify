@@ -7,6 +7,7 @@
 		"@iconify/api-redundancy"
 	],
 	"compiler": {
+		"tsconfigFilePath": "<projectFolder>/tsconfig.src.json",
 		"skipLibCheck": true
 	},
 	"apiReport": {

@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../';
 
@@ -12,7 +10,11 @@ const iconData = {
 
 describe('Padding attributes', () => {
 	test('title', () => {
-		const component = render(Icon, { icon: iconData, title: 'Icon!' });
+		const component = render(Icon, {
+			icon: iconData,
+			// @ts-expect-error
+			title: 'Icon!',
+		});
 		const node = component.container.querySelector('svg')!;
 		expect(node.getAttribute('title')).toBe('Icon!');
 	});
@@ -31,6 +33,7 @@ describe('Padding attributes', () => {
 		// camelCase, boolean value
 		const component = render(Icon, {
 			icon: iconData,
+			// @ts-expect-error
 			ariaHidden: false,
 		});
 		const node = component.container.querySelector('svg')!;

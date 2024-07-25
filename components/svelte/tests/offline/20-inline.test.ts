@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../offline';
 
@@ -20,7 +18,11 @@ describe('Inline attribute', () => {
 	});
 
 	test('string true', () => {
-		const component = render(Icon, { icon: iconData, inline: 'true' });
+		const component = render(Icon, {
+			icon: iconData,
+			// @ts-expect-error
+			inline: 'true',
+		});
 		const node = component.container.querySelector('svg')!;
 		const style = node.style;
 
@@ -37,7 +39,11 @@ describe('Inline attribute', () => {
 
 	test('false string', () => {
 		// "false" should be ignored
-		const component = render(Icon, { icon: iconData, inline: 'false' });
+		const component = render(Icon, {
+			icon: iconData,
+			// @ts-expect-error
+			inline: 'false',
+		});
 		const node = component.container.querySelector('svg')!;
 		const style = node.style;
 

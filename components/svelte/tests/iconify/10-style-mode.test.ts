@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../..';
 
@@ -13,9 +11,9 @@ const iconData = {
 describe('Rendering as span', () => {
 	test('basic icon', () => {
 		const component = render(Icon, {
-			icon: iconData,
-			mode: 'style',
-			onLoad: () => {
+			'icon': iconData,
+			'mode': 'style',
+			'on:load': () => {
 				// Should be called only for icons loaded from API
 				throw new Error('onLoad called for object!');
 			},
@@ -35,11 +33,11 @@ describe('Rendering as span', () => {
 
 	test('custom dimensions', () => {
 		const component = render(Icon, {
-			icon: iconData,
-			mode: 'style',
-			width: '48',
-			height: 32,
-			onLoad: () => {
+			'icon': iconData,
+			'mode': 'style',
+			'width': '48',
+			'height': 32,
+			'on:load': () => {
 				// Should be called only for icons loaded from API
 				throw new Error('onLoad called for object!');
 			},

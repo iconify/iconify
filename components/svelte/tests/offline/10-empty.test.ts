@@ -1,15 +1,12 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../offline';
 
 describe('Empty icon', () => {
 	test('basic test', () => {
-		const component = render(Icon, {});
-		const html = component.container.innerHTML;
-
-		// Empty container div
-		expect(html.replaceAll('<!--<OfflineIcon>-->', '')).toBe('<div></div>');
+		const renderResult = render(Icon, {});
+		expect(
+			renderResult.container.innerHTML.replace(/<!--(.*?)-->/gm, '')
+		).toEqual('');
 	});
 });

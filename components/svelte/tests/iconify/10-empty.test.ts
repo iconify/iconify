@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Icon from '../../';
 
@@ -10,6 +8,6 @@ describe('Empty icon', () => {
 		const html = component.container.innerHTML;
 
 		// Empty container div
-		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('<div></div>');
+		expect(html.replace(/<!--(.*?)-->/gm, '')).toBe('');
 	});
 });
