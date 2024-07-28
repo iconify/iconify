@@ -187,6 +187,8 @@ export type IconifyLoaderOptions = {
 	 *
 	 * Only used on `node` environment.
 	 *
+	 * If value is an array and `autoInstall` is enabled, `autoInstall` will be used only for last entry.
+	 *
 	 * @default process.cwd()
 	 */
 	cwd?: string | string[];

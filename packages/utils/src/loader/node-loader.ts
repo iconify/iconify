@@ -17,12 +17,12 @@ export const loadNodeIcon: UniversalIconLoader = async (
 
 	const cwds = Array.isArray(options?.cwd) ? options.cwd : [options?.cwd];
 
-	for (const cwd of cwds) {
+	for (let i = 0; i < cwds.length; i++) {
 		const iconSet = await loadCollectionFromFS(
 			collection,
-			options?.autoInstall,
+			i === cwds.length - 1 ? options?.autoInstall : false,
 			undefined,
-			cwd
+			cwds[i]
 		);
 		if (iconSet) {
 			result = await searchForIcon(
@@ -31,13 +31,13 @@ export const loadNodeIcon: UniversalIconLoader = async (
 				getPossibleIconNames(icon),
 				options
 			);
-			if (result) break;
+			if (result) {
+				return result;
+			}
 		}
 	}
 
-	if (!result && options?.warn) {
+	if (options?.warn) {
 		warnOnce(`failed to load ${options.warn} icon`);
 	}
-
-	return result;
 };
