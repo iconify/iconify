@@ -10,6 +10,7 @@ describe('external-pkg', () => {
 		});
 		expect(result).toBeTruthy();
 	});
+
 	test('loadNodeIcon works with importModule and scoped package name', async () => {
 		const result = await loadNodeIcon('test-color-icons', 'about', {
 			customCollections: createExternalPackageIconLoader(

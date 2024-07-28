@@ -122,4 +122,18 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('width="')).toBeFalsy();
 		expect(result && result.includes('height="1em"')).toBeTruthy();
 	});
+
+	test('loadIcon with bad cwd', async () => {
+		const result = await loadNodeIcon('flat-color-icons', 'up-left', {
+			cwd: './tests',
+		});
+		expect(result).toBeUndefined();
+	});
+
+	test('loadIcon with multiple cwd', async () => {
+		const result = await loadNodeIcon('flat-color-icons', 'up-left', {
+			cwd: ['./tests', process.cwd()],
+		});
+		expect(result).toBeTruthy();
+	});
 });

@@ -1,12 +1,17 @@
 import { promises as fs, Stats } from 'fs';
-import { isPackageExists, importModule } from 'local-pkg';
+import { importModule } from 'local-pkg';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
 import { resolvePath } from 'mlly';
 
-const _collections: Record<string, Promise<IconifyJSON | undefined>> = {};
-const isLegacyExists = isPackageExists('@iconify/json');
+// Cache: [cwd][name] => icon set promise
+type CachedItem = Promise<IconifyJSON | undefined>;
+type CachedItems = Record<string, CachedItem>;
+const _collections = Object.create(null) as Record<string, CachedItems>;
+
+// Check if full package exists, per cwd value
+const isLegacyExists = Object.create(null) as Record<string, boolean>;
 
 /**
  * Asynchronously loads a collection from the file system.
@@ -22,10 +27,14 @@ export async function loadCollectionFromFS(
 	scope = '@iconify-json',
 	cwd = process.cwd()
 ): Promise<IconifyJSON | undefined> {
-	if (!(await _collections[name])) {
-		_collections[name] = task();
+	const cache =
+		_collections[cwd] ||
+		(_collections[cwd] = Object.create(null) as CachedItems);
+
+	if (!(await cache[name])) {
+		cache[name] = task();
 	}
-	return _collections[name];
+	return cache[name];
 
 	async function task() {
 		const packageName = scope.length === 0 ? name : `${scope}/${name}`;
@@ -35,7 +44,20 @@ export async function loadCollectionFromFS(
 
 		// Legacy support for @iconify/json
 		if (scope === '@iconify-json') {
-			if (!jsonPath && isLegacyExists) {
+			// Check legacy package exists
+			if (isLegacyExists[cwd] === undefined) {
+				const testResult = await resolvePath(
+					`@iconify/json/collections.json`,
+					{
+						url: cwd,
+					}
+				).catch(() => undefined);
+				isLegacyExists[cwd] = !!testResult;
+			}
+			const checkLegacy = isLegacyExists[cwd];
+
+			// Check legacy package
+			if (!jsonPath && checkLegacy) {
 				jsonPath = await resolvePath(
 					`@iconify/json/json/${name}.json`,
 					{
@@ -45,7 +67,7 @@ export async function loadCollectionFromFS(
 			}
 
 			// Try to install the package if it doesn't exist
-			if (!jsonPath && !isLegacyExists && autoInstall) {
+			if (!jsonPath && !checkLegacy && autoInstall) {
 				await tryInstallPkg(packageName, autoInstall);
 				jsonPath = await resolvePath(`${packageName}/icons.json`, {
 					url: cwd,
