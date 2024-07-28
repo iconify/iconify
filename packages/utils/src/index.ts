@@ -131,3 +131,4 @@ export {
 	compareObjects,
 	unmergeObjects,
 } from './misc/objects';
+export { sanitiseTitleAttribute } from './misc/title';

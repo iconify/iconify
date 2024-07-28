@@ -337,6 +337,11 @@
 			"require": "./lib/misc/strings.cjs",
 			"import": "./lib/misc/strings.mjs"
 		},
+		"./lib/misc/title": {
+			"types": "./lib/misc/title.d.ts",
+			"require": "./lib/misc/title.cjs",
+			"import": "./lib/misc/title.mjs"
+		},
 		"./lib/misc/licenses": {
 			"types": "./lib/misc/licenses.d.ts",
 			"require": "./lib/misc/licenses.cjs",
