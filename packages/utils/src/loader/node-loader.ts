@@ -15,19 +15,24 @@ export const loadNodeIcon: UniversalIconLoader = async (
 		return result;
 	}
 
-	const iconSet = await loadCollectionFromFS(
-		collection,
-		options?.autoInstall,
-		undefined,
-		options?.cwd
-	);
-	if (iconSet) {
-		result = await searchForIcon(
-			iconSet,
+	const cwds = Array.isArray(options?.cwd) ? options.cwd : [options?.cwd];
+
+	for (const cwd of cwds) {
+		const iconSet = await loadCollectionFromFS(
 			collection,
-			getPossibleIconNames(icon),
-			options
+			options?.autoInstall,
+			undefined,
+			cwd
 		);
+		if (iconSet) {
+			result = await searchForIcon(
+				iconSet,
+				collection,
+				getPossibleIconNames(icon),
+				options
+			);
+			if (result) break;
+		}
 	}
 
 	if (!result && options?.warn) {

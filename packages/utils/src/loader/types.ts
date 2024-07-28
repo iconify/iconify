@@ -183,8 +183,11 @@ export type IconifyLoaderOptions = {
 	/**
 	 * Current working directory, used to resolve the @iconify-json package.
 	 *
+	 * Can be a string or an array of strings, the first existing path will be used.
+	 *
 	 * Only used on `node` environment.
+	 *
 	 * @default process.cwd()
 	 */
-	cwd?: string;
+	cwd?: string | string[];
 };
