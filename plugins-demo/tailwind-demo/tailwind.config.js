@@ -91,6 +91,15 @@ module.exports = {
 			scale: 0,
 			// No prefixes list: reusing data from plugin above
 		}),
+		// Main plugin, no square and scale
+		addIconSelectors({
+			maskSelector: '.fa6-mask',
+			backgroundSelector: '.fa6-bg', // unused
+			iconSelector: '.{prefix}-{name}',
+			square: false,
+			scale: 2,
+			prefixes: ['fa6-regular'],
+		}),
 		// Plugin with clean selectors: requires writing all used icons in first parameter
 		addCleanIconSelectors(['mdi-light:home']),
 		// Plugin with dynamic selectors

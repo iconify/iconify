@@ -5,6 +5,7 @@ import {
 } from '@iconify/utils/lib/css/common';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
+import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type {
 	IconifyPluginOptions,
 	IconifyPluginOptionsObject,
@@ -90,6 +91,12 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
 	// Add icon sets
 	const iconSelector = options.iconSelector || '.{prefix}--{name}';
 
+	// Make icons square
+	const square = options.square !== false;
+
+	// Scale
+	const scale = options.scale ?? 1;
+
 	options.prefixes?.forEach((item) => {
 		let prefix: string;
 		let iconSet: IconifyJSON | undefined;
@@ -162,7 +169,7 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
 				{
 					mode: 'mask', // not used because varName is set, but required
 					varName,
-					forceSquare: true,
+					forceSquare: square,
 				}
 			);
 
@@ -170,6 +177,11 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
 			const selector = iconSelector
 				.replace('{prefix}', prefix)
 				.replace('{name}', name);
+
+			// Scale non-square icons
+			if (!square && scale > 0 && scale !== 1 && iconRules.width) {
+				iconRules.width = calculateSize(iconRules.width, scale);
+			}
 
 			// Add to rules
 			rules[selector] = iconRules;

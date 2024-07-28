@@ -9,6 +9,7 @@
 	},
 	"keywords": [],
 	"devDependencies": {
+		"@iconify-json/fa6-regular": "^1.1.21",
 		"@iconify-json/mdi-light": "^1.1.10",
 		"@iconify-json/vscode-icons": "^1.1.36",
 		"@iconify/tailwind": "workspace:*",

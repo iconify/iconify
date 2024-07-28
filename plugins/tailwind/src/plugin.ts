@@ -26,7 +26,7 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
 					return getDynamicCSSRules(icon, options);
 				} catch (err) {
 					// Log error, but do not throw it
-					console.error(err.message);
+					console.error((err as Error).message);
 				}
 			},
 		});

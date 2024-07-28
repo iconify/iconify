@@ -94,6 +94,9 @@ export interface IconifyPluginOptionsObject {
 	// Scale for icons, defaults to 1
 	scale?: number;
 
+	// Make icons square, defaults to true
+	square?: boolean;
+
 	// Prefixes to load
 	prefixes?: IconifyPluginListOptions;
 

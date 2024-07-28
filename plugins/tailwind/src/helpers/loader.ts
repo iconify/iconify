@@ -19,7 +19,9 @@ export function locateIconSet(prefix: string): LocatedIconSet | undefined {
 			main,
 			info,
 		};
-	} catch {}
+	} catch {
+		//
+	}
 
 	// Try `@iconify/json`
 	try {
@@ -27,7 +29,9 @@ export function locateIconSet(prefix: string): LocatedIconSet | undefined {
 		return {
 			main,
 		};
-	} catch {}
+	} catch {
+		//
+	}
 }
 
 /**
@@ -45,13 +49,19 @@ const cache = Object.create(null) as Record<string, IconifyJSON>;
  */
 function loadIconSetFromFile(source: LocatedIconSet): IconifyJSON | undefined {
 	try {
-		const result = JSON.parse(readFileSync(source.main, 'utf8'));
+		const result = JSON.parse(
+			readFileSync(source.main, 'utf8')
+		) as IconifyJSON;
 		if (!result.info && source.info) {
 			// Load info from a separate file
-			result.info = JSON.parse(readFileSync(source.info, 'utf8'));
+			result.info = JSON.parse(
+				readFileSync(source.info, 'utf8')
+			) as IconifyJSON['info'];
 		}
 		return result;
-	} catch {}
+	} catch {
+		//
+	}
 }
 
 /**
@@ -75,7 +85,7 @@ export function loadIconSet(
 	// Try to parse JSON
 	if (source.startsWith('{')) {
 		try {
-			return JSON.parse(source);
+			return JSON.parse(source) as IconifyJSON;
 		} catch {
 			// Invalid JSON
 		}

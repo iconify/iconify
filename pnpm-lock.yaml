@@ -832,6 +832,9 @@ importers:
 
   plugins-demo/tailwind-demo:
     devDependencies:
+      '@iconify-json/fa6-regular':
+        specifier: ^1.1.21
+        version: 1.1.21
       '@iconify-json/mdi-light':
         specifier: ^1.1.10
         version: 1.1.10
@@ -2638,6 +2641,9 @@ packages:
 
   '@iconify-icons/uil@1.2.3':
     resolution: {integrity: sha512-+UlrTCKJ13k8MdZdBJUdJLwrys6r8/BG3MT+C09Vcqbzh5IKGxS9RdJ7G3XeTn+H2MrIJ/EHWCNNUANlDqLk6A==}
+
+  '@iconify-json/fa6-regular@1.1.21':
+    resolution: {integrity: sha512-xgKt8d9AeMXKc1gfaUUqhYpDZjmC++e6ETsNyW6G0g8n7m2pUsnlpiTDUXGEtalVt6zl7M+HSU9RKrq4ma0rHg==}
 
   '@iconify-json/flat-color-icons@1.1.10':
     resolution: {integrity: sha512-tkkxTEPMYqDtss8tFij/gWfwrnt/NeChZoUGr6l71sWi7jYMwD35dYjFhM2bjtww5MCkVIAJaVx/3QJGUmMD/g==}
@@ -11597,6 +11603,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-icons/uil@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/fa6-regular@1.1.21':
     dependencies:
       '@iconify/types': 2.0.0
 
