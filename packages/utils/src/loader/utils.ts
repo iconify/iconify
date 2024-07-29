@@ -1,5 +1,6 @@
 import type { Awaitable } from '@antfu/utils';
 import { isUnsetKeyword } from '../svg/build';
+import { calculateSize } from '../svg/size';
 import type { IconifyLoaderOptions } from './types';
 
 const svgWidthRegex = /\swidth\s*=\s*["']([\w.]+)["']/;
@@ -23,7 +24,11 @@ function configureSvgSize(
 			if (typeof scale === 'number') {
 				// Scale icon, unless scale is 0
 				if (scale > 0) {
-					props[prop] = `${scale}em`;
+					props[prop] = calculateSize(
+						// Base on result from iconToSVG() or 1em
+						result?.[1] ?? '1em',
+						scale
+					);
 				}
 			} else if (result) {
 				// Use result from iconToSVG()
