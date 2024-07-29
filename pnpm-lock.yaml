@@ -793,6 +793,9 @@ importers:
         specifier: ^1.7.1
         version: 1.7.1
     devDependencies:
+      '@iconify-json/fa6-regular':
+        specifier: ^1.1.21
+        version: 1.1.21
       '@iconify-json/flat-color-icons':
         specifier: ^1.1.10
         version: 1.1.10

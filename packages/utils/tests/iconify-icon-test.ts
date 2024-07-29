@@ -1,6 +1,6 @@
 import { loadNodeIcon } from '../lib/loader/node-loader';
 
-describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
+describe('Testing loadNodeIcon', () => {
 	test('loadIcon works', async () => {
 		const result = await loadNodeIcon('flat-color-icons', 'up-right');
 		expect(result).toBeTruthy();
@@ -173,5 +173,21 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 			cwd: ['./tests', process.cwd()],
 		});
 		expect(result).toBeTruthy();
+	});
+
+	test('loadIcon with non-square icon', async () => {
+		const result = await loadNodeIcon('fa6-regular', 'bookmark');
+		expect(result).toBeTruthy();
+		expect(result && result.includes('width="0.75em"')).toBeTruthy();
+		expect(result && result.includes('height="1em"')).toBeTruthy();
+	});
+
+	test('loadIcon with non-square icon with scale', async () => {
+		const result = await loadNodeIcon('fa6-regular', 'bookmark', {
+			scale: 1,
+		});
+		expect(result).toBeTruthy();
+		expect(result && result.includes('width="0.75em"')).toBeTruthy();
+		expect(result && result.includes('height="1em"')).toBeTruthy();
 	});
 });

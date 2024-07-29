@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "2.1.26",
+	"version": "2.1.28",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/docs/libraries/utils/",
@@ -427,6 +427,7 @@
 		"mlly": "^1.7.1"
 	},
 	"devDependencies": {
+		"@iconify-json/fa6-regular": "^1.1.21",
 		"@iconify-json/flat-color-icons": "^1.1.10",
 		"@types/debug": "^4.1.12",
 		"@types/jest": "^29.5.12",
