@@ -1,6 +1,6 @@
 import type { Awaitable } from '@antfu/utils';
 import type { FullIconCustomisations } from '../customisations/defaults';
-import type { IconifyJSON } from '@iconify/types';
+import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 
 /**
  * External package name.
@@ -69,11 +69,15 @@ export type IconCustomizations = {
 	 * Change default icon customizations values.
 	 *
 	 * @param defaultCustomizations Default icon's customizations values.
+	 * @param data The icon data. Mutable, you can change the icon data.
+	 * @param name The icon name, can be used to check if icon needs to be customised.
 	 * @return The modified icon's customizations values.
 	 */
 	customize?: (
-		defaultCustomizations: FullIconCustomisations
-	) => FullIconCustomisations;
+		defaultCustomizations: FullIconCustomisations,
+		data: IconifyIcon,
+		name: string
+	) => FullIconCustomisations | undefined;
 	/**
 	 * Custom icon customizer.
 	 */

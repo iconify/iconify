@@ -143,4 +143,15 @@ describe('Testing getCustomIcon', () => {
 		expect(result && result.indexOf(' width="') === -1).toBeTruthy();
 		expect(result && result.indexOf(' height="') === -1).toBeTruthy();
 	});
+
+	test('CustomIconLoader with non-square icon', async () => {
+		const svg =
+			'<svg viewBox="0 0 90 120"><circle cx="45" cy="60" r="30"/></svg>';
+		const result = await getCustomIcon(() => svg, 'a', 'b', {
+			addXmlNs: true,
+		});
+		expect(result).toEqual(
+			'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 120"><circle cx="45" cy="60" r="30"/></svg>'
+		);
+	});
 });

@@ -22,8 +22,16 @@ export async function searchForIcon(
 		if (iconData) {
 			debug(`${collection}:${id}`);
 			let defaultCustomizations = { ...defaultIconCustomisations };
-			if (typeof customize === 'function')
-				defaultCustomizations = customize(defaultCustomizations);
+			if (typeof customize === 'function') {
+				// Clone icon data to make it mutable
+				iconData = Object.assign({}, iconData);
+				defaultCustomizations =
+					customize(
+						defaultCustomizations,
+						iconData,
+						`${collection}:${id}`
+					) ?? defaultCustomizations;
+			}
 
 			const {
 				attributes: { width, height, ...restAttributes },

@@ -11,7 +11,7 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 			addXmlNs: true,
 		});
 		expect(result).toBeTruthy();
-		expect(result && result.indexOf('xmlns:xlink=') === -1).toBeTruthy();
+		expect(result && !result.includes('xmlns:xlink=')).toBeTruthy();
 	});
 
 	test('loadIcon with customize with default style and class', async () => {
@@ -19,7 +19,14 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 			defaultStyle: 'margin-top: 1rem;',
 			defaultClass: 'clazz',
 			customizations: {
-				customize(props) {
+				customize(props, data, name) {
+					// Check props
+					expect(props.width).toBeNull();
+					expect(data.width).toBe(48);
+					expect(data.height).toBe(48);
+					expect(name).toBe('flat-color-icons:up-right');
+
+					// Change props
 					props.width = '2em';
 					props.height = '2em';
 					return props;
@@ -27,10 +34,10 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 			},
 		});
 		expect(result).toBeTruthy();
-		expect(result && result.indexOf('margin-top: 1rem;') > -1).toBeTruthy();
-		expect(result && result.indexOf('class="clazz"') > -1).toBeTruthy();
-		expect(result && result.indexOf('width="2em"') > -1).toBeTruthy();
-		expect(result && result.indexOf('height="2em"') > -1).toBeTruthy();
+		expect(result && result.includes('margin-top: 1rem;')).toBeTruthy();
+		expect(result && result.includes('class="clazz"')).toBeTruthy();
+		expect(result && result.includes('width="2em"')).toBeTruthy();
+		expect(result && result.includes('height="2em"')).toBeTruthy();
 	});
 
 	test('loadIcon preserves customizations order', async () => {
@@ -100,7 +107,7 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('height="1em"')).toBeTruthy();
 	});
 
-	test.only('loadIcon with custom width/height', async () => {
+	test('loadIcon with custom width/height', async () => {
 		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
 			customizations: {
 				customize(props) {
