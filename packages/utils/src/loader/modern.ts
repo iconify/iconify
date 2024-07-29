@@ -1,6 +1,7 @@
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 import { iconToSVG, isUnsetKeyword } from '../svg/build';
 import { getIconData } from '../icon-set/get-icon';
+import { calculateSize } from '../svg/size';
 import { mergeIconProps } from './utils';
 import createDebugger from 'debug';
 import { defaultIconCustomisations } from '../customisations/defaults';
@@ -56,7 +57,11 @@ export async function searchForIcon(
 							if (typeof scale === 'number') {
 								// Scale icon, unless scale is 0
 								if (scale) {
-									value = `${scale}em`;
+									value = calculateSize(
+										// Base on result from iconToSVG() or 1em
+										defaultValue ?? '1em',
+										scale
+									);
 								}
 							} else {
 								// Use result from iconToSVG()

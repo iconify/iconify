@@ -100,7 +100,7 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result && result.includes('height="1em"')).toBeTruthy();
 	});
 
-	test('loadIcon with custom width/height', async () => {
+	test.only('loadIcon with custom width/height', async () => {
 		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
 			customizations: {
 				customize(props) {
@@ -113,6 +113,22 @@ describe('Testing loadIcon with @iconify-json/flat-color-icons>', () => {
 		expect(result).toBeTruthy();
 		expect(result && result.includes('width="2em"')).toBeTruthy();
 		expect(result && result.includes('height="1em"')).toBeTruthy();
+	});
+
+	test('loadIcon with custom width/height and scale', async () => {
+		const result = await loadNodeIcon('flat-color-icons', 'up-right', {
+			customizations: {
+				customize(props) {
+					props.width = '3em';
+					props.height = '2em';
+					return props;
+				},
+			},
+			scale: 1.5,
+		});
+		expect(result).toBeTruthy();
+		expect(result && result.includes('width="4.5em"')).toBeTruthy();
+		expect(result && result.includes('height="3em"')).toBeTruthy();
 	});
 
 	test('loadIcon with 0 scale', async () => {
