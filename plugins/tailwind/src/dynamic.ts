@@ -10,6 +10,7 @@ export function getDynamicCSSRules(
 	icon: string,
 	options: DynamicIconifyPluginOptions = {}
 ): Record<string, string> {
+    icon = icon.replace(/&#45;/g, '-');
 	const nameParts = icon.split(/--|\:/);
 	if (nameParts.length !== 2) {
 		throw new Error(`Invalid icon name: "${icon}"`);
