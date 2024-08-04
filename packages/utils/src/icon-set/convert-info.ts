@@ -2,7 +2,6 @@ import type { IconifyInfo } from '@iconify/types';
 
 const minDisplayHeight = 16;
 const maxDisplayHeight = 24;
-const maxSamplesCount = 3;
 
 /**
  * Item provided by API or loaded from collections.json, slightly different from IconifyInfo
@@ -167,7 +166,7 @@ export function convertIconSetInfo(
 	if (source.samples instanceof Array) {
 		const samples: string[] = [];
 		source.samples.forEach((item) => {
-			if (typeof item === 'string' && samples.length < maxSamplesCount) {
+			if (typeof item === 'string' && !samples.includes(item)) {
 				samples.push(item);
 			}
 		});

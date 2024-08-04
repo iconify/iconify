@@ -55,7 +55,14 @@ describe('Testing convertIconSetInfo', () => {
 			licenseID: 'MIT',
 			licenseURL: 'https://license.local/',
 			height: '24',
-			samples: ['arrow-left', 'arrow-right', 'arrow-up', 'arrow-down'],
+			samples: [
+				'arrow-left',
+				'arrow-right',
+				'arrow-up',
+				'arrow-down',
+				// duplicate
+				'arrow-up',
+			],
 			palette: true,
 		});
 		expected = {
@@ -70,7 +77,7 @@ describe('Testing convertIconSetInfo', () => {
 				url: 'https://license.local/',
 			},
 			height: 24,
-			samples: ['arrow-left', 'arrow-right', 'arrow-up'],
+			samples: ['arrow-left', 'arrow-right', 'arrow-up', 'arrow-down'],
 			palette: true,
 		};
 		expect(result).toEqual(expected);
