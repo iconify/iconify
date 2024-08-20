@@ -418,7 +418,7 @@
 		"*.d.ts"
 	],
 	"dependencies": {
-		"@antfu/install-pkg": "^0.1.1",
+		"@antfu/install-pkg": "^0.4.0",
 		"@antfu/utils": "^0.7.10",
 		"@iconify/types": "workspace:^",
 		"debug": "^4.3.5",
