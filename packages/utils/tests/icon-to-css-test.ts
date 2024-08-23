@@ -28,6 +28,32 @@ describe('Testing CSS for icon', () => {
 `);
 	});
 
+	test('Background with transformations', () => {
+		const icon: IconifyIcon = {
+			body: '<path d="M0 0h16v16z" fill="#f80" />',
+			rotate: 1,
+			width: 24,
+			height: 16,
+		};
+		const expectedURL = svgToURL(
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 24" width="16" height="24"><g transform="rotate(90 8 8)">${icon.body}</g></svg>`
+		);
+
+		expect(
+			getIconCSS(icon, {
+				format: 'expanded',
+			})
+		).toBe(`.icon {
+  display: inline-block;
+  width: 0.67em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: ${expectedURL};
+}
+`);
+	});
+
 	test('Background with options', () => {
 		const icon: IconifyIcon = {
 			body: '<path d="M0 0h16v16z" fill="#f80" />',
@@ -216,6 +242,30 @@ describe('Testing CSS for icon', () => {
 			})
 		).toBe(`.test-icon::before {
   visibility: visible;
+  content: ${expectedURL};
+}
+`);
+	});
+
+	test('Transformations with getIconContentCSS', () => {
+		const icon: IconifyIcon = {
+			body: '<path d="M0 0h16v16z" fill="currentColor" stroke="currentColor" stroke-width="1" />',
+			hFlip: true,
+		};
+		const expectedURL = svgToURL(
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24"><g transform="translate(16 0) scale(-1 1)">${icon.body.replace(
+				/currentColor/g,
+				'black'
+			)}</g></svg>`
+		);
+
+		expect(
+			getIconContentCSS(icon, {
+				height: 24,
+				format: 'expanded',
+				iconSelector: '.test-icon::before',
+			})
+		).toBe(`.test-icon::before {
   content: ${expectedURL};
 }
 `);

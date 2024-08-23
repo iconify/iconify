@@ -7,7 +7,8 @@ import type {
 	IconCSSItemOptions,
 	IconContentItemOptions,
 } from './types';
-import { makeIconSquare } from '../icon/square';
+import { makeViewBoxSquare } from '../icon/square';
+import { iconToSVG } from '../svg/build';
 
 /**
  * Generates common CSS rules for multiple icons, rendered as background/mask
@@ -61,24 +62,28 @@ export function generateItemCSSRules(
 	const result = {} as Record<string, string>;
 	const varName = options.varName;
 
+	// Build icon
+	const buildResult = iconToSVG(icon);
+	let viewBox = buildResult.viewBox;
+
 	// Calculate width
-	if (icon.width !== icon.height) {
+	if (viewBox[2] !== viewBox[3]) {
 		if (options.forceSquare) {
 			// Change viewBox
-			icon = makeIconSquare(icon);
+			viewBox = makeViewBoxSquare(viewBox);
 		} else {
 			// Change width in result
-			result['width'] = calculateSize('1em', icon.width / icon.height);
+			result['width'] = calculateSize('1em', viewBox[2] / viewBox[3]);
 		}
 	}
 
 	// Get SVG
 	const svg = iconToHTML(
-		icon.body.replace(/currentColor/g, options.color || 'black'),
+		buildResult.body.replace(/currentColor/g, options.color || 'black'),
 		{
-			viewBox: `${icon.left} ${icon.top} ${icon.width} ${icon.height}`,
-			width: icon.width.toString(),
-			height: icon.height.toString(),
+			viewBox: `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`,
+			width: `${viewBox[2]}`,
+			height: `${viewBox[3]}`,
 		}
 	);
 
@@ -110,16 +115,20 @@ export function generateItemContent(
 	icon: Required<IconifyIcon>,
 	options: IconContentItemOptions
 ): string {
+	// Build icon
+	const buildResult = iconToSVG(icon);
+	const viewBox = buildResult.viewBox;
+
 	// Get dimensions
 	const height = options.height;
 	const width =
-		options.width ?? calculateSize(height, icon.width / icon.height);
+		options.width ?? calculateSize(height, viewBox[2] / viewBox[3]);
 
 	// Get SVG
 	const svg = iconToHTML(
-		icon.body.replace(/currentColor/g, options.color || 'black'),
+		buildResult.body.replace(/currentColor/g, options.color || 'black'),
 		{
-			viewBox: `${icon.left} ${icon.top} ${icon.width} ${icon.height}`,
+			viewBox: `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`,
 			width: width.toString(),
 			height: height.toString(),
 		}

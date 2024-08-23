@@ -1,4 +1,5 @@
 import type { IconifyIcon } from '@iconify/types';
+import { SVGViewBox } from '../svg/viewbox';
 
 /**
  * Make icon square
@@ -18,4 +19,16 @@ export function makeIconSquare(
 		};
 	}
 	return icon;
+}
+
+/**
+ * Make icon viewBox square
+ */
+export function makeViewBoxSquare(viewBox: SVGViewBox): SVGViewBox {
+	const [left, top, width, height] = viewBox;
+	if (width !== height) {
+		const max = Math.max(width, height);
+		return [left - (max - width) / 2, top - (max - height) / 2, max, max];
+	}
+	return viewBox;
 }
