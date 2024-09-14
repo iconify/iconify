@@ -26,12 +26,12 @@ describe('Finding emojis in text', () => {
 
 		if (!data) {
 			data = (
-				await fetch(
-					`https://unicode.org/Public/emoji/${emojiVersion}/emoji-test.txt`
-				)
-			)
-				.text()
-				.toString();
+				await (
+					await fetch(
+						`https://unicode.org/Public/emoji/${emojiVersion}/emoji-test.txt`
+					)
+				).text()
+			).toString();
 			await writeFile(source, data, 'utf8');
 		}
 
