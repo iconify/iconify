@@ -3,6 +3,7 @@
 api-extractor.*.json
 rollup.config.js
 tsconfig.json
+tsconfig.src.tsbuildinfo
 build.js
 cleanup.js
 node_modules
