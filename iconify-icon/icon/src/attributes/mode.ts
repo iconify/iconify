@@ -4,6 +4,7 @@ import type { ActualRenderMode, IconifyRenderMode } from './types';
 let isBuggedSafari = false;
 try {
 	isBuggedSafari = navigator.vendor.indexOf('Apple') === 0;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (err) {
 	//
 }

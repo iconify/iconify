@@ -115,7 +115,7 @@ function getStyleValue(inline: boolean): string {
 	return (
 		':host{display:inline-block;vertical-align:' +
 		(inline ? '-0.125em' : '0') +
-		'}span,svg{display:block}'
+		'}span,svg{display:block;margin:auto}'
 	);
 }
 export const expectedInline = getStyleValue(true);

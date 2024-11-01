@@ -3,7 +3,6 @@ import {
 	haveCustomisationsChanged,
 	defaultCustomisations,
 } from '../src/attributes/customisations';
-import { getInline } from '../src/attributes/inline';
 import { cleanupGlobals, setupDOM } from '../src/tests/helpers';
 
 describe('Testing customisations', () => {
@@ -17,7 +16,6 @@ describe('Testing customisations', () => {
 		const node = doc.createElement('div');
 		const emptyCustomisations = getCustomisations(node);
 		expect(emptyCustomisations).toEqual(defaultCustomisations);
-		expect(getInline(node)).toBe(false);
 		expect(
 			haveCustomisationsChanged(
 				emptyCustomisations,
@@ -25,8 +23,8 @@ describe('Testing customisations', () => {
 			)
 		).toBe(false);
 
-		// Test inline and height
-		node.innerHTML = '<span inline="true" height="1em"></span>';
+		// Test height
+		node.innerHTML = '<span height="1em"></span>';
 		let testNode = node.lastChild as HTMLSpanElement;
 
 		const test1 = getCustomisations(testNode);
@@ -37,7 +35,6 @@ describe('Testing customisations', () => {
 		expect(haveCustomisationsChanged(emptyCustomisations, test1)).toBe(
 			true
 		);
-		expect(getInline(testNode)).toBe(true);
 
 		// Test transformations
 		node.innerHTML = '<span flip="horizontal" rotate="2"></span>';
@@ -53,7 +50,6 @@ describe('Testing customisations', () => {
 			true
 		);
 		expect(haveCustomisationsChanged(test1, test2)).toBe(true);
-		expect(getInline(testNode)).toBe(false);
 
 		// Dimensions, empty value
 		node.innerHTML = '<span width="auto" height=""></span>';
@@ -69,7 +65,6 @@ describe('Testing customisations', () => {
 		expect(haveCustomisationsChanged(test3, emptyCustomisations)).toBe(
 			true
 		);
-		expect(getInline(testNode)).toBe(false);
 
 		// preserveAspectRatio
 		node.innerHTML = '<span preserveAspectRatio="xMidYMid meet"></span>';
