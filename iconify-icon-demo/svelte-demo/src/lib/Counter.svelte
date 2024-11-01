@@ -8,7 +8,7 @@
   }
 
 
-  let count: number = 0
+  let count = $state(0);
   const increment = () => {
     count += 1
   }
@@ -16,7 +16,7 @@
 </script>
 
 <button on:click={increment}>
-  <iconify-icon icon={plusIcon} inline /> Clicks: {count}
+  <iconify-icon icon={plusIcon} inline></iconify-icon> Clicks: {count}
 </button>
 
 <style>

@@ -10,19 +10,20 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
-		"@types/cookie": "^0.6.0",
+		"@sveltejs/adapter-auto": "^3.3.1",
+		"@sveltejs/kit": "^2.7.4",
+		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/cookie": "^1.0.0",
 		"iconify-icon": "workspace:*",
-		"svelte": "^4.2.18",
-		"svelte-check": "^3.8.4",
-		"svelte-preprocess": "^5.1.4",
-		"tslib": "^2.6.3",
-		"typescript": "^5.5.3",
-		"vite": "^5.3.4"
+		"svelte": "^5.1.9",
+		"svelte-check": "^4.0.5",
+		"svelte-preprocess": "^6.0.3",
+		"tslib": "^2.8.1",
+		"typescript": "^5.6.3",
+		"vite": "^5.4.10"
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^5.0.13"
+		"@fontsource/fira-mono": "^5.1.0"
 	}
 }

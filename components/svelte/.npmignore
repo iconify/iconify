@@ -3,6 +3,7 @@
 rollup.config.js
 tsconfig-base.json
 tsconfig.json
+tsconfig.src.tsbuildinfo
 api-extractor*.json
 build.js
 copy.js

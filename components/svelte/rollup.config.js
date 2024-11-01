@@ -32,6 +32,9 @@ export default [
 			resolve(resolveParams),
 			typescript({
 				tsconfig: 'tsconfig.src.json',
+				compilerOptions: {
+					outDir: `./${targetDir}`,
+				},
 			}),
 		],
 	},
@@ -52,6 +55,9 @@ export default [
 			resolve(resolveParams),
 			typescript({
 				tsconfig: 'tsconfig.src.json',
+				compilerOptions: {
+					outDir: `./${targetDir}`,
+				},
 			}),
 		],
 	},
