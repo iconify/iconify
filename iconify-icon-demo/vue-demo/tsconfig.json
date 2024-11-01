@@ -1,7 +1,5 @@
 {
 	"compilerOptions": {
-		"rootDir": "./lib",
-		"outDir": "./src",
 		"target": "ESNext",
 		"module": "ESNext",
 		"declaration": false,
@@ -9,6 +7,8 @@
 		"strict": false,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
-	}
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true
+	},
+	"include": ["./src"]
 }
