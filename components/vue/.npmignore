@@ -10,5 +10,6 @@ api-extractor.*.json
 build.js
 tsconfig.json
 tsconfig.common.json
+tsconfig.tsbuildinfo
 *.config.js
 vitest.config.ts
