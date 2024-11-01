@@ -9,11 +9,11 @@
 	},
 	"keywords": [],
 	"devDependencies": {
-		"@iconify-json/fa6-regular": "^1.1.21",
-		"@iconify-json/mdi-light": "^1.1.10",
-		"@iconify-json/vscode-icons": "^1.1.36",
+		"@iconify-json/fa6-regular": "^1.2.1",
+		"@iconify-json/mdi-light": "^1.2.1",
+		"@iconify-json/vscode-icons": "^1.2.2",
 		"@iconify/tailwind": "workspace:*",
 		"@iconify/tools": "3.0.0-beta.3",
-		"tailwindcss": "^3.4.6"
+		"tailwindcss": "^3.4.14"
 	}
 }
