@@ -50,7 +50,6 @@ export function calculateSize(
 	let code = oldParts.shift() as string;
 	let isNumber = unitsTest.test(code);
 
-	// eslint-disable-next-line no-constant-condition
 	while (true) {
 		if (isNumber) {
 			const num = parseFloat(code);

@@ -16,6 +16,7 @@ function createPolicy() {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			createHTML: (s) => s,
 		}) as Policy;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		policy = null;
 	}

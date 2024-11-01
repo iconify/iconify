@@ -21,6 +21,7 @@ export function FileSystemIconLoader(
 		for (const path of paths) {
 			try {
 				stat = await fs.lstat(path);
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			} catch (err) {
 				continue;
 			}

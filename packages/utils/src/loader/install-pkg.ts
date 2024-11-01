@@ -16,7 +16,6 @@ export async function tryInstallPkg(
 	}
 
 	if (!tasks[name]) {
-		// eslint-disable-next-line no-console
 		console.log(cyan(`Installing ${name}...`));
 		if (typeof autoInstall === 'function') {
 			tasks[name] = pending = autoInstall(name)

@@ -100,6 +100,7 @@ export async function loadCollectionFromFS(
 		let stat: Stats | undefined;
 		try {
 			stat = jsonPath ? await fs.lstat(jsonPath) : undefined;
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (err) {
 			return undefined;
 		}
