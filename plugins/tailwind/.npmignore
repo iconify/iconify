@@ -1,6 +1,6 @@
 .DS_Store
 .eslintignore
-.eslintrc.js
+eslint.config.*
 api-extractor*.json
 tsconfig*.json
 rollup.config.*
