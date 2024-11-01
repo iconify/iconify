@@ -3,7 +3,7 @@
 .DS_Store
 *.map
 .eslintignore
-.eslintrc.js
+eslint.config.*
 .prettierrc
 .editorconfig
 jest.config.*

@@ -10,7 +10,7 @@
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git"
 	},
-	"packageManager": "pnpm@9.5.0",
+	"packageManager": "pnpm@9.12.3",
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
 		"build": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run build",

@@ -267,7 +267,6 @@ export function sendQuery(
 					failQuery();
 				} else {
 					// Queue is empty: run next item immediately
-					// eslint-disable-next-line @typescript-eslint/no-use-before-define
 					execNext();
 				}
 			}
