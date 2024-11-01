@@ -24,6 +24,7 @@ export function getBrowserStorage(
 		) {
 			return _window[attr];
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}

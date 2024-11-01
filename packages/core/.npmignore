@@ -7,7 +7,7 @@ node_modules
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
-.eslintrc.cjs
+eslint.config.*
 tsconfig.json
 tsconfig.common.json
 jest.config.*

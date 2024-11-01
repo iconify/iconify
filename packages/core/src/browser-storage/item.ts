@@ -9,6 +9,7 @@ export function getStoredItem(
 ): string | null | undefined {
 	try {
 		return func.getItem(key);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}
@@ -25,6 +26,7 @@ export function setStoredItem(
 	try {
 		func.setItem(key, value);
 		return true;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}
@@ -36,6 +38,7 @@ export function setStoredItem(
 export function removeStoredItem(func: BrowserStorageInstance, key: string) {
 	try {
 		func.removeItem(key);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}

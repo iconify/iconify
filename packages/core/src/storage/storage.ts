@@ -91,6 +91,7 @@ export function addIconToStorage(
 			storage.icons[name] = { ...icon };
 			return true;
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		// Do nothing
 	}

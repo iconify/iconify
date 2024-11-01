@@ -83,6 +83,7 @@ export function iterateBrowserStorage(
 			) {
 				return true;
 			}
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (err) {
 			//
 		}
