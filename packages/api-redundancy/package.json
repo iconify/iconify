@@ -34,8 +34,8 @@
 		"@typescript-eslint/parser": "^8.12.2",
 		"cross-env": "^7.0.3",
 		"eslint": "^9.13.0",
-		"tsup": "^7.3.0",
-		"vitest": "^0.34.6"
+		"tsup": "^8.3.5",
+		"vitest": "^2.1.4"
 	},
 	"dependencies": {
 		"globals": "^15.11.0"
