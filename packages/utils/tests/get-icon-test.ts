@@ -23,21 +23,49 @@ describe('Testing getting icon data', () => {
 	test('Minified icon set', () => {
 		const result = getIconData(
 			{
-				prefix: 'foo',
+				prefix: 'test_set',
 				icons: {
-					bar: {
+					test_icon: {
 						body: '<g />',
 					},
 				},
 				width: 24,
 				height: 24,
 			},
-			'bar'
+			'test_icon'
 		);
 		expect(result).toEqual({
 			body: '<g />',
 			width: 24,
 			height: 24,
+		});
+	});
+
+	test('Alias', () => {
+		const result = getIconData(
+			{
+				prefix: 'test_set',
+				icons: {
+					test_icon: {
+						body: '<g />',
+					},
+				},
+				aliases: {
+					test_alias: {
+						parent: 'test_icon',
+						rotate: 2,
+					},
+				},
+				width: 24,
+				height: 24,
+			},
+			'test_alias'
+		);
+		expect(result).toEqual({
+			body: '<g />',
+			width: 24,
+			height: 24,
+			rotate: 2,
 		});
 	});
 });

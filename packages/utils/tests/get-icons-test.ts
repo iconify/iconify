@@ -70,7 +70,7 @@ describe('Testing retrieving icons from icon set', () => {
 				bar: {
 					body: '<g />',
 				},
-				bar2: {
+				bar_2: {
 					body: '<g />',
 				},
 			},
@@ -79,7 +79,7 @@ describe('Testing retrieving icons from icon set', () => {
 					parent: 'bar',
 					hFlip: true,
 				},
-				'foo2': {
+				'foo_2': {
 					parent: 'foo',
 				},
 				'missing-alias': {
@@ -87,10 +87,10 @@ describe('Testing retrieving icons from icon set', () => {
 				},
 			},
 			chars: {
-				f00: 'bar2',
+				f00: 'bar_2',
 				f01: 'bar',
 				f02: 'foo',
-				f03: 'foo2',
+				f03: 'foo_2',
 				f04: 'missing-icon',
 			},
 		};
@@ -113,7 +113,7 @@ describe('Testing retrieving icons from icon set', () => {
 		});
 
 		// Alias of alias
-		expect(getIcons(data, ['foo2'])).toEqual({
+		expect(getIcons(data, ['foo_2'])).toEqual({
 			prefix: 'foo',
 			lastModified,
 			icons: {
@@ -126,7 +126,7 @@ describe('Testing retrieving icons from icon set', () => {
 					parent: 'bar',
 					hFlip: true,
 				},
-				foo2: {
+				foo_2: {
 					parent: 'foo',
 				},
 			},

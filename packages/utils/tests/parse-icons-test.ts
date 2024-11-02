@@ -4,16 +4,16 @@ import { parseIconSet, parseIconSetAsync } from '../lib/icon-set/parse';
 describe('Testing parsing icon set', () => {
 	test('Simple icon set', () => {
 		// Names list
-		const names: string[] = ['missing', 'icon1', 'icon2'];
+		const names: string[] = ['missing', 'icon_1', 'icon_2'];
 
 		// Resolved data
 		const expected: Record<string, ExtendedIconifyIcon | null> = {
-			icon1: {
+			icon_1: {
 				body: '<path d="icon1" />',
 				width: 20,
 				height: 24,
 			},
-			icon2: {
+			icon_2: {
 				body: '<path d="icon2" />',
 				width: 24,
 				height: 24,
@@ -28,11 +28,11 @@ describe('Testing parsing icon set', () => {
 					prefix: 'foo',
 					not_found: ['missing'],
 					icons: {
-						icon1: {
+						icon_1: {
 							body: '<path d="icon1" />',
 							width: 20,
 						},
-						icon2: {
+						icon_2: {
 							body: '<path d="icon2" />',
 							width: 24,
 						},
@@ -48,7 +48,7 @@ describe('Testing parsing icon set', () => {
 					expect(data).toEqual(expected[name]);
 				}
 			)
-		).toEqual(['missing', 'icon1', 'icon2']);
+		).toEqual(['missing', 'icon_1', 'icon_2']);
 
 		// All names should have been parsed
 		expect(names).toEqual([]);

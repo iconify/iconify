@@ -16,7 +16,7 @@ describe('Testing CSS for multiple icons', () => {
 				'airplane': {
 					body: '<path fill="currentColor" d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918l-.375 2.253l1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318l-.376-2.253l-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Zm.894.448C7.111 2.02 7 2.569 7 3v4a.5.5 0 0 1-.276.447l-5.448 2.724a.5.5 0 0 0-.276.447v.792l5.418-.903a.5.5 0 0 1 .575.41l.5 3a.5.5 0 0 1-.14.437L6.708 15h2.586l-.647-.646a.5.5 0 0 1-.14-.436l.5-3a.5.5 0 0 1 .576-.411L15 11.41v-.792a.5.5 0 0 0-.276-.447L9.276 7.447A.5.5 0 0 1 9 7V3c0-.432-.11-.979-.322-1.401C8.458 1.159 8.213 1 8 1c-.213 0-.458.158-.678.599Z"/>',
 				},
-				'airplane-engines': {
+				'airplane_engines': {
 					body: '<path fill="currentColor" d="M8 0c-.787 0-1.292.592-1.572 1.151A4.347 4.347 0 0 0 6 3v3.691l-2 1V7.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.191l-1.17.585A1.5 1.5 0 0 0 0 10.618V12a.5.5 0 0 0 .582.493l1.631-.272l.313.937a.5.5 0 0 0 .948 0l.405-1.214l2.21-.369l.375 2.253l-1.318 1.318A.5.5 0 0 0 5.5 16h5a.5.5 0 0 0 .354-.854l-1.318-1.318l.375-2.253l2.21.369l.405 1.214a.5.5 0 0 0 .948 0l.313-.937l1.63.272A.5.5 0 0 0 16 12v-1.382a1.5 1.5 0 0 0-.83-1.342L14 8.691V7.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v.191l-2-1V3c0-.568-.14-1.271-.428-1.849C9.292.591 8.787 0 8 0ZM7 3c0-.432.11-.979.322-1.401C7.542 1.159 7.787 1 8 1c.213 0 .458.158.678.599C8.889 2.02 9 2.569 9 3v4a.5.5 0 0 0 .276.447l5.448 2.724a.5.5 0 0 1 .276.447v.792l-5.418-.903a.5.5 0 0 0-.575.41l-.5 3a.5.5 0 0 0 .14.437l.646.646H6.707l.647-.646a.5.5 0 0 0 .14-.436l-.5-3a.5.5 0 0 0-.576-.411L1 11.41v-.792a.5.5 0 0 1 .276-.447l5.448-2.724A.5.5 0 0 0 7 7V3Z"/>',
 				},
 				'empty': {
@@ -33,12 +33,16 @@ describe('Testing CSS for multiple icons', () => {
 
 		// Detect mode: mask
 		expect(
-			getIconsCSS(iconSet, ['activity', '123', 'airplane', 'missing'], {
-				format: 'expanded',
-				rules: {
-					visibility: 'visible',
-				},
-			})
+			getIconsCSS(
+				iconSet,
+				['activity', '123', 'airplane_engines', 'missing'],
+				{
+					format: 'expanded',
+					rules: {
+						visibility: 'visible',
+					},
+				}
+			)
 		).toBe(`.icon--test-prefix {
   visibility: visible;
   display: inline-block;
@@ -61,8 +65,8 @@ describe('Testing CSS for multiple icons', () => {
   --svg: ${expectedURL('123')};
 }
 
-.icon--test-prefix--airplane {
-  --svg: ${expectedURL('airplane')};
+.icon--test-prefix--airplane_engines {
+  --svg: ${expectedURL('airplane_engines')};
 }
 
 /* Could not find icon: missing */

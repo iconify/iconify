@@ -58,7 +58,9 @@ describe('Testing validating alias', () => {
 					},
 					aliases: null,
 				});
-				reject('Expected to throw error when aliases is null');
+				reject(
+					new Error('Expected to throw error when aliases is null')
+				);
 				return;
 			} catch {
 				//
@@ -108,8 +110,10 @@ describe('Testing validating alias', () => {
 					},
 				});
 				reject(
-					'Expected to throw error when alias has missing parent, got ' +
-						JSON.stringify(result)
+					new Error(
+						'Expected to throw error when alias has missing parent, got ' +
+							JSON.stringify(result)
+					)
 				);
 				return;
 			} catch {
@@ -167,8 +171,10 @@ describe('Testing validating alias', () => {
 					},
 				});
 				reject(
-					'Expected to throw error when alias has missing parent, got ' +
-						JSON.stringify(result)
+					new Error(
+						'Expected to throw error when alias has missing parent, got ' +
+							JSON.stringify(result)
+					)
 				);
 				return;
 			} catch {
@@ -229,8 +235,10 @@ describe('Testing validating alias', () => {
 					},
 				});
 				reject(
-					'Expected to throw error when alias has missing parent, got ' +
-						JSON.stringify(result)
+					new Error(
+						'Expected to throw error when alias has missing parent, got ' +
+							JSON.stringify(result)
+					)
 				);
 				return;
 			} catch {
@@ -294,8 +302,10 @@ describe('Testing validating alias', () => {
 					},
 				});
 				reject(
-					'Expected to throw error when alias has missing parent, got ' +
-						JSON.stringify(result)
+					new Error(
+						'Expected to throw error when alias has missing parent, got ' +
+							JSON.stringify(result)
+					)
 				);
 				return;
 			} catch {
