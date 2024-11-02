@@ -42,10 +42,7 @@ export default [
 			sourceType: 'commonjs',
 
 			parserOptions: {
-				tsconfigRootDir:
-					'/Users/slava/Documents/dev/iconify/iconify/iconify-dev/packages/core',
 				project: ['tsconfig.json', 'tests/tsconfig.json'],
-				extraFileExtensions: ['.cjs'],
 			},
 		},
 

@@ -13,8 +13,8 @@
 	"packageManager": "pnpm@9.12.3",
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
-		"build": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run build",
-		"test": "pnpm recursive --filter \"./(packages|iconify-icon|components)/**\" run test"
+		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run build",
+		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run test"
 	},
 	"devDependencies": {},
 	"pnpm": {
