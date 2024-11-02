@@ -14,11 +14,14 @@ export type IconifyIconSource = Omit<IconifyIconName, 'name'>;
 
 /**
  * Expression to test part of icon name.
+ *
+ * Used when loading icons from Iconify API due to project naming convension.
+ * Ignored when using custom icon sets - convension does not apply.
  */
 export const matchIconName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /**
- * Convert string to Icon object.
+ * Convert string icon name to IconifyIconName object.
  */
 export const stringToIcon = (
 	value: string,
@@ -96,9 +99,11 @@ export const validateIconName = (
 	}
 
 	return !!(
-		(icon.provider === '' || icon.provider.match(matchIconName)) &&
-		((allowSimpleName && icon.prefix === '') ||
-			icon.prefix.match(matchIconName)) &&
-		icon.name.match(matchIconName)
+		// Check prefix: cannot be empty, unless allowSimpleName is enabled
+		// Check name: cannot be empty
+		(
+			((allowSimpleName && icon.prefix === '') || !!icon.prefix) &&
+			!!icon.name
+		)
 	);
 };

@@ -33,9 +33,11 @@ describe('Testing validation', () => {
 
 		expect(
 			quicklyValidateIconSet({
-				prefix: 'foo',
+				// Characters that used to be invalid
+				prefix: 'fòó_bār',
 				icons: {
-					bar: {
+					// Characters that used to be invalid
+					bär: {
 						body: '<g />',
 						width: 32,
 						height: 32,
@@ -47,8 +49,9 @@ describe('Testing validation', () => {
 					},
 				},
 				aliases: {
-					baz: {
-						parent: 'bar',
+					// Characters that used to be invalid
+					Bär_Bāz: {
+						parent: 'bär',
 						hFlip: true,
 					},
 				},
@@ -56,9 +59,9 @@ describe('Testing validation', () => {
 				height: 24,
 			})
 		).toEqual({
-			prefix: 'foo',
+			prefix: 'fòó_bār',
 			icons: {
-				bar: {
+				bär: {
 					body: '<g />',
 					width: 32,
 					height: 32,
@@ -69,8 +72,8 @@ describe('Testing validation', () => {
 				},
 			},
 			aliases: {
-				baz: {
-					parent: 'bar',
+				Bär_Bāz: {
+					parent: 'bär',
 					hFlip: true,
 				},
 			},
@@ -100,6 +103,19 @@ describe('Testing validation', () => {
 		expect(
 			quicklyValidateIconSet({
 				icons: {},
+			})
+		).toBe(null);
+	});
+
+	test('Empty icon name', () => {
+		expect(
+			quicklyValidateIconSet({
+				prefix: 'foo',
+				icons: {
+					'': {
+						body: '<g />',
+					},
+				},
 			})
 		).toBe(null);
 	});

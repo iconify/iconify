@@ -5,7 +5,7 @@ describe('Testing validation', () => {
 		return new Promise((fulfill, reject) => {
 			try {
 				validateIconSet(void 0);
-				reject('Expected to throw error on undefined');
+				reject(new Error('Expected to throw error on undefined'));
 				return;
 			} catch {
 				//
@@ -13,7 +13,7 @@ describe('Testing validation', () => {
 
 			try {
 				validateIconSet({});
-				reject('Expected to throw error on empty object');
+				reject(new Error('Expected to throw error on empty object'));
 				return;
 			} catch {
 				//
@@ -21,7 +21,7 @@ describe('Testing validation', () => {
 
 			try {
 				validateIconSet(null);
-				reject('Expected to throw error on null');
+				reject(new Error('Expected to throw error on null'));
 				return;
 			} catch {
 				//
@@ -29,7 +29,7 @@ describe('Testing validation', () => {
 
 			try {
 				validateIconSet([]);
-				reject('Expected to throw error on array');
+				reject(new Error('Expected to throw error on array'));
 				return;
 			} catch {
 				//
@@ -42,17 +42,72 @@ describe('Testing validation', () => {
 	test('Valid set', () => {
 		expect(
 			validateIconSet({
-				prefix: 'foo',
+				prefix: 'fòó_bār',
 				icons: {
 					bar: {
+						body: '<g />',
+					},
+					// Characters that used to be invalid
+					fòó_: {
 						body: '<g />',
 					},
 				},
 			})
 		).toEqual({
-			prefix: 'foo',
+			prefix: 'fòó_bār',
 			icons: {
 				bar: {
+					body: '<g />',
+				},
+				fòó_: {
+					body: '<g />',
+				},
+			},
+		});
+	});
+
+	test('Bad icon names', () => {
+		// Empty name, not fixed
+		let threw = false;
+		try {
+			validateIconSet({
+				prefix: 'foo',
+				icons: {
+					// Cannot be empty
+					'': {
+						body: '<g />',
+					},
+				},
+			});
+		} catch {
+			threw = true;
+		}
+		expect(threw).toBeTruthy();
+
+		// Empty name, fixed
+		expect(
+			validateIconSet(
+				{
+					prefix: 'foo',
+					icons: {
+						// Empty name
+						'': {
+							body: '<g />',
+						},
+						// Characters that used to be invalid
+						'fòó_': {
+							body: '<g />',
+						},
+					},
+				},
+				{
+					fix: true,
+				}
+			)
+		).toEqual({
+			prefix: 'foo',
+			icons: {
+				fòó_: {
 					body: '<g />',
 				},
 			},
@@ -65,7 +120,9 @@ describe('Testing validation', () => {
 				validateIconSet({
 					prefix: 'foo',
 				});
-				reject('Expected to throw error when icons are missing');
+				reject(
+					new Error('Expected to throw error when icons are missing')
+				);
 				return;
 			} catch {
 				//
@@ -76,7 +133,9 @@ describe('Testing validation', () => {
 					prefix: 'foo',
 					icons: {},
 				});
-				reject('Expected to throw error when icons are empty');
+				reject(
+					new Error('Expected to throw error when icons are empty')
+				);
 				return;
 			} catch {
 				//
@@ -84,7 +143,7 @@ describe('Testing validation', () => {
 
 			try {
 				validateIconSet([]);
-				reject('Expected to throw error on array');
+				reject(new Error('Expected to throw error on array'));
 				return;
 			} catch {
 				//
@@ -149,7 +208,9 @@ describe('Testing validation', () => {
 					},
 				});
 				reject(
-					'Expected to throw error when character points to missing icon'
+					new Error(
+						'Expected to throw error when character points to missing icon'
+					)
 				);
 				return;
 			} catch {
@@ -193,7 +254,11 @@ describe('Testing validation', () => {
 						test: 'bar',
 					},
 				});
-				reject('Expected to throw error when character is invalid');
+				reject(
+					new Error(
+						'Expected to throw error when character is invalid'
+					)
+				);
 				return;
 			} catch {
 				//
@@ -253,7 +318,11 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject('Expected to throw error for bad default properties');
+				reject(
+					new Error(
+						'Expected to throw error for bad default properties'
+					)
+				);
 				return;
 			} catch {
 				//
@@ -274,7 +343,11 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject('Expected to throw error for bad default properties');
+				reject(
+					new Error(
+						'Expected to throw error for bad default properties'
+					)
+				);
 				return;
 			} catch {
 				//
@@ -295,7 +368,11 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject('Expected to throw error for bad default properties');
+				reject(
+					new Error(
+						'Expected to throw error for bad default properties'
+					)
+				);
 				return;
 			} catch {
 				//

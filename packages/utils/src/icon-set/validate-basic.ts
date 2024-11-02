@@ -1,5 +1,4 @@
 import type { IconifyAliases, IconifyJSON } from '@iconify/types';
-import { matchIconName } from '../icon/name';
 import {
 	defaultIconDimensions,
 	defaultExtendedIconProps,
@@ -63,8 +62,11 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 	for (const name in icons) {
 		const icon = icons[name];
 		if (
-			!name.match(matchIconName) ||
+			// Name cannot be empty
+			!name ||
+			// Must have body
 			typeof icon.body !== 'string' ||
+			// Check other props
 			!checkOptionalProps(
 				icon as unknown as PropsList,
 				defaultExtendedIconProps
@@ -80,9 +82,12 @@ export function quicklyValidateIconSet(obj: unknown): IconifyJSON | null {
 		const icon = aliases[name];
 		const parent = icon.parent;
 		if (
-			!name.match(matchIconName) ||
+			// Name cannot be empty
+			!name ||
+			// Parent must be set and point to existing icon
 			typeof parent !== 'string' ||
 			(!icons[parent] && !aliases[parent]) ||
+			// Check other props
 			!checkOptionalProps(
 				icon as unknown as PropsList,
 				defaultExtendedIconProps

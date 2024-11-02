@@ -58,7 +58,7 @@ describe('Testing icon name', () => {
 		expect(validateIconName(icon)).toBe(false);
 		expect(validateIconName(icon, true)).toBe(false);
 
-		// Underscore is not an acceptable separator
+		// No prefix
 		icon = stringToIcon('fa_home');
 		expect(icon).toEqual(null);
 		expect(validateIconName(icon)).toBe(false);
@@ -71,30 +71,30 @@ describe('Testing icon name', () => {
 			name: 'fa_home',
 		});
 		expect(validateIconName(icon)).toBe(false);
-		expect(validateIconName(icon, true)).toBe(false);
+		expect(validateIconName(icon, true)).toBe(true);
 
-		// Invalid character '_': fail validateIcon
+		// Underscore is allowed now
 		icon = stringToIcon('fa:home_outline') as IconifyIconName;
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'fa',
 			name: 'home_outline',
 		});
-		expect(validateIconName(icon)).toBe(false);
+		expect(validateIconName(icon)).toBe(true);
 
 		// Too many colons: fail stringToIcon
 		icon = stringToIcon('mdi:light:home:outline');
 		expect(icon).toEqual(null);
 		expect(validateIconName(icon)).toBe(false);
 
-		// Upper case: fail validateIcon
+		// Upper case: allowed now
 		icon = stringToIcon('MD:Home') as IconifyIconName;
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'MD',
 			name: 'Home',
 		});
-		expect(validateIconName(icon)).toBe(false);
+		expect(validateIconName(icon)).toBe(true);
 
 		// Numbers: pass
 		icon = stringToIcon('1:foo') as IconifyIconName;
@@ -105,14 +105,14 @@ describe('Testing icon name', () => {
 		});
 		expect(validateIconName(icon)).toBe(true);
 
-		// Accented letters: fail validateIcon
+		// Accented letters: allowed now
 		icon = stringToIcon('md-fõö') as IconifyIconName;
 		expect(icon).toEqual({
 			provider: '',
 			prefix: 'md',
 			name: 'fõö',
 		});
-		expect(validateIconName(icon)).toBe(false);
+		expect(validateIconName(icon)).toBe(true);
 	});
 
 	it('Providers', () => {
@@ -167,13 +167,13 @@ describe('Testing icon name', () => {
 		icon = stringToIcon('@mdi:light:home:outline', false, true);
 		expect(icon).toEqual(null);
 
-		// Upper case: fail validateIcon
+		// Upper case: allowed now
 		icon = stringToIcon('@MD:home-outline') as IconifyIconName;
 		expect(icon).toEqual({
 			provider: 'MD',
 			prefix: 'home',
 			name: 'outline',
 		});
-		expect(validateIconName(icon)).toBe(false);
+		expect(validateIconName(icon)).toBe(true);
 	});
 });

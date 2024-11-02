@@ -4,7 +4,6 @@ import type {
 	IconifyJSON,
 	IconifyOptional,
 } from '@iconify/types';
-import { matchIconName } from '../icon/name';
 import { defaultExtendedIconProps } from '../icon/defaults';
 import { getIconsTree } from './tree';
 
@@ -99,8 +98,9 @@ export function validateIconSet(
 	if (options && typeof options.prefix === 'string') {
 		data.prefix = options.prefix;
 	} else if (
+		// Prefix must be a string and not empty
 		typeof data.prefix !== 'string' ||
-		!data.prefix.match(matchIconName)
+		!data.prefix
 	) {
 		throw new Error('Invalid prefix');
 	}
@@ -110,10 +110,7 @@ export function validateIconSet(
 		data.provider = options.provider;
 	} else if (data.provider !== void 0) {
 		const value = data.provider;
-		if (
-			typeof value !== 'string' ||
-			(value !== '' && !value.match(matchIconName))
-		) {
+		if (typeof value !== 'string') {
 			if (fix) {
 				delete data.provider;
 			} else {
@@ -150,7 +147,7 @@ export function validateIconSet(
 			throw new Error(`Invalid alias: ${name}`);
 		}
 
-		if (!name.match(matchIconName)) {
+		if (!name) {
 			if (fix) {
 				delete parentObj[name];
 				continue;
