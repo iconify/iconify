@@ -21,6 +21,9 @@ export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
 
 	// Inline mode
 	inline?: boolean;
+
+	// SSR: render icon instantly without waiting for component to mount
+	ssr?: boolean;
 };
 
 export const defaultExtendedIconCustomisations = {

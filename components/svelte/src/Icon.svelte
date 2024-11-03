@@ -16,6 +16,8 @@ import {
 	buildIcon,
 	loadIcons,
 	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
 	addAPIProvider,
 	_api
 } from './functions';
@@ -34,6 +36,8 @@ export {
 	buildIcon,
 	loadIcons,
 	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
 	addAPIProvider,
 	_api
 }
@@ -79,7 +83,8 @@ export {
 	// Generate data
 	$: {
 		counter;
-		const iconData = checkIconState($$props.icon, state, mounted, loaded, onLoad);
+		const isMounted = !!$$props.ssr || mounted;
+		const iconData = checkIconState($$props.icon, state, isMounted, loaded, onLoad);
 		data = iconData ? generateIcon(iconData.data, $$props) : null;
 		if (data && iconData.classes) {
 			// Add classes

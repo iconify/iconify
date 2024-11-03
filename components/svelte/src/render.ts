@@ -112,6 +112,7 @@ export function render(
 			case 'style':
 			case 'onLoad':
 			case 'mode':
+			case 'ssr':
 				break;
 
 			// Boolean attributes

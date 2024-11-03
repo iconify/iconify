@@ -34,6 +34,8 @@ export {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
 } from './functions';
 
 // Builder functions
@@ -60,4 +62,11 @@ export {
 
 export { calculateSize, replaceIDs, buildIcon } from './functions';
 
-export { loadIcons, loadIcon, addAPIProvider, _api } from './functions';
+export {
+	addAPIProvider,
+	loadIcons,
+	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
+	_api,
+} from './functions';
