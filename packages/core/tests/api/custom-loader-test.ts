@@ -10,7 +10,7 @@ describe('Testing API loadIcons', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return `loader-test-${prefixCounter < 10 ? '0' : ''}${prefixCounter}`;
+		return `CustomLoaderTest_${prefixCounter}`;
 	}
 
 	it('Custom async loader for multiple icons with loadIcon', () => {
