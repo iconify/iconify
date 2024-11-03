@@ -4,16 +4,25 @@ import type {
 } from './icons';
 import type { SortedIcons } from '../icon/sort';
 import type { IconStorage } from '../storage/storage';
-import { IconifyJSON } from '@iconify/types';
+import { IconifyIcon, IconifyJSON } from '@iconify/types';
 
 /**
  * Custom icons loader
  */
-export type IconifyCustomLoader = (
+export type IconifyCustomIconsLoader = (
 	icons: string[],
 	prefix: string,
 	provider: string
 ) => Promise<IconifyJSON | null> | IconifyJSON | null;
+
+/**
+ * Custom loader for one icon
+ */
+export type IconifyCustomIconLoader = (
+	name: string,
+	prefix: string,
+	provider: string
+) => Promise<IconifyIcon | null> | IconifyIcon | null;
 
 /**
  * Storage for callbacks
@@ -36,8 +45,18 @@ export interface APICallbackItem {
  * Add custom stuff to storage
  */
 export interface IconStorageWithAPI extends IconStorage {
-	// Custom loader
-	customLoader?: IconifyCustomLoader;
+	/**
+	 * Custom loaders
+	 *
+	 * If custom loader is set, API module will not be used to load icons.
+	 *
+	 * You can set only one of these loaders.
+	 *
+	 * If both loaders are set, loader for one icon will be used when requesting only once icon,
+	 * loader for multiple icons will be used when requesting multiple icons.
+	 */
+	loadIcons?: IconifyCustomIconsLoader;
+	loadIcon?: IconifyCustomIconLoader;
 
 	/**
 	 * List of icons that are being loaded, added to storage

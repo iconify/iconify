@@ -91,7 +91,8 @@ function checkIconNamesForAPI(icons: string[]): CheckIconNames {
 function parseLoaderResponse(
 	storage: IconStorageWithAPI,
 	icons: string[],
-	data: unknown
+	data: unknown,
+	isAPIResponse: boolean
 ) {
 	function checkMissing() {
 		const pending = storage.pendingIcons;
@@ -119,7 +120,9 @@ function parseLoaderResponse(
 			}
 
 			// Cache API response
-			storeInBrowserStorage(storage, data as IconifyJSON);
+			if (isAPIResponse) {
+				storeInBrowserStorage(storage, data as IconifyJSON);
+			}
 		} catch (err) {
 			console.error(err);
 		}
@@ -130,6 +133,28 @@ function parseLoaderResponse(
 
 	// Trigger update on next tick
 	loadedNewIcons(storage);
+}
+
+/**
+ * Handle response that can be async
+ */
+function parsePossiblyAsyncResponse<T>(
+	response: T | null | Promise<T | null>,
+	callback: (data: T | null) => void
+): void {
+	if (response instanceof Promise) {
+		// Custom loader is async
+		response
+			.then((data) => {
+				callback(data);
+			})
+			.catch(() => {
+				callback(null);
+			});
+	} else {
+		// Sync loader
+		callback(response);
+	}
 }
 
 /**
@@ -158,22 +183,34 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 				return;
 			}
 
-			// Check for custom loader
-			if (storage.customLoader) {
-				const response = storage.customLoader(icons, prefix, provider);
-				if (response instanceof Promise) {
-					// Custom loader is async
-					response
-						.then((data) => {
-							parseLoaderResponse(storage, icons, data);
-						})
-						.catch(() => {
-							parseLoaderResponse(storage, icons, null);
-						});
-				} else {
-					// Sync loader
-					parseLoaderResponse(storage, icons, response);
-				}
+			// Check for custom loader for multiple icons
+			const customIconLoader = storage.loadIcon;
+			if (storage.loadIcons && (icons.length > 1 || !customIconLoader)) {
+				parsePossiblyAsyncResponse(
+					storage.loadIcons(icons, prefix, provider),
+					(data) => {
+						parseLoaderResponse(storage, icons, data, false);
+					}
+				);
+				return;
+			}
+
+			// Check for custom loader for one icon
+			if (customIconLoader) {
+				icons.forEach((name) => {
+					const response = customIconLoader(name, prefix, provider);
+					parsePossiblyAsyncResponse(response, (data) => {
+						const iconSet: IconifyJSON | null = data
+							? {
+									prefix,
+									icons: {
+										[name]: data,
+									},
+							  }
+							: null;
+						parseLoaderResponse(storage, [name], iconSet, false);
+					});
+				});
 				return;
 			}
 
@@ -183,7 +220,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 
 			if (invalid.length) {
 				// Invalid icons
-				parseLoaderResponse(storage, invalid, null);
+				parseLoaderResponse(storage, invalid, null, false);
 			}
 			if (!valid.length) {
 				// No valid icons to load
@@ -196,7 +233,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 				: null;
 			if (!api) {
 				// API module not found
-				parseLoaderResponse(storage, valid, null);
+				parseLoaderResponse(storage, valid, null, false);
 				return;
 			}
 
@@ -204,7 +241,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			const params = api.prepare(provider, prefix, valid);
 			params.forEach((item) => {
 				sendAPIQuery(provider, item, (data) => {
-					parseLoaderResponse(storage, item.icons, data);
+					parseLoaderResponse(storage, item.icons, data, true);
 				});
 			});
 		});

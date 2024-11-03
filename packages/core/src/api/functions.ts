@@ -14,6 +14,10 @@ import type {
 	IconifyAPICustomQueryParams,
 } from './modules';
 import type { IconifyIcon } from '@iconify/types';
+import type {
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
+} from './types';
 
 /**
  * Iconify API functions
@@ -41,6 +45,24 @@ export interface IconifyAPIFunctions {
 		provider: string,
 		customConfig: PartialIconifyAPIConfig
 	) => boolean;
+
+	/**
+	 * Set custom loader for multple icons
+	 */
+	setCustomIconsLoader: (
+		callback: IconifyCustomIconsLoader,
+		prefix: string,
+		provider?: string
+	) => void;
+
+	/**
+	 * Set custom loader for one icon
+	 */
+	setCustomIconLoader: (
+		callback: IconifyCustomIconLoader,
+		prefix: string,
+		provider?: string
+	) => void;
 }
 
 /**
