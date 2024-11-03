@@ -1,6 +1,6 @@
 import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
-import { Icon, loadIcons, iconLoaded } from '../../';
+import { Icon, loadIcons, iconLoaded, setCustomIconLoader } from '../../';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { defaultIconResult } from '../empty';
@@ -216,6 +216,74 @@ describe('Rendering icon', () => {
 				},
 			};
 			const wrapper = mount(Wrapper, {});
+		});
+	});
+
+	test('custom loader', () => {
+		return new Promise((fulfill, reject) => {
+			const prefix = nextPrefix();
+			const name = 'render-test';
+			const iconName = `@${provider}:${prefix}:${name}`;
+			const className = `iconify iconify--${prefix} iconify--${provider}`;
+			let onLoadCalled = false;
+
+			setCustomIconLoader(
+				() => {
+					return iconData;
+				},
+				prefix,
+				provider
+			);
+
+			// Check if icon has been loaded
+			expect(iconLoaded(iconName)).toEqual(false);
+
+			// Load icon
+			loadIcons([iconName], (loaded, missing, pending) => {
+				// Make sure icon has been loaded
+				expect(loaded).toMatchObject([
+					{
+						provider,
+						prefix,
+						name,
+					},
+				]);
+				expect(missing).toMatchObject([]);
+				expect(pending).toMatchObject([]);
+				expect(iconLoaded(iconName)).toEqual(true);
+
+				// Render component
+				const Wrapper = {
+					components: { Icon },
+					// Also test class string
+					template: `<Icon icon="${iconName}" :onLoad="onLoad" class="test" />`,
+					methods: {
+						onLoad(name) {
+							expect(name).toEqual(iconName);
+							expect(onLoadCalled).toEqual(false);
+							onLoadCalled = true;
+						},
+					},
+				};
+				const wrapper = mount(Wrapper, {});
+
+				// Check HTML on next tick
+				nextTick()
+					.then(() => {
+						const html = wrapper.html().replace(/\s*\n\s*/g, '');
+						expect(html).toEqual(
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
+								className +
+								'" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+						);
+
+						// Make sure onLoad has been called
+						expect(onLoadCalled).toEqual(true);
+
+						fulfill(true);
+					})
+					.catch(reject);
+			});
 		});
 	});
 });
