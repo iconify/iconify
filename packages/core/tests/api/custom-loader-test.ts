@@ -42,6 +42,10 @@ describe('Testing API loadIcons', () => {
 								icon_2: {
 									body: '<path d="" />',
 								},
+								// Use reserved keyword that can break objects not created with Object.create(null)
+								constructor: {
+									body: '<path d="" />',
+								},
 							},
 						});
 					});
@@ -64,6 +68,7 @@ describe('Testing API loadIcons', () => {
 						expect(listIcons(provider, prefix)).toEqual([
 							`@${provider}:${prefix}:icon1`,
 							`@${provider}:${prefix}:icon_2`,
+							`@${provider}:${prefix}:constructor`,
 						]);
 					} catch (err) {
 						reject(err);
@@ -101,6 +106,10 @@ describe('Testing API loadIcons', () => {
 							Icon_1: {
 								body: '<path d="" />',
 							},
+							// Use reserved keyword that can break objects not created with Object.create(null)
+							constructor: {
+								body: '<path d="" />',
+							},
 						},
 					};
 				},
@@ -121,6 +130,7 @@ describe('Testing API loadIcons', () => {
 						// Check storage
 						expect(listIcons(provider, prefix)).toEqual([
 							`@${provider}:${prefix}:Icon_1`,
+							`@${provider}:${prefix}:constructor`,
 						]);
 					} catch (err) {
 						reject(err);
@@ -143,7 +153,7 @@ describe('Testing API loadIcons', () => {
 				(icons, requestedPrefix, requestedProvider) => {
 					try {
 						// Check params
-						expect(icons).toEqual(['icon1']);
+						expect(icons).toEqual(['constructor']);
 						expect(requestedPrefix).toBe(prefix1);
 						expect(requestedProvider).toBe(provider);
 					} catch (err) {
@@ -155,7 +165,7 @@ describe('Testing API loadIcons', () => {
 					return {
 						prefix: prefix1,
 						icons: {
-							icon1: {
+							constructor: {
 								body: '<path d="" />',
 							},
 						},
@@ -203,7 +213,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			loadIcons(
 				[
-					`${provider}:${prefix1}:icon1`,
+					`${provider}:${prefix1}:constructor`,
 					`${provider}:${prefix2}:Icon_2`,
 					`${provider}:${prefix2}:BadIcon`,
 				],
@@ -219,7 +229,7 @@ describe('Testing API loadIcons', () => {
 							{
 								provider,
 								prefix: prefix1,
-								name: 'icon1',
+								name: 'constructor',
 							},
 							{
 								provider,
@@ -237,7 +247,7 @@ describe('Testing API loadIcons', () => {
 
 						// Check storage
 						expect(listIcons(provider, prefix1)).toEqual([
-							`@${provider}:${prefix1}:icon1`,
+							`@${provider}:${prefix1}:constructor`,
 						]);
 						expect(listIcons(provider, prefix2)).toEqual([
 							`@${provider}:${prefix2}:Icon_1`,
@@ -265,7 +275,7 @@ describe('Testing API loadIcons', () => {
 					return new Promise((resolve, reject) => {
 						try {
 							// Check params
-							expect(name).toBe('icon1');
+							expect(name).toBe('constructor');
 							expect(requestedPrefix).toBe(prefix);
 							expect(requestedProvider).toBe(provider);
 						} catch (err) {
@@ -284,7 +294,7 @@ describe('Testing API loadIcons', () => {
 			);
 
 			// Load icon
-			loadIcon(provider + ':' + prefix + ':icon1')
+			loadIcon(provider + ':' + prefix + ':constructor')
 				.then((data) => {
 					try {
 						// Test response
@@ -295,7 +305,7 @@ describe('Testing API loadIcons', () => {
 
 						// Check storage
 						expect(listIcons(provider, prefix)).toEqual([
-							`@${provider}:${prefix}:icon1`,
+							`@${provider}:${prefix}:constructor`,
 						]);
 					} catch (err) {
 						reject(err);
@@ -314,7 +324,7 @@ describe('Testing API loadIcons', () => {
 			const prefix2 = nextPrefix();
 
 			const iconsToTest: Record<string, Set<string>> = {
-				[prefix1]: new Set(['icon1']),
+				[prefix1]: new Set(['constructor']),
 				[prefix2]: new Set(['Icon_2', 'BadIcon']),
 			};
 
@@ -375,7 +385,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			loadIcons(
 				[
-					`${provider}:${prefix1}:icon1`,
+					`${provider}:${prefix1}:constructor`,
 					`${provider}:${prefix2}:Icon_2`,
 					`${provider}:${prefix2}:BadIcon`,
 				],
@@ -391,7 +401,7 @@ describe('Testing API loadIcons', () => {
 							{
 								provider,
 								prefix: prefix1,
-								name: 'icon1',
+								name: 'constructor',
 							},
 							{
 								provider,
@@ -409,7 +419,7 @@ describe('Testing API loadIcons', () => {
 
 						// Check storage
 						expect(listIcons(provider, prefix1)).toEqual([
-							`@${provider}:${prefix1}:icon1`,
+							`@${provider}:${prefix1}:constructor`,
 						]);
 						expect(listIcons(provider, prefix2)).toEqual([
 							`@${provider}:${prefix2}:Icon_2`,
