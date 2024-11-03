@@ -1,6 +1,6 @@
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import {
-	IconifyIconName,
+	type IconifyIconName,
 	matchIconName,
 	stringToIcon,
 } from '@iconify/utils/lib/icon/name';
@@ -93,30 +93,29 @@ function parseLoaderResponse(
 	icons: string[],
 	data: unknown
 ) {
-	const fail = () => {
+	function checkMissing() {
+		const pending = storage.pendingIcons;
 		icons.forEach((name) => {
-			storage.missing.add(name);
+			// Remove added icons from pending list
+			if (pending) {
+				pending.delete(name);
+			}
+
+			// Mark as missing if icon is not in storage
+			if (!storage.icons[name]) {
+				storage.missing.add(name);
+			}
 		});
-	};
+	}
 
 	// Check for error
-	if (typeof data !== 'object' || !data) {
-		fail();
-	} else {
+	if (data && typeof data === 'object') {
 		// Add icons to storage
 		try {
 			const parsed = addIconSet(storage, data as IconifyJSON);
 			if (!parsed.length) {
-				fail();
+				checkMissing();
 				return;
-			}
-
-			// Remove added icons from pending list
-			const pending = storage.pendingIcons;
-			if (pending) {
-				parsed.forEach((name) => {
-					pending.delete(name);
-				});
 			}
 
 			// Cache API response
@@ -125,6 +124,9 @@ function parseLoaderResponse(
 			console.error(err);
 		}
 	}
+
+	// Check for some icons from request were not in response: mark as missing
+	checkMissing();
 
 	// Trigger update on next tick
 	loadedNewIcons(storage);
@@ -149,15 +151,35 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			const { provider, prefix } = storage;
 
 			// Get icons and delete queue
-			// Icons should not be undefined, but just in case assume it can be
 			const icons = storage.iconsToLoad;
 			delete storage.iconsToLoad;
+			if (!icons || !icons.length) {
+				// Icons should not be undefined or empty, but just in case check it
+				return;
+			}
 
-			// TODO: check for custom loader
+			// Check for custom loader
+			if (storage.customLoader) {
+				const response = storage.customLoader(icons, prefix, provider);
+				if (response instanceof Promise) {
+					// Custom loader is async
+					response
+						.then((data) => {
+							parseLoaderResponse(storage, icons, data);
+						})
+						.catch(() => {
+							parseLoaderResponse(storage, icons, null);
+						});
+				} else {
+					// Sync loader
+					parseLoaderResponse(storage, icons, response);
+				}
+				return;
+			}
 
 			// Using API loader
 			// Validate icon names for API
-			const { valid, invalid } = checkIconNamesForAPI(icons || []);
+			const { valid, invalid } = checkIconNamesForAPI(icons);
 
 			if (invalid.length) {
 				// Invalid icons

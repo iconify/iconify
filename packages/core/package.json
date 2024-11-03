@@ -38,6 +38,10 @@
 			"require": "./lib/api/icons.cjs",
 			"import": "./lib/api/icons.mjs"
 		},
+		"./lib/api/loaders": {
+			"require": "./lib/api/loaders.cjs",
+			"import": "./lib/api/loaders.mjs"
+		},
 		"./lib/api/modules": {
 			"require": "./lib/api/modules.cjs",
 			"import": "./lib/api/modules.mjs"

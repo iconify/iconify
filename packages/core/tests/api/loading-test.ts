@@ -12,11 +12,7 @@ describe('Testing API loadIcons', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return (
-			'api-load-test-' +
-			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter.toString()
-		);
+		return `api-load-test-${prefixCounter < 10 ? '0' : ''}${prefixCounter}`;
 	}
 
 	it('Loading few icons', () => {
@@ -311,9 +307,9 @@ describe('Testing API loadIcons', () => {
 		expect(loadedIcon).toBe(false);
 
 		// Test isPending
-		// After change to naming convention, icon name is valid and should be pending
-		// Filtering invalid names is done in loader, not in API module
-		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(true);
+		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(
+			false
+		);
 	});
 
 	it('Loading one icon twice with Promise', () => {
@@ -551,7 +547,6 @@ describe('Testing API loadIcons', () => {
 				callback: QueryModuleResponse
 			): void => {
 				queryCounter++;
-				params;
 				switch (queryCounter) {
 					case 1:
 						// First call on api1

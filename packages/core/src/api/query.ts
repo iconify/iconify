@@ -7,13 +7,13 @@ import type {
 import { initRedundancy } from '@iconify/api-redundancy';
 import {
 	getAPIModule,
-	IconifyAPIQueryParams,
-	IconifyAPISendQuery,
+	type IconifyAPIQueryParams,
+	type IconifyAPISendQuery,
 } from './modules';
 import {
 	createAPIConfig,
-	IconifyAPIConfig,
-	PartialIconifyAPIConfig,
+	type IconifyAPIConfig,
+	type PartialIconifyAPIConfig,
 } from './config';
 import { getAPIConfig } from './config';
 

@@ -4,6 +4,16 @@ import type {
 } from './icons';
 import type { SortedIcons } from '../icon/sort';
 import type { IconStorage } from '../storage/storage';
+import { IconifyJSON } from '@iconify/types';
+
+/**
+ * Custom icons loader
+ */
+export type IconifyCustomLoader = (
+	icons: string[],
+	prefix: string,
+	provider: string
+) => Promise<IconifyJSON | null> | IconifyJSON | null;
 
 /**
  * Storage for callbacks
@@ -26,6 +36,9 @@ export interface APICallbackItem {
  * Add custom stuff to storage
  */
 export interface IconStorageWithAPI extends IconStorage {
+	// Custom loader
+	customLoader?: IconifyCustomLoader;
+
 	/**
 	 * List of icons that are being loaded, added to storage
 	 *
