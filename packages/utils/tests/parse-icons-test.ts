@@ -319,4 +319,47 @@ describe('Testing parsing icon set', () => {
 		parsedNames.sort((a, b) => a.localeCompare(b));
 		expect(parsedNames).toEqual(expectedNames);
 	});
+
+	test('Bug test 1', () => {
+		// Names list
+		const names: string[] = ['test20', 'test21', 'BadName'];
+
+		// Resolved data
+		const expected: Record<string, ExtendedIconifyIcon | null> = {
+			test20: {
+				body: '<g />',
+			},
+			test21: {
+				body: '<g />',
+			},
+			BadName: {
+				body: '<g />',
+			},
+		};
+
+		// Do stuff
+		expect(
+			parseIconSet(
+				{
+					prefix: 'api-mock-02',
+					icons: {
+						test20: { body: '<g />' },
+						test21: { body: '<g />' },
+						BadName: { body: '<g />' },
+					},
+				},
+				(name, data) => {
+					// Make sure name matches
+					expect(names.length).toBeGreaterThanOrEqual(1);
+					expect(name).toBe(names.shift());
+
+					// Check icon data
+					expect(data).toEqual(expected[name]);
+				}
+			)
+		).toEqual(['test20', 'test21', 'BadName']);
+
+		// All names should have been parsed
+		expect(names).toEqual([]);
+	});
 });

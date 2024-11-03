@@ -311,9 +311,9 @@ describe('Testing API loadIcons', () => {
 		expect(loadedIcon).toBe(false);
 
 		// Test isPending
-		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(
-			false
-		);
+		// After change to naming convention, icon name is valid and should be pending
+		// Filtering invalid names is done in loader, not in API module
+		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(true);
 	});
 
 	it('Loading one icon twice with Promise', () => {

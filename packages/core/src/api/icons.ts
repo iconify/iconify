@@ -1,5 +1,9 @@
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
-import { IconifyIconName, stringToIcon } from '@iconify/utils/lib/icon/name';
+import {
+	IconifyIconName,
+	matchIconName,
+	stringToIcon,
+} from '@iconify/utils/lib/icon/name';
 import type { SortedIcons } from '../icon/sort';
 import { sortIcons } from '../icon/sort';
 import { storeCallback, updateCallbacks } from './callbacks';
@@ -61,6 +65,71 @@ function loadedNewIcons(storage: IconStorageWithAPI): void {
 	}
 }
 
+interface CheckIconNames {
+	valid: string[];
+	invalid: string[];
+}
+/**
+ * Check icon names for API
+ */
+function checkIconNamesForAPI(icons: string[]): CheckIconNames {
+	const valid: string[] = [];
+	const invalid: string[] = [];
+
+	icons.forEach((name) => {
+		(name.match(matchIconName) ? valid : invalid).push(name);
+	});
+	return {
+		valid,
+		invalid,
+	};
+}
+
+/**
+ * Parse loader response
+ */
+function parseLoaderResponse(
+	storage: IconStorageWithAPI,
+	icons: string[],
+	data: unknown
+) {
+	const fail = () => {
+		icons.forEach((name) => {
+			storage.missing.add(name);
+		});
+	};
+
+	// Check for error
+	if (typeof data !== 'object' || !data) {
+		fail();
+	} else {
+		// Add icons to storage
+		try {
+			const parsed = addIconSet(storage, data as IconifyJSON);
+			if (!parsed.length) {
+				fail();
+				return;
+			}
+
+			// Remove added icons from pending list
+			const pending = storage.pendingIcons;
+			if (pending) {
+				parsed.forEach((name) => {
+					pending.delete(name);
+				});
+			}
+
+			// Cache API response
+			storeInBrowserStorage(storage, data as IconifyJSON);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
+	// Trigger update on next tick
+	loadedNewIcons(storage);
+}
+
 /**
  * Load icons
  */
@@ -80,54 +149,40 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			const { provider, prefix } = storage;
 
 			// Get icons and delete queue
+			// Icons should not be undefined, but just in case assume it can be
 			const icons = storage.iconsToLoad;
 			delete storage.iconsToLoad;
 
+			// TODO: check for custom loader
+
+			// Using API loader
+			// Validate icon names for API
+			const { valid, invalid } = checkIconNamesForAPI(icons || []);
+
+			if (invalid.length) {
+				// Invalid icons
+				parseLoaderResponse(storage, invalid, null);
+			}
+			if (!valid.length) {
+				// No valid icons to load
+				return;
+			}
+
 			// Get API module
-			let api: ReturnType<typeof getAPIModule>;
-			if (!icons || !(api = getAPIModule(provider))) {
-				// No icons or no way to load icons!
+			const api = prefix.match(matchIconName)
+				? getAPIModule(provider)
+				: null;
+			if (!api) {
+				// API module not found
+				parseLoaderResponse(storage, valid, null);
 				return;
 			}
 
 			// Prepare parameters and run queries
-			const params = api.prepare(provider, prefix, icons);
+			const params = api.prepare(provider, prefix, valid);
 			params.forEach((item) => {
 				sendAPIQuery(provider, item, (data) => {
-					// Check for error
-					if (typeof data !== 'object') {
-						// Not found: mark as missing
-						item.icons.forEach((name) => {
-							storage.missing.add(name);
-						});
-					} else {
-						// Add icons to storage
-						try {
-							const parsed = addIconSet(
-								storage,
-								data as IconifyJSON
-							);
-							if (!parsed.length) {
-								return;
-							}
-
-							// Remove added icons from pending list
-							const pending = storage.pendingIcons;
-							if (pending) {
-								parsed.forEach((name) => {
-									pending.delete(name);
-								});
-							}
-
-							// Cache API response
-							storeInBrowserStorage(storage, data as IconifyJSON);
-						} catch (err) {
-							console.error(err);
-						}
-					}
-
-					// Trigger update on next tick
-					loadedNewIcons(storage);
+					parseLoaderResponse(storage, item.icons, data);
 				});
 			});
 		});
@@ -232,9 +287,9 @@ export const loadIcons: IconifyLoadIcons = (
 	// Load icons on next tick to make sure result is not returned before callback is stored and
 	// to consolidate multiple synchronous loadIcons() calls into one asynchronous API call
 	sources.forEach((storage) => {
-		const { provider, prefix } = storage;
-		if (newIcons[provider][prefix].length) {
-			loadNewIcons(storage, newIcons[provider][prefix]);
+		const list = newIcons[storage.provider][storage.prefix];
+		if (list.length) {
+			loadNewIcons(storage, list);
 		}
 	});
 

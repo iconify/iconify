@@ -21,6 +21,7 @@ const detectFetch = (): FetchType | undefined => {
 		if (typeof callback === 'function') {
 			return callback;
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}
