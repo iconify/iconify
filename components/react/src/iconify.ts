@@ -28,6 +28,10 @@ import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 
 // API
 import type {
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
+} from '@iconify/core/lib/api/types';
+import type {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 	IconifyAPIQueryParams,
@@ -59,6 +63,10 @@ import type {
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
+import {
+	setCustomIconLoader,
+	setCustomIconsLoader,
+} from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Cache
@@ -120,6 +128,8 @@ export {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
 };
 
 // Builder functions
@@ -394,7 +404,13 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export { addAPIProvider, loadIcons, loadIcon };
+export {
+	addAPIProvider,
+	loadIcons,
+	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
+};
 
 // IconifyStorageFunctions
 export {
