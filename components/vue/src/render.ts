@@ -127,6 +127,7 @@ export const render = (
 			case 'style':
 			case 'onLoad':
 			case 'mode':
+			case 'ssr':
 				break;
 
 			// Boolean attributes
