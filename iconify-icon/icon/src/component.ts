@@ -66,6 +66,7 @@ export function defineIconifyIcon(
 	try {
 		customElements = window.customElements;
 		ParentClass = window.HTMLElement;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		return;
 	}
@@ -228,6 +229,7 @@ export function defineIconifyIcon(
 			if (value && value.slice(0, 1) === '{') {
 				try {
 					return JSON.parse(value);
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (err) {
 					//
 				}
@@ -284,6 +286,7 @@ export function defineIconifyIcon(
 					try {
 						(root.lastChild as SVGSVGElement).setCurrentTime(0);
 						return;
+						// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					} catch (err) {
 						// Failed: setCurrentTime() is not supported
 					}
@@ -468,11 +471,13 @@ export function defineIconifyIcon(
 						}
 					});
 					this._observer.observe(this);
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (err) {
 					// Something went wrong, possibly observer is not supported
 					if (this._observer) {
 						try {
 							this._observer.disconnect();
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
 						} catch (err) {
 							//
 						}

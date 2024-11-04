@@ -12,6 +12,10 @@ import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 
 // API
 import type {
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
+} from '@iconify/core/lib/api/types';
+import type {
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 	IconifyAPIQueryParams,
@@ -82,6 +86,8 @@ export {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
 };
 
 // Builder functions
@@ -122,6 +128,8 @@ const {
 	svgToURL,
 	loadIcons,
 	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
 	addAPIProvider,
 	_api,
 } = IconifyIconComponent;
@@ -142,6 +150,8 @@ export {
 	loadIcons,
 	loadIcon,
 	addAPIProvider,
+	setCustomIconLoader,
+	setCustomIconsLoader,
 	appendCustomStyle,
 	_api,
 };

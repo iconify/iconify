@@ -11,6 +11,7 @@ export function testIconObject(value: unknown): IconifyIcon | undefined {
 				...obj,
 			};
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}

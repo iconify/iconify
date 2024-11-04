@@ -37,11 +37,16 @@ describe('Testing parseIconValue without API', () => {
 		});
 		expect(result).toEqual({
 			value,
+			name: {
+				provider: '',
+				prefix: '',
+				name: value,
+			},
 		});
 	});
 
 	it('Icon without prefix', () => {
-		const value = 'test';
+		const value = 'Test';
 		const result = parseIconValue(value, () => {
 			throw new Error('callback should not have been called');
 		});

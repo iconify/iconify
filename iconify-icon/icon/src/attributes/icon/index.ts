@@ -22,15 +22,36 @@ export function parseIconValue(
 	value: unknown,
 	onload: IconOnLoadCallback
 ): CurrentIconData {
-	// Check if icon name is valid
-	const name =
-		typeof value === 'string' ? stringToIcon(value, true, true) : null;
-	if (!name) {
-		// Test for serialised object
+	if (typeof value === 'object') {
 		const data = testIconObject(value);
 		return {
-			value,
 			data,
+			value,
+		};
+	}
+	if (typeof value !== 'string') {
+		// Invalid value
+		return {
+			value,
+		};
+	}
+
+	// Check for JSON
+	if (value.includes('{')) {
+		const data = testIconObject(value);
+		if (data) {
+			return {
+				data,
+				value,
+			};
+		}
+	}
+
+	// Parse icon name
+	const name = stringToIcon(value, true, true);
+	if (!name) {
+		return {
+			value,
 		};
 	}
 
@@ -38,7 +59,7 @@ export function parseIconValue(
 	const data = getIconData(name);
 
 	// Icon data exists or icon has no prefix. Do not load icon from API if icon has no prefix
-	if (data !== void 0 || !name.prefix) {
+	if (data !== undefined || !name.prefix) {
 		return {
 			value,
 			name,

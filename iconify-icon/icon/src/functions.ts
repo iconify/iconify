@@ -40,6 +40,10 @@ import {
 } from '@iconify/core/lib/api/modules/fetch';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
+import {
+	setCustomIconLoader,
+	setCustomIconsLoader,
+} from '@iconify/core/lib/api/loaders';
 
 // Cache
 import { initBrowserStorage } from '@iconify/core/lib/browser-storage';
@@ -92,6 +96,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 	let _window: WindowWithIconifyStuff;
 	try {
 		_window = window as WindowWithIconifyStuff;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		//
 	}
@@ -120,6 +125,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 							) {
 								console.error(err);
 							}
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
 						} catch (e) {
 							console.error(err);
 						}
@@ -146,6 +152,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 						if (!addAPIProvider(key, value)) {
 							console.error(err);
 						}
+						// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					} catch (e) {
 						console.error(err);
 					}
@@ -181,6 +188,8 @@ export function exportFunctions(): IconifyExportedFunctions {
 		loadIcons,
 		loadIcon,
 		addAPIProvider,
+		setCustomIconLoader,
+		setCustomIconsLoader,
 		appendCustomStyle,
 		_api,
 	};

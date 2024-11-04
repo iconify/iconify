@@ -36,6 +36,8 @@ export type {
 	PartialIconifyAPIConfig,
 	IconifyAPIQueryParams,
 	IconifyAPICustomQueryParams,
+	IconifyCustomIconLoader,
+	IconifyCustomIconsLoader,
 } from 'iconify-icon';
 
 // Builder functions
@@ -69,6 +71,8 @@ export {
 	loadIcons,
 	loadIcon,
 	addAPIProvider,
+	setCustomIconLoader,
+	setCustomIconsLoader,
 	appendCustomStyle,
 	_api,
 } from 'iconify-icon';
