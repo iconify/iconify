@@ -26,11 +26,12 @@ describe('Testing IconifyStorageFunctions', () => {
 	it('Storage functions', () => {
 		const provider = nextProvider();
 		const testName = `@${provider}:foo:bar`;
+		const missingIcon = `@${provider}:foo:missing`;
 
 		// Empty
 		expect(iconLoaded(testName)).toBe(false);
 		expect(getIconData(testName)).toBeUndefined();
-		expect(getIcon(testName)).toBeNull();
+		expect(getIcon(testName)).toBeUndefined();
 		expect(listIcons(provider)).toEqual([]);
 
 		// Add and test one icon
@@ -50,6 +51,12 @@ describe('Testing IconifyStorageFunctions', () => {
 			...defaultIconProps,
 			...expected,
 		});
+
+		// Add null icon
+		expect(addIcon(missingIcon, null)).toBe(true);
+		expect(getIconData(missingIcon)).toBeNull();
+		expect(getIcon(missingIcon)).toBeNull();
+		expect(listIcons(provider)).toEqual([testName]);
 
 		// Add icon set
 		const prefix = 'prefix' + (count++).toString();
@@ -83,7 +90,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		// Test 'invalid' icon
 		expect(iconLoaded(`${prefix}:invalid`)).toBe(false);
 		expect(getIconData(`${prefix}:invalid`)).toBeUndefined();
-		expect(getIcon(`${prefix}:invalid`)).toBeNull();
+		expect(getIcon(`${prefix}:invalid`)).toBeUndefined();
 	});
 
 	it('Invalid icon name', () => {
@@ -92,7 +99,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		// Empty
 		expect(iconLoaded(testName)).toBe(false);
 		expect(getIconData(testName)).toBeUndefined();
-		expect(getIcon(testName)).toBeNull();
+		expect(getIcon(testName)).toBeUndefined();
 
 		// Add and test one icon (icon should not be added)
 		expect(
@@ -125,7 +132,7 @@ describe('Testing IconifyStorageFunctions', () => {
 
 		// Empty
 		expect(iconLoaded(testName)).toBe(false);
-		expect(getIcon(testName)).toBeNull();
+		expect(getIcon(testName)).toBeUndefined();
 
 		// Add and test one icon
 		expect(
@@ -149,6 +156,7 @@ describe('Testing IconifyStorageFunctions', () => {
 		const prefix2 = `prefixed${n}`;
 		const name2 = `icon${n2}`;
 		const missing = `missing${n}`;
+		const notLoaded = `not-loaded${n}`;
 		expect(
 			addCollection({
 				prefix: '',
@@ -201,9 +209,14 @@ describe('Testing IconifyStorageFunctions', () => {
 			...expected,
 		});
 
-		// Test missing icon: should not exist because without provider missing icon cannot be added
+		// Test icon that was never loaded
+		expect(iconLoaded(notLoaded)).toBe(false);
+		expect(getIconData(notLoaded)).toBeUndefined();
+		expect(getIcon(notLoaded)).toBeUndefined();
+
+		// Test icon marked as missing
 		expect(iconLoaded(missing)).toBe(false);
-		expect(getIconData(missing)).toBeUndefined();
+		expect(getIconData(missing)).toBeNull();
 		expect(getIcon(missing)).toBeNull();
 	});
 });

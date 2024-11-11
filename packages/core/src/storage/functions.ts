@@ -24,8 +24,11 @@ export interface IconifyStorageFunctions {
 
 	/**
 	 * Get icon data with all properties
+	 *
+	 * Returns null if icon is missing (attempted to load, but failed)
+	 * Returns undefined if icon was not loaded
 	 */
-	getIcon: (name: string) => Required<IconifyIcon> | null;
+	getIcon: (name: string) => Required<IconifyIcon> | null | undefined;
 
 	/**
 	 * List all available icons
@@ -35,8 +38,10 @@ export interface IconifyStorageFunctions {
 	/* Add icons */
 	/**
 	 * Add icon to storage
+	 *
+	 * Data is null if icon is missing
 	 */
-	addIcon: (name: string, data: IconifyIcon) => boolean;
+	addIcon: (name: string, data: IconifyIcon | null) => boolean;
 
 	/**
 	 * Add icon set to storage
@@ -62,7 +67,7 @@ export function allowSimpleNames(allow?: boolean): boolean {
  * Returns:
  * - IconifyIcon on success, object directly from storage so don't modify it
  * - null if icon is marked as missing (returned in `not_found` property from API, so don't bother sending API requests)
- * - undefined if icon is missing
+ * - undefined if icon is missing in storage
  */
 export function getIconData(
 	name: string | IconifyIconName
@@ -83,13 +88,18 @@ export function getIconData(
 /**
  * Add one icon
  */
-export function addIcon(name: string, data: IconifyIcon): boolean {
+export function addIcon(name: string, data: IconifyIcon | null): boolean {
 	const icon = stringToIcon(name, true, simpleNames);
 	if (!icon) {
 		return false;
 	}
 	const storage = getStorage(icon.provider, icon.prefix);
-	return addIconToStorage(storage, icon.name, data);
+	if (data) {
+		return addIconToStorage(storage, icon.name, data);
+	} else {
+		storage.missing.add(icon.name);
+		return true;
+	}
 }
 
 /**
@@ -115,7 +125,7 @@ export function addCollection(data: IconifyJSON, provider?: string): boolean {
 			data.prefix = '';
 
 			parseIconSet(data, (name, icon) => {
-				if (icon && addIcon(name, icon)) {
+				if (addIcon(name, icon)) {
 					added = true;
 				}
 			});
@@ -149,12 +159,14 @@ export function iconLoaded(name: string): boolean {
 /**
  * Get full icon
  */
-export function getIcon(name: string): Required<IconifyIcon> | null {
+export function getIcon(
+	name: string
+): Required<IconifyIcon> | null | undefined {
 	const result = getIconData(name);
 	return result
 		? {
 				...defaultIconProps,
 				...result,
 		  }
-		: null;
+		: result;
 }
