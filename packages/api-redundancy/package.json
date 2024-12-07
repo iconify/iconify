@@ -28,18 +28,18 @@
 		"directory": "packages/api-redundancy"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.1.0",
-		"@eslint/js": "^9.13.0",
+		"@eslint/eslintrc": "^3.2.0",
+		"@eslint/js": "^9.16.0",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^22.8.6",
-		"@typescript-eslint/eslint-plugin": "^8.12.2",
-		"@typescript-eslint/parser": "^8.12.2",
+		"@types/node": "^22.10.1",
+		"@typescript-eslint/eslint-plugin": "^8.17.0",
+		"@typescript-eslint/parser": "^8.17.0",
 		"cross-env": "^7.0.3",
-		"eslint": "^9.13.0",
+		"eslint": "^9.16.0",
 		"tsup": "^8.3.5",
-		"vitest": "^2.1.4"
+		"vitest": "^2.1.8"
 	},
 	"dependencies": {
-		"globals": "^15.11.0"
+		"globals": "^15.13.0"
 	}
 }

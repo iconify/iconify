@@ -421,27 +421,27 @@
 		"@antfu/install-pkg": "^0.4.1",
 		"@antfu/utils": "^0.7.10",
 		"@iconify/types": "workspace:^",
-		"debug": "^4.3.7",
-		"globals": "^15.11.0",
+		"debug": "^4.4.0",
+		"globals": "^15.13.0",
 		"kolorist": "^1.8.0",
-		"local-pkg": "^0.5.0",
-		"mlly": "^1.7.2"
+		"local-pkg": "^0.5.1",
+		"mlly": "^1.7.3"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.1.0",
-		"@eslint/js": "^9.13.0",
-		"@iconify-json/fa6-regular": "^1.2.1",
+		"@eslint/eslintrc": "^3.2.0",
+		"@eslint/js": "^9.16.0",
+		"@iconify-json/fa6-regular": "^1.2.2",
 		"@iconify-json/flat-color-icons": "^1.2.0",
 		"@types/debug": "^4.1.12",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^18.19.63",
-		"@typescript-eslint/eslint-plugin": "^8.12.2",
-		"eslint": "^9.13.0",
+		"@types/node": "^18.19.67",
+		"@typescript-eslint/eslint-plugin": "^8.17.0",
+		"eslint": "^9.16.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
 		"rimraf": "^6.0.1",
-		"typescript": "^5.6.3",
+		"typescript": "^5.7.2",
 		"unbuild": "^2.0.0",
-		"vitest": "^2.1.4"
+		"vitest": "^2.1.8"
 	}
 }
