@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import type { SVGProps, CSSProperties } from 'react';
+import type { SVGProps, CSSProperties, JSX } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import { mergeCustomisations } from '@iconify/utils/lib/customisations/merge';
 import { flipFromString } from '@iconify/utils/lib/customisations/flip';

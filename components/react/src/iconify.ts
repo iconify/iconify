@@ -1,10 +1,5 @@
-import {
-	useEffect,
-	useState,
-	forwardRef,
-	createElement,
-	type Ref,
-} from 'react';
+import { useEffect, useState, forwardRef, createElement } from 'react';
+import type { Ref, JSX } from 'react';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core

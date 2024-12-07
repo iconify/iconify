@@ -1,4 +1,5 @@
-import { forwardRef, createElement, memo, type Ref } from 'react';
+import { forwardRef, createElement, memo } from 'react';
+import type { Ref, JSX } from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
@@ -63,25 +64,29 @@ type IconComponentType = (props: IconProps) => JSX.Element;
  *
  * @param props - Component properties
  */
-export const Icon = memo(forwardRef<IconElement, IconProps>((props, ref) =>
-	IconComponent({
-		...props,
-		_ref: ref,
-	})
-)) as IconComponentType;
+export const Icon = memo(
+	forwardRef<IconElement, IconProps>((props, ref) =>
+		IconComponent({
+			...props,
+			_ref: ref,
+		})
+	)
+) as IconComponentType;
 
 /**
  * Inline icon (has negative verticalAlign that makes it behave like icon font)
  *
  * @param props - Component properties
  */
-export const InlineIcon = memo(forwardRef<IconElement, IconProps>((props, ref) =>
-	IconComponent({
-		inline: true,
-		...props,
-		_ref: ref,
-	})
-)) as IconComponentType;
+export const InlineIcon = memo(
+	forwardRef<IconElement, IconProps>((props, ref) =>
+		IconComponent({
+			inline: true,
+			...props,
+			_ref: ref,
+		})
+	)
+) as IconComponentType;
 
 /**
  * Add icon to storage, allowing to call it by name
