@@ -234,6 +234,11 @@ export function convertIconSetInfo(
 		info.category = source.category;
 	}
 
+	// Tags
+	if (source.tags instanceof Array) {
+		info.tags = source.tags;
+	}
+
 	// Palette
 	switch (typeof source.palette) {
 		case 'boolean':

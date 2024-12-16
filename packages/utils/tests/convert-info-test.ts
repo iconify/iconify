@@ -287,6 +287,7 @@ describe('Testing convertIconSetInfo', () => {
 			height: 16,
 			palette: false,
 			category: 'General',
+			tags: ['Foo', 'Bar'],
 		};
 		const result = convertIconSetInfo(item);
 
