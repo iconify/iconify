@@ -46,8 +46,6 @@ import {
 } from '@iconify/core/lib/api/loaders';
 
 // Cache
-import { initBrowserStorage } from '@iconify/core/lib/browser-storage';
-import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
 import type {
 	IconifyBrowserCacheType,
 	IconifyBrowserCacheFunctions,
@@ -101,9 +99,6 @@ export function exportFunctions(): IconifyExportedFunctions {
 		//
 	}
 	if (_window) {
-		// Set cache and load existing cache
-		initBrowserStorage();
-
 		// Load icons from global "IconifyPreload"
 		if (_window.IconifyPreload !== void 0) {
 			const preload = _window.IconifyPreload;
@@ -171,10 +166,14 @@ export function exportFunctions(): IconifyExportedFunctions {
 	};
 
 	return {
-		enableCache: (storage: IconifyBrowserCacheType) =>
-			toggleBrowserCache(storage, true),
-		disableCache: (storage: IconifyBrowserCacheType) =>
-			toggleBrowserCache(storage, false),
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		enableCache: (storage: IconifyBrowserCacheType) => {
+			// No longer used
+		},
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		disableCache: (storage: IconifyBrowserCacheType) => {
+			// No longer used
+		},
 		iconLoaded,
 		iconExists: iconLoaded, // deprecated, kept to avoid breaking changes
 		getIcon,

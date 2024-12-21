@@ -12,7 +12,6 @@ import { getStorage, addIconSet } from '../storage/storage';
 import { listToIcons } from '../icon/list';
 import { allowSimpleNames, getIconData } from '../storage/functions';
 import { sendAPIQuery } from './query';
-import { storeInBrowserStorage } from '../browser-storage/store';
 import type { IconStorageWithAPI } from './types';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
@@ -91,8 +90,7 @@ function checkIconNamesForAPI(icons: string[]): CheckIconNames {
 function parseLoaderResponse(
 	storage: IconStorageWithAPI,
 	icons: string[],
-	data: unknown,
-	isAPIResponse: boolean
+	data: unknown
 ) {
 	function checkMissing() {
 		const pending = storage.pendingIcons;
@@ -117,11 +115,6 @@ function parseLoaderResponse(
 			if (!parsed.length) {
 				checkMissing();
 				return;
-			}
-
-			// Cache API response
-			if (isAPIResponse) {
-				storeInBrowserStorage(storage, data as IconifyJSON);
 			}
 		} catch (err) {
 			console.error(err);
@@ -189,7 +182,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 				parsePossiblyAsyncResponse(
 					storage.loadIcons(icons, prefix, provider),
 					(data) => {
-						parseLoaderResponse(storage, icons, data, false);
+						parseLoaderResponse(storage, icons, data);
 					}
 				);
 				return;
@@ -208,7 +201,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 									},
 							  }
 							: null;
-						parseLoaderResponse(storage, [name], iconSet, false);
+						parseLoaderResponse(storage, [name], iconSet);
 					});
 				});
 				return;
@@ -220,7 +213,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 
 			if (invalid.length) {
 				// Invalid icons
-				parseLoaderResponse(storage, invalid, null, false);
+				parseLoaderResponse(storage, invalid, null);
 			}
 			if (!valid.length) {
 				// No valid icons to load
@@ -233,7 +226,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 				: null;
 			if (!api) {
 				// API module not found
-				parseLoaderResponse(storage, valid, null, false);
+				parseLoaderResponse(storage, valid, null);
 				return;
 			}
 
@@ -241,7 +234,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			const params = api.prepare(provider, prefix, valid);
 			params.forEach((item) => {
 				sendAPIQuery(provider, item, (data) => {
-					parseLoaderResponse(storage, item.icons, data, true);
+					parseLoaderResponse(storage, item.icons, data);
 				});
 			});
 		});

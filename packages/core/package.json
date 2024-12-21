@@ -62,49 +62,9 @@
 			"require": "./lib/api/types.cjs",
 			"import": "./lib/api/types.mjs"
 		},
-		"./lib/browser-storage/config": {
-			"require": "./lib/browser-storage/config.cjs",
-			"import": "./lib/browser-storage/config.mjs"
-		},
-		"./lib/browser-storage/count": {
-			"require": "./lib/browser-storage/count.cjs",
-			"import": "./lib/browser-storage/count.mjs"
-		},
-		"./lib/browser-storage/data": {
-			"require": "./lib/browser-storage/data.cjs",
-			"import": "./lib/browser-storage/data.mjs"
-		},
-		"./lib/browser-storage/foreach": {
-			"require": "./lib/browser-storage/foreach.cjs",
-			"import": "./lib/browser-storage/foreach.mjs"
-		},
 		"./lib/browser-storage/functions": {
 			"require": "./lib/browser-storage/functions.cjs",
 			"import": "./lib/browser-storage/functions.mjs"
-		},
-		"./lib/browser-storage/global": {
-			"require": "./lib/browser-storage/global.cjs",
-			"import": "./lib/browser-storage/global.mjs"
-		},
-		"./lib/browser-storage": {
-			"require": "./lib/browser-storage/index.cjs",
-			"import": "./lib/browser-storage/index.mjs"
-		},
-		"./lib/browser-storage/index": {
-			"require": "./lib/browser-storage/index.cjs",
-			"import": "./lib/browser-storage/index.mjs"
-		},
-		"./lib/browser-storage/item": {
-			"require": "./lib/browser-storage/item.cjs",
-			"import": "./lib/browser-storage/item.mjs"
-		},
-		"./lib/browser-storage/mock": {
-			"require": "./lib/browser-storage/mock.cjs",
-			"import": "./lib/browser-storage/mock.mjs"
-		},
-		"./lib/browser-storage/store": {
-			"require": "./lib/browser-storage/store.cjs",
-			"import": "./lib/browser-storage/store.mjs"
 		},
 		"./lib/browser-storage/types": {
 			"require": "./lib/browser-storage/types.cjs",

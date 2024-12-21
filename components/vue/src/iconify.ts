@@ -75,8 +75,6 @@ import {
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Cache
-import { initBrowserStorage } from '@iconify/core/lib/browser-storage';
-import { toggleBrowserCache } from '@iconify/core/lib/browser-storage/functions';
 import type {
 	IconifyBrowserCacheType,
 	IconifyBrowserCacheFunctions,
@@ -144,16 +142,20 @@ export { IconifyBrowserCacheType };
 
 /**
  * Enable cache
+ *
+ * @deprecated No longer used
  */
 function enableCache(storage: IconifyBrowserCacheType): void {
-	toggleBrowserCache(storage, true);
+	//
 }
 
 /**
  * Disable cache
+ *
+ * @deprecated No longer used
  */
 function disableCache(storage: IconifyBrowserCacheType): void {
-	toggleBrowserCache(storage, false);
+	//
 }
 
 /**
@@ -169,9 +171,6 @@ setAPIModule('', fetchAPIModule);
  * Browser stuff
  */
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-	// Set cache and load existing cache
-	initBrowserStorage();
-
 	interface WindowWithIconifyStuff {
 		IconifyPreload?: IconifyJSON[] | IconifyJSON;
 		IconifyProviders?: Record<string, PartialIconifyAPIConfig>;
