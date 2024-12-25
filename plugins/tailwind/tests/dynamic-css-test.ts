@@ -1,4 +1,4 @@
-import { getDynamicCSSRules } from '../src/dynamic';
+import { getDynamicCSSRules } from '../lib/dynamic.js';
 
 describe('Testing dynamic CSS rules', () => {
 	it('One icon', () => {

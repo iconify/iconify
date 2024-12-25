@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import type { IconifyJSON } from '@iconify/types';
-import { IconifyIconSetSource } from './options';
+import type { IconifyIconSetSource } from './options.js';
 import { matchIconName } from '@iconify/utils/lib/icon/name';
 
 /**

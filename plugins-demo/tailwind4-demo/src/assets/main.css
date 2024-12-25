@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@plugin "@iconify/tailwind4";
+
+.demo {
+	color: var(--color-blue-600);
+}
+.demo:hover {
+	color: var(--color-red-600);
+}

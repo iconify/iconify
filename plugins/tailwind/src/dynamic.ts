@@ -1,7 +1,7 @@
 import { getIconsCSSData } from '@iconify/utils/lib/css/icons';
 import { matchIconName } from '@iconify/utils/lib/icon/name';
-import { loadIconSet } from './helpers/loader';
-import type { DynamicIconifyPluginOptions } from './helpers/options';
+import { loadIconSet } from './helpers/loader.js';
+import type { DynamicIconifyPluginOptions } from './helpers/options.js';
 
 /**
  * Get dynamic CSS rules
@@ -10,7 +10,7 @@ export function getDynamicCSSRules(
 	icon: string,
 	options: DynamicIconifyPluginOptions = {}
 ): Record<string, string> {
-	const nameParts = icon.split(/--|\:/);
+	const nameParts = icon.split(/--|:/);
 	if (nameParts.length !== 2) {
 		throw new Error(`Invalid icon name: "${icon}"`);
 	}

@@ -3,6 +3,8 @@
 	"compilerOptions": {
 		"types": ["node", "jest"],
 		"rootDir": ".",
-		"outDir": "../tests-compiled"
+		"outDir": "../tests-compiled",
+		"module": "ESNext",
+		"moduleResolution": "bundler"
 	}
 }
