@@ -3,7 +3,7 @@
 	"description": "Iconify plugin for Tailwind CSS",
 	"type": "module",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"license": "MIT",
 	"main": "./dist/plugin.js",
 	"types": "./dist/plugin.d.ts",

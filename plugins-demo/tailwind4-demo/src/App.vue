@@ -10,7 +10,7 @@
 				Monotone icons, arrow changes on hover:
 				<span class="text-2xl demo">
 					<span
-						class="icon-[mdi-light--arrow-left] hover:icon-[mdi-light--arrow-right]"
+						class="icon-[mdi-light--arrow-left] hover:icon-override-[mdi-light--arrow-right]"
 					></span>
 					<span class="icon-[mdi-light--forum]"></span>
 				</span>
