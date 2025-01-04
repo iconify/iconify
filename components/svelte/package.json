@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "4.1.0",
+	"version": "4.2.0",
 	"type": "module",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
