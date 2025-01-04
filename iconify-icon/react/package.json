@@ -38,7 +38,7 @@
 		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
-		"@types/react": "^18.3.14",
+		"@types/react": "^18.3.18",
 		"@types/react-test-renderer": "^18.3.1",
 		"@vitejs/plugin-react": "^4.3.4",
 		"jest": "^29.7.0",
