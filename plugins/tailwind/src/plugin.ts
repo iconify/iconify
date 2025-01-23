@@ -8,7 +8,7 @@ import type { DynamicIconifyPluginOptions } from './helpers/options.js';
  *
  * Usage in HTML: <span class="icon-[mdi-light--home]" />
  */
-function addDynamicIconSelectors(): ReturnType<typeof plugin.withOptions> {
+function addDynamicIconSelectors() {
 	return plugin.withOptions((params: unknown) => {
 		// Clean up options
 		const options: DynamicIconifyPluginOptions = {};
