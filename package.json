@@ -10,7 +10,7 @@
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git"
 	},
-	"packageManager": "pnpm@9.15.2",
+	"packageManager": "pnpm@9.15.4",
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
 		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run build",
@@ -19,11 +19,6 @@
 	"devDependencies": {},
 	"pnpm": {
 		"packageExtensions": {
-			"vue-template-compiler": {
-				"peerDependencies": {
-					"vue": "^2.*"
-				}
-			},
 			"tsutils": {
 				"peerDependencies": {
 					"typescript": "*"

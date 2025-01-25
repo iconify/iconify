@@ -425,22 +425,22 @@
 		"globals": "^15.14.0",
 		"kolorist": "^1.8.0",
 		"local-pkg": "^0.5.1",
-		"mlly": "^1.7.3"
+		"mlly": "^1.7.4"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.2.0",
-		"@eslint/js": "^9.17.0",
+		"@eslint/js": "^9.19.0",
 		"@iconify-json/fa6-regular": "^1.2.3",
 		"@iconify-json/flat-color-icons": "^1.2.1",
 		"@types/debug": "^4.1.12",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^18.19.69",
-		"@typescript-eslint/eslint-plugin": "^8.19.0",
-		"eslint": "^9.17.0",
+		"@types/node": "^18.19.74",
+		"@typescript-eslint/eslint-plugin": "^8.21.0",
+		"eslint": "^9.19.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-prettier": "^5.2.1",
+		"eslint-plugin-prettier": "^5.2.3",
 		"rimraf": "^6.0.1",
-		"typescript": "^5.7.2",
+		"typescript": "^5.7.3",
 		"unbuild": "^2.0.0",
 		"vitest": "^2.1.8"
 	}
