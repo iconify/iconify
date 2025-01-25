@@ -50,7 +50,7 @@ export function splitEmojiNameVariations(
 	}
 
 	// Get variations
-	const variations: (string | EmojiSequenceComponentEntry)[] = parts
+	const baseVariations: string[] = parts
 		.join(nameSplit)
 		.split(variationSplit)
 		.filter((text) => {
@@ -66,7 +66,9 @@ export function splitEmojiNameVariations(
 
 	const key =
 		base +
-		(variations.length ? nameSplit + variations.join(variationSplit) : '');
+		(baseVariations.length
+			? nameSplit + baseVariations.join(variationSplit)
+			: '');
 	const result: SplitEmojiName = {
 		base,
 		key,
@@ -74,6 +76,9 @@ export function splitEmojiNameVariations(
 
 	// Check sequence for variations
 	let components = 0;
+	const variations: (string | EmojiSequenceComponentEntry)[] = [
+		...baseVariations,
+	];
 	for (let index = 0; index < sequence.length; index++) {
 		const num = sequence[index];
 		for (const key in emojiComponents) {
