@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import plugin from 'tailwindcss/plugin';
 import { getCSSRulesForIcons } from './clean';
 import { getDynamicCSSRules } from './dynamic';
