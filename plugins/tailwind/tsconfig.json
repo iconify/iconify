@@ -1,6 +1,6 @@
 {
 	"extends": "./tsconfig-base.json",
-	"include": ["src/**/*.ts", ".eslintrc.cjs"],
+	"include": ["src/**/*.ts"],
 	"compilerOptions": {
 		"rootDir": "./src",
 		"outDir": "./lib",
