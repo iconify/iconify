@@ -418,13 +418,13 @@
 		"*.d.ts"
 	],
 	"dependencies": {
-		"@antfu/install-pkg": "^0.4.1",
-		"@antfu/utils": "^0.7.10",
+		"@antfu/install-pkg": "^1.0.0",
+		"@antfu/utils": "^8.1.0",
 		"@iconify/types": "workspace:^",
 		"debug": "^4.4.0",
 		"globals": "^15.14.0",
 		"kolorist": "^1.8.0",
-		"local-pkg": "^0.5.1",
+		"local-pkg": "^1.0.0",
 		"mlly": "^1.7.4"
 	},
 	"devDependencies": {
