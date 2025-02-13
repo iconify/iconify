@@ -4,9 +4,17 @@ This Tailwind 3 plugin creates CSS for over 150k open source icons. For Tailwind
 
 [Browse icons at Iconify](https://icon-sets.iconify.design/) to see all icons.
 
+## Tailwind CSS versions
+
+This plugin is for Tailwind CSS 3.
+
+It can be used with Tailwind CSS 4, but requires creating a config file.
+
+For Tailwind CSS 4 there is [a new plugin in a different repository](https://github.com/iconify/iconify-tailwind).
+
 ## Usage
 
-[See Iconify for Tailwind CSS documentation](https://iconify.design/docs/usage/css/tailwind/#installation).
+[See Iconify for Tailwind CSS documentation](https://iconify.design/docs/usage/css/tailwind/tailwind3/).
 
 ## License
 
