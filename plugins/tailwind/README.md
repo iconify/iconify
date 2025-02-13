@@ -1,6 +1,6 @@
 # Iconify for Tailwind CSS
 
-This plugin creates CSS for over 150k open source icons.
+This Tailwind 3 plugin creates CSS for over 150k open source icons. For Tailwind 4, see [`@iconify/tailwind4`](https://www.npmjs.com/package/@iconify/tailwind4).
 
 [Browse icons at Iconify](https://icon-sets.iconify.design/) to see all icons.
 
