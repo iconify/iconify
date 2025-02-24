@@ -39,8 +39,6 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
  *
  * Icons should combine either mask or background selector and icon selector
  *
- * This plugin generates only square icons. Icons that are not square will be resized to fit square.
- *
  * Usage in HTML: <span class="iconify mdi-light--home" />
  */
 export function addIconSelectors(options: IconifyPluginOptions) {
