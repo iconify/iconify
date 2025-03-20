@@ -5,7 +5,7 @@ import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 /**
  * External package name.
  *
- * You can use scoped packages, for example, `@my-collections/collection-a` or normal packages `my-awaesome-collection`.
+ * You can use scoped packages, for example, `@my-collections/collection-a` or normal packages `my-awesome-collection`.
  */
 export type ExternalPkgName = string | [scope: string, collection: string];
 
