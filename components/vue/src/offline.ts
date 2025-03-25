@@ -1,13 +1,4 @@
-import { defineComponent } from 'vue';
-import type {
-	VNode,
-	DefineComponent,
-	ComponentOptionsMixin,
-	EmitsOptions,
-	VNodeProps,
-	AllowedComponentProps,
-	ComponentCustomProps,
-} from 'vue';
+import { defineComponent, renderSlot } from 'vue';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
@@ -73,39 +64,63 @@ export function addCollection(
 /**
  * Component
  */
-export const Icon = defineComponent<IconProps>({
-	// Do not inherit other attributes: it is handled by render()
-	inheritAttrs: false,
+export const Icon = defineComponent<IconProps>(
+	(props: IconProps, ctx) => {
+		// Render function
+		return () => {
+			// Check icon
+			const propsIcon = props.icon;
+			const icon: IconifyIcon | null =
+				typeof propsIcon === 'string'
+					? storage[propsIcon]
+					: typeof propsIcon === 'object'
+					? propsIcon
+					: null;
 
-	// Render icon
-	render() {
-		const props = this.$attrs;
+			// Validate icon object
+			if (
+				icon === null ||
+				typeof icon !== 'object' ||
+				typeof icon.body !== 'string'
+			) {
+				// Failed
+				return renderSlot(ctx.slots, 'default');
+			}
 
-		// Check icon
-		const propsIcon = props.icon;
-		const icon: IconifyIcon | null =
-			typeof propsIcon === 'string'
-				? storage[propsIcon]
-				: typeof propsIcon === 'object'
-				? propsIcon
-				: null;
-
-		// Validate icon object
-		if (
-			icon === null ||
-			typeof icon !== 'object' ||
-			typeof icon.body !== 'string'
-		) {
-			return this.$slots.default ? this.$slots.default() : null;
-		}
-
-		// Valid icon: render it
-		return render(
-			{
-				...defaultIconProps,
-				...icon,
-			},
-			props
-		);
+			// Valid icon: render it
+			return render(
+				{
+					...defaultIconProps,
+					...icon,
+				},
+				props
+			);
+		};
 	},
-});
+	{
+		props: [
+			// Icon and render mode
+			'icon',
+			'mode',
+			'ssr',
+			// Layout and style
+			'width',
+			'height',
+			'style',
+			'color',
+			'inline',
+			// Transformations
+			'rotate',
+			'hFlip',
+			'horizontalFlip',
+			'vFlip',
+			'verticalFlip',
+			'flip',
+			// Misc
+			'id',
+			'ariaHidden',
+			'customise',
+			'title',
+		],
+	}
+);

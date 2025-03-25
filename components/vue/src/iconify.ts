@@ -1,13 +1,12 @@
-import { defineComponent } from 'vue';
-import type {
-	DefineComponent,
-	ComponentOptionsMixin,
-	EmitsOptions,
-	VNodeProps,
-	AllowedComponentProps,
-	ComponentCustomProps,
+import {
+	defineComponent,
+	onMounted,
+	onUnmounted,
+	ref,
+	shallowRef,
+	nextTick,
+	watch,
 } from 'vue';
-
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
@@ -74,15 +73,8 @@ import {
 } from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
-// Cache
-import type {
-	IconifyBrowserCacheType,
-	IconifyBrowserCacheFunctions,
-} from '@iconify/core/lib/browser-storage/functions';
-
 // Properties
 import type {
-	IconifyIconOnLoad,
 	IconProps,
 	IconifyIconCustomisations,
 	IconifyIconProps,
@@ -100,7 +92,6 @@ import { render } from './render';
 export {
 	IconifyStorageFunctions,
 	IconifyBuilderFunctions,
-	IconifyBrowserCacheFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 };
@@ -115,7 +106,6 @@ export {
 	IconifyRenderMode,
 	IconifyIconProps,
 	IconProps,
-	IconifyIconOnLoad,
 };
 
 // API
@@ -136,27 +126,6 @@ export {
 
 // Builder functions
 export { IconifyIconBuildResult };
-
-/* Browser cache */
-export { IconifyBrowserCacheType };
-
-/**
- * Enable cache
- *
- * @deprecated No longer used
- */
-function enableCache(storage: IconifyBrowserCacheType): void {
-	//
-}
-
-/**
- * Disable cache
- *
- * @deprecated No longer used
- */
-function disableCache(storage: IconifyBrowserCacheType): void {
-	//
-}
 
 /**
  * Initialise stuff
@@ -241,76 +210,55 @@ const emptyIcon = {
 /**
  * Component
  */
-interface IconComponentData {
-	data: IconifyIcon;
-	classes?: string[];
-}
+export const Icon = defineComponent<IconProps>(
+	(props: IconProps, { emit }) => {
+		// Loader
+		interface LoaderState {
+			name: string;
+			abort?: () => void;
+		}
+		const loader = ref<LoaderState | null>(null);
 
-export const Icon = defineComponent<IconProps>({
-	// Do not inherit other attributes: it is handled by render()
-	inheritAttrs: false,
-
-	// Set initial data
-	data() {
-		return {
-			// Current icon name
-			_name: '',
-
-			// Loading
-			_loadingIcon: null,
-
-			// Mounted status
-			iconMounted: false,
-
-			// Callback counter to trigger re-render
-			counter: 0,
-		};
-	},
-
-	mounted() {
-		// Mark as mounted
-		this.iconMounted = true;
-	},
-
-	unmounted() {
-		this.abortLoading();
-	},
-
-	methods: {
-		abortLoading() {
-			if (this._loadingIcon) {
-				this._loadingIcon.abort();
-				this._loadingIcon = null;
+		function abortLoading() {
+			if (loader.value) {
+				loader.value.abort?.();
+				loader.value = null;
 			}
-		},
+		}
 
-		// Get data for icon to render or null
-		getIcon(
-			icon: IconifyIcon | string,
-			onload?: IconifyIconOnLoad,
-			customise?: IconifyIconCustomiseCallback
-		): IconComponentData | null {
+		// Render state
+		const rendering = ref(!!props.ssr);
+		const lastRenderedIconName = ref('');
+
+		// Icon data
+		interface IconComponentData {
+			data: IconifyIcon;
+			classes?: string[];
+		}
+		const iconData = shallowRef<IconComponentData | null>(null);
+
+		// Update icon data
+		function getIcon(): IconComponentData | null {
+			const icon = props.icon;
+
 			// Icon is an object
 			if (
 				typeof icon === 'object' &&
 				icon !== null &&
 				typeof icon.body === 'string'
 			) {
-				// Stop loading
-				this._name = '';
-				this.abortLoading();
+				lastRenderedIconName.value = '';
 				return {
 					data: icon,
 				};
 			}
 
-			// Invalid icon?
+			// Check for valid icon name
 			let iconName: IconifyIconName | null;
 			if (
 				typeof icon !== 'string' ||
 				(iconName = stringToIcon(icon, false, true)) === null
 			) {
-				this.abortLoading();
 				return null;
 			}
 
@@ -318,17 +266,18 @@ export const Icon = defineComponent<IconProps>({
 			let data = getIconData(iconName);
 			if (!data) {
 				// Icon data is not available
-				if (!this._loadingIcon || this._loadingIcon.name !== icon) {
-					// New icon to load
-					this.abortLoading();
-					this._name = '';
-					if (data !== null) {
-						// Icon was not loaded
-						this._loadingIcon = {
+				const oldState = loader.value;
+				if (!oldState || oldState.name !== icon) {
+					// Icon name does not match old loader state
+					if (data === null) {
+						// Failed to load
+						loader.value = {
 							name: icon,
-							abort: loadIcons([iconName], () => {
-								this.counter++;
-							}),
+						};
+					} else {
+						loader.value = {
+							name: icon,
+							abort: loadIcons([iconName], updateIconData),
 						};
 					}
 				}
@@ -336,15 +285,17 @@ export const Icon = defineComponent<IconProps>({
 			}
 
 			// Icon data is available
-			this.abortLoading();
-			if (this._name !== icon) {
-				this._name = icon;
-				if (onload) {
-					onload(icon);
-				}
+			abortLoading();
+			if (lastRenderedIconName.value !== icon) {
+				lastRenderedIconName.value = icon;
+				// Emit on next tick because render will be called on next tick
+				nextTick(() => {
+					emit('load', icon);
+				});
 			}
 
 			// Customise icon
+			const customise = props.customise;
 			if (customise) {
 				// Clone data and customise it
 				data = Object.assign({}, data);
@@ -369,49 +320,88 @@ export const Icon = defineComponent<IconProps>({
 			}
 
 			return { data, classes };
-		},
-	},
-
-	// Render icon
-	render() {
-		// Re-render when counter changes
-		this.counter;
-
-		const props = this.$attrs;
-
-		// Get icon data
-		const icon: IconComponentData | null =
-			this.iconMounted || props.ssr
-				? this.getIcon(props.icon, props.onLoad, props.customise)
-				: null;
-
-		// Validate icon object
-		if (!icon) {
-			return render(emptyIcon, props);
 		}
 
-		// Add classes
-		let newProps = props;
-		if (icon.classes) {
-			newProps = {
-				...props,
-				class:
-					(typeof props['class'] === 'string'
-						? props['class'] + ' '
-						: '') + icon.classes.join(' '),
-			};
+		function updateIconData() {
+			const icon = getIcon();
+			if (!icon) {
+				iconData.value = null;
+			} else if (icon.data !== iconData.value?.data) {
+				iconData.value = icon;
+			}
 		}
 
-		// Render icon
-		return render(
-			{
-				...defaultIconProps,
-				...icon.data,
-			},
-			newProps
-		);
+		// Set icon data
+		if (rendering.value) {
+			updateIconData();
+		} else {
+			onMounted(() => {
+				rendering.value = true;
+				updateIconData();
+			});
+		}
+		watch(() => props.icon, updateIconData);
+
+		// Abort loading on unmount
+		onUnmounted(abortLoading);
+
+		// Render function
+		return () => {
+			// Get icon data
+			const icon = iconData.value;
+
+			if (!icon) {
+				// Icon is not available
+				return render(emptyIcon, props);
+			}
+
+			// Add classes
+			let newProps = props as IconifyIconProps & { class?: string };
+			if (icon.classes) {
+				newProps = {
+					...props,
+					class: icon.classes.join(' '),
+				};
+			}
+
+			// Render icon
+			return render(
+				{
+					...defaultIconProps,
+					...icon.data,
+				},
+				newProps
+			);
+		};
 	},
-});
+	{
+		props: [
+			// Icon and render mode
+			'icon',
+			'mode',
+			'ssr',
+			// Layout and style
+			'width',
+			'height',
+			'style',
+			'color',
+			'inline',
+			// Transformations
+			'rotate',
+			'hFlip',
+			'horizontalFlip',
+			'vFlip',
+			'verticalFlip',
+			'flip',
+			// Misc
+			'id',
+			'ariaHidden',
+			'customise',
+			'title',
+		],
+		emits: ['load'],
+	}
+);
 
 /**
  * Internal API
@@ -452,6 +442,3 @@ export {
 
 // IconifyBuilderFunctions
 export { replaceIDs, calculateSize, buildIcon };
-
-// IconifyBrowserCacheFunctions
-export { enableCache, disableCache };

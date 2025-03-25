@@ -18,7 +18,6 @@ describe('Rendering icon', () => {
 			const name = 'render-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const className = `iconify iconify--${prefix} iconify--${provider}`;
-			let onLoadCalled = false;
 
 			mockAPIData({
 				type: 'icons',
@@ -50,32 +49,24 @@ describe('Rendering icon', () => {
 				expect(iconLoaded(iconName)).toEqual(true);
 
 				// Render component
-				const Wrapper = {
-					components: { Icon },
-					// Also test class string
-					template: `<Icon icon="${iconName}" :onLoad="onLoad" class="test" />`,
-					methods: {
-						onLoad(name) {
-							expect(name).toEqual(iconName);
-							expect(onLoadCalled).toEqual(false);
-							onLoadCalled = true;
-						},
+				const wrapper = mount(
+					{
+						components: { Icon },
+						// Also test class string
+						template: `<Icon icon="${iconName}" class="test" />`,
 					},
-				};
-				const wrapper = mount(Wrapper, {});
+					{}
+				);
 
 				// Check HTML on next tick
 				nextTick()
 					.then(() => {
 						const html = wrapper.html().replace(/\s*\n\s*/g, '');
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" class="' +
 								className +
-								'" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+								' test"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
-
-						// Make sure onLoad has been called
-						expect(onLoadCalled).toEqual(true);
 
 						fulfill(true);
 					})
@@ -123,9 +114,9 @@ describe('Rendering icon', () => {
 			// Render component
 			const Wrapper = {
 				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad="onLoad" :class="testClass" />`,
+				template: `<Icon icon="${iconName}" @load="onLoad" :class="testClass" />`,
 				methods: {
-					onLoad(name) {
+					onLoad(name: string) {
 						expect(name).toEqual(iconName);
 						expect(onLoadCalled).toEqual(false);
 						onLoadCalled = true;
@@ -137,9 +128,9 @@ describe('Rendering icon', () => {
 								expect(
 									wrapper.html().replace(/\s*\n\s*/g, '')
 								).toEqual(
-									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="foo ' +
+									'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" class="' +
 										className +
-										'" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+										' foo"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 								);
 
 								fulfill(true);
@@ -208,7 +199,7 @@ describe('Rendering icon', () => {
 			// Render component
 			const Wrapper = {
 				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad='onLoad' />`,
+				template: `<Icon icon="${iconName}" @load='onLoad' />`,
 				methods: {
 					onLoad() {
 						throw new Error('onLoad called for empty icon!');
@@ -256,9 +247,9 @@ describe('Rendering icon', () => {
 				const Wrapper = {
 					components: { Icon },
 					// Also test class string
-					template: `<Icon icon="${iconName}" :onLoad="onLoad" class="test" />`,
+					template: `<Icon icon="${iconName}" @load="onLoad" class="test" />`,
 					methods: {
-						onLoad(name) {
+						onLoad(name: string) {
 							expect(name).toEqual(iconName);
 							expect(onLoadCalled).toEqual(false);
 							onLoadCalled = true;
@@ -272,9 +263,9 @@ describe('Rendering icon', () => {
 					.then(() => {
 						const html = wrapper.html().replace(/\s*\n\s*/g, '');
 						expect(html).toEqual(
-							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="test ' +
+							'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" class="' +
 								className +
-								'" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
+								' test"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>'
 						);
 
 						// Make sure onLoad has been called

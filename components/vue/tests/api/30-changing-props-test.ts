@@ -27,7 +27,7 @@ describe('Rendering icon', () => {
 			const className = `iconify iconify--${prefix} iconify--${provider}`;
 			let onLoadCalled = ''; // Name of icon from last onLoad call
 
-			const onLoad = (name) => {
+			const onLoad = (name: string) => {
 				// onLoad should be called only once per icon
 				switch (name) {
 					// First onLoad call
@@ -46,6 +46,7 @@ describe('Rendering icon', () => {
 								);
 
 								wrapper.setProps({
+									// @ts-ignore
 									icon: iconName2,
 								});
 							})
@@ -134,14 +135,16 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const Wrapper = {
-				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad="onLoad" />`,
-				methods: {
-					onLoad,
+			const wrapper = mount(
+				{
+					components: { Icon },
+					template: `<Icon icon="${iconName}" @load="onLoad" />`,
+					methods: {
+						onLoad,
+					},
 				},
-			};
-			const wrapper = mount(Wrapper, {});
+				{}
+			);
 
 			// onLoad should not have been called yet
 			expect(onLoadCalled).toEqual('');
@@ -235,17 +238,20 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const Wrapper = {
-				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad="onLoad" />`,
-				methods: {
-					onLoad,
+			const wrapper = mount(
+				{
+					components: { Icon },
+					template: `<Icon icon="${iconName}" @load="onLoad" />`,
+					methods: {
+						onLoad,
+					},
 				},
-			};
-			const wrapper = mount(Wrapper, {});
+				{}
+			);
 
 			// Change icon name
 			wrapper.setProps({
+				// @ts-ignore
 				icon: iconName2,
 			});
 
@@ -277,6 +283,7 @@ describe('Rendering icon', () => {
 
 						// Add horizontal flip and style
 						wrapper.setProps({
+							// @ts-ignore
 							icon: iconName,
 							hFlip: true,
 							style: {
@@ -327,14 +334,16 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component with placeholder text
-			const Wrapper = {
-				components: { Icon },
-				template: `<Icon icon="${iconName}" :onLoad="onLoad" />`,
-				methods: {
-					onLoad,
+			const wrapper = mount(
+				{
+					components: { Icon },
+					template: `<Icon icon="${iconName}" @load="onLoad" />`,
+					methods: {
+						onLoad,
+					},
 				},
-			};
-			const wrapper = mount(Wrapper, {});
+				{}
+			);
 		});
 	});
 });
