@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Icon, disableCache, addIcon } from '@iconify/vue';
+import { Icon, addIcon } from '@iconify/vue';
 
 // Preload icon
 addIcon('mdi-animated:coffee', {
@@ -24,9 +24,6 @@ addIcon('mdi-animated:coffee', {
 	height: 24,
 	body: `<mask id="coffee-mask" x="0" y="0" width="24" height="24"><g fill="white"><path d="M20 13h-2v-3h2v3Zm0-5H4v10a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-3h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2Z"></path><path d="M8 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M16 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4" stroke="white" stroke-width="2" fill="none"><animateMotion path="M0 0v-8" calcMode="linear" dur="3s" repeatCount="indefinite"></animateMotion></path></g><g fill="black"><path d="M4 7h18v1H4zM4 0h18v2H4z"></path></g></mask><rect mask="url(#coffee-mask)" width="24" height="24" fill="currentColor"></rect>`,
 });
-
-// Disable cache to make sure other icons aren't cached after being loaded from API
-disableCache('all');
 
 export default {
 	components: {
