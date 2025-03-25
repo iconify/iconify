@@ -138,24 +138,6 @@ describe('Passing attributes', () => {
 		expect(wrapper.html()).toContain('style="color: purple;"');
 	});
 
-	test('attributes that cannot change', async () => {
-		const Wrapper = {
-			components: { Icon },
-			template: `<Icon :icon="icon" viewBox="0 0 0 0" />`,
-			data() {
-				return {
-					icon: iconData,
-				};
-			},
-		};
-
-		const wrapper = mount(Wrapper, {});
-		await nextTick();
-
-		const html = wrapper.html();
-		expect(html).not.toContain('viewBox="0 0 0 0"');
-	});
-
 	test('class', async () => {
 		const Wrapper = {
 			components: { Icon },

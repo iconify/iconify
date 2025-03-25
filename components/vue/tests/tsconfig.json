@@ -1,7 +1,7 @@
 {
 	"extends": "../tsconfig.common.json",
 	"compilerOptions": {
-		"types": ["node", "jest"],
+		"types": ["jest"],
 		"rootDir": "."
 	}
 }

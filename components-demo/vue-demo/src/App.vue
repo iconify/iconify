@@ -37,7 +37,6 @@ import {
 import {
 	addIcon as addOnlineIcon,
 	addCollection as addOnlineCollection,
-	disableCache,
 } from '@iconify/vue';
 import bxBarChartAlt from '@iconify-icons/bx/bx-bar-chart-alt';
 import bxShapes from '@iconify-icons/bx/bxs-shapes';
@@ -52,9 +51,6 @@ import LoadingTest from './test-components/LoadingDemo.vue';
 import StyleTest from './test-components/Style.vue';
 import InlineTest from './test-components/Inline.vue';
 import VueAttributesTest from './test-components/VueAttributes.vue';
-
-// Disable cache
-disableCache('all');
 
 // Add 'bx:bx-bar-chart-alt' as 'demo' for offline module
 addOfflineIcon('demo', bxBarChartAlt);

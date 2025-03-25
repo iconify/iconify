@@ -21,17 +21,15 @@ export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
 
 	// Inline mode
 	inline?: boolean;
+
+	// Remove aria-hidden attribute
+	ariaHidden?: boolean;
 };
 
 export const defaultExtendedIconCustomisations = {
 	...defaultIconCustomisations,
 	inline: false,
 };
-
-/**
- * Callback for when icon has been loaded (only triggered for icons loaded from API)
- */
-export type IconifyIconOnLoad = (name: string) => void;
 
 /**
  * Customise callback
@@ -58,6 +56,10 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 
 	// Shorthand flip
 	flip?: string;
+
+	// Vue specific flip properties because 'v-flip' is not a valid attribute in Vue
+	horizontalFlip?: boolean;
+	verticalFlip?: boolean;
 }
 
 /**
@@ -69,6 +71,9 @@ interface IconifyElementProps {
 
 	// Style
 	style?: unknown;
+
+	// Title will be integrated into SVG as <title> element
+	title?: string;
 }
 
 /**
@@ -82,9 +87,6 @@ export interface IconProps extends IconifyElementProps, IconifyIconProps {
 	 * Note this might hydration mismatches if the icon data is not handled correctly, use with caution.
 	 */
 	ssr?: boolean;
-
-	// Callback to call when icon data has been loaded. Used only for icons loaded from API
-	onLoad?: IconifyIconOnLoad;
 
 	// Customise icon content (replace stroke-width, colors, etc...).
 	// Called only for icons loaded from API
