@@ -338,7 +338,9 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 	if (!data) {
 		return props.children
 			? (props.children as JSX.Element)
-			: createElement('span', {});
+			: props.fallback
+				? (props.fallback as JSX.Element)
+				: createElement('span', {});
 	}
 
 	return render(
