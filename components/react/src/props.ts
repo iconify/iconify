@@ -1,4 +1,4 @@
-import type { SVGProps, RefAttributes } from 'react';
+import type { SVGProps, RefAttributes, ReactNode } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import type { IconifyIconCustomisations as RawIconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
@@ -55,6 +55,10 @@ export interface IconifyIconProps extends IconifyIconCustomisations {
 
 	// If true, icon will be rendered without waiting for component to mount, such as when rendering on server side
 	ssr?: boolean;
+
+	// If present, icon will render the value of this property before the icon is loaded and rendered
+	// If not present, icon will render an empty span
+	fallback?: ReactNode;
 
 	// Callback to call when icon data has been loaded. Used only for icons loaded from API
 	onLoad?: IconifyIconOnLoad;
