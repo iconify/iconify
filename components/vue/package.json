@@ -45,18 +45,18 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.26.7",
+		"@babel/preset-env": "^7.26.9",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.49.1",
+		"@microsoft/api-extractor": "^7.52.2",
 		"@rollup/plugin-node-resolve": "^15.3.1",
 		"@types/jest": "^29.5.14",
-		"@vitejs/plugin-vue": "^5.2.1",
+		"@vitejs/plugin-vue": "^5.2.3",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^25.0.1",
-		"rollup": "^4.32.0",
-		"typescript": "^5.7.3",
-		"vitest": "^2.1.8",
+		"rollup": "^4.38.0",
+		"typescript": "^5.8.2",
+		"vitest": "^2.1.9",
 		"vue": "^3.5.13"
 	},
 	"peerDependencies": {

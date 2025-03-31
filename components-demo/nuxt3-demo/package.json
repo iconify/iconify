@@ -9,9 +9,9 @@
 		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"nuxt": "^3.15.3",
-		"typescript": "^5.7.3",
-		"vite": "^5.4.14"
+		"nuxt": "^3.16.1",
+		"typescript": "^5.8.2",
+		"vite": "^5.4.15"
 	},
 	"dependencies": {
 		"@iconify/vue": "workspace:*"

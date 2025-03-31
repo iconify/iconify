@@ -97,18 +97,18 @@
 		"@iconify/utils": "workspace:^"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.2.0",
-		"@eslint/js": "^9.19.0",
+		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/js": "^9.23.0",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^18.19.74",
-		"@typescript-eslint/eslint-plugin": "^8.21.0",
-		"eslint": "^9.19.0",
+		"@types/node": "^18.19.84",
+		"@typescript-eslint/eslint-plugin": "^8.28.0",
+		"eslint": "^9.23.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-prettier": "^5.2.3",
-		"globals": "^15.14.0",
+		"eslint-plugin-prettier": "^5.2.5",
+		"globals": "^15.15.0",
 		"rimraf": "^6.0.1",
-		"typescript": "^5.7.3",
+		"typescript": "^5.8.2",
 		"unbuild": "^2.0.0",
-		"vitest": "^2.1.8"
+		"vitest": "^2.1.9"
 	}
 }
