@@ -3,7 +3,6 @@
 	import {
 		addIcon as addOnlineIcon,
 		addCollection as addOnlineCollection,
-		disableCache,
 	} from '@iconify/svelte';
 
 	import Checkbox from './lib/Checkbox.svelte';
@@ -11,9 +10,6 @@
 	import OfflineUsageDemo from './lib/UsageOffline.svelte';
 	import FullOfflineUsageDemo from './lib/UsageFullOffline.svelte';
 	import FullUsageDemo from './lib/UsageFull.svelte';
-
-	// Disable cache
-	disableCache('all');
 
 	// Add 'mdi-light:presentation-play' as 'demo' for offline module
 	addOfflineIcon('demo', {

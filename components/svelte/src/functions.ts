@@ -64,12 +64,6 @@ import {
 } from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
-// Cache
-import type {
-	IconifyBrowserCacheType,
-	IconifyBrowserCacheFunctions,
-} from '@iconify/core/lib/browser-storage/functions';
-
 // Properties
 import type {
 	IconProps,
@@ -89,7 +83,6 @@ import type { RenderResult } from './render';
 export {
 	IconifyStorageFunctions,
 	IconifyBuilderFunctions,
-	IconifyBrowserCacheFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 };
@@ -124,27 +117,6 @@ export {
 
 // Builder functions
 export { IconifyIconBuildResult };
-
-/* Browser cache */
-export { IconifyBrowserCacheType };
-
-/**
- * Enable cache
- *
- * @deprecated No longer used
- */
-function enableCache(storage: IconifyBrowserCacheType): void {
-	//
-}
-
-/**
- * Disable cache
- *
- * @deprecated No longer used
- */
-function disableCache(storage: IconifyBrowserCacheType): void {
-	//
-}
 
 /**
  * Initialise stuff
@@ -389,6 +361,3 @@ export {
 
 // IconifyBuilderFunctions
 export { replaceIDs, calculateSize, buildIcon };
-
-// IconifyBrowserCacheFunctions
-export { enableCache, disableCache };

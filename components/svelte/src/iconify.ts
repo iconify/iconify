@@ -5,7 +5,6 @@
 export {
 	IconifyStorageFunctions,
 	IconifyBuilderFunctions,
-	IconifyBrowserCacheFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 } from './functions';
@@ -41,16 +40,11 @@ export {
 // Builder functions
 export { IconifyIconBuildResult } from './functions';
 
-// Browser cache
-export { IconifyBrowserCacheType } from './functions';
-
 // Component params
 export { IconifyIconOnLoad } from './functions';
 
 // Functions
 // Important: duplicate of global exports in Icon.svelte. When changing exports, they must be changed in both files.
-export { enableCache, disableCache } from './functions';
-
 export {
 	iconLoaded,
 	iconExists, // deprecated, kept to avoid breaking changes

@@ -2,8 +2,6 @@
 	// Export stuff.
 	// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
 	import { 
-		enableCache,
-		disableCache, 
 		iconLoaded,
 		iconExists, // deprecated, kept to avoid breaking changes
 		getIcon,
@@ -22,8 +20,6 @@
 	} from './functions';
 	
 	export { 
-		enableCache,
-		disableCache, 
 		iconLoaded,
 		iconExists, // deprecated, kept to avoid breaking changes
 		getIcon,
