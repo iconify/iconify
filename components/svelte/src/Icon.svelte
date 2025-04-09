@@ -1,54 +1,54 @@
-<script context="module">
-
-// Export stuff.
-// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
-import { 
-	enableCache,
-	disableCache, 
-	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
-	getIcon,
-	listIcons,
-	addIcon,
-	addCollection,
-	calculateSize,
-	replaceIDs,
-	buildIcon,
-	loadIcons,
-	loadIcon,
-	setCustomIconLoader,
-	setCustomIconsLoader,
-	addAPIProvider,
-	_api
-} from './functions';
-
-export { 
-	enableCache,
-	disableCache, 
-	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
-	getIcon,
-	listIcons,
-	addIcon,
-	addCollection,
-	calculateSize,
-	replaceIDs,
-	buildIcon,
-	loadIcons,
-	loadIcon,
-	setCustomIconLoader,
-	setCustomIconsLoader,
-	addAPIProvider,
-	_api
-}
-
+<script module>
+	// Export stuff.
+	// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
+	import { 
+		enableCache,
+		disableCache, 
+		iconLoaded,
+		iconExists, // deprecated, kept to avoid breaking changes
+		getIcon,
+		listIcons,
+		addIcon,
+		addCollection,
+		calculateSize,
+		replaceIDs,
+		buildIcon,
+		loadIcons,
+		loadIcon,
+		setCustomIconLoader,
+		setCustomIconsLoader,
+		addAPIProvider,
+		_api
+	} from './functions';
+	
+	export { 
+		enableCache,
+		disableCache, 
+		iconLoaded,
+		iconExists, // deprecated, kept to avoid breaking changes
+		getIcon,
+		listIcons,
+		addIcon,
+		addCollection,
+		calculateSize,
+		replaceIDs,
+		buildIcon,
+		loadIcons,
+		loadIcon,
+		setCustomIconLoader,
+		setCustomIconsLoader,
+		addAPIProvider,
+		_api
+	}
+	
 </script>
 <script>
-	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { checkIconState, generateIcon } from './functions';
+	
 
 	// State
-	const state = {
+	const iconState = {
 		// Last icon name
 		name: '',
 
@@ -59,38 +59,28 @@ export {
 		destroyed: false,
 	};
 
+	// Props
+	const props = $props();
+
 	// Mounted status
-	let mounted = false;
+	let mounted = $state(false);
 
 	// Callback counter
-	let counter = 0;
-
-	// Generated data
-	let data;
-
-	const onLoad = (icon) => {
-		// Legacy onLoad property
-		if (typeof $$props.onLoad === 'function') {
-			$$props.onLoad(icon);
-		}
-		// on:load event
-		const dispatch = createEventDispatcher();
-		dispatch('load', {
-			icon
-		});
-	}
+	let counter = $state(0);
 
 	// Generate data
-	$: {
+	let data = $state(null);
+	$effect(() => {
 		counter;
-		const isMounted = !!$$props.ssr || mounted;
-		const iconData = checkIconState($$props.icon, state, isMounted, loaded, onLoad);
-		data = iconData ? generateIcon(iconData.data, $$props) : null;
-		if (data && iconData.classes) {
+		const isMounted = !!props.ssr || mounted;
+		const iconData = checkIconState(props.icon, iconState, isMounted, loaded, props.onload);
+		const generatedData = iconData ? generateIcon(iconData.data, props) : null;
+		if (generatedData && iconData.classes) {
 			// Add classes
-			data.attributes['class'] = (typeof $$props['class'] === 'string' ? $$props['class'] + ' ' : '') + iconData.classes.join(' ');
+			generatedData.attributes['class'] = (typeof props['class'] === 'string' ? props['class'] + ' ' : '') + iconData.classes.join(' ');
 		}
-	}
+		data = generatedData;
+	});
 
 	// Increase counter when loaded to force re-calculation of data
 	function loaded() {
@@ -104,10 +94,10 @@ export {
 
 	// Abort loading when component is destroyed
 	onDestroy(() => {
-		state.destroyed = true;
-		if (state.loading) {
-			state.loading.abort();
-			state.loading = null;
+		iconState.destroyed = true;
+		if (iconState.loading) {
+			iconState.loading.abort();
+			iconState.loading = null;
 		}
 	})
 </script>

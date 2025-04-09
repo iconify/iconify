@@ -1,7 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 
-    let onLoadCalled = false;
+    let onLoadCalled = $state(false);
 </script>
 
 <section class="icon-24">
@@ -10,7 +10,7 @@
         Icon referenced by name (as svg, as span): <Icon icon="mdi:home" mode="svg" /><Icon icon="mdi:home" mode="style" />
     </div>
     <div class="alert">
-        <Icon icon="mdi-light:alert" on:load={event => {
+        <Icon icon="mdi-light:alert" onload={event => {
             console.log(event);
             onLoadCalled = true;
         }} mode="style" />

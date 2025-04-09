@@ -12,26 +12,17 @@
         height: 24
     })
 
-    export let checked = false;
-    export let text = '';
-    export let hint = '';
 
-    let isChecked = checked;
+    let { checked, text, hint } = $props();
 
-    let icon = '';
-    let className = '';
-    $: {
-		icon = isChecked ? 'demo:checked' : 'demo:unchecked';
-		className =
-			'checkbox checkbox--' + (isChecked ? 'checked' : 'unchecked');
-    }
+    let isChecked = $state(!!checked);
 
-    function toggle() {
-        isChecked = !isChecked;
-    }
+    let icon = $derived(isChecked ? 'demo:checked' : 'demo:unchecked');
+    let className = $derived('checkbox checkbox--' + (isChecked ? 'checked' : 'unchecked'));
+  
 </script>
 
 <div class="checkbox-container">
-    <a href="# " class={className} on:click|preventDefault={toggle}><Icon icon={icon} mode={checked ? 'svg' : 'style'} />{text}</a>
+    <a href="# " class={className} onclick={event => {event.preventDefault(); isChecked = !isChecked}}><Icon icon={icon} mode={checked ? 'svg' : 'style'} />{text}</a>
     <small>{hint}</small>
 </div>

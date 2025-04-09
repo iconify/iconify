@@ -106,6 +106,7 @@ export {
 	IconifyRenderMode,
 	IconifyIconProps,
 	IconProps,
+	IconifyIconCustomiseCallback,
 };
 
 // API
