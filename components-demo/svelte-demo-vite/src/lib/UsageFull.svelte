@@ -1,5 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
+    import IconWrapper from './IconWrapper.svelte';
 
     let onLoadCalled = $state(false);
 </script>
@@ -15,5 +16,17 @@
             onLoadCalled = true;
         }} mode="style" />
         Important notice with alert icon{onLoadCalled ? '' : ' (loading...)'}!
+    </div>
+    <div>Icons with fallback (valid, missing): 
+        <IconWrapper icon="mdi-light:alert">
+            {#snippet fallback()}
+                <small>(loading...)</small>
+	        {/snippet}
+        </IconWrapper>
+        <IconWrapper icon="mdi-light:no-such-icon">
+            {#snippet fallback()}
+                <small>(missing)</small>
+	        {/snippet}
+        </IconWrapper>
     </div>
 </section>
