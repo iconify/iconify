@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, loadIcons, iconExists } from '../../dist/iconify';
+import { Icon, loadIcons, iconLoaded } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { describe, test, expect } from 'vitest';
@@ -33,7 +33,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Load icon
 			loadIcons([iconName], (loaded, missing, pending) => {
@@ -47,7 +47,7 @@ describe('Rendering icon', () => {
 				]);
 				expect(missing).toMatchObject([]);
 				expect(pending).toMatchObject([]);
-				expect(iconExists(iconName)).toEqual(true);
+				expect(iconLoaded(iconName)).toEqual(true);
 
 				// Render component
 				const renderResult = render(
@@ -92,7 +92,7 @@ describe('Rendering icon', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toEqual(false);
@@ -101,7 +101,7 @@ describe('Rendering icon', () => {
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toEqual(true);
+					expect(iconLoaded(iconName)).toEqual(true);
 
 					// Check if state was changed in next few ticks
 					let counter = 0;
@@ -133,7 +133,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
 			const renderResult = render(
@@ -168,13 +168,13 @@ describe('Rendering icon', () => {
 				response: 404,
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 
 					// Send icon data
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 
 					// Check if state was changed in next few ticks
 					let counter = 0;
@@ -204,7 +204,7 @@ describe('Rendering icon', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
 			const renderResult = render(

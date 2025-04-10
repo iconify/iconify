@@ -1,4 +1,4 @@
-import { addIcon, addCollection, disableCache } from '@iconify-icon/react';
+import { addIcon, addCollection } from '@iconify-icon/react';
 import chartIcon from '@iconify-icons/mdi-light/chart-histogram';
 
 import { Checkbox } from './demo-components/Checkbox';
@@ -9,9 +9,6 @@ import { FullUsageDemo } from './demo-components/UsageAPI';
 import { TestIcon } from './test-components/TestIcon';
 
 import './App.css';
-
-// Disable cache
-disableCache('all');
 
 // Add few custom icons
 addIcon('demo', chartIcon);

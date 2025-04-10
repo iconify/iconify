@@ -14,7 +14,6 @@ import type {
 export type {
 	IconifyStorageFunctions,
 	IconifyBuilderFunctions,
-	IconifyBrowserCacheFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 } from 'iconify-icon';
@@ -44,9 +43,6 @@ export type {
 // Builder functions
 export type { IconifyIconBuildResult } from 'iconify-icon';
 
-// Browser cache
-export type { IconifyBrowserCacheType } from 'iconify-icon';
-
 // Component types
 export type {
 	IconifyIconAttributes,
@@ -59,10 +55,7 @@ export type {
  * Export functions
  */
 export {
-	enableCache,
-	disableCache,
 	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

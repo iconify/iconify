@@ -1,18 +1,10 @@
 import type { Component } from 'solid-js';
-import {
-	Icon,
-	addIcon,
-	addCollection,
-	disableCache,
-} from '@iconify-icon/solid';
+import { Icon, addIcon, addCollection } from '@iconify-icon/solid';
 import calendarIcon from '@iconify-icons/line-md/calendar';
 
 import UsageAPI from './demo/UsageAPI';
 import UsageOffline from './demo/UsageOffline';
 import InlineDemo from './demo/Inline';
-
-// Disable cache
-disableCache('all');
 
 // Add few custom icons
 addIcon('demo', calendarIcon);

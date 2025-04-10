@@ -5,7 +5,6 @@ import {
 import {
 	addIcon as addOnlineIcon,
 	addCollection as addOnlineCollection,
-	disableCache,
 } from '@iconify/react';
 import presentationPlay from '@iconify-icons/mdi-light/presentation-play';
 import playIcon from '@iconify-icons/mdi-light/play';
@@ -20,9 +19,6 @@ import { TestsFullOffline } from './test-components/TestsFullOffline';
 import { TestsFull } from './test-components/TestsFull';
 
 import './App.css';
-
-// Disable cache
-disableCache('all');
 
 // Add 'mdi-light:presentation-play' as 'demo' for offline module
 addOfflineIcon('demo', presentationPlay);

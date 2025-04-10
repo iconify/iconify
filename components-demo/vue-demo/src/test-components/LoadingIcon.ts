@@ -1,5 +1,5 @@
 import { Icon, getIcon, loadIcons } from '@iconify/vue';
-import { h, defineComponent, ref } from 'vue';
+import { h, defineComponent, shallowRef } from 'vue';
 
 export default defineComponent({
 	components: {
@@ -8,10 +8,10 @@ export default defineComponent({
 	props: ['icon'],
 	setup() {
 		// Variable to store function to cancel loading
-		const loader = ref(null);
+		const loader = shallowRef<ReturnType<typeof loadIcons> | null>(null);
 
 		// Icon data
-		const data = ref(null);
+		const data = shallowRef<ReturnType<typeof getIcon>>(null);
 
 		// Function to check icon data
 		const check = (icon: string) => {

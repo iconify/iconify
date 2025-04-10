@@ -3,7 +3,6 @@
 	// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
 	import { 
 		iconLoaded,
-		iconExists, // deprecated, kept to avoid breaking changes
 		getIcon,
 		listIcons,
 		addIcon,
@@ -21,7 +20,6 @@
 	
 	export { 
 		iconLoaded,
-		iconExists, // deprecated, kept to avoid breaking changes
 		getIcon,
 		listIcons,
 		addIcon,
@@ -41,7 +39,6 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { checkIconState, generateIcon } from './functions';
-	
 
 	// State
 	const iconState = {

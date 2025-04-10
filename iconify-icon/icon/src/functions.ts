@@ -45,11 +45,7 @@ import {
 	setCustomIconsLoader,
 } from '@iconify/core/lib/api/loaders';
 
-// Cache
-import type {
-	IconifyBrowserCacheType,
-	IconifyBrowserCacheFunctions,
-} from '@iconify/core/lib/browser-storage/functions';
+// Misc
 import { appendCustomStyle } from './render/style';
 
 /**
@@ -58,7 +54,6 @@ import { appendCustomStyle } from './render/style';
 export interface IconifyExportedFunctions
 	extends IconifyStorageFunctions,
 		IconifyBuilderFunctions,
-		IconifyBrowserCacheFunctions,
 		IconifyAPIFunctions {
 	// API internal functions
 	_api: IconifyAPIInternalFunctions;
@@ -166,16 +161,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 	};
 
 	return {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		enableCache: (storage: IconifyBrowserCacheType) => {
-			// No longer used
-		},
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		disableCache: (storage: IconifyBrowserCacheType) => {
-			// No longer used
-		},
 		iconLoaded,
-		iconExists: iconLoaded, // deprecated, kept to avoid breaking changes
 		getIcon,
 		listIcons,
 		addIcon,

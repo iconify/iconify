@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, InlineIcon, loadIcons, iconExists } from '../../dist/iconify';
+import { Icon, InlineIcon, loadIcons, iconLoaded } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { describe, test, expect } from 'vitest';
@@ -31,7 +31,7 @@ describe('Testing references', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Load icon
 			loadIcons([iconName], (loaded, missing, pending) => {
@@ -48,7 +48,7 @@ describe('Testing references', () => {
 				]);
 				expect(missing).toMatchObject([]);
 				expect(pending).toMatchObject([]);
-				expect(iconExists(iconName)).toEqual(true);
+				expect(iconLoaded(iconName)).toEqual(true);
 
 				// Render components
 				render(
@@ -97,7 +97,7 @@ describe('Testing references', () => {
 				},
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 
 					// Reference should not have been called yet
 					expect(gotRef).toEqual(false);
@@ -106,7 +106,7 @@ describe('Testing references', () => {
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toEqual(true);
+					expect(iconLoaded(iconName)).toEqual(true);
 					expect(gotRef).toEqual(false);
 
 					// Check if state was changed in next few ticks
@@ -130,7 +130,7 @@ describe('Testing references', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
 			render(
@@ -161,7 +161,7 @@ describe('Testing references', () => {
 				response: 404,
 				delay: (next) => {
 					// Icon should not have loaded yet
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 
 					// Reference should not have been called
 					expect(gotRef).toEqual(false);
@@ -170,7 +170,7 @@ describe('Testing references', () => {
 					next();
 
 					// Test it again
-					expect(iconExists(iconName)).toEqual(false);
+					expect(iconLoaded(iconName)).toEqual(false);
 					expect(gotRef).toEqual(false);
 
 					// Check if state was changed in next few ticks
@@ -194,7 +194,7 @@ describe('Testing references', () => {
 			});
 
 			// Check if icon has been loaded
-			expect(iconExists(iconName)).toEqual(false);
+			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
 			render(

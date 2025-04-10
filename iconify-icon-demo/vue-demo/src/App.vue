@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { addIcon, addCollection, disableCache } from 'iconify-icon';
+import { addIcon, addCollection } from 'iconify-icon';
 import bxBarChartAlt from '@iconify-icons/bx/bx-bar-chart-alt';
 
 import Checkbox from './demo-components/Checkbox.vue';
@@ -39,9 +39,6 @@ import UsageDemo from './demo-components/Usage.vue';
 import StyleTest from './test-components/Style.vue';
 import InlineTest from './test-components/Inline.vue';
 import VueAttributesTest from './test-components/VueAttributes.vue';
-
-// Disable cache
-disableCache('all');
 
 // Add custom icons
 addIcon('demo', bxBarChartAlt);

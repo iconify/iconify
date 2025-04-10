@@ -1,5 +1,5 @@
-import { Icon, iconExists, loadIcons } from '@iconify/vue';
-import { h, defineComponent, ref } from 'vue';
+import { Icon, iconLoaded, loadIcons } from '@iconify/vue';
+import { h, defineComponent, shallowRef } from 'vue';
 
 export default defineComponent({
 	components: {
@@ -8,14 +8,14 @@ export default defineComponent({
 	props: ['icon'],
 	setup() {
 		// Variable to store function to cancel loading
-		const loader = ref(null);
+		const loader = shallowRef<ReturnType<typeof loadIcons> | null>(null);
 
 		// Icon status
-		const loaded = ref(null);
+		const loaded = shallowRef<boolean | null>(null);
 
 		// Function to check if icon exists
 		const check = (icon: string) => {
-			const isLoaded = (loaded.value = iconExists(icon));
+			const isLoaded = (loaded.value = iconLoaded(icon));
 
 			// Cancel old loder
 			if (loader.value) {
@@ -25,7 +25,7 @@ export default defineComponent({
 
 			if (!isLoaded) {
 				loader.value = loadIcons([icon], () => {
-					loaded.value = iconExists(icon);
+					loaded.value = iconLoaded(icon);
 				});
 			}
 		};

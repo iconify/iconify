@@ -36,12 +36,6 @@ import type {
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 
-// Cache
-import type {
-	IconifyBrowserCacheType,
-	IconifyBrowserCacheFunctions,
-} from '@iconify/core/lib/browser-storage/functions';
-
 // Component
 import type {
 	IconifyIconProperties,
@@ -63,7 +57,6 @@ import { appendCustomStyle } from './render/style';
 export {
 	IconifyStorageFunctions,
 	IconifyBuilderFunctions,
-	IconifyBrowserCacheFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
 };
@@ -93,9 +86,6 @@ export {
 // Builder functions
 export { IconifyIconBuildResult };
 
-// Browser cache
-export { IconifyBrowserCacheType };
-
 // Component types
 export {
 	IconifyIconProperties,
@@ -114,10 +104,7 @@ export const IconifyIconComponent = defineIconifyIcon() || exportFunctions();
  * Export functions
  */
 const {
-	enableCache,
-	disableCache,
 	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,
@@ -135,10 +122,7 @@ const {
 } = IconifyIconComponent;
 
 export {
-	enableCache,
-	disableCache,
 	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

@@ -47,7 +47,6 @@ export { IconifyIconOnLoad } from './functions';
 // Important: duplicate of global exports in Icon.svelte. When changing exports, they must be changed in both files.
 export {
 	iconLoaded,
-	iconExists, // deprecated, kept to avoid breaking changes
 	getIcon,
 	listIcons,
 	addIcon,

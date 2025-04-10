@@ -62,14 +62,6 @@
 			"require": "./lib/api/types.cjs",
 			"import": "./lib/api/types.mjs"
 		},
-		"./lib/browser-storage/functions": {
-			"require": "./lib/browser-storage/functions.cjs",
-			"import": "./lib/browser-storage/functions.mjs"
-		},
-		"./lib/browser-storage/types": {
-			"require": "./lib/browser-storage/types.cjs",
-			"import": "./lib/browser-storage/types.mjs"
-		},
 		"./lib/builder/functions": {
 			"require": "./lib/builder/functions.cjs",
 			"import": "./lib/builder/functions.mjs"

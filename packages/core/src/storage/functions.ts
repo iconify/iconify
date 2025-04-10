@@ -16,13 +16,6 @@ export interface IconifyStorageFunctions {
 	iconLoaded: (name: string) => boolean;
 
 	/**
-	 * Older, badly named, version of iconLoaded()
-	 *
-	 * @deprecated
-	 */
-	iconExists: (name: string) => boolean;
-
-	/**
 	 * Get icon data with all properties
 	 *
 	 * Returns null if icon is missing (attempted to load, but failed)

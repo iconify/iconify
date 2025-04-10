@@ -350,14 +350,7 @@ export {
 };
 
 // IconifyStorageFunctions
-export {
-	iconLoaded,
-	iconLoaded as iconExists, // deprecated, kept to avoid breaking changes
-	getIcon,
-	listIcons,
-	addIcon,
-	addCollection,
-};
+export { iconLoaded, getIcon, listIcons, addIcon, addCollection };
 
 // IconifyBuilderFunctions
 export { replaceIDs, calculateSize, buildIcon };
