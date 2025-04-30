@@ -4,9 +4,6 @@
 	"author": "Vjacheslav Trushkin",
 	"type": "module",
 	"version": "6.0.0",
-	"publishConfig": {
-		"tag": "next"
-	},
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",

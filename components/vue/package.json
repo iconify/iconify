@@ -2,10 +2,7 @@
 	"name": "@iconify/vue",
 	"description": "Iconify icon component for Vue 3.",
 	"author": "Vjacheslav Trushkin",
-	"version": "5.0.0-beta.3",
-	"publishConfig": {
-		"tag": "next"
-	},
+	"version": "5.0.0",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
