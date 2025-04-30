@@ -17,9 +17,9 @@
 		"@iconify/core": "workspace:*",
 		"@iconify/react": "workspace:*",
 		"@types/react": "^18.3.20",
-		"@types/react-dom": "^18.3.5",
-		"@vitejs/plugin-react": "^4.3.4",
-		"typescript": "^5.8.2",
-		"vite": "^5.4.15"
+		"@types/react-dom": "^18.3.6",
+		"@vitejs/plugin-react": "^4.4.1",
+		"typescript": "^5.8.3",
+		"vite": "^5.4.19"
 	}
 }
