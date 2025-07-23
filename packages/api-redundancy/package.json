@@ -4,8 +4,9 @@
 	"version": "1.1.1",
 	"author": "Vjacheslav Trushkin",
 	"license": "MIT",
+	"type": "module",
 	"main": "dist/index.js",
-	"module": "dist/index.mjs",
+	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"exports": {
 		"./*": "./*",
@@ -17,8 +18,8 @@
 	"scripts": {
 		"lint": "eslint src/*.ts",
 		"prebuild": "pnpm run lint",
-		"build": "tsup src/index.ts --dts --format esm,cjs",
-		"test": "vitest --config vitest.config.mjs"
+		"build": "tsup src/index.ts --dts --format esm",
+		"test": "vitest --config vitest.config.js"
 	},
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -29,14 +30,14 @@
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.1",
-		"@eslint/js": "^9.25.1",
+		"@eslint/js": "^9.31.0",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^22.15.3",
-		"@typescript-eslint/eslint-plugin": "^8.31.1",
-		"@typescript-eslint/parser": "^8.31.1",
+		"@types/node": "^22.16.5",
+		"@typescript-eslint/eslint-plugin": "^8.38.0",
+		"@typescript-eslint/parser": "^8.38.0",
 		"cross-env": "^7.0.3",
-		"eslint": "^9.25.1",
-		"tsup": "^8.4.0",
+		"eslint": "^9.31.0",
+		"tsup": "^8.5.0",
 		"vitest": "^2.1.9"
 	},
 	"dependencies": {

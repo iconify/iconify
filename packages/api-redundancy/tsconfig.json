@@ -2,7 +2,7 @@
 	"include": ["./src/*.ts", "./tests/*.ts", ".eslintrc.js"],
 	"compilerOptions": {
 		"target": "ESNext",
-		"module": "CommonJS",
+		"module": "esnext",
 		"declaration": true,
 		"declarationMap": false,
 		"sourceMap": false,
