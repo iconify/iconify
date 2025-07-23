@@ -8,13 +8,6 @@
 	"main": "dist/index.js",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"exports": {
-		"./*": "./*",
-		".": {
-			"require": "./dist/index.js",
-			"import": "./dist/index.mjs"
-		}
-	},
 	"scripts": {
 		"lint": "eslint src/*.ts",
 		"prebuild": "pnpm run lint",

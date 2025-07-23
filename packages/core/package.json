@@ -23,64 +23,64 @@
 	"exports": {
 		"./*": "./*",
 		"./lib/api/callbacks": {
-			"require": "./lib/api/callbacks.cjs",
-			"import": "./lib/api/callbacks.mjs"
+			"import": "./lib/api/callbacks.mjs",
+			"types": "./lib/api/callbacks.d.ts"
 		},
 		"./lib/api/config": {
-			"require": "./lib/api/config.cjs",
-			"import": "./lib/api/config.mjs"
+			"import": "./lib/api/config.mjs",
+			"types": "./lib/api/config.d.ts"
 		},
 		"./lib/api/functions": {
-			"require": "./lib/api/functions.cjs",
-			"import": "./lib/api/functions.mjs"
+			"import": "./lib/api/functions.mjs",
+			"types": "./lib/api/functions.d.ts"
 		},
 		"./lib/api/icons": {
-			"require": "./lib/api/icons.cjs",
-			"import": "./lib/api/icons.mjs"
+			"import": "./lib/api/icons.mjs",
+			"types": "./lib/api/icons.d.ts"
 		},
 		"./lib/api/loaders": {
-			"require": "./lib/api/loaders.cjs",
-			"import": "./lib/api/loaders.mjs"
+			"import": "./lib/api/loaders.mjs",
+			"types": "./lib/api/loaders.d.ts"
 		},
 		"./lib/api/modules": {
-			"require": "./lib/api/modules.cjs",
-			"import": "./lib/api/modules.mjs"
+			"import": "./lib/api/modules.mjs",
+			"types": "./lib/api/modules.d.ts"
 		},
 		"./lib/api/modules/fetch": {
-			"require": "./lib/api/modules/fetch.cjs",
-			"import": "./lib/api/modules/fetch.mjs"
+			"import": "./lib/api/modules/fetch.mjs",
+			"types": "./lib/api/modules/fetch.d.ts"
 		},
 		"./lib/api/modules/mock": {
-			"require": "./lib/api/modules/mock.cjs",
-			"import": "./lib/api/modules/mock.mjs"
+			"import": "./lib/api/modules/mock.mjs",
+			"types": "./lib/api/modules/mock.d.ts"
 		},
 		"./lib/api/query": {
-			"require": "./lib/api/query.cjs",
-			"import": "./lib/api/query.mjs"
+			"import": "./lib/api/query.mjs",
+			"types": "./lib/api/query.d.ts"
 		},
 		"./lib/api/types": {
-			"require": "./lib/api/types.cjs",
-			"import": "./lib/api/types.mjs"
+			"import": "./lib/api/types.mjs",
+			"types": "./lib/api/types.d.ts"
 		},
 		"./lib/builder/functions": {
-			"require": "./lib/builder/functions.cjs",
-			"import": "./lib/builder/functions.mjs"
+			"import": "./lib/builder/functions.mjs",
+			"types": "./lib/builder/functions.d.ts"
 		},
 		"./lib/icon/list": {
-			"require": "./lib/icon/list.cjs",
-			"import": "./lib/icon/list.mjs"
+			"import": "./lib/icon/list.mjs",
+			"types": "./lib/icon/list.d.ts"
 		},
 		"./lib/icon/sort": {
-			"require": "./lib/icon/sort.cjs",
-			"import": "./lib/icon/sort.mjs"
+			"import": "./lib/icon/sort.mjs",
+			"types": "./lib/icon/sort.d.ts"
 		},
 		"./lib/storage/functions": {
-			"require": "./lib/storage/functions.cjs",
-			"import": "./lib/storage/functions.mjs"
+			"import": "./lib/storage/functions.mjs",
+			"types": "./lib/storage/functions.d.ts"
 		},
 		"./lib/storage/storage": {
-			"require": "./lib/storage/storage.cjs",
-			"import": "./lib/storage/storage.mjs"
+			"import": "./lib/storage/storage.mjs",
+			"types": "./lib/storage/storage.d.ts"
 		}
 	},
 	"dependencies": {
