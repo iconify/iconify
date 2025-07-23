@@ -22,66 +22,21 @@
 	"sideEffects": false,
 	"exports": {
 		"./*": "./*",
-		"./lib/api/callbacks": {
-			"import": "./lib/api/callbacks.mjs",
-			"types": "./lib/api/callbacks.d.ts"
-		},
-		"./lib/api/config": {
-			"import": "./lib/api/config.mjs",
-			"types": "./lib/api/config.d.ts"
-		},
-		"./lib/api/functions": {
-			"import": "./lib/api/functions.mjs",
-			"types": "./lib/api/functions.d.ts"
-		},
-		"./lib/api/icons": {
-			"import": "./lib/api/icons.mjs",
-			"types": "./lib/api/icons.d.ts"
-		},
-		"./lib/api/loaders": {
-			"import": "./lib/api/loaders.mjs",
-			"types": "./lib/api/loaders.d.ts"
-		},
-		"./lib/api/modules": {
-			"import": "./lib/api/modules.mjs",
-			"types": "./lib/api/modules.d.ts"
-		},
-		"./lib/api/modules/fetch": {
-			"import": "./lib/api/modules/fetch.mjs",
-			"types": "./lib/api/modules/fetch.d.ts"
-		},
-		"./lib/api/modules/mock": {
-			"import": "./lib/api/modules/mock.mjs",
-			"types": "./lib/api/modules/mock.d.ts"
-		},
-		"./lib/api/query": {
-			"import": "./lib/api/query.mjs",
-			"types": "./lib/api/query.d.ts"
-		},
-		"./lib/api/types": {
-			"import": "./lib/api/types.mjs",
-			"types": "./lib/api/types.d.ts"
-		},
-		"./lib/builder/functions": {
-			"import": "./lib/builder/functions.mjs",
-			"types": "./lib/builder/functions.d.ts"
-		},
-		"./lib/icon/list": {
-			"import": "./lib/icon/list.mjs",
-			"types": "./lib/icon/list.d.ts"
-		},
-		"./lib/icon/sort": {
-			"import": "./lib/icon/sort.mjs",
-			"types": "./lib/icon/sort.d.ts"
-		},
-		"./lib/storage/functions": {
-			"import": "./lib/storage/functions.mjs",
-			"types": "./lib/storage/functions.d.ts"
-		},
-		"./lib/storage/storage": {
-			"import": "./lib/storage/storage.mjs",
-			"types": "./lib/storage/storage.d.ts"
-		}
+		"./lib/api/callbacks": "./lib/api/callbacks.mjs",
+		"./lib/api/config": "./lib/api/config.mjs",
+		"./lib/api/functions": "./lib/api/functions.mjs",
+		"./lib/api/icons": "./lib/api/icons.mjs",
+		"./lib/api/loaders": "./lib/api/loaders.mjs",
+		"./lib/api/modules": "./lib/api/modules.mjs",
+		"./lib/api/modules/fetch": "./lib/api/modules/fetch.mjs",
+		"./lib/api/modules/mock": "./lib/api/modules/mock.mjs",
+		"./lib/api/query": "./lib/api/query.mjs",
+		"./lib/api/types": "./lib/api/types.mjs",
+		"./lib/builder/functions": "./lib/builder/functions.mjs",
+		"./lib/icon/list": "./lib/icon/list.mjs",
+		"./lib/icon/sort": "./lib/icon/sort.mjs",
+		"./lib/storage/functions": "./lib/storage/functions.mjs",
+		"./lib/storage/storage": "./lib/storage/storage.mjs"
 	},
 	"dependencies": {
 		"@iconify/api-redundancy": "workspace:^",

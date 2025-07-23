@@ -10,13 +10,15 @@ Object.keys(exportsList).forEach((key) => {
 		return;
 	}
 
-	const importValue = exportsList[key]['import'];
+	const importValue = exportsList[key];
 	if (importValue === key + '.mjs') {
 		const name = key.slice(match.length);
-		entries.push({
-			input: 'src/' + name,
-			name,
-		});
+		if (!entries.find((entry) => entry.name === name)) {
+			entries.push({
+				input: 'src/' + name,
+				name,
+			});
+		}
 	}
 });
 
