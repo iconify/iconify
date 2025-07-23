@@ -1,13 +1,13 @@
-import fs from 'fs'
+import { cpSync } from 'node:fs';
 
-fs.cpSync(
+cpSync(
 	'./tests/fixtures/plain-color-icons',
 	'./node_modules/plain-color-icons',
 	{ recursive: true }
-)
+);
 
-fs.cpSync(
+cpSync(
 	'./tests/fixtures/@test-scope/test-color-icons',
 	'./node_modules/@test-scope/test-color-icons',
 	{ recursive: true }
-)
+);
