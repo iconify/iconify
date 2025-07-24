@@ -29,6 +29,7 @@
 		"@typescript-eslint/eslint-plugin": "^8.38.0",
 		"@typescript-eslint/parser": "^8.38.0",
 		"eslint": "^9.31.0",
+		"globals": "^15.15.0",
 		"tsdown": "^0.13.0",
 		"vitest": "^2.1.9"
 	},

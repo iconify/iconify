@@ -19,7 +19,7 @@
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild",
+		"build": "tsdown src/*.ts src/*/*.ts src/*/*/*.ts --dts --format esm -d lib",
 		"test": "node ./scripts/prepare-tests.mjs && vitest"
 	},
 	"sideEffects": false,
@@ -133,8 +133,8 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.6",
 		"rimraf": "^6.0.1",
+		"tsdown": "^0.13.0",
 		"typescript": "^5.8.3",
-		"unbuild": "^2.0.0",
 		"vitest": "^2.1.9"
 	}
 }

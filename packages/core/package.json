@@ -16,27 +16,27 @@
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild",
+		"build": "tsdown src/*.ts src/*/*.ts src/*/*/*.ts --dts --format esm -d lib",
 		"test": "vitest"
 	},
 	"sideEffects": false,
 	"exports": {
 		"./*": "./*",
-		"./lib/api/callbacks": "./lib/api/callbacks.mjs",
-		"./lib/api/config": "./lib/api/config.mjs",
-		"./lib/api/functions": "./lib/api/functions.mjs",
-		"./lib/api/icons": "./lib/api/icons.mjs",
-		"./lib/api/loaders": "./lib/api/loaders.mjs",
-		"./lib/api/modules": "./lib/api/modules.mjs",
-		"./lib/api/modules/fetch": "./lib/api/modules/fetch.mjs",
-		"./lib/api/modules/mock": "./lib/api/modules/mock.mjs",
-		"./lib/api/query": "./lib/api/query.mjs",
-		"./lib/api/types": "./lib/api/types.mjs",
-		"./lib/builder/functions": "./lib/builder/functions.mjs",
-		"./lib/icon/list": "./lib/icon/list.mjs",
-		"./lib/icon/sort": "./lib/icon/sort.mjs",
-		"./lib/storage/functions": "./lib/storage/functions.mjs",
-		"./lib/storage/storage": "./lib/storage/storage.mjs"
+		"./lib/api/callbacks": "./lib/api/callbacks.js",
+		"./lib/api/config": "./lib/api/config.js",
+		"./lib/api/functions": "./lib/api/functions.js",
+		"./lib/api/icons": "./lib/api/icons.js",
+		"./lib/api/loaders": "./lib/api/loaders.js",
+		"./lib/api/modules": "./lib/api/modules.js",
+		"./lib/api/modules/fetch": "./lib/api/modules/fetch.js",
+		"./lib/api/modules/mock": "./lib/api/modules/mock.js",
+		"./lib/api/query": "./lib/api/query.js",
+		"./lib/api/types": "./lib/api/types.js",
+		"./lib/builder/functions": "./lib/builder/functions.js",
+		"./lib/icon/list": "./lib/icon/list.js",
+		"./lib/icon/sort": "./lib/icon/sort.js",
+		"./lib/storage/functions": "./lib/storage/functions.js",
+		"./lib/storage/storage": "./lib/storage/storage.js"
 	},
 	"dependencies": {
 		"@iconify/api-redundancy": "workspace:^",
@@ -54,8 +54,8 @@
 		"eslint-plugin-prettier": "^5.2.6",
 		"globals": "^15.15.0",
 		"rimraf": "^6.0.1",
+		"tsdown": "^0.13.0",
 		"typescript": "^5.8.3",
-		"unbuild": "^2.0.0",
 		"vitest": "^2.1.9"
 	}
 }
