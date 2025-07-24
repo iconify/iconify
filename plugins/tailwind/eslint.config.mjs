@@ -16,13 +16,11 @@ const compat = new FlatCompat({
 
 export default [
 	{
-		ignores: ['**/lib', '**/dist', '*.mjs'],
+		ignores: ['**/lib'],
 	},
 	...compat.extends(
 		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/recommended-requiring-type-checking',
-		'plugin:prettier/recommended'
+		'plugin:@typescript-eslint/recommended'
 	),
 	{
 		plugins: {
@@ -33,26 +31,17 @@ export default [
 			globals: {
 				...globals.browser,
 				...globals.node,
+				...globals.jasmine,
 				Atomics: 'readonly',
 				SharedArrayBuffer: 'readonly',
 			},
 
 			parser: tsParser,
-			ecmaVersion: 5,
-			sourceType: 'commonjs',
-
-			parserOptions: {
-				tsconfigRootDir: '.',
-				project: ['tsconfig.json', 'tests/tsconfig.json'],
-			},
 		},
 
 		rules: {
 			'no-mixed-spaces-and-tabs': ['off'],
 			'no-unused-vars': ['off'],
 		},
-	},
-	{
-		files: ['src/**/*.ts', 'tests/*.ts'],
 	},
 ];

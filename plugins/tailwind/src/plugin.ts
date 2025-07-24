@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import plugin from 'tailwindcss/plugin';
 import { getCSSRulesForIcons } from './clean';
 import { getDynamicCSSRules } from './dynamic';
@@ -28,6 +27,7 @@ export function addDynamicIconSelectors(options?: DynamicIconifyPluginOptions) {
 				} catch (err) {
 					// Log error, but do not throw it
 					console.error((err as Error).message);
+					return {};
 				}
 			},
 		});

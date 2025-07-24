@@ -851,15 +851,6 @@ importers:
       '@iconify/utils':
         specifier: workspace:^
         version: link:../../packages/utils
-      '@microsoft/api-extractor':
-        specifier: ^7.52.5
-        version: 7.52.5(@types/node@22.15.3)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.3.1
-        version: 15.3.1(rollup@4.40.1)
-      '@rollup/plugin-replace':
-        specifier: ^6.0.2
-        version: 6.0.2(rollup@4.40.1)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -878,24 +869,18 @@ importers:
       globals:
         specifier: ^15.15.0
         version: 15.15.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.15.3)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
-      rollup:
-        specifier: ^4.40.1
-        version: 4.40.1
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17
-      ts-jest:
-        specifier: ^29.3.2
-        version: 29.3.2(@babel/core@7.26.10)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.10))(jest@29.7.0(@types/node@22.15.3))(typescript@5.8.3)
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
+      tsdown:
+        specifier: ^0.13.0
+        version: 0.13.0(typescript@5.8.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.15.3)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.17.7)
 
 packages:
 

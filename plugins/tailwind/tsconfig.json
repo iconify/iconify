@@ -1,9 +1,14 @@
 {
-	"extends": "./tsconfig-base.json",
-	"include": ["src/**/*.ts"],
+	"include": ["./src/**/*.ts", "./tests/**/*.ts", "vitest.config.js"],
 	"compilerOptions": {
-		"rootDir": "./src",
-		"outDir": "./lib",
-		"lib": ["ESNext", "DOM"]
+		"target": "ESNext",
+		"module": "esnext",
+		"declaration": true,
+		"declarationMap": false,
+		"sourceMap": false,
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
 	}
 }

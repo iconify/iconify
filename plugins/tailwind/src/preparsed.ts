@@ -98,7 +98,7 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
 	const scale = options.scale ?? 1;
 
 	options.prefixes?.forEach((item) => {
-		let prefix: string;
+		let prefix: string | undefined;
 		let iconSet: IconifyJSON | undefined;
 		let iconsList: IconsListOption | undefined;
 		let customise: ((content: string, name: string) => string) | undefined;
@@ -141,6 +141,10 @@ export function getCSSRulesForPlugin(options: IconifyPluginOptionsObject) {
 
 		// Load icons
 		parseIconSet(iconSet, (name, data) => {
+			if (!data) {
+				return;
+			}
+
 			// Check if icon should be rendered
 			if (iconsList) {
 				if (Array.isArray(iconsList)) {
