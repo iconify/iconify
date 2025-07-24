@@ -31,7 +31,6 @@ export default [
 			globals: {
 				...globals.browser,
 				...globals.node,
-				...globals.jasmine,
 				Atomics: 'readonly',
 				SharedArrayBuffer: 'readonly',
 			},
