@@ -8,7 +8,7 @@ build.js
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
-jest.config.js
+vitest.config.js
 node_modules
 src
 lib
