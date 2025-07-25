@@ -21,7 +21,6 @@
 	},
 	"sideEffects": false,
 	"exports": {
-		"./*": "./*",
 		"./lib/api/callbacks": "./lib/api/callbacks.js",
 		"./lib/api/config": "./lib/api/config.js",
 		"./lib/api/functions": "./lib/api/functions.js",
