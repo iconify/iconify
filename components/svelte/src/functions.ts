@@ -288,7 +288,9 @@ export function checkIconState(
 	if (state.name !== icon) {
 		state.name = icon;
 		if (onload && !state.destroyed) {
-			onload(icon);
+			setTimeout(() => {
+				onload(icon);
+			});
 		}
 	}
 

@@ -61,18 +61,23 @@
 	// Callback counter
 	let counter = $state(0);
 
-	// Generate data
-	let data = $state(null);
-	$effect(() => {
+	// Mounted status
+	let isMounted = $derived(!!props.ssr || mounted);
+
+	// Get icon data
+	let iconData = $derived.by(() => {
 		counter;
-		const isMounted = !!props.ssr || mounted;
-		const iconData = checkIconState(props.icon, iconState, isMounted, loaded, props.onload);
+		return checkIconState(props.icon, iconState, isMounted, loaded, props.onload);
+	});
+
+	// Generate data to render
+	let data = $derived.by(() => {
 		const generatedData = iconData ? generateIcon(iconData.data, props) : null;
 		if (generatedData && iconData.classes) {
 			// Add classes
 			generatedData.attributes['class'] = (typeof props['class'] === 'string' ? props['class'] + ' ' : '') + iconData.classes.join(' ');
 		}
-		data = generatedData;
+		return generatedData;
 	});
 
 	// Increase counter when loaded to force re-calculation of data

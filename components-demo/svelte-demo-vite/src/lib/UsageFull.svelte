@@ -12,7 +12,7 @@
     </div>
     <div class="alert">
         <Icon icon="mdi-light:alert" onload={event => {
-            console.log(event);
+            console.log('onLoad event value:', event);
             onLoadCalled = true;
         }} mode="style" />
         Important notice with alert icon{onLoadCalled ? '' : ' (loading...)'}!
