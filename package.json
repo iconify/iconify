@@ -1,6 +1,7 @@
 {
 	"name": "iconify",
 	"private": true,
+	"packageManager": "pnpm@9.15.9",
 	"description": "The most versatile icon framework",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"license": "MIT",
@@ -10,7 +11,6 @@
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git"
 	},
-	"packageManager": "pnpm@9.15.9",
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
 		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run lint",
