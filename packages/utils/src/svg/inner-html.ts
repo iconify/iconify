@@ -11,9 +11,9 @@ let policy: undefined | null | Policy;
  */
 function createPolicy() {
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+		 
 		policy = window.trustedTypes.createPolicy('iconify', {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+			 
 			createHTML: (s) => s,
 		}) as Policy;
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -16,72 +16,26 @@
 		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
 		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "unbuild",
+		"build": "tsdown src/*.ts src/*/*.ts src/*/*/*.ts --dts --format esm -d lib",
 		"test": "vitest"
 	},
 	"sideEffects": false,
 	"exports": {
-		"./*": "./*",
-		"./lib/api/callbacks": {
-			"require": "./lib/api/callbacks.cjs",
-			"import": "./lib/api/callbacks.mjs"
-		},
-		"./lib/api/config": {
-			"require": "./lib/api/config.cjs",
-			"import": "./lib/api/config.mjs"
-		},
-		"./lib/api/functions": {
-			"require": "./lib/api/functions.cjs",
-			"import": "./lib/api/functions.mjs"
-		},
-		"./lib/api/icons": {
-			"require": "./lib/api/icons.cjs",
-			"import": "./lib/api/icons.mjs"
-		},
-		"./lib/api/loaders": {
-			"require": "./lib/api/loaders.cjs",
-			"import": "./lib/api/loaders.mjs"
-		},
-		"./lib/api/modules": {
-			"require": "./lib/api/modules.cjs",
-			"import": "./lib/api/modules.mjs"
-		},
-		"./lib/api/modules/fetch": {
-			"require": "./lib/api/modules/fetch.cjs",
-			"import": "./lib/api/modules/fetch.mjs"
-		},
-		"./lib/api/modules/mock": {
-			"require": "./lib/api/modules/mock.cjs",
-			"import": "./lib/api/modules/mock.mjs"
-		},
-		"./lib/api/query": {
-			"require": "./lib/api/query.cjs",
-			"import": "./lib/api/query.mjs"
-		},
-		"./lib/api/types": {
-			"require": "./lib/api/types.cjs",
-			"import": "./lib/api/types.mjs"
-		},
-		"./lib/builder/functions": {
-			"require": "./lib/builder/functions.cjs",
-			"import": "./lib/builder/functions.mjs"
-		},
-		"./lib/icon/list": {
-			"require": "./lib/icon/list.cjs",
-			"import": "./lib/icon/list.mjs"
-		},
-		"./lib/icon/sort": {
-			"require": "./lib/icon/sort.cjs",
-			"import": "./lib/icon/sort.mjs"
-		},
-		"./lib/storage/functions": {
-			"require": "./lib/storage/functions.cjs",
-			"import": "./lib/storage/functions.mjs"
-		},
-		"./lib/storage/storage": {
-			"require": "./lib/storage/storage.cjs",
-			"import": "./lib/storage/storage.mjs"
-		}
+		"./lib/api/callbacks": "./lib/api/callbacks.js",
+		"./lib/api/config": "./lib/api/config.js",
+		"./lib/api/functions": "./lib/api/functions.js",
+		"./lib/api/icons": "./lib/api/icons.js",
+		"./lib/api/loaders": "./lib/api/loaders.js",
+		"./lib/api/modules": "./lib/api/modules.js",
+		"./lib/api/modules/fetch": "./lib/api/modules/fetch.js",
+		"./lib/api/modules/mock": "./lib/api/modules/mock.js",
+		"./lib/api/query": "./lib/api/query.js",
+		"./lib/api/types": "./lib/api/types.js",
+		"./lib/builder/functions": "./lib/builder/functions.js",
+		"./lib/icon/list": "./lib/icon/list.js",
+		"./lib/icon/sort": "./lib/icon/sort.js",
+		"./lib/storage/functions": "./lib/storage/functions.js",
+		"./lib/storage/storage": "./lib/storage/storage.js"
 	},
 	"dependencies": {
 		"@iconify/api-redundancy": "workspace:^",
@@ -90,17 +44,15 @@
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.1",
-		"@eslint/js": "^9.25.1",
+		"@eslint/js": "^9.31.0",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^18.19.87",
-		"@typescript-eslint/eslint-plugin": "^8.31.1",
-		"eslint": "^9.25.1",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-prettier": "^5.2.6",
+		"@types/node": "^18.19.120",
+		"@typescript-eslint/eslint-plugin": "^8.38.0",
+		"eslint": "^9.31.0",
 		"globals": "^15.15.0",
 		"rimraf": "^6.0.1",
+		"tsdown": "^0.13.0",
 		"typescript": "^5.8.3",
-		"unbuild": "^2.0.0",
 		"vitest": "^2.1.9"
 	}
 }

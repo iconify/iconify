@@ -1,14 +1,12 @@
 .DS_Store
 .eslintignore
 eslint.config.*
-api-extractor*.json
 tsconfig*.json
-rollup.config.*
-build.js
+tsdown.config.*
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
-jest.config.*
+vitest.config.*
 node_modules
 src
 lib

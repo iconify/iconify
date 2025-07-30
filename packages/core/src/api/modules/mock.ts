@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { QueryModuleResponse } from '@iconify/api-redundancy';
 import type {
 	IconifyAPIIconsQueryParams,

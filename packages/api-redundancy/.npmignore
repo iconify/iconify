@@ -7,6 +7,7 @@ eslint.config.*
 .prettierrc
 .editorconfig
 jest.config.*
+vitest.config.*
 node_modules
 npm-debug.log
 yarn.lock

@@ -38,11 +38,11 @@ export function getDynamicCSSRules(
 
 	const scale = options.scale ?? 1;
 	if (scale) {
-		generated.common.rules.height = scale + 'em';
-		generated.common.rules.width = scale + 'em';
+		generated.common!.rules.height = scale + 'em';
+		generated.common!.rules.width = scale + 'em';
 	} else {
-		delete generated.common.rules.height;
-		delete generated.common.rules.width;
+		delete generated.common!.rules.height;
+		delete generated.common!.rules.width;
 	}
 
 	return {

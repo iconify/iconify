@@ -28,7 +28,7 @@ export function getIconNames(
 		iconNames = [];
 		// Split each array entry
 		icons.forEach((item) => {
-			item.split(/[\s,.]/).forEach((name) => iconNames.push(name));
+			item.split(/[\s,.]/).forEach((name) => iconNames!.push(name));
 		});
 	} else {
 		return;
