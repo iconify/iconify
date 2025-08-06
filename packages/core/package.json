@@ -13,10 +13,9 @@
 		"directory": "packages/core"
 	},
 	"scripts": {
-		"clean": "rimraf lib tsconfig.tsbuildinfo",
 		"lint": "eslint --fix src/**/*.ts",
-		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "tsdown src/*.ts src/*/*.ts src/*/*/*.ts --dts --format esm -d lib",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown",
 		"test": "vitest"
 	},
 	"sideEffects": false,
@@ -50,7 +49,6 @@
 		"@typescript-eslint/eslint-plugin": "^8.38.0",
 		"eslint": "^9.31.0",
 		"globals": "^15.15.0",
-		"rimraf": "^6.0.1",
 		"tsdown": "^0.13.0",
 		"typescript": "^5.8.3",
 		"vitest": "^2.1.9"
