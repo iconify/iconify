@@ -6,14 +6,12 @@
 eslint.config.*
 .prettierrc
 .editorconfig
-jest.config.*
+tsdown.config.*
 vitest.config.*
 node_modules
 npm-debug.log
 yarn.lock
 tsconfig.tsbuildinfo
 src
-spec
 tests
-tests-compiled
 tsconfig.json

@@ -10,9 +10,7 @@ tsconfig.tsbuildinfo
 eslint.config.*
 tsconfig.json
 tsconfig.common.json
-jest.config.*
-jest.shared.config.cjs
 vitest.config.*
-build.config.ts
+tsdown.config.ts
 src
 tests
