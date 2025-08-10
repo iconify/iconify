@@ -3,9 +3,9 @@ import { replaceIDs } from '../lib/svg/id';
 describe('Testing replaceIDs', () => {
 	test('Simple code', () => {
 		const body =
-			'<defs><path id="test1"></defs><use fill="#FFA000" xlink:href="#test1"/>';
+			'<defs><path id="test1"/></defs><use fill="#FFA000" xlink:href="#test1"/>';
 		const expected =
-			'<defs><path id="callback0"></defs><use fill="#FFA000" xlink:href="#callback0"/>';
+			'<defs><path id="callback0"/></defs><use fill="#FFA000" xlink:href="#callback0"/>';
 
 		// Using callback
 		let counter = 0;
@@ -77,9 +77,9 @@ describe('Testing replaceIDs', () => {
 
 	test('Matching parts', () => {
 		const body =
-			'<defs><path id="test1"><path id="test"></defs><use fill="#FFA000" xlink:href="#test1"/><use fill="#00f" xlink:href="#test"/>';
+			'<defs><path id="test1"/><path id="test"/></defs><use fill="#FFA000" xlink:href="#test1"/><use fill="#00f" xlink:href="#test"/>';
 		const expected =
-			'<defs><path id="callbackID0"><path id="callbackID1"></defs><use fill="#FFA000" xlink:href="#callbackID0"/><use fill="#00f" xlink:href="#callbackID1"/>';
+			'<defs><path id="callbackID0"/><path id="callbackID1"/></defs><use fill="#FFA000" xlink:href="#callbackID0"/><use fill="#00f" xlink:href="#callbackID1"/>';
 
 		expect(
 			replaceIDs(body, (id: string) => {
