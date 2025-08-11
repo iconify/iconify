@@ -727,7 +727,7 @@ describe('Testing unicode test data', () => {
 		const missing = new Set(
 			findMissingEmojis(testList, tree).map((item) => item.sequenceKey)
 		);
-		expect(missing.size).toBe(30);
+		expect(missing.size).toBe(60);
 		expect(missing.has('1faf1-1f3fb-200d-1faf2-1f3fb')).toBe(true);
 		expect(missing.has('1faf1-1f3fb-200d-1faf2-1f3fc')).toBe(false);
 
