@@ -8,7 +8,35 @@ packageExtensionsChecksum: d1b4b209cd1224668f31b62ee587a532
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.3.1
+        version: 3.3.1
+      '@eslint/js':
+        specifier: ^9.31.0
+        version: 9.31.0
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: ^22.16.5
+        version: 22.16.5
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.38.0
+        version: 8.38.0(@typescript-eslint/parser@8.38.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint:
+        specifier: ^9.31.0
+        version: 9.31.0(jiti@2.4.2)
+      globals:
+        specifier: ^15.15.0
+        version: 15.15.0
+      tsdown:
+        specifier: ^0.13.0
+        version: 0.13.0(typescript@5.8.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.16.5)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.17.7)
 
   components-demo/nextjs-demo:
     dependencies:
@@ -645,10 +673,6 @@ importers:
         version: 5.8.3
 
   packages/api-redundancy:
-    dependencies:
-      globals:
-        specifier: ^15.15.0
-        version: 15.15.0
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
@@ -668,6 +692,9 @@ importers:
       eslint:
         specifier: ^9.31.0
         version: 9.31.0(jiti@2.4.2)
+      globals:
+        specifier: ^15.15.0
+        version: 15.15.0
       tsdown:
         specifier: ^0.13.0
         version: 0.13.0(typescript@5.8.3)

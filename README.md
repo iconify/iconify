@@ -56,6 +56,7 @@ Main packages:
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
 -   [Iconify core](./packages/core/) - common files used by icon components and plugins.
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable.
+-   [Fetch](./packages/fetch/) - Fetch wrapper with built in redundancy, allowing to use multiple hosts for request. Modern replacement of outdated "API redundancy" package.
 
 ### Web component
 
