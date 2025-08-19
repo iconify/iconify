@@ -11,7 +11,7 @@
 	"scripts": {
 		"lint": "eslint src/*.ts",
 		"prebuild": "pnpm run lint",
-		"build": "tsdown src/index.ts --dts --format esm",
+		"build": "tsdown",
 		"test": "vitest --config vitest.config.js"
 	},
 	"bugs": "https://github.com/iconify/iconify/issues",
