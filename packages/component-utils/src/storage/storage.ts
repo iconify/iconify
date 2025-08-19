@@ -1,6 +1,6 @@
-import type { IconsData } from '../icon/types.js';
-import { createIconStorage } from '../storage/create.js';
-import type { IconStorage } from '../storage/types.js';
+import type { IconsData } from '../icon-lists/types.js';
+import { createIconStorage } from './create.js';
+import type { IconStorage } from './types.js';
 
 // Storage
 const storage = Object.create(null) as IconsData<IconStorage>;

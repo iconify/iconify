@@ -1,4 +1,4 @@
-import type { QueueSplitConfig } from './types.js';
+import type { QueueSplitConfig } from '../types.js';
 
 /**
  * Split icon names into queues

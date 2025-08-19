@@ -3,12 +3,12 @@ import {
 	stringToIcon,
 	type IconifyIconName,
 } from '@iconify/utils/lib/icon/name';
-import { getIconStorage } from '../data/storage.js';
+import { getIconStorage } from '../../storage/storage.js';
 import {
 	subscribeToIconStorage,
 	unsubscribeFromIconStorage,
-} from '../storage/subscription.js';
-import { loadIcons } from './queue.js';
+} from '../../storage/subscription.js';
+import { loadIcons } from '../../loader/queue.js';
 
 /**
  * Load icon

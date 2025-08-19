@@ -1,5 +1,5 @@
-import { createIconifyAPILoader } from './api.js';
-import { setProviderLoader } from './loaders.js';
+import { createIconifyAPILoader } from './create.js';
+import { setProviderLoader } from '../loaders.js';
 
 // Add default loader for Iconify API
 setProviderLoader(

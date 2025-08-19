@@ -1,16 +1,16 @@
 import type { IconifyJSON } from '@iconify/types';
-import { getIconStorage } from '../data/storage.js';
+import { getIconStorage } from '../storage/storage.js';
 import { triggerCallbackAsync } from '../helpers/callbacks.js';
-import { mergeSplitIconNames } from '../icon/merge.js';
-import type { IconsData } from '../icon/types.js';
+import { mergeSplitIconNames } from '../icon-lists/merge.js';
+import type { IconsData } from '../icon-lists/types.js';
 import { getLoader } from './loaders.js';
-import { splitForBatchLoading } from './batch.js';
+import { splitForBatchLoading } from './api/batch.js';
 import {
 	matchIconName,
 	parseIconSet,
 	type IconifyIconName,
 } from '@iconify/utils';
-import { splitIconNames } from '../icon/split.js';
+import { splitIconNames } from '../icon-lists/split.js';
 
 // Queue
 let queue = Object.create(null) as IconsData<string[]>;

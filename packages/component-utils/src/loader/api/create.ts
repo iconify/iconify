@@ -1,6 +1,6 @@
 import { matchIconName } from '@iconify/utils';
 import { fetchJSON } from '@iconify/fetch';
-import type { LoaderConfig } from './types.js';
+import type { LoaderConfig } from '../types.js';
 import type { IconifyJSON } from '@iconify/types';
 
 /**

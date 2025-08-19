@@ -1,14 +1,16 @@
-import { getIconStorage } from '../src/data/storage.js';
-import { getLoadedIcon } from '../src/data/get-icon.js';
-import { loadIcon } from '../src/loader/load-icon.js';
+import { getIconStorage } from '../src/storage/storage.js';
+import { getLoadedIcon } from '../src/exported/icons/get-icon.js';
+import { loadIcon } from '../src/exported/icons/load-icon.js';
 import { setProviderLoader } from '../src/loader/loaders.js';
 import { loadIcons } from '../src/loader/queue.js';
 import {
 	subscribeToIconStorage,
 	unsubscribeFromIconStorage,
 } from '../src/storage/subscription.js';
-import { createIconifyAPILoader } from '../src/loader/api.js';
-import { loadIconsWithCallback } from '../src/loader/load-icons.js';
+import { createIconifyAPILoader } from '../src/loader/api/create.js';
+import { loadIconsWithCallback } from '../src/exported/icons/load-icons.js';
+import { subscribeToIconData } from '../src/exported/icons/subscribe.js';
+import type { IconifyIcon } from '@iconify/types';
 
 describe('Testing icon loader', () => {
 	let index = 0;
@@ -289,5 +291,71 @@ describe('Testing icon loader', () => {
 			getLoadedIcon(`@${provider}:material-symbols:arrow-left`)
 		).toBeTruthy();
 		expect(getLoadedIcon(`@${provider}:mdi-broken:arrow-left`)).toBeNull();
+	});
+
+	it('subscribeToIconData', async () => {
+		const provider = getProvider();
+
+		// Set loader
+		setProviderLoader(provider, {
+			loadIcon: async (name: string, prefix: string) => {
+				if (prefix === 'delay') {
+					await new Promise((resolve) => setTimeout(resolve, 100));
+				}
+				return name === 'error'
+					? null
+					: {
+							body: `<g id="${name}" />`,
+					  };
+			},
+		});
+
+		// Subscribe to data
+		// Add 'false' to test to make sure callback was not called yet
+		let lastData: IconifyIcon | null | undefined | false = false;
+		const subscriber = subscribeToIconData(
+			`@${provider}:test:icon1`,
+			(data) => {
+				lastData = data;
+			}
+		);
+
+		// Should have subscriber and no data
+		expect(getIconStorage(provider, 'test').subscribers.length).toBe(1);
+		expect(lastData).toBe(false);
+		expect(subscriber.data).toBeUndefined();
+
+		// Wait for data
+		await testForUpdate(() => lastData !== false);
+		expect(lastData).toEqual({
+			body: '<g id="icon1" />',
+		});
+
+		// Change icon name, should instantly update data
+		subscriber.change(`@${provider}:test:error`);
+		expect(lastData).toBeUndefined();
+
+		// Wait for new data
+		await testForUpdate(() => lastData !== undefined);
+		expect(lastData).toBeNull();
+
+		// Change icon name to existing icon
+		subscriber.change(`@${provider}:test:icon1`);
+		expect(lastData).toEqual({
+			body: '<g id="icon1" />',
+		});
+
+		// Change icon name to icon that will take a while to load
+		subscriber.change(`@${provider}:delay:icon1`);
+		expect(lastData).toBeUndefined();
+
+		// ... and change it again before it loads
+		subscriber.change(`@${provider}:test:icon1`);
+		expect(lastData).toEqual({
+			body: '<g id="icon1" />',
+		});
+
+		// Finish subscription
+		subscriber.unsubscribe();
 	});
 });

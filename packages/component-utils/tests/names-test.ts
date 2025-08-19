@@ -1,4 +1,4 @@
-import { splitIconNames } from '../src/icon/split.js';
+import { splitIconNames } from '../src/icon-lists/split.js';
 
 describe('Testing icon names', () => {
 	it('Split names', () => {

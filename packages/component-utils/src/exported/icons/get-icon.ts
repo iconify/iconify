@@ -1,6 +1,6 @@
 import type { IconifyIcon } from '@iconify/types';
 import { stringToIcon, type IconifyIconName } from '@iconify/utils';
-import { getIconStorage } from './storage.js';
+import { getIconStorage } from '../../storage/storage.js';
 
 /**
  * Get icon data
