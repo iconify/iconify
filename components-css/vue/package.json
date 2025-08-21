@@ -1,0 +1,36 @@
+{
+	"name": "@iconify/css-vue",
+	"description": "Iconify fallback icon component for Vue 3.",
+	"author": "Vjacheslav Trushkin",
+	"type": "module",
+	"version": "0.0.1",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"funding": "https://github.com/sponsors/cyberalien",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "components-css/vue"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown"
+	},
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"vue": "^3.5.18"
+	},
+	"peerDependencies": {
+		"vue": ">=3"
+	}
+}

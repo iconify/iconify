@@ -38,6 +38,47 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.16.5)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.17.7)
 
+  components-css-demo/vue-demo:
+    dependencies:
+      vue:
+        specifier: ^3.5.18
+        version: 3.5.18(typescript@5.8.3)
+    devDependencies:
+      '@iconify/css-vue':
+        specifier: workspace:*
+        version: link:../../components-css/vue
+      '@iconify/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@vitejs/plugin-vue':
+        specifier: ^5.2.4
+        version: 5.2.4(vite@5.4.19(@types/node@22.16.5)(lightningcss@1.27.0)(terser@5.17.7))(vue@3.5.18(typescript@5.8.3))
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vite:
+        specifier: ^5.4.19
+        version: 5.4.19(@types/node@22.16.5)(lightningcss@1.27.0)(terser@5.17.7)
+
+  components-css/vue:
+    dependencies:
+      '@iconify/types':
+        specifier: workspace:^
+        version: link:../../packages/types
+    devDependencies:
+      '@iconify/component-utils':
+        specifier: workspace:^
+        version: link:../../packages/component-utils
+      '@iconify/fetch':
+        specifier: workspace:^
+        version: link:../../packages/fetch
+      '@iconify/utils':
+        specifier: workspace:^
+        version: link:../../packages/utils
+      vue:
+        specifier: ^3.5.18
+        version: 3.5.18(typescript@5.8.3)
+
   components-demo/nextjs-demo:
     dependencies:
       '@iconify/react':

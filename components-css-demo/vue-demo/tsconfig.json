@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"rootDir": "./lib",
+		"outDir": "./src",
+		"target": "ESNext",
+		"module": "ESNext",
+		"declaration": false,
+		"sourceMap": false,
+		"strict": false,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	}
+}

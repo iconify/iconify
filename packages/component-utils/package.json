@@ -18,7 +18,6 @@
 		"build": "tsdown",
 		"test": "vitest"
 	},
-	"sideEffects": false,
 	"dependencies": {
 		"@iconify/fetch": "workspace:^",
 		"@iconify/types": "workspace:^",

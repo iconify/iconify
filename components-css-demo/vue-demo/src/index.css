@@ -1,0 +1,415 @@
+#app {
+	font-family: Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: left;
+	color: #2c3e50;
+	font-size: 16px;
+	line-height: 1.5;
+}
+section {
+	border-bottom: 1px dotted #ccc;
+	padding: 16px;
+}
+section:last-child {
+	border-bottom-width: 0;
+}
+section:after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+h1 {
+	margin: 0 0 16px;
+	padding: 0;
+	font-size: 24px;
+	font-weight: normal;
+}
+p {
+	margin: 12px 0 4px;
+	padding: 0;
+}
+
+svg:hover {
+	color: #090;
+}
+
+.status {
+	color: #c00;
+}
+.status:after {
+	content: 'does not support';
+}
+
+@supports (d: path('M0 0')) {
+	.status {
+		color: #090;
+	}
+	.status:after {
+		content: 'supports';
+	}
+}
+
+.restart-animations {
+	display: none;
+}
+
+@supports (d: path('M0 0')) {
+	.restart-animations {
+		display: block;
+		margin: 8px 0;
+	}
+}
+
+button {
+	background: #2c3e50;
+	color: #fff;
+	border: none;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	display: flex;
+	gap: 8px;
+}
+button:hover {
+	background: #070;
+}
+
+button svg,
+button svg:hover {
+	color: inherit;
+}
+
+.icons-list {
+	display: flex;
+	gap: 4px;
+	min-height: 32px;
+}
+
+.hide-animated .has-animations > div {
+	display: none;
+}
+
+/**
+ * Icons
+ */
+.tabler-group {
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 2;
+}
+.tabler-home-path1 {
+	d: path('M5 12H3l9-9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7');
+}
+.tabler-home-path2 {
+	d: path('M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6');
+}
+
+.ms-drafts {
+	fill: currentColor;
+	d: path(
+		'm13.025 1.6l8.025 4.8q.45.275.7.75t.25 1V19q0 .825-.587 1.413T20 21H4q-.825 0-1.412-.587T2 19V8.15q0-.525.25-1t.7-.75l8.025-4.8q.475-.275 1.025-.275t1.025.275M12 12.65L19.8 8L12 3.35L4.2 8zm-1.025 1.725L4 10.2V19h16v-8.8l-6.975 4.175q-.475.275-1.025.275t-1.025-.275M13.025 19H20H4z'
+	);
+}
+
+.ms-mail {
+	fill: currentColor;
+	d: path(
+		'M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z'
+	);
+}
+
+/**
+ * current-location
+ */
+@media not (prefers-reduced-motion) {
+	.in7b1h {
+		stroke-dasharray: 6;
+		stroke-dashoffset: 6;
+		animation: 0.2s linear 0.8s forwards stroke-dashoffset-to-0;
+	}
+}
+
+.y4wbml {
+	fill: none;
+}
+
+.iy2otu {
+	stroke-width: var(--svg-stroke-width, 1.5px);
+}
+
+.g_1xrq {
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+@media not (prefers-reduced-motion) {
+	.ivbn6z {
+		stroke-dasharray: 46;
+		stroke-dashoffset: 46;
+		animation: 0.5s linear forwards stroke-dashoffset-to-0;
+	}
+}
+
+.eq8iua {
+	d: path(
+		'M12 5c3.86 0 7 3.14 7 7c0 3.86 -3.14 7 -7 7c-3.86 0 -7 -3.14 -7 -7c0 -3.86 3.14 -7 7 -7Z'
+	);
+}
+
+.lsejuv {
+	d: path('M0 0h24v24H0z');
+}
+
+.ydovum {
+	fill: currentColor;
+}
+
+.s8e22g {
+	stroke: currentColor;
+}
+
+@media not (prefers-reduced-motion) {
+	.odtl1h {
+		stroke-dasharray: 22;
+		stroke-dashoffset: 22;
+		fill-opacity: 0;
+		animation: 0.3s linear 0.5s forwards stroke-dashoffset-to-0,
+			0.4s linear 1s forwards fill-to-1;
+	}
+}
+
+.znaocm {
+	d: path(
+		'M12 9c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z'
+	);
+}
+
+.k63a6f {
+	d: path('M12 5v-3M12 19v3M5 12h-3M19 12h3');
+	stroke: #fff;
+}
+
+.al390y {
+	stroke-width: var(
+		--svg-mask-width,
+		calc(var(--svg-stroke-width, 1.5px) + 1px)
+	);
+	stroke: #000;
+}
+
+/**
+ * tabler:user
+ */
+@media not (prefers-reduced-motion) {
+	.zosa6w {
+		stroke-dasharray: 14;
+		stroke-dashoffset: 14;
+		animation: 0.4s linear 0.4s forwards stroke-dashoffset-to-0;
+	}
+}
+
+.i_g6gd {
+	d: path('M12 15h2c2.21 0 4 1.79 4 4v2M12 15h-2c-2.21 0 -4 1.79 -4 4v2');
+}
+
+@media not (prefers-reduced-motion) {
+	.gb90pv {
+		stroke-dasharray: 32;
+		stroke-dashoffset: 32;
+		animation: 0.4s linear forwards stroke-dashoffset-to-0;
+	}
+}
+
+.yc6i9w {
+	d: path(
+		'M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z'
+	);
+}
+
+.eh1pdv {
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: var(--svg-stroke-width, 2px);
+	stroke: currentColor;
+	fill: none;
+}
+
+/**
+ * tabler:user-filled
+ */
+@media not (prefers-reduced-motion) {
+	.qlbhpj {
+		opacity: 0;
+		animation: 0.2s linear 0.9s forwards fade-to-1;
+	}
+}
+
+.jhh48i {
+	d: path(
+		'M12 15h2c2.21 0 4 1.79 4 4v1c0 0.28 -0.22 0.5 -0.5 0.5h-10c-0.28 0 -0.5 -0.22 -0.5 -0.5v-1c0 -2.21 1.79 -4 4 -4Z'
+	);
+}
+
+.ydovum {
+	fill: currentColor;
+}
+
+@media not (prefers-reduced-motion) {
+	.u7lp5j {
+		stroke-dasharray: 20;
+		stroke-dashoffset: 20;
+		animation: 0.5s linear 0.4s forwards stroke-dashoffset-to-0;
+	}
+}
+
+@media not (prefers-reduced-motion) {
+	.h4r4ew {
+		stroke-dasharray: 32;
+		stroke-dashoffset: 32;
+		fill-opacity: 0;
+		animation: 0.4s linear forwards stroke-dashoffset-to-0,
+			0.2s linear 0.9s forwards fill-to-1;
+	}
+}
+
+.yc6i9w {
+	d: path(
+		'M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z'
+	);
+}
+
+.a0ixkd {
+	d: path(
+		'M12 15h2c2.21 0 4 1.79 4 4v1c0 0.28 -0.22 0.5 -0.5 0.5h-6M12 15h-2c-2.21 0 -4 1.79 -4 4v1c0 0.28 0.22 0.5 0.5 0.5h6'
+	);
+	fill: none;
+}
+
+.kfci3p {
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: var(--svg-stroke-width, 2px);
+	stroke: currentColor;
+}
+
+/**
+ * Refresh
+ */
+.ullnga {
+	d: path(
+		'M20 12c0 -4.97 -4.03 -9 -9 -9c-2.49 0 -4.74 1.01 -6.36 2.64l-2.64 2.36M2 12c0 4.97 4.03 9 9 9c2.49 0 4.74 -1.01 6.36 -2.64l2.64 -2.36'
+	);
+}
+
+button:hover .ullnga {
+	d: path(
+		'M19.95 11c-0.5 -4.5 -4.32 -8 -8.95 -8c-2.49 0 -4.74 1.01 -6.36 2.64l-3.14 3.36M2.05 13c0.5 4.5 4.32 8 8.95 8c2.49 0 4.74 -1.01 6.36 -2.64l3.14 -3.36'
+	);
+}
+
+@media not (prefers-reduced-motion) {
+	.ullnga {
+		transition: d 0.4s linear;
+	}
+}
+
+@media not (prefers-reduced-motion) {
+	.w-_u6e {
+		stroke-dasharray: 28;
+		stroke-dashoffset: 28;
+		animation: 0.4s linear forwards stroke-dashoffset-to-0;
+	}
+}
+
+.zxndow {
+	stroke: #fff;
+}
+
+.iy2otu {
+	stroke-width: var(--svg-stroke-width, 1.5px);
+}
+
+.jcsjqr {
+	d: path('M2 8l0 -4M20 16l0 4');
+}
+
+button:hover .jcsjqr {
+	d: path('M1.5 9l1 -5M20.5 15l-1 5');
+}
+
+@media not (prefers-reduced-motion) {
+	.jcsjqr {
+		transition: d 0.4s linear;
+	}
+}
+
+@media not (prefers-reduced-motion) {
+	.hgfl7k {
+		stroke-dasharray: 8;
+		stroke-dashoffset: 8;
+		animation: 0.4s linear 0.4s forwards stroke-dashoffset-to-0;
+	}
+}
+
+.z77veu {
+	d: path('M2 8l4 0M20 16l-4 0');
+}
+
+button:hover .z77veu {
+	d: path('M1.5 9l5 -1M20.5 15l-5 1');
+}
+
+@media not (prefers-reduced-motion) {
+	.z77veu {
+		transition: d 0.4s linear;
+	}
+}
+
+.s8e22g {
+	stroke: currentColor;
+}
+
+.r1menc {
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+}
+
+.al390y {
+	stroke-width: var(
+		--svg-mask-width,
+		calc(var(--svg-stroke-width, 1.5px) + 1px)
+	);
+	stroke: #000;
+}
+
+.axv--x {
+	d: path('M0 0h22v24H0z');
+	fill: currentColor;
+}
+
+/**
+ * Keyframes used in icons
+ */
+@keyframes stroke-dashoffset-to-0 {
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes fill-to-1 {
+	100% {
+		fill-opacity: 1;
+	}
+}
+
+@keyframes fade-to-1 {
+	100% {
+		opacity: 1;
+	}
+}
