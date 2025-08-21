@@ -1,4 +1,5 @@
 import './init.js';
+import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import type {
 	CSSIconComponentProps,
 	CSSIconComponentViewbox,
@@ -7,4 +8,4 @@ import { Icon } from './component.js';
 import { preloadIcons } from './preload.js';
 
 export { Icon, preloadIcons };
-export type { CSSIconComponentProps, CSSIconComponentViewbox };
+export type { CSSIconComponentProps, CSSIconComponentViewbox, IconifyIconName };
