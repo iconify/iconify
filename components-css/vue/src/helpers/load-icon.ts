@@ -1,3 +1,3 @@
-import { loadIcon } from '@iconify/component-utils/lib/exported/icons/load-icon.js';
+import { loadIcon } from '@iconify/component-utils/icons/load-icon';
 
 export { loadIcon };

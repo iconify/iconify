@@ -2,7 +2,7 @@
 import { ref, shallowRef } from 'vue';
 import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-vue';
-import { loadIcon } from '@iconify/css-vue/dist/helpers/load-icon.js';
+import { loadIcon } from '@iconify/css-vue/helpers/load-icon';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,

@@ -8,17 +8,23 @@ import type { IconifyJSON } from '@iconify/types';
  */
 export function createIconifyAPILoader(
 	host: string | string[],
-	init?: RequestInit
+	init?: RequestInit,
+	checkSSR = true
 ): LoaderConfig {
 	const hosts = Array.isArray(host) ? host : [host];
+
+	// Check for SSR environment: do not send API requests in SSR
+	const isSSR = checkSSR
+		? typeof window === 'undefined' || !window.document
+		: checkSSR;
 
 	return {
 		maxCount: 32,
 		maxLength: 480,
 		validateNames: true,
 		loadIcons: async (names: string[], prefix: string) => {
-			if (!matchIconName.test(prefix)) {
-				// Invalid prefix
+			if (isSSR || !matchIconName.test(prefix)) {
+				// Invalid prefix or SSR environment
 				return {
 					prefix,
 					icons: Object.create(null),

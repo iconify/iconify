@@ -1,6 +1,6 @@
 import { getIconStorage } from '../src/storage/storage.js';
-import { getLoadedIcon } from '../src/exported/icons/get-icon.js';
-import { loadIcon } from '../src/exported/icons/load-icon.js';
+import { getLoadedIcon } from '../src/icons/get-icon.js';
+import { loadIcon } from '../src/icons/load-icon.js';
 import { setProviderLoader } from '../src/loader/loaders.js';
 import { loadIcons } from '../src/loader/queue.js';
 import {
@@ -8,8 +8,8 @@ import {
 	unsubscribeFromIconStorage,
 } from '../src/storage/subscription.js';
 import { createIconifyAPILoader } from '../src/loader/api/create.js';
-import { loadIconsWithCallback } from '../src/exported/icons/load-icons.js';
-import { subscribeToIconData } from '../src/exported/icons/subscribe.js';
+import { loadIconsWithCallback } from '../src/icons/load-icons.js';
+import { subscribeToIconData } from '../src/icons/subscribe.js';
 import type { IconifyIcon } from '@iconify/types';
 
 describe('Testing icon loader', () => {
@@ -220,11 +220,15 @@ describe('Testing icon loader', () => {
 		// Set API loader
 		setProviderLoader(
 			provider,
-			createIconifyAPILoader([
-				'https://api.iconify.design',
-				'https://api.simplesvg.com',
-				'https://api.unisvg.com',
-			])
+			createIconifyAPILoader(
+				[
+					'https://api.iconify.design',
+					'https://api.simplesvg.com',
+					'https://api.unisvg.com',
+				],
+				undefined,
+				false
+			)
 		);
 
 		// Load one icon

@@ -1,3 +1,3 @@
-import { loadIconsWithCallback } from '@iconify/component-utils/lib/exported/icons/load-icons.js';
+import { loadIconsWithCallback } from '@iconify/component-utils/icons/load-icons';
 
 export { loadIconsWithCallback };

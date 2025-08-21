@@ -1,9 +1,9 @@
-import { getIconStorage, iterateIconStorage } from '../../storage/storage.js';
+import { getIconStorage, iterateIconStorage } from './storage.js';
 import {
 	subscribeToIconStorage,
 	unsubscribeFromIconStorage,
-} from '../../storage/subscription.js';
-import type { IconsData } from '../../icon-lists/types.js';
+} from './subscription.js';
+import type { IconsData } from '../icon-lists/types.js';
 
 type Callback = () => unknown;
 

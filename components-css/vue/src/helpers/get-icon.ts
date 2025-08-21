@@ -1,3 +1,3 @@
-import { getLoadedIcon } from '@iconify/component-utils/lib/exported/icons/get-icon.js';
+import { getLoadedIcon } from '@iconify/component-utils/icons/get-icon';
 
 export { getLoadedIcon };

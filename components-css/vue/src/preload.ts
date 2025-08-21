@@ -1,5 +1,5 @@
-import { splitIconNames } from '@iconify/component-utils/lib/icon-lists/split.js';
-import { loadIcons } from '@iconify/component-utils/lib/loader/queue.js';
+import { splitIconNames } from '@iconify/component-utils/icon-lists/split';
+import { loadIcons } from '@iconify/component-utils/loader/queue';
 import { renderCSS } from './status.js';
 
 /**

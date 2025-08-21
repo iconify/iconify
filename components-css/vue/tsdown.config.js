@@ -6,6 +6,7 @@ export default defineConfig({
 	format: ['esm'],
 	outDir: 'dist',
 	clean: true,
+	exports: true,
 	inputOptions: {
 		experimental: {
 			attachDebugInfo: 'none',

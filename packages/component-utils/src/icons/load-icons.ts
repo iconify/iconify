@@ -1,12 +1,12 @@
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import { getIconStorage } from '../../storage/storage.js';
-import { loadIcons } from '../../loader/queue.js';
-import type { IconsData } from '../../icon-lists/types.js';
+import { getIconStorage } from '../storage/storage.js';
+import { loadIcons } from '../loader/queue.js';
+import type { IconsData } from '../icon-lists/types.js';
 import {
 	toggleIconStorage,
 	unsubscribeFromAllIconStorage,
-} from '../helpers/subscribe.js';
-import { splitIconNames } from '../../icon-lists/split.js';
+} from '../storage/subscribe.js';
+import { splitIconNames } from '../icon-lists/split.js';
 
 /**
  * Load icon(s)

@@ -1,10 +1,10 @@
 import { setFetch } from '@iconify/fetch';
-import { createIconifyAPILoader } from '@iconify/component-utils/lib/loader/api/create.js';
+import { createIconifyAPILoader } from '@iconify/component-utils/loader/api/create';
 import {
 	setLoader,
 	setProviderLoader,
 	getLoader,
-} from '@iconify/component-utils/lib/loader/loaders.js';
+} from '@iconify/component-utils/loader/loaders';
 
 export {
 	setFetch,

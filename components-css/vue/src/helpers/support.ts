@@ -1,3 +1,3 @@
-import { supportsCSS } from '@iconify/component-utils/lib/exported/helpers/support.js';
+import { supportsCSS } from '@iconify/component-utils/helpers/support';
 
 export { supportsCSS };

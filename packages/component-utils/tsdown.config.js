@@ -7,6 +7,7 @@ export default defineConfig({
 	outDir: 'lib',
 	clean: true,
 	unbundle: true,
+	exports: true,
 	inputOptions: {
 		experimental: {
 			attachDebugInfo: 'none',

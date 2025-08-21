@@ -10,7 +10,7 @@ import type { CSSIconComponentProps } from './types.js';
 import type { IconifyIcon } from '@iconify/types';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
-import { subscribeToIconData } from '@iconify/component-utils/lib/exported/icons/subscribe.js';
+import { subscribeToIconData } from '@iconify/component-utils/icons/subscribe';
 import { renderCSS } from './status.js';
 
 /**

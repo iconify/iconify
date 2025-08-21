@@ -18,9 +18,9 @@
 		"prebuild": "pnpm run lint",
 		"build": "tsdown"
 	},
-	"main": "dist/index.js",
-	"module": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"dependencies": {
 		"@iconify/types": "workspace:^"
 	},
@@ -32,5 +32,15 @@
 	},
 	"peerDependencies": {
 		"vue": ">=3"
+	},
+	"exports": {
+		".": "./dist/index.js",
+		"./helpers/api": "./dist/helpers/api.js",
+		"./helpers/get-icon": "./dist/helpers/get-icon.js",
+		"./helpers/load-icon": "./dist/helpers/load-icon.js",
+		"./helpers/load-icons": "./dist/helpers/load-icons.js",
+		"./helpers/subscribe": "./dist/helpers/subscribe.js",
+		"./helpers/support": "./dist/helpers/support.js",
+		"./package.json": "./package.json"
 	}
 }

@@ -1,12 +1,12 @@
 import type { IconifyIcon } from '@iconify/types';
 import { stringToIcon, type IconifyIconName } from '@iconify/utils';
-import { getIconStorage } from '../../storage/storage.js';
-import type { IconStorage } from '../../storage/types.js';
+import { getIconStorage } from '../storage/storage.js';
+import type { IconStorage } from '../storage/types.js';
 import {
 	subscribeToIconStorage,
 	unsubscribeFromIconStorage,
-} from '../../storage/subscription.js';
-import { loadIcons } from '../../loader/queue.js';
+} from '../storage/subscription.js';
+import { loadIcons } from '../loader/queue.js';
 
 // Callback with icon data
 type Callback = (data: IconifyIcon | null | undefined) => void;
