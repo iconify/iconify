@@ -2,6 +2,7 @@
 import { ref, shallowRef } from 'vue';
 import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-vue';
+import { Icon as BasicIcon } from '@iconify/css-vue/basic';
 import { loadIcon } from '@iconify/css-vue/helpers/load-icon';
 
 const grid24: CSSIconComponentViewbox = {
@@ -137,9 +138,15 @@ function restartAnimations() {
 		<section>
 			<h1>Testing various params</h1>
 			<div class="icons-list">
-				No fallback (should render icon in modern browser only):
+				No fallback (should render icon in modern browser only), 2
+				icons:
 				<div>
 					<Icon :content="msDrafts" :viewBox="grid24" height="24" />
+					<BasicIcon
+						:content="msDrafts"
+						:viewBox="grid24"
+						height="24"
+					/>
 				</div>
 			</div>
 			<div class="icons-list">

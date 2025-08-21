@@ -1,3 +1,4 @@
+import './init.js';
 import {
 	defineComponent,
 	onUnmounted,
@@ -6,7 +7,7 @@ import {
 	h,
 	computed,
 } from 'vue';
-import type { CSSIconComponentProps } from './types.js';
+import type { CSSIconComponentProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';

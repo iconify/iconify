@@ -1,6 +1,6 @@
 import { splitIconNames } from '@iconify/component-utils/icon-lists/split';
 import { loadIcons } from '@iconify/component-utils/loader/queue';
-import { renderCSS } from './status.js';
+import { renderCSS } from '../full/status.js';
 
 /**
  * Preload icons used in fallback mode

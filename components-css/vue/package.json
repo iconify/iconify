@@ -35,12 +35,15 @@
 	},
 	"exports": {
 		".": "./dist/index.js",
+		"./basic": "./dist/basic.js",
 		"./helpers/api": "./dist/helpers/api.js",
 		"./helpers/get-icon": "./dist/helpers/get-icon.js",
 		"./helpers/load-icon": "./dist/helpers/load-icon.js",
 		"./helpers/load-icons": "./dist/helpers/load-icons.js",
+		"./helpers/preload": "./dist/helpers/preload.js",
 		"./helpers/subscribe": "./dist/helpers/subscribe.js",
 		"./helpers/support": "./dist/helpers/support.js",
+		"./props": "./dist/props.js",
 		"./package.json": "./package.json"
 	}
 }

@@ -1,7 +1,16 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-	entry: ['src/index.ts', 'src/helpers/*.ts'],
+	entry: [
+		// Full component
+		'src/index.ts',
+		// Basic component
+		'src/basic.ts',
+		// Prop types
+		'src/props.ts',
+		// Helpers
+		'src/helpers/*.ts',
+	],
 	dts: true,
 	format: ['esm'],
 	outDir: 'dist',
