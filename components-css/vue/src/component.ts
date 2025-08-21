@@ -19,19 +19,23 @@ import { renderCSS } from './status.js';
 export const Icon = defineComponent<CSSIconComponentProps>(
 	(props: CSSIconComponentProps) => {
 		// Icon to render from API, set to empty string if CSS rendering is used
-		const iconName = computed(() =>
-			renderCSS ? '' : props.fallback || ''
+		const fallbackToRender = computed(() =>
+			renderCSS && props.content ? '' : props.fallback || ''
 		);
 
 		// Data for icon to render
 		const iconData = shallowRef<IconifyIcon | null | undefined>(null);
 
 		// Subscribe to icon data updates and watch prop changes
-		const subscriber = subscribeToIconData(iconName.value, (newData) => {
-			iconData.value = newData;
-		});
+		const subscriber = subscribeToIconData(
+			fallbackToRender.value,
+			(newData) => {
+				iconData.value = newData;
+			}
+		);
 		iconData.value = subscriber.data;
-		watch(iconName, subscriber.change);
+
+		watch(fallbackToRender, subscriber.change);
 		onUnmounted(subscriber.unsubscribe);
 
 		// Render fallback icon

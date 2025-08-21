@@ -1,3 +1,5 @@
+import type { IconifyIcon } from '@iconify/types';
+
 export interface CSSIconComponentViewbox {
 	left?: number;
 	top?: number;
@@ -14,8 +16,8 @@ export interface CSSIconComponentProps {
 	viewBox: CSSIconComponentViewbox;
 
 	// Raw content to render if browser supports SVG+CSS
-	content: string;
+	content?: string | IconifyIcon;
 
 	// Fallback icon name
-	fallback?: string;
+	fallback?: string | IconifyIcon;
 }

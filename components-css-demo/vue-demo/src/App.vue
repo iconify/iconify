@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref, shallowRef } from 'vue';
+import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-vue';
-import { ref } from 'vue';
+import { loadIcon } from '@iconify/css-vue/dist/helpers/load-icon.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -33,6 +35,13 @@ const refreshIcon = `<defs>
 <path mask="url(#SVGYCxuLdPe)" class="axv--x"></path>
 <path class="hgfl7k iy2otu r1menc s8e22g z77veu"></path>`;
 
+const iconData = shallowRef<IconifyIcon | null>(null);
+loadIcon('material-symbols:mail-lock-outline-rounded')
+	.then((data) => {
+		iconData.value = data;
+	})
+	.catch(console.error);
+
 const hideAnimated = ref(false);
 function restartAnimations() {
 	hideAnimated.value = true;
@@ -46,6 +55,10 @@ function restartAnimations() {
 		<section>
 			<h1>Demo for SVG+CSS</h1>
 			<p>This browser <span class="status"></span> SVG+CSS</p>
+			<p>
+				Known browsers that do not support SVG+CSS: Safari 18.6
+				(currently latest stable version)
+			</p>
 		</section>
 		<section>
 			<h1>Test icons</h1>
@@ -119,6 +132,31 @@ function restartAnimations() {
 					:viewBox="grid24"
 					fallback="tabler:home-check"
 				/>
+			</div>
+		</section>
+		<section>
+			<h1>Testing various params</h1>
+			<div class="icons-list">
+				No fallback (should render icon in modern browser only):
+				<div>
+					<Icon :content="msDrafts" :viewBox="grid24" height="24" />
+				</div>
+			</div>
+			<div class="icons-list">
+				Fallback only as string (used as Iconify Icon component):
+				<div>
+					<Icon
+						:viewBox="grid24"
+						height="24"
+						fallback="material-symbols:mail-lock-outline-rounded"
+					/>
+				</div>
+			</div>
+			<div class="icons-list" v-if="iconData">
+				Fallback only as IconifyIcon (used as Iconify Icon component):
+				<div>
+					<Icon :viewBox="grid24" height="24" :fallback="iconData" />
+				</div>
 			</div>
 		</section>
 	</div>

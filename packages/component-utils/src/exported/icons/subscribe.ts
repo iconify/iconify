@@ -13,7 +13,7 @@ type Callback = (data: IconifyIcon | null | undefined) => void;
 
 interface Result {
 	// Change icon name
-	change: (iconName: string | IconifyIconName) => void;
+	change: (iconName: string | IconifyIconName | IconifyIcon) => void;
 
 	// Unsubscribe function
 	unsubscribe: () => void;
@@ -30,7 +30,7 @@ interface Result {
  * Intended to be used with reactive frameworks to watch for icon data when name can change
  */
 export function subscribeToIconData(
-	iconName: string | IconifyIconName,
+	iconToRender: string | IconifyIconName | IconifyIcon,
 	callback: Callback
 ): Result {
 	// Create unique subscriber
@@ -79,22 +79,32 @@ export function subscribeToIconData(
 	};
 
 	// Change icon name to watch
-	const change = (iconName: string | IconifyIconName) => {
+	const change = (iconName: string | IconifyIconName | IconifyIcon) => {
 		if (unsubscribed) {
 			// Ignore
 			return;
 		}
 
-		// Update icon name
-		icon =
-			typeof iconName === 'string'
-				? stringToIcon(iconName)
-				: { ...iconName };
-
 		// Update storage
 		if (storage) {
 			unsubscribeFromIconStorage(storage, subscriber);
 		}
+
+		// Convert icon name to object
+		const newIcon =
+			typeof iconName === 'string'
+				? stringToIcon(iconName)
+				: { ...iconName };
+		if (newIcon && 'body' in newIcon) {
+			// Icon data as object
+			icon = null;
+			data = newIcon;
+			storage = null;
+			return;
+		}
+
+		// Icon name
+		icon = newIcon;
 
 		// Update subscriber
 		if (icon) {
@@ -106,7 +116,7 @@ export function subscribeToIconData(
 			setData();
 		}
 	};
-	change(iconName);
+	change(iconToRender);
 
 	// Return result
 	returned = true;
