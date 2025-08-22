@@ -11,6 +11,7 @@ import type { CSSIconComponentProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import { iconToSVG } from '@iconify/utils/lib/svg/build';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { subscribeToIconData } from '@iconify/component-utils/icons/subscribe';
 import { renderCSS } from './status.js';
 
@@ -19,6 +20,13 @@ import { renderCSS } from './status.js';
  */
 export const Icon = defineComponent<CSSIconComponentProps>(
 	(props: CSSIconComponentProps) => {
+		// Content
+		const content = computed(() => {
+			const data = props.content || '';
+			const html = typeof data === 'object' ? iconToSVG(data).body : data;
+			return replaceIDs(html);
+		});
+
 		// Icon to render from API, set to empty string if CSS rendering is used
 		const fallbackToRender = computed(() =>
 			renderCSS && props.content ? '' : props.fallback || ''
@@ -42,7 +50,7 @@ export const Icon = defineComponent<CSSIconComponentProps>(
 		// Render fallback icon
 		const fallbackIcon = computed(() => {
 			const data = iconData.value;
-			return data ? iconToSVG(data).body : '';
+			return replaceIDs(data ? iconToSVG(data).body : '');
 		});
 
 		// Icon size
@@ -98,7 +106,7 @@ export const Icon = defineComponent<CSSIconComponentProps>(
 				xmlns: 'http://www.w3.org/2000/svg',
 				...size.value,
 				viewBox: viewBox.value,
-				innerHTML: fallbackIcon.value || props.content,
+				innerHTML: fallbackIcon.value || content.value,
 			});
 	},
 	{

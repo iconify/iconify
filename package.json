@@ -13,9 +13,9 @@
 	},
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
-		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run lint",
-		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run build",
-		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run test"
+		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run lint",
+		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run build",
+		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run test"
 	},
 	"dependencies": {},
 	"devDependencies": {

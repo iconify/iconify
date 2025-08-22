@@ -1,9 +1,11 @@
 import { defineComponent, h, computed } from 'vue';
+import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import type {
 	CSSIconComponentProps,
 	CSSIconComponentViewbox,
 } from './props.js';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
+import { iconToSVG } from '@iconify/utils/lib/svg/build';
 
 /**
  * Basic icon component, without fallback
@@ -12,6 +14,13 @@ import { calculateSize } from '@iconify/utils/lib/svg/size';
  */
 export const Icon = defineComponent<CSSIconComponentProps>(
 	(props: CSSIconComponentProps) => {
+		// Content
+		const content = computed(() => {
+			const data = props.content || '';
+			const html = typeof data === 'object' ? iconToSVG(data).body : data;
+			return replaceIDs(html);
+		});
+
 		// Icon size
 		const viewBox = computed(
 			() =>
@@ -65,7 +74,7 @@ export const Icon = defineComponent<CSSIconComponentProps>(
 				xmlns: 'http://www.w3.org/2000/svg',
 				...size.value,
 				viewBox: viewBox.value,
-				innerHTML: props.content,
+				innerHTML: content.value,
 			});
 	},
 	{
