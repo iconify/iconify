@@ -1,3 +1,3 @@
-import { clearIDCache } from '@iconify/component-utils/helpers/content';
+import { clearIDCache } from '@iconify/utils/lib/svg/id';
 
 export { clearIDCache };

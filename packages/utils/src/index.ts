@@ -55,7 +55,7 @@ export { convertIconSetInfo } from './icon-set/convert-info';
 export { iconToSVG } from './svg/build';
 export type { IconifyIconBuildResult } from './svg/build';
 export { splitSVGDefs, mergeDefsAndContent, wrapSVGContent } from './svg/defs';
-export { replaceIDs } from './svg/id';
+export { replaceIDs, clearIDCache } from './svg/id';
 export { calculateSize } from './svg/size';
 export { encodeSvgForCss } from './svg/encode-svg-for-css';
 export { trimSVG } from './svg/trim';

@@ -202,19 +202,8 @@ export const render = (
 		// Add icon stuff
 		Object.assign(componentProps, renderAttribs);
 
-		// Counter for ids based on "id" property to render icons consistently on server and client
-		let localCounter = 0;
-		let id = props.id;
-		if (typeof id === 'string') {
-			// Convert '-' to '_' to avoid errors in animations
-			id = id.replace(/-/g, '_');
-		}
-
 		// Add innerHTML and style to props
-		componentProps['innerHTML'] = replaceIDs(
-			item.body,
-			id ? () => id + 'ID' + localCounter++ : 'iconifyVue'
-		);
+		componentProps['innerHTML'] = replaceIDs(item.body);
 
 		// Render icon
 		return h('svg', componentProps);

@@ -17,7 +17,7 @@ import {
 import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
 import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
-import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { replaceIDs, clearIDCache } from '@iconify/utils/lib/svg/id';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
 import type { IconifyIconBuildResult } from '@iconify/utils/lib/svg/build';
 
@@ -311,8 +311,8 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 		return props.children
 			? (props.children as JSX.Element)
 			: props.fallback
-				? (props.fallback as JSX.Element)
-				: createElement('span', {});
+			? (props.fallback as JSX.Element)
+			: createElement('span', {});
 	}
 
 	return render(
@@ -384,4 +384,4 @@ export {
 export { iconLoaded, getIcon, listIcons, addIcon, addCollection };
 
 // IconifyBuilderFunctions
-export { replaceIDs, calculateSize, buildIcon };
+export { replaceIDs, clearIDCache, calculateSize, buildIcon };

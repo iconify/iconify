@@ -53,7 +53,12 @@ export {
 	addCollection,
 } from './functions';
 
-export { calculateSize, replaceIDs, buildIcon } from './functions';
+export {
+	calculateSize,
+	replaceIDs,
+	clearIDCache,
+	buildIcon,
+} from './functions';
 
 export {
 	addAPIProvider,
