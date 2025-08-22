@@ -1,11 +1,10 @@
 import { defineComponent, h, computed } from 'vue';
-import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { renderContent } from '@iconify/component-utils/helpers/content';
 import type {
 	CSSIconComponentProps,
 	CSSIconComponentViewbox,
 } from './props.js';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
-import { iconToSVG } from '@iconify/utils/lib/svg/build';
 
 /**
  * Basic icon component, without fallback
@@ -15,11 +14,7 @@ import { iconToSVG } from '@iconify/utils/lib/svg/build';
 export const Icon = defineComponent<CSSIconComponentProps>(
 	(props: CSSIconComponentProps) => {
 		// Content
-		const content = computed(() => {
-			const data = props.content || '';
-			const html = typeof data === 'object' ? iconToSVG(data).body : data;
-			return replaceIDs(html);
-		});
+		const content = computed(() => renderContent(props.content || ''));
 
 		// Icon size
 		const viewBox = computed(

@@ -10,8 +10,7 @@ import {
 import type { CSSIconComponentProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
 import { calculateSize } from '@iconify/utils/lib/svg/size';
-import { iconToSVG } from '@iconify/utils/lib/svg/build';
-import { replaceIDs } from '@iconify/utils/lib/svg/id';
+import { renderContent } from '@iconify/component-utils/helpers/content';
 import { subscribeToIconData } from '@iconify/component-utils/icons/subscribe';
 import { renderCSS } from './status.js';
 
@@ -21,11 +20,7 @@ import { renderCSS } from './status.js';
 export const Icon = defineComponent<CSSIconComponentProps>(
 	(props: CSSIconComponentProps) => {
 		// Content
-		const content = computed(() => {
-			const data = props.content || '';
-			const html = typeof data === 'object' ? iconToSVG(data).body : data;
-			return replaceIDs(html);
-		});
+		const content = computed(() => renderContent(props.content || ''));
 
 		// Icon to render from API, set to empty string if CSS rendering is used
 		const fallbackToRender = computed(() =>
@@ -48,10 +43,9 @@ export const Icon = defineComponent<CSSIconComponentProps>(
 		onUnmounted(subscriber.unsubscribe);
 
 		// Render fallback icon
-		const fallbackIcon = computed(() => {
-			const data = iconData.value;
-			return replaceIDs(data ? iconToSVG(data).body : '');
-		});
+		const fallbackIcon = computed(() =>
+			renderContent(fallbackToRender.value)
+		);
 
 		// Icon size
 		const viewBox = computed(
