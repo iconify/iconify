@@ -22,6 +22,7 @@ export function createIconifyAPILoader(
 		maxCount: 32,
 		maxLength: 480,
 		validateNames: true,
+		hosts,
 		loadIcons: async (names: string[], prefix: string) => {
 			if (isSSR || !matchIconName.test(prefix)) {
 				// Invalid prefix or SSR environment

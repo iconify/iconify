@@ -51,6 +51,9 @@ interface ConfigProps extends QueueSplitConfig {
 
 	// Allow reloading icons
 	allowReload?: boolean;
+
+	// Hosts for API, only used if loader is created using createIconifyAPILoader()
+	hosts?: string[];
 }
 
 /**
