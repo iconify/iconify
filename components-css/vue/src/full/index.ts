@@ -43,9 +43,10 @@ export const Icon = defineComponent<CSSIconComponentProps>(
 		onUnmounted(subscriber.unsubscribe);
 
 		// Render fallback icon
-		const fallbackIcon = computed(() =>
-			renderContent(fallbackToRender.value)
-		);
+		const fallbackIcon = computed(() => {
+			const data = iconData.value;
+			return data ? renderContent(data) : '';
+		});
 
 		// Icon size
 		const viewBox = computed(

@@ -95,6 +95,7 @@ export function subscribeToIconData(
 			typeof iconName === 'string'
 				? stringToIcon(iconName)
 				: { ...iconName };
+
 		if (newIcon && 'body' in newIcon) {
 			// Icon data as object
 			icon = null;

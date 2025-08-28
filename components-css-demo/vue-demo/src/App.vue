@@ -4,6 +4,7 @@ import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-vue';
 import { Icon as BasicIcon } from '@iconify/css-vue/basic';
 import { loadIcon } from '@iconify/css-vue/helpers/load-icon';
+import MDIHomeIcon from './test/mdi/h/home.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -163,6 +164,15 @@ function restartAnimations() {
 				Fallback only as IconifyIcon (used as Iconify Icon component):
 				<div>
 					<Icon :viewBox="grid24" height="24" :fallback="iconData" />
+				</div>
+			</div>
+		</section>
+		<section>
+			<h1>Test generated icon component</h1>
+			<div class="icons-list">
+				Home icon:
+				<div>
+					<MDIHomeIcon height="24" />
 				</div>
 			</div>
 		</section>
