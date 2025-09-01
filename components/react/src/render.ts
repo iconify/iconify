@@ -138,6 +138,7 @@ export const render = (
 			case 'onLoad':
 			case 'mode':
 			case 'ssr':
+			case 'fallback':
 				break;
 
 			// Forward ref
