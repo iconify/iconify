@@ -4,23 +4,62 @@ import type { IconifyIconCustomisations as RawIconifyIconCustomisations } from '
 import { defaultIconCustomisations } from '@iconify/utils/lib/customisations/defaults';
 
 /**
- * Icon render mode
+ * Icon rendering mode
  *
- * 'style' = 'bg' or 'mask', depending on icon content
- * 'bg' = <span> with style using `background`
- * 'mask' = <span> with style using `mask`
- * 'svg' = <svg>
+ * Defines how the icon should be rendered in the DOM.
+ *
+ * - `'svg'` - Render as SVG element (recommended, best compatibility)
+ * - `'style'` - Auto-detect between 'bg' or 'mask' based on icon content
+ * - `'bg'` - Render as `<span>` with `background-image` CSS property
+ * - `'mask'` - Render as `<span>` with `mask-image` CSS property
+ *
+ * @see https://iconify.design/docs/icon-components/react/render-modes.html
  */
 export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'svg';
 
 /**
- * Icon customisations
+ * Icon customisation properties
+ * 
+ * Extends the base Iconify icon customisations with React-specific options.
+ * These properties control the appearance and behavior of the icon.
  */
 export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
-	// Allow rotation to be string
+	/**
+	 * Rotation angle for the icon
+	 * 
+	 * Can be specified as:
+	 * - String with units: "90deg", "0.5turn", "1.5708rad"
+	 * - Number representing quarter-turns: 0=0°, 1=90°, 2=180°, 3=270°
+	 * 
+	 * @example
+	 * ```tsx
+	 * <Icon icon="bi:check2-circle" /> // No rotation
+	 * <Icon icon="bi:check2-circle" rotate="90deg" /> // 90° clockwise
+	 * <Icon icon="bi:check2-circle" rotate={2} /> // 180° rotation
+	 * <Icon icon="bi:check2-circle" rotate="0.5turn" /> // 180° rotation
+	 * ```
+	 * 
+	 * @see https://iconify.design/docs/icon-components/react/transform.html#rotation
+	 */
 	rotate?: string | number;
 
-	// Inline mode
+	/**
+	 * Display mode for the icon
+	 * 
+	 * When `true`, the icon is displayed as an inline element with baseline 
+	 * vertical alignment. When `false`, it's displayed as a block element
+	 * with middle vertical alignment.
+	 * 
+	 * @default false
+	 * 
+	 * @example
+	 * ```tsx
+	 * <Icon icon="mdi:home" inline /> // Aligns with text baseline
+	 * <Icon icon="mdi:home" /> // Centers vertically
+	 * ```
+	 * 
+	 * @see https://iconify.design/docs/icon-components/react/inline.html
+	 */
 	inline?: boolean;
 };
 
@@ -30,7 +69,9 @@ export const defaultExtendedIconCustomisations = {
 };
 
 /**
- * Callback for when icon has been loaded (only triggered for icons loaded from API)
+ * Callback function invoked when icon data has been loaded from the API
+ * 
+ * @param name - The name of the icon that was loaded (e.g., "mdi:home")
  */
 export type IconifyIconOnLoad = (name: string) => void;
 
@@ -38,29 +79,78 @@ export type IconifyIconOnLoad = (name: string) => void;
  * Icon properties
  */
 export interface IconifyIconProps extends IconifyIconCustomisations {
-	// Icon object or icon name (must be added to storage using addIcon for offline package)
+
+	/**
+	 * The icon to render
+	 *
+	 * Can be either:
+	 * - An icon object (IconifyIcon) containing SVG data
+	 * - A string with icon name in format "prefix:name" (must be loaded first)
+	 *
+	 * @see https://iconify.design/docs/icon-components/react/#icon
+	 */
 	icon: IconifyIcon | string;
 
-	// Render mode
+	/**
+	 * Rendering mode for the icon
+	 * @see {@link IconifyRenderMode}
+	 */
 	mode?: IconifyRenderMode;
 
-	// Style
+	/**
+	 * Icon color (for monotone icons only)
+	 *
+	 * Only affects monotone icons. Icons with hardcoded palettes (like emoji)
+	 * cannot be recolored. Accepts any valid CSS color value.
+	 *
+	 * @see https://iconify.design/docs/icon-components/react/color.html
+	 */
 	color?: string;
 
-	// Flip shorthand
+	/**
+	 * Flip transformation shorthand
+	 *
+	 * Convenient way to flip icons horizontally and/or vertically.
+	 *
+	 * @example
+	 * flip="horizontal"
+	 * flip="vertical"
+	 * flip="horizontal,vertical"
+	 *
+	 * @see https://iconify.design/docs/icon-components/react/transform.html#flip
+	 */
 	flip?: string;
 
-	// Unique id, used as base for ids for shapes. Use it to get consistent ids for server side rendering
+	/**
+	 * Unique identifier for the icon
+	 *
+	 * Used as base for generating unique IDs for SVG elements and shapes.
+	 * Ensures consistent IDs for server-side rendering and accessibility.
+	 */
 	id?: string;
 
-	// If true, icon will be rendered without waiting for component to mount, such as when rendering on server side
+	/**
+	 * Server-side rendering mode
+	 *
+	 * When `true`, icon renders immediately without waiting for component
+	 * to mount. Useful for server-side rendering to prevent hydration issues.
+	 */
 	ssr?: boolean;
 
-	// If present, icon will render the value of this property before the icon is loaded and rendered
-	// If not present, icon will render an empty span
+	/**
+	 * Fallback content while icon is loading or failed to load
+	 *
+	 * Displayed before the icon is loaded and rendered. If not provided,
+	 * an empty span will be rendered as placeholder.
+	 */
 	fallback?: ReactNode;
 
-	// Callback to call when icon data has been loaded. Used only for icons loaded from API
+	/**
+	 * Callback fired when icon data is loaded
+	 *
+	 * Only triggered for icons loaded from the Iconify API. Not called
+	 * for icons that are already available or provided as objects.
+	 */
 	onLoad?: IconifyIconOnLoad;
 }
 
