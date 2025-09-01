@@ -6,8 +6,7 @@
  * - Alias definitions (overrides parent icon's properties)
  * - Root of JSON file (provides default values for all icons)
  */
-export interface IconifyDimenisons
-{
+export interface IconifyDimenisons {
 	/**
 	 * Left position of the viewBox.
 	 * @default 0
@@ -40,8 +39,7 @@ export interface IconifyDimenisons
  * - Icon definitions (applied directly)
  * - Alias definitions (merged with parent icon's properties)
  */
-export interface IconifyTransformations
-{
+export interface IconifyTransformations {
 	/**
 	 * Number of 90-degree rotations to apply.
 	 * - 0 = 0°
@@ -74,16 +72,12 @@ export interface IconifyTransformations
  */
 export interface IconifyOptional
 	extends IconifyDimenisons,
-		IconifyTransformations
-{
-
-}
+		IconifyTransformations {}
 
 /**
  * Icon alias definition.
  */
-export interface IconifyAlias extends IconifyOptional
-{
+export interface IconifyAlias extends IconifyOptional {
 	/**
 	 * Parent icon name without prefix.
 	 */
@@ -102,8 +96,7 @@ export interface IconifyAlias extends IconifyOptional
  * Represents a complete icon with its SVG body content and optional properties.
  * If any optional property is missing, the default value from the root JSON object is used.
  */
-export interface IconifyIcon extends IconifyOptional
-{
+export interface IconifyIcon extends IconifyOptional {
 	/**
 	 * SVG body content (inner SVG elements).
 	 * @example `<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>`
@@ -123,8 +116,7 @@ export interface IconifyIcon extends IconifyOptional
  * Additional properties provided by the Iconify API that affect icon discovery and search behavior.
  * These attributes are not part of the core icon definition but are used for API functionality.
  */
-interface APIIconAttributes
-{
+interface APIIconAttributes {
 	/**
 	 * Indicates if the icon is hidden from search results.
 	 *
@@ -137,20 +129,19 @@ interface APIIconAttributes
 /**
  * Extended icon definition with API attributes.
  */
-export interface ExtendedIconifyIcon extends IconifyIcon, APIIconAttributes { }
+export interface ExtendedIconifyIcon extends IconifyIcon, APIIconAttributes {}
 
 /**
  * Extended alias definition with API attributes.
  */
-export interface ExtendedIconifyAlias extends IconifyAlias, APIIconAttributes { }
+export interface ExtendedIconifyAlias extends IconifyAlias, APIIconAttributes {}
 
 /**
  * Collection of icons in an icon set.
  *
  * Maps icon names (without prefix) to their definitions.
  */
-export interface IconifyIcons
-{
+export interface IconifyIcons {
 	/**
 	 * Icon definitions indexed by name.
 	 * @example `{ "home": { body: "<path d='...'/>" }, "user": { body: "<circle cx='12' cy='7' r='4'/>" } }`
@@ -163,8 +154,7 @@ export interface IconifyIcons
  *
  * Maps alias names (without prefix) to their definitions.
  */
-export interface IconifyAliases
-{
+export interface IconifyAliases {
 	/**
 	 * Alias definitions indexed by name without prefix.
 	 */
@@ -174,8 +164,7 @@ export interface IconifyAliases
 /**
  * Icon set information and metadata.
  */
-export interface IconifyInfo
-{
+export interface IconifyInfo {
 	/**
 	 * Name of the icon set.
 	 */
@@ -194,8 +183,7 @@ export interface IconifyInfo
 	/**
 	 * Author information.
 	 */
-	author:
-	{
+	author: {
 		/**
 		 * Author name.
 		 */
@@ -210,8 +198,7 @@ export interface IconifyInfo
 	/**
 	 * Licensing information.
 	 */
-	license:
-	{
+	license: {
 		/**
 		 * Human-readable license name.
 		 * @example "Apache License 2.0"
@@ -285,14 +272,12 @@ export interface IconifyInfo
  * and suffixes/prefixes are mixed together. Use the newer `prefixes` and `suffixes`
  * format in IconifyMetaData instead.
  */
-export interface LegacyIconifyThemes
-{
+export interface LegacyIconifyThemes {
 	/**
 	 * Theme definitions indexed by unique identifier.
 	 * The key is an arbitrary unique string.
 	 */
-	[key: string]:
-	{
+	[key: string]: {
 		/**
 		 * Display title for the theme.
 		 */
@@ -321,8 +306,7 @@ export interface LegacyIconifyThemes
  * - Searching icons by character in font-imported icon sets
  * - Exporting icon sets to font format
  */
-export interface IconifyChars
-{
+export interface IconifyChars {
 	/**
 	 * Character mappings indexed by Unicode character code.
 	 * @example `{ "f000": "home", "f001": "user" }`
@@ -336,8 +320,7 @@ export interface IconifyChars
  * Groups icons into categories for easier browsing and filtering.
  * Icons can belong to multiple categories or no categories at all.
  */
-export interface IconifyCategories
-{
+export interface IconifyCategories {
 	/**
 	 * Category definitions indexed by category name.
 	 * Each icon can belong to multiple categories or no categories at all.
@@ -348,8 +331,7 @@ export interface IconifyCategories
 /**
  * Metadata for icon set browsing and organization.
  */
-export interface IconifyMetaData
-{
+export interface IconifyMetaData {
 	/**
 	 * Icon set information block.
 	 * Used for public icon sets; can be omitted for private icon sets.
@@ -392,8 +374,7 @@ export interface IconifyMetaData
  * Contains only the essential icon data needed for rendering icons,
  * excluding browsing and organizational metadata.
  */
-export interface IconifyJSONIconsData extends IconifyDimenisons
-{
+export interface IconifyJSONIconsData extends IconifyDimenisons {
 	/**
 	 * Unique prefix for all icons in this set.
 	 */
@@ -431,8 +412,7 @@ export interface IconifyJSONIconsData extends IconifyDimenisons
  * Combines icon data with metadata to provide a comprehensive icon set definition.
  * All optional values can exist in the root of the JSON file as defaults for individual icons.
  */
-export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData
-{
+export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData {
 	/**
 	 * Last modification timestamp for icon data.
 	 *
@@ -458,8 +438,7 @@ export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData
  * to reduce the amount of data imported when only specific parts are needed.
  * This allows tree-shaking and more efficient bundle sizes.
  */
-export interface IconifyJSONPackageExports
-{
+export interface IconifyJSONPackageExports {
 	/**
 	 * Icon set information and metadata.
 	 */

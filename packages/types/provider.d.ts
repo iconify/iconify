@@ -3,8 +3,7 @@
  */
 
 // Links
-export interface APIProviderRawDataLinks
-{
+export interface APIProviderRawDataLinks {
 	/** Collections list */
 	home?: string;
 	/** Collection. Available variables: {prefix} */
@@ -14,8 +13,7 @@ export interface APIProviderRawDataLinks
 }
 
 // NPM
-export interface APIProviderRawDataNPM
-{
+export interface APIProviderRawDataNPM {
 	/** Package name for installation. Available variables: {prefix} */
 	package?: string;
 
@@ -24,8 +22,7 @@ export interface APIProviderRawDataNPM
 }
 
 // Main type
-export interface APIProviderRawData
-{
+export interface APIProviderRawData {
 	/** Provider name (as used in icon names) */
 	provider: string;
 

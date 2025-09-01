@@ -19,18 +19,18 @@ export type IconifyRenderMode = 'style' | 'bg' | 'mask' | 'svg';
 
 /**
  * Icon customisation properties
- * 
+ *
  * Extends the base Iconify icon customisations with React-specific options.
  * These properties control the appearance and behavior of the icon.
  */
 export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
 	/**
 	 * Rotation angle for the icon
-	 * 
+	 *
 	 * Can be specified as:
 	 * - String with units: "90deg", "0.5turn", "1.5708rad"
 	 * - Number representing quarter-turns: 0=0°, 1=90°, 2=180°, 3=270°
-	 * 
+	 *
 	 * @example
 	 * ```tsx
 	 * <Icon icon="bi:check2-circle" /> // No rotation
@@ -38,26 +38,26 @@ export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
 	 * <Icon icon="bi:check2-circle" rotate={2} /> // 180° rotation
 	 * <Icon icon="bi:check2-circle" rotate="0.5turn" /> // 180° rotation
 	 * ```
-	 * 
+	 *
 	 * @see https://iconify.design/docs/icon-components/react/transform.html#rotation
 	 */
 	rotate?: string | number;
 
 	/**
 	 * Display mode for the icon
-	 * 
-	 * When `true`, the icon is displayed as an inline element with baseline 
+	 *
+	 * When `true`, the icon is displayed as an inline element with baseline
 	 * vertical alignment. When `false`, it's displayed as a block element
 	 * with middle vertical alignment.
-	 * 
+	 *
 	 * @default false
-	 * 
+	 *
 	 * @example
 	 * ```tsx
 	 * <Icon icon="mdi:home" inline /> // Aligns with text baseline
 	 * <Icon icon="mdi:home" /> // Centers vertically
 	 * ```
-	 * 
+	 *
 	 * @see https://iconify.design/docs/icon-components/react/inline.html
 	 */
 	inline?: boolean;
@@ -70,7 +70,7 @@ export const defaultExtendedIconCustomisations = {
 
 /**
  * Callback function invoked when icon data has been loaded from the API
- * 
+ *
  * @param name - The name of the icon that was loaded (e.g., "mdi:home")
  */
 export type IconifyIconOnLoad = (name: string) => void;
@@ -79,7 +79,6 @@ export type IconifyIconOnLoad = (name: string) => void;
  * Icon properties
  */
 export interface IconifyIconProps extends IconifyIconCustomisations {
-
 	/**
 	 * The icon to render
 	 *
