@@ -1,49 +1,71 @@
 /**
  * Icon dimensions.
  *
- * Used in:
- *  icon (as is)
- *  alias (overwrite icon's properties)
- *  root of JSON file (default values)
+ * Defines the viewBox dimensions for SVG icons. These properties can be used in:
+ * - Icon definitions (applied directly)
+ * - Alias definitions (overrides parent icon's properties)
+ * - Root of JSON file (provides default values for all icons)
  */
-export interface IconifyDimenisons {
-	// Left position of viewBox.
-	// Defaults to 0.
+export interface IconifyDimenisons
+{
+	/**
+	 * Left position of the viewBox.
+	 * @default 0
+	 */
 	left?: number;
 
-	// Top position of viewBox.
-	// Defaults to 0.
+	/**
+	 * Top position of the viewBox.
+	 * @default 0
+	 */
 	top?: number;
 
-	// Width of viewBox.
-	// Defaults to 16.
+	/**
+	 * Width of the viewBox.
+	 * @default 16
+	 */
 	width?: number;
 
-	// Height of viewBox.
-	// Defaults to 16.
+	/**
+	 * Height of the viewBox.
+	 * @default 16
+	 */
 	height?: number;
 }
 
 /**
- * Icon transformations.
+ * Icon transformations interface.
  *
- * Used in:
- *  icon (as is)
- *  alias (merged with icon's properties)
+ * Defines visual transformations that can be applied to icons. Used in:
+ * - Icon definitions (applied directly)
+ * - Alias definitions (merged with parent icon's properties)
  */
-export interface IconifyTransformations {
-	// Number of 90 degrees rotations.
-	// 0 = 0, 1 = 90deg and so on.
-	// Defaults to 0.
-	// When merged (such as alias + icon), result is icon.rotation + alias.rotation.
+export interface IconifyTransformations
+{
+	/**
+	 * Number of 90-degree rotations to apply.
+	 * - 0 = 0°
+	 * - 1 = 90°
+	 * - 2 = 180°
+	 * - 3 = 270°
+	 *
+	 * When merging (e.g., alias + icon), the result is `icon.rotate + alias.rotate`.
+	 * @default 0
+	 */
 	rotate?: number;
 
-	// Horizontal flip.
-	// Defaults to false.
-	// When merged, result is icon.hFlip !== alias.hFlip
+	/**
+	 * Horizontal flip transformation.
+	 * When merging (e.g., alias + icon), the result is `icon.hFlip !== alias.hFlip`.
+	 * @default false
+	 */
 	hFlip?: boolean;
 
-	// Vertical flip. (see hFlip comments)
+	/**
+	 * Vertical flip transformation.
+	 * When merging (e.g., alias + icon), the result is `icon.vFlip !== alias.vFlip`.
+	 * @default false
+	 */
 	vFlip?: boolean;
 }
 
@@ -52,221 +74,409 @@ export interface IconifyTransformations {
  */
 export interface IconifyOptional
 	extends IconifyDimenisons,
-		IconifyTransformations {
-	//
+		IconifyTransformations
+{
+
 }
 
 /**
- * Alias.
+ * Icon alias definition.
  */
-export interface IconifyAlias extends IconifyOptional {
-	// Parent icon index without prefix, required.
+export interface IconifyAlias extends IconifyOptional
+{
+	/**
+	 * Parent icon name without prefix.
+	 */
 	parent: string;
 
-	// IconifyOptional properties.
-	// Alias should have only properties that it overrides.
-	// Transformations are merged, not overridden. See IconifyTransformations comments.
+	/*
+	 * Optional properties from IconifyOptional can be used to override
+	 * the parent icon's properties. Transformations are merged rather than overridden.
+	 * @see IconifyTransformations for transformation merging behavior
+	 */
 }
 
 /**
- * Icon.
+ * Icon definition.
+ *
+ * Represents a complete icon with its SVG body content and optional properties.
+ * If any optional property is missing, the default value from the root JSON object is used.
  */
-export interface IconifyIcon extends IconifyOptional {
-	// Icon body: <path d="..." />, required.
+export interface IconifyIcon extends IconifyOptional
+{
+	/**
+	 * SVG body content (inner SVG elements).
+	 * @example `<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>`
+	 */
 	body: string;
 
-	// IconifyOptional properties.
-	// If property is missing in JSON file, look in root object for default value.
+	/*
+	 * Optional properties from IconifyOptional can be used to define
+	 * the icon's dimensions and transformations. If missing, values from
+	 * the root JSON object are used as defaults.
+	 */
 }
 
 /**
- * Icon with optional parameters that are provided by API and affect only search
+ * API-specific icon attributes.
+ *
+ * Additional properties provided by the Iconify API that affect icon discovery and search behavior.
+ * These attributes are not part of the core icon definition but are used for API functionality.
  */
-interface APIIconAttributes {
-	// True if icon is hidden.
-	// Used in icon sets to keep icons that no longer exist, but should still be accessible
-	// from API, preventing websites from breaking when icon is removed by developer.
+interface APIIconAttributes
+{
+	/**
+	 * Indicates if the icon is hidden from search results.
+	 *
+	 * Hidden icons are kept in icon sets for backward compatibility when icons are deprecated
+	 * or removed, preventing websites from breaking when referencing removed icons.
+	 */
 	hidden?: boolean;
 }
 
-export interface ExtendedIconifyIcon extends IconifyIcon, APIIconAttributes {}
-export interface ExtendedIconifyAlias extends IconifyAlias, APIIconAttributes {}
+/**
+ * Extended icon definition with API attributes.
+ */
+export interface ExtendedIconifyIcon extends IconifyIcon, APIIconAttributes { }
 
 /**
- * "icons" field of JSON file.
+ * Extended alias definition with API attributes.
  */
-export interface IconifyIcons {
-	// Index is name of icon, without prefix. Value is ExtendedIconifyIcon object.
+export interface ExtendedIconifyAlias extends IconifyAlias, APIIconAttributes { }
+
+/**
+ * Collection of icons in an icon set.
+ *
+ * Maps icon names (without prefix) to their definitions.
+ */
+export interface IconifyIcons
+{
+	/**
+	 * Icon definitions indexed by name.
+	 * @example `{ "home": { body: "<path d='...'/>" }, "user": { body: "<circle cx='12' cy='7' r='4'/>" } }`
+	 */
 	[index: string]: ExtendedIconifyIcon;
 }
 
 /**
- * "aliases" field of JSON file.
+ * Collection of icon aliases in an icon set.
+ *
+ * Maps alias names (without prefix) to their definitions.
  */
-export interface IconifyAliases {
-	// Index is name of icon, without prefix. Value is ExtendedIconifyAlias object.
-	[index: string]: ExtendedIconifyAlias;
+export interface IconifyAliases
+{
+	/**
+	 * Alias definitions indexed by name without prefix.
+	 */
+	[iconName: string]: ExtendedIconifyAlias;
 }
 
 /**
- * Icon set information block.
+ * Icon set information and metadata.
  */
-export interface IconifyInfo {
-	// Icon set name.
+export interface IconifyInfo
+{
+	/**
+	 * Name of the icon set.
+	 */
 	name: string;
 
-	// Total number of icons.
+	/**
+	 * Total number of icons in the set.
+	 */
 	total?: number;
 
-	// Version string.
+	/**
+	 * Version string of the icon set.
+	 */
 	version?: string;
 
-	// Author information.
-	author: {
-		// Author name.
+	/**
+	 * Author information.
+	 */
+	author:
+	{
+		/**
+		 * Author name.
+		 */
 		name: string;
 
-		// Link to author's website or icon set website.
+		/**
+		 * URL to author's website or icon set homepage.
+		 */
 		url?: string;
 	};
 
-	// License
-	license: {
-		// Human readable license.
+	/**
+	 * Licensing information.
+	 */
+	license:
+	{
+		/**
+		 * Human-readable license name.
+		 * @example "Apache License 2.0"
+		 */
 		title: string;
 
-		// SPDX license identifier.
+		/**
+		 * SPDX license identifier.
+		 * @example "Apache-2.0"
+		 * @see https://spdx.org/licenses/
+		 */
 		spdx?: string;
 
-		// License URL.
+		/**
+		 * URL to the full license text.
+		 * @example "https://www.apache.org/licenses/LICENSE-2.0"
+		 */
 		url?: string;
 	};
 
-	// Array of icons that should be used for samples in icon sets list.
+	/**
+	 * Array of icon names to use as samples in icon set listings.
+	 */
 	samples?: string[];
 
-	// Icon grid: number or array of numbers.
+	/**
+	 * Icon grid configuration for display purposes.
+	 */
 	height?: number | number[];
 
-	// Display height for samples: 16 - 24
+	/**
+	 * Display height for icon samples in pixels.
+	 * Should be between 16-24 pixels for optimal display in icon browsers.
+	 * @minimum 16
+	 * @maximum 24
+	 */
 	displayHeight?: number;
 
-	// Category on Iconify collections list.
+	/**
+	 * Category classification for the Iconify collections list.
+	 */
 	category?: string;
 
-	// List of tags to group similar icon sets.
+	/**
+	 * Tags for grouping and filtering similar icon sets.
+	 */
 	tags?: string[];
 
-	// Palette status. True if icons have predefined color scheme, false if icons use currentColor.
-	// Ideally, icon set should not mix icons with and without palette to simplify search.
+	/**
+	 * Indicates whether icons have a predefined color scheme.
+	 *
+	 * - `true`: Icons have predefined colors and should not use currentColor
+	 * - `false`: Icons use currentColor and inherit text color
+	 *
+	 * Icon sets should avoid mixing both types for consistent search experience.
+	 */
 	palette?: boolean;
 
-	// If true, icon set should not appear in icon sets list.
+	/**
+	 * If true, the icon set will not appear in public icon set listings.
+	 * Used for private or deprecated icon sets.
+	 * @default false
+	 */
 	hidden?: boolean;
 }
 
 /**
- * Optional themes, old format.
+ * Legacy icon themes configuration (deprecated).
  *
- * Deprecated because format is unnecessary complicated. Key is meaningless, suffixes and prefixes are mixed together.
+ * @deprecated This format is unnecessarily complicated as the key is meaningless
+ * and suffixes/prefixes are mixed together. Use the newer `prefixes` and `suffixes`
+ * format in IconifyMetaData instead.
  */
-export interface LegacyIconifyThemes {
-	// Key is unique string.
-	[index: string]: {
-		// Theme title.
+export interface LegacyIconifyThemes
+{
+	/**
+	 * Theme definitions indexed by unique identifier.
+	 * The key is an arbitrary unique string.
+	 */
+	[key: string]:
+	{
+		/**
+		 * Display title for the theme.
+		 */
 		title: string;
 
-		// Icon prefix or suffix, including dash. All icons that start with prefix and end with suffix belong to theme.
-		prefix?: string; // Example: 'baseline-'
-		suffix?: string; // Example: '-filled'
+		/**
+		 * Icon name prefix including dash.
+		 * All icons starting with this prefix belong to the theme.
+		 * @example "baseline-"
+		 */
+		prefix?: string;
+
+		/**
+		 * Icon name suffix including dash.
+		 * All icons ending with this suffix belong to the theme.
+		 * @example "-filled"
+		 */
+		suffix?: string;
 	};
 }
 
 /**
- * Characters used in font.
+ * Character-to-icon mapping for font-based icon sets.
+ *
+ * Maps Unicode character codes to icon names, used for:
+ * - Searching icons by character in font-imported icon sets
+ * - Exporting icon sets to font format
  */
-export interface IconifyChars {
-	// Index is character, such as "f000".
-	// Value is icon name.
-	[index: string]: string;
+export interface IconifyChars
+{
+	/**
+	 * Character mappings indexed by Unicode character code.
+	 * @example `{ "f000": "home", "f001": "user" }`
+	 */
+	[character: string]: string;
 }
 
 /**
- * Icon categories
+ * Icon categorization system.
+ *
+ * Groups icons into categories for easier browsing and filtering.
+ * Icons can belong to multiple categories or no categories at all.
  */
-export interface IconifyCategories {
-	// Index is category title, such as "Weather".
-	// Value is array of icons that belong to that category.
-	// Each icon can belong to multiple categories or no categories.
-	[index: string]: string[];
+export interface IconifyCategories
+{
+	/**
+	 * Category definitions indexed by category name.
+	 * Each icon can belong to multiple categories or no categories at all.
+	 */
+	[category: string]: string[];
 }
 
 /**
- * Meta data stored in JSON file, used for browsing icon set.
+ * Metadata for icon set browsing and organization.
  */
-export interface IconifyMetaData {
-	// Icon set information block. Used for public icon sets, can be skipped for private icon sets.
+export interface IconifyMetaData
+{
+	/**
+	 * Icon set information block.
+	 * Used for public icon sets; can be omitted for private icon sets.
+	 */
 	info?: IconifyInfo;
 
-	// Characters used in font. Used for searching by character for icon sets imported from font, exporting icon set to font.
+	/**
+	 * Character-to-icon mappings for font-based icon sets.
+	 * Used for character-based searching and font export functionality.
+	 */
 	chars?: IconifyChars;
 
-	// Categories. Used for filtering icons.
+	/**
+	 * Icon categorization for filtering and browsing.
+	 */
 	categories?: IconifyCategories;
 
-	// Optional themes (old format).
+	/**
+	 * Legacy theme definitions (deprecated).
+	 * @deprecated Use `prefixes` and `suffixes` instead.
+	 */
 	themes?: LegacyIconifyThemes;
 
-	// Optional themes (new format). Key is prefix or suffix, value is title.
+	/**
+	 * Theme prefixes mapping.
+	 * Maps icon name prefixes to theme titles.
+	 */
 	prefixes?: Record<string, string>;
+
+	/**
+	 * Theme suffixes mapping.
+	 * Maps icon name suffixes to theme titles.
+	 */
 	suffixes?: Record<string, string>;
 }
 
 /**
- * JSON structure, contains only icon data
+ * Core icon data structure without metadata.
+ *
+ * Contains only the essential icon data needed for rendering icons,
+ * excluding browsing and organizational metadata.
  */
-export interface IconifyJSONIconsData extends IconifyDimenisons {
-	// Prefix for icons in JSON file, required.
+export interface IconifyJSONIconsData extends IconifyDimenisons
+{
+	/**
+	 * Unique prefix for all icons in this set.
+	 */
 	prefix: string;
 
-	// API provider, optional.
+	/**
+	 * API provider identifier.
+	 * Specifies which API provider serves this icon set.
+	 */
 	provider?: string;
 
-	// List of icons, required.
+	/**
+	 * Collection of icon definitions.
+	 */
 	icons: IconifyIcons;
 
-	// Optional aliases.
+	/**
+	 * Collection of icon aliases.
+	 * Optional aliases that reference existing icons with modifications.
+	 */
 	aliases?: IconifyAliases;
 
-	// IconifyDimenisons properties that are used as default viewbox for icons when icon is missing value.
-	// If viewbox exists in both icon and root, use value from icon.
-	// This is used to reduce duplication.
+	/*
+	 * Default viewBox dimensions inherited from IconifyDimenisons.
+	 *
+	 * These properties serve as fallback values for icons that don't
+	 * specify their own dimensions. Individual icon dimensions take precedence
+	 * when specified. This reduces duplication in icon definitions.
+	 */
 }
 
 /**
- * JSON structure.
+ * Complete icon set JSON structure.
  *
- * All optional values can exist in root of JSON file, used as defaults.
+ * Combines icon data with metadata to provide a comprehensive icon set definition.
+ * All optional values can exist in the root of the JSON file as defaults for individual icons.
  */
-export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData {
-	// Last modification time of icons. Unix time stamp in seconds.
-	// Time is calculated only for icon data, ignoring metadata.
-	// Used to invalidate icons cache in components.
+export interface IconifyJSON extends IconifyJSONIconsData, IconifyMetaData
+{
+	/**
+	 * Last modification timestamp for icon data.
+	 *
+	 * Unix timestamp in seconds indicating when the icon data was last updated.
+	 * Only reflects changes to icon data, not metadata. Used by components
+	 * to invalidate cached icons when the data changes.
+	 */
 	lastModified?: number;
 
-	// Optional list of missing icons. Returned by Iconify API when querying for icons that do not exist.
+	/**
+	 * List of icon names that were requested but don't exist.
+	 *
+	 * Returned by the Iconify API when querying for non-existent icons
+	 * to help identify missing or misnamed icons.
+	 */
 	not_found?: string[];
 }
 
 /**
- * Structure of exports '@iconify-json/*' packages.
+ * Structure of '@iconify-json/*' package exports.
  *
- * These are small packages, one per icon set, that split JSON structure into multiple files to reduce
- * amount of data imported from package.
+ * Individual icon set packages split the JSON structure into separate files
+ * to reduce the amount of data imported when only specific parts are needed.
+ * This allows tree-shaking and more efficient bundle sizes.
  */
-export interface IconifyJSONPackageExports {
+export interface IconifyJSONPackageExports
+{
+	/**
+	 * Icon set information and metadata.
+	 */
 	info: IconifyInfo;
+
+	/**
+	 * Complete icon set data including icons and aliases.
+	 */
 	icons: IconifyJSON;
+
+	/**
+	 * Additional metadata for browsing and organization.
+	 */
 	metadata: IconifyMetaData;
+
+	/**
+	 * Character-to-icon mappings for font-based icon sets.
+	 */
 	chars: IconifyChars;
 }
