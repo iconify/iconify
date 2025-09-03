@@ -11,25 +11,25 @@ import { combineSimilarEmojiTestData } from './test/similar';
 import { getEmojiTestDataTree } from './test/tree';
 import { getQualifiedEmojiVariations } from './test/variations';
 
-/**
- * Parsed icon
- */
-export interface PreparedEmojiIcon {
-	// Icon name
+/** Parsed icon */
+export interface PreparedEmojiIcon
+{
+	/** Icon name */
 	icon: string;
 
-	// Emoji sequence as string
+	/** Emoji sequence as string */
 	sequence: string;
 }
 
 /**
  * Parse
  */
-export interface PreparedEmojiResult {
-	// List of icons
+export interface PreparedEmojiResult
+{
+	/** List of icons */
 	icons: PreparedEmojiIcon[];
 
-	// Regular expression
+	/** Regular expression */
 	regex: string;
 }
 

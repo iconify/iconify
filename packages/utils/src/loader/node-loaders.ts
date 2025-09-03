@@ -4,7 +4,7 @@ import type { CustomIconLoader } from './types';
 import { camelize, pascalize, snakelize } from '../misc/strings';
 
 /**
- * Returns CustomIconLoader for loading icons from a directory
+ * @returns A {@link CustomIconLoader} for loading icons from a directory
  */
 export function FileSystemIconLoader(
 	dir: string,

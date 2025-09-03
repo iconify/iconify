@@ -5,12 +5,12 @@ import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
 import { resolvePath } from 'mlly';
 
-// Cache: [cwd][name] => icon set promise
+/** Cache: [cwd][name] => icon set promise */
 type CachedItem = Promise<IconifyJSON | undefined>;
 type CachedItems = Record<string, CachedItem>;
 const _collections = Object.create(null) as Record<string, CachedItems>;
 
-// Check if full package exists, per cwd value
+/** Check if full package exists, per cwd value */
 const isLegacyExists = Object.create(null) as Record<string, boolean>;
 
 /**

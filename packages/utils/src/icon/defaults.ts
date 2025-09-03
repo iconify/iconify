@@ -6,20 +6,18 @@ import type {
 	ExtendedIconifyIcon,
 } from '@iconify/types';
 
-// Export icon and full icon types
+/** Export icon and full icon types */
 export { IconifyIcon };
 
 export type FullIconifyIcon = Required<IconifyIcon>;
 
-// Partial and full extended icon
+/** Partial and full extended icon */
 export type PartialExtendedIconifyIcon = Partial<ExtendedIconifyIcon>;
 
 type IconifyIconExtraProps = Omit<ExtendedIconifyIcon, keyof IconifyIcon>;
 export type FullExtendedIconifyIcon = FullIconifyIcon & IconifyIconExtraProps;
 
-/**
- * Default values for dimensions
- */
+/** Default values for dimensions */
 export const defaultIconDimensions: Required<IconifyDimenisons> = Object.freeze(
 	{
 		left: 0,
@@ -29,9 +27,7 @@ export const defaultIconDimensions: Required<IconifyDimenisons> = Object.freeze(
 	}
 );
 
-/**
- * Default values for transformations
- */
+/** Default values for transformations */
 export const defaultIconTransformations: Required<IconifyTransformations> =
 	Object.freeze({
 		rotate: 0,
@@ -39,17 +35,13 @@ export const defaultIconTransformations: Required<IconifyTransformations> =
 		hFlip: false,
 	});
 
-/**
- * Default values for all optional IconifyIcon properties
- */
+/** Default values for all optional IconifyIcon properties */
 export const defaultIconProps: Required<IconifyOptional> = Object.freeze({
 	...defaultIconDimensions,
 	...defaultIconTransformations,
 });
 
-/**
- * Default values for all properties used in ExtendedIconifyIcon
- */
+/** Default values for all properties used in ExtendedIconifyIcon */
 export const defaultExtendedIconProps: Required<FullExtendedIconifyIcon> =
 	Object.freeze({
 		...defaultIconProps,

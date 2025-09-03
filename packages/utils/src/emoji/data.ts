@@ -1,14 +1,15 @@
-/**
- * Various codes
- */
 
-// Joiner in emoji sequences
+// ----------------------------------
+// Various codes
+// ----------------------------------
+
+/** Joiner in emoji sequences */
 export const joinerEmoji = 0x200d;
 
-// Emoji as icon
+/** Emoji as icon */
 export const vs16Emoji = 0xfe0f;
 
-// Keycap, preceeded by mandatory VS16 for full emoji
+/** Keycap, preceeded by mandatory VS16 for full emoji */
 export const keycapEmoji = 0x20e3;
 
 /**
