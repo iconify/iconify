@@ -38,7 +38,7 @@ export function splitUTF32Number(code: number): [number, number] | undefined {
 /**
  * Check if number is UTF-32 split as UTF-16
  *
- * Returns:
+ * @returns
  * - 1 if number fits first number in sequence
  * - 2 if number fits second number in sequence
  * - false on failure
