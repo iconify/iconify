@@ -4,11 +4,11 @@
 	"main": "../dist/offline.js",
 	"types": "../dist/offline.d.ts",
 	"exports": {
-		"./*": "./*",
 		".": {
 			"import": "../dist/offline.mjs",
 			"types": "../dist/offline.d.ts",
 			"default": "../dist/offline.js"
-		}
+		},
+		"./*": "./*"
 	}
 }
