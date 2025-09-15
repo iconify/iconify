@@ -22,7 +22,6 @@
 	"module": "dist/iconify.mjs",
 	"types": "dist/iconify.d.ts",
 	"exports": {
-		"./*": "./*",
 		".": {
 			"import": "./dist/iconify.mjs",
 			"types": "./dist/iconify.d.ts",
@@ -32,7 +31,8 @@
 			"import": "./dist/iconify.mjs",
 			"types": "./dist/iconify.d.ts",
 			"require": "./dist/iconify.js"
-		}
+		},
+		"./*": "./*"
 	},
 	"dependencies": {
 		"iconify-icon": "workspace:^"

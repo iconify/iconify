@@ -30,7 +30,6 @@
 		"test": "pnpm run test:jest && pnpm run test:mjs"
 	},
 	"exports": {
-		"./*": "./*",
 		".": {
 			"require": "./dist/iconify-icon.cjs",
 			"import": "./dist/iconify-icon.mjs",
@@ -48,7 +47,8 @@
 			"import": "./dist/iconify-icon.mjs",
 			"types": "./dist/iconify-icon.d.ts",
 			"default": "./dist/iconify-icon.min.js"
-		}
+		},
+		"./*": "./*"
 	},
 	"dependencies": {
 		"@iconify/types": "workspace:^"

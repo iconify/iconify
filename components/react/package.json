@@ -27,7 +27,6 @@
 	"main": "dist/iconify.js",
 	"types": "dist/iconify.d.ts",
 	"exports": {
-		"./*": "./*",
 		".": {
 			"types": "./dist/iconify.d.ts",
 			"require": "./dist/iconify.cjs",
@@ -45,7 +44,8 @@
 			"require": "./dist/offline.cjs",
 			"import": "./dist/offline.js",
 			"default": "./dist/offline.js"
-		}
+		},
+		"./*": "./*"
 	},
 	"dependencies": {
 		"@iconify/types": "workspace:^"

@@ -3,12 +3,12 @@
 	"main": "../dist/offline.js",
 	"types": "../dist/offline.d.ts",
 	"exports": {
-		"./*": "./*",
 		".": {
 			"types": "../dist/offline.d.ts",
 			"require": "../dist/offline.cjs",
 			"import": "../dist/offline.js",
 			"default": "../dist/offline.js"
-		}
+		},
+		"./*": "./*"
 	}
 }
