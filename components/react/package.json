@@ -3,7 +3,7 @@
 	"description": "Iconify icon component for React.",
 	"author": "Vjacheslav Trushkin",
 	"type": "module",
-	"version": "6.0.1",
+	"version": "6.0.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",

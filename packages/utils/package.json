@@ -3,7 +3,7 @@
 	"type": "module",
 	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"author": "Vjacheslav Trushkin",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/docs/libraries/utils/",
@@ -24,7 +24,6 @@
 	"types": "lib/index.d.ts",
 	"exports": {
 		".": "./lib/index.js",
-		"./*": "./*",
 		"./lib/colors": "./lib/colors/index.js",
 		"./lib/colors/index": "./lib/colors/index.js",
 		"./lib/colors/keywords": "./lib/colors/keywords.js",
@@ -100,7 +99,8 @@
 		"./lib/svg/size": "./lib/svg/size.js",
 		"./lib/svg/trim": "./lib/svg/trim.js",
 		"./lib/svg/url": "./lib/svg/url.js",
-		"./lib/svg/viewbox": "./lib/svg/viewbox.js"
+		"./lib/svg/viewbox": "./lib/svg/viewbox.js",
+		"./*": "./*"
 	},
 	"files": [
 		"lib",
