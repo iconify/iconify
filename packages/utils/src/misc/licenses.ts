@@ -1,48 +1,55 @@
-export interface LicenseInfo {
-	// Requires attribution
+export interface LicenseInfo
+{
+	/** Requires attribution */
 	attribution: boolean;
 
-	// Allows commercial use
+	/** Allows commercial use */
 	commercial: boolean;
 
-	// Keep same license
+	/** Keep same license */
 	sameLicense?: boolean;
 }
 
-// Completely free, no limits
-const freeLicense: LicenseInfo = {
+/** Completely free, no limits */
+const freeLicense: LicenseInfo =
+{
 	attribution: false,
 	commercial: true,
 };
 
-// Requires same license for derived works
-const freeSameLicense: LicenseInfo = {
+/** Requires same license for derived works */
+const freeSameLicense: LicenseInfo =
+{
 	attribution: false,
 	commercial: true,
 	sameLicense: true,
 };
 
-// Requires attribution
-const attribLicense: LicenseInfo = {
+/** Requires attribution */
+const attribLicense: LicenseInfo =
+{
 	attribution: true,
 	commercial: true,
 };
 
-// Requires attribution and same license for derived works
-const attribSameLicense: LicenseInfo = {
+/** Requires attribution and same license for derived works */
+const attribSameLicense: LicenseInfo =
+{
 	attribution: true,
 	commercial: true,
 	sameLicense: true,
 };
 
-// Requires attribution and non-commercial use
-const attribNonCommercialLicense: LicenseInfo = {
+/** Requires attribution and non-commercial use */
+const attribNonCommercialLicense: LicenseInfo =
+{
 	attribution: true,
 	commercial: false,
 };
 
-// Requires attribution, non-commercial use and same license for derived works
-const attribNonCommercialSameLicense: LicenseInfo = {
+/** Requires attribution, non-commercial use and same license for derived works */
+const attribNonCommercialSameLicense: LicenseInfo =
+{
 	attribution: true,
 	commercial: false,
 	sameLicense: true,
@@ -53,7 +60,8 @@ const attribNonCommercialSameLicense: LicenseInfo = {
  *
  * Key is SPDX license identifier
  */
-export const licensesData: Record<string, LicenseInfo> = {
+export const licensesData: Record<string, LicenseInfo> =
+{
 	'Apache-2.0': freeLicense,
 	'MIT': freeLicense,
 	'MPL-2.0': freeLicense,

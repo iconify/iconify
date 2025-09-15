@@ -63,17 +63,19 @@ function validateIconProps(
 	return null;
 }
 
-export interface IconSetValidationOptions {
-	// If true, validation function will attempt to fix icon set instead of throwing errors.
+export interface IconSetValidationOptions
+{
+	/** Whether validation function will attempt to fix icon set instead of throwing errors. */
 	fix?: boolean;
 
-	// Values for provider and prefix. If missing, validation should add them.
+	/** Values for provider and prefix. If missing, validation should add them. */
 	prefix?: string;
 	provider?: string;
 }
 
 /**
- * Validate icon set, return it as IconifyJSON type on success, throw error on failure
+ * Validate icon set
+ * @returns param obj as IconifyJSON type on success, throw error on failure
  */
 export function validateIconSet(
 	obj: unknown,
