@@ -20,8 +20,7 @@ import { stringToIcon } from '@iconify/utils/lib/icon/name';
 /**
  * Default SVG attributes
  */
-const svgDefaults: SVGProps<SVGSVGElement> =
-{
+const svgDefaults: SVGProps<SVGSVGElement> = {
 	'xmlns': 'http://www.w3.org/2000/svg',
 	'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
@@ -31,40 +30,33 @@ const svgDefaults: SVGProps<SVGSVGElement> =
 /**
  * Style modes
  */
-const commonProps: Record<string, string> =
-{
+const commonProps: Record<string, string> = {
 	display: 'inline-block',
 };
 
-const monotoneProps: Record<string, string> =
-{
+const monotoneProps: Record<string, string> = {
 	backgroundColor: 'currentColor',
 };
 
-const coloredProps: Record<string, string> =
-{
+const coloredProps: Record<string, string> = {
 	backgroundColor: 'transparent',
 };
 
 /** Dynamically add common props to variables above */
-const propsToAdd: Record<string, string> =
-{
+const propsToAdd: Record<string, string> = {
 	Image: 'var(--svg)',
 	Repeat: 'no-repeat',
 	Size: '100% 100%',
 };
-const propsToAddTo: Record<string, Record<string, string>> =
-{
+const propsToAddTo: Record<string, Record<string, string>> = {
 	WebkitMask: monotoneProps,
 	mask: monotoneProps,
 	background: coloredProps,
 };
 
-for (const prefix in propsToAddTo)
-{
+for (const prefix in propsToAddTo) {
 	const list = propsToAddTo[prefix];
-	for (const prop in propsToAdd)
-	{
+	for (const prop in propsToAdd) {
 		list[prefix + prop] = propsToAdd[prop];
 	}
 }
@@ -72,8 +64,7 @@ for (const prefix in propsToAddTo)
 /**
  * Default values for customisations for inline icon
  */
-const inlineDefaults: Required<IconifyIconCustomisations> =
-{
+const inlineDefaults: Required<IconifyIconCustomisations> = {
 	...defaultExtendedIconCustomisations,
 	inline: true,
 };
@@ -81,8 +72,7 @@ const inlineDefaults: Required<IconifyIconCustomisations> =
 /**
  * Fix size: add 'px' to numbers
  */
-function fixSize(value: string): string
-{
+function fixSize(value: string): string {
 	return value + (value.match(/^[-0-9.]+$/) ? 'px' : '');
 }
 

@@ -12,8 +12,7 @@ import { getEmojiTestDataTree } from './test/tree';
 import { getQualifiedEmojiVariations } from './test/variations';
 
 /** Parsed icon */
-export interface PreparedEmojiIcon
-{
+export interface PreparedEmojiIcon {
 	/** Icon name */
 	icon: string;
 
@@ -24,8 +23,7 @@ export interface PreparedEmojiIcon
 /**
  * Parse
  */
-export interface PreparedEmojiResult
-{
+export interface PreparedEmojiResult {
 	/** List of icons */
 	icons: PreparedEmojiIcon[];
 

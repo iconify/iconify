@@ -1,5 +1,4 @@
-export interface LicenseInfo
-{
+export interface LicenseInfo {
 	/** Requires attribution */
 	attribution: boolean;
 
@@ -11,45 +10,39 @@ export interface LicenseInfo
 }
 
 /** Completely free, no limits */
-const freeLicense: LicenseInfo =
-{
+const freeLicense: LicenseInfo = {
 	attribution: false,
 	commercial: true,
 };
 
 /** Requires same license for derived works */
-const freeSameLicense: LicenseInfo =
-{
+const freeSameLicense: LicenseInfo = {
 	attribution: false,
 	commercial: true,
 	sameLicense: true,
 };
 
 /** Requires attribution */
-const attribLicense: LicenseInfo =
-{
+const attribLicense: LicenseInfo = {
 	attribution: true,
 	commercial: true,
 };
 
 /** Requires attribution and same license for derived works */
-const attribSameLicense: LicenseInfo =
-{
+const attribSameLicense: LicenseInfo = {
 	attribution: true,
 	commercial: true,
 	sameLicense: true,
 };
 
 /** Requires attribution and non-commercial use */
-const attribNonCommercialLicense: LicenseInfo =
-{
+const attribNonCommercialLicense: LicenseInfo = {
 	attribution: true,
 	commercial: false,
 };
 
 /** Requires attribution, non-commercial use and same license for derived works */
-const attribNonCommercialSameLicense: LicenseInfo =
-{
+const attribNonCommercialSameLicense: LicenseInfo = {
 	attribution: true,
 	commercial: false,
 	sameLicense: true,
@@ -60,8 +53,7 @@ const attribNonCommercialSameLicense: LicenseInfo =
  *
  * Key is SPDX license identifier
  */
-export const licensesData: Record<string, LicenseInfo> =
-{
+export const licensesData: Record<string, LicenseInfo> = {
 	'Apache-2.0': freeLicense,
 	'MIT': freeLicense,
 	'MPL-2.0': freeLicense,

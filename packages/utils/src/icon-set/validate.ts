@@ -63,8 +63,7 @@ function validateIconProps(
 	return null;
 }
 
-export interface IconSetValidationOptions
-{
+export interface IconSetValidationOptions {
 	/** Whether validation function will attempt to fix icon set instead of throwing errors. */
 	fix?: boolean;
 

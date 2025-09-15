@@ -11,9 +11,7 @@ let policy: undefined | null | Policy;
  */
 function createPolicy() {
 	try {
-		 
 		policy = window.trustedTypes.createPolicy('iconify', {
-			 
 			createHTML: (s) => s,
 		}) as Policy;
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
