@@ -52,4 +52,4 @@ pkgExports['./basic/Icon.svelte'] = {
 pkg['exports'] = pkgExports;
 
 // Write package.json
-writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n', 'utf8');
+writeFileSync('package.json', JSON.stringify(pkg, null, '\t') + '\n', 'utf8');

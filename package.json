@@ -12,7 +12,7 @@
 		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
-		"clean": "rm -rf */*/node_modules",
+		"clean": "rm -rf node_modules */*/node_modules */*/lib */*/dist",
 		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run lint",
 		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run build",
 		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run test"
