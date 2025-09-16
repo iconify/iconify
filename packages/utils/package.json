@@ -110,14 +110,14 @@
 		"@antfu/install-pkg": "^1.1.0",
 		"@antfu/utils": "^9.2.0",
 		"@iconify/types": "workspace:^",
-		"debug": "^4.4.1",
+		"debug": "^4.4.3",
 		"kolorist": "^1.8.0",
-		"local-pkg": "^1.1.1",
-		"mlly": "^1.7.4"
+		"local-pkg": "^1.1.2",
+		"mlly": "^1.8.0"
 	},
 	"devDependencies": {
 		"@iconify-json/fa6-regular": "^1.2.4",
-		"@iconify-json/flat-color-icons": "^1.2.1",
+		"@iconify-json/flat-color-icons": "^1.2.3",
 		"@types/debug": "^4.1.12"
 	}
 }
