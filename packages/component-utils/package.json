@@ -1,0 +1,51 @@
+{
+	"name": "@iconify/component-utils",
+	"type": "module",
+	"description": "Reusable files used by multiple Iconify components",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
+	"version": "0.0.1",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "packages/component-utils"
+	},
+	"scripts": {
+		"lint": "eslint --fix src/**/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@iconify/fetch": "workspace:^",
+		"@iconify/types": "workspace:^",
+		"@iconify/utils": "workspace:^"
+	},
+	"exports": {
+		"./helpers/callbacks": "./lib/helpers/callbacks.js",
+		"./helpers/content": "./lib/helpers/content.js",
+		"./helpers/support": "./lib/helpers/support.js",
+		"./icon-lists/clear": "./lib/icon-lists/clear.js",
+		"./icon-lists/merge": "./lib/icon-lists/merge.js",
+		"./icon-lists/split": "./lib/icon-lists/split.js",
+		"./icon-lists/types": "./lib/icon-lists/types.js",
+		"./icons/get-icon": "./lib/icons/get-icon.js",
+		"./icons/load-icon": "./lib/icons/load-icon.js",
+		"./icons/load-icons": "./lib/icons/load-icons.js",
+		"./icons/subscribe": "./lib/icons/subscribe.js",
+		"./loader/api/batch": "./lib/loader/api/batch.js",
+		"./loader/api/create": "./lib/loader/api/create.js",
+		"./loader/api/init": "./lib/loader/api/init.js",
+		"./loader/loaders": "./lib/loader/loaders.js",
+		"./loader/queue": "./lib/loader/queue.js",
+		"./loader/types": "./lib/loader/types.js",
+		"./storage/create": "./lib/storage/create.js",
+		"./storage/storage": "./lib/storage/storage.js",
+		"./storage/subscribe": "./lib/storage/subscribe.js",
+		"./storage/subscription": "./lib/storage/subscription.js",
+		"./storage/types": "./lib/storage/types.js",
+		"./package.json": "./package.json"
+	}
+}

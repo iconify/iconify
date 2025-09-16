@@ -11,7 +11,7 @@
 	"scripts": {
 		"lint": "eslint src/*.ts",
 		"prebuild": "pnpm run lint",
-		"build": "tsdown src/index.ts --dts --format esm",
+		"build": "tsdown",
 		"test": "vitest --config vitest.config.js"
 	},
 	"bugs": "https://github.com/iconify/iconify/issues",
@@ -20,19 +20,5 @@
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/api-redundancy"
-	},
-	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.1",
-		"@eslint/js": "^9.31.0",
-		"@types/jest": "^29.5.14",
-		"@types/node": "^22.16.5",
-		"@typescript-eslint/eslint-plugin": "^8.38.0",
-		"eslint": "^9.31.0",
-		"globals": "^15.15.0",
-		"tsdown": "^0.13.0",
-		"vitest": "^2.1.9"
-	},
-	"dependencies": {
-		"globals": "^15.15.0"
 	}
 }

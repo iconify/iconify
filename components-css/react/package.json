@@ -1,0 +1,52 @@
+{
+	"name": "@iconify/css-react",
+	"description": "Iconify fallback icon component for React.",
+	"author": "Vjacheslav Trushkin",
+	"type": "module",
+	"version": "0.1.0",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"funding": "https://github.com/sponsors/cyberalien",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "components-css/react"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"@types/react": "^18.3.23",
+		"@types/react-dom": "^18.3.7",
+		"react": "^18.3.1"
+	},
+	"peerDependencies": {
+		"react": ">=16"
+	},
+	"exports": {
+		".": "./dist/index.js",
+		"./basic": "./dist/basic.js",
+		"./helpers/api": "./dist/helpers/api.js",
+		"./helpers/get-icon": "./dist/helpers/get-icon.js",
+		"./helpers/ids": "./dist/helpers/ids.js",
+		"./helpers/load-icon": "./dist/helpers/load-icon.js",
+		"./helpers/load-icons": "./dist/helpers/load-icons.js",
+		"./helpers/preload": "./dist/helpers/preload.js",
+		"./helpers/subscribe": "./dist/helpers/subscribe.js",
+		"./helpers/support": "./dist/helpers/support.js",
+		"./props": "./dist/props.js",
+		"./package.json": "./package.json"
+	}
+}

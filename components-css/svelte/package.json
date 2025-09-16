@@ -1,0 +1,66 @@
+{
+	"name": "@iconify/css-svelte",
+	"description": "Iconify fallback icon component for Svelte 4.",
+	"author": "Vjacheslav Trushkin",
+	"type": "module",
+	"version": "0.1.0",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"funding": "https://github.com/sponsors/cyberalien",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "components-css/svelte"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build:dist": "tsdown",
+		"build:svelte": "node scripts/build.js",
+		"build": "pnpm run build:dist && pnpm run build:svelte"
+	},
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"svelte": "^5.36.16",
+		"svelte-preprocess": "^6.0.3"
+	},
+	"peerDependencies": {
+		"svelte": ">4.0.0"
+	},
+	"svelte": "./dist/full/Icon.svelte",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"svelte": "./dist/full/Icon.svelte",
+			"types": "./dist/index.d.ts"
+		},
+		"./helpers/api": "./dist/helpers/api.js",
+		"./helpers/get-icon": "./dist/helpers/get-icon.js",
+		"./helpers/ids": "./dist/helpers/ids.js",
+		"./helpers/load-icon": "./dist/helpers/load-icon.js",
+		"./helpers/load-icons": "./dist/helpers/load-icons.js",
+		"./helpers/preload": "./dist/helpers/preload.js",
+		"./helpers/subscribe": "./dist/helpers/subscribe.js",
+		"./helpers/support": "./dist/helpers/support.js",
+		"./props": "./dist/props.js",
+		"./package.json": "./package.json",
+		"./basic": {
+			"svelte": "./dist/basic/Icon.svelte",
+			"types": "./dist/index.d.ts"
+		},
+		"./full/Icon.svelte": {
+			"svelte": "./dist/full/Icon.svelte",
+			"types": "./dist/index.d.ts"
+		},
+		"./basic/Icon.svelte": {
+			"svelte": "./dist/basic/Icon.svelte",
+			"types": "./dist/index.d.ts"
+		}
+	}
+}

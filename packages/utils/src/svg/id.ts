@@ -18,27 +18,24 @@
 const regex = /\sid="(\S+)"/g;
 
 /**
- * New random-ish prefix for ids
- *
- * Do not use dash, it cannot be used in SVG 2 animations
+ * Counters
  */
-const randomPrefix =
-	'IconifyId' +
-	Date.now().toString(16) +
-	((Math.random() * 0x1000000) | 0).toString(16);
+const counters = new Map<string, number>();
 
 /**
- * Counter for ids, increasing with every replacement
+ * Get unique new ID
  */
-let counter = 0;
+function nextID(id: string): string {
+	id = id.replace(/[0-9]+$/, '') || 'a';
+	const count = counters.get(id) || 0;
+	counters.set(id, count + 1);
+	return count ? `${id}${count}` : id;
+}
 
 /**
  * Replace IDs in SVG output with unique IDs
  */
-export function replaceIDs(
-	body: string,
-	prefix: string | ((id: string) => string) = randomPrefix
-): string {
+export function replaceIDs(body: string): string {
 	// Find all IDs
 	const ids: string[] = [];
 	let match: RegExpExecArray | null;
@@ -55,10 +52,7 @@ export function replaceIDs(
 
 	// Replace with unique ids
 	ids.forEach((id) => {
-		const newID =
-			typeof prefix === 'function'
-				? prefix(id)
-				: prefix + (counter++).toString();
+		const newID = nextID(id);
 
 		const escapedID = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -72,4 +66,11 @@ export function replaceIDs(
 	body = body.replace(new RegExp(suffix, 'g'), '');
 
 	return body;
+}
+
+/**
+ * Clear ID cache
+ */
+export function clearIDCache() {
+	counters.clear();
 }

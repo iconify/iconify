@@ -197,22 +197,11 @@ export function render(
 			componentProps.style = style;
 		}
 
-		// Counter for ids based on "id" property to render icons consistently on server and client
-		let localCounter = 0;
-		let id = props.id;
-		if (typeof id === 'string') {
-			// Convert '-' to '_' to avoid errors in animations
-			id = id.replace(/-/g, '_');
-		}
-
 		// Generate HTML
 		return {
 			svg: true,
 			attributes: componentProps,
-			body: replaceIDs(
-				item.body,
-				id ? () => id + 'ID' + localCounter++ : 'iconifySvelte'
-			),
+			body: replaceIDs(item.body),
 		};
 	}
 

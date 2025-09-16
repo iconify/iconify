@@ -13,11 +13,22 @@
 	},
 	"scripts": {
 		"clean": "rm -rf */*/node_modules",
-		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run lint",
-		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run build",
-		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components)/**\" run test"
+		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run lint",
+		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run build",
+		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css)/**\" run test"
 	},
-	"devDependencies": {},
+	"dependencies": {},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/js": "^9.31.0",
+		"@types/jest": "^29.5.14",
+		"@types/node": "^22.16.5",
+		"@typescript-eslint/eslint-plugin": "^8.38.0",
+		"eslint": "^9.31.0",
+		"globals": "^15.15.0",
+		"tsdown": "^0.13.0",
+		"vitest": "^2.1.9"
+	},
 	"pnpm": {
 		"packageExtensions": {
 			"tsutils": {

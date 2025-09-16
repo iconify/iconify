@@ -1,0 +1,17 @@
+.idea
+.vscode
+.DS_Store
+*.map
+.eslintignore
+eslint.config.*
+.prettierrc
+.editorconfig
+tsdown.config.*
+vitest.config.*
+node_modules
+npm-debug.log
+yarn.lock
+tsconfig.tsbuildinfo
+src
+tests
+tsconfig.json

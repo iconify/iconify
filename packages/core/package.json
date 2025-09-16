@@ -40,17 +40,5 @@
 		"@iconify/api-redundancy": "workspace:^",
 		"@iconify/types": "workspace:^",
 		"@iconify/utils": "workspace:^"
-	},
-	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.1",
-		"@eslint/js": "^9.31.0",
-		"@types/jest": "^29.5.14",
-		"@types/node": "^18.19.120",
-		"@typescript-eslint/eslint-plugin": "^8.38.0",
-		"eslint": "^9.31.0",
-		"globals": "^15.15.0",
-		"tsdown": "^0.13.0",
-		"typescript": "^5.8.3",
-		"vitest": "^2.1.9"
 	}
 }

@@ -1,7 +1,7 @@
 Iconify is the most versatile icon framework.
 
 -   Unified icon framework that can be used with any icon library.
--   Out of the box includes 150+ icon sets with more than 200,000 icons.
+-   Out of the box includes 200+ icon sets with more than 250,000 icons.
 -   Embed icons in HTML with Iconify Icon web component or components for front-end frameworks.
 -   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 -   Add icon search to your applications with Iconify Icon Finder.
@@ -14,10 +14,11 @@ There are several parts of project, some are in this repository, some are in oth
 
 What is included in this repository?
 
--   Directory `packages` contains main reusable packages: types, utilities, reusable functions used by various components.
+-   Directory `packages` contains reusable packages: types, utilities, functions used by various components.
 -   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
 -   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
--   Directory `plugins` contains plugins for various frameworks, which generate icons.
+-   Directory `components-css` contains components for rendering SVG with CSS, with Iconify API fallback for Safari browser.
+-   Directory `plugins` contains plugins for various frameworks, which generate icons (deprecated, moved to separate repository).
 
 Other repositories you might want to look at:
 
@@ -32,15 +33,22 @@ Why are those icon components needed? Iconify icon components are not just yet a
 
 Iconify API provides data for over 200,000 open source icons! API is hosted on publicly available servers, spread out geographically to make sure visitors from all over the world have the fastest possible connection with redundancies in place to make sure it is always online.
 
+### Types of components
+
+There are currently 2 types of components:
+
+-   Iconify icon components. These components render icon by name, loading icon data from Iconify API. They are very easy to use, but they do not work without API. You'll find them in `iconify-icon` (web component) and `components` directories.
+-   Iconify CSS icon components (in development). These components render SVG with CSS, which unfortunately is not supported by Safari browser, so for Safari it uses Iconify API as a fallback, loading icon data when needed and rendering it. You'll find them in `components-css` directory.
+
 #### Why is API needed?
 
-When you use an icon font, each visitor loads an entire font, even if your page only uses a few icons. This is a major downside of using icon fonts. That limits developers to one or two fonts or icon sets.
+API is needed to load data for icons that you use.
 
-If you are using typical icon set that is not a font, you still need to bundle all icons used in your application, even ones that visitor does not need.
+For Iconify icon components, this means you don't need to worry about bundling all possible icons during development, component will load icons that are rendered.
 
-Unlike icon fonts and components for various icon sets, Iconify icon components dynamically load icon data from Iconify API whenever it is needed.
+For CSS icon components, this means fallback SVGs for Safari browser will be loaded only for users that use Safari browser (components check for feature support, not browser id), so you can move path data to CSS without worrying about visitors with old browsers.
 
-This makes it possible to have an unlimited choice of icons!
+You can also use API if you don't know what icons user will need, while offering thousands of icons to choose from. This is perfect for applications that can be customised by user.
 
 ## Packages in this repository
 
@@ -54,8 +62,16 @@ Main packages:
 
 -   [Iconify types](./packages/types/) - TypeScript types.
 -   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
--   [Iconify core](./packages/core/) - common files used by icon components and plugins.
--   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable.
+
+Packages used by Iconify icon components:
+
+-   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable (will be deprecated in future, replaced by "Fetch" package).
+-   [Iconify core](./packages/core/) - common files used by icon components and plugins (will be deprecated in future, replaced by "Component Utils" package).
+
+Packages used by Iconify CSS icon components, will also be used in future by new versions of Iconify icon components:
+
+-   [Fetch](./packages/fetch/) - Fetch wrapper with built in redundancy, allowing to use multiple hosts for request. Modern replacement of outdated "API redundancy" package.
+-   [Component Utils](./packages/component-utils/) - common files used by icon components, modern version of "Iconify core" package.
 
 ### Web component
 
@@ -115,9 +131,23 @@ Directory `components` contains native components for several frameworks:
 | [Vue component](./components/vue/)       | Vue    |
 | [Svelte component](./components/svelte/) | Svelte |
 
+### Iconify CSS icon components
+
+Directory `components-css` contains native components for several frameworks:
+
+| Package                                      | Usage  |
+| -------------------------------------------- | ------ |
+| [React component](./components-css/react/)   | React  |
+| [Vue component](./components-css/vue/)       | Vue    |
+| [Svelte component](./components-css/svelte/) | Svelte |
+
+Unlike Iconify icon components, these components are intended to be used for rendering SVG + CSS,
+loading icon data from API only as a fallback option for Safari users.
+
 #### Deprecation notice
 
-Components in directory `components` are slowly phased out in favor of `iconify-icon` web component. Components are still maintained and supported, but it is better to switch to web component.
+Components in directory `components` are slowly phased out in favor of `iconify-icon` web component.
+Components are still maintained and supported, but it is better to switch to web component.
 
 Functionality is identical, but web component has some advantages:
 
@@ -125,14 +155,17 @@ Functionality is identical, but web component has some advantages:
 -   Works better with SSR (icon is rendered only in browser, but because icon is contained in shadow DOM, it does not cause hydration problems).
 -   Better interoperability. All parts of applicaiton reuse same web component, even if those parts are written in different frameworks.
 
-Deprecation status:
+Packages that have been deprecated, removed from this repository and are no longer maintained:
 
 -   SVG Framework: can be replaced with `iconify-icon`.
+-   Vue 2 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
+-   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
+
+Packages that are still available, but should be avoided:
+
 -   React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
 -   Svelte component: can be replaced with `iconify-icon`, does not require Svelte specific wrapper.
 -   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper.
--   Vue 2 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
--   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
 
 To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
 
@@ -149,11 +182,9 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 ### Plugins
 
-Directory `plugins` contains plugins.
+Directory `plugins` contains [Tailwind CSS plugin](./plugins/tailwind/) for Tailwind CSS 3.
 
-| Package                                    | Usage        |
-| ------------------------------------------ | ------------ |
-| [Tailwind CSS plugin](./plugins/tailwind/) | Tailwind CSS |
+For Tailwind CSS 4, plugin has been rewritten and moved to [a separate repository](https://github.com/iconify/iconify-tailwind).
 
 #### Demo
 

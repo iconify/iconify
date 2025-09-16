@@ -1,0 +1,23 @@
+{
+	"name": "@iconify-demo/css-react",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"devDependencies": {
+		"@iconify/types": "workspace:*",
+		"@iconify/css-react": "workspace:*",
+		"@types/react": "^18.3.23",
+		"@types/react-dom": "^18.3.7",
+		"@vitejs/plugin-react": "^4.7.0",
+		"typescript": "^5.8.3",
+		"vite": "^5.4.19"
+	}
+}
