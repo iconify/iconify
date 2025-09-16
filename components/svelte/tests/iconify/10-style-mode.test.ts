@@ -26,8 +26,12 @@ describe('Rendering as span', () => {
 		const html = node.outerHTML;
 
 		// Check HTML
+		// Depending on version of jsdom, "currentColor" may be converted to "currentcolor"
+		const currentColor = html.includes('currentcolor')
+			? 'currentcolor'
+			: 'currentColor';
 		expect(html).toBe(
-			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: currentColor; mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;\"></span>"
+			`<span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E&quot;); width: 1em; height: 1em; display: inline-block; background-color: ${currentColor}; mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;"></span>`
 		);
 	});
 
@@ -50,8 +54,12 @@ describe('Rendering as span', () => {
 		const html = node.outerHTML;
 
 		// Check HTML
+		// Depending on version of jsdom, "currentColor" may be converted to "currentcolor"
+		const currentColor = html.includes('currentcolor')
+			? 'currentcolor'
+			: 'currentColor';
 		expect(html).toBe(
-			"<span style=\"--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E&quot;); width: 48px; height: 32px; display: inline-block; background-color: currentColor; mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;\"></span>"
+			`<span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z' fill='currentColor'/%3E%3C/svg%3E&quot;); width: 48px; height: 32px; display: inline-block; background-color: ${currentColor}; mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;"></span>`
 		);
 	});
 });
