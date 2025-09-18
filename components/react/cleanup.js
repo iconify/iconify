@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 // Text to ad
-const text = "'use client'";
+const text = '"use client"';
 
 // List of files to fix
 ['iconify', 'offline'].forEach((prefix) => {
