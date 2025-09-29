@@ -1,8 +1,7 @@
 <script>
     import { onDestroy } from 'svelte';
-    import { renderContent, subscribeToIconData } from './functions.js';
+    import { getSizeProps, renderContent, subscribeToIconData } from './functions.js';
     import { renderCSS } from './status.js';
-    import { getSizeProps } from '../size.js';
 
     // Props
     let {

@@ -1,11 +1,11 @@
 import { defineComponent, h, computed } from 'vue';
 import { renderContent } from '@iconify/component-utils/helpers/content';
+import { getSizeProps } from '@iconify/component-utils/helpers/size';
 import type {
 	CSSIconComponentProps,
 	CSSIconComponentViewbox,
 	CSSIconElementProps,
 } from './props.js';
-import { getSizeProps } from './size.js';
 
 /**
  * Basic icon component, without fallback

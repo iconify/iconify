@@ -26,6 +26,7 @@
 	"exports": {
 		"./helpers/callbacks": "./lib/helpers/callbacks.js",
 		"./helpers/content": "./lib/helpers/content.js",
+		"./helpers/size": "./lib/helpers/size.js",
 		"./helpers/support": "./lib/helpers/support.js",
 		"./icon-lists/clear": "./lib/icon-lists/clear.js",
 		"./icon-lists/merge": "./lib/icon-lists/merge.js",

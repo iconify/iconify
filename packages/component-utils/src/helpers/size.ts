@@ -20,6 +20,7 @@ export function getSizeProps(
 
 	if ((!width && !height) || (width && height)) {
 		// None or both sizes are set
+		// Empty value = undefined
 		return {
 			viewBox,
 			width: width || undefined,

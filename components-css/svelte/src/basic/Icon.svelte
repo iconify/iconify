@@ -1,6 +1,5 @@
 <script>
-    import { renderContent } from './functions.js';
-    import { getSizeProps } from '../size.js';
+    import { getSizeProps, renderContent } from './functions.js';
 
     // Props
     let {

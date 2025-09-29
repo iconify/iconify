@@ -11,8 +11,8 @@ import type { CSSIconComponentProps, CSSIconElementProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
 import { renderContent } from '@iconify/component-utils/helpers/content';
 import { subscribeToIconData } from '@iconify/component-utils/icons/subscribe';
+import { getSizeProps } from '@iconify/component-utils/helpers/size';
 import { renderCSS } from './status.js';
-import { getSizeProps } from '../size.js';
 
 /**
  * Icon component
