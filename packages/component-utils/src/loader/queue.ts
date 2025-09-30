@@ -5,12 +5,9 @@ import { mergeSplitIconNames } from '../icon-lists/merge.js';
 import type { IconsData } from '../icon-lists/types.js';
 import { getLoader } from './loaders.js';
 import { splitForBatchLoading } from './api/batch.js';
-import {
-	matchIconName,
-	parseIconSet,
-	type IconifyIconName,
-} from '@iconify/utils';
+import { matchIconName, type IconifyIconName } from '@iconify/utils';
 import { splitIconNames } from '../icon-lists/split.js';
+import { addIconSetToStorage } from './parse.js';
 
 // Queue
 let queue = Object.create(null) as IconsData<string[]>;
@@ -95,13 +92,12 @@ function parseQueuedIcons() {
 						for (const batch of batches) {
 							// Parse icon set
 							const parse = (data?: IconifyJSON | null) => {
-								const added = new Set<string>();
-								if (data) {
-									parseIconSet(data, (name, icon) => {
-										storage.update(name, icon);
-										added.add(name);
-									});
-								}
+								// Add icon set
+								const added = data
+									? addIconSetToStorage(data, provider)
+									: new Set<string>();
+
+								// Send notifications for missing icons
 								for (const name of batch) {
 									if (!added.has(name)) {
 										storage.update(name, null);
