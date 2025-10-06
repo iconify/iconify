@@ -886,8 +886,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugins/tailwind
       '@iconify/tools':
-        specifier: 3.0.0-beta.3
-        version: 3.0.0-beta.3
+        specifier: 3.0.7
+        version: 3.0.7
       tailwindcss:
         specifier: ^3.4.18
         version: 3.4.18(yaml@2.8.1)
@@ -1980,8 +1980,8 @@ packages:
   '@iconify-json/vscode-icons@1.2.30':
     resolution: {integrity: sha512-dlTOc8w4a8/QNumZzMve+APJa6xQVXPZwo8qBk/MaYfY42NPrQT83QXkbTWKDkuEu/xgHPXvKZZBL7Yy12vYQw==}
 
-  '@iconify/tools@3.0.0-beta.3':
-    resolution: {integrity: sha512-DTPZ4/qgWlScbUzU3WtVSBv5e87abRiuAlu8GnrsmawR34/Bk12bgC1yZFittJvLeRGgmJLuw7yiyPLsdyX4lw==}
+  '@iconify/tools@3.0.7':
+    resolution: {integrity: sha512-DxfhFLMnooS34dHelpGUnnYrxLZHs0czC1CgrBhAbuL8ddVzBb2VEQm8kh9qGh7A34qeXAB5iSHH3A72rAaFrg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -7098,8 +7098,8 @@ packages:
     resolution: {integrity: sha512-sVOie0sbU9F/Lh0IoUfaq9hLzujRKxiL7xTMbG0y8ROx/qErtbfmm6sLSlJUbUMW4NcIgqHQPFiHX4LakA8fzA==}
     engines: {node: '>=18'}
 
-  svgo@3.3.2:
-    resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
+  svgo@3.0.3:
+    resolution: {integrity: sha512-X4UZvLhOglD5Xrp834HzGHf8RKUW0Ahigg/08yRO1no9t2NxffOkMiQ0WmaMIbaGlVTlSst2zWANsdhz5ybXgA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -9017,7 +9017,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/tools@3.0.0-beta.3':
+  '@iconify/tools@3.0.7':
     dependencies:
       '@iconify/types': 2.0.0
       '@iconify/utils': 2.3.0
@@ -9027,7 +9027,7 @@ snapshots:
       extract-zip: 2.0.1
       local-pkg: 0.4.3
       pathe: 1.1.2
-      svgo: 3.3.2
+      svgo: 3.0.3
       tar: 6.2.1
     transitivePeerDependencies:
       - supports-color
@@ -14817,13 +14817,12 @@ snapshots:
       magic-string: 0.30.19
       zimmerframe: 1.1.4
 
-  svgo@3.3.2:
+  svgo@3.0.3:
     dependencies:
       '@trysound/sax': 0.2.0
       commander: 7.2.0
       css-select: 5.2.2
       css-tree: 2.3.1
-      css-what: 6.2.2
       csso: 5.0.5
       picocolors: 1.1.1
 
