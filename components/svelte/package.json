@@ -58,7 +58,7 @@
 		"@microsoft/api-extractor": "^7.53.0",
 		"@rollup/plugin-node-resolve": "^16.0.2",
 		"@rollup/plugin-typescript": "^12.1.4",
-		"@sveltejs/vite-plugin-svelte": "^4.0.4",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/svelte": "^5.2.8",
 		"@tsconfig/svelte": "^5.0.5",
