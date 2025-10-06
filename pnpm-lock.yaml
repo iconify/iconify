@@ -388,8 +388,8 @@ importers:
         specifier: ^16.0.1
         version: 16.0.1(rollup@4.50.2)
       '@testing-library/jest-dom':
-        specifier: ^6.8.0
-        version: 6.8.0
+        specifier: ^6.9.1
+        version: 6.9.1
       '@testing-library/react':
         specifier: ^16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -443,8 +443,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.38.10)(vite@5.4.20(@types/node@22.18.4)(terser@5.44.0))
       '@testing-library/jest-dom':
-        specifier: ^6.6.3
-        version: 6.8.0
+        specifier: ^6.9.1
+        version: 6.9.1
       '@testing-library/svelte':
         specifier: ^5.2.8
         version: 5.2.8(svelte@5.38.10)(vite@5.4.20(@types/node@22.18.4)(terser@5.44.0))(vitest@2.1.9(@types/node@22.18.4)(jsdom@27.0.0(postcss@8.5.6))(terser@5.44.0))
@@ -613,7 +613,7 @@ importers:
         version: 5.4.20(@types/node@24.5.2)(terser@5.44.0)
       vite-plugin-solid:
         specifier: ^2.11.7
-        version: 2.11.8(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
+        version: 2.11.8(@testing-library/jest-dom@6.9.1)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
 
   iconify-icon-demo/svelte-demo:
     devDependencies:
@@ -3170,8 +3170,8 @@ packages:
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
 
-  '@testing-library/jest-dom@6.8.0':
-    resolution: {integrity: sha512-WgXcWzVM6idy5JaftTVC8Vs83NKRmGJz4Hqs4oyOuO2J4r/y79vvKZsb+CaGyCSEbUPI6OsewfPd0G1A0/TUZQ==}
+  '@testing-library/jest-dom@6.9.1':
+    resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
 
   '@testing-library/react@16.3.0':
@@ -10073,7 +10073,7 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@6.8.0':
+  '@testing-library/jest-dom@6.9.1':
     dependencies:
       '@adobe/css-tools': 4.4.4
       aria-query: 5.3.2
@@ -15045,7 +15045,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.8(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0)):
+  vite-plugin-solid@2.11.8(@testing-library/jest-dom@6.9.1)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0)):
     dependencies:
       '@babel/core': 7.28.4
       '@types/babel__core': 7.20.5
@@ -15056,7 +15056,7 @@ snapshots:
       vite: 5.4.20(@types/node@24.5.2)(terser@5.44.0)
       vitefu: 1.1.1(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
     optionalDependencies:
-      '@testing-library/jest-dom': 6.8.0
+      '@testing-library/jest-dom': 6.9.1
     transitivePeerDependencies:
       - supports-color
 
