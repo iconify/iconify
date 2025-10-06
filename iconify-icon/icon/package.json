@@ -61,7 +61,7 @@
 		"@rollup/plugin-replace": "^6.0.2",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@types/jsdom": "^21.1.7",
-		"cross-env": "^7.0.3",
+		"cross-env": "^10.1.0",
 		"jsdom": "^25.0.1",
 		"rimraf": "^6.0.1",
 		"rollup": "^4.52.4",
