@@ -41,6 +41,7 @@
 		"./loader/api/create": "./lib/loader/api/create.js",
 		"./loader/api/init": "./lib/loader/api/init.js",
 		"./loader/loaders": "./lib/loader/loaders.js",
+		"./loader/parse": "./lib/loader/parse.js",
 		"./loader/queue": "./lib/loader/queue.js",
 		"./loader/types": "./lib/loader/types.js",
 		"./storage/create": "./lib/storage/create.js",
