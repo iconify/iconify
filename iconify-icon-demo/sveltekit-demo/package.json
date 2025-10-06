@@ -24,6 +24,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^5.2.6"
+		"@fontsource/fira-mono": "^5.2.7"
 	}
 }
