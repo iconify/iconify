@@ -14,6 +14,6 @@
 		"@iconify-json/vscode-icons": "^1.2.30",
 		"@iconify/tailwind": "workspace:*",
 		"@iconify/tools": "3.0.0-beta.3",
-		"tailwindcss": "^3.4.18"
+		"tailwindcss": "^4.1.14"
 	}
 }
