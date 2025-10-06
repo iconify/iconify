@@ -1,7 +1,7 @@
 {
 	"name": "iconify",
 	"private": true,
-	"packageManager": "pnpm@9.15.9",
+	"packageManager": "pnpm@10.18.0",
 	"description": "The most versatile icon framework",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"license": "MIT",
