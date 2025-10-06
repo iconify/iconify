@@ -71,9 +71,15 @@ importers:
 
   components-css-demo/svelte-demo:
     devDependencies:
+      '@iconify-svelte/ri':
+        specifier: ^1.0.0
+        version: 1.0.0(svelte@5.39.9)
       '@iconify/css-svelte':
         specifier: workspace:*
         version: link:../../components-css/svelte
+      '@iconify/ri-svelte-test':
+        specifier: file:iconify-ri-svelte-test-1.0.0.tgz
+        version: file:components-css-demo/svelte-demo/iconify-ri-svelte-test-1.0.0.tgz
       '@iconify/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -102,9 +108,15 @@ importers:
         specifier: ^3.5.22
         version: 3.5.22(typescript@5.9.3)
     devDependencies:
+      '@iconify-vue/ri':
+        specifier: ^1.0.1
+        version: 1.0.1(vue@3.5.22(typescript@5.9.3))
       '@iconify/css-vue':
         specifier: workspace:*
         version: link:../../components-css/vue
+      '@iconify/ri-vue-test':
+        specifier: file:iconify-ri-vue-test-1.0.0.tgz
+        version: file:components-css-demo/vue-demo/iconify-ri-vue-test-1.0.0.tgz
       '@iconify/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -1730,6 +1742,30 @@ packages:
 
   '@iconify-json/vscode-icons@1.2.30':
     resolution: {integrity: sha512-dlTOc8w4a8/QNumZzMve+APJa6xQVXPZwo8qBk/MaYfY42NPrQT83QXkbTWKDkuEu/xgHPXvKZZBL7Yy12vYQw==}
+
+  '@iconify-svelte/ri@1.0.0':
+    resolution: {integrity: sha512-dLV1lx3U7SKNXd93GzICdf2CnNyA0pLT4nBQR5w8Zph0b2TJV4vn64yVsVOKg/RlRQTYPzbj3i0+d9DJKh/WRw==}
+
+  '@iconify-vue/ri@1.0.1':
+    resolution: {integrity: sha512-+IUPdmCucgtagzVZiHUmqHIKNjfDhcDXkWFB/oFxgU3zl54/ITjfMHcoV/YzcbajMOGOz+cFgdvbWtvS+LwYCw==}
+
+  '@iconify/css-svelte@1.0.0':
+    resolution: {integrity: sha512-S9kZ+U/hQ+QVHZVLKu06xiVi0rII4DJCh2Z6M1m7IOyECBD7A1emk5pRx4fWG9Zp7ZOHL8dWO90sxtsaOPZBJw==}
+    peerDependencies:
+      svelte: '>4.0.0'
+
+  '@iconify/css-vue@1.0.1':
+    resolution: {integrity: sha512-rGkUIToUFUfP1zIYrY8A1pWUcadGxbMgAsUyI4PmK6BgxTO5Sajw1cbl6gqMi/D26S6LSjEG/Q+7O7gcLJthaA==}
+    peerDependencies:
+      vue: '>=3'
+
+  '@iconify/ri-svelte-test@file:components-css-demo/svelte-demo/iconify-ri-svelte-test-1.0.0.tgz':
+    resolution: {integrity: sha512-zln1B73P91Gpq6TCxYDe4WltJ3RIXCRqEcBOzb9KT1Rd//QWohCcTVu2gNVJ5UZy3zNEcu4TAvxtaQ/g1kfezg==, tarball: file:components-css-demo/svelte-demo/iconify-ri-svelte-test-1.0.0.tgz}
+    version: 1.0.0
+
+  '@iconify/ri-vue-test@file:components-css-demo/vue-demo/iconify-ri-vue-test-1.0.0.tgz':
+    resolution: {integrity: sha512-a28n/XtcP5qK3426I0m+HqC+Sr5UMZ5y+UV21w5hXztIT8tXGNVObgjb7bOe/iSqYQaUExBUoOhFVt6dh8oQ0w==, tarball: file:components-css-demo/vue-demo/iconify-ri-vue-test-1.0.0.tgz}
+    version: 1.0.0
 
   '@iconify/tools@4.1.4':
     resolution: {integrity: sha512-s6BcNUcCxQ3S6cvhlsoWzOuBt8qKXdVyXB9rT57uSJ/ARHD7dVM43+5ERBWn3tmkMWXeJ/s9DPVc3dUasayzeA==}
@@ -8189,6 +8225,32 @@ snapshots:
   '@iconify-json/vscode-icons@1.2.30':
     dependencies:
       '@iconify/types': 2.0.0
+
+  '@iconify-svelte/ri@1.0.0(svelte@5.39.9)':
+    dependencies:
+      '@iconify/css-svelte': 1.0.0(svelte@5.39.9)
+    transitivePeerDependencies:
+      - svelte
+
+  '@iconify-vue/ri@1.0.1(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      '@iconify/css-vue': 1.0.1(vue@3.5.22(typescript@5.9.3))
+    transitivePeerDependencies:
+      - vue
+
+  '@iconify/css-svelte@1.0.0(svelte@5.39.9)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      svelte: 5.39.9
+
+  '@iconify/css-vue@1.0.1(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      '@iconify/types': 2.0.0
+      vue: 3.5.22(typescript@5.9.3)
+
+  '@iconify/ri-svelte-test@file:components-css-demo/svelte-demo/iconify-ri-svelte-test-1.0.0.tgz': {}
+
+  '@iconify/ri-vue-test@file:components-css-demo/vue-demo/iconify-ri-vue-test-1.0.0.tgz': {}
 
   '@iconify/tools@4.1.4':
     dependencies:

@@ -4,7 +4,14 @@ import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-vue';
 import { Icon as BasicIcon } from '@iconify/css-vue/basic';
 import { loadIcon } from '@iconify/css-vue/helpers/load-icon';
-import MDIHomeIcon from './test/mdi/h/home.js';
+import GitHubIcon from '@iconify-vue/ri/github-line';
+import TwitterIcon from '@iconify-vue/ri/twitter-x-line';
+import LinkedInIcon from '@iconify-vue/ri/linkedin-box-line';
+import BlueSkyIcon from '@iconify-vue/ri/bluesky-line';
+import GitHubIconTest from '@iconify/ri-vue-test/github-line';
+import TwitterIconTest from '@iconify/ri-vue-test/twitter-x-line';
+import LinkedInIconTest from '@iconify/ri-vue-test/linkedin-box-line';
+import BlueSkyIconTest from '@iconify/ri-vue-test/bluesky-line';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -174,9 +181,21 @@ function restartAnimations() {
 		<section>
 			<h1>Test generated icon component</h1>
 			<div class="icons-list">
-				Home icon:
+				From @iconify-vue/ri:
 				<div>
-					<MDIHomeIcon height="24" />
+					<GitHubIcon height="24" />
+					<TwitterIcon height="24" />
+					<LinkedInIcon height="24" />
+					<BlueSkyIcon height="24" />
+				</div>
+			</div>
+			<div class="icons-list">
+				From test package:
+				<div>
+					<GitHubIconTest height="24" />
+					<TwitterIconTest height="24" />
+					<LinkedInIconTest height="24" />
+					<BlueSkyIconTest height="24" />
 				</div>
 			</div>
 		</section>

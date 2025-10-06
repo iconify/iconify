@@ -4,7 +4,14 @@ import type { CSSIconComponentViewbox, } from '@iconify/css-svelte';
 import Icon from '@iconify/css-svelte';
 import BasicIcon from '@iconify/css-svelte/basic';
 import { loadIcon } from '@iconify/css-svelte/helpers/load-icon';
-import MDIHomeIcon from './test/mdi/h/home.svelte';
+import GitHubIcon from '@iconify-svelte/ri/github-line';
+import TwitterIcon from '@iconify-svelte/ri/twitter-x-line';
+import LinkedInIcon from '@iconify-svelte/ri/linkedin-box-line';
+import BlueSkyIcon from '@iconify-svelte/ri/bluesky-line';
+import GitHubIconTest from '@iconify/ri-svelte-test/github-line';
+import TwitterIconTest from '@iconify/ri-svelte-test/twitter-x-line';
+import LinkedInIconTest from '@iconify/ri-svelte-test/linkedin-box-line';
+import BlueSkyIconTest from '@iconify/ri-svelte-test/bluesky-line';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -178,9 +185,21 @@ function restartAnimations() {
 	<section>
 		<h1>Test generated icon component</h1>
 		<div class="icons-list">
-			Home icon:
+			From @iconify-svelte/ri:
 			<div>
-				<MDIHomeIcon height="24" />
+				<GitHubIcon height="24" />
+				<TwitterIcon height="24" />
+				<LinkedInIcon height="24" />
+				<BlueSkyIcon height="24" />
+			</div>
+		</div>
+		<div class="icons-list">
+			From test package:
+			<div>
+				<GitHubIconTest height="24" />
+				<TwitterIconTest height="24" />
+				<LinkedInIconTest height="24" />
+				<BlueSkyIconTest height="24" />
 			</div>
 		</div>
 	</section>
