@@ -115,8 +115,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/types
       '@vitejs/plugin-vue':
-        specifier: ^5.2.4
-        version: 5.2.4(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
+        specifier: ^6.0.1
+        version: 6.0.1(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -357,8 +357,8 @@ importers:
         specifier: workspace:*
         version: link:../../components/vue
       '@vitejs/plugin-vue':
-        specifier: ^5.2.4
-        version: 5.2.4(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
+        specifier: ^6.0.1
+        version: 6.0.1(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -495,8 +495,8 @@ importers:
         specifier: ^29.5.14
         version: 29.5.14
       '@vitejs/plugin-vue':
-        specifier: ^5.2.4
-        version: 5.2.4(vite@7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
+        specifier: ^6.0.1
+        version: 6.0.1(vite@7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -692,8 +692,8 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
       '@vitejs/plugin-vue':
-        specifier: ^5.2.4
-        version: 5.2.4(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
+        specifier: ^6.0.1
+        version: 6.0.1(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))
       iconify-icon:
         specifier: workspace:*
         version: link:../../iconify-icon/icon
@@ -3712,13 +3712,6 @@ packages:
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
       vue: ^3.0.0
-
-  '@vitejs/plugin-vue@5.2.4':
-    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    peerDependencies:
-      vite: ^5.0.0 || ^6.0.0
-      vue: ^3.2.25
 
   '@vitejs/plugin-vue@6.0.1':
     resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
@@ -10794,21 +10787,17 @@ snapshots:
       '@babel/core': 7.28.4
       '@babel/plugin-syntax-typescript': 7.27.1(@babel/core@7.28.4)
       '@babel/plugin-transform-typescript': 7.28.0(@babel/core@7.28.4)
-      '@rolldown/pluginutils': 1.0.0-beta.38
+      '@rolldown/pluginutils': 1.0.0-beta.41
       '@vue/babel-plugin-jsx': 1.5.0(@babel/core@7.28.4)
       vite: 7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1)
       vue: 3.5.22(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.2.4(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))':
+  '@vitejs/plugin-vue@6.0.1(vite@5.4.20(@types/node@24.6.2)(terser@5.44.0))(vue@3.5.22(typescript@5.9.3))':
     dependencies:
+      '@rolldown/pluginutils': 1.0.0-beta.29
       vite: 5.4.20(@types/node@24.6.2)(terser@5.44.0)
-      vue: 3.5.22(typescript@5.9.3)
-
-  '@vitejs/plugin-vue@5.2.4(vite@7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))':
-    dependencies:
-      vite: 7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1)
       vue: 3.5.22(typescript@5.9.3)
 
   '@vitejs/plugin-vue@6.0.1(vite@7.1.9(@types/node@24.6.2)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))':
