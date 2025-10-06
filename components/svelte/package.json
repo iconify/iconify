@@ -62,7 +62,7 @@
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/svelte": "^5.2.8",
 		"@tsconfig/svelte": "^5.0.5",
-		"@types/jest": "^29.5.14",
+		"@types/jest": "^30.0.0",
 		"rimraf": "^6.0.1",
 		"rollup": "^4.52.4",
 		"rollup-plugin-svelte": "^7.2.3",

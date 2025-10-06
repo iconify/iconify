@@ -49,7 +49,7 @@
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.53.0",
 		"@rollup/plugin-node-resolve": "^16.0.2",
-		"@types/jest": "^29.5.14",
+		"@types/jest": "^30.0.0",
 		"@vitejs/plugin-vue": "^6.0.1",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.0.0",
