@@ -24,7 +24,7 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@iconify-json/line-md": "^1.2.8",
+		"@iconify-json/line-md": "^1.2.11",
 		"@iconify-json/mdi-light": "^1.2.2",
 		"@iconify/utils": "workspace:^",
 		"@types/jsdom": "^21.1.7",
