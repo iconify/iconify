@@ -905,7 +905,7 @@ importers:
         version: link:../../packages/types
     devDependencies:
       '@iconify-json/line-md':
-        specifier: ^1.2.8
+        specifier: ^1.2.11
         version: 1.2.11
       '@iconify-json/mdi-light':
         specifier: ^1.2.2
