@@ -52,7 +52,7 @@
 		"@types/jest": "^29.5.14",
 		"@vitejs/plugin-vue": "^6.0.1",
 		"@vue/test-utils": "^2.4.6",
-		"jsdom": "^25.0.1",
+		"jsdom": "^27.0.0",
 		"rollup": "^4.52.4",
 		"typescript": "^5.9.3",
 		"vitest": "^3.2.4",
