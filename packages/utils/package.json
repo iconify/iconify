@@ -108,7 +108,7 @@
 	],
 	"dependencies": {
 		"@antfu/install-pkg": "^1.1.0",
-		"@antfu/utils": "^9.2.0",
+		"@antfu/utils": "^9.3.0",
 		"@iconify/types": "workspace:^",
 		"debug": "^4.4.3",
 		"kolorist": "^1.8.0",
