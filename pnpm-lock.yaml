@@ -464,7 +464,7 @@ importers:
         specifier: ^4.45.1
         version: 4.50.2
       rollup-plugin-svelte:
-        specifier: ^7.2.2
+        specifier: ^7.2.3
         version: 7.2.3(rollup@4.50.2)(svelte@5.38.10)
       svelte:
         specifier: ^5.36.16
