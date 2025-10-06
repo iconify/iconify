@@ -27,7 +27,7 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"svelte": "^5.36.16",
+		"svelte": "^5.39.9",
 		"svelte-preprocess": "^6.0.3"
 	},
 	"peerDependencies": {
@@ -40,6 +40,7 @@
 			"svelte": "./dist/full/Icon.svelte",
 			"types": "./dist/index.d.ts"
 		},
+		"./helpers/add": "./dist/helpers/add.js",
 		"./helpers/api": "./dist/helpers/api.js",
 		"./helpers/get-icon": "./dist/helpers/get-icon.js",
 		"./helpers/ids": "./dist/helpers/ids.js",

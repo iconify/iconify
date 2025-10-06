@@ -11,19 +11,19 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.3.1",
-		"@sveltejs/kit": "^2.26.0",
+		"@sveltejs/kit": "^2.44.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.4",
 		"@types/cookie": "^1.0.0",
 		"iconify-icon": "workspace:*",
-		"svelte": "^5.36.16",
-		"svelte-check": "^4.3.0",
+		"svelte": "^5.39.9",
+		"svelte-check": "^4.3.2",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1",
-		"typescript": "^5.8.3",
-		"vite": "^5.4.19"
+		"typescript": "^5.9.3",
+		"vite": "^5.4.20"
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^5.2.6"
+		"@fontsource/fira-mono": "^5.2.7"
 	}
 }

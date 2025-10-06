@@ -47,16 +47,16 @@
 		"@babel/preset-env": "^7.28.3",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.52.9",
+		"@microsoft/api-extractor": "^7.53.0",
 		"@rollup/plugin-node-resolve": "^15.3.1",
 		"@types/jest": "^29.5.14",
 		"@vitejs/plugin-vue": "^5.2.4",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^25.0.1",
-		"rollup": "^4.45.1",
-		"typescript": "^5.8.3",
+		"rollup": "^4.52.4",
+		"typescript": "^5.9.3",
 		"vitest": "^2.1.9",
-		"vue": "^3.5.18"
+		"vue": "^3.5.22"
 	},
 	"peerDependencies": {
 		"vue": ">=3"

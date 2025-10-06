@@ -28,7 +28,7 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"vue": "^3.5.18"
+		"vue": "^3.5.22"
 	},
 	"peerDependencies": {
 		"vue": ">=3"
@@ -36,6 +36,7 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./basic": "./dist/basic.js",
+		"./helpers/add": "./dist/helpers/add.js",
 		"./helpers/api": "./dist/helpers/api.js",
 		"./helpers/get-icon": "./dist/helpers/get-icon.js",
 		"./helpers/ids": "./dist/helpers/ids.js",
