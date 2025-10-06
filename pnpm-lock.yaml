@@ -612,8 +612,8 @@ importers:
         specifier: ^5.4.19
         version: 5.4.20(@types/node@24.5.2)(terser@5.44.0)
       vite-plugin-solid:
-        specifier: ^2.11.7
-        version: 2.11.8(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
+        specifier: ^2.11.9
+        version: 2.11.9(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
 
   iconify-icon-demo/svelte-demo:
     devDependencies:
@@ -7340,8 +7340,8 @@ packages:
       '@nuxt/kit':
         optional: true
 
-  vite-plugin-solid@2.11.8:
-    resolution: {integrity: sha512-hFrCxBfv3B1BmFqnJF4JOCYpjrmi/zwyeKjcomQ0khh8HFyQ8SbuBWQ7zGojfrz6HUOBFrJBNySDi/JgAHytWg==}
+  vite-plugin-solid@2.11.9:
+    resolution: {integrity: sha512-bTA6p+bspXZsuulSd2y6aTzegF8xGaJYcq1Uyh/mv+W4DQtzCgL9nN6n2fsTaxp/dMk+ZHHKgGndlNeooqHLKw==}
     peerDependencies:
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.*
       solid-js: ^1.7.2
@@ -15045,7 +15045,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.8(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0)):
+  vite-plugin-solid@2.11.9(@testing-library/jest-dom@6.8.0)(solid-js@1.9.9)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0)):
     dependencies:
       '@babel/core': 7.28.4
       '@types/babel__core': 7.20.5
