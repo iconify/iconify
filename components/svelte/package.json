@@ -63,7 +63,7 @@
 		"@testing-library/svelte": "^5.2.8",
 		"@tsconfig/svelte": "^5.0.4",
 		"@types/jest": "^29.5.14",
-		"@types/node": "^22.16.5",
+		"@types/node": "^22.18.8",
 		"rimraf": "^6.0.1",
 		"rollup": "^4.45.1",
 		"rollup-plugin-svelte": "^7.2.2",
