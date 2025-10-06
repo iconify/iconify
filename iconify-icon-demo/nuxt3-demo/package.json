@@ -9,6 +9,6 @@
 		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"nuxt": "^4.1.2"
+		"nuxt": "^4.1.3"
 	}
 }
