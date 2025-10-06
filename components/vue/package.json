@@ -44,7 +44,7 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.28.0",
+		"@babel/preset-env": "^7.28.3",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.52.9",
