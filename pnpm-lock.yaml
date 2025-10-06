@@ -81,7 +81,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.38.10)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
       '@tsconfig/svelte':
-        specifier: ^5.0.4
+        specifier: ^5.0.5
         version: 5.0.5
       svelte:
         specifier: ^5.36.16
@@ -280,7 +280,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.38.10)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
       '@tsconfig/svelte':
-        specifier: ^5.0.4
+        specifier: ^5.0.5
         version: 5.0.5
       svelte:
         specifier: ^5.36.16
@@ -449,7 +449,7 @@ importers:
         specifier: ^5.2.8
         version: 5.2.8(svelte@5.38.10)(vite@5.4.20(@types/node@22.18.4)(terser@5.44.0))(vitest@2.1.9(@types/node@22.18.4)(jsdom@27.0.0(postcss@8.5.6))(terser@5.44.0))
       '@tsconfig/svelte':
-        specifier: ^5.0.4
+        specifier: ^5.0.5
         version: 5.0.5
       '@types/jest':
         specifier: ^29.5.14
@@ -621,7 +621,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.38.10)(vite@5.4.20(@types/node@24.5.2)(terser@5.44.0))
       '@tsconfig/svelte':
-        specifier: ^5.0.4
+        specifier: ^5.0.5
         version: 5.0.5
       iconify-icon:
         specifier: workspace:*
