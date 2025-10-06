@@ -54,8 +54,6 @@
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.0.0",
 		"rollup": "^4.52.4",
-		"typescript": "^5.9.3",
-		"vitest": "^3.2.4",
 		"vue": "^3.5.22"
 	},
 	"peerDependencies": {

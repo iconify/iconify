@@ -67,8 +67,7 @@
 		"rollup": "^4.52.4",
 		"rollup-plugin-svelte": "^7.2.3",
 		"svelte": "^5.39.9",
-		"svelte-preprocess": "^6.0.3",
-		"vitest": "^3.2.4"
+		"svelte-preprocess": "^6.0.3"
 	},
 	"peerDependencies": {
 		"svelte": ">4.0.0"
