@@ -55,7 +55,7 @@
 		"jsdom": "^25.0.1",
 		"rollup": "^4.52.4",
 		"typescript": "^5.9.3",
-		"vitest": "^2.1.9",
+		"vitest": "^3.2.4",
 		"vue": "^3.5.22"
 	},
 	"peerDependencies": {
