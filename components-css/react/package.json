@@ -28,8 +28,8 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@types/react": "^19.2.1",
-		"@types/react-dom": "^19.2.0",
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.1",
 		"react": "^19.2.0"
 	},
 	"peerDependencies": {
