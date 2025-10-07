@@ -16,7 +16,7 @@
 		"@iconify-icon/react": "workspace:*",
 		"@iconify-icons/mdi-light": "^1.2.5",
 		"@iconify-icons/uil": "^1.2.3",
-		"@types/react": "^19.2.0",
+		"@types/react": "^19.2.1",
 		"@types/react-dom": "^19.2.0",
 		"@vitejs/plugin-react": "^5.0.4",
 		"iconify-icon": "workspace:*"
