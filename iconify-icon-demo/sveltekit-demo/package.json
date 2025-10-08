@@ -16,7 +16,7 @@
 		"@types/cookie": "^1.0.0",
 		"iconify-icon": "workspace:*",
 		"svelte": "^5.39.11",
-		"svelte-check": "^4.3.2",
+		"svelte-check": "^4.3.3",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"
 	},
