@@ -109,8 +109,8 @@ importers:
         version: 3.5.22(typescript@5.9.3)
     devDependencies:
       '@iconify-vue/ri':
-        specifier: ^1.0.1
-        version: 1.0.1(vue@3.5.22(typescript@5.9.3))
+        specifier: ^1.0.2
+        version: 1.0.2(vue@3.5.22(typescript@5.9.3))
       '@iconify/css-vue':
         specifier: workspace:*
         version: link:../../components-css/vue
@@ -1902,8 +1902,8 @@ packages:
   '@iconify-svelte/ri@1.0.0':
     resolution: {integrity: sha512-dLV1lx3U7SKNXd93GzICdf2CnNyA0pLT4nBQR5w8Zph0b2TJV4vn64yVsVOKg/RlRQTYPzbj3i0+d9DJKh/WRw==}
 
-  '@iconify-vue/ri@1.0.1':
-    resolution: {integrity: sha512-+IUPdmCucgtagzVZiHUmqHIKNjfDhcDXkWFB/oFxgU3zl54/ITjfMHcoV/YzcbajMOGOz+cFgdvbWtvS+LwYCw==}
+  '@iconify-vue/ri@1.0.2':
+    resolution: {integrity: sha512-Mtlj5kcSza022k1C4Xo+vrkq9lV/tY2qXHnhIhL8ekfVBmPvmESD5LIxgpEoLufwmDjvm9ysTNf6ALVKJu85EQ==}
 
   '@iconify/css-svelte@1.0.0':
     resolution: {integrity: sha512-S9kZ+U/hQ+QVHZVLKu06xiVi0rII4DJCh2Z6M1m7IOyECBD7A1emk5pRx4fWG9Zp7ZOHL8dWO90sxtsaOPZBJw==}
@@ -8585,7 +8585,7 @@ snapshots:
     transitivePeerDependencies:
       - svelte
 
-  '@iconify-vue/ri@1.0.1(vue@3.5.22(typescript@5.9.3))':
+  '@iconify-vue/ri@1.0.2(vue@3.5.22(typescript@5.9.3))':
     dependencies:
       '@iconify/css-vue': 1.0.1(vue@3.5.22(typescript@5.9.3))
     transitivePeerDependencies:
