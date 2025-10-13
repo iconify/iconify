@@ -57,7 +57,7 @@
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.53.1",
-		"@rollup/plugin-node-resolve": "^16.0.2",
+		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@rollup/plugin-replace": "^6.0.2",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@types/jsdom": "^27.0.0",
