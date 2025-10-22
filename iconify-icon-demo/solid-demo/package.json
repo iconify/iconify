@@ -14,7 +14,7 @@
 		"@iconify-icon/solid": "workspace:*",
 		"@iconify-icons/line-md": "^1.2.30",
 		"iconify-icon": "workspace:*",
-		"vite-plugin-solid": "^2.11.9"
+		"vite-plugin-solid": "^2.11.10"
 	},
 	"dependencies": {
 		"solid-js": "^1.9.9"
