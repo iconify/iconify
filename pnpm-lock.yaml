@@ -784,8 +784,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       '@iconify-json/vscode-icons':
-        specifier: ^1.2.32
-        version: 1.2.32
+        specifier: ^1.2.33
+        version: 1.2.33
       '@iconify/tailwind':
         specifier: workspace:*
         version: link:../../plugins/tailwind
@@ -1896,8 +1896,8 @@ packages:
   '@iconify-json/mdi-light@1.2.2':
     resolution: {integrity: sha512-86UV9uyNve8zRFWiPrOrrDp9GDzsZM7plYV/on4VjgLLqXlyriuy541eHZB7LIOzTUyIPVli7QiUpBbTtBhsFw==}
 
-  '@iconify-json/vscode-icons@1.2.32':
-    resolution: {integrity: sha512-UzZmL6hF02YGu/qEbpskEVnstlNJG+c+0PNzNYTIBf/dXylWHLUVufhOXqAzuGRjkUZ2q7rPpOEwLUPkhkFHUA==}
+  '@iconify-json/vscode-icons@1.2.33':
+    resolution: {integrity: sha512-2lKDybGxXXeLeeqeNT2YVDYXs5va0YMHf06w3GemS22j/0CCTpKwKDK7REaibsCq3bRV8qX0RJDM4AbREE7L+w==}
 
   '@iconify-svelte/ri@1.0.1':
     resolution: {integrity: sha512-YSSCRreU+mv93HDe3qckpQ/T0ibnnsiFa/MqdNNQnqNxCli4WTKyxJoQTa9Q6aYLelBC8lGw4SDcwviOCUSA/A==}
@@ -3297,12 +3297,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/tsconfig-utils@8.46.1':
-    resolution: {integrity: sha512-X88+J/CwFvlJB+mK09VFqx5FE4H5cXD+H/Bdza2aEWkSb8hnWIQorNcscRl4IEo1Cz9VI/+/r/jnGWkbWPx54g==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.0.0'
-
   '@typescript-eslint/tsconfig-utils@8.46.2':
     resolution: {integrity: sha512-a7QH6fw4S57+F5y2FIxxSDyi5M4UfGF+Jl1bCGd7+L4KsaUY80GsiF/t0UoRFDHAguKlBaACWJRmdrc6Xfkkag==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -3318,10 +3312,6 @@ packages:
 
   '@typescript-eslint/types@8.44.0':
     resolution: {integrity: sha512-ZSl2efn44VsYM0MfDQe68RKzBz75NPgLQXuGypmym6QVOWL5kegTZuZ02xRAT9T+onqvM6T8CdQk0OwYMB6ZvA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/types@8.46.1':
-    resolution: {integrity: sha512-C+soprGBHwWBdkDpbaRC4paGBrkIXxVlNohadL5o0kfhsXqOC6GYH2S/Obmig+I0HTDl8wMaRySwrfrXVP8/pQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typescript-eslint/types@8.46.2':
@@ -8587,7 +8577,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/vscode-icons@1.2.32':
+  '@iconify-json/vscode-icons@1.2.33':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -10054,8 +10044,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.44.0(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.46.1(typescript@5.9.3)
-      '@typescript-eslint/types': 8.46.1
+      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.3)
+      '@typescript-eslint/types': 8.46.2
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -10084,10 +10074,6 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@typescript-eslint/tsconfig-utils@8.46.1(typescript@5.9.3)':
-    dependencies:
-      typescript: 5.9.3
-
   '@typescript-eslint/tsconfig-utils@8.46.2(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
@@ -10105,8 +10091,6 @@ snapshots:
       - supports-color
 
   '@typescript-eslint/types@8.44.0': {}
-
-  '@typescript-eslint/types@8.46.1': {}
 
   '@typescript-eslint/types@8.46.2': {}
 
