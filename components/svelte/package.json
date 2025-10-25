@@ -55,19 +55,20 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.53.2",
+		"@microsoft/api-extractor": "^7.53.3",
 		"@rollup/plugin-node-resolve": "^16.0.3",
-		"@rollup/plugin-typescript": "^12.2.0",
+		"@rollup/plugin-typescript": "^12.3.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
-		"@testing-library/jest-dom": "^6.9.1",
-		"@testing-library/svelte": "^5.2.8",
 		"@tsconfig/svelte": "^5.0.5",
 		"@types/jest": "^30.0.0",
+		"@vitest/browser-playwright": "^4.0.3",
+		"playwright": "^1.56.1",
 		"rimraf": "^6.0.1",
 		"rollup": "^4.52.5",
 		"rollup-plugin-svelte": "^7.2.3",
-		"svelte": "^5.41.3",
-		"svelte-preprocess": "^6.0.3"
+		"svelte": "^5.41.4",
+		"svelte-preprocess": "^6.0.3",
+		"vitest-browser-svelte": "^2.0.0"
 	},
 	"peerDependencies": {
 		"svelte": ">4.0.0"

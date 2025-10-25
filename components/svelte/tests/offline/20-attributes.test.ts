@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/svelte';
+import { render } from 'vitest-browser-svelte';
 import Icon from '../../offline';
 
 const iconData = {
@@ -43,7 +43,7 @@ describe('Padding attributes', () => {
 			style: 'vertical-align: 0; color: red;',
 		});
 		expect(renderResult.container.innerHTML).toContain(
-			'style="vertical-align: 0; color: red;"'
+			'style="vertical-align: 0px; color: red;"'
 		);
 	});
 

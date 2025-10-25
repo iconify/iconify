@@ -2,7 +2,7 @@
 	"name": "@iconify-icon/react",
 	"description": "React wrapper for Iconify Icon web component",
 	"author": "Vjacheslav Trushkin",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -38,12 +38,13 @@
 		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.0",
 		"@types/react": "^19.2.2",
 		"@types/react-test-renderer": "^19.1.0",
-		"@vitejs/plugin-react": "^5.0.4",
-		"jest": "^30.2.0",
+		"@vitejs/plugin-react": "^5.1.0",
+		"jsdom": "^27.0.1",
 		"react": "^19.2.0",
-		"react-test-renderer": "^19.2.0",
 		"rimraf": "^6.0.1",
 		"tsup": "^8.5.0"
 	},

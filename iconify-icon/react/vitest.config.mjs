@@ -5,10 +5,7 @@ export default defineConfig({
 	plugins: [react()],
 	test: {
 		globals: true,
+		environment: 'jsdom',
 		watch: false,
-		include: ['**/tests/*-test.{ts,tsx}'],
-		transformMode: {
-			web: [/\.[jt]sx$/],
-		},
 	},
 });

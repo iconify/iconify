@@ -9,7 +9,7 @@
 		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"nuxt": "^4.1.3"
+		"nuxt": "^4.2.0"
 	},
 	"dependencies": {
 		"@iconify/vue": "workspace:*"

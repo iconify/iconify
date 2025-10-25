@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/svelte';
+import { render } from 'vitest-browser-svelte';
 
 // Test importing from exports
 import Icon from '../../offline';

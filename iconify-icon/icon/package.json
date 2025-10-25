@@ -2,7 +2,7 @@
 	"name": "iconify-icon",
 	"description": "Icon web component that loads icon data on demand. Over 200,000 icons to choose from",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"license": "MIT",
 	"main": "./dist/iconify-icon.cjs",
 	"types": "./dist/iconify-icon.d.ts",
@@ -31,21 +31,21 @@
 	},
 	"exports": {
 		".": {
-			"require": "./dist/iconify-icon.cjs",
-			"import": "./dist/iconify-icon.mjs",
 			"types": "./dist/iconify-icon.d.ts",
+			"import": "./dist/iconify-icon.mjs",
+			"require": "./dist/iconify-icon.cjs",
 			"default": "./dist/iconify-icon.min.js"
 		},
 		"./dist/iconify": {
-			"require": "./dist/iconify-icon.cjs",
-			"import": "./dist/iconify-icon.mjs",
 			"types": "./dist/iconify-icon.d.ts",
+			"import": "./dist/iconify-icon.mjs",
+			"require": "./dist/iconify-icon.cjs",
 			"default": "./dist/iconify-icon.min.js"
 		},
 		"./dist/iconify.min": {
-			"require": "./dist/iconify-icon.cjs",
-			"import": "./dist/iconify-icon.mjs",
 			"types": "./dist/iconify-icon.d.ts",
+			"import": "./dist/iconify-icon.mjs",
+			"require": "./dist/iconify-icon.cjs",
 			"default": "./dist/iconify-icon.min.js"
 		},
 		"./*": "./*"
@@ -56,7 +56,7 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.53.2",
+		"@microsoft/api-extractor": "^7.53.3",
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@rollup/plugin-replace": "^6.0.2",
 		"@rollup/plugin-terser": "^0.4.4",
