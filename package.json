@@ -29,7 +29,7 @@
 		"tsdown": "^0.15.10",
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12",
-		"vitest": "^4.0.3"
+		"vitest": "^4.0.4"
 	},
 	"pnpm": {
 		"packageExtensions": {
