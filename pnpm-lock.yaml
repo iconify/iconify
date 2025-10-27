@@ -428,8 +428,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3(@babel/core@7.28.4)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(yaml@2.8.1))(postcss@8.5.6)(svelte@5.42.2)(typescript@5.9.3)
       vitest-browser-svelte:
-        specifier: ^2.0.0
-        version: 2.0.0(svelte@5.42.2)(vitest@4.0.4)
+        specifier: ^2.0.1
+        version: 2.0.1(svelte@5.42.2)(vitest@4.0.4)
 
   components/vue:
     dependencies:
@@ -7094,11 +7094,11 @@ packages:
       vite:
         optional: true
 
-  vitest-browser-svelte@2.0.0:
-    resolution: {integrity: sha512-+uHMRDkPBifChW29EbltbQ+WmYoS6Q5zHntg+vOmnssVyuBBJMI+wuUgogwH1hYHyoAdZPtn66nl7V2nXogTgw==}
+  vitest-browser-svelte@2.0.1:
+    resolution: {integrity: sha512-z7GFio7vxaOolY+xwPUMEKuwL4KcPzB8+bepA9F0Phqag/TJ4j7IAGSwm4Y/FBh7KznsP+7aEIllMay0qDpFXw==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5 || ^5.0.0-next.0
-      vitest: ^4.0.0-0
+      vitest: ^4.0.0
 
   vitest@4.0.4:
     resolution: {integrity: sha512-hV31h0/bGbtmDQc0KqaxsTO1v4ZQeF8ojDFuy4sZhFadwAqqvJA0LDw68QUocctI5EDpFMql/jVWKuPYHIf2Ew==}
@@ -14363,7 +14363,7 @@ snapshots:
     optionalDependencies:
       vite: 7.1.12(@types/node@24.9.1)(jiti@2.6.1)(terser@5.44.0)(yaml@2.8.1)
 
-  vitest-browser-svelte@2.0.0(svelte@5.42.2)(vitest@4.0.4):
+  vitest-browser-svelte@2.0.1(svelte@5.42.2)(vitest@4.0.4):
     dependencies:
       svelte: 5.42.2
       vitest: 4.0.4(@types/debug@4.1.12)(@types/node@24.9.1)(@vitest/browser-playwright@4.0.4)(jiti@2.6.1)(jsdom@27.0.1(postcss@8.5.6))(terser@5.44.0)(yaml@2.8.1)
