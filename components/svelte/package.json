@@ -66,7 +66,7 @@
 		"rimraf": "^6.0.1",
 		"rollup": "^4.52.5",
 		"rollup-plugin-svelte": "^7.2.3",
-		"svelte": "^5.42.3",
+		"svelte": "^5.43.0",
 		"svelte-preprocess": "^6.0.3",
 		"vitest-browser-svelte": "^2.0.1"
 	},
