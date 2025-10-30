@@ -2,7 +2,7 @@
 	"name": "@iconify-icon/react",
 	"description": "React wrapper for Iconify Icon web component",
 	"author": "Vjacheslav Trushkin",
-	"version": "3.0.2",
+	"version": "3.0.3",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -49,6 +49,6 @@
 		"tsup": "^8.5.0"
 	},
 	"peerDependencies": {
-		"react": ">=19.2.0"
+		"react": ">=18.0.0"
 	}
 }
