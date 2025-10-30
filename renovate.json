@@ -4,6 +4,10 @@
 	"rangeStrategy": "bump",
 	"packageRules": [
 		{
+			"matchDepTypes": ["peerDependencies"],
+			"enabled": false
+		},
+		{
 			"matchPackageNames": ["tailwindcss"],
 			"allowedVersions": "<4.0.0"
 		},
