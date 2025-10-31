@@ -61,7 +61,7 @@
 		"@types/react-dom": "^19.2.2",
 		"jsdom": "^27.0.1",
 		"react": "^19.2.0",
-		"rimraf": "^6.0.1",
+		"rimraf": "^6.1.0",
 		"rollup": "^4.52.5"
 	},
 	"peerDependencies": {
