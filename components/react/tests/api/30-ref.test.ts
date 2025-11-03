@@ -3,7 +3,8 @@ import { Icon, InlineIcon, loadIcons, iconLoaded } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, type RenderResult } from 'vitest-browser-react';
+import { createElement } from 'react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -13,7 +14,7 @@ const iconData = {
 
 describe('Testing references', () => {
 	test('reference for preloaded icon', () => {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'render-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
@@ -52,22 +53,22 @@ describe('Testing references', () => {
 
 				// Render components
 				render(
-					<Icon
-						icon={iconName}
-						ref={(element) => {
+					createElement(Icon, {
+						icon: iconName,
+						ref: (element) => {
 							gotRef = true;
-						}}
-					/>
-				);
+						},
+					})
+				).catch(reject);
 
 				render(
-					<InlineIcon
-						icon={iconName}
-						ref={(element) => {
+					createElement(InlineIcon, {
+						icon: iconName,
+						ref: (element) => {
 							gotInlineRef = true;
-						}}
-					/>
-				);
+						},
+					})
+				).catch(reject);
 
 				// References should be called immediately in test
 				expect(gotRef).toEqual(true);
@@ -134,13 +135,13 @@ describe('Testing references', () => {
 
 			// Render component
 			render(
-				<Icon
-					icon={iconName}
-					ref={(element) => {
+				createElement(Icon, {
+					icon: iconName,
+					ref: (element) => {
 						gotRef = true;
-					}}
-				/>
-			);
+					},
+				})
+			).catch(reject);
 
 			// Reference should not have been called yet
 			expect(gotRef).toEqual(false);
@@ -198,13 +199,13 @@ describe('Testing references', () => {
 
 			// Render component
 			render(
-				<Icon
-					icon={iconName}
-					ref={(element) => {
+				createElement(Icon, {
+					icon: iconName,
+					ref: (element) => {
 						gotRef = true;
-					}}
-				></Icon>
-			);
+					},
+				})
+			).catch(reject);
 
 			// Reference should not have been called
 			expect(gotRef).toEqual(false);

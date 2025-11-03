@@ -3,7 +3,8 @@ import { Icon, iconLoaded } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, type RenderResult } from 'vitest-browser-react';
+import { createElement } from 'react';
 
 const path1 = 'M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z';
 const iconData = {
@@ -29,6 +30,7 @@ describe('Rendering icon', () => {
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const iconName2 = `@${provider}:${prefix}:${name2}`;
 			let onLoadCalled = ''; // Name of icon from last onLoad call
+			let component: RenderResult | null = null;
 
 			const onLoad = (name) => {
 				// onLoad should be called only once per icon
@@ -76,7 +78,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (html.includes('<span')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -95,8 +97,8 @@ describe('Rendering icon', () => {
 						expect(onLoadCalled).toEqual(iconName);
 
 						// Change property
-						renderResult.rerender(
-							<Icon icon={iconName2} onLoad={onLoad} />
+						component?.rerender(
+							createElement(Icon, { icon: iconName2, onLoad })
 						);
 					});
 				},
@@ -126,7 +128,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (html.includes('<span')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -153,15 +155,24 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const renderResult = render(
-				<Icon icon={iconName} onLoad={onLoad} />
-			);
+			render(
+				createElement(Icon, {
+					icon: iconName,
+					onLoad,
+				})
+			)
+				.then((result) => {
+					component = result;
 
-			// Should render placeholder
-			expect(renderResult.container.innerHTML).toEqual('<span></span>');
+					// Should render placeholder
+					expect(component.container.innerHTML).toEqual(
+						'<span></span>'
+					);
 
-			// onLoad should not have been called yet
-			expect(onLoadCalled).toEqual('');
+					// onLoad should not have been called yet
+					expect(onLoadCalled).toEqual('');
+				})
+				.catch(reject);
 		});
 	});
 
@@ -173,6 +184,7 @@ describe('Rendering icon', () => {
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const iconName2 = `@${provider}:${prefix}:${name2}`;
 			let isSync = true;
+			let component: RenderResult | null = null;
 
 			mockAPIData({
 				type: 'icons',
@@ -220,7 +232,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (html.includes('<span')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -244,16 +256,30 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const renderResult = render(<Icon icon={iconName} />);
+			render(
+				createElement(Icon, {
+					icon: iconName,
+				})
+			)
+				.then((result) => {
+					component = result;
 
-			// Should render placeholder
-			expect(renderResult.container.innerHTML).toEqual('<span></span>');
+					const html = component.container.innerHTML;
 
-			// Change icon name
-			renderResult.rerender(<Icon icon={iconName2} />);
+					// Should render placeholder
+					expect(html).toEqual('<span></span>');
 
-			// Async
-			isSync = false;
+					// Change icon name
+					result.rerender(
+						createElement(Icon, {
+							icon: iconName2,
+						})
+					);
+
+					// Async
+					isSync = false;
+				})
+				.catch(reject);
 		});
 	});
 
@@ -263,6 +289,7 @@ describe('Rendering icon', () => {
 			const name = 'multiple-props';
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const className = `iconify iconify--${prefix} iconify--${provider}`;
+			let component: RenderResult | null = null;
 
 			mockAPIData({
 				type: 'icons',
@@ -288,7 +315,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (!html.includes('<svg')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -308,19 +335,19 @@ describe('Rendering icon', () => {
 						expect(html).not.toContain('style="color: red;"');
 
 						// Add horizontal flip and style
-						renderResult.rerender(
-							<Icon
-								icon={iconName}
-								hFlip={true}
-								style={{ color: 'red' }}
-							/>
+						component?.rerender(
+							createElement(Icon, {
+								icon: iconName,
+								hFlip: true,
+								style: { color: 'red' },
+							})
 						);
 
 						// Should be updated immediately
-						expect(renderResult.container.innerHTML).toContain(
+						expect(component?.container.innerHTML ?? '').toContain(
 							`<g transform="translate(${iconData.width} 0) scale(-1 1)">`
 						);
-						expect(renderResult.container.innerHTML).toContain(
+						expect(component?.container.innerHTML ?? '').toContain(
 							'style="color: red;"'
 						);
 
@@ -333,12 +360,18 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component with placeholder text
-			const renderResult = render(
-				<Icon icon={iconName}>loading...</Icon>
-			);
+			render(
+				createElement(Icon, {
+					icon: iconName,
+					children: 'loading...',
+				})
+			)
+				.then((result) => {
+					component = result;
 
-			// Should render placeholder
-			expect(renderResult.container.innerHTML).toEqual('loading...');
+					expect(component.container.innerHTML).toEqual('loading...');
+				})
+				.catch(reject);
 		});
 	});
 });

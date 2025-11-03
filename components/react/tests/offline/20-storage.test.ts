@@ -1,7 +1,8 @@
 import React from 'react';
 import { Icon, addIcon, addCollection } from '../../dist/offline';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
+import { createElement } from 'react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -10,16 +11,21 @@ const iconData = {
 };
 
 describe('Using storage', () => {
-	test('using storage', () => {
+	test('using storage', async () => {
 		addIcon('test-icon', iconData);
 
-		const renderResult = render(<Icon icon="test-icon" />);
-		expect(renderResult.container.innerHTML).toContain(
+		const component = await render(
+			createElement(Icon, {
+				icon: 'test-icon',
+			})
+		);
+
+		expect(component.container.innerHTML).toContain(
 			'M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z'
 		);
 	});
 
-	test('using storage with icon set', () => {
+	test('using storage with icon set', async () => {
 		const iconSet = {
 			prefix: 'mdi-light',
 			icons: {
@@ -35,13 +41,18 @@ describe('Using storage', () => {
 		};
 		addCollection(iconSet);
 
-		const renderResult = render(<Icon icon="mdi-light:account" />);
-		expect(renderResult.container.innerHTML).toContain(
+		const component = await render(
+			createElement(Icon, {
+				icon: 'mdi-light:account',
+			})
+		);
+
+		expect(component.container.innerHTML).toContain(
 			'"M11.5 14c4.142 0 7.5 1.567 7.5 3.5V20'
 		);
 	});
 
-	test('using storage with icon set with custom prefix', () => {
+	test('using storage with icon set with custom prefix', async () => {
 		const iconSet = {
 			prefix: 'mdi-light',
 			icons: {
@@ -57,14 +68,24 @@ describe('Using storage', () => {
 		};
 		addCollection(iconSet, 'custom-');
 
-		const renderResult = render(<Icon icon="custom-link" />);
-		expect(renderResult.container.innerHTML).toContain(
+		const component = await render(
+			createElement(Icon, {
+				icon: 'custom-link',
+			})
+		);
+
+		expect(component.container.innerHTML).toContain(
 			'M8 13v-1h7v1H8zm7.5-6a5.5 5.5 0 1 1 0 11H13v-1h2.5'
 		);
 	});
 
-	test('missing icon from storage', () => {
-		const renderResult = render(<Icon icon="missing-icon" />);
-		expect(renderResult.container.innerHTML).toEqual('<span></span>');
+	test('missing icon from storage', async () => {
+		const component = await render(
+			createElement(Icon, {
+				icon: 'missing-icon',
+			})
+		);
+
+		expect(component.container.innerHTML).toEqual('<span></span>');
 	});
 });

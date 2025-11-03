@@ -1,7 +1,8 @@
 import React from 'react';
 import { Icon, InlineIcon } from '../../dist/iconify';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
+import { createElement } from 'react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -10,45 +11,48 @@ const iconData = {
 };
 
 describe('Testing references', () => {
-	test('basic icon reference', () => {
+	test('basic icon reference', async () => {
 		let gotRef = false;
-		render(
-			<Icon
-				icon={iconData}
-				ref={(element) => {
+
+		await render(
+			createElement(Icon, {
+				icon: iconData,
+				ref: (element) => {
 					gotRef = true;
-				}}
-			/>
+				},
+			})
 		);
 
 		// Ref should have been called by now
 		expect(gotRef).toEqual(true);
 	});
 
-	test('inline icon reference', () => {
+	test('inline icon reference', async () => {
 		let gotRef = false;
-		render(
-			<InlineIcon
-				icon={iconData}
-				ref={(element) => {
+
+		await render(
+			createElement(InlineIcon, {
+				icon: iconData,
+				ref: (element) => {
 					gotRef = true;
-				}}
-			/>
+				},
+			})
 		);
 
 		// Ref should have been called by now
 		expect(gotRef).toEqual(true);
 	});
 
-	test('placeholder reference', () => {
+	test('placeholder reference', async () => {
 		let gotRef = false;
-		render(
+
+		await render(
 			// @ts-expect-error
-			<Icon
-				ref={(element) => {
+			createElement(Icon, {
+				ref: (element) => {
 					gotRef = true;
-				}}
-			/>
+				},
+			})
 		);
 
 		// Ref should not have been called

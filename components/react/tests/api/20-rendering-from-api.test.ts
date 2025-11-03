@@ -3,7 +3,8 @@ import { Icon, loadIcons, iconLoaded } from '../../dist/iconify';
 import { mockAPIData } from '@iconify/core/lib/api/modules/mock';
 import { provider, nextPrefix } from './load';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, type RenderResult } from 'vitest-browser-react';
+import { createElement } from 'react';
 
 const iconData = {
 	body: '<path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"/>',
@@ -13,12 +14,13 @@ const iconData = {
 
 describe('Rendering icon', () => {
 	test('rendering icon after loading it', () => {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			const prefix = nextPrefix();
 			const name = 'render-test';
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const className = `iconify iconify--${provider} iconify--${prefix}`;
 			let onLoadCalled = false;
+			let component: RenderResult | null = null;
 
 			mockAPIData({
 				type: 'icons',
@@ -50,24 +52,30 @@ describe('Rendering icon', () => {
 				expect(iconLoaded(iconName)).toEqual(true);
 
 				// Render component
-				const renderResult = render(
-					<Icon
-						icon={iconName}
-						onLoad={(name) => {
+				render(
+					createElement(Icon, {
+						icon: iconName,
+						onLoad: (name) => {
 							expect(name).toEqual(iconName);
 							expect(onLoadCalled).toEqual(false);
 							onLoadCalled = true;
-						}}
-					/>
-				);
-				expect(renderResult.container.innerHTML).toEqual(
-					`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="${className}" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>`
-				);
+						},
+					})
+				)
+					.then((result) => {
+						component = result;
 
-				// Make sure onLoad has been called
-				expect(onLoadCalled).toEqual(true);
+						const html = component.container.innerHTML;
+						expect(html).toEqual(
+							`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="${className}" width="1em" height="1em" viewBox="0 0 24 24"><path d="M4 19h16v2H4zm5-4h11v2H9zm-5-4h16v2H4zm0-8h16v2H4zm5 4h11v2H9z" fill="currentColor"></path></svg>`
+						);
 
-				resolve(true);
+						// Make sure onLoad has been called
+						expect(onLoadCalled).toEqual(true);
+
+						resolve(true);
+					})
+					.catch(reject);
 			});
 		});
 	});
@@ -79,6 +87,7 @@ describe('Rendering icon', () => {
 			const iconName = `@${provider}:${prefix}:${name}`;
 			const className = `iconify iconify--${provider} iconify--${prefix}`;
 			let onLoadCalled = false;
+			let component: RenderResult | null = null;
 
 			mockAPIData({
 				type: 'icons',
@@ -107,7 +116,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (html.includes('<span')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -136,23 +145,29 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const renderResult = render(
-				<Icon
-					icon={iconName}
-					className="test"
-					onLoad={(name) => {
+			render(
+				createElement(Icon, {
+					icon: iconName,
+					className: 'test',
+					onLoad: (name) => {
 						expect(name).toEqual(iconName);
 						expect(onLoadCalled).toEqual(false);
 						onLoadCalled = true;
-					}}
-				/>
-			);
+					},
+				})
+			)
+				.then((result) => {
+					component = result;
 
-			// Should render placeholder
-			expect(renderResult.container.innerHTML).toEqual('<span></span>');
+					// Should render placeholder
+					expect(component.container.innerHTML).toEqual(
+						'<span></span>'
+					);
 
-			// onLoad should not have been called yet
-			expect(onLoadCalled).toEqual(false);
+					// onLoad should not have been called yet
+					expect(onLoadCalled).toEqual(false);
+				})
+				.catch((err) => reject(err));
 		});
 	});
 
@@ -161,6 +176,8 @@ describe('Rendering icon', () => {
 			const prefix = nextPrefix();
 			const name = 'missing-icon';
 			const iconName = `@${provider}:${prefix}:${name}`;
+			let component: RenderResult | null = null;
+
 			mockAPIData({
 				type: 'icons',
 				provider,
@@ -180,7 +197,7 @@ describe('Rendering icon', () => {
 					let counter = 0;
 					const timer = setInterval(() => {
 						counter++;
-						const html = renderResult.container.innerHTML;
+						const html = component?.container.innerHTML ?? '';
 						if (html.includes('<span')) {
 							// Not rendered yet
 							if (counter > 5) {
@@ -196,7 +213,7 @@ describe('Rendering icon', () => {
 						reject(
 							new Error(
 								'Bad icon content: ' +
-									renderResult.container.innerHTML
+									(component?.container.innerHTML ?? '')
 							)
 						);
 					});
@@ -207,17 +224,23 @@ describe('Rendering icon', () => {
 			expect(iconLoaded(iconName)).toEqual(false);
 
 			// Render component
-			const renderResult = render(
-				<Icon
-					icon={iconName}
-					onLoad={() => {
+			render(
+				createElement(Icon, {
+					icon: iconName,
+					onLoad: () => {
 						throw new Error('onLoad called for empty icon!');
-					}}
-				></Icon>
-			);
+					},
+				})
+			)
+				.then((result) => {
+					component = result;
 
-			// Should render placeholder
-			expect(renderResult.container.innerHTML).toEqual('<span></span>');
+					// Should render placeholder
+					expect(component.container.innerHTML).toEqual(
+						'<span></span>'
+					);
+				})
+				.catch((err) => reject(err));
 		});
 	});
 });

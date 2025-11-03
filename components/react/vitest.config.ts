@@ -1,9 +1,18 @@
 import { defineConfig } from 'vitest/config';
+import { playwright } from '@vitest/browser-playwright';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	test: {
 		globals: true,
-		environment: 'jsdom',
 		watch: false,
+		include: ['**/tests/**/*.test.ts'],
+		browser: {
+			enabled: true,
+			provider: playwright(),
+			instances: [{ browser: 'chromium' }],
+		},
 	},
-});
+	resolve: {
+		conditions: mode === 'test' ? ['browser'] : [],
+	},
+}));

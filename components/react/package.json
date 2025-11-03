@@ -55,14 +55,14 @@
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.53.3",
 		"@rollup/plugin-node-resolve": "^16.0.3",
-		"@testing-library/jest-dom": "^6.9.1",
-		"@testing-library/react": "^16.3.0",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",
-		"jsdom": "^27.1.0",
+		"@vitest/browser-playwright": "^4.0.6",
+		"playwright": "^1.56.1",
 		"react": "^19.2.0",
 		"rimraf": "^6.1.0",
-		"rollup": "^4.52.5"
+		"rollup": "^4.52.5",
+		"vitest-browser-react": "^2.0.2"
 	},
 	"peerDependencies": {
 		"react": ">=18.0.0"
