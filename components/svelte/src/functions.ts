@@ -227,12 +227,22 @@ export interface CheckIconStateResult {
 }
 
 /**
+ * Check for SSR
+ */
+function isSSR() {
+	try {
+		return typeof window !== 'object';
+	} catch (err) {
+		return true;
+	}
+}
+
+/**
  * Check if component needs to be updated
  */
 export function checkIconState(
 	icon: string | IconifyIcon,
 	state: IconState,
-	mounted: boolean,
 	callback: IconStateCallback,
 	onload?: IconifyIconOnLoad
 ): CheckIconStateResult | null {
@@ -269,9 +279,8 @@ export function checkIconState(
 	// Load icon
 	const data = getIconData(iconName);
 	if (!data) {
-		// Icon data is not available
-		// Do not load icon until component is mounted
-		if (mounted && (!state.loading || state.loading.name !== icon)) {
+		// Icon data is not available: load if not loading already
+		if (!isSSR() && (!state.loading || state.loading.name !== icon)) {
 			// New icon to load
 			abortLoading();
 			state.name = '';

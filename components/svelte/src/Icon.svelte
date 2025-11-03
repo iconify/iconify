@@ -39,7 +39,7 @@
 	
 </script>
 <script>
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { checkIconState, generateIcon } from './functions';
 
 	// State
@@ -57,19 +57,13 @@
 	// Props
 	const props = $props();
 
-	// Mounted status
-	let mounted = $state(false);
-
 	// Callback counter
 	let counter = $state(0);
-
-	// Mounted status
-	let isMounted = $derived(!!props.ssr || mounted);
 
 	// Get icon data
 	let iconData = $derived.by(() => {
 		counter;
-		return checkIconState(props.icon, iconState, isMounted, loaded, props.onload);
+		return checkIconState(props.icon, iconState, loaded, props.onload);
 	});
 
 	// Generate data to render
@@ -86,11 +80,6 @@
 	function loaded() {
 		counter ++;
 	}
-
-	// Force re-render
-	onMount(() => {
-		mounted = true;
-	});
 
 	// Abort loading when component is destroyed
 	onDestroy(() => {
