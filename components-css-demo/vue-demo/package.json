@@ -7,7 +7,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.5.22"
+		"vue": "^3.5.23"
 	},
 	"devDependencies": {
 		"@iconify-vue/ri": "^1.0.2",
