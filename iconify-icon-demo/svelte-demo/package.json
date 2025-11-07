@@ -13,7 +13,7 @@
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@tsconfig/svelte": "^5.0.5",
 		"iconify-icon": "workspace:*",
-		"svelte": "^5.43.3",
+		"svelte": "^5.43.4",
 		"svelte-check": "^4.3.3",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"
