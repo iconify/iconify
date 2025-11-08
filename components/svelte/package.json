@@ -64,7 +64,7 @@
 		"@vitest/browser-playwright": "^4.0.7",
 		"playwright": "^1.56.1",
 		"rimraf": "^6.1.0",
-		"rollup": "^4.52.5",
+		"rollup": "^4.53.1",
 		"rollup-plugin-svelte": "^7.2.3",
 		"svelte": "^5.43.4",
 		"svelte-preprocess": "^6.0.3",
