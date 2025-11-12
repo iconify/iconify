@@ -16,6 +16,7 @@ export default defineConfig({
 	outDir: 'dist',
 	clean: true,
 	exports: true,
+	fixedExtension: false,
 	inputOptions: {
 		experimental: {
 			attachDebugInfo: 'none',

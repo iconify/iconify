@@ -8,6 +8,7 @@ export default defineConfig({
 	clean: true,
 	unbundle: true,
 	exports: true,
+	fixedExtension: false,
 	inputOptions: {
 		experimental: {
 			attachDebugInfo: 'none',
