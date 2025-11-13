@@ -46,7 +46,7 @@
 		"jsdom": "^27.2.0",
 		"react": "^19.2.0",
 		"rimraf": "^6.1.0",
-		"tsup": "^8.5.0"
+		"tsup": "^8.5.1"
 	},
 	"peerDependencies": {
 		"react": ">=18.0.0"
