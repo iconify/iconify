@@ -23,13 +23,13 @@
 		"@eslint/js": "^9.39.1",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^24.10.1",
-		"@typescript-eslint/eslint-plugin": "^8.46.4",
+		"@typescript-eslint/eslint-plugin": "^8.47.0",
 		"eslint": "^9.39.1",
 		"globals": "^16.5.0",
-		"tsdown": "^0.16.3",
+		"tsdown": "^0.16.5",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.2",
-		"vitest": "^4.0.8"
+		"vitest": "^4.0.10"
 	},
 	"pnpm": {
 		"packageExtensions": {

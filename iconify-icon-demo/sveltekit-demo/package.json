@@ -11,11 +11,11 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.48.4",
+		"@sveltejs/kit": "^2.48.5",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/cookie": "^1.0.0",
 		"iconify-icon": "workspace:*",
-		"svelte": "^5.43.6",
+		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"

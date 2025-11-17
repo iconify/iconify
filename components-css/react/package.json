@@ -3,7 +3,7 @@
 	"description": "Iconify fallback icon component for React.",
 	"author": "Vjacheslav Trushkin",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
@@ -28,7 +28,7 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@types/react": "^19.2.4",
+		"@types/react": "^19.2.5",
 		"@types/react-dom": "^19.2.3",
 		"react": "^19.2.0"
 	},
