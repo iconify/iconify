@@ -63,7 +63,7 @@
 		"@types/jest": "^30.0.0",
 		"@vitest/browser-playwright": "^4.0.10",
 		"playwright": "^1.56.1",
-		"rimraf": "^6.1.0",
+		"rimraf": "^6.1.2",
 		"rollup": "^4.53.2",
 		"rollup-plugin-svelte": "^7.2.3",
 		"svelte": "^5.43.8",

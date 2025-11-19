@@ -45,7 +45,7 @@
 		"@vitejs/plugin-react": "^5.1.1",
 		"jsdom": "^27.2.0",
 		"react": "^19.2.0",
-		"rimraf": "^6.1.0",
+		"rimraf": "^6.1.2",
 		"tsup": "^8.5.1"
 	},
 	"peerDependencies": {
