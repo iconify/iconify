@@ -50,7 +50,7 @@
 		"@microsoft/api-extractor": "^7.55.0",
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@types/jest": "^30.0.0",
-		"@vitejs/plugin-vue": "^6.0.1",
+		"@vitejs/plugin-vue": "^6.0.2",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.2.0",
 		"rollup": "^4.53.2",
