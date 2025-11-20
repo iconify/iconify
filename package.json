@@ -26,9 +26,9 @@
 		"@typescript-eslint/eslint-plugin": "^8.47.0",
 		"eslint": "^9.39.1",
 		"globals": "^16.5.0",
-		"tsdown": "^0.16.5",
+		"tsdown": "^0.16.6",
 		"typescript": "^5.9.3",
-		"vite": "^7.2.2",
+		"vite": "^7.2.4",
 		"vitest": "^4.0.10"
 	},
 	"pnpm": {
