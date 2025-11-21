@@ -14,7 +14,7 @@
 		"@sveltejs/kit": "^2.49.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/cookie": "^1.0.0",
-		"svelte": "^5.43.12",
+		"svelte": "^5.43.14",
 		"svelte-check": "^4.3.4",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"
