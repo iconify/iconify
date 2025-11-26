@@ -752,9 +752,6 @@ importers:
       '@antfu/install-pkg':
         specifier: ^1.1.0
         version: 1.1.0
-      '@antfu/utils':
-        specifier: ^9.3.0
-        version: 9.3.0
       '@iconify/types':
         specifier: workspace:^
         version: link:../types
@@ -829,9 +826,6 @@ packages:
 
   '@antfu/utils@8.1.1':
     resolution: {integrity: sha512-Mex9nXf9vR6AhcXmMrlz/HVgYYZpVGJ6YlPgwl7UnaFpnshXs6EK/oa5Gpf3CzENMjkvEx2tQtntGnb7UtSTOQ==}
-
-  '@antfu/utils@9.3.0':
-    resolution: {integrity: sha512-9hFT4RauhcUzqOE4f1+frMKLZrgNog5b06I7VmZQV1BkvwvqrbC8EBZf3L1eEL2AKb6rNKjER0sEvJiSP1FXEA==}
 
   '@asamuzakjp/css-color@4.0.4':
     resolution: {integrity: sha512-cKjSKvWGmAziQWbCouOsFwb14mp1betm8Y7Fn+yglDMUUu3r9DCbJ9iJbeFDenLMqFbIMC0pQP8K+B8LAxX3OQ==}
@@ -7428,8 +7422,6 @@ snapshots:
       tinyexec: 1.0.2
 
   '@antfu/utils@8.1.1': {}
-
-  '@antfu/utils@9.3.0': {}
 
   '@asamuzakjp/css-color@4.0.4':
     dependencies:

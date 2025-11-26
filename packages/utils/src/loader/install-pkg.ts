@@ -1,11 +1,13 @@
 import { installPackage } from '@antfu/install-pkg';
-import { sleep } from '@antfu/utils';
 import { styleText } from 'node:util';
 import type { AutoInstall } from './types';
 import { warnOnce } from './warn';
 
 let pending: Promise<void> | undefined;
 const tasks: Record<string, Promise<void> | undefined> = {};
+
+const sleep = (ms: number) =>
+	new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export async function tryInstallPkg(
 	name: string,

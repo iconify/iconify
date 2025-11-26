@@ -1,6 +1,7 @@
-import type { Awaitable } from '@antfu/utils';
 import type { FullIconCustomisations } from '../customisations/defaults';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
+
+export type Awaitable<T> = T | Promise<T>;
 
 /**
  * External package name.

@@ -1,6 +1,5 @@
-import type { Awaitable } from '@antfu/utils';
 import { promises as fs, Stats } from 'fs';
-import type { CustomIconLoader } from './types';
+import type { Awaitable, CustomIconLoader } from './types';
 import { camelize, pascalize, snakelize } from '../misc/strings';
 
 /**

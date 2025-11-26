@@ -1,7 +1,6 @@
-import type { Awaitable } from '@antfu/utils';
 import { isUnsetKeyword } from '../svg/build';
 import { calculateSize } from '../svg/size';
-import type { IconifyLoaderOptions } from './types';
+import type { Awaitable, IconifyLoaderOptions } from './types';
 
 const svgWidthRegex = /\swidth\s*=\s*["']([\w.]+)["']/;
 const svgHeightRegex = /\sheight\s*=\s*["']([\w.]+)["']/;
