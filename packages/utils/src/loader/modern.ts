@@ -3,11 +3,8 @@ import { iconToSVG, isUnsetKeyword } from '../svg/build';
 import { getIconData } from '../icon-set/get-icon';
 import { calculateSize } from '../svg/size';
 import { mergeIconProps } from './utils';
-import createDebugger from 'debug';
 import { defaultIconCustomisations } from '../customisations/defaults';
 import type { IconifyLoaderOptions } from './types';
-
-const debug = createDebugger('@iconify-loader:icon');
 
 export async function searchForIcon(
 	iconSet: IconifyJSON,
@@ -20,7 +17,6 @@ export async function searchForIcon(
 	for (const id of ids) {
 		iconData = getIconData(iconSet, id);
 		if (iconData) {
-			debug(`${collection}:${id}`);
 			let defaultCustomizations: typeof defaultIconCustomisations = {
 				...defaultIconCustomisations,
 			};

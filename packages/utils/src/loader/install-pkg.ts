@@ -1,6 +1,6 @@
 import { installPackage } from '@antfu/install-pkg';
 import { sleep } from '@antfu/utils';
-import { cyan } from 'kolorist';
+import { styleText } from 'node:util';
 import type { AutoInstall } from './types';
 import { warnOnce } from './warn';
 
@@ -16,7 +16,7 @@ export async function tryInstallPkg(
 	}
 
 	if (!tasks[name]) {
-		console.log(cyan(`Installing ${name}...`));
+		console.log(styleText('cyan', `Installing ${name}...`));
 		if (typeof autoInstall === 'function') {
 			tasks[name] = pending = autoInstall(name)
 				.then(() => sleep(300))

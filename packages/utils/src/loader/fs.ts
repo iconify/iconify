@@ -1,9 +1,8 @@
 import { promises as fs, Stats } from 'fs';
-import { importModule } from 'local-pkg';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
-import { resolvePath } from 'mlly';
+import { resolvePathAsync } from './resolve.js';
 
 /** Cache: [cwd][name] => icon set promise */
 type CachedItem = Promise<IconifyJSON | undefined>;
@@ -19,6 +18,7 @@ const isLegacyExists = Object.create(null) as Record<string, boolean>;
  * @param name {string} the name of the collection, e.g. 'mdi'
  * @param autoInstall {AutoInstall} [autoInstall=false] - whether to automatically install
  * @param scope {string} [scope='@iconify-json'] - the scope of the collection, e.g. '@my-company-json'
+ * @param cwd {string} [cwd=process.cwd()] - current working directory for caching
  * @return {Promise<IconifyJSON | undefined>} the loaded IconifyJSON or undefined
  */
 export async function loadCollectionFromFS(
@@ -38,58 +38,49 @@ export async function loadCollectionFromFS(
 
 	async function task() {
 		const packageName = scope.length === 0 ? name : `${scope}/${name}`;
-		let jsonPath = await resolvePath(`${packageName}/icons.json`, {
-			url: cwd,
-		}).catch(() => undefined);
+		let jsonPath = await resolvePathAsync(`${packageName}/icons.json`, cwd);
 
 		// Legacy support for @iconify/json
 		if (scope === '@iconify-json') {
 			// Check legacy package exists
 			if (isLegacyExists[cwd] === undefined) {
-				const testResult = await resolvePath(
+				const testResult = await resolvePathAsync(
 					`@iconify/json/collections.json`,
-					{
-						url: cwd,
-					}
-				).catch(() => undefined);
+					cwd
+				);
 				isLegacyExists[cwd] = !!testResult;
 			}
 			const checkLegacy = isLegacyExists[cwd];
 
 			// Check legacy package
 			if (!jsonPath && checkLegacy) {
-				jsonPath = await resolvePath(
+				jsonPath = await resolvePathAsync(
 					`@iconify/json/json/${name}.json`,
-					{
-						url: cwd,
-					}
-				).catch(() => undefined);
+					cwd
+				);
 			}
 
 			// Try to install the package if it doesn't exist
 			if (!jsonPath && !checkLegacy && autoInstall) {
 				await tryInstallPkg(packageName, autoInstall);
-				jsonPath = await resolvePath(`${packageName}/icons.json`, {
-					url: cwd,
-				}).catch(() => undefined);
+				jsonPath = await resolvePathAsync(
+					`${packageName}/icons.json`,
+					cwd
+				);
 			}
 		} else if (!jsonPath && autoInstall) {
 			await tryInstallPkg(packageName, autoInstall);
-			jsonPath = await resolvePath(`${packageName}/icons.json`, {
-				url: cwd,
-			}).catch(() => undefined);
+			jsonPath = await resolvePathAsync(`${packageName}/icons.json`, cwd);
 		}
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			let packagePath = await resolvePath(packageName, {
-				url: cwd,
-			}).catch(() => undefined);
+			let packagePath = await resolvePathAsync(packageName, cwd);
 			if (packagePath?.match(/^[a-z]:/i)) {
 				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
 			}
 			if (packagePath) {
-				const { icons }: { icons?: IconifyJSON } = await importModule(
+				const { icons }: { icons?: IconifyJSON } = await import(
 					packagePath
 				);
 				if (icons) return icons;

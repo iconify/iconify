@@ -758,15 +758,6 @@ importers:
       '@iconify/types':
         specifier: workspace:^
         version: link:../types
-      debug:
-        specifier: ^4.4.3
-        version: 4.4.3
-      kolorist:
-        specifier: ^1.8.0
-        version: 1.8.0
-      local-pkg:
-        specifier: ^1.1.2
-        version: 1.1.2
       mlly:
         specifier: ^1.8.0
         version: 1.8.0
@@ -777,9 +768,6 @@ importers:
       '@iconify-json/flat-color-icons':
         specifier: ^1.2.3
         version: 1.2.3
-      '@types/debug':
-        specifier: ^4.1.12
-        version: 4.1.12
 
   plugins-demo/tailwind-demo:
     devDependencies:
@@ -10167,6 +10155,7 @@ snapshots:
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 2.1.0
+    optional: true
 
   '@types/deep-eql@4.0.2': {}
 
@@ -10195,7 +10184,8 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/ms@2.1.0': {}
+  '@types/ms@2.1.0':
+    optional: true
 
   '@types/node@24.10.1':
     dependencies:

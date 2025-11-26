@@ -1,4 +1,3 @@
-import createDebugger from 'debug';
 import type {
 	CustomIconLoader,
 	IconifyLoaderOptions,
@@ -6,8 +5,6 @@ import type {
 } from './types';
 import { mergeIconProps } from './utils';
 import { trimSVG } from '../svg/trim';
-
-const debug = createDebugger('@iconify-loader:custom');
 
 /**
  * Get custom icon from inline collection or using loader
@@ -19,8 +16,6 @@ export async function getCustomIcon(
 	options?: IconifyLoaderOptions
 ): Promise<string | undefined> {
 	let result: string | undefined | null;
-
-	debug(`${collection}:${icon}`);
 
 	try {
 		if (typeof custom === 'function') {
