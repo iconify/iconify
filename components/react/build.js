@@ -88,6 +88,7 @@ const next = () => {
 	const result = spawnSync(item.cmd, item.args, {
 		cwd: item.cwd,
 		stdio: 'inherit',
+		shell: true,
 	});
 
 	if (result.status === 0) {
