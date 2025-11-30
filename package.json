@@ -19,7 +19,7 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/eslintrc": "^3.3.3",
 		"@eslint/js": "^9.39.1",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^24.10.1",
