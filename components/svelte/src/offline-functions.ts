@@ -2,9 +2,9 @@ import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 import { parseIconSet } from '@iconify/utils/lib/icon-set/parse';
 import { quicklyValidateIconSet } from '@iconify/utils/lib/icon-set/validate-basic';
-import { render } from './render';
-import type { RenderResult } from './render';
-import type { IconProps } from './props';
+import { render } from './render.js';
+import type { RenderResult } from './render.js';
+import type { IconProps } from './props.js';
 
 /**
  * Storage for icons referred by name

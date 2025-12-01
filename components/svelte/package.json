@@ -62,11 +62,11 @@
 		"@tsconfig/svelte": "^5.0.6",
 		"@types/jest": "^30.0.0",
 		"@vitest/browser-playwright": "^4.0.14",
-		"playwright": "^1.56.1",
+		"playwright": "^1.57.0",
 		"rimraf": "^6.1.2",
 		"rollup": "^4.53.3",
 		"rollup-plugin-svelte": "^7.2.3",
-		"svelte": "^5.43.14",
+		"svelte": "^5.45.2",
 		"svelte-preprocess": "^6.0.3",
 		"vitest-browser-svelte": "^2.0.1"
 	},

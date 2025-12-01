@@ -17,7 +17,7 @@
 		setCustomIconsLoader,
 		addAPIProvider,
 		_api
-	} from './functions';
+	} from './functions.js';
 	
 	export { 
 		iconLoaded,
@@ -40,7 +40,7 @@
 </script>
 <script>
 	import { onDestroy } from 'svelte';
-	import { checkIconState, generateIcon } from './functions';
+	import { checkIconState, generateIcon } from './functions.js';
 
 	// State
 	const iconState = {

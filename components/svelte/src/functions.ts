@@ -70,11 +70,11 @@ import type {
 	IconifyIconCustomisations,
 	IconifyIconProps,
 	IconifyRenderMode,
-} from './props';
+} from './props.js';
 
 // Render SVG
-import { render } from './render';
-import type { RenderResult } from './render';
+import { render } from './render.js';
+import type { RenderResult } from './render.js';
 
 /**
  * Export required types

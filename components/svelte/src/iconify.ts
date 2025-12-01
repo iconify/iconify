@@ -7,10 +7,10 @@ export {
 	IconifyBuilderFunctions,
 	IconifyAPIFunctions,
 	IconifyAPIInternalFunctions,
-} from './functions';
+} from './functions.js';
 
 // JSON stuff
-export { IconifyIcon, IconifyJSON, IconifyIconName } from './functions';
+export { IconifyIcon, IconifyJSON, IconifyIconName } from './functions.js';
 
 // Customisations
 export {
@@ -19,7 +19,7 @@ export {
 	IconifyIconProps,
 	IconProps,
 	IconifyRenderMode,
-} from './functions';
+} from './functions.js';
 
 // API
 export {
@@ -35,13 +35,13 @@ export {
 	IconifyAPICustomQueryParams,
 	IconifyCustomIconLoader,
 	IconifyCustomIconsLoader,
-} from './functions';
+} from './functions.js';
 
 // Builder functions
-export { IconifyIconBuildResult } from './functions';
+export { IconifyIconBuildResult } from './functions.js';
 
 // Component params
-export { IconifyIconOnLoad } from './functions';
+export { IconifyIconOnLoad } from './functions.js';
 
 // Functions
 // Important: duplicate of global exports in Icon.svelte. When changing exports, they must be changed in both files.
@@ -51,14 +51,14 @@ export {
 	listIcons,
 	addIcon,
 	addCollection,
-} from './functions';
+} from './functions.js';
 
 export {
 	calculateSize,
 	replaceIDs,
 	clearIDCache,
 	buildIcon,
-} from './functions';
+} from './functions.js';
 
 export {
 	addAPIProvider,
@@ -67,4 +67,4 @@ export {
 	setCustomIconLoader,
 	setCustomIconsLoader,
 	_api,
-} from './functions';
+} from './functions.js';

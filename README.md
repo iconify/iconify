@@ -18,7 +18,6 @@ What is included in this repository?
 -   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
 -   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
 -   Directory `components-css` contains components for rendering SVG with CSS, with Iconify API fallback for Safari browser.
--   Directory `plugins` contains plugins for various frameworks, which generate icons (deprecated, moved to separate repository).
 
 Other repositories you might want to look at:
 
@@ -66,7 +65,7 @@ Main packages:
 Packages used by Iconify icon components:
 
 -   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable (will be deprecated in future, replaced by "Fetch" package).
--   [Iconify core](./packages/core/) - common files used by icon components and plugins (will be deprecated in future, replaced by "Component Utils" package).
+-   [Iconify core](./packages/core/) - common files used by icon components (will be deprecated in future, replaced by "Component Utils" package).
 
 Packages used by Iconify CSS icon components, will also be used in future by new versions of Iconify icon components:
 
@@ -182,15 +181,7 @@ Directory `components-demo` contains demo packages that show usage of icon compo
 
 ### Plugins
 
-Directory `plugins` contains [Tailwind CSS plugin](./plugins/tailwind/) for Tailwind CSS 3.
-
-For Tailwind CSS 4, plugin has been rewritten and moved to [a separate repository](https://github.com/iconify/iconify-tailwind).
-
-#### Demo
-
-Directory `plugins-demo` contains demo packages that show usage of plugins.
-
--   [Tailwind demo](./plugins-demo/tailwind-demo/) - demo for Tailwind CSS plugin. Run `npm run build` to build demo, open `src/index.html` in browser to see result.
+Plugin for Tailwind CSS has been rewritten and moved to [a separate repository](https://github.com/iconify/iconify-tailwind).
 
 ## Installation, debugging and contributing
 

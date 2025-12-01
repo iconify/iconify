@@ -5,7 +5,7 @@
 	import {
 		addIcon,
 		addCollection
-	} from './offline-functions';
+	} from './offline-functions.js';
 	
 	export {
 		addIcon,
@@ -14,7 +14,7 @@
 		
 </script>
 <script>
-	import { generateIcon } from './offline-functions';
+	import { generateIcon } from './offline-functions.js';
 
 	// Props
 	let props = $props();

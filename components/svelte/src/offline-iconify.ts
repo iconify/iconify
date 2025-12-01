@@ -7,8 +7,8 @@ export type {
 	IconifyIconCustomisations,
 	IconProps,
 	IconifyRenderMode,
-} from './props';
+} from './props.js';
 
 // Functions
 // Important: duplicate of global exports in OfflineIcon.svelte. When changing exports, they must be changed in both files.
-export { addIcon, addCollection } from './offline-functions';
+export { addIcon, addCollection } from './offline-functions.js';

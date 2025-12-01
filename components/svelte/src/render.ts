@@ -6,8 +6,8 @@ import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
-import type { IconProps, IconifyRenderMode } from './props';
-import { defaultExtendedIconCustomisations } from './props';
+import type { IconProps, IconifyRenderMode } from './props.js';
+import { defaultExtendedIconCustomisations } from './props.js';
 
 /**
  * Default SVG attributes
