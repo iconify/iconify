@@ -23,7 +23,7 @@
 		"@eslint/js": "^9.39.1",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^24.10.1",
-		"@typescript-eslint/eslint-plugin": "^8.48.0",
+		"@typescript-eslint/eslint-plugin": "^8.48.1",
 		"eslint": "^9.39.1",
 		"globals": "^16.5.0",
 		"tsdown": "^0.16.8",
