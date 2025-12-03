@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"@iconify/svelte": "workspace:*",
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.49.0",
+		"@sveltejs/kit": "^2.49.1",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/cookie": "^1.0.0",
 		"svelte": "^5.45.2",
