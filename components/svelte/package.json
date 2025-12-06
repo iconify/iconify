@@ -55,7 +55,7 @@
 	"devDependencies": {
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.55.1",
+		"@microsoft/api-extractor": "^7.55.2",
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@rollup/plugin-typescript": "^12.3.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
