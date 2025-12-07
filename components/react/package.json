@@ -59,7 +59,7 @@
 		"@types/react-dom": "^19.2.3",
 		"@vitest/browser-playwright": "^4.0.15",
 		"playwright": "^1.57.0",
-		"react": "^19.2.0",
+		"react": "^19.2.1",
 		"rimraf": "^6.1.2",
 		"rollup": "^4.53.3",
 		"vitest-browser-react": "^2.0.2"
