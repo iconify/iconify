@@ -16,6 +16,6 @@
 		"@iconify/types": "workspace:*",
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
-		"@vitejs/plugin-react": "^5.1.1"
+		"@vitejs/plugin-react": "^5.1.2"
 	}
 }
