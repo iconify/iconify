@@ -14,6 +14,6 @@
 		"@iconify/css-vue": "workspace:*",
 		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/types": "workspace:*",
-		"@vitejs/plugin-vue": "^6.0.2"
+		"@vitejs/plugin-vue": "^6.0.3"
 	}
 }

@@ -14,6 +14,6 @@
 		"@iconify-icons/dashicons": "^1.2.4",
 		"@iconify/types": "workspace:*",
 		"@iconify/vue": "workspace:*",
-		"@vitejs/plugin-vue": "^6.0.2"
+		"@vitejs/plugin-vue": "^6.0.3"
 	}
 }
