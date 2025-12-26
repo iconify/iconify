@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"@iconify-icons/bx": "^1.2.6",
 		"@iconify-icons/dashicons": "^1.2.4",
-		"@vitejs/plugin-vue": "^6.0.2",
+		"@vitejs/plugin-vue": "^6.0.3",
 		"iconify-icon": "workspace:*"
 	}
 }
