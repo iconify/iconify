@@ -43,7 +43,7 @@
 		"@types/react": "^19.2.7",
 		"@types/react-test-renderer": "^19.1.0",
 		"@vitejs/plugin-react": "^5.1.2",
-		"jsdom": "^27.2.0",
+		"jsdom": "^27.4.0",
 		"react": "^19.2.1",
 		"rimraf": "^6.1.2",
 		"tsup": "^8.5.1"
