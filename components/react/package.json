@@ -61,7 +61,7 @@
 		"playwright": "^1.57.0",
 		"react": "^19.2.3",
 		"rimraf": "^6.1.2",
-		"rollup": "^4.53.3",
+		"rollup": "^4.54.0",
 		"vitest-browser-react": "^2.0.2"
 	},
 	"peerDependencies": {
