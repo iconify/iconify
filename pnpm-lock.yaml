@@ -72,8 +72,8 @@ importers:
   components-css-demo/svelte-demo:
     devDependencies:
       '@iconify-svelte/ri':
-        specifier: ^1.0.1
-        version: 1.0.1(svelte@5.46.1)
+        specifier: ^1.0.2
+        version: 1.0.2(svelte@5.46.1)
       '@iconify/css-svelte':
         specifier: workspace:*
         version: link:../../components-css/svelte
@@ -1865,8 +1865,8 @@ packages:
   '@iconify-json/flat-color-icons@1.2.3':
     resolution: {integrity: sha512-KcmJ7CY0TKFv5GuBjiS4/v++jEcNXna1jfY+yq014tnw/MN/jMI2oYpoMHGuIpYtUqDu7eove+WySnOYO8nS3w==}
 
-  '@iconify-svelte/ri@1.0.1':
-    resolution: {integrity: sha512-YSSCRreU+mv93HDe3qckpQ/T0ibnnsiFa/MqdNNQnqNxCli4WTKyxJoQTa9Q6aYLelBC8lGw4SDcwviOCUSA/A==}
+  '@iconify-svelte/ri@1.0.2':
+    resolution: {integrity: sha512-Ic6cAXbYIkVkEqZYV92VnPNUC2OzALglBILFzrMF6W/XuDCidlP3NfZbClT6ziLCTVgV6nd7oL7AbenouQTaHg==}
 
   '@iconify-vue/ri@1.0.2':
     resolution: {integrity: sha512-Mtlj5kcSza022k1C4Xo+vrkq9lV/tY2qXHnhIhL8ekfVBmPvmESD5LIxgpEoLufwmDjvm9ysTNf6ALVKJu85EQ==}
@@ -8191,7 +8191,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-svelte/ri@1.0.1(svelte@5.46.1)':
+  '@iconify-svelte/ri@1.0.2(svelte@5.46.1)':
     dependencies:
       '@iconify/css-svelte': 1.0.0(svelte@5.46.1)
     transitivePeerDependencies:
