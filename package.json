@@ -25,7 +25,7 @@
 		"@types/node": "^24.10.4",
 		"@typescript-eslint/eslint-plugin": "^8.50.1",
 		"eslint": "^9.39.2",
-		"globals": "^16.5.0",
+		"globals": "^17.0.0",
 		"tsdown": "^0.18.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.0",
