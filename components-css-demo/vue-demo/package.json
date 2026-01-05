@@ -10,7 +10,7 @@
 		"vue": "^3.5.26"
 	},
 	"devDependencies": {
-		"@iconify-vue/ri": "^1.0.2",
+		"@iconify-vue/ri": "^1.0.3",
 		"@iconify/css-vue": "workspace:*",
 		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/types": "workspace:*",
