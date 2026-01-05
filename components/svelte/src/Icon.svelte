@@ -69,7 +69,7 @@
 	// Generate data to render
 	let data = $derived.by(() => {
 		const generatedData = iconData ? generateIcon(iconData.data, props) : null;
-		if (generatedData && iconData.classes) {
+		if (generatedData && iconData.classes && props['class'] === undefined) {
 			// Add classes
 			generatedData.attributes['class'] = (typeof props['class'] === 'string' ? props['class'] + ' ' : '') + iconData.classes.join(' ');
 		}

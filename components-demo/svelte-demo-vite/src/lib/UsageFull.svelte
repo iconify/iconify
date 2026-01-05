@@ -10,6 +10,7 @@
     <div>
         Icon referenced by name (as svg, as span): <Icon icon="mdi:home" mode="svg" /><Icon icon="mdi:home" mode="style" />
     </div>
+    <div>Custom class: <Icon icon="mdi:home" mode="svg" class="color-red" /><Icon icon="mdi:home" mode="style" class={{'color-red': true}} /></div>
     <div class="alert">
         <Icon icon="mdi-light:alert" onload={event => {
             console.log('onLoad event value:', event);
