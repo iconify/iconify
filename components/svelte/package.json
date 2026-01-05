@@ -2,7 +2,7 @@
 	"name": "@iconify/svelte",
 	"description": "Iconify icon component for Svelte.",
 	"author": "Vjacheslav Trushkin",
-	"version": "5.2.0",
+	"version": "5.2.1",
 	"type": "module",
 	"license": "MIT",
 	"bugs": "https://github.com/iconify/iconify/issues",
@@ -71,6 +71,6 @@
 		"vitest-browser-svelte": "^2.0.1"
 	},
 	"peerDependencies": {
-		"svelte": ">4.0.0"
+		"svelte": ">5.0.0"
 	}
 }
