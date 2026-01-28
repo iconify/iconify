@@ -39,7 +39,7 @@
 	},
 	"devDependencies": {
 		"@testing-library/jest-dom": "^6.9.1",
-		"@testing-library/react": "^16.3.1",
+		"@testing-library/react": "^16.3.2",
 		"@types/react": "^19.2.7",
 		"@types/react-test-renderer": "^19.1.0",
 		"@vitejs/plugin-react": "^5.1.2",
