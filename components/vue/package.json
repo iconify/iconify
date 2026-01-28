@@ -44,7 +44,7 @@
 		"@iconify/types": "workspace:^"
 	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.28.5",
+		"@babel/preset-env": "^7.28.6",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.55.2",
@@ -53,8 +53,8 @@
 		"@vitejs/plugin-vue": "^6.0.3",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.4.0",
-		"rollup": "^4.55.1",
-		"vue": "^3.5.26"
+		"rollup": "^4.57.0",
+		"vue": "^3.5.27"
 	},
 	"peerDependencies": {
 		"vue": ">=3.0.0"

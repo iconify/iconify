@@ -22,6 +22,7 @@
 		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
 		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
 		"build:cleanup": "node cleanup",
+		"pretest": "pnpm exec playwright install",
 		"test": "vitest"
 	},
 	"main": "dist/iconify.js",
@@ -55,14 +56,14 @@
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.55.2",
 		"@rollup/plugin-node-resolve": "^16.0.3",
-		"@types/react": "^19.2.7",
+		"@types/react": "^19.2.10",
 		"@types/react-dom": "^19.2.3",
-		"@vitest/browser-playwright": "^4.0.16",
-		"playwright": "^1.57.0",
-		"react": "^19.2.3",
+		"@vitest/browser-playwright": "^4.0.18",
+		"playwright": "^1.58.0",
+		"react": "^19.2.4",
 		"rimraf": "^6.1.2",
-		"rollup": "^4.55.1",
-		"vitest-browser-react": "^2.0.2"
+		"rollup": "^4.57.0",
+		"vitest-browser-react": "^2.0.4"
 	},
 	"peerDependencies": {
 		"react": ">=18.0.0"
