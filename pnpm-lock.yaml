@@ -346,8 +346,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/utils
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
-        version: 7.55.2(@types/node@25.0.10)
+        specifier: ^7.56.0
+        version: 7.56.0(@types/node@25.0.10)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.0)
@@ -389,8 +389,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/utils
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
-        version: 7.55.2(@types/node@25.0.10)
+        specifier: ^7.56.0
+        version: 7.56.0(@types/node@25.0.10)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.0)
@@ -447,8 +447,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/utils
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
-        version: 7.55.2(@types/node@25.0.10)
+        specifier: ^7.56.0
+        version: 7.56.0(@types/node@25.0.10)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.0)
@@ -636,8 +636,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/utils
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
-        version: 7.55.2(@types/node@25.0.10)
+        specifier: ^7.56.0
+        version: 7.56.0(@types/node@25.0.10)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.57.0)
@@ -698,7 +698,7 @@ importers:
         version: 6.1.2
       tsup:
         specifier: ^8.5.1
-        version: 8.5.1(@microsoft/api-extractor@7.55.2(@types/node@25.0.10))(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+        version: 8.5.1(@microsoft/api-extractor@7.56.0(@types/node@25.0.10))(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
 
   iconify-icon/solid:
     dependencies:
@@ -2284,8 +2284,8 @@ packages:
   '@microsoft/api-extractor-model@7.32.2':
     resolution: {integrity: sha512-Ussc25rAalc+4JJs9HNQE7TuO9y6jpYQX9nWD1DhqUzYPBr3Lr7O9intf+ZY8kD5HnIqeIRJX7ccCT0QyBy2Ww==}
 
-  '@microsoft/api-extractor@7.55.2':
-    resolution: {integrity: sha512-1jlWO4qmgqYoVUcyh+oXYRztZde/pAi7cSVzBz/rc+S7CoVzDasy8QE13dx6sLG4VRo8SfkkLbFORR6tBw4uGQ==}
+  '@microsoft/api-extractor@7.56.0':
+    resolution: {integrity: sha512-H0V69QG5jIb9Ayx35NVBv2lOgFSS3q+Eab2oyGEy0POL3ovYPST+rCNPbwYoczOZXNG8IKjWUmmAMxmDTsXlQA==}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.18.0':
@@ -3268,16 +3268,16 @@ packages:
   '@rushstack/rig-package@0.6.0':
     resolution: {integrity: sha512-ZQmfzsLE2+Y91GF15c65L/slMRVhF6Hycq04D4TwtdGaUAbIXXg9c5pKA5KFU7M4QMaihoobp9JJYpYcaY3zOw==}
 
-  '@rushstack/terminal@0.19.5':
-    resolution: {integrity: sha512-6k5tpdB88G0K7QrH/3yfKO84HK9ggftfUZ51p7fePyCE7+RLLHkWZbID9OFWbXuna+eeCFE7AkKnRMHMxNbz7Q==}
+  '@rushstack/terminal@0.21.0':
+    resolution: {integrity: sha512-cLaI4HwCNYmknM5ns4G+drqdEB6q3dCPV423+d3TZeBusYSSm09+nR7CnhzJMjJqeRcdMAaLnrA4M/3xDz4R3w==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
 
-  '@rushstack/ts-command-line@5.1.5':
-    resolution: {integrity: sha512-YmrFTFUdHXblYSa+Xc9OO9FsL/XFcckZy0ycQ6q7VSBsVs5P0uD9vcges5Q9vctGlVdu27w+Ct6IuJ458V0cTQ==}
+  '@rushstack/ts-command-line@5.1.7':
+    resolution: {integrity: sha512-Ugwl6flarZcL2nqH5IXFYk3UR3mBVDsVFlCQW/Oaqidvdb/5Ota6b/Z3JXWIdqV3rOR2/JrYoAHanWF5rgenXA==}
 
   '@sinclair/typebox@0.34.41':
     resolution: {integrity: sha512-6gS8pZzSXdyRHTIqoqSVknxolr1kzfy4/CeDnrzsVz8TTIWUbOBr6gnzOmTYJ3eXQNh4IYHIGi5aIL7sOZ2G/g==}
@@ -9066,15 +9066,15 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.55.2(@types/node@25.0.10)':
+  '@microsoft/api-extractor@7.56.0(@types/node@25.0.10)':
     dependencies:
       '@microsoft/api-extractor-model': 7.32.2(@types/node@25.0.10)
       '@microsoft/tsdoc': 0.16.0
       '@microsoft/tsdoc-config': 0.18.0
       '@rushstack/node-core-library': 5.19.1(@types/node@25.0.10)
       '@rushstack/rig-package': 0.6.0
-      '@rushstack/terminal': 0.19.5(@types/node@25.0.10)
-      '@rushstack/ts-command-line': 5.1.5(@types/node@25.0.10)
+      '@rushstack/terminal': 0.21.0(@types/node@25.0.10)
+      '@rushstack/ts-command-line': 5.1.7(@types/node@25.0.10)
       diff: 8.0.2
       lodash: 4.17.21
       minimatch: 10.0.3
@@ -9944,7 +9944,7 @@ snapshots:
       resolve: 1.22.10
       strip-json-comments: 3.1.1
 
-  '@rushstack/terminal@0.19.5(@types/node@25.0.10)':
+  '@rushstack/terminal@0.21.0(@types/node@25.0.10)':
     dependencies:
       '@rushstack/node-core-library': 5.19.1(@types/node@25.0.10)
       '@rushstack/problem-matcher': 0.1.1(@types/node@25.0.10)
@@ -9952,9 +9952,9 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.10
 
-  '@rushstack/ts-command-line@5.1.5(@types/node@25.0.10)':
+  '@rushstack/ts-command-line@5.1.7(@types/node@25.0.10)':
     dependencies:
-      '@rushstack/terminal': 0.19.5(@types/node@25.0.10)
+      '@rushstack/terminal': 0.21.0(@types/node@25.0.10)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -14078,7 +14078,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.5.1(@microsoft/api-extractor@7.55.2(@types/node@25.0.10))(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2):
+  tsup@8.5.1(@microsoft/api-extractor@7.56.0(@types/node@25.0.10))(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.27.1)
       cac: 6.7.14
@@ -14098,7 +14098,7 @@ snapshots:
       tinyglobby: 0.2.15
       tree-kill: 1.2.2
     optionalDependencies:
-      '@microsoft/api-extractor': 7.55.2(@types/node@25.0.10)
+      '@microsoft/api-extractor': 7.56.0(@types/node@25.0.10)
       postcss: 8.5.6
       typescript: 5.9.3
     transitivePeerDependencies:
