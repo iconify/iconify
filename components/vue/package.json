@@ -53,7 +53,7 @@
 		"@vitejs/plugin-vue": "^6.0.3",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.4.0",
-		"rollup": "^4.57.0",
+		"rollup": "^4.57.1",
 		"vue": "^3.5.27"
 	},
 	"peerDependencies": {
