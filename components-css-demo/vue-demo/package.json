@@ -7,13 +7,13 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.5.27"
+		"vue": "^3.5.28"
 	},
 	"devDependencies": {
-		"@iconify-vue/ri": "^1.0.3",
+		"@iconify-vue/ri": "^1.0.6",
 		"@iconify/css-vue": "workspace:*",
 		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/types": "workspace:*",
-		"@vitejs/plugin-vue": "^6.0.3"
+		"@vitejs/plugin-vue": "^6.0.4"
 	}
 }
