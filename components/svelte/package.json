@@ -60,7 +60,7 @@
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@rollup/plugin-typescript": "^12.3.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
-		"@tsconfig/svelte": "^5.0.7",
+		"@tsconfig/svelte": "^5.0.8",
 		"@types/jest": "^30.0.0",
 		"@vitest/browser-playwright": "^4.0.18",
 		"playwright": "^1.58.2",
