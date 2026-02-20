@@ -1,7 +1,7 @@
 {
 	"name": "iconify",
 	"private": true,
-	"packageManager": "pnpm@10.29.3",
+	"packageManager": "pnpm@10.30.1",
 	"description": "The most versatile icon framework",
 	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"license": "MIT",
@@ -20,10 +20,10 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.3",
-		"@eslint/js": "^9.39.2",
+		"@eslint/js": "^9.39.3",
 		"@types/jest": "^30.0.0",
-		"@types/node": "^25.2.3",
-		"@typescript-eslint/eslint-plugin": "^8.55.0",
+		"@types/node": "^25.3.0",
+		"@typescript-eslint/eslint-plugin": "^8.56.0",
 		"eslint": "^9.39.2",
 		"globals": "^17.3.0",
 		"tsdown": "^0.20.3",

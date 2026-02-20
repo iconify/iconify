@@ -47,13 +47,13 @@
 		"@babel/preset-env": "^7.29.0",
 		"@iconify/core": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@microsoft/api-extractor": "^7.56.3",
+		"@microsoft/api-extractor": "^7.57.1",
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@types/jest": "^30.0.0",
 		"@vitejs/plugin-vue": "^6.0.4",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^27.4.0",
-		"rollup": "^4.57.1",
+		"rollup": "^4.58.0",
 		"vue": "^3.5.28"
 	},
 	"peerDependencies": {
