@@ -17,7 +17,7 @@
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tsconfig/svelte": "^5.0.8",
 		"svelte": "^5.53.0",
-		"svelte-check": "^4.4.1",
+		"svelte-check": "^4.4.3",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"
 	}
