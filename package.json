@@ -24,7 +24,7 @@
 		"@types/jest": "^30.0.0",
 		"@types/node": "^25.3.0",
 		"@typescript-eslint/eslint-plugin": "^8.56.0",
-		"eslint": "^9.39.2",
+		"eslint": "^9.39.3",
 		"globals": "^17.3.0",
 		"tsdown": "^0.20.3",
 		"typescript": "^5.9.3",
