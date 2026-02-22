@@ -143,6 +143,9 @@ describe('Inline attribute', () => {
 		const wrapper = mount(Wrapper, {});
 		await nextTick();
 
-		expect(wrapper.html()).toContain('vertical-align: 0;"');
+		const html = wrapper.html();
+		// Depending on version of jsdom, "vertical-align: 0" may be converted to "vertical-align: 0px"
+		const hasPX = html.includes('0px');
+		expect(html).toContain(`vertical-align: ${hasPX ? '0px' : '0'};"`);
 	});
 });
