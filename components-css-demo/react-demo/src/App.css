@@ -88,10 +88,6 @@ button svg:hover {
 	min-height: 32px;
 }
 
-.hide-animated .has-animations > div {
-	display: none;
-}
-
 /**
  * Icons
  */
@@ -178,7 +174,8 @@ button svg:hover {
 		stroke-dasharray: 22;
 		stroke-dashoffset: 22;
 		fill-opacity: 0;
-		animation: 0.3s linear 0.5s forwards stroke-dashoffset-to-0,
+		animation:
+			0.3s linear 0.5s forwards stroke-dashoffset-to-0,
 			0.4s linear 1s forwards fill-to-1;
 	}
 }
@@ -272,7 +269,8 @@ button svg:hover {
 		stroke-dasharray: 32;
 		stroke-dashoffset: 32;
 		fill-opacity: 0;
-		animation: 0.4s linear forwards stroke-dashoffset-to-0,
+		animation:
+			0.4s linear forwards stroke-dashoffset-to-0,
 			0.2s linear 0.9s forwards fill-to-1;
 	}
 }

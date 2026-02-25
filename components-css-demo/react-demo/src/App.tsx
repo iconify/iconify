@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-react';
 import { Icon as BasicIcon } from '@iconify/css-react/basic';
@@ -39,30 +39,13 @@ const refreshIcon = `<defs>
 <path class="hgfl7k iy2otu r1menc s8e22g z77veu"></path>`;
 
 function AnimatedDemo() {
-	const [hideAnimated, setHideAnimated] = useState(false);
 	const [restartCount, setRestartCount] = useState(0);
-	const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	useEffect(() => {
-		timerId.current = setTimeout(() => {
-			setHideAnimated(false);
-		}, 100);
-
-		return () => {
-			//Clearing a timeout
-			const timer = timerId.current;
-			if (timer) {
-				clearTimeout(timer);
-			}
-		};
-	}, [restartCount]);
-
 	function restartAnimations() {
 		setRestartCount((count) => count + 1);
 	}
 
 	return (
-		<div className={`animated-demo${hideAnimated ? ' hide-animated' : ''}`}>
+		<div key={restartCount}>
 			<div className="restart-animations">
 				<button onClick={restartAnimations}>
 					<Icon
