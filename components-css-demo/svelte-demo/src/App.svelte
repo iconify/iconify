@@ -12,6 +12,9 @@ import GitHubIconTest from '@iconify/ri-svelte-test/github-line';
 import TwitterIconTest from '@iconify/ri-svelte-test/twitter-x-line';
 import LinkedInIconTest from '@iconify/ri-svelte-test/linkedin-box-line';
 import BlueSkyIconTest from '@iconify/ri-svelte-test/bluesky-line';
+import TestIcon1 from './icons/icon1.svelte';
+import TestIcon1TS from './icons/icon1-ts.svelte';
+import TestIcon2 from './icons/icon2.svelte';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -59,6 +62,39 @@ function restartAnimations() {
 	setTimeout(() => {
 		hideAnimated = false;
 	}, 100);
+}
+
+let action = $state(false);
+let halign = $state<'left' | 'center' | 'right'>('left');
+let valign = $state<'top' | 'middle' | 'bottom' | 'stretch'>('top');
+function nextAlign() {
+	switch (halign) {
+		case 'left':
+			halign = 'center';
+			break;
+		case 'center':
+			halign = 'right';
+			break;
+		case 'right':
+			halign = 'left';
+			break;
+	}	
+}
+function nextValign() {
+	switch (valign) {
+		case 'top':
+			valign = 'middle';
+			break;
+		case 'middle':
+			valign = 'bottom';
+			break;
+		case 'bottom':
+			valign = 'stretch';
+			break;
+		case 'stretch':
+			valign = 'top';
+			break;
+	}	
 }
 </script>
 
@@ -202,5 +238,14 @@ function restartAnimations() {
 				<BlueSkyIconTest height="24" />
 			</div>
 		</div>
+		<div class="icons-list svg-hover-anchor">
+			Generated stateful icons:
+			<div>
+				<TestIcon1 height="24" halign={halign} valign={valign} />
+				<TestIcon1TS height="24" halign={halign} valign={valign} />
+				<TestIcon2 height="24" action={action} />
+			</div>
+		</div>
+		<div style="display: flex; gap: 8px; flex-wrap: wrap;"><button onclick={nextAlign}>hAlign: {halign}</button><button onclick={nextValign}>vAlign: {valign}</button><button onclick={() => action = !action}>Toggle</button></div>
 	</section>
 </main>

@@ -65,17 +65,16 @@ export function Icon({
 	);
 
 	// Content
-	const finalContent = useMemo(() => {
-		return fallbackIcon || renderedContent;
-	}, [fallbackIcon, renderedContent]);
+	const finalContent = useMemo(
+		() => ({ __html: cleanUpInnerHTML(fallbackIcon || renderedContent) }),
+		[fallbackIcon, renderedContent]
+	);
 
 	// Render icon
 	return createElement('svg', {
 		xmlns: 'http://www.w3.org/2000/svg',
 		...size,
 		...props,
-		dangerouslySetInnerHTML: {
-			__html: cleanUpInnerHTML(finalContent),
-		},
+		dangerouslySetInnerHTML: finalContent,
 	});
 }

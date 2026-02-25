@@ -12,6 +12,8 @@ import GitHubIconTest from '@iconify/ri-vue-test/github-line';
 import TwitterIconTest from '@iconify/ri-vue-test/twitter-x-line';
 import LinkedInIconTest from '@iconify/ri-vue-test/linkedin-box-line';
 import BlueSkyIconTest from '@iconify/ri-vue-test/bluesky-line';
+import TestIcon1 from './icons/icon.vue';
+import TestIcon2 from './icons/icon-func.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -57,6 +59,21 @@ function restartAnimations() {
 	setTimeout(() => {
 		hideAnimated.value = false;
 	}, 100);
+}
+
+const halign = ref<'left' | 'center' | 'right'>('left');
+function nextAlign() {
+	switch (halign.value) {
+		case 'left':
+			halign.value = 'center';
+			break;
+		case 'center':
+			halign.value = 'right';
+			break;
+		case 'right':
+			halign.value = 'left';
+			break;
+	}
 }
 </script>
 <template>
@@ -196,6 +213,13 @@ function restartAnimations() {
 					<TwitterIconTest height="24" />
 					<LinkedInIconTest height="24" />
 					<BlueSkyIconTest height="24" />
+				</div>
+			</div>
+			<div class="icons-list svg-hover-anchor">
+				Generated stateful icons:
+				<div @click="nextAlign">
+					<TestIcon1 height="24" :halign="halign" />
+					<TestIcon2 height="24" :halign="halign" />
 				</div>
 			</div>
 		</section>
