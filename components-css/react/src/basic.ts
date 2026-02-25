@@ -25,7 +25,7 @@ export function Icon({
 }: CSSIconElementProps): JSX.Element {
 	// Content
 	const renderedContent = useMemo(
-		() => renderContent(content || ''),
+		() => ({ __html: cleanUpInnerHTML(renderContent(content || '')) }),
 		[content]
 	);
 
@@ -40,7 +40,7 @@ export function Icon({
 		xmlns: 'http://www.w3.org/2000/svg',
 		...size,
 		...props,
-		dangerouslySetInnerHTML: { __html: cleanUpInnerHTML(renderedContent) },
+		dangerouslySetInnerHTML: renderedContent,
 	});
 }
 

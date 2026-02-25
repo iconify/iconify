@@ -4,6 +4,8 @@ import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-react';
 import { Icon as BasicIcon } from '@iconify/css-react/basic';
 import { loadIcon } from '@iconify/css-react/helpers/load-icon';
+import TestIcon1 from './icons/icon1.js';
+import TestIcon2 from './icons/icon2.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -36,15 +38,7 @@ const refreshIcon = `<defs>
 <path mask="url(#SVGYCxuLdPe)" class="axv--x"></path>
 <path class="hgfl7k iy2otu r1menc s8e22g z77veu"></path>`;
 
-function App() {
-	const [iconData, setIconData] = useState<IconifyIcon | null>(null);
-
-	useEffect(() => {
-		loadIcon('material-symbols:mail-lock-outline-rounded')
-			.then(setIconData)
-			.catch(console.error);
-	});
-
+function AnimatedDemo() {
 	const [hideAnimated, setHideAnimated] = useState(false);
 	const [restartCount, setRestartCount] = useState(0);
 	const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -68,7 +62,112 @@ function App() {
 	}
 
 	return (
-		<div className={`App${hideAnimated ? ' hide-animated' : ''}`}>
+		<div className={`animated-demo${hideAnimated ? ' hide-animated' : ''}`}>
+			<div className="restart-animations">
+				<button onClick={restartAnimations}>
+					<Icon
+						content={refreshIcon}
+						viewBox={refreshViewbox}
+						height="24"
+						fallback=""
+					/>
+					Restart animations
+				</button>
+			</div>
+			<div className="icons-list has-animations">
+				Animated icons:
+				<div>
+					<Icon
+						content={targetIcon}
+						viewBox={grid24}
+						height="24"
+						fallback="tabler:current-location-filled"
+					/>
+					<Icon
+						content={tablerUserIcon}
+						viewBox={grid24}
+						height="24"
+						fallback="tabler:user"
+					/>
+					<Icon
+						content={tablerUserFilledIcon}
+						viewBox={grid24}
+						height="24"
+						fallback="tabler:user-filled"
+					/>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function StatefulDemo() {
+	const [hAlign, setHAlign] = useState<'left' | 'center' | 'right'>('left');
+	const [vAlign, setVAlign] = useState<
+		'top' | 'middle' | 'bottom' | 'stretch'
+	>('top');
+	const [action, setAction] = useState(false);
+
+	function nextHAlign() {
+		switch (hAlign) {
+			case 'left':
+				setHAlign('center');
+				break;
+			case 'center':
+				setHAlign('right');
+				break;
+			case 'right':
+				setHAlign('left');
+				break;
+		}
+	}
+
+	function nextVAlign() {
+		switch (vAlign) {
+			case 'top':
+				setVAlign('middle');
+				break;
+			case 'middle':
+				setVAlign('bottom');
+				break;
+			case 'bottom':
+				setVAlign('stretch');
+				break;
+			case 'stretch':
+				setVAlign('top');
+				break;
+		}
+	}
+
+	return (
+		<div>
+			<div className="icons-list svg-hover-anchor">
+				Generated stateful icons:
+				<div>
+					<TestIcon1 height="24" halign={hAlign} valign={vAlign} />
+					<TestIcon2 height="24" action={action} />
+				</div>
+			</div>
+			<div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+				<button onClick={() => nextHAlign()}>hAlign: {hAlign}</button>
+				<button onClick={() => nextVAlign()}>vAlign: {vAlign}</button>
+				<button onClick={() => setAction(!action)}>Toggle</button>
+			</div>
+		</div>
+	);
+}
+
+function App() {
+	const [iconData, setIconData] = useState<IconifyIcon | null>(null);
+
+	useEffect(() => {
+		loadIcon('material-symbols:mail-lock-outline-rounded')
+			.then(setIconData)
+			.catch(console.error);
+	});
+
+	return (
+		<div className="App">
 			<section>
 				<h1>Demo for SVG+CSS</h1>
 				<p>
@@ -109,40 +208,7 @@ function App() {
 						/>
 					</div>
 				</div>
-				<div className="restart-animations">
-					<button onClick={restartAnimations}>
-						<Icon
-							content={refreshIcon}
-							viewBox={refreshViewbox}
-							height="24"
-							fallback=""
-						/>
-						Restart animations
-					</button>
-				</div>
-				<div className="icons-list has-animations">
-					Animated icons:
-					<div>
-						<Icon
-							content={targetIcon}
-							viewBox={grid24}
-							height="24"
-							fallback="tabler:current-location-filled"
-						/>
-						<Icon
-							content={tablerUserIcon}
-							viewBox={grid24}
-							height="24"
-							fallback="tabler:user"
-						/>
-						<Icon
-							content={tablerUserFilledIcon}
-							viewBox={grid24}
-							height="24"
-							fallback="tabler:user-filled"
-						/>
-					</div>
-				</div>
+				<AnimatedDemo />
 			</section>
 			<section>
 				<h1>
@@ -197,6 +263,7 @@ function App() {
 						</div>
 					</div>
 				)}
+				<StatefulDemo />
 			</section>
 		</div>
 	);
