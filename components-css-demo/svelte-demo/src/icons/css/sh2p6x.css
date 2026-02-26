@@ -1,0 +1,29 @@
+.sh2p6x {
+  d: path('M9.88 2.75c-2.25 1.69 -2.93 4.8 -1.5 7.31c1.5 2.59 4.65 3.49 7.25 2.29');
+}
+
+.svg-focus-anchor:focus-within svg.state-dark, .svg-hover-anchor:hover svg.state-dark, svg.state-dark.state-focus {
+  .sh2p6x {
+    d: path('M11.5 2c-3.37 2.75 -4.5 7.6 -2.3 11.5c2.3 4 7.2 5.23 11.3 3.5');
+  }
+}
+
+.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+  .sh2p6x {
+    d: path('M9.13 2c-2.53 2.06 -3.38 5.7 -1.73 8.63c1.73 3 5.4 3.92 8.48 2.63');
+  }
+}
+
+svg.state-dark {
+  .sh2p6x {
+    d: path('M12.5 3c-3 2.26 -3.9 6.4 -2 9.75c2 3.45 6.2 4.65 9.66 3.05');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .sh2p6x {
+    stroke-dasharray: 28;
+    animation: 0.4s linear forwards so-from-28;
+    transition: d 0.4s linear;
+  }
+}

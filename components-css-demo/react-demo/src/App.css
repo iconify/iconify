@@ -81,6 +81,9 @@ button svg,
 button svg:hover {
 	color: inherit;
 }
+select {
+	padding: 8px;
+}
 
 .icons-list {
 	display: flex;

@@ -12,8 +12,9 @@ import GitHubIconTest from '@iconify/ri-vue-test/github-line';
 import TwitterIconTest from '@iconify/ri-vue-test/twitter-x-line';
 import LinkedInIconTest from '@iconify/ri-vue-test/linkedin-box-line';
 import BlueSkyIconTest from '@iconify/ri-vue-test/bluesky-line';
-import TestIcon1 from './icons/icon.vue';
-import TestIcon2 from './icons/icon-func.js';
+import TestIcon1 from './icons/icon1.vue';
+import TestIcon2 from './icons/icon2-func.js';
+import TestIcon3 from './icons/icon3-ts.vue';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -61,19 +62,37 @@ function restartAnimations() {
 	}, 100);
 }
 
-const halign = ref<'left' | 'center' | 'right'>('left');
-function nextAlign() {
-	switch (halign.value) {
-		case 'left':
-			halign.value = 'center';
-			break;
-		case 'center':
-			halign.value = 'right';
-			break;
-		case 'right':
-			halign.value = 'left';
-			break;
-	}
+const hAlignValues = ['left', 'center', 'right'] as const;
+const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
+const fillValues = [
+	'no-fill',
+	'light-filled',
+	'dark-filled',
+	'filled',
+] as const;
+const modeValues = ['auto', 'light', 'dark'] as const;
+
+const halign = ref<(typeof hAlignValues)[number]>(hAlignValues[0]);
+const valign = ref<(typeof vAlignValues)[number]>(vAlignValues[0]);
+const fill = ref<(typeof fillValues)[number]>(fillValues[0]);
+const mode = ref<(typeof modeValues)[number]>(modeValues[0]);
+const action = ref(false);
+
+function nextHAlign() {
+	const index = hAlignValues.indexOf(halign.value);
+	halign.value = hAlignValues[(index + 1) % hAlignValues.length];
+}
+function nextVAlign() {
+	const index = vAlignValues.indexOf(valign.value);
+	valign.value = vAlignValues[(index + 1) % vAlignValues.length];
+}
+function nextFill() {
+	const index = fillValues.indexOf(fill.value);
+	fill.value = fillValues[(index + 1) % fillValues.length];
+}
+function nextMode() {
+	const index = modeValues.indexOf(mode.value);
+	mode.value = modeValues[(index + 1) % modeValues.length];
 }
 </script>
 <template>
@@ -217,10 +236,18 @@ function nextAlign() {
 			</div>
 			<div class="icons-list svg-hover-anchor">
 				Generated stateful icons:
-				<div @click="nextAlign">
-					<TestIcon1 height="24" :halign="halign" />
-					<TestIcon2 height="24" :halign="halign" />
+				<div>
+					<TestIcon1 height="24" :halign="halign" :valign="valign" />
+					<TestIcon2 height="24" :action="action" />
+					<TestIcon3 height="24" :fill="fill" :mode="mode" />
 				</div>
+			</div>
+			<div style="display: flex; gap: 8px; flex-wrap: wrap">
+				<button @click="nextHAlign">hAlign: {{ halign }}</button>
+				<button @click="nextVAlign">vAlign: {{ valign }}</button>
+				<button @click="nextMode">Mode: {{ mode }}</button>
+				<button @click="nextFill">Fill: {{ fill }}</button>
+				<button @click="() => (action = !action)">Toggle</button>
 			</div>
 		</section>
 	</div>

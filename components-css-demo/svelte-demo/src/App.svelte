@@ -15,6 +15,7 @@ import BlueSkyIconTest from '@iconify/ri-svelte-test/bluesky-line';
 import TestIcon1 from './icons/icon1.svelte';
 import TestIcon1TS from './icons/icon1-ts.svelte';
 import TestIcon2 from './icons/icon2.svelte';
+import TestIcon3 from './icons/icon3.svelte';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -64,38 +65,40 @@ function restartAnimations() {
 	}, 100);
 }
 
+
+const hAlignValues = ['left', 'center', 'right'] as const;
+const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
+const fillValues = [
+	'no-fill',
+	'light-filled',
+	'dark-filled',
+	'filled',
+] as const;
+const modeValues = ['auto', 'light', 'dark'] as const;
+
 let action = $state(false);
-let halign = $state<'left' | 'center' | 'right'>('left');
-let valign = $state<'top' | 'middle' | 'bottom' | 'stretch'>('top');
+let halign = $state<(typeof hAlignValues)[number]>(hAlignValues[0]);
+let valign = $state<(typeof vAlignValues)[number]>(vAlignValues[0]);
+let fill = $state<(typeof fillValues)[number]>(fillValues[0]);
+let mode = $state<(typeof modeValues)[number]>(modeValues[0]);
+
 function nextAlign() {
-	switch (halign) {
-		case 'left':
-			halign = 'center';
-			break;
-		case 'center':
-			halign = 'right';
-			break;
-		case 'right':
-			halign = 'left';
-			break;
-	}	
+	const index = hAlignValues.indexOf(halign);
+	halign = hAlignValues[(index + 1) % hAlignValues.length];	
 }
 function nextValign() {
-	switch (valign) {
-		case 'top':
-			valign = 'middle';
-			break;
-		case 'middle':
-			valign = 'bottom';
-			break;
-		case 'bottom':
-			valign = 'stretch';
-			break;
-		case 'stretch':
-			valign = 'top';
-			break;
-	}	
+	const index = vAlignValues.indexOf(valign);
+	valign = vAlignValues[(index + 1) % vAlignValues.length];	
 }
+function nextFill() {
+	const index = fillValues.indexOf(fill);
+	fill = fillValues[(index + 1) % fillValues.length];	
+}
+function nextMode() {
+	const index = modeValues.indexOf(mode);
+	mode = modeValues[(index + 1) % modeValues.length];	
+}
+
 </script>
 
 <main class={ hideAnimated ? 'hide-animated' : '' }>
@@ -241,11 +244,17 @@ function nextValign() {
 		<div class="icons-list svg-hover-anchor">
 			Generated stateful icons:
 			<div>
-				<TestIcon1 height="24" halign={halign} valign={valign} />
 				<TestIcon1TS height="24" halign={halign} valign={valign} />
 				<TestIcon2 height="24" action={action} />
+				<TestIcon3 height="24" mode={mode} fill={fill} />
 			</div>
 		</div>
-		<div style="display: flex; gap: 8px; flex-wrap: wrap;"><button onclick={nextAlign}>hAlign: {halign}</button><button onclick={nextValign}>vAlign: {valign}</button><button onclick={() => action = !action}>Toggle</button></div>
+		<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+			<button onclick={nextAlign}>hAlign: {halign}</button>
+			<button onclick={nextValign}>vAlign: {valign}</button>
+			<button onclick={nextMode}>Mode: {mode}</button>
+			<button onclick={nextFill}>Fill: {fill}</button>
+			<button onclick={() => action = !action}>Toggle</button>
+		</div>
 	</section>
 </main>

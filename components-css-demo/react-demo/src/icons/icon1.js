@@ -2,11 +2,9 @@ import { Icon } from '@iconify/css-react';
 import { createElement, useMemo } from 'react';
 import { namedStateValue } from './helpers/named-state-value.js';
 import { getFallback } from './helpers/fallback-ay9wndypfp.js';
+import './css/u2mluk.css';
 import './css/ona74n.css';
-import './css/mfq4_u.css';
-import './css/mfxbmu.css';
-import './css/fabh7v.css';
-import './css/ek9rqv.css';
+import './css/b6dtxa.css';
 import './css/so-from-74.css';
 import './css/so-to-0.css';
 
@@ -22,7 +20,7 @@ function Component({halign, valign, focus, width, height, ...props}) {
 		width,
 		height,
 		viewBox,
-		"content": `<path class="fabh7v mfq4_u ona74n"/><path class="ek9rqv mfxbmu ona74n"/>`,
+		"content": `<path class="ona74n u2mluk"/><path class="b6dtxa ona74n"/>`,
 		fallback,
 	});
 }

@@ -1,0 +1,18 @@
+.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+  .u2mluk {
+    d: path('M11 3h9c0 0 0 0 0 0v18c0 0 0 0 0 0h-18c0 0 0 0 0 0v-18c0 0 0 0 0 0Z');
+  }
+}
+
+.u2mluk {
+  d: path('M11 3h8c0.5 0 1 0.5 1 1v16c0 0.5 -0.5 1 -1 1h-16c-0.5 0 -1 -0.5 -1 -1v-16c0 -0.5 0.5 -1 1 -1Z');
+  stroke: var(--svg-tertiary-color, currentColor);
+}
+
+@media not (prefers-reduced-motion) {
+  .u2mluk {
+    stroke-dasharray: 74;
+    animation: 0.6s linear forwards so-from-74;
+    transition: d 0.4s linear;
+  }
+}

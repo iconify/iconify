@@ -1,0 +1,29 @@
+.rg1nfv {
+  d: path('M9.88 2.75h-0.38c-3.73 0 -6.75 3.02 -6.75 6.75c0 3.73 3.02 6.75 6.75 6.75c2.7 0 5.05 -1.6 6.12 -3.9');
+}
+
+.svg-focus-anchor:focus-within svg.state-dark, .svg-hover-anchor:hover svg.state-dark, svg.state-dark.state-focus {
+  .rg1nfv {
+    d: path('M11.5 2h0c-5.2 0.35 -9.5 4.7 -9.5 10c0 5.52 4.48 10 10 10c3.6 0 6.73 -2.18 8.5 -5');
+  }
+}
+
+.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+  .rg1nfv {
+    d: path('M9.13 2h0c-3.9 0.26 -7.13 3.53 -7.13 7.5c0 4.14 3.36 7.5 7.5 7.5c2.7 0 5.05 -1.63 6.38 -3.75');
+  }
+}
+
+svg.state-dark {
+  .rg1nfv {
+    d: path('M12.5 3h-0.5c-4.97 0 -9 4.03 -9 9c0 4.97 4.03 9 9 9c3.6 0 6.73 -2.13 8.16 -5.2');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .rg1nfv {
+    stroke-dasharray: 44;
+    animation: 0.4s linear forwards so-from-44;
+    transition: d 0.4s linear;
+  }
+}

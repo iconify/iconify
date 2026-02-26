@@ -1,0 +1,10 @@
+.mc7__g {
+  fill: #fff;
+}
+
+@media not (prefers-reduced-motion) {
+  .mc7__g {
+    opacity: 0;
+    animation: 0.4s linear 0.4s forwards fade-to-1;
+  }
+}

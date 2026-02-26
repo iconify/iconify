@@ -1,0 +1,30 @@
+.svg-focus-anchor:focus-within svg.state-light, .svg-hover-anchor:hover svg.state-light, svg.state-focus.state-light {
+  .td9rkk {
+    d: path('M12 4.5v-3M12 19.5v3M4.5 12h-3M19.5 12h3');
+  }
+}
+
+.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+  .td9rkk {
+    d: path('M14.5 8.88v-2.25M14.5 20.13v2.25M8.88 14.5h-2.25M20.13 14.5h2.25');
+  }
+}
+
+.td9rkk {
+  d: path('M14.5 7.75v-0.75M14.5 21.25v0.75M7.75 14.5h-0.75M21.25 14.5h0.75');
+}
+
+svg.state-light {
+  .td9rkk {
+    d: path('M12 3v-1M12 21v1M3 12h-1M21 12h1');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .td9rkk {
+    stroke-dasharray: 6;
+    stroke-dashoffset: 6;
+    animation: 0.4s linear 0.8s forwards so-to-0;
+    transition: d 0.4s linear;
+  }
+}

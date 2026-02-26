@@ -6,6 +6,7 @@ import { Icon as BasicIcon } from '@iconify/css-react/basic';
 import { loadIcon } from '@iconify/css-react/helpers/load-icon';
 import TestIcon1 from './icons/icon1.js';
 import TestIcon2 from './icons/icon2.js';
+import TestIcon3 from './icons/icon3.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -84,57 +85,72 @@ function AnimatedDemo() {
 	);
 }
 
+const hAlignValues = ['left', 'center', 'right'] as const;
+const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
+const fillValues = [
+	'no-fill',
+	'light-filled',
+	'dark-filled',
+	'filled',
+] as const;
+const modeValues = ['auto', 'light', 'dark'] as const;
+
 function StatefulDemo() {
-	const [hAlign, setHAlign] = useState<'left' | 'center' | 'right'>('left');
-	const [vAlign, setVAlign] = useState<
-		'top' | 'middle' | 'bottom' | 'stretch'
-	>('top');
+	const [restartCount, setRestartCount] = useState(0);
+	function restartAnimations() {
+		setRestartCount((count) => count + 1);
+	}
+	const [hAlign, setHAlign] = useState<(typeof hAlignValues)[number]>(
+		hAlignValues[0]
+	);
+	const [vAlign, setVAlign] = useState<(typeof vAlignValues)[number]>(
+		vAlignValues[0]
+	);
 	const [action, setAction] = useState(false);
+	const [fill, setFill] = useState<(typeof fillValues)[number]>(
+		fillValues[0]
+	);
+	const [mode, setMode] = useState<(typeof modeValues)[number]>(
+		modeValues[0]
+	);
 
 	function nextHAlign() {
-		switch (hAlign) {
-			case 'left':
-				setHAlign('center');
-				break;
-			case 'center':
-				setHAlign('right');
-				break;
-			case 'right':
-				setHAlign('left');
-				break;
-		}
+		const index = hAlignValues.indexOf(hAlign);
+		setHAlign(hAlignValues[(index + 1) % hAlignValues.length]);
 	}
 
 	function nextVAlign() {
-		switch (vAlign) {
-			case 'top':
-				setVAlign('middle');
-				break;
-			case 'middle':
-				setVAlign('bottom');
-				break;
-			case 'bottom':
-				setVAlign('stretch');
-				break;
-			case 'stretch':
-				setVAlign('top');
-				break;
-		}
+		const index = vAlignValues.indexOf(vAlign);
+		setVAlign(vAlignValues[(index + 1) % vAlignValues.length]);
+	}
+
+	function nextFill() {
+		const index = fillValues.indexOf(fill);
+		setFill(fillValues[(index + 1) % fillValues.length]);
+	}
+
+	function nextMode() {
+		const index = modeValues.indexOf(mode);
+		setMode(modeValues[(index + 1) % modeValues.length]);
 	}
 
 	return (
-		<div>
+		<div key={restartCount}>
 			<div className="icons-list svg-hover-anchor">
 				Generated stateful icons:
 				<div>
 					<TestIcon1 height="24" halign={hAlign} valign={vAlign} />
 					<TestIcon2 height="24" action={action} />
+					<TestIcon3 height="24" mode={mode} fill={fill} />
 				</div>
 			</div>
 			<div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
 				<button onClick={() => nextHAlign()}>hAlign: {hAlign}</button>
 				<button onClick={() => nextVAlign()}>vAlign: {vAlign}</button>
 				<button onClick={() => setAction(!action)}>Toggle</button>
+				<button onClick={() => nextFill()}>Fill: {fill}</button>
+				<button onClick={() => nextMode()}>Mode: {mode}</button>
+				<button onClick={restartAnimations}>Restart animations</button>
 			</div>
 		</div>
 	);
