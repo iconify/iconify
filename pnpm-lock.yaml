@@ -56,6 +56,9 @@ importers:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
     devDependencies:
+      '@iconify-react/ri':
+        specifier: ^1.0.0
+        version: 1.0.0(react@19.2.4)
       '@iconify/css-react':
         specifier: workspace:*
         version: link:../../components-css/react
@@ -1735,6 +1738,9 @@ packages:
 
   '@iconify-json/flat-color-icons@1.2.3':
     resolution: {integrity: sha512-KcmJ7CY0TKFv5GuBjiS4/v++jEcNXna1jfY+yq014tnw/MN/jMI2oYpoMHGuIpYtUqDu7eove+WySnOYO8nS3w==}
+
+  '@iconify-react/ri@1.0.0':
+    resolution: {integrity: sha512-yWPgCAYnui7tpAa52w7Kz1JcOjljE7+vH1fmnOUaKlq58GVL8uTySrcM+MX087ddeNhUzad+iyZqH2fKzOLKGQ==}
 
   '@iconify-svelte/ri@1.0.5':
     resolution: {integrity: sha512-Z4uhqhB/J8iRU+Psuq1mXm9oOpuODDzuescEM5NH8f2ivrOJrMvRwP6gF0QiCeM+aKlfg5dXuQ5NsS6vQlV6/g==}
@@ -8165,6 +8171,12 @@ snapshots:
   '@iconify-json/flat-color-icons@1.2.3':
     dependencies:
       '@iconify/types': 2.0.0
+
+  '@iconify-react/ri@1.0.0(react@19.2.4)':
+    dependencies:
+      '@iconify/css-react': 1.0.1(react@19.2.4)
+    transitivePeerDependencies:
+      - react
 
   '@iconify-svelte/ri@1.0.5(svelte@5.53.6)':
     dependencies:

@@ -4,10 +4,17 @@ import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-react';
 import { Icon as BasicIcon } from '@iconify/css-react/basic';
 import { loadIcon } from '@iconify/css-react/helpers/load-icon';
+import GitHubIcon from '@iconify-react/ri/github-line';
+import TwitterIcon from '@iconify-react/ri/twitter-x-line';
+import LinkedInIcon from '@iconify-react/ri/linkedin-box-line';
+import BlueSkyIcon from '@iconify-react/ri/bluesky-line';
+import GitHubIconTest from '@iconify/ri-react-test/github-line';
+import TwitterIconTest from '@iconify/ri-react-test/twitter-x-line';
+import LinkedInIconTest from '@iconify/ri-react-test/linkedin-box-line';
+import BlueSkyIconTest from '@iconify/ri-react-test/bluesky-line';
 import TestIcon1 from './icons/icon1.js';
 import TestIcon2 from './icons/icon2.js';
 import TestIcon3 from './icons/icon3.js';
-import GeneratedIcon1 from '@iconify/ri-react-test/bluesky-line';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -208,12 +215,6 @@ function App() {
 						/>
 					</div>
 				</div>
-				<div className="icons-list">
-					Imported from generated package:
-					<div>
-						<GeneratedIcon1 height="24" />
-					</div>
-				</div>
 				<AnimatedDemo />
 			</section>
 			<section>
@@ -270,6 +271,27 @@ function App() {
 					</div>
 				)}
 				<StatefulDemo />
+			</section>
+			<section>
+				<h1>Test generated icon component</h1>
+				<div className="icons-list">
+					From @iconify-react/ri:
+					<div>
+						<GitHubIcon height="24" />
+						<TwitterIcon height="24" />
+						<LinkedInIcon height="24" />
+						<BlueSkyIcon height="24" />
+					</div>
+				</div>
+				<div className="icons-list">
+					From test package:
+					<div>
+						<GitHubIconTest height="24" />
+						<TwitterIconTest height="24" />
+						<LinkedInIconTest height="24" />
+						<BlueSkyIconTest height="24" />
+					</div>
+				</div>
 			</section>
 		</div>
 	);
