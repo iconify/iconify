@@ -7,6 +7,7 @@ import { loadIcon } from '@iconify/css-react/helpers/load-icon';
 import TestIcon1 from './icons/icon1.js';
 import TestIcon2 from './icons/icon2.js';
 import TestIcon3 from './icons/icon3.js';
+import GeneratedIcon1 from '@iconify/ri-react-test/bluesky-line';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -205,6 +206,12 @@ function App() {
 							height="24"
 							fallback="material-symbols:mail-lock-outline-rounded"
 						/>
+					</div>
+				</div>
+				<div className="icons-list">
+					Imported from generated package:
+					<div>
+						<GeneratedIcon1 height="24" />
 					</div>
 				</div>
 				<AnimatedDemo />
