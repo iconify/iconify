@@ -1,0 +1,50 @@
+{
+	"name": "@iconify/css-solid",
+	"description": "Iconify fallback icon component for Solid.",
+	"author": "Vjacheslav Trushkin",
+	"type": "module",
+	"version": "1.0.0",
+	"license": "MIT",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"homepage": "https://iconify.design/",
+	"funding": "https://github.com/sponsors/cyberalien",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iconify/iconify.git",
+		"directory": "components-css/solid"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown"
+	},
+	"types": "./dist/index.d.ts",
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"solid-js": "^1.9.11"
+	},
+	"peerDependencies": {
+		"solid-js": ">=1.9.0"
+	},
+	"exports": {
+		".": "./dist/index.js",
+		"./basic": "./dist/basic.js",
+		"./helpers/add": "./dist/helpers/add.js",
+		"./helpers/api": "./dist/helpers/api.js",
+		"./helpers/get-icon": "./dist/helpers/get-icon.js",
+		"./helpers/ids": "./dist/helpers/ids.js",
+		"./helpers/load-icon": "./dist/helpers/load-icon.js",
+		"./helpers/load-icons": "./dist/helpers/load-icons.js",
+		"./helpers/preload": "./dist/helpers/preload.js",
+		"./helpers/size": "./dist/helpers/size.js",
+		"./helpers/subscribe": "./dist/helpers/subscribe.js",
+		"./helpers/support": "./dist/helpers/support.js",
+		"./props": "./dist/props.js",
+		"./package.json": "./package.json"
+	}
+}

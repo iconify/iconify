@@ -106,7 +106,7 @@ function nextMode() {
 		<h1>Demo for SVG+CSS</h1>
 		<p>This browser <span class="status"></span> SVG+CSS</p>
 		<p>
-			Known browsers that do not support SVG+CSS: Safari 18.6
+			Known browsers that do not support SVG+CSS: Safari 26.3
 			(currently latest stable version)
 		</p>
 	</section>

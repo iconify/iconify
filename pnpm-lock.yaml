@@ -75,6 +75,22 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(terser@5.44.0)(yaml@2.8.2))
 
+  components-css-demo/solid-demo:
+    dependencies:
+      solid-js:
+        specifier: ^1.9.11
+        version: 1.9.11
+    devDependencies:
+      '@iconify/css-solid':
+        specifier: workspace:*
+        version: link:../../components-css/solid
+      '@iconify/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      vite-plugin-solid:
+        specifier: ^2.11.10
+        version: 2.11.10(@testing-library/jest-dom@6.9.1)(solid-js@1.9.11)(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(terser@5.44.0)(yaml@2.8.2))
+
   components-css-demo/svelte-demo:
     devDependencies:
       '@iconify-svelte/ri':
@@ -154,6 +170,25 @@ importers:
       react:
         specifier: ^19.2.4
         version: 19.2.4
+
+  components-css/solid:
+    dependencies:
+      '@iconify/types':
+        specifier: workspace:^
+        version: link:../../packages/types
+    devDependencies:
+      '@iconify/component-utils':
+        specifier: workspace:^
+        version: link:../../packages/component-utils
+      '@iconify/fetch':
+        specifier: workspace:^
+        version: link:../../packages/fetch
+      '@iconify/utils':
+        specifier: workspace:^
+        version: link:../../packages/utils
+      solid-js:
+        specifier: ^1.9.11
+        version: 1.9.11
 
   components-css/svelte:
     dependencies:
