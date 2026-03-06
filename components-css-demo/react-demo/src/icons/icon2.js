@@ -33,7 +33,11 @@ const content = {__html: cleanupHTML(`<style>.a8wtkc {
   fill: none;
 }
 
-.svg-focus-anchor:focus-within svg.state-action, .svg-hover-anchor:hover svg.state-action, svg.state-action.state-focus {
+.zs6nhs {
+  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
+}
+
+button:focus-visible:not(:disabled) svg.state-action, button:hover:not(:disabled) svg.state-action, input:focus-visible:not(:disabled) svg.state-action, input:hover:not(:disabled) svg.state-action, svg.state-action.state-focus {
   .ae-3qn {
     d: path('M11 14.4l0 0M11 14.4l6 7.6');
   }
@@ -43,7 +47,7 @@ const content = {__html: cleanupHTML(`<style>.a8wtkc {
   }
 }
 
-.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
   .ae-3qn {
     d: path('M18 4l-16 16M18 20l0 0');
   }
@@ -51,10 +55,6 @@ const content = {__html: cleanupHTML(`<style>.a8wtkc {
   .zs6nhs {
     d: path('M18 20c0 0 -8 -8 -8 -8c0 0 -8 -8 -8 -8c0 0 8 8 8 8c0 0 8 8 8 8Z');
   }
-}
-
-.zs6nhs {
-  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
 }
 
 svg.state-action {
@@ -78,9 +78,10 @@ svg.state-action {
 }
 </style><defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"/><path class="g_1xrq objeeb zs6nhs"/></mask></defs><path mask="url(#SVGRErrZbBT)" class="mbb8cl"/><path class="a8wtkc g_1xrq p10gmg zs6nhs"/>`)};
 
+/** @type {{action?: boolean; focus?: boolean; width?: string; height?: string;}} */
 function Component({action, focus, width, height, ...props}) {
 	const states = useMemo(() => ({ 'action': action, 'focus': focus }), [action, focus]);
-	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '), [states]);
+	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined, [states]);
 	const size = useMemo(() => getSizeProps(width, height, 0.84), [width, height]);
 	return createElement('svg', {
 		"xmlns": "http://www.w3.org/2000/svg",

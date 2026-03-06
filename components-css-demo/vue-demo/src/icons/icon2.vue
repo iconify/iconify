@@ -7,7 +7,7 @@ const props = defineProps(["action","focus","width","height"]);
 
 const states = computed(() => ({ 'action': props['action'], 'focus': props['focus'] }));
 const fallback = computed(() => getFallback(["animated-line-24:",{"state":"action","values":["remove","search"]}],states.value));
-const className = computed(() => Object.entries(states.value).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '));
+const className = computed(() => Object.entries(states.value).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
 const viewBox = {"width":20,"height":24};
 const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"/><path class="g_1xrq objeeb zs6nhs"/></mask></defs><path mask="url(#SVGRErrZbBT)" class="mbb8cl"/><path class="a8wtkc g_1xrq p10gmg zs6nhs"/>`;
 </script>
@@ -43,7 +43,11 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   fill: none;
 }
 
-.svg-focus-anchor:focus-within svg.state-action, .svg-hover-anchor:hover svg.state-action, svg.state-action.state-focus {
+.zs6nhs {
+  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
+}
+
+button:focus-visible:not(:disabled) svg.state-action, button:hover:not(:disabled) svg.state-action, input:focus-visible:not(:disabled) svg.state-action, input:hover:not(:disabled) svg.state-action, svg.state-action.state-focus {
   .ae-3qn {
     d: path('M11 14.4l0 0M11 14.4l6 7.6');
   }
@@ -53,7 +57,7 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   }
 }
 
-.svg-focus-anchor:focus-within, .svg-hover-anchor:hover, svg.state-focus {
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
   .ae-3qn {
     d: path('M18 4l-16 16M18 20l0 0');
   }
@@ -61,10 +65,6 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   .zs6nhs {
     d: path('M18 20c0 0 -8 -8 -8 -8c0 0 -8 -8 -8 -8c0 0 8 8 8 8c0 0 8 8 8 8Z');
   }
-}
-
-.zs6nhs {
-  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
 }
 
 svg.state-action {

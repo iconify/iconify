@@ -15,6 +15,9 @@ import BlueSkyIconTest from '@iconify/ri-react-test/bluesky-line';
 import TestIcon1 from './icons/icon1.js';
 import TestIcon2 from './icons/icon2.js';
 import TestIcon3 from './icons/icon3.js';
+import TestIcon1b from './icons/icon1-ts.js';
+import TestIcon2b from './icons/icon2-ts.js';
+import TestIcon3b from './icons/icon3-ts.js';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -145,11 +148,14 @@ function StatefulDemo() {
 	return (
 		<div key={restartCount}>
 			<div className="icons-list svg-hover-anchor">
-				Generated stateful icons:
+				Generated stateful icons (one with ts, one without):
 				<div>
 					<TestIcon1 height="24" halign={hAlign} valign={vAlign} />
+					<TestIcon1b height="24" halign={hAlign} valign={vAlign} />
 					<TestIcon2 height="24" action={action} />
+					<TestIcon2b height="24" action={action} />
 					<TestIcon3 height="24" mode={mode} fill={fill} />
+					<TestIcon3b height="24" mode={mode} fill={fill} />
 				</div>
 			</div>
 			<div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>

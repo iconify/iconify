@@ -47,7 +47,7 @@ export function Icon(props: CSSIconElementProps): JSX.Element {
 				},
 			}),
 			true,
-			false
+			true
 		);
 		return _el$;
 	})();

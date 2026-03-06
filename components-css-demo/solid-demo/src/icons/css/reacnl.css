@@ -1,0 +1,40 @@
+.reacnl {
+  d: path('M9.88 2.75h-0.38c-3.73 0 -6.75 3.02 -6.75 6.75c0 3.73 3.02 6.75 6.75 6.75c2.7 0 5.05 -1.6 6.12 -3.9c-2.6 1.2 -5.75 0.3 -7.25 -2.29c-1.43 -2.51 -0.75 -5.62 1.5 -7.31Z');
+  fill-opacity: 0;
+}
+
+button:focus-visible:not(:disabled) svg.state-dark, button:hover:not(:disabled) svg.state-dark, input:focus-visible:not(:disabled) svg.state-dark, input:hover:not(:disabled) svg.state-dark, svg.state-dark.state-focus {
+  .reacnl {
+    d: path('M11.5 2h0c-5.2 0.35 -9.5 4.7 -9.5 10c0 5.52 4.48 10 10 10c3.6 0 6.73 -2.18 8.5 -5c-4.1 1.73 -9 0.5 -11.3 -3.5c-2.2 -3.9 -1.07 -8.75 2.3 -11.5Z');
+  }
+}
+
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
+  .reacnl {
+    d: path('M9.13 2h0c-3.9 0.26 -7.13 3.53 -7.13 7.5c0 4.14 3.36 7.5 7.5 7.5c2.7 0 5.05 -1.63 6.38 -3.75c-3.08 1.3 -6.75 0.38 -8.48 -2.63c-1.65 -2.93 -0.8 -6.56 1.73 -8.63Z');
+  }
+}
+
+svg.state-dark {
+  .reacnl {
+    d: path('M12.5 3h-0.5c-4.97 0 -9 4.03 -9 9c0 4.97 4.03 9 9 9c3.6 0 6.73 -2.13 8.16 -5.2c-3.46 1.6 -7.66 0.4 -9.66 -3.05c-1.9 -3.35 -1 -7.49 2 -9.75Z');
+  }
+}
+
+svg.state-dark-filled {
+  .reacnl {
+    fill-opacity: 1;
+  }
+}
+
+svg.state-filled {
+  .reacnl {
+    fill-opacity: 1;
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .reacnl {
+    transition: d 0.4s linear, fill-opacity 0.4s linear;
+  }
+}

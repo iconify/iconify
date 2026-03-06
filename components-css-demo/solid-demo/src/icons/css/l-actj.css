@@ -1,0 +1,21 @@
+.l-actj {
+  d: path('M24 0h24v24h-48Z');
+}
+
+svg.state-dark {
+  .l-actj {
+    d: path('M48 0h24v24h-48Z');
+  }
+}
+
+svg.state-light {
+  .l-actj {
+    d: path('M0 0h24v24h-48Z');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .l-actj {
+    transition: d 0.4s linear;
+  }
+}

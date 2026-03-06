@@ -11,11 +11,13 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
+		"@iconify-solid/ri": "^1.0.0",
 		"@iconify/css-solid": "workspace:*",
 		"@iconify/types": "workspace:*",
 		"vite-plugin-solid": "^2.11.10"
 	},
 	"dependencies": {
+		"@iconify/ri-solid-test": "file:iconify-ri-solid-test-1.0.0.tgz",
 		"solid-js": "^1.9.11"
 	}
 }

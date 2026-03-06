@@ -10,10 +10,11 @@ import './css/so-to-0.css';
 
 const viewBox = {"width":22,"height":24};
 
+/** @type {{halign?: 'left' | 'center' | 'right'; valign?: 'top' | 'middle' | 'bottom' | 'stretch'; focus?: boolean; width?: string; height?: string;}} */
 function Component({halign, valign, focus, width, height, ...props}) {
 	const states = useMemo(() => ({ 'halign': namedStateValue(halign, 'left'), 'valign': namedStateValue(valign, 'top'), 'focus': focus }), [halign, valign, focus]);
 	const fallback = useMemo(() => getFallback(["animated-line-24:align-box-",{"state":"halign"},"-",{"state":"valign"}], states), [states]);
-	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '), [states]);
+	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined, [states]);
 	return createElement(Icon, {
 		...props,
 		className,

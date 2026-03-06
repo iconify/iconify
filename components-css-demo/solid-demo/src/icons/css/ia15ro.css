@@ -1,0 +1,23 @@
+.ia15ro {
+  d: path('M12 12l10 -10M12 12l-10 10');
+}
+
+svg.state-dark {
+  .ia15ro {
+    d: path('M26 26l10 -10M26 26l-10 10');
+  }
+}
+
+svg.state-light {
+  .ia15ro {
+    d: path('M-2 -2l10 -10M-2 -2l-10 10');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .ia15ro {
+    stroke-dasharray: 18;
+    animation: 0.4s linear forwards so-from-18;
+    transition: d 0.4s linear;
+  }
+}

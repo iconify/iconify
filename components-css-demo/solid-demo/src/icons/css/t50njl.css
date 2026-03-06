@@ -1,0 +1,30 @@
+.t50njl {
+  d: path('M9.63 9.63l-0.38 -0.38M9.63 19.38l-0.38 0.38M19.38 9.63l0.38 -0.38M19.38 19.38l0.38 0.38');
+}
+
+button:focus-visible:not(:disabled) svg.state-light, button:hover:not(:disabled) svg.state-light, input:focus-visible:not(:disabled) svg.state-light, input:hover:not(:disabled) svg.state-light, svg.state-focus.state-light {
+  .t50njl {
+    d: path('M7 7l-2 -2M7 17l-2 2M17 7l2 -2M17 17l2 2');
+  }
+}
+
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
+  .t50njl {
+    d: path('M10.75 10.75l-1.5 -1.5M10.75 18.25l-1.5 1.5M18.25 10.75l1.5 -1.5M18.25 18.25l1.5 1.5');
+  }
+}
+
+svg.state-light {
+  .t50njl {
+    d: path('M5.5 5.5l-0.5 -0.5M5.5 18.5l-0.5 0.5M18.5 5.5l0.5 -0.5M18.5 18.5l0.5 0.5');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .t50njl {
+    stroke-dasharray: 6;
+    stroke-dashoffset: 6;
+    animation: 0.4s linear 1s forwards so-to-0;
+    transition: d 0.4s linear;
+  }
+}

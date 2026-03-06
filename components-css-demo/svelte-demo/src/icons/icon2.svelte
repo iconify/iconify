@@ -7,7 +7,7 @@ let {action, focus, width, height, ...props} = $props();
 
 let states = $derived(({ 'action': action, 'focus': focus }));
 let fallback = $derived(getFallback(["animated-line-24:",{"state":"action","values":["remove","search"]}],states));
-let className = $derived(Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '));
+let className = $derived(Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
 const viewBox = {"width":20,"height":24};
 const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"/><path class="g_1xrq objeeb zs6nhs"/></mask></defs><path mask="url(#SVGRErrZbBT)" class="mbb8cl"/><path class="a8wtkc g_1xrq p10gmg zs6nhs"/>`;
 </script>
@@ -43,7 +43,11 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   fill: none;
 }
 
-:global(.svg-focus-anchor:focus-within svg.state-action), :global(.svg-hover-anchor:hover svg.state-action), :global(svg.state-action.state-focus) {
+:global(.zs6nhs) {
+  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
+}
+
+:global(button:focus-visible:not(:disabled) svg.state-action), :global(button:hover:not(:disabled) svg.state-action), :global(input:focus-visible:not(:disabled) svg.state-action), :global(input:hover:not(:disabled) svg.state-action), :global(svg.state-action.state-focus) {
   :global(.ae-3qn) {
     d: path('M11 14.4l0 0M11 14.4l6 7.6');
   }
@@ -53,7 +57,7 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   }
 }
 
-:global(.svg-focus-anchor:focus-within), :global(.svg-hover-anchor:hover), :global(svg.state-focus) {
+:global(button:focus-visible:not(:disabled)), :global(button:hover:not(:disabled)), :global(input:focus-visible:not(:disabled)), :global(input:hover:not(:disabled)), :global(svg.state-focus) {
   :global(.ae-3qn) {
     d: path('M18 4l-16 16M18 20l0 0');
   }
@@ -61,10 +65,6 @@ const content = `<defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"
   :global(.zs6nhs) {
     d: path('M18 20c0 0 -8 -8 -8 -8c0 0 -8 -8 -8 -8c0 0 8 8 8 8c0 0 8 8 8 8Z');
   }
-}
-
-:global(.zs6nhs) {
-  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
 }
 
 :global(svg.state-action) {

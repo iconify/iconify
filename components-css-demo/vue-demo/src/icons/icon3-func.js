@@ -33,7 +33,7 @@ const Component = defineComponent(
 	(props) => {
 		const states = computed(() => ({ 'mode': namedStateValue(props['mode'], 'auto'), 'fill': namedStateValue(props['fill'], 'no-fill'), 'focus': props['focus'] }));
 		const fallback = computed(() => getFallback(["animated-line-24:color-scheme-",{"state":"mode"},"-",{"state":"fill"}],states.value));
-		const className = computed(() => Object.entries(states.value).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '));
+		const className = computed(() => Object.entries(states.value).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
 		const viewBox = {"width":24,"height":24};
 		return () => h(Icon, { 
 			'class': className.value,

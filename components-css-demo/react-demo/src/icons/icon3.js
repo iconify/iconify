@@ -31,10 +31,11 @@ import './css/so-to-0.css';
 
 const viewBox = {"width":24,"height":24};
 
+/** @type {{mode?: 'auto' | 'light' | 'dark'; fill?: 'no-fill' | 'light-filled' | 'dark-filled' | 'filled'; focus?: boolean; width?: string; height?: string;}} */
 function Component({mode, fill, focus, width, height, ...props}) {
 	const states = useMemo(() => ({ 'mode': namedStateValue(mode, 'auto'), 'fill': namedStateValue(fill, 'no-fill'), 'focus': focus }), [mode, fill, focus]);
 	const fallback = useMemo(() => getFallback(["animated-line-24:color-scheme-",{"state":"mode"},"-",{"state":"fill"}], states), [states]);
-	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' '), [states]);
+	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined, [states]);
 	return createElement(Icon, {
 		...props,
 		className,

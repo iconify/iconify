@@ -1,0 +1,21 @@
+.c807hd {
+  d: path('M24 0h-48v24h24Z');
+}
+
+svg.state-dark {
+  .c807hd {
+    d: path('M48 0h-48v24h24Z');
+  }
+}
+
+svg.state-light {
+  .c807hd {
+    d: path('M0 0h-48v24h24Z');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .c807hd {
+    transition: d 0.4s linear;
+  }
+}

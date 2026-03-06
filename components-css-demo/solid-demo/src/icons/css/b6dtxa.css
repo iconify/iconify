@@ -1,0 +1,151 @@
+.b6dtxa {
+  stroke: var(--svg-primary-color, currentColor);
+  d: path('M6 7h4M6 10.5h8M6 14h6');
+}
+
+button:focus-visible:not(:disabled) svg.state-bottom, button:hover:not(:disabled) svg.state-bottom, input:focus-visible:not(:disabled) svg.state-bottom, input:hover:not(:disabled) svg.state-bottom, svg.state-bottom.state-focus {
+  .b6dtxa {
+    d: path('M5 12h8M5 15h8M5 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-bottom.state-center, button:hover:not(:disabled) svg.state-bottom.state-center, input:focus-visible:not(:disabled) svg.state-bottom.state-center, input:hover:not(:disabled) svg.state-bottom.state-center, svg.state-bottom.state-center.state-focus {
+  .b6dtxa {
+    d: path('M7 12h8M7 15h8M7 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-bottom.state-right, button:hover:not(:disabled) svg.state-bottom.state-right, input:focus-visible:not(:disabled) svg.state-bottom.state-right, input:hover:not(:disabled) svg.state-bottom.state-right, svg.state-bottom.state-focus.state-right {
+  .b6dtxa {
+    d: path('M9 12h8M9 15h8M9 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-center, button:hover:not(:disabled) svg.state-center, input:focus-visible:not(:disabled) svg.state-center, input:hover:not(:disabled) svg.state-center, svg.state-center.state-focus {
+  .b6dtxa {
+    d: path('M7 6h8M7 9h8M7 12h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-center.state-middle, button:hover:not(:disabled) svg.state-center.state-middle, input:focus-visible:not(:disabled) svg.state-center.state-middle, input:hover:not(:disabled) svg.state-center.state-middle, svg.state-center.state-focus.state-middle {
+  .b6dtxa {
+    d: path('M7 9h8M7 12h8M7 15h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-center.state-stretch, button:hover:not(:disabled) svg.state-center.state-stretch, input:focus-visible:not(:disabled) svg.state-center.state-stretch, input:hover:not(:disabled) svg.state-center.state-stretch, svg.state-center.state-focus.state-stretch {
+  .b6dtxa {
+    d: path('M7 6h8M7 12h8M7 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-middle, button:hover:not(:disabled) svg.state-middle, input:focus-visible:not(:disabled) svg.state-middle, input:hover:not(:disabled) svg.state-middle, svg.state-focus.state-middle {
+  .b6dtxa {
+    d: path('M5 9h8M5 12h8M5 15h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-middle.state-right, button:hover:not(:disabled) svg.state-middle.state-right, input:focus-visible:not(:disabled) svg.state-middle.state-right, input:hover:not(:disabled) svg.state-middle.state-right, svg.state-focus.state-middle.state-right {
+  .b6dtxa {
+    d: path('M9 9h8M9 12h8M9 15h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-right, button:hover:not(:disabled) svg.state-right, input:focus-visible:not(:disabled) svg.state-right, input:hover:not(:disabled) svg.state-right, svg.state-focus.state-right {
+  .b6dtxa {
+    d: path('M9 6h8M9 9h8M9 12h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-right.state-stretch, button:hover:not(:disabled) svg.state-right.state-stretch, input:focus-visible:not(:disabled) svg.state-right.state-stretch, input:hover:not(:disabled) svg.state-right.state-stretch, svg.state-focus.state-right.state-stretch {
+  .b6dtxa {
+    d: path('M9 6h8M9 12h8M9 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled) svg.state-stretch, button:hover:not(:disabled) svg.state-stretch, input:focus-visible:not(:disabled) svg.state-stretch, input:hover:not(:disabled) svg.state-stretch, svg.state-focus.state-stretch {
+  .b6dtxa {
+    d: path('M5 6h8M5 12h8M5 18h8');
+  }
+}
+
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
+  .b6dtxa {
+    d: path('M5 6h8M5 9h8M5 12h8');
+  }
+}
+
+svg.state-bottom {
+  .b6dtxa {
+    d: path('M6 10h4M6 13.5h8M6 17h6');
+  }
+}
+
+svg.state-bottom.state-center {
+  .b6dtxa {
+    d: path('M9 10h4M7 13.5h8M8 17h6');
+  }
+}
+
+svg.state-bottom.state-right {
+  .b6dtxa {
+    d: path('M12 10h4M8 13.5h8M10 17h6');
+  }
+}
+
+svg.state-center {
+  .b6dtxa {
+    d: path('M9 7h4M7 10.5h8M8 14h6');
+  }
+}
+
+svg.state-center.state-middle {
+  .b6dtxa {
+    d: path('M9 8.5h4M7 12h8M8 15.5h6');
+  }
+}
+
+svg.state-center.state-stretch {
+  .b6dtxa {
+    d: path('M9 7h4M7 12h8M8 17h6');
+  }
+}
+
+svg.state-middle {
+  .b6dtxa {
+    d: path('M6 8.5h4M6 12h8M6 15.5h6');
+  }
+}
+
+svg.state-middle.state-right {
+  .b6dtxa {
+    d: path('M12 8.5h4M8 12h8M10 15.5h6');
+  }
+}
+
+svg.state-right {
+  .b6dtxa {
+    d: path('M12 7h4M8 10.5h8M10 14h6');
+  }
+}
+
+svg.state-right.state-stretch {
+  .b6dtxa {
+    d: path('M12 7h4M8 12h8M10 17h6');
+  }
+}
+
+svg.state-stretch {
+  .b6dtxa {
+    d: path('M6 7h4M6 12h8M6 17h6');
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .b6dtxa {
+    stroke-dasharray: 10;
+    stroke-dashoffset: 10;
+    animation: 0.2s linear 0.7s forwards so-to-0;
+    transition: d 0.4s linear;
+  }
+}

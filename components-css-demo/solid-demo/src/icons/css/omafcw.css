@@ -1,0 +1,40 @@
+.omafcw {
+  d: path('M14.5 10.75c2.07 0 3.75 1.68 3.75 3.75c0 2.07 -1.68 3.75 -3.75 3.75c-2.07 0 -3.75 -1.68 -3.75 -3.75c0 -2.07 1.68 -3.75 3.75 -3.75Z');
+  fill-opacity: 0;
+}
+
+button:focus-visible:not(:disabled) svg.state-light, button:hover:not(:disabled) svg.state-light, input:focus-visible:not(:disabled) svg.state-light, input:hover:not(:disabled) svg.state-light, svg.state-focus.state-light {
+  .omafcw {
+    d: path('M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4Z');
+  }
+}
+
+button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
+  .omafcw {
+    d: path('M14.5 11.5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z');
+  }
+}
+
+svg.state-filled {
+  .omafcw {
+    fill-opacity: 1;
+  }
+}
+
+svg.state-light {
+  .omafcw {
+    d: path('M12 7c2.76 0 5 2.24 5 5c0 2.76 -2.24 5 -5 5c-2.76 0 -5 -2.24 -5 -5c0 -2.76 2.24 -5 5 -5Z');
+  }
+}
+
+svg.state-light-filled {
+  .omafcw {
+    fill-opacity: 1;
+  }
+}
+
+@media not (prefers-reduced-motion) {
+  .omafcw {
+    transition: d 0.4s linear, fill-opacity 0.4s linear;
+  }
+}

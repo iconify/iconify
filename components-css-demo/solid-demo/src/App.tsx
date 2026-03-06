@@ -1,14 +1,22 @@
-import {
-	createEffect,
-	createSignal,
-	type Component,
-	Show,
-	createMemo,
-} from 'solid-js';
+import { createEffect, createSignal, type Component, Show } from 'solid-js';
 import type { IconifyIcon } from '@iconify/types';
 import { type CSSIconComponentViewbox, Icon } from '@iconify/css-solid';
 import { Icon as BasicIcon } from '@iconify/css-solid/basic';
 import { loadIcon } from '@iconify/css-solid/helpers/load-icon';
+import GitHubIcon from '@iconify-solid/ri/github-line';
+import TwitterIcon from '@iconify-solid/ri/twitter-x-line';
+import LinkedInIcon from '@iconify-solid/ri/linkedin-box-line';
+import BlueSkyIcon from '@iconify-solid/ri/bluesky-line';
+import GitHubIconTest from '@iconify/ri-solid-test/github-line';
+import TwitterIconTest from '@iconify/ri-solid-test/twitter-x-line';
+import LinkedInIconTest from '@iconify/ri-solid-test/linkedin-box-line';
+import BlueSkyIconTest from '@iconify/ri-solid-test/bluesky-line';
+import TestIcon1 from './icons/icon1.jsx';
+import TestIcon2 from './icons/icon2.jsx';
+import TestIcon3 from './icons/icon3.jsx';
+import TestIcon1b from './icons/icon1-ts.jsx';
+import TestIcon2b from './icons/icon2-ts.jsx';
+import TestIcon3b from './icons/icon3-ts.jsx';
 
 const grid24: CSSIconComponentViewbox = {
 	width: 24,
@@ -51,7 +59,6 @@ function AnimatedDemo() {
 	let timer: ReturnType<typeof setTimeout> | null = null;
 	createEffect(() => {
 		const count = restartCount();
-		console.log('Restarting animations, count:', count);
 		if (count) {
 			if (timer) {
 				clearTimeout(timer);
@@ -100,6 +107,104 @@ function AnimatedDemo() {
 						/>
 					</div>
 				</div>
+			</div>
+		</Show>
+	);
+}
+
+const hAlignValues = ['left', 'center', 'right'] as const;
+const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
+const fillValues = [
+	'no-fill',
+	'light-filled',
+	'dark-filled',
+	'filled',
+] as const;
+const modeValues = ['auto', 'light', 'dark'] as const;
+
+function StatefulDemo() {
+	const [restartCount, setRestartCount] = createSignal(0);
+	const [isRendering, setIsRendering] = createSignal(true);
+	function restartAnimations() {
+		setRestartCount((count) => count + 1);
+	}
+
+	let timer: ReturnType<typeof setTimeout> | null = null;
+	createEffect(() => {
+		const count = restartCount();
+		if (count) {
+			if (timer) {
+				clearTimeout(timer);
+			}
+			setIsRendering(false);
+			timer = setTimeout(() => {
+				setIsRendering(true);
+			}, 100);
+		}
+	});
+
+	const [hAlign, setHAlign] = createSignal<(typeof hAlignValues)[number]>(
+		hAlignValues[0]
+	);
+	const [vAlign, setVAlign] = createSignal<(typeof vAlignValues)[number]>(
+		vAlignValues[0]
+	);
+	const [action, setAction] = createSignal(false);
+	const [fill, setFill] = createSignal<(typeof fillValues)[number]>(
+		fillValues[0]
+	);
+	const [mode, setMode] = createSignal<(typeof modeValues)[number]>(
+		modeValues[0]
+	);
+
+	function nextHAlign() {
+		const index = hAlignValues.indexOf(hAlign());
+		setHAlign(hAlignValues[(index + 1) % hAlignValues.length]);
+	}
+
+	function nextVAlign() {
+		const index = vAlignValues.indexOf(vAlign());
+		setVAlign(vAlignValues[(index + 1) % vAlignValues.length]);
+	}
+
+	function nextFill() {
+		const index = fillValues.indexOf(fill());
+		setFill(fillValues[(index + 1) % fillValues.length]);
+	}
+
+	function nextMode() {
+		const index = modeValues.indexOf(mode());
+		setMode(modeValues[(index + 1) % modeValues.length]);
+	}
+
+	return (
+		<Show when={isRendering()}>
+			<div class="icons-list svg-hover-anchor">
+				Generated stateful icons (one with ts, one without):
+				<div>
+					<TestIcon1
+						height="24"
+						halign={hAlign()}
+						valign={vAlign()}
+					/>
+					<TestIcon1b
+						height="24"
+						halign={hAlign()}
+						valign={vAlign()}
+					/>
+					<TestIcon2 height="24" action={action()} />
+					<TestIcon2b height="24" action={action()} />
+					<TestIcon3 height="24" mode={mode()} fill={fill()} />
+					<TestIcon3b height="24" mode={mode()} fill={fill()} />
+				</div>
+			</div>
+			<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+				<button onClick={() => nextHAlign()}>hAlign: {hAlign()}</button>
+				<button onClick={() => nextVAlign()}>vAlign: {vAlign()}</button>
+				<button onClick={() => setAction(!action())}>Toggle</button>
+				<button onClick={() => nextFill()}>Fill: {fill()}</button>
+				<button onClick={() => nextMode()}>Mode: {mode()}</button>
+				<button onClick={restartAnimations}>Restart animations</button>
 			</div>
 		</Show>
 	);
@@ -211,6 +316,29 @@ const App: Component = () => {
 						</div>
 					</div>
 				)}
+				<StatefulDemo />
+			</section>
+			<section>
+				<h1>Test generated icon component</h1>
+				<div class="icons-list">
+					From @iconify-solid/ri:
+					<div>
+						<GitHubIcon height="24" />
+						<TwitterIcon height="24" />
+						<LinkedInIcon height="24" />
+						<BlueSkyIcon height="24" />
+					</div>
+				</div>
+				<div class="icons-list">
+					From test package (no fallback used for GitHub and BlueSky
+					icons):
+					<div>
+						<GitHubIconTest height="24" />
+						<TwitterIconTest height="24" />
+						<LinkedInIconTest height="24" />
+						<BlueSkyIconTest height="24" />
+					</div>
+				</div>
 			</section>
 		</>
 	);
