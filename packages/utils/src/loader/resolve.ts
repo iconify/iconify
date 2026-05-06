@@ -12,6 +12,7 @@ export async function resolvePathAsync(
 ): Promise<string | undefined> {
 	// `import.meta.resolve` works with fake cwd paths, but we want to intentionally bail if so
 	if (!(await pathExists(cwd))) return;
+	if (!path.isAbsolute(cwd)) return;
 
 	const parent = pathToFileURL(path.join(cwd, '_parent.mjs')).href;
 	try {
