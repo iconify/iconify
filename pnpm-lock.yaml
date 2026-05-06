@@ -811,9 +811,9 @@ importers:
       '@iconify/types':
         specifier: workspace:^
         version: link:../types
-      mlly:
-        specifier: ^1.8.2
-        version: 1.8.2
+      import-meta-resolve:
+        specifier: ^4.2.0
+        version: 4.2.0
     devDependencies:
       '@iconify-json/fa6-regular':
         specifier: ^1.2.4
@@ -4849,6 +4849,9 @@ packages:
     resolution: {integrity: sha512-2SPlun1JUPWoM6t3F0dw0FkCF/jWY8kttcY4f599GLTSjh2OCuuhdTkJQsEcZzBqbXZGKMK2OqW1oZsjtf/gQA==}
     engines: {node: '>=8'}
     hasBin: true
+
+  import-meta-resolve@4.2.0:
+    resolution: {integrity: sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==}
 
   import-without-cache@0.3.3:
     resolution: {integrity: sha512-bDxwDdF04gm550DfZHgffvlX+9kUlcz32UD0AeBTmVPFiWkrexF2XVmiuFFbDhiFuP8fQkrkvI2KdSNPYWAXkQ==}
@@ -11402,6 +11405,8 @@ snapshots:
     dependencies:
       pkg-dir: 4.2.0
       resolve-cwd: 3.0.0
+
+  import-meta-resolve@4.2.0: {}
 
   import-without-cache@0.3.3: {}
 

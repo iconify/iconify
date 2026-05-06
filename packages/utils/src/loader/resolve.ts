@@ -1,22 +1,19 @@
-import { resolvePath } from 'mlly';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { resolve } from 'import-meta-resolve';
 
 /**
  * Resolve path to package
  */
-export async function resolvePathAsync(
+export function resolvePath(
 	packageName: string,
 	cwd: string
-): Promise<string | undefined> {
-	/*
+): string | undefined {
+	const parent = pathToFileURL(path.join(cwd, '_base.mjs')).href;
 	try {
-		const path = import.meta.resolve(packageName);
-		return path.replace('file://', '');
-	} catch {
-		//
-	}
-	*/
-	try {
-		return await resolvePath(packageName, { url: cwd });
+		// Replace with `import.meta.resolve` when the `parent` parameter is stabilized
+		const path = resolve(packageName, parent);
+		return fileURLToPath(path);
 	} catch {
 		//
 	}

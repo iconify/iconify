@@ -109,10 +109,11 @@
 	"dependencies": {
 		"@antfu/install-pkg": "^1.1.0",
 		"@iconify/types": "workspace:^",
-		"mlly": "^1.8.2"
+		"import-meta-resolve": "^4.2.0"
 	},
 	"devDependencies": {
 		"@iconify-json/fa6-regular": "^1.2.4",
-		"@iconify-json/flat-color-icons": "^1.2.3"
+		"@iconify-json/flat-color-icons": "^1.2.3",
+		"@typescript-eslint/parser": "^8.59.2"
 	}
 }
