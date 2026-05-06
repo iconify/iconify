@@ -1,4 +1,5 @@
 import { promises as fs, Stats } from 'fs';
+import { pathToFileURL } from 'node:url';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
@@ -75,13 +76,10 @@ export async function loadCollectionFromFS(
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			let packagePath = await resolvePathAsync(packageName, cwd);
-			if (packagePath?.match(/^[a-z]:/i)) {
-				packagePath = `file:///${packagePath}`.replace(/\\/g, '/');
-			}
+			const packagePath = await resolvePathAsync(packageName, cwd);
 			if (packagePath) {
 				const { icons }: { icons?: IconifyJSON } = await import(
-					packagePath
+					pathToFileURL(packagePath).href
 				);
 				if (icons) return icons;
 			}
