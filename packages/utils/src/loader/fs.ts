@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 import type { IconifyJSON } from '@iconify/types';
 import { tryInstallPkg } from './install-pkg';
 import type { AutoInstall } from './types';
-import { resolvePath } from './resolve.js';
+import { resolvePathAsync } from './resolve.js';
 
 /** Cache: [cwd][name] => icon set promise */
 type CachedItem = Promise<IconifyJSON | undefined>;
@@ -39,13 +39,13 @@ export async function loadCollectionFromFS(
 
 	async function task() {
 		const packageName = scope.length === 0 ? name : `${scope}/${name}`;
-		let jsonPath = resolvePath(`${packageName}/icons.json`, cwd);
+		let jsonPath = await resolvePathAsync(`${packageName}/icons.json`, cwd);
 
 		// Legacy support for @iconify/json
 		if (scope === '@iconify-json') {
 			// Check legacy package exists
 			if (isLegacyExists[cwd] === undefined) {
-				const testResult = resolvePath(
+				const testResult = await resolvePathAsync(
 					`@iconify/json/collections.json`,
 					cwd
 				);
@@ -55,22 +55,28 @@ export async function loadCollectionFromFS(
 
 			// Check legacy package
 			if (!jsonPath && checkLegacy) {
-				jsonPath = resolvePath(`@iconify/json/json/${name}.json`, cwd);
+				jsonPath = await resolvePathAsync(
+					`@iconify/json/json/${name}.json`,
+					cwd
+				);
 			}
 
 			// Try to install the package if it doesn't exist
 			if (!jsonPath && !checkLegacy && autoInstall) {
 				await tryInstallPkg(packageName, autoInstall);
-				jsonPath = resolvePath(`${packageName}/icons.json`, cwd);
+				jsonPath = await resolvePathAsync(
+					`${packageName}/icons.json`,
+					cwd
+				);
 			}
 		} else if (!jsonPath && autoInstall) {
 			await tryInstallPkg(packageName, autoInstall);
-			jsonPath = resolvePath(`${packageName}/icons.json`, cwd);
+			jsonPath = await resolvePathAsync(`${packageName}/icons.json`, cwd);
 		}
 
 		// Try to import module if it exists
 		if (!jsonPath) {
-			const packagePath = resolvePath(packageName, cwd);
+			const packagePath = await resolvePathAsync(packageName, cwd);
 			if (packagePath) {
 				const { icons }: { icons?: IconifyJSON } = await import(
 					pathToFileURL(packagePath).href
