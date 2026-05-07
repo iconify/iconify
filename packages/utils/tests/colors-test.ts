@@ -67,6 +67,41 @@ describe('Colors', () => {
 			})
 		).toBe('#800080');
 
+		// Alpha
+		expect(
+			colorToString({
+				type: 'rgb',
+				r: 255,
+				g: 0,
+				b: 0,
+				alpha: 0.5,
+			})
+		).toBe('rgba(255, 0, 0, 0.5)');
+		expect(
+			colorToString(
+				{
+					type: 'rgb',
+					r: 255,
+					g: 0,
+					b: 0,
+					alpha: 0.5,
+				},
+				true
+			)
+		).toBe('#ff000080');
+		expect(
+			colorToString(
+				{
+					type: 'rgb',
+					r: 254.7,
+					g: 0.4,
+					b: 0,
+					alpha: 68 / 255, // '44'
+				},
+				true
+			)
+		).toBe('#f004');
+
 		// Keywords
 		expect(
 			colorToString({

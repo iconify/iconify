@@ -209,14 +209,14 @@ function fromFunction(value: string): Color | null {
 						a: numbers[1],
 						b: numbers[2],
 						alpha,
-				  }
+					}
 				: {
 						type: 'lch',
 						l: numbers[0],
 						c: numbers[1],
 						h: numbers[2],
 						alpha,
-				  };
+					};
 		}
 	}
 
@@ -269,14 +269,14 @@ function fromHex(value: string): Color | null {
 	return alpha === 0
 		? {
 				type: 'transparent',
-		  }
+			}
 		: {
 				type: 'rgb',
 				r: parseInt(hex[0], 16),
 				g: parseInt(hex[1], 16),
 				b: parseInt(hex[2], 16),
 				alpha,
-		  };
+			};
 }
 
 /**
@@ -376,23 +376,30 @@ export function compareColors(color1: Color, color2: Color): boolean {
  */
 export function colorToHexString(
 	color: RGBColor,
-	canCompact = true
+	canCompact = true,
+	canRound = false
 ): string | null {
-	if (color.alpha !== 1) {
-		return null;
-	}
 	let result = '';
+	let hasAlpha = false;
 	const attrs: (keyof RGBColor)[] = ['r', 'g', 'b'];
+	if (color.alpha !== 1) {
+		attrs.push('alpha');
+		hasAlpha = true;
+	}
+
 	for (let i = 0; i < attrs.length; i++) {
-		const value = color[attrs[i]] as number;
-		if (Math.round(value) !== value) {
+		const prop = attrs[i];
+		let value = Math.min(
+			255,
+			Math.max(0, (color[prop] as number) * (prop === 'alpha' ? 255 : 1))
+		);
+		if (canRound) {
+			value = Math.round(value);
+		} else if (Math.round(value) !== value) {
 			return null;
 		}
 		const hex = value.toString(16);
 		result += (value < 16 ? '0' : '') + hex;
-	}
-	if (result.length !== 6) {
-		return null;
 	}
 
 	// Compact color
@@ -400,9 +407,11 @@ export function colorToHexString(
 		canCompact &&
 		result[0] === result[1] &&
 		result[2] === result[3] &&
-		result[4] === result[5]
+		result[4] === result[5] &&
+		(!hasAlpha || result[6] === result[7])
 	) {
-		result = result[0] + result[2] + result[4];
+		result =
+			result[0] + result[2] + result[4] + (hasAlpha ? result[6] : '');
 	}
 
 	return '#' + result;
@@ -411,7 +420,7 @@ export function colorToHexString(
 /**
  * Convert color to string
  */
-export function colorToString(color: Color): string {
+export function colorToString(color: Color, canRound = false): string {
 	if ((color as RGBColor).alpha === 0) {
 		return 'transparent';
 	}
@@ -425,7 +434,7 @@ export function colorToString(color: Color): string {
 			return 'currentColor';
 
 		case 'rgb': {
-			const hex = colorToHexString(color);
+			const hex = colorToHexString(color, true, canRound);
 			if (hex !== null) {
 				return hex;
 			}
