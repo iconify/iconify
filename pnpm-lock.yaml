@@ -60,8 +60,8 @@ importers:
         version: 19.2.5(react@19.2.5)
     devDependencies:
       '@iconify-react/ri':
-        specifier: ^1.0.0
-        version: 1.0.0(react@19.2.5)
+        specifier: ^1.0.2
+        version: 1.0.2(react@19.2.5)
       '@iconify/css-react':
         specifier: workspace:*
         version: link:../../components-css/react
@@ -1801,8 +1801,8 @@ packages:
   '@iconify-json/flat-color-icons@1.2.3':
     resolution: {integrity: sha512-KcmJ7CY0TKFv5GuBjiS4/v++jEcNXna1jfY+yq014tnw/MN/jMI2oYpoMHGuIpYtUqDu7eove+WySnOYO8nS3w==}
 
-  '@iconify-react/ri@1.0.0':
-    resolution: {integrity: sha512-yWPgCAYnui7tpAa52w7Kz1JcOjljE7+vH1fmnOUaKlq58GVL8uTySrcM+MX087ddeNhUzad+iyZqH2fKzOLKGQ==}
+  '@iconify-react/ri@1.0.2':
+    resolution: {integrity: sha512-I8UugTKMp5AggweGbaQEUZhfncr0n34sBp5N1RNN6pQUWDVJNMyaBaFrvN+b/xZXAO2y2TOJdWOvb5i8POf91w==}
 
   '@iconify-solid/ri@1.0.0':
     resolution: {integrity: sha512-0JaSnFwwePhRTUSR+/ro4cXhXHxKxK7cF0UMVmztBjlQDeHhIXalgp+YSkggm1EIncc7kvLxBxGX74KUzT8vaQ==}
@@ -8290,7 +8290,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-react/ri@1.0.0(react@19.2.5)':
+  '@iconify-react/ri@1.0.2(react@19.2.5)':
     dependencies:
       '@iconify/css-react': 1.0.2(react@19.2.5)
     transitivePeerDependencies:
