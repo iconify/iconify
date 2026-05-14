@@ -42,7 +42,7 @@
 		"@testing-library/react": "^16.3.2",
 		"@types/react": "^19.2.14",
 		"@types/react-test-renderer": "^19.1.0",
-		"@vitejs/plugin-react": "^5.2.0",
+		"@vitejs/plugin-react": "^6.0.2",
 		"jsdom": "^29.0.2",
 		"react": "^19.2.5",
 		"rimraf": "^6.1.3",
