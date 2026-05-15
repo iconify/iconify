@@ -20,11 +20,11 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.5",
-		"@eslint/js": "^9.39.4",
+		"@eslint/js": "^10.0.1",
 		"@types/node": "^25.6.0",
 		"@typescript-eslint/eslint-plugin": "^8.59.2",
 		"@typescript-eslint/parser": "^8.59.2",
-		"eslint": "^9.39.4",
+		"eslint": "^10.4.0",
 		"globals": "^17.5.0",
 		"tsdown": "^0.21.10",
 		"typescript": "^5.9.3",
