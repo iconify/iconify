@@ -29,14 +29,14 @@
 			"types": "./dist/offline.d.ts"
 		},
 		"./dist/functions": {
-			"types": "./lib/dist/functions.d.ts",
-			"require": "./lib/dist/functions.cjs",
-			"import": "./lib/dist/functions.js"
+			"types": "./dist/functions.d.ts",
+			"require": "./dist/functions.cjs",
+			"import": "./dist/functions.js"
 		},
 		"./dist/offline-functions": {
-			"types": "./lib/dist/offline-functions.d.ts",
-			"require": "./lib/dist/offline-functions.cjs",
-			"import": "./lib/dist/offline-functions.js"
+			"types": "./dist/offline-functions.d.ts",
+			"require": "./dist/offline-functions.cjs",
+			"import": "./dist/offline-functions.js"
 		},
 		"./*": "./*"
 	},
