@@ -37,8 +37,10 @@
 		"./*": "./*"
 	},
 	"scripts": {
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"fmt": "npx oxfmt src/ --write",
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"prebuild": "pnpm run clean",
+		"prebuild": "pnpm run clean && pnpm run lint",
 		"build": "node build",
 		"build:lib": "tsc -b tsconfig.src.json",
 		"build:dist": "rollup -c rollup.config.js",

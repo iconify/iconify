@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { SVGProps, RefAttributes, ReactNode } from 'react';
 import type { IconifyIcon } from '@iconify/types';
 import type { IconifyIconCustomisations as RawIconifyIconCustomisations } from '@iconify/utils/lib/customisations/defaults';

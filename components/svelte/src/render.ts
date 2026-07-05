@@ -13,10 +13,10 @@ import { defaultExtendedIconCustomisations } from './props.js';
  * Default SVG attributes
  */
 const svgDefaults = {
-	xmlns: 'http://www.w3.org/2000/svg',
+	'xmlns': 'http://www.w3.org/2000/svg',
 	'xmlns:xlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
-	role: 'img',
+	'role': 'img',
 };
 
 /**
@@ -42,8 +42,8 @@ const propsToAdd: Record<string, string> = {
 };
 const propsToAddTo: Record<string, Record<string, string>> = {
 	'-webkit-mask': monotoneProps,
-	mask: monotoneProps,
-	background: coloredProps,
+	'mask': monotoneProps,
+	'background': coloredProps,
 };
 for (const prefix in propsToAddTo) {
 	const list = propsToAddTo[prefix];
@@ -82,11 +82,17 @@ export function render(
 	// Properties
 	props: IconProps
 ): RenderResult {
-	const customisations = mergeCustomisations(defaultExtendedIconCustomisations, props);
+	const customisations = mergeCustomisations(
+		defaultExtendedIconCustomisations,
+		props
+	);
 
 	// Check mode
 	const mode: IconifyRenderMode = props.mode || 'svg';
-	const componentProps = (mode === 'svg' ? { ...svgDefaults } : {}) as Record<string, unknown>;
+	const componentProps = (mode === 'svg' ? { ...svgDefaults } : {}) as Record<
+		string,
+		unknown
+	>;
 	if (icon.body.indexOf('xlink:') === -1) {
 		delete componentProps['xmlns:xlink'];
 	}
@@ -156,7 +162,11 @@ export function render(
 					break;
 				}
 				// Copy missing property if it does not exist in customisations
-				if ((defaultExtendedIconCustomisations as Record<string, unknown>)[key] === void 0) {
+				if (
+					(defaultExtendedIconCustomisations as Record<string, unknown>)[
+						key
+					] === void 0
+				) {
 					componentProps[key] = value;
 				}
 		}
@@ -191,7 +201,9 @@ export function render(
 
 	// Render <span> with style
 	const { body, width, height } = icon;
-	const useMask = mode === 'mask' || (mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
+	const useMask =
+		mode === 'mask' ||
+		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
 
 	// Generate SVG
 	const html = iconToHTML(body, {

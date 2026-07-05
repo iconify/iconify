@@ -33,6 +33,9 @@
 		}
 	},
 	"scripts": {
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"fmt": "npx oxfmt src/ --write",
+		"prebuild": "pnpm run lint",
 		"build": "node build",
 		"build:lib": "tsc -b",
 		"build:dist": "rollup -c rollup.config.mjs",

@@ -43,19 +43,23 @@ export function addIcon(name: string, data: IconifyIcon): void {
  * @param data Icon set
  * @param prefix Optional prefix to add to icon names, true (default) if prefix from icon set should be used.
  */
-export function addCollection(data: IconifyJSON, prefix?: string | boolean): void {
+export function addCollection(
+	data: IconifyJSON,
+	prefix?: string | boolean
+): void {
 	const iconPrefix: string =
 		typeof prefix === 'string'
 			? prefix
 			: prefix !== false && typeof data.prefix === 'string'
 				? data.prefix + ':'
 				: '';
-	quicklyValidateIconSet(data) &&
+	if (quicklyValidateIconSet(data)) {
 		parseIconSet(data, (name, icon) => {
 			if (icon) {
 				storage[iconPrefix + name] = icon;
 			}
 		});
+	}
 }
 
 /**
@@ -75,7 +79,11 @@ export const Icon = defineComponent<IconProps>(
 						: null;
 
 			// Validate icon object
-			if (icon === null || typeof icon !== 'object' || typeof icon.body !== 'string') {
+			if (
+				icon === null ||
+				typeof icon !== 'object' ||
+				typeof icon.body !== 'string'
+			) {
 				// Failed
 				return renderSlot(ctx.slots, 'default');
 			}

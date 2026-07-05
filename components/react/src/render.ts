@@ -9,7 +9,11 @@ import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
 import { cleanUpInnerHTML } from '@iconify/utils/lib/svg/inner-html';
-import type { IconifyIconCustomisations, IconifyRenderMode, IconProps } from './props';
+import type {
+	IconifyIconCustomisations,
+	IconifyRenderMode,
+	IconProps,
+} from './props';
 import { defaultExtendedIconCustomisations } from './props';
 import { stringToIcon } from '@iconify/utils/lib/icon/name';
 
@@ -17,10 +21,10 @@ import { stringToIcon } from '@iconify/utils/lib/icon/name';
  * Default SVG attributes
  */
 const svgDefaults: SVGProps<SVGSVGElement> = {
-	xmlns: 'http://www.w3.org/2000/svg',
-	xmlnsXlink: 'http://www.w3.org/1999/xlink',
+	'xmlns': 'http://www.w3.org/2000/svg',
+	'xmlnsXlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
-	role: 'img',
+	'role': 'img',
 };
 
 /**
@@ -84,7 +88,9 @@ export const render = (
 	name?: string
 ): JSX.Element => {
 	// Get default properties
-	const defaultProps = props.inline ? inlineDefaults : defaultExtendedIconCustomisations;
+	const defaultProps = props.inline
+		? inlineDefaults
+		: defaultExtendedIconCustomisations;
 
 	// Get all customisations
 	const customisations = mergeCustomisations(defaultProps, props);
@@ -138,7 +144,8 @@ export const render = (
 
 			// Merge class names
 			case 'className':
-				componentProps[key] = (componentProps[key] ? componentProps[key] + ' ' : '') + value;
+				componentProps[key] =
+					(componentProps[key] ? componentProps[key] + ' ' : '') + value;
 				break;
 
 			// Boolean attributes
@@ -213,7 +220,9 @@ export const render = (
 
 	// Render <span> with style
 	const { body, width, height } = icon;
-	const useMask = mode === 'mask' || (mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
+	const useMask =
+		mode === 'mask' ||
+		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
 
 	// Generate SVG
 	const html = iconToHTML(body, {
@@ -226,8 +235,8 @@ export const render = (
 	componentProps.style = {
 		...style,
 		'--svg': svgToURL(html),
-		width: fixSize(renderAttribs.width),
-		height: fixSize(renderAttribs.height),
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 		...customStyle,

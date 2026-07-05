@@ -1,7 +1,7 @@
 <script module>
 	// Export stuff.
 	// Important: duplicate of iconify.ts. When changing exports, they must be changed in both files.
-	import { 
+	import {
 		iconLoaded,
 		getIcon,
 		listIcons,
@@ -16,10 +16,10 @@
 		setCustomIconLoader,
 		setCustomIconsLoader,
 		addAPIProvider,
-		_api
+		_api,
 	} from './functions.js';
-	
-	export { 
+
+	export {
 		iconLoaded,
 		getIcon,
 		listIcons,
@@ -34,10 +34,10 @@
 		setCustomIconLoader,
 		setCustomIconsLoader,
 		addAPIProvider,
-		_api
-	}
-	
+		_api,
+	};
 </script>
+
 <script>
 	import { onDestroy } from 'svelte';
 	import { checkIconState, generateIcon } from './functions.js';
@@ -62,23 +62,29 @@
 
 	// Get icon data
 	let iconData = $derived.by(() => {
+		// eslint-disable-next-line no-unused-expressions
 		counter;
 		return checkIconState(props.icon, iconState, loaded, props.onload);
 	});
 
 	// Generate data to render
 	let data = $derived.by(() => {
-		const generatedData = iconData ? generateIcon(iconData.data, props) : null;
+		const generatedData = iconData
+			? generateIcon(iconData.data, props)
+			: null;
 		if (generatedData && iconData.classes && props['class'] === undefined) {
 			// Add classes
-			generatedData.attributes['class'] = (typeof props['class'] === 'string' ? props['class'] + ' ' : '') + iconData.classes.join(' ');
+			generatedData.attributes['class'] =
+				(typeof props['class'] === 'string'
+					? props['class'] + ' '
+					: '') + iconData.classes.join(' ');
 		}
 		return generatedData;
 	});
 
 	// Increase counter when loaded to force re-calculation of data
 	function loaded() {
-		counter ++;
+		counter++;
 	}
 
 	// Abort loading when component is destroyed
@@ -88,7 +94,7 @@
 			iconState.loading.abort();
 			iconState.loading = null;
 		}
-	})
+	});
 </script>
 
 {#if data}

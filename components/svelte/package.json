@@ -41,8 +41,10 @@
 		"./*": "./*"
 	},
 	"scripts": {
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"fmt": "npx oxfmt src/ --write",
 		"cleanup": "rimraf lib dist",
-		"prebuild": "pnpm run cleanup",
+		"prebuild": "pnpm run cleanup && pnpm run lint",
 		"build": "node build",
 		"build:tsc": "tsc -b tsconfig.src.json",
 		"build:bundles": "rollup -c rollup.config.js",

@@ -43,14 +43,25 @@ import type {
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import { addAPIProvider, getAPIConfig, listAPIProviders } from '@iconify/core/lib/api/config';
-import { fetchAPIModule, setFetch, getFetch } from '@iconify/core/lib/api/modules/fetch';
+import {
+	addAPIProvider,
+	getAPIConfig,
+	listAPIProviders,
+} from '@iconify/core/lib/api/config';
+import {
+	fetchAPIModule,
+	setFetch,
+	getFetch,
+} from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
-import { setCustomIconLoader, setCustomIconsLoader } from '@iconify/core/lib/api/loaders';
+import {
+	setCustomIconLoader,
+	setCustomIconsLoader,
+} from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Properties
@@ -149,6 +160,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 					) {
 						console.error(err);
 					}
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (e) {
 					console.error(err);
 				}
@@ -164,12 +176,17 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
 				try {
 					const value = providers[key];
-					if (typeof value !== 'object' || !value || value.resources === void 0) {
+					if (
+						typeof value !== 'object' ||
+						!value ||
+						value.resources === void 0
+					) {
 						continue;
 					}
 					if (!addAPIProvider(key, value)) {
 						console.error(err);
 					}
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (e) {
 					console.error(err);
 				}
@@ -357,7 +374,13 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export { addAPIProvider, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader };
+export {
+	addAPIProvider,
+	loadIcons,
+	loadIcon,
+	setCustomIconLoader,
+	setCustomIconsLoader,
+};
 
 // IconifyStorageFunctions
 export { iconLoaded, getIcon, listIcons, addIcon, addCollection };
