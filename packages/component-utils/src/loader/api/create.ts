@@ -14,7 +14,9 @@ export function createIconifyAPILoader(
 	const hosts = Array.isArray(host) ? host : [host];
 
 	// Check for SSR environment: do not send API requests in SSR
-	const isSSR = checkSSR ? typeof window === 'undefined' || !window.document : checkSSR;
+	const isSSR = checkSSR
+		? typeof window === 'undefined' || !window.document
+		: checkSSR;
 
 	return {
 		maxCount: 32,

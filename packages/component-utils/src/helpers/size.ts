@@ -23,7 +23,8 @@ export function getSizeProps(
 	ratio: number | ViewBox
 ): Size {
 	const viewBox = typeof ratio === 'object' ? getIconViewBox(ratio) : undefined;
-	const ratioValue = typeof ratio === 'number' ? ratio : ratio.width / ratio.height;
+	const ratioValue =
+		typeof ratio === 'number' ? ratio : ratio.width / ratio.height;
 
 	if (width && height) {
 		return { width, height, viewBox };

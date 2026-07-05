@@ -2,7 +2,10 @@ import type { IconifyIcon } from '@iconify/types';
 import { stringToIcon, type IconifyIconName } from '@iconify/utils';
 import { getIconStorage } from '../storage/storage.js';
 import type { IconStorage } from '../storage/types.js';
-import { subscribeToIconStorage, unsubscribeFromIconStorage } from '../storage/subscription.js';
+import {
+	subscribeToIconStorage,
+	unsubscribeFromIconStorage,
+} from '../storage/subscription.js';
 import { loadIcons } from '../loader/queue.js';
 
 // Callback with icon data
@@ -54,7 +57,8 @@ export function subscribeToIconData(
 
 		// Get data from storage
 		const name = icon.name;
-		const newData = storage.icons[name] || (storage.missing.has(name) ? null : undefined);
+		const newData =
+			storage.icons[name] || (storage.missing.has(name) ? null : undefined);
 		if (newData === undefined && !storage.pending.has(name)) {
 			// Trigger loading
 			loadIcons({
@@ -86,7 +90,8 @@ export function subscribeToIconData(
 		}
 
 		// Convert icon name to object
-		const newIcon = typeof iconName === 'string' ? stringToIcon(iconName) : { ...iconName };
+		const newIcon =
+			typeof iconName === 'string' ? stringToIcon(iconName) : { ...iconName };
 
 		if (newIcon && 'body' in newIcon) {
 			// Icon data as object

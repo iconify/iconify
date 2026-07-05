@@ -41,7 +41,8 @@
 		"./package.json": "./package.json"
 	},
 	"scripts": {
-		"lint": "eslint --fix src/**/*.ts",
+		"lint": "npx oxlint --fix src/",
+		"fmt": "npx oxfmt src/ --write",
 		"prebuild": "pnpm run lint",
 		"build": "tsdown",
 		"test": "vitest"

@@ -87,7 +87,9 @@ function parseQueuedIcons() {
 							// Parse icon set
 							const parse = (data?: IconifyJSON | null) => {
 								// Add icon set
-								const added = data ? addIconSetToStorage(data, provider) : new Set<string>();
+								const added = data
+									? addIconSetToStorage(data, provider)
+									: new Set<string>();
 
 								// Send notifications for missing icons
 								for (const name of batch) {
