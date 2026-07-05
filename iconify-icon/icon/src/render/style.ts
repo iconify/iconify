@@ -23,7 +23,9 @@ export function appendCustomStyle(style: string) {
 export function updateStyle(parent: Element | ShadowRoot, inline: boolean) {
 	// Get node, create if needed
 	let styleNode = Array.from(parent.childNodes).find(
-		(node) => (node as HTMLElement).hasAttribute && (node as HTMLElement).hasAttribute(nodeAttr)
+		(node) =>
+			(node as HTMLElement).hasAttribute &&
+			(node as HTMLElement).hasAttribute(nodeAttr)
 	) as HTMLElement | undefined;
 
 	if (!styleNode) {

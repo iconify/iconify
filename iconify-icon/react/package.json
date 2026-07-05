@@ -29,6 +29,8 @@
 		"./*": "./*"
 	},
 	"scripts": {
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"fmt": "npx oxfmt src/ --write",
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
 		"prebuild": "pnpm run clean",
 		"build": "tsup",

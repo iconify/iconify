@@ -23,7 +23,10 @@ export function getRenderMode(body: string, mode?: string): ActualRenderMode {
 
 	// Check for animation, use 'style' for animated icons, unless browser is Safari
 	// (only <a>, which should be ignored or animations start with '<a')
-	if ((mode as IconifyRenderMode) !== 'style' && (isBuggedSafari || body.indexOf('<a') === -1)) {
+	if (
+		(mode as IconifyRenderMode) !== 'style' &&
+		(isBuggedSafari || body.indexOf('<a') === -1)
+	) {
 		// Render <svg>
 		return 'svg';
 	}

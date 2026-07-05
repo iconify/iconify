@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { JSX } from 'solid-js';
 
 import type {
@@ -74,7 +75,8 @@ export {
  * Properties for Solid component
  */
 type BaseElementProps = JSX.IntrinsicElements['span'];
-export interface IconifyIconProps extends BaseElementProps, IconifyIconProperties {
+export interface IconifyIconProps
+	extends BaseElementProps, IconifyIconProperties {
 	// Rotation can be string or number
 	rotate?: string | number;
 }
@@ -83,7 +85,17 @@ export interface IconifyIconProps extends BaseElementProps, IconifyIconPropertie
  * Solid component
  */
 export function Icon(props: IconifyIconProps): JSX.Element {
-	let { icon, mode, inline, rotate, flip, width, height, preserveAspectRatio, noobserver } = props;
+	let {
+		icon,
+		mode,
+		inline,
+		rotate,
+		flip,
+		width,
+		height,
+		preserveAspectRatio,
+		noobserver,
+	} = props;
 
 	// Convert icon to string
 	if (typeof icon === 'object') {

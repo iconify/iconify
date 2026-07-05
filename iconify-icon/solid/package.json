@@ -16,6 +16,8 @@
 	"main": "dist/iconify.jsx",
 	"types": "dist/iconify.d.ts",
 	"scripts": {
+		"lint": "npx oxlint --fix src/",
+		"fmt": "npx oxfmt src/ --write",
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
 		"prebuild": "pnpm run clean",
 		"build": "tsc -b"

@@ -7,7 +7,8 @@ import type { IconifyIconSVGAttributes } from './types';
 /**
  * Customisations that affect rendering
  */
-export type RenderedIconCustomisations = FullIconCustomisations & IconifyIconSVGAttributes;
+export type RenderedIconCustomisations = FullIconCustomisations &
+	IconifyIconSVGAttributes;
 
 const defaultCustomisations = {
 	...defaultIconCustomisations,
@@ -23,7 +24,8 @@ export function getCustomisations(node: Element): RenderedIconCustomisations {
 		...defaultCustomisations,
 	};
 
-	const attr = (key: string, def: string | null) => node.getAttribute(key) || def;
+	const attr = (key: string, def: string | null) =>
+		node.getAttribute(key) || def;
 
 	// Dimensions
 	customisations.width = attr('width', null);
@@ -36,7 +38,10 @@ export function getCustomisations(node: Element): RenderedIconCustomisations {
 	flipFromString(customisations, attr('flip', ''));
 
 	// SVG attributes
-	customisations.preserveAspectRatio = attr('preserveAspectRatio', attr('preserveaspectratio', ''));
+	customisations.preserveAspectRatio = attr(
+		'preserveAspectRatio',
+		attr('preserveaspectratio', '')
+	);
 
 	return customisations;
 }

@@ -7,9 +7,13 @@ import { renderSVG } from './svg';
 /**
  * Find icon node
  */
-export function findIconElement(parent: Element | ShadowRoot): HTMLElement | undefined {
+export function findIconElement(
+	parent: Element | ShadowRoot
+): HTMLElement | undefined {
 	return Array.from(parent.childNodes).find((node) => {
-		const tag = (node as HTMLElement).tagName && (node as HTMLElement).tagName.toUpperCase();
+		const tag =
+			(node as HTMLElement).tagName &&
+			(node as HTMLElement).tagName.toUpperCase();
 		return tag === 'SPAN' || tag === 'SVG';
 	}) as HTMLElement | undefined;
 }
@@ -24,7 +28,8 @@ export function renderIcon(parent: Element | ShadowRoot, state: RenderedState) {
 	// Render icon
 	const renderData = iconToSVG(iconData, customisations);
 	if (customisations.preserveAspectRatio) {
-		renderData.attributes['preserveAspectRatio'] = customisations.preserveAspectRatio;
+		renderData.attributes['preserveAspectRatio'] =
+			customisations.preserveAspectRatio;
 	}
 
 	const mode = state.renderedMode;

@@ -40,7 +40,8 @@
 	},
 	"scripts": {
 		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"lint": "eslint src/**/*.ts",
+		"lint": "npx oxlint --fix src/",
+		"fmt": "npx oxfmt src/ --write",
 		"prebuild": "pnpm run lint && pnpm run clean",
 		"build": "node build",
 		"build:api": "api-extractor run --local --verbose",

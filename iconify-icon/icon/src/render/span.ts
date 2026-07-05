@@ -20,8 +20,8 @@ const propsToAdd: Record<string, string> = {
 };
 const propsToAddTo: Record<string, Record<string, string>> = {
 	'-webkit-mask': monotoneProps,
-	mask: monotoneProps,
-	background: coloredProps,
+	'mask': monotoneProps,
+	'background': coloredProps,
 };
 for (const prefix in propsToAddTo) {
 	const list = propsToAddTo[prefix];
@@ -67,8 +67,8 @@ export function renderSPAN(
 	const svgStyle = node.style;
 	const styles: Record<string, string> = {
 		'--svg': url,
-		width: fixSize(renderAttribs.width),
-		height: fixSize(renderAttribs.height),
+		'width': fixSize(renderAttribs.width),
+		'height': fixSize(renderAttribs.height),
 		...(useMask ? monotoneProps : coloredProps),
 	};
 

@@ -5,7 +5,10 @@ import {
 	RenderedIconCustomisations,
 } from './attributes/customisations';
 import { parseIconValue } from './attributes/icon';
-import type { CurrentIconData, RenderedCurrentIconData } from './attributes/icon/state';
+import type {
+	CurrentIconData,
+	RenderedCurrentIconData,
+} from './attributes/icon/state';
 import { getRenderMode } from './attributes/mode';
 import type { IconifyIconProperties } from './attributes/types';
 import { exportFunctions, IconifyExportedFunctions } from './functions';
@@ -55,7 +58,9 @@ export interface IconifyIconHTMLElementClass
 /**
  * Register 'iconify-icon' component, if it does not exist
  */
-export function defineIconifyIcon(name = 'iconify-icon'): IconifyIconHTMLElementClass | undefined {
+export function defineIconifyIcon(
+	name = 'iconify-icon'
+): IconifyIconHTMLElementClass | undefined {
 	// Check for custom elements registry and HTMLElement
 	let customElements: CustomElementRegistry;
 	let ParentClass: typeof HTMLElement;
@@ -296,7 +301,11 @@ export function defineIconifyIcon(name = 'iconify-icon'): IconifyIconHTMLElement
 		 */
 		get status(): IconifyIconStatus {
 			const state = this._state;
-			return state.rendered ? 'rendered' : state.icon.data === null ? 'failed' : 'loading';
+			return state.rendered
+				? 'rendered'
+				: state.icon.data === null
+					? 'failed'
+					: 'loading';
 		}
 
 		/**
@@ -405,7 +414,11 @@ export function defineIconifyIcon(name = 'iconify-icon'): IconifyIconHTMLElement
 		 */
 		_gotIconData(icon: RenderedCurrentIconData) {
 			this._checkQueued = false;
-			this._renderIcon(icon, getCustomisations(this), this.getAttribute('mode'));
+			this._renderIcon(
+				icon,
+				getCustomisations(this),
+				this.getAttribute('mode')
+			);
 		}
 
 		/**
