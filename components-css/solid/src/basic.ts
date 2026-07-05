@@ -14,13 +14,21 @@ import type {
  * Can be used when you do not need a fallback icon
  */
 export function Icon(props: CSSIconElementProps): JSX.Element {
-	const [local, others] = splitProps(props, ['content', 'fallback', 'width', 'height', 'viewBox']);
+	const [local, others] = splitProps(props, [
+		'content',
+		'fallback',
+		'width',
+		'height',
+		'viewBox',
+	]);
 
 	// Content
 	const renderedContent = createMemo(() => renderContent(local.content || ''));
 
 	// Icon size
-	const size = createMemo(() => getSizeProps(local.width, local.height, local.viewBox));
+	const size = createMemo(() =>
+		getSizeProps(local.width, local.height, local.viewBox)
+	);
 
 	// Render icon
 	// Render icon
@@ -34,4 +42,8 @@ export function Icon(props: CSSIconElementProps): JSX.Element {
 	);
 }
 
-export type { CSSIconComponentProps, CSSIconElementProps, CSSIconComponentViewbox };
+export type {
+	CSSIconComponentProps,
+	CSSIconElementProps,
+	CSSIconComponentViewbox,
+};

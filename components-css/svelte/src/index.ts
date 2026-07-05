@@ -1,7 +1,10 @@
 import { SvelteComponent } from 'svelte';
 import type { SvelteHTMLElements } from 'svelte/elements';
 import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
-import type { CSSIconComponentProps, CSSIconComponentViewbox } from './props.js';
+import type {
+	CSSIconComponentProps,
+	CSSIconComponentViewbox,
+} from './props.js';
 
 /**
  * Svelte component
@@ -15,4 +18,8 @@ export default class Icon extends SvelteComponent<
 /**
  * Types
  */
-export { type CSSIconComponentProps, type CSSIconComponentViewbox, type IconifyIconName };
+export {
+	type CSSIconComponentProps,
+	type CSSIconComponentViewbox,
+	type IconifyIconName,
+};

@@ -18,7 +18,9 @@ export const Icon = defineComponent<CSSIconElementProps>(
 		const renderedContent = computed(() => renderContent(props.content || ''));
 
 		// Icon size
-		const size = computed(() => getSizeProps(props.width, props.height, props.viewBox));
+		const size = computed(() =>
+			getSizeProps(props.width, props.height, props.viewBox)
+		);
 
 		// Render icon
 		return () =>
@@ -33,4 +35,8 @@ export const Icon = defineComponent<CSSIconElementProps>(
 	}
 );
 
-export type { CSSIconComponentProps, CSSIconComponentViewbox, CSSIconElementProps };
+export type {
+	CSSIconComponentProps,
+	CSSIconComponentViewbox,
+	CSSIconElementProps,
+};

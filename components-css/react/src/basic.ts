@@ -30,7 +30,10 @@ export function Icon({
 	);
 
 	// Icon size
-	const size = useMemo(() => getSizeProps(width, height, viewBox), [width, height, viewBox]);
+	const size = useMemo(
+		() => getSizeProps(width, height, viewBox),
+		[width, height, viewBox]
+	);
 
 	// Render icon
 	return createElement('svg', {
@@ -41,4 +44,8 @@ export function Icon({
 	});
 }
 
-export type { CSSIconComponentProps, CSSIconComponentViewbox, CSSIconElementProps };
+export type {
+	CSSIconComponentProps,
+	CSSIconComponentViewbox,
+	CSSIconElementProps,
+};

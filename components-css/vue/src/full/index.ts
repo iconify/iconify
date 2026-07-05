@@ -1,5 +1,12 @@
 import './init.js';
-import { defineComponent, onUnmounted, shallowRef, watch, h, computed } from 'vue';
+import {
+	defineComponent,
+	onUnmounted,
+	shallowRef,
+	watch,
+	h,
+	computed,
+} from 'vue';
 import type { CSSIconComponentProps, CSSIconElementProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
 import { renderContent } from '@iconify/component-utils/helpers/content';
@@ -24,9 +31,12 @@ export const Icon = defineComponent<CSSIconElementProps>(
 		const iconData = shallowRef<IconifyIcon | null | undefined>(null);
 
 		// Subscribe to icon data updates and watch prop changes
-		const subscriber = subscribeToIconData(fallbackToRender.value, (newData) => {
-			iconData.value = newData;
-		});
+		const subscriber = subscribeToIconData(
+			fallbackToRender.value,
+			(newData) => {
+				iconData.value = newData;
+			}
+		);
 		iconData.value = subscriber.data;
 
 		watch(fallbackToRender, subscriber.change);
@@ -39,7 +49,9 @@ export const Icon = defineComponent<CSSIconElementProps>(
 		});
 
 		// Icon size
-		const size = computed(() => getSizeProps(props.width, props.height, props.viewBox));
+		const size = computed(() =>
+			getSizeProps(props.width, props.height, props.viewBox)
+		);
 
 		// Render icon
 		return () =>
