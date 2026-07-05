@@ -10,14 +10,14 @@
 	"dependencies": {
 		"@iconify/glyphs-poly-react-test": "file:iconify-glyphs-poly-react-test-1.0.0.tgz",
 		"@iconify/ri-react-test": "file:iconify-ri-react-test-1.0.0.tgz",
-		"react": "^19.2.5",
-		"react-dom": "^19.2.5"
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7"
 	},
 	"devDependencies": {
-		"@iconify-react/ri": "^1.0.0",
+		"@iconify-react/ri": "^1.0.2",
 		"@iconify/css-react": "workspace:*",
 		"@iconify/types": "workspace:*",
-		"@types/react": "^19.2.14",
+		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^5.2.0"
 	}

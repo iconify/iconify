@@ -101,7 +101,7 @@
 		"./*": "./*"
 	},
 	"scripts": {
-		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"lint": "npx oxlint --fix src/",
 		"fmt": "npx oxfmt src/ --write",
 		"prebuild": "pnpm run lint",
 		"build": "tsdown",

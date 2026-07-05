@@ -19,15 +19,15 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "^25.6.0",
-		"globals": "^17.5.0",
+		"@types/node": "^25.9.4",
+		"globals": "^17.7.0",
 		"oxlint": "^1.72.0",
 		"tsdown": "^0.21.10",
 		"typescript": "^5.9.3",
-		"vite": "^7.3.2",
-		"vitest": "^4.1.5"
+		"vite": "^7.3.6",
+		"vitest": "^4.1.9"
 	},
-	"packageManager": "pnpm@10.33.2",
+	"packageManager": "pnpm@10.34.4",
 	"pnpm": {
 		"packageExtensions": {
 			"tsutils": {

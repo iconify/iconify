@@ -12,6 +12,6 @@
 		"@iconify/vue": "workspace:*"
 	},
 	"devDependencies": {
-		"nuxt": "^4.4.2"
+		"nuxt": "^4.4.8"
 	}
 }

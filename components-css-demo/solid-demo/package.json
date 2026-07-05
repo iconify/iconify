@@ -13,10 +13,10 @@
 	"dependencies": {
 		"@iconify/glyphs-poly-solid-test": "file:iconify-glyphs-poly-solid-test-1.0.0.tgz",
 		"@iconify/ri-solid-test": "file:iconify-ri-solid-test-1.0.0.tgz",
-		"solid-js": "^1.9.12"
+		"solid-js": "^1.9.14"
 	},
 	"devDependencies": {
-		"@iconify-solid/ri": "^1.0.0",
+		"@iconify-solid/ri": "^1.0.2",
 		"@iconify/css-solid": "workspace:*",
 		"@iconify/types": "workspace:*",
 		"vite-plugin-solid": "^2.11.12"

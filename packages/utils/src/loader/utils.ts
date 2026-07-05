@@ -10,7 +10,7 @@ export const loaderDefaultWidthProp = '__iconify_loader_width';
 export const loaderDefaultHeightProp = '__iconify_loader_height';
 
 function stringifySize(value: string | number | undefined): string | undefined {
-	return value === undefined ? value : value.toString();
+	return value === undefined ? undefined : value.toString();
 }
 
 function getConfiguredSize(

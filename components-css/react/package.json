@@ -44,9 +44,9 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"@types/react": "^19.2.14",
+		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"react": "^19.2.5"
+		"react": "^19.2.7"
 	},
 	"peerDependencies": {
 		"react": ">=18.0.0"
