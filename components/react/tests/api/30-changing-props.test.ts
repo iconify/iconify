@@ -13,8 +13,7 @@ const iconData = {
 	height: 24,
 };
 
-const path2 =
-	'M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z';
+const path2 = 'M19.031 4.281l-11 11l-.687.719l.687.719l11 11l1.438-1.438L10.187 16L20.47 5.719z';
 const iconData2 = {
 	body: `<path d="${path2}" fill="currentColor"/>`,
 	width: 32,
@@ -98,9 +97,7 @@ describe.skip('Rendering icon', () => {
 						expect(onLoadCalled).toEqual(iconName);
 
 						// Change property
-						component?.rerender(
-							createElement(Icon, { icon: iconName2, onLoad })
-						);
+						component?.rerender(createElement(Icon, { icon: iconName2, onLoad }));
 					});
 				},
 			});
@@ -166,9 +163,7 @@ describe.skip('Rendering icon', () => {
 					component = result;
 
 					// Should render placeholder
-					expect(component.container.innerHTML).toEqual(
-						'<span></span>'
-					);
+					expect(component.container.innerHTML).toEqual('<span></span>');
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toEqual('');
@@ -348,9 +343,7 @@ describe.skip('Rendering icon', () => {
 						expect(component?.container.innerHTML ?? '').toContain(
 							`<g transform="translate(${iconData.width} 0) scale(-1 1)">`
 						);
-						expect(component?.container.innerHTML ?? '').toContain(
-							'style="color: red;"'
-						);
+						expect(component?.container.innerHTML ?? '').toContain('style="color: red;"');
 
 						resolve(true);
 					});

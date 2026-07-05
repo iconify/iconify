@@ -23,18 +23,13 @@ export function Icon({
 	...props
 }: CSSIconElementProps): JSX.Element {
 	// Data for icon to render
-	const [iconData, setIconData] = useState<IconifyIcon | null | undefined>(
+	const [iconData, setIconData] = useState<IconifyIcon | null | undefined>(null);
+	const [subscriberState, setSubscriber] = useState<ReturnType<typeof subscribeToIconData> | null>(
 		null
 	);
-	const [subscriberState, setSubscriber] = useState<ReturnType<
-		typeof subscribeToIconData
-	> | null>(null);
 
 	// Content
-	const renderedContent = useMemo(
-		() => renderContent(content || ''),
-		[content]
-	);
+	const renderedContent = useMemo(() => renderContent(content || ''), [content]);
 
 	// Icon to render from API, set to empty string if CSS rendering is used
 	const fallbackToRender = useMemo(
@@ -59,10 +54,7 @@ export function Icon({
 	}, [iconData]);
 
 	// Icon size
-	const size = useMemo(
-		() => getSizeProps(width, height, viewBox),
-		[width, height, viewBox]
-	);
+	const size = useMemo(() => getSizeProps(width, height, viewBox), [width, height, viewBox]);
 
 	// Content
 	const finalContent = useMemo(

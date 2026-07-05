@@ -8,7 +8,7 @@ import './css/b6dtxa.css';
 import './css/so-from-74.css';
 import './css/so-to-0.css';
 
-const viewBox = {"width":22,"height":24};
+const viewBox = { width: 22, height: 24 };
 const content = `<path class="ona74n u2mluk"/><path class="b6dtxa ona74n"/>`;
 
 interface Props {
@@ -18,15 +18,48 @@ interface Props {
 	static?: boolean;
 	width?: string;
 	height?: string;
-};
+}
 
 function Component(props: Props) {
-	const [local, others] = splitProps(props, ["halign","valign","focus","static","width","height"]);
+	const [local, others] = splitProps(props, [
+		'halign',
+		'valign',
+		'focus',
+		'static',
+		'width',
+		'height',
+	]);
 
-	const states = createMemo(() => ({ 'halign': namedStateValue(local['halign'], 'left'), 'valign': namedStateValue(local['valign'], 'top'), 'focus': local['focus'], 'static': local['static'] }));
-	const fallback = createMemo(() => getFallback(["animated-line-24:align-box-",{"state":"halign"},"-",{"state":"valign"}],states()));
-	const className = createMemo(() => Object.entries(states()).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
-	return (<Icon class={className()} width={local.width} height={local.height} viewBox={viewBox} content={content} fallback={fallback()} {...others} />);
+	const states = createMemo(() => ({
+		halign: namedStateValue(local['halign'], 'left'),
+		valign: namedStateValue(local['valign'], 'top'),
+		focus: local['focus'],
+		static: local['static'],
+	}));
+	const fallback = createMemo(() =>
+		getFallback(
+			['animated-line-24:align-box-', { state: 'halign' }, '-', { state: 'valign' }],
+			states()
+		)
+	);
+	const className = createMemo(
+		() =>
+			Object.entries(states())
+				.map(([key, value]) => (value ? `state-${value === true ? key : value}` : ''))
+				.join(' ')
+				.trim() || undefined
+	);
+	return (
+		<Icon
+			class={className()}
+			width={local.width}
+			height={local.height}
+			viewBox={viewBox}
+			content={content}
+			fallback={fallback()}
+			{...others}
+		/>
+	);
 }
 
 export default Component;

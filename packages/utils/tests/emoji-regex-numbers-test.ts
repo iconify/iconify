@@ -83,16 +83,17 @@ describe('Creating chunks of regex for numbers', () => {
 
 		// Mix
 		const items3 = createEmojiRegexItemForNumbers([
-			0x2763, 0x2765, 0x1f49a, 0x1f49c, 0x1f49b, 0x1f89a, 0x1f89b,
-			0x1f89e, 0x2764,
+			0x2763, 0x2765, 0x1f49a, 0x1f49c, 0x1f49b, 0x1f89a, 0x1f89b, 0x1f89e,
+			0x2764,
 		]);
 		delete (items3 as unknown as Record<string, unknown>).sets;
 		expect(items3).toEqual({
 			type: 'set',
-			regex: '\\uD83D[\\uDC9A-\\uDC9C]|\\uD83E[\\uDC9A\\uDC9B\\uDC9E]|[\\u2763-\\u2765]',
+			regex:
+				'\\uD83D[\\uDC9A-\\uDC9C]|\\uD83E[\\uDC9A\\uDC9B\\uDC9E]|[\\u2763-\\u2765]',
 			numbers: [
-				0x2763, 0x2764, 0x2765, 0x1f49a, 0x1f49b, 0x1f49c, 0x1f89a,
-				0x1f89b, 0x1f89e,
+				0x2763, 0x2764, 0x2765, 0x1f49a, 0x1f49b, 0x1f49c, 0x1f89a, 0x1f89b,
+				0x1f89e,
 			],
 			length: 1,
 			group: false,
@@ -125,27 +126,23 @@ describe('Creating chunks of regex for numbers', () => {
 			items: [
 				createUTF16EmojiRegexItem([0xd83d]),
 				createUTF16EmojiRegexItem([0xdc9a]),
-				createOptionalEmojiRegexItem(
-					createUTF16EmojiRegexItem([0xfe0f])
-				),
+				createOptionalEmojiRegexItem(createUTF16EmojiRegexItem([0xfe0f])),
 			],
 			length: 3,
 			group: false,
 		});
 
-		expect(createRegexForNumbersSequence([0x1f49a, 0xfe0f], false)).toEqual(
-			{
-				type: 'sequence',
-				regex: '\\uD83D\\uDC9A\\uFE0F',
-				items: [
-					createUTF16EmojiRegexItem([0xd83d]),
-					createUTF16EmojiRegexItem([0xdc9a]),
-					createUTF16EmojiRegexItem([0xfe0f]),
-				],
-				length: 3,
-				group: false,
-			}
-		);
+		expect(createRegexForNumbersSequence([0x1f49a, 0xfe0f], false)).toEqual({
+			type: 'sequence',
+			regex: '\\uD83D\\uDC9A\\uFE0F',
+			items: [
+				createUTF16EmojiRegexItem([0xd83d]),
+				createUTF16EmojiRegexItem([0xdc9a]),
+				createUTF16EmojiRegexItem([0xfe0f]),
+			],
+			length: 3,
+			group: false,
+		});
 
 		// Variation only
 		expect(createRegexForNumbersSequence([0xfe0f])).toEqual(
@@ -163,9 +160,7 @@ describe('Creating chunks of regex for numbers', () => {
 					createUTF16EmojiRegexItem([0x2001]),
 					createEmojiRegexItemForNumbers([0x1f932]),
 					// Optional
-					createOptionalEmojiRegexItem(
-						createUTF16EmojiRegexItem([0x2100])
-					),
+					createOptionalEmojiRegexItem(createUTF16EmojiRegexItem([0x2100])),
 					createOptionalEmojiRegexItem(
 						createEmojiRegexItemForNumbers([0x1f91d])
 					),

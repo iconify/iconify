@@ -302,9 +302,7 @@ describe('Testing parsing icon set', () => {
 					// Make sure name exists in array of pending names
 					const index = names.indexOf(name);
 					expect(index).not.toBe(-1);
-					names = names
-						.slice(0, index)
-						.concat(names.slice(index + 1));
+					names = names.slice(0, index).concat(names.slice(index + 1));
 
 					// Check icon data
 					expect(data).toEqual(expected[name]);

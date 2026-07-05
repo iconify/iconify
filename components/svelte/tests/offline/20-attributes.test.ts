@@ -21,7 +21,7 @@ describe('Padding attributes', () => {
 	test('aria-hidden', () => {
 		// dashes, string value
 		const renderResult = render(Icon, {
-			'icon': iconData,
+			icon: iconData,
 			'aria-hidden': 'false',
 		});
 		expect(renderResult.container.innerHTML).not.toContain('aria-hidden');
@@ -42,9 +42,7 @@ describe('Padding attributes', () => {
 			icon: iconData,
 			style: 'vertical-align: 0; color: red;',
 		});
-		expect(renderResult.container.innerHTML).toContain(
-			'style="vertical-align: 0px; color: red;"'
-		);
+		expect(renderResult.container.innerHTML).toContain('style="vertical-align: 0px; color: red;"');
 	});
 
 	test('color', () => {
@@ -52,9 +50,7 @@ describe('Padding attributes', () => {
 			icon: iconData,
 			color: 'red',
 		});
-		expect(renderResult.container.innerHTML).toContain(
-			'style="color: red;"'
-		);
+		expect(renderResult.container.innerHTML).toContain('style="color: red;"');
 	});
 
 	test('color with style', () => {
@@ -65,9 +61,7 @@ describe('Padding attributes', () => {
 		});
 
 		// In Svelte component, `color` overrides `style`
-		expect(renderResult.container.innerHTML).toContain(
-			'style="color: red;"'
-		);
+		expect(renderResult.container.innerHTML).toContain('style="color: red;"');
 		expect(renderResult.container.innerHTML).not.toContain('green');
 	});
 
@@ -77,9 +71,7 @@ describe('Padding attributes', () => {
 			viewBox: '0 0 0 0',
 		});
 
-		expect(renderResult.container.innerHTML).toContain(
-			'viewBox="0 0 24 24"'
-		);
+		expect(renderResult.container.innerHTML).toContain('viewBox="0 0 24 24"');
 		expect(renderResult.container.innerHTML).not.toContain('0 0 0 0');
 	});
 });

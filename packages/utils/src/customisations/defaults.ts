@@ -18,8 +18,7 @@ export interface IconifyIconSizeCustomisations {
  * Icon customisations
  */
 export interface IconifyIconCustomisations
-	extends IconifyTransformations,
-		IconifyIconSizeCustomisations {}
+	extends IconifyTransformations, IconifyIconSizeCustomisations {}
 
 export type FullIconCustomisations = Required<IconifyIconCustomisations>;
 

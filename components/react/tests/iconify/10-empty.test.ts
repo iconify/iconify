@@ -22,9 +22,7 @@ describe('Empty icon', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toEqual(
-			'<i class="fa fa-home"></i>'
-		);
+		expect(component.container.innerHTML).toEqual('<i class="fa fa-home"></i>');
 	});
 
 	test('with text child node', async () => {
@@ -42,15 +40,10 @@ describe('Empty icon', () => {
 		const component = await render(
 			// @ts-expect-error
 			createElement(Icon, {
-				children: [
-					createElement('i', { className: 'fa fa-home' }),
-					'Home',
-				],
+				children: [createElement('i', { className: 'fa fa-home' }), 'Home'],
 			})
 		);
 
-		expect(component.container.innerHTML).toEqual(
-			'<i class="fa fa-home"></i>Home'
-		);
+		expect(component.container.innerHTML).toEqual('<i class="fa fa-home"></i>Home');
 	});
 });

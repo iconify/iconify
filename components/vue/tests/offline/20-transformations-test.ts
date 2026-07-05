@@ -54,9 +54,7 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(wrapper.html()).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('string', () => {
@@ -71,9 +69,7 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'<g transform="translate(0 24) scale(1 -1)">'
-		);
+		expect(wrapper.html()).toContain('<g transform="translate(0 24) scale(1 -1)">');
 	});
 
 	test('string and boolean', () => {
@@ -103,9 +99,7 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(wrapper.html()).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('shorthand and boolean', () => {
@@ -121,9 +115,7 @@ describe('Flip', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(wrapper.html()).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('shorthand and boolean as string', () => {

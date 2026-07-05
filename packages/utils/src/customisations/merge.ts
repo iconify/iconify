@@ -28,8 +28,7 @@ export function mergeCustomisations<T extends FullIconCustomisations>(
 				value === null ||
 				(value && (valueType === 'string' || valueType === 'number'))
 			) {
-				result[key as keyof IconifyIconSizeCustomisations] =
-					value as string;
+				result[key as keyof IconifyIconSizeCustomisations] = value as string;
 			}
 		} else if (valueType === typeof result[key as keyof T]) {
 			// Normalise rotation, copy everything else as is

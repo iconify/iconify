@@ -4,16 +4,16 @@ Iconify for React is not yet another icon component! There are many of them alre
 
 What you get with other components:
 
--   Limited set of icons.
--   Large bundle size because all icons are bundled.
+- Limited set of icons.
+- Large bundle size because all icons are bundled.
 
 Iconify icon component is nothing like that. Component does not include any icon data, it is not tied to any specific icon set. Instead, all data is retrieved from public API on demand.
 
 That means:
 
--   One syntax for over 200,000 icons from 150+ icon sets.
--   Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
--   Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
+- One syntax for over 200,000 icons from 150+ icon sets.
+- Renders SVG. Many components simply render icon fonts, which look ugly. Iconify renders pixel perfect SVG.
+- Loads icons on demand. No need to bundle icons, component will automatically load icon data for icons that you use from Iconify API.
 
 For more information about Iconify project visit [https://iconify.design/](https://iconify.design/).
 
@@ -59,14 +59,14 @@ If you want to use icons without Iconify API, [there are many other options avai
 
 Icon name is a string. Few examples:
 
--   `@api-provider:icon-set-prefix:icon-name`
--   `mdi-light:home` (in this example API provider is empty, so it is skipped)
+- `@api-provider:icon-set-prefix:icon-name`
+- `mdi-light:home` (in this example API provider is empty, so it is skipped)
 
 It has 3 parts, separated by ":":
 
--   provider points to API source. Starts with "@", can be empty (empty value is used for public Iconify API).
--   prefix is name of icon set.
--   name is name of icon.
+- provider points to API source. Starts with "@", can be empty (empty value is used for public Iconify API).
+- prefix is name of icon set.
+- name is name of icon.
 
 See [Iconify for React icon names documentation](https://iconify.design/docs/icon-components/react/icon-name.html) for more detailed explanation.
 
@@ -171,13 +171,13 @@ Visual example to show the difference between inline and block modes:
 
 The icon component has the following optional properties:
 
--   `inline`. Changes icon behaviour to match icon fonts. See "Inline icon" section above.
--   `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
--   `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
--   `flip`, `hFlip`, `vFlip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
--   `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
--   `align`, `vAlign`, `hAlign`, `slice`. Icon alignment. See "Alignment" section below.
--   `onLoad`. Callback function that is called when icon data has been loaded. See "onLoad" section below.
+- `inline`. Changes icon behaviour to match icon fonts. See "Inline icon" section above.
+- `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
+- `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
+- `flip`, `hFlip`, `vFlip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
+- `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
+- `align`, `vAlign`, `hAlign`, `slice`. Icon alignment. See "Alignment" section below.
+- `onLoad`. Callback function that is called when icon data has been loaded. See "onLoad" section below.
 
 ### Other properties and events
 
@@ -189,8 +189,8 @@ By default, icon height is "1em". With is dynamic, calculated using the icon's w
 
 There are several ways to change icon dimensions:
 
--   Setting `font-size` in style (or `fontSize` if you are using inline style).
--   Setting `width` and/or `height` property.
+- Setting `font-size` in style (or `fontSize` if you are using inline style).
+- Setting `width` and/or `height` property.
 
 Values for `width` and `height` can be numbers or strings.
 
@@ -248,8 +248,8 @@ Icons that do have a palette, such as emojis, cannot be customised. Setting colo
 
 Icons that do not have a palette can be customised. By default, colour is set to "currentColor", which means the icon's colour matches text colour. To change the colour you can:
 
--   Set `color` style or use stylesheet to target icon. If you are using the stylesheet, target `svg` element.
--   Add `color` property.
+- Set `color` style or use stylesheet to target icon. If you are using the stylesheet, target `svg` element.
+- Add `color` property.
 
 Examples:
 
@@ -285,15 +285,15 @@ You can rotate and flip the icon.
 
 This might seem redundant because icon can also be rotated and flipped using CSS transformations. So why do transformation properties exist? Because it is a different type of transformation.
 
--   CSS transformations transform the entire icon.
--   Icon transformations transform the contents of the icon.
+- CSS transformations transform the entire icon.
+- Icon transformations transform the contents of the icon.
 
 If you have a square icon, this makes no difference. However, if you have an icon that has different width and height values, it makes a huge difference.
 
 Rotating 16x24 icon by 90 degrees results in:
 
--   CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
--   Icon transformation changes bounding box to 24x16, rotating content inside an icon.
+- CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
+- Icon transformation changes bounding box to 24x16, rotating content inside an icon.
 
 See [icon transformations documentation](https://iconify.design/docs/icon-components/react/transform.html) for more details.
 
@@ -301,9 +301,9 @@ See [icon transformations documentation](https://iconify.design/docs/icon-compon
 
 There are several properties available to flip an icon:
 
--   `hFlip`: boolean property, flips icon horizontally.
--   `vFlip`: boolean property, flips icon vertically.
--   `flip`: shorthand string property, can flip icon horizontally and/or vertically.
+- `hFlip`: boolean property, flips icon horizontally.
+- `vFlip`: boolean property, flips icon vertically.
+- `flip`: shorthand string property, can flip icon horizontally and/or vertically.
 
 Examples:
 
@@ -352,9 +352,9 @@ It is not an event, such as `onClick` event for links, it is a simple callback f
 
 When `onLoad` is called:
 
--   If value of icon property is an object, `onLoad` is not called.
--   If value of icon property is a string and icon data is available, `onLoad` is called on first render.
--   If value of icon property is a string and icon data is not available, `onLoad` is called on first re-render after icon data is retrieved from API.
+- If value of icon property is an object, `onLoad` is not called.
+- If value of icon property is a string and icon data is available, `onLoad` is called on first render.
+- If value of icon property is a string and icon data is not available, `onLoad` is called on first re-render after icon data is retrieved from API.
 
 What is the purpose of `onLoad`? To let you know when Icon component renders an icon and when it does not render anything. This allows you to do things like adding class name for parent element, such as "container--with-icon" that modify layout if icon is being displayed.
 

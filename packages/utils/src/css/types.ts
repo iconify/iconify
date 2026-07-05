@@ -67,7 +67,8 @@ export interface IconCSSModeOptions {
  * Requires mode
  */
 export interface IconCSSCommonCodeOptions
-	extends IconCSSSharedOptions,
+	extends
+		IconCSSSharedOptions,
 		IconCSSIconSelectorOptions,
 		Required<IconCSSModeOptions> {
 	//
@@ -77,8 +78,7 @@ export interface IconCSSCommonCodeOptions
  * Options for generating data for one icon
  */
 export interface IconCSSItemOptions
-	extends IconCSSSharedOptions,
-		Required<IconCSSModeOptions> {
+	extends IconCSSSharedOptions, Required<IconCSSModeOptions> {
 	//
 }
 
@@ -155,7 +155,8 @@ export interface IconCSSFormatOptions {
  * Options for generating data for one icon as background/mask
  */
 export interface IconCSSIconOptions
-	extends IconCSSSharedOptions,
+	extends
+		IconCSSSharedOptions,
 		IconCSSIconSelectorOptions,
 		IconCSSModeOptions,
 		IconCSSFormatOptions {
@@ -167,7 +168,8 @@ export interface IconCSSIconOptions
  * Options for generating data for one icon as content
  */
 export interface IconContentIconOptions
-	extends IconContentSharedOptions,
+	extends
+		IconContentSharedOptions,
 		IconContentIconSelectorOptions,
 		IconCSSFormatOptions {
 	// Customise icon
@@ -178,7 +180,8 @@ export interface IconContentIconOptions
  * Options for generating multiple icons as background/mask
  */
 export interface IconCSSIconSetOptions
-	extends IconCSSSharedOptions,
+	extends
+		IconCSSSharedOptions,
 		IconCSSSelectorOptions,
 		IconCSSModeOptions,
 		IconCSSFormatOptions {
@@ -190,7 +193,8 @@ export interface IconCSSIconSetOptions
  * Options for generating multiple icons as content
  */
 export interface IconContentIconSetOptions
-	extends IconContentSharedOptions,
+	extends
+		IconContentSharedOptions,
 		IconContentIconSelectorOptions,
 		IconCSSFormatOptions {
 	// Customise icon from icon set

@@ -51,10 +51,7 @@ describe('Fetch data', () => {
 		fetchData['https://example.com/simple-fetch'] = {
 			result: { message: 'Success' },
 		};
-		const result = await fetchJSON<{ message: string }>(
-			['https://example.com'],
-			'/simple-fetch'
-		);
+		const result = await fetchJSON<{ message: string }>(['https://example.com'], '/simple-fetch');
 		expect(result).toEqual({ message: 'Success' });
 	});
 
@@ -63,10 +60,7 @@ describe('Fetch data', () => {
 			status: 500,
 		};
 		await expect(
-			fetchJSON<{ message: string }>(
-				['https://example.com'],
-				'/failed-fetch'
-			)
+			fetchJSON<{ message: string }>(['https://example.com'], '/failed-fetch')
 		).rejects.toThrow('All promises were rejected');
 	});
 

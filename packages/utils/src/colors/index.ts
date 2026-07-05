@@ -410,8 +410,7 @@ export function colorToHexString(
 		result[4] === result[5] &&
 		(!hasAlpha || result[6] === result[7])
 	) {
-		result =
-			result[0] + result[2] + result[4] + (hasAlpha ? result[6] : '');
+		result = result[0] + result[2] + result[4] + (hasAlpha ? result[6] : '');
 	}
 
 	return '#' + result;
@@ -442,9 +441,7 @@ export function colorToString(color: Color, canRound = false): string {
 			if (color.alpha !== 1) {
 				list.push(color.alpha);
 			}
-			return (
-				'rgb' + (list.length === 4 ? 'a(' : '(') + list.join(', ') + ')'
-			);
+			return 'rgb' + (list.length === 4 ? 'a(' : '(') + list.join(', ') + ')';
 		}
 
 		case 'hsl': {
@@ -456,9 +453,7 @@ export function colorToString(color: Color, canRound = false): string {
 			if (color.alpha !== 1) {
 				list.push(color.alpha);
 			}
-			return (
-				'hsl' + (list.length === 4 ? 'a(' : '(') + list.join(', ') + ')'
-			);
+			return 'hsl' + (list.length === 4 ? 'a(' : '(') + list.join(', ') + ')';
 		}
 
 		case 'lab': {

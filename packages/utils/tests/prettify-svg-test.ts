@@ -34,13 +34,13 @@ describe('Prettify SVG', () => {
 			'<svg>\n\t<title>Trimmed Text</title>\n</svg>\n'
 		);
 
-		expect(
-			prettifySVG('<svg><title> Right Trimmed Text</title></svg>')
-		).toBe('<svg>\n\t<title> Right Trimmed Text</title>\n</svg>\n');
+		expect(prettifySVG('<svg><title> Right Trimmed Text</title></svg>')).toBe(
+			'<svg>\n\t<title> Right Trimmed Text</title>\n</svg>\n'
+		);
 
-		expect(
-			prettifySVG('<svg><title>Left Trimmed Text </title></svg>')
-		).toBe('<svg>\n\t<title>Left Trimmed Text </title>\n</svg>\n');
+		expect(prettifySVG('<svg><title>Left Trimmed Text </title></svg>')).toBe(
+			'<svg>\n\t<title>Left Trimmed Text </title>\n</svg>\n'
+		);
 
 		expect(prettifySVG('<svg><title> Text </title></svg>')).toBe(
 			'<svg>\n\t<title>\n\t\tText\n\t</title>\n</svg>\n'
@@ -74,9 +74,7 @@ describe('Prettify SVG', () => {
 
 	test('Bad code', () => {
 		expect(prettifySVG('<svg><title>Incomplete SVG</title>')).toBeNull();
-		expect(
-			prettifySVG('<svg><title>Incomplete SVG</title>/svg>')
-		).toBeNull();
+		expect(prettifySVG('<svg><title>Incomplete SVG</title>/svg>')).toBeNull();
 		expect(
 			prettifySVG('<svg><title>Incomplete SVG</title></g></svg>')
 		).toBeNull();

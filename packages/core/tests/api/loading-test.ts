@@ -1,9 +1,6 @@
 import type { QueryModuleResponse } from '@iconify/api-redundancy';
 import { addAPIProvider } from '../../lib/api/config';
-import type {
-	IconifyAPIIconsQueryParams,
-	IconifyAPIQueryParams,
-} from '../../lib/api/modules';
+import type { IconifyAPIIconsQueryParams, IconifyAPIQueryParams } from '../../lib/api/modules';
 import { setAPIModule } from '../../lib/api/modules';
 import { loadIcons, loadIcon, isPending } from '../../lib/api/icons';
 import type { IconifyIcon } from '@iconify/types';
@@ -137,9 +134,7 @@ describe('Testing API loadIcons', () => {
 							name: 'icon1',
 						})
 					).toBe(false);
-					expect(isPending({ provider, prefix, name: 'icon3' })).toBe(
-						false
-					);
+					expect(isPending({ provider, prefix, name: 'icon3' })).toBe(false);
 
 					fulfill(true);
 				}
@@ -307,9 +302,7 @@ describe('Testing API loadIcons', () => {
 		expect(loadedIcon).toBe(false);
 
 		// Test isPending
-		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(
-			false
-		);
+		expect(isPending({ provider, prefix, name: 'BadIconName' })).toBe(false);
 	});
 
 	it('Loading one icon twice with Promise', () => {
@@ -459,10 +452,7 @@ describe('Testing API loadIcons', () => {
 				expect(params).toEqual(expected);
 
 				// Send only requested icons
-				const icons = Object.create(null) as Record<
-					string,
-					IconifyIcon
-				>;
+				const icons = Object.create(null) as Record<string, IconifyIcon>;
 				params.icons.forEach((icon) => {
 					icons[icon] = {
 						body: '<path d="" />',
@@ -484,10 +474,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			let callbackCalled = false;
 			loadIcons(
-				[
-					provider + ':' + prefix + ':icon1',
-					provider + ':' + prefix + ':icon2',
-				],
+				[provider + ':' + prefix + ':icon1', provider + ':' + prefix + ':icon2'],
 				(loaded, missing, pending) => {
 					// Callback should be called only once because results should be sent in same tick
 					expect(callbackCalled).toBe(false);
@@ -574,9 +561,7 @@ describe('Testing API loadIcons', () => {
 						break;
 
 					default:
-						reject(
-							`Unexpected additional call to sendQuery for host ${host}.`
-						);
+						reject(`Unexpected additional call to sendQuery for host ${host}.`);
 				}
 			};
 
@@ -588,10 +573,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			let callbackCalled = false;
 			loadIcons(
-				[
-					provider + ':' + prefix + ':icon1',
-					provider + ':' + prefix + ':icon2',
-				],
+				[provider + ':' + prefix + ':icon1', provider + ':' + prefix + ':icon2'],
 				(loaded, missing, pending) => {
 					// Callback should be called only once
 					expect(callbackCalled).toBe(false);
@@ -706,9 +688,7 @@ describe('Testing API loadIcons', () => {
 						break;
 
 					default:
-						reject(
-							`Unexpected additional call to sendQuery for host ${host}.`
-						);
+						reject(`Unexpected additional call to sendQuery for host ${host}.`);
 				}
 			};
 
@@ -720,10 +700,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			let callbackCalled = false;
 			loadIcons(
-				[
-					provider + ':' + prefix + ':icon1',
-					provider + ':' + prefix + ':icon2',
-				],
+				[provider + ':' + prefix + ':icon1', provider + ':' + prefix + ':icon2'],
 				(loaded, missing, pending) => {
 					// Callback should be called only once
 					expect(callbackCalled).toBe(false);
@@ -749,10 +726,7 @@ describe('Testing API loadIcons', () => {
 					setTimeout(() => {
 						let callbackCalled = false;
 						loadIcons(
-							[
-								provider + ':' + prefix + ':icon3',
-								provider + ':' + prefix + ':icon4',
-							],
+							[provider + ':' + prefix + ':icon3', provider + ':' + prefix + ':icon4'],
 							(loaded, missing, pending) => {
 								// Callback should be called only once
 								expect(callbackCalled).toBe(false);
@@ -874,9 +848,7 @@ describe('Testing API loadIcons', () => {
 						break;
 
 					default:
-						reject(
-							`Unexpected additional call to sendQuery for host ${host}.`
-						);
+						reject(`Unexpected additional call to sendQuery for host ${host}.`);
 				}
 			};
 
@@ -888,10 +860,7 @@ describe('Testing API loadIcons', () => {
 			// Load icons
 			let callbackCalled = false;
 			loadIcons(
-				[
-					provider + ':' + prefix + ':icon1',
-					provider + ':' + prefix + ':icon2',
-				],
+				[provider + ':' + prefix + ':icon1', provider + ':' + prefix + ':icon2'],
 				(loaded, missing, pending) => {
 					// Callback should be called only once
 					expect(callbackCalled).toBe(false);
@@ -917,10 +886,7 @@ describe('Testing API loadIcons', () => {
 					setTimeout(() => {
 						let callbackCalled = false;
 						loadIcons(
-							[
-								provider + ':' + prefix2 + ':icon2',
-								provider + ':' + prefix2 + ':icon4',
-							],
+							[provider + ':' + prefix2 + ':icon2', provider + ':' + prefix2 + ':icon4'],
 							(loaded, missing, pending) => {
 								// Callback should be called only once
 								expect(callbackCalled).toBe(false);

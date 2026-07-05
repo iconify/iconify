@@ -16,11 +16,12 @@ import { iconToSVG } from '../svg/build';
 export function getCommonCSSRules(
 	options: IconCSSCommonCodeOptions
 ): Record<string, string> {
-	const result = {
+	const result = Object.create(null) as Record<string, string>;
+	Object.assign(result, {
 		display: 'inline-block',
 		width: '1em',
 		height: '1em',
-	} as Record<string, string>;
+	});
 	const varName = options.varName;
 
 	if (options.pseudoSelector) {
@@ -59,7 +60,7 @@ export function generateItemCSSRules(
 	icon: Required<IconifyIcon>,
 	options: IconCSSItemOptions
 ): Record<string, string> {
-	const result = {} as Record<string, string>;
+	const result = Object.create(null) as Record<string, string>;
 	const varName = options.varName;
 
 	// Build icon
@@ -121,8 +122,7 @@ export function generateItemContent(
 
 	// Get dimensions
 	const height = options.height;
-	const width =
-		options.width ?? calculateSize(height, viewBox[2] / viewBox[3]);
+	const width = options.width ?? calculateSize(height, viewBox[2] / viewBox[3]);
 
 	// Get SVG
 	const svg = iconToHTML(

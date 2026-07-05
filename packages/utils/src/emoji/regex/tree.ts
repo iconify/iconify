@@ -44,9 +44,7 @@ export function createEmojisTree(sequences: number[][]): TreeItem[] {
 
 			// Find item
 			let item: TreeItem;
-			const match = parent.find(
-				(item) => item.regex.regex === regex.regex
-			);
+			const match = parent.find((item) => item.regex.regex === regex.regex);
 			if (!match) {
 				// Create new item
 				item = {

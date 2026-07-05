@@ -10,9 +10,7 @@ export function expandIconSet(data: IconifyJSON): void {
 	const icons = Object.keys(data.icons);
 
 	(
-		Object.keys(
-			defaultIconDimensions
-		) as (keyof typeof defaultIconDimensions)[]
+		Object.keys(defaultIconDimensions) as (keyof typeof defaultIconDimensions)[]
 	).forEach((prop) => {
 		if (typeof data[prop] !== typeof defaultIconDimensions[prop]) {
 			return;

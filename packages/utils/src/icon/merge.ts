@@ -22,8 +22,7 @@ export function mergeIconData<T extends PartialExtendedIconifyIcon>(
 		// Add default transformations if needed
 		if (key in defaultIconTransformations) {
 			if (key in parent && !(key in result)) {
-				result[key as 'rotate'] =
-					defaultIconTransformations[key as 'rotate'];
+				result[key as 'rotate'] = defaultIconTransformations[key as 'rotate'];
 			}
 			// Not transformation
 		} else if (key in child) {

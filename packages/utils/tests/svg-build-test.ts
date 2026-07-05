@@ -317,10 +317,7 @@ describe('Testing iconToSVG', () => {
 				viewBox: '0 0 128 128',
 			},
 			viewBox: [0, 0, 128, 128],
-			body:
-				'<g transform="translate(128 0) scale(-1 1)">' +
-				iconBody +
-				'</g>',
+			body: '<g transform="translate(128 0) scale(-1 1)">' + iconBody + '</g>',
 		};
 
 		const result = iconToSVG(icon);

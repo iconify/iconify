@@ -8,10 +8,10 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
 	},
-	"devDependencies": {
-		"nuxt": "^4.4.2"
-	},
 	"dependencies": {
 		"@iconify/vue": "workspace:*"
+	},
+	"devDependencies": {
+		"nuxt": "^4.4.2"
 	}
 }

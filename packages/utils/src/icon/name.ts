@@ -101,9 +101,6 @@ export const validateIconName = (
 	return !!(
 		// Check prefix: cannot be empty, unless allowSimpleName is enabled
 		// Check name: cannot be empty
-		(
-			((allowSimpleName && icon.prefix === '') || !!icon.prefix) &&
-			!!icon.name
-		)
+		(((allowSimpleName && icon.prefix === '') || !!icon.prefix) && !!icon.name)
 	);
 };

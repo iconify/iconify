@@ -43,25 +43,14 @@ import type {
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import {
-	addAPIProvider,
-	getAPIConfig,
-	listAPIProviders,
-} from '@iconify/core/lib/api/config';
-import {
-	fetchAPIModule,
-	setFetch,
-	getFetch,
-} from '@iconify/core/lib/api/modules/fetch';
+import { addAPIProvider, getAPIConfig, listAPIProviders } from '@iconify/core/lib/api/config';
+import { fetchAPIModule, setFetch, getFetch } from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
-import {
-	setCustomIconLoader,
-	setCustomIconsLoader,
-} from '@iconify/core/lib/api/loaders';
+import { setCustomIconLoader, setCustomIconsLoader } from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Properties
@@ -175,11 +164,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
 				try {
 					const value = providers[key];
-					if (
-						typeof value !== 'object' ||
-						!value ||
-						value.resources === void 0
-					) {
+					if (typeof value !== 'object' || !value || value.resources === void 0) {
 						continue;
 					}
 					if (!addAPIProvider(key, value)) {
@@ -311,8 +296,8 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 		return props.children
 			? (props.children as JSX.Element)
 			: props.fallback
-			? (props.fallback as JSX.Element)
-			: createElement('span', {});
+				? (props.fallback as JSX.Element)
+				: createElement('span', {});
 	}
 
 	return render(
@@ -372,13 +357,7 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export {
-	addAPIProvider,
-	loadIcons,
-	loadIcon,
-	setCustomIconLoader,
-	setCustomIconsLoader,
-};
+export { addAPIProvider, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader };
 
 // IconifyStorageFunctions
 export { iconLoaded, getIcon, listIcons, addIcon, addCollection };

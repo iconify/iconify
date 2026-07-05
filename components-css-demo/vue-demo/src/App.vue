@@ -77,12 +77,7 @@ function restartAnimations() {
 
 const hAlignValues = ['left', 'center', 'right'] as const;
 const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
-const fillValues = [
-	'no-fill',
-	'light-filled',
-	'dark-filled',
-	'filled',
-] as const;
+const fillValues = ['no-fill', 'light-filled', 'dark-filled', 'filled'] as const;
 const modeValues = ['auto', 'light', 'dark'] as const;
 
 const halign = ref<(typeof hAlignValues)[number]>(hAlignValues[0]);
@@ -114,8 +109,7 @@ function nextMode() {
 			<h1>Demo for SVG+CSS</h1>
 			<p>This browser <span class="status"></span> SVG+CSS</p>
 			<p>
-				Known browsers that do not support SVG+CSS: Safari 26.3
-				(currently latest stable version)
+				Known browsers that do not support SVG+CSS: Safari 26.3 (currently latest stable version)
 			</p>
 		</section>
 		<section>
@@ -150,12 +144,7 @@ function nextMode() {
 			</div>
 			<div class="restart-animations">
 				<button @click="restartAnimations">
-					<Icon
-						:content="refreshIcon"
-						:viewBox="refreshViewbox"
-						height="24"
-						fallback=""
-					/>
+					<Icon :content="refreshIcon" :viewBox="refreshViewbox" height="24" fallback="" />
 					Restart animations
 				</button>
 			</div>
@@ -184,8 +173,7 @@ function nextMode() {
 		</section>
 		<section>
 			<h1>
-				No size set (container limited to 100x200 px,
-				preserveAspectRatio aligns icon to bottom)
+				No size set (container limited to 100x200 px, preserveAspectRatio aligns icon to bottom)
 			</h1>
 			<div style="width: 100px; height: 200px; display: flex">
 				<Icon
@@ -199,15 +187,10 @@ function nextMode() {
 		<section>
 			<h1>Testing various params</h1>
 			<div class="icons-list">
-				No fallback (should render icon in modern browser only), 2
-				icons:
+				No fallback (should render icon in modern browser only), 2 icons:
 				<div>
 					<Icon :content="msDrafts" :viewBox="grid24" height="24" />
-					<BasicIcon
-						:content="msDrafts"
-						:viewBox="grid24"
-						height="24"
-					/>
+					<BasicIcon :content="msDrafts" :viewBox="grid24" height="24" />
 				</div>
 			</div>
 			<div class="icons-list">
@@ -266,16 +249,11 @@ function nextMode() {
 				</div>
 			</div>
 			<div class="icons-list svg-hover-anchor">
-				Generated stateful icons (one with ts, one without, one
-				functional, last icons are duplicated with static mode and no
-				fallback):
+				Generated stateful icons (one with ts, one without, one functional, last icons are
+				duplicated with static mode and no fallback):
 				<div>
 					<TestIcon1 height="24" :halign="halign" :valign="valign" />
-					<TestIcon1b
-						height="24"
-						:halign="halign"
-						:valign="valign"
-					/><TestIcon1c
+					<TestIcon1b height="24" :halign="halign" :valign="valign" /><TestIcon1c
 						height="24"
 						:halign="halign"
 						:valign="valign"
@@ -286,24 +264,9 @@ function nextMode() {
 					<TestIcon3 height="24" :fill="fill" :mode="mode" />
 					<TestIcon3b height="24" :fill="fill" :mode="mode" />
 					<TestIcon3c height="24" :fill="fill" :mode="mode" />
-					<TestIcon4
-						height="24"
-						:fill="fill"
-						:mode="mode"
-						:static="true"
-					/>
-					<TestIcon4b
-						height="24"
-						:fill="fill"
-						:mode="mode"
-						:static="true"
-					/>
-					<TestIcon4c
-						height="24"
-						:fill="fill"
-						:mode="mode"
-						:static="true"
-					/>
+					<TestIcon4 height="24" :fill="fill" :mode="mode" :static="true" />
+					<TestIcon4b height="24" :fill="fill" :mode="mode" :static="true" />
+					<TestIcon4c height="24" :fill="fill" :mode="mode" :static="true" />
 				</div>
 			</div>
 			<div style="display: flex; gap: 8px; flex-wrap: wrap">

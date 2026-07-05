@@ -41,9 +41,7 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 	const data = typeof icon === 'string' ? storage[icon] : icon;
 
 	if (!data) {
-		return props.children
-			? (props.children as JSX.Element)
-			: createElement('span', {});
+		return props.children ? (props.children as JSX.Element) : createElement('span', {});
 	}
 
 	return render(
@@ -104,16 +102,13 @@ export function addIcon(name: string, data: IconifyIcon): void {
  * @param data Icon set
  * @param prefix Optional prefix to add to icon names, true (default) if prefix from icon set should be used.
  */
-export function addCollection(
-	data: IconifyJSON,
-	prefix?: string | boolean
-): void {
+export function addCollection(data: IconifyJSON, prefix?: string | boolean): void {
 	const iconPrefix: string =
 		typeof prefix === 'string'
 			? prefix
 			: prefix !== false && typeof data.prefix === 'string'
-			? data.prefix + ':'
-			: '';
+				? data.prefix + ':'
+				: '';
 
 	quicklyValidateIconSet(data) &&
 		parseIconSet(data, (name, icon) => {

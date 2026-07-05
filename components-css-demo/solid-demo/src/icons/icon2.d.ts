@@ -8,7 +8,8 @@ interface IconProps {
 }
 
 declare const Component: (
-	props: Omit<JSX.SvgSVGAttributes<SVGSVGElement>, 'viewBox' | 'width' | 'height' | 'xmlns'> & IconProps
+	props: Omit<JSX.SvgSVGAttributes<SVGSVGElement>, 'viewBox' | 'width' | 'height' | 'xmlns'> &
+		IconProps
 ) => JSX.Element;
 
 export { type IconProps };

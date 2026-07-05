@@ -106,9 +106,7 @@ E0.6 smiling face: ${String.fromCodePoint(0x263a)} (text)
 		const regexValue = createOptimisedRegex(list);
 
 		const matches = `
-E1.0 waving hand: medium skin tone: ${
-			String.fromCodePoint(0x1f44b) + String.fromCodePoint(0x1f3fd)
-		}
+E1.0 waving hand: medium skin tone: ${String.fromCodePoint(0x1f44b) + String.fromCodePoint(0x1f3fd)}
 `.match(new RegExp(regexValue, 'g'));
 
 		expect(matches?.length).toBe(1);

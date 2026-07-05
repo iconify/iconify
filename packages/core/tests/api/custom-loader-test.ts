@@ -1,9 +1,6 @@
 import { defaultIconProps } from '@iconify/utils';
 import { loadIcons, loadIcon } from '../../lib/api/icons';
-import {
-	setCustomIconsLoader,
-	setCustomIconLoader,
-} from '../../lib/api/loaders';
+import { setCustomIconsLoader, setCustomIconLoader } from '../../lib/api/loaders';
 import { listIcons } from '../../lib/storage/storage';
 
 describe('Testing API loadIcons', () => {
@@ -246,9 +243,7 @@ describe('Testing API loadIcons', () => {
 						]);
 
 						// Check storage
-						expect(listIcons(provider, prefix1)).toEqual([
-							`@${provider}:${prefix1}:constructor`,
-						]);
+						expect(listIcons(provider, prefix1)).toEqual([`@${provider}:${prefix1}:constructor`]);
 						expect(listIcons(provider, prefix2)).toEqual([
 							`@${provider}:${prefix2}:Icon_1`,
 							`@${provider}:${prefix2}:Icon_2`,
@@ -304,9 +299,7 @@ describe('Testing API loadIcons', () => {
 						});
 
 						// Check storage
-						expect(listIcons(provider, prefix)).toEqual([
-							`@${provider}:${prefix}:constructor`,
-						]);
+						expect(listIcons(provider, prefix)).toEqual([`@${provider}:${prefix}:constructor`]);
 					} catch (err) {
 						reject(err);
 						return;
@@ -335,9 +328,7 @@ describe('Testing API loadIcons', () => {
 						// Check params
 						expect(requestedPrefix).toBe(prefix1);
 						expect(requestedProvider).toBe(provider);
-						expect(
-							iconsToTest[prefix1].has(requestedName)
-						).toBeTruthy();
+						expect(iconsToTest[prefix1].has(requestedName)).toBeTruthy();
 					} catch (err) {
 						reject(err);
 						return null;
@@ -357,9 +348,7 @@ describe('Testing API loadIcons', () => {
 						// Check params
 						expect(requestedPrefix).toBe(prefix2);
 						expect(requestedProvider).toBe(provider);
-						expect(
-							iconsToTest[prefix2].has(requestedName)
-						).toBeTruthy();
+						expect(iconsToTest[prefix2].has(requestedName)).toBeTruthy();
 					} catch (err) {
 						reject(err);
 						return null;
@@ -373,7 +362,7 @@ describe('Testing API loadIcons', () => {
 									? null
 									: {
 											body: `<g data-name="${requestedName}" />`,
-									  }
+										}
 							);
 						}, 150);
 					});
@@ -418,12 +407,8 @@ describe('Testing API loadIcons', () => {
 						]);
 
 						// Check storage
-						expect(listIcons(provider, prefix1)).toEqual([
-							`@${provider}:${prefix1}:constructor`,
-						]);
-						expect(listIcons(provider, prefix2)).toEqual([
-							`@${provider}:${prefix2}:Icon_2`,
-						]);
+						expect(listIcons(provider, prefix1)).toEqual([`@${provider}:${prefix1}:constructor`]);
+						expect(listIcons(provider, prefix2)).toEqual([`@${provider}:${prefix2}:Icon_2`]);
 					} catch (err) {
 						reject(err);
 						return;
@@ -463,11 +448,7 @@ describe('Testing API loadIcons', () => {
 			);
 			setCustomIconsLoader(
 				() => {
-					reject(
-						new Error(
-							'Loader for multple icons should not be called'
-						)
-					);
+					reject(new Error('Loader for multple icons should not be called'));
 					return null;
 				},
 				prefix,
@@ -475,32 +456,27 @@ describe('Testing API loadIcons', () => {
 			);
 
 			// Load icon
-			loadIcons(
-				[`${provider}:${prefix}:${name}`],
-				(loaded, missing, pending) => {
-					try {
-						// Test response
-						expect(loaded).toEqual([
-							{
-								provider,
-								prefix,
-								name,
-							},
-						]);
-						expect(missing).toEqual([]);
-						expect(pending).toEqual([]);
+			loadIcons([`${provider}:${prefix}:${name}`], (loaded, missing, pending) => {
+				try {
+					// Test response
+					expect(loaded).toEqual([
+						{
+							provider,
+							prefix,
+							name,
+						},
+					]);
+					expect(missing).toEqual([]);
+					expect(pending).toEqual([]);
 
-						// Check storage
-						expect(listIcons(provider, prefix)).toEqual([
-							`@${provider}:${prefix}:${name}`,
-						]);
-					} catch (err) {
-						reject(err);
-						return;
-					}
-					resolve(true);
+					// Check storage
+					expect(listIcons(provider, prefix)).toEqual([`@${provider}:${prefix}:${name}`]);
+				} catch (err) {
+					reject(err);
+					return;
 				}
-			);
+				resolve(true);
+			});
 		});
 	});
 
@@ -540,9 +516,7 @@ describe('Testing API loadIcons', () => {
 			);
 			setCustomIconLoader(
 				() => {
-					reject(
-						new Error('Loader for one icon should not be called')
-					);
+					reject(new Error('Loader for one icon should not be called'));
 					return null;
 				},
 				prefix,
@@ -551,10 +525,7 @@ describe('Testing API loadIcons', () => {
 
 			// Load icon
 			loadIcons(
-				[
-					`${provider}:${prefix}:Icon_1`,
-					`${provider}:${prefix}:Icon_2`,
-				],
+				[`${provider}:${prefix}:Icon_1`, `${provider}:${prefix}:Icon_2`],
 				(loaded, missing, pending) => {
 					try {
 						// Test response

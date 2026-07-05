@@ -58,18 +58,12 @@ export function TestIcon() {
 							}
 
 							if (style.fontSize !== '24px') {
-								console.log(
-									'Invalid font-size:',
-									style.fontSize
-								);
+								console.log('Invalid font-size:', style.fontSize);
 								errors = true;
 							}
 
 							if (style.verticalAlign !== '-0.25em') {
-								console.log(
-									'Invalid vertical-align:',
-									style.verticalAlign
-								);
+								console.log('Invalid vertical-align:', style.verticalAlign);
 								errors = true;
 							}
 
@@ -128,12 +122,7 @@ export function TestIcon() {
 					ref={(element) => {
 						const key = 'icon-rotate2';
 						if (element) {
-							toggleTest(
-								key,
-								element.getAttribute('rotate') !== '2'
-									? 'failed'
-									: 'success'
-							);
+							toggleTest(key, element.getAttribute('rotate') !== '2' ? 'failed' : 'success');
 						} else {
 							toggleTest(key, 'failed');
 						}

@@ -28,9 +28,7 @@ export function FileSystemIconLoader(
 				let svg = await fs.readFile(path, 'utf-8');
 				const cleanupIdx = svg.indexOf('<svg');
 				if (cleanupIdx > 0) svg = svg.slice(cleanupIdx);
-				return typeof transform === 'function'
-					? await transform(svg)
-					: svg;
+				return typeof transform === 'function' ? await transform(svg) : svg;
 			}
 		}
 	};

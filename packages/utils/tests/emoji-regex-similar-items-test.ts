@@ -5,7 +5,7 @@ import {
 	createSequenceEmojiRegexItem,
 	createSetEmojiRegexItem,
 	createUTF16EmojiRegexItem,
-	SequenceEmojiItemRegex,
+	type SequenceEmojiItemRegex,
 } from '../lib/emoji/regex/base';
 import {
 	createEmojiRegexItemForNumbers,
@@ -29,9 +29,7 @@ describe('Similar chunks of regex', () => {
 		expect(
 			findSimilarRegexItemSequences([
 				createEmojiRegexItemForNumbers([0x1234]),
-				createOptionalEmojiRegexItem(
-					createEmojiRegexItemForNumbers([0x1234])
-				),
+				createOptionalEmojiRegexItem(createEmojiRegexItemForNumbers([0x1234])),
 			])
 		).toBeUndefined();
 
@@ -85,9 +83,7 @@ describe('Similar chunks of regex', () => {
 			sets: [
 				createSequenceEmojiRegexItem([
 					items[0],
-					createOptionalEmojiRegexItem(
-						createUTF16EmojiRegexItem([0x1235])
-					),
+					createOptionalEmojiRegexItem(createUTF16EmojiRegexItem([0x1235])),
 				]),
 				items[2],
 			],
@@ -142,26 +138,17 @@ describe('Similar chunks of regex', () => {
 
 		// Apply
 		const set = createSetEmojiRegexItem(
-			mergeSimilarRegexItemSequences(
-				items,
-				sequence,
-				mergeSimilarItemsInSet
-			)
+			mergeSimilarRegexItemSequences(items, sequence, mergeSimilarItemsInSet)
 		);
 
-		const commonChunk = (items[0] as SequenceEmojiItemRegex).items.slice(
-			0,
-			3
-		);
+		const commonChunk = (items[0] as SequenceEmojiItemRegex).items.slice(0, 3);
 		expect(set).toEqual({
 			type: 'set',
 			regex: '\\uD83E\\uDD1D\\uD83C[\\uDFFB-\\uDFFF]',
 			sets: [
 				createSequenceEmojiRegexItem([
 					...commonChunk,
-					createUTF16EmojiRegexItem([
-						0xdffb, 0xdffc, 0xdffd, 0xdffe, 0xdfff,
-					]),
+					createUTF16EmojiRegexItem([0xdffb, 0xdffc, 0xdffd, 0xdffe, 0xdfff]),
 				]),
 			],
 			length: 4,
@@ -272,11 +259,9 @@ describe('Similar chunks of regex', () => {
 			regex: '\\uD83D\\uDE4F(?:\\uD83C\\uDFFB)?',
 			sets: [
 				createSequenceEmojiRegexItem([
-					...items[0].items,
+					...(items[0] as SequenceEmojiItemRegex).items,
 					createOptionalEmojiRegexItem(
-						createRegexForNumbersSequence(
-							splitUTF32Number(0x1f3fb)!
-						)
+						createRegexForNumbersSequence(splitUTF32Number(0x1f3fb)!)
 					),
 				]),
 			],

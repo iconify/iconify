@@ -16,12 +16,7 @@ describe('Testing customisations', () => {
 		const node = doc.createElement('div');
 		const emptyCustomisations = getCustomisations(node);
 		expect(emptyCustomisations).toEqual(defaultCustomisations);
-		expect(
-			haveCustomisationsChanged(
-				emptyCustomisations,
-				defaultCustomisations
-			)
-		).toBe(false);
+		expect(haveCustomisationsChanged(emptyCustomisations, defaultCustomisations)).toBe(false);
 
 		// Test height
 		node.innerHTML = '<span height="1em"></span>';
@@ -32,9 +27,7 @@ describe('Testing customisations', () => {
 			...defaultCustomisations,
 			height: '1em',
 		});
-		expect(haveCustomisationsChanged(emptyCustomisations, test1)).toBe(
-			true
-		);
+		expect(haveCustomisationsChanged(emptyCustomisations, test1)).toBe(true);
 
 		// Test transformations
 		node.innerHTML = '<span flip="horizontal" rotate="2"></span>';
@@ -46,9 +39,7 @@ describe('Testing customisations', () => {
 			hFlip: true,
 			rotate: 2,
 		});
-		expect(haveCustomisationsChanged(emptyCustomisations, test2)).toBe(
-			true
-		);
+		expect(haveCustomisationsChanged(emptyCustomisations, test2)).toBe(true);
 		expect(haveCustomisationsChanged(test1, test2)).toBe(true);
 
 		// Dimensions, empty value
@@ -62,9 +53,7 @@ describe('Testing customisations', () => {
 		});
 		expect(haveCustomisationsChanged(test3, test2)).toBe(true);
 		expect(haveCustomisationsChanged(test1, test3)).toBe(true);
-		expect(haveCustomisationsChanged(test3, emptyCustomisations)).toBe(
-			true
-		);
+		expect(haveCustomisationsChanged(test3, emptyCustomisations)).toBe(true);
 
 		// preserveAspectRatio
 		node.innerHTML = '<span preserveAspectRatio="xMidYMid meet"></span>';
@@ -75,9 +64,7 @@ describe('Testing customisations', () => {
 			...defaultCustomisations,
 			preserveAspectRatio: 'xMidYMid meet',
 		});
-		expect(haveCustomisationsChanged(test6, emptyCustomisations)).toBe(
-			true
-		);
+		expect(haveCustomisationsChanged(test6, emptyCustomisations)).toBe(true);
 
 		node.innerHTML = '<span preserveaspectratio="xMidYMin slice"></span>';
 		testNode = node.lastChild as HTMLSpanElement;
@@ -87,9 +74,7 @@ describe('Testing customisations', () => {
 			...defaultCustomisations,
 			preserveAspectRatio: 'xMidYMin slice',
 		});
-		expect(haveCustomisationsChanged(test7, emptyCustomisations)).toBe(
-			true
-		);
+		expect(haveCustomisationsChanged(test7, emptyCustomisations)).toBe(true);
 		expect(haveCustomisationsChanged(test7, test6)).toBe(true);
 	});
 });

@@ -58,9 +58,7 @@ describe('Testing validating alias', () => {
 					},
 					aliases: null,
 				});
-				reject(
-					new Error('Expected to throw error when aliases is null')
-				);
+				reject(new Error('Expected to throw error when aliases is null'));
 				return;
 			} catch {
 				//

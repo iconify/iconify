@@ -12,8 +12,8 @@
 	"devDependencies": {
 		"@iconify-vue/ri": "^1.0.6",
 		"@iconify/css-vue": "workspace:*",
-		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/glyphs-poly-vue-test": "file:iconify-glyphs-poly-vue-test-1.0.0.tgz",
+		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/types": "workspace:*",
 		"@vitejs/plugin-vue": "^6.0.6"
 	}

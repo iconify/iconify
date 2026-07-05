@@ -1,23 +1,17 @@
 {
 	"name": "@iconify-icon/react",
-	"description": "React wrapper for Iconify Icon web component",
-	"author": "Vjacheslav Trushkin",
 	"version": "3.0.3",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "React wrapper for Iconify Icon web component",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "iconify-icon/react"
 	},
-	"scripts": {
-		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"prebuild": "pnpm run clean",
-		"build": "tsup",
-		"test": "vitest --config vitest.config.mjs"
-	},
+	"funding": "https://github.com/sponsors/cyberalien",
 	"main": "dist/iconify.js",
 	"module": "dist/iconify.mjs",
 	"types": "dist/iconify.d.ts",
@@ -33,6 +27,12 @@
 			"require": "./dist/iconify.js"
 		},
 		"./*": "./*"
+	},
+	"scripts": {
+		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
+		"prebuild": "pnpm run clean",
+		"build": "tsup",
+		"test": "vitest --config vitest.config.mjs"
 	},
 	"dependencies": {
 		"iconify-icon": "workspace:^"

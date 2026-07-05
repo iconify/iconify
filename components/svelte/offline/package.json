@@ -1,7 +1,7 @@
 {
 	"name": "@iconify/svelte/offline",
-	"svelte": "../dist/OfflineIcon.svelte",
 	"types": "../dist/offline.d.ts",
+	"svelte": "../dist/OfflineIcon.svelte",
 	"exports": {
 		".": {
 			"svelte": "../dist/OfflineIcon.svelte",

@@ -81,12 +81,7 @@ function AnimatedDemo() {
 			<div>
 				<div class="restart-animations">
 					<button onClick={restartAnimations}>
-						<Icon
-							content={refreshIcon}
-							viewBox={refreshViewbox}
-							height="24"
-							fallback=""
-						/>
+						<Icon content={refreshIcon} viewBox={refreshViewbox} height="24" fallback="" />
 						Restart animations
 					</button>
 				</div>
@@ -99,12 +94,7 @@ function AnimatedDemo() {
 							height="24"
 							fallback="tabler:current-location-filled"
 						/>
-						<Icon
-							content={tablerUserIcon}
-							viewBox={grid24}
-							height="24"
-							fallback="tabler:user"
-						/>
+						<Icon content={tablerUserIcon} viewBox={grid24} height="24" fallback="tabler:user" />
 						<Icon
 							content={tablerUserFilledIcon}
 							viewBox={grid24}
@@ -120,12 +110,7 @@ function AnimatedDemo() {
 
 const hAlignValues = ['left', 'center', 'right'] as const;
 const vAlignValues = ['top', 'middle', 'bottom', 'stretch'] as const;
-const fillValues = [
-	'no-fill',
-	'light-filled',
-	'dark-filled',
-	'filled',
-] as const;
+const fillValues = ['no-fill', 'light-filled', 'dark-filled', 'filled'] as const;
 const modeValues = ['auto', 'light', 'dark'] as const;
 
 function StatefulDemo() {
@@ -149,19 +134,11 @@ function StatefulDemo() {
 		}
 	});
 
-	const [hAlign, setHAlign] = createSignal<(typeof hAlignValues)[number]>(
-		hAlignValues[0]
-	);
-	const [vAlign, setVAlign] = createSignal<(typeof vAlignValues)[number]>(
-		vAlignValues[0]
-	);
+	const [hAlign, setHAlign] = createSignal<(typeof hAlignValues)[number]>(hAlignValues[0]);
+	const [vAlign, setVAlign] = createSignal<(typeof vAlignValues)[number]>(vAlignValues[0]);
 	const [action, setAction] = createSignal(false);
-	const [fill, setFill] = createSignal<(typeof fillValues)[number]>(
-		fillValues[0]
-	);
-	const [mode, setMode] = createSignal<(typeof modeValues)[number]>(
-		modeValues[0]
-	);
+	const [fill, setFill] = createSignal<(typeof fillValues)[number]>(fillValues[0]);
+	const [mode, setMode] = createSignal<(typeof modeValues)[number]>(modeValues[0]);
 
 	function nextHAlign() {
 		const index = hAlignValues.indexOf(hAlign());
@@ -186,35 +163,17 @@ function StatefulDemo() {
 	return (
 		<Show when={isRendering()}>
 			<div class="icons-list svg-hover-anchor">
-				Generated stateful icons (one with ts, one without, last icon is
-				duplicated with static mode and no fallback):
+				Generated stateful icons (one with ts, one without, last icon is duplicated with static mode
+				and no fallback):
 				<div>
-					<TestIcon1
-						height="24"
-						halign={hAlign()}
-						valign={vAlign()}
-					/>
-					<TestIcon1b
-						height="24"
-						halign={hAlign()}
-						valign={vAlign()}
-					/>
+					<TestIcon1 height="24" halign={hAlign()} valign={vAlign()} />
+					<TestIcon1b height="24" halign={hAlign()} valign={vAlign()} />
 					<TestIcon2 height="24" action={action()} />
 					<TestIcon2b height="24" action={action()} />
 					<TestIcon3 height="24" mode={mode()} fill={fill()} />
 					<TestIcon3b height="24" mode={mode()} fill={fill()} />
-					<TestIcon4
-						height="24"
-						mode={mode()}
-						fill={fill()}
-						static={true}
-					/>
-					<TestIcon4b
-						height="24"
-						mode={mode()}
-						fill={fill()}
-						static={true}
-					/>
+					<TestIcon4 height="24" mode={mode()} fill={fill()} static={true} />
+					<TestIcon4b height="24" mode={mode()} fill={fill()} static={true} />
 				</div>
 			</div>
 			<div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -233,9 +192,7 @@ const App: Component = () => {
 	const [iconData, setIconData] = createSignal<IconifyIcon | null>(null);
 
 	createEffect(() => {
-		loadIcon('material-symbols:mail-lock-outline-rounded')
-			.then(setIconData)
-			.catch(console.error);
+		loadIcon('material-symbols:mail-lock-outline-rounded').then(setIconData).catch(console.error);
 	});
 
 	return (
@@ -246,8 +203,7 @@ const App: Component = () => {
 					This browser <span class="status"></span> SVG+CSS
 				</p>
 				<p>
-					Known browsers that do not support SVG+CSS: Safari 26.3
-					(currently latest stable version)
+					Known browsers that do not support SVG+CSS: Safari 26.3 (currently latest stable version)
 				</p>
 			</section>
 			<section>
@@ -284,12 +240,9 @@ const App: Component = () => {
 			</section>
 			<section>
 				<h1>
-					No size set (container limited to 100x200 px,
-					preserveAspectRatio aligns icon to bottom)
+					No size set (container limited to 100x200 px, preserveAspectRatio aligns icon to bottom)
 				</h1>
-				<div
-					style={{ width: '100px', height: '200px', display: 'flex' }}
-				>
+				<div style={{ width: '100px', height: '200px', display: 'flex' }}>
 					<Icon
 						content={tablerHomeIcon}
 						viewBox={grid24}
@@ -301,15 +254,10 @@ const App: Component = () => {
 			<section>
 				<h1>Testing various params</h1>
 				<div class="icons-list">
-					No fallback (should render icon in modern browser only), 2
-					icons:
+					No fallback (should render icon in modern browser only), 2 icons:
 					<div>
 						<Icon content={msDrafts} viewBox={grid24} height="24" />
-						<BasicIcon
-							content={msDrafts}
-							viewBox={grid24}
-							height="24"
-						/>
+						<BasicIcon content={msDrafts} viewBox={grid24} height="24" />
 					</div>
 				</div>
 				<div class="icons-list">
@@ -324,14 +272,9 @@ const App: Component = () => {
 				</div>
 				{iconData() && (
 					<div class="icons-list">
-						Fallback only as IconifyIcon (used as Iconify Icon
-						component):
+						Fallback only as IconifyIcon (used as Iconify Icon component):
 						<div>
-							<Icon
-								viewBox={grid24}
-								height="24"
-								fallback={iconData()!}
-							/>
+							<Icon viewBox={grid24} height="24" fallback={iconData()!} />
 						</div>
 					</div>
 				)}
@@ -349,8 +292,7 @@ const App: Component = () => {
 					</div>
 				</div>
 				<div class="icons-list">
-					From test package (no fallback used for GitHub and BlueSky
-					icons):
+					From test package (no fallback used for GitHub and BlueSky icons):
 					<div>
 						<GitHubIconTest height="24" />
 						<TwitterIconTest height="24" />

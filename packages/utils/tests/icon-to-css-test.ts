@@ -154,8 +154,7 @@ describe('Testing CSS for icon', () => {
 		expect(
 			getIconCSS(icon, {
 				format: 'expanded',
-				customise: (content) =>
-					content.replace(/currentColor/g, 'purple'),
+				customise: (content) => content.replace(/currentColor/g, 'purple'),
 			})
 		).toBe(`.icon {
   display: inline-block;

@@ -1,12 +1,4 @@
-import {
-	defineComponent,
-	onMounted,
-	onUnmounted,
-	ref,
-	shallowRef,
-	nextTick,
-	watch,
-} from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, shallowRef, nextTick, watch } from 'vue';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
 // Core
@@ -52,25 +44,14 @@ import type {
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import {
-	addAPIProvider,
-	getAPIConfig,
-	listAPIProviders,
-} from '@iconify/core/lib/api/config';
-import {
-	fetchAPIModule,
-	setFetch,
-	getFetch,
-} from '@iconify/core/lib/api/modules/fetch';
+import { addAPIProvider, getAPIConfig, listAPIProviders } from '@iconify/core/lib/api/config';
+import { fetchAPIModule, setFetch, getFetch } from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
-import {
-	setCustomIconLoader,
-	setCustomIconsLoader,
-} from '@iconify/core/lib/api/loaders';
+import { setCustomIconLoader, setCustomIconsLoader } from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Properties
@@ -182,11 +163,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
 				try {
 					const value = providers[key];
-					if (
-						typeof value !== 'object' ||
-						!value ||
-						value.resources === void 0
-					) {
+					if (typeof value !== 'object' || !value || value.resources === void 0) {
 						continue;
 					}
 					if (!addAPIProvider(key, value)) {
@@ -243,11 +220,7 @@ export const Icon = defineComponent<IconProps>(
 			const icon = props.icon;
 
 			// Icon is an object
-			if (
-				typeof icon === 'object' &&
-				icon !== null &&
-				typeof icon.body === 'string'
-			) {
+			if (typeof icon === 'object' && icon !== null && typeof icon.body === 'string') {
 				lastRenderedIconName.value = '';
 				return {
 					data: icon,
@@ -256,10 +229,7 @@ export const Icon = defineComponent<IconProps>(
 
 			// Check for valid icon name
 			let iconName: IconifyIconName | null;
-			if (
-				typeof icon !== 'string' ||
-				(iconName = stringToIcon(icon, false, true)) === null
-			) {
+			if (typeof icon !== 'string' || (iconName = stringToIcon(icon, false, true)) === null) {
 				return null;
 			}
 
@@ -300,12 +270,7 @@ export const Icon = defineComponent<IconProps>(
 			if (customise) {
 				// Clone data and customise it
 				data = Object.assign({}, data);
-				const customised = customise(
-					data.body,
-					iconName.name,
-					iconName.prefix,
-					iconName.provider
-				);
+				const customised = customise(data.body, iconName.name, iconName.prefix, iconName.provider);
 				if (typeof customised === 'string') {
 					data.body = customised;
 				}
@@ -423,13 +388,7 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export {
-	addAPIProvider,
-	loadIcons,
-	loadIcon,
-	setCustomIconLoader,
-	setCustomIconsLoader,
-};
+export { addAPIProvider, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader };
 
 // IconifyStorageFunctions
 export { iconLoaded, getIcon, listIcons, addIcon, addCollection };

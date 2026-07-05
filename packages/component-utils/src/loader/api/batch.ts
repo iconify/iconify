@@ -3,10 +3,7 @@ import type { QueueSplitConfig } from '../types.js';
 /**
  * Split icon names into queues
  */
-export function splitForBatchLoading(
-	icons: string[],
-	config: QueueSplitConfig
-): string[][] {
+export function splitForBatchLoading(icons: string[], config: QueueSplitConfig): string[][] {
 	const { maxCount, maxLength } = config;
 
 	icons.sort((a, b) => a.localeCompare(b));

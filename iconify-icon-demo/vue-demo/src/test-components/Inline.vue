@@ -11,11 +11,7 @@
 		</div>
 		<div>
 			Using "vertical-align: 0" to override inline attribute:
-			<iconify-icon
-				icon="experiment2"
-				:style="{ verticalAlign: 0 }"
-				inline
-			/>
+			<iconify-icon icon="experiment2" :style="{ verticalAlign: 0 }" inline />
 		</div>
 	</section>
 </template>

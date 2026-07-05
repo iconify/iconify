@@ -7,19 +7,12 @@ export default () => {
 			<div>
 				Block icon (behaving like image):
 				<Icon icon="experiment2" />
-				<Icon
-					icon="experiment2"
-					inline={true}
-					style="vertical-align: 0"
-				/>
+				<Icon icon="experiment2" inline={true} style="vertical-align: 0" />
 			</div>
 			<div>
 				Inline icon (behaving line text / icon font):
 				<Icon icon="experiment2" inline={true} />
-				<Icon
-					icon="experiment2"
-					style={{ 'vertical-align': '-0.125em' }}
-				/>
+				<Icon icon="experiment2" style={{ 'vertical-align': '-0.125em' }} />
 			</div>
 		</section>
 	);

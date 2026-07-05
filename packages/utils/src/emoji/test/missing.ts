@@ -105,13 +105,7 @@ export function findMissingEmojis<T extends BaseSequenceItem>(
 			// Check child elements
 			if (deep || oldItem) {
 				for (const key in values) {
-					iterate(
-						key as EmojiComponentType,
-						childTree,
-						values,
-						item,
-						deep
-					);
+					iterate(key as EmojiComponentType, childTree, values, item, deep);
 				}
 			}
 		}
@@ -134,13 +128,7 @@ export function findMissingEmojis<T extends BaseSequenceItem>(
 			'hair-style': [],
 		};
 		for (const key in values) {
-			iterate(
-				key as EmojiComponentType,
-				treeItem,
-				values,
-				rootItem,
-				deep
-			);
+			iterate(key as EmojiComponentType, treeItem, values, rootItem, deep);
 		}
 	};
 

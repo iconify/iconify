@@ -19,9 +19,7 @@ describe('Empty icon', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-			'<i class="fa fa-home"></i>'
-		);
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('<i class="fa fa-home"></i>');
 	});
 
 	test('with text child node', () => {
@@ -41,8 +39,6 @@ describe('Empty icon', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe(
-			'<i class="fa fa-home"></i>Home icon'
-		);
+		expect(wrapper.html().replace(/\s*\n\s*/g, '')).toBe('<i class="fa fa-home"></i>Home icon');
 	});
 });

@@ -22,7 +22,7 @@ describe('Padding attributes', () => {
 	test('aria-hidden', () => {
 		// dashes, string value
 		const component = render(Icon, {
-			'icon': iconData,
+			icon: iconData,
 			'aria-hidden': 'false',
 		});
 		const node = component.container.querySelector('svg')!;

@@ -45,9 +45,7 @@ export function minifyIconSet(data: IconifyJSON): void {
 	const icons = Object.keys(data.icons);
 
 	(
-		Object.keys(
-			defaultIconDimensions
-		) as (keyof typeof defaultIconDimensions)[]
+		Object.keys(defaultIconDimensions) as (keyof typeof defaultIconDimensions)[]
 	).forEach((prop) => {
 		// Check for default value for property
 		if (data[prop] === defaultIconDimensions[prop]) {
@@ -122,8 +120,8 @@ export function minifyIconSet(data: IconifyJSON): void {
 				prop in item
 					? item[prop]
 					: hasMinifiedDefault
-					? oldDefault
-					: defaultValue;
+						? oldDefault
+						: defaultValue;
 			if (
 				value === newDefault ||
 				(newDefault === null && value === defaultValue)

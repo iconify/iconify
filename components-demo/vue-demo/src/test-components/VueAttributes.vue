@@ -15,27 +15,15 @@
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
-			<Icon
-				icon="admin-users"
-				style="vertical-align: 0.25em"
-				:inline="true"
-			/>
+			<Icon icon="admin-users" style="vertical-align: 0.25em" :inline="true" />
 		</div>
 		<div>
 			Inline icon with bound style as object (purple, 2em, no alignment):
-			<Icon
-				icon="admin-users"
-				v-bind:style="icon1StyleObj"
-				color="green"
-			/>
+			<Icon icon="admin-users" v-bind:style="icon1StyleObj" color="green" />
 		</div>
 		<div>
 			Inline icon with bound style as string (purple, 2em, no alignment):
-			<Icon
-				icon="admin-users"
-				v-bind:style="icon1StyleStr"
-				color="green"
-			/>
+			<Icon icon="admin-users" v-bind:style="icon1StyleStr" color="green" />
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
@@ -50,29 +38,20 @@
 			<Icon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
-				v-on:click="
-					dynamicStyleObj.color =
-						dynamicStyleObj.color === 'red' ? 'green' : 'red'
-				"
+				v-on:click="dynamicStyleObj.color = dynamicStyleObj.color === 'red' ? 'green' : 'red'"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Dynamic style (shadow / color):
 			<Icon
 				icon="admin-users"
-				v-bind:style="[
-					showShadow ? boxShadowStyleObj : dynamicStyleObj,
-				]"
+				v-bind:style="[showShadow ? boxShadowStyleObj : dynamicStyleObj]"
 				v-on:click="showShadow = !showShadow"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Reference:
-			<Icon
-				icon="admin-users"
-				ref="icon1"
-				@click="logReference"
-			/>&nbsp;(click to log)
+			<Icon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click to log)
 		</div>
 	</section>
 </template>

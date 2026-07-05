@@ -64,10 +64,7 @@ export async function loadCollectionFromFS(
 			// Try to install the package if it doesn't exist
 			if (!jsonPath && !checkLegacy && autoInstall) {
 				await tryInstallPkg(packageName, autoInstall);
-				jsonPath = await resolvePathAsync(
-					`${packageName}/icons.json`,
-					cwd
-				);
+				jsonPath = await resolvePathAsync(`${packageName}/icons.json`, cwd);
 			}
 		} else if (!jsonPath && autoInstall) {
 			await tryInstallPkg(packageName, autoInstall);

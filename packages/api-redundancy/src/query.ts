@@ -168,10 +168,7 @@ export function sendQuery(
 	 * Add / replace callback to call when execution is complete.
 	 * This can be used to abort pending query implementations when query is complete or aborted.
 	 */
-	function subscribe(
-		callback?: QueryDoneCallback,
-		overwrite?: boolean
-	): void {
+	function subscribe(callback?: QueryDoneCallback, overwrite?: boolean): void {
 		if (overwrite) {
 			doneCallbacks = [];
 		}

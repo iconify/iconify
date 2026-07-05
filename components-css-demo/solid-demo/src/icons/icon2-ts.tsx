@@ -2,7 +2,7 @@ import { Icon } from '@iconify/css-solid';
 import { createMemo, splitProps } from 'solid-js';
 import { getFallback } from './helpers/fallback-fi4iupre1o.js';
 
-const viewBox = {"width":20,"height":24};
+const viewBox = { width: 20, height: 24 };
 const content = `<style>.a8wtkc {
   stroke: var(--svg-primary-color, currentColor);
 }
@@ -83,15 +83,33 @@ interface Props {
 	focus?: boolean;
 	width?: string;
 	height?: string;
-};
+}
 
 function Component(props: Props) {
-	const [local, others] = splitProps(props, ["action","focus","width","height"]);
+	const [local, others] = splitProps(props, ['action', 'focus', 'width', 'height']);
 
-	const states = createMemo(() => ({ 'action': local['action'], 'focus': local['focus'] }));
-	const fallback = createMemo(() => getFallback(["animated-line-24:",{"state":"action","values":["remove","search"]}],states()));
-	const className = createMemo(() => Object.entries(states()).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
-	return (<Icon class={className()} width={local.width} height={local.height} viewBox={viewBox} content={content} fallback={fallback()} {...others} />);
+	const states = createMemo(() => ({ action: local['action'], focus: local['focus'] }));
+	const fallback = createMemo(() =>
+		getFallback(['animated-line-24:', { state: 'action', values: ['remove', 'search'] }], states())
+	);
+	const className = createMemo(
+		() =>
+			Object.entries(states())
+				.map(([key, value]) => (value ? `state-${value === true ? key : value}` : ''))
+				.join(' ')
+				.trim() || undefined
+	);
+	return (
+		<Icon
+			class={className()}
+			width={local.width}
+			height={local.height}
+			viewBox={viewBox}
+			content={content}
+			fallback={fallback()}
+			{...others}
+		/>
+	);
 }
 
 export default Component;

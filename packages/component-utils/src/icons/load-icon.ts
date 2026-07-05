@@ -1,24 +1,15 @@
 import type { IconifyIcon } from '@iconify/types';
-import {
-	stringToIcon,
-	type IconifyIconName,
-} from '@iconify/utils/lib/icon/name';
+import { stringToIcon, type IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { getIconStorage } from '../storage/storage.js';
-import {
-	subscribeToIconStorage,
-	unsubscribeFromIconStorage,
-} from '../storage/subscription.js';
+import { subscribeToIconStorage, unsubscribeFromIconStorage } from '../storage/subscription.js';
 import { loadIcons } from '../loader/queue.js';
 
 /**
  * Load icon
  */
-export function loadIcon(
-	iconName: string | IconifyIconName
-): Promise<IconifyIcon | null> {
+export function loadIcon(iconName: string | IconifyIconName): Promise<IconifyIcon | null> {
 	return new Promise((resolve) => {
-		const icon =
-			typeof iconName === 'string' ? stringToIcon(iconName) : iconName;
+		const icon = typeof iconName === 'string' ? stringToIcon(iconName) : iconName;
 		if (!icon) {
 			return resolve(null);
 		}

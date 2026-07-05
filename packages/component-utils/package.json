@@ -1,28 +1,17 @@
 {
 	"name": "@iconify/component-utils",
-	"type": "module",
-	"description": "Reusable files used by multiple Iconify components",
-	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"version": "0.0.1",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Reusable files used by multiple Iconify components",
 	"homepage": "https://iconify.design/",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/component-utils"
 	},
-	"scripts": {
-		"lint": "eslint --fix src/**/*.ts",
-		"prebuild": "pnpm run lint",
-		"build": "tsdown",
-		"test": "vitest"
-	},
-	"dependencies": {
-		"@iconify/fetch": "workspace:^",
-		"@iconify/types": "workspace:^",
-		"@iconify/utils": "workspace:^"
-	},
+	"type": "module",
 	"exports": {
 		"./helpers/callbacks": "./lib/helpers/callbacks.js",
 		"./helpers/content": "./lib/helpers/content.js",
@@ -50,5 +39,16 @@
 		"./storage/subscription": "./lib/storage/subscription.js",
 		"./storage/types": "./lib/storage/types.js",
 		"./package.json": "./package.json"
+	},
+	"scripts": {
+		"lint": "eslint --fix src/**/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@iconify/fetch": "workspace:^",
+		"@iconify/types": "workspace:^",
+		"@iconify/utils": "workspace:^"
 	}
 }

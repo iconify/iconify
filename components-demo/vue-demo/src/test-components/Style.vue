@@ -8,27 +8,15 @@
 		<div>
 			Red color:
 			<Icon icon="demo" color="red" />
-			<Icon
-				icon="demo"
-				:inline="true"
-				:style="{ color: 'red', verticalAlign: 0 }"
-			/>
-			<Icon
-				icon="demo"
-				:inline="true"
-				style="color: red; vertical-align: 0"
-			/>
+			<Icon icon="demo" :inline="true" :style="{ color: 'red', verticalAlign: 0 }" />
+			<Icon icon="demo" :inline="true" style="color: red; vertical-align: 0" />
 			<Icon icon="demo" :style="redIcon" />
 		</div>
 		<div>
 			40px:
 			<Icon icon="demo" height="40" />
 			<Icon icon="demo" :width="40" />
-			<Icon
-				icon="demo"
-				:inline="true"
-				:style="{ fontSize: '40px', verticalAlign: 0 }"
-			/>
+			<Icon icon="demo" :inline="true" :style="{ fontSize: '40px', verticalAlign: 0 }" />
 			<Icon icon="demo" style="font-size: 40px" />
 			<Icon icon="demo" :style="bigIcon" />
 		</div>

@@ -120,9 +120,7 @@ describe('Testing validation', () => {
 				validateIconSet({
 					prefix: 'foo',
 				});
-				reject(
-					new Error('Expected to throw error when icons are missing')
-				);
+				reject(new Error('Expected to throw error when icons are missing'));
 				return;
 			} catch {
 				//
@@ -133,9 +131,7 @@ describe('Testing validation', () => {
 					prefix: 'foo',
 					icons: {},
 				});
-				reject(
-					new Error('Expected to throw error when icons are empty')
-				);
+				reject(new Error('Expected to throw error when icons are empty'));
 				return;
 			} catch {
 				//
@@ -254,11 +250,7 @@ describe('Testing validation', () => {
 						test: 'bar',
 					},
 				});
-				reject(
-					new Error(
-						'Expected to throw error when character is invalid'
-					)
-				);
+				reject(new Error('Expected to throw error when character is invalid'));
 				return;
 			} catch {
 				//
@@ -318,11 +310,7 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject(
-					new Error(
-						'Expected to throw error for bad default properties'
-					)
-				);
+				reject(new Error('Expected to throw error for bad default properties'));
 				return;
 			} catch {
 				//
@@ -343,11 +331,7 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject(
-					new Error(
-						'Expected to throw error for bad default properties'
-					)
-				);
+				reject(new Error('Expected to throw error for bad default properties'));
 				return;
 			} catch {
 				//
@@ -368,11 +352,7 @@ describe('Testing validation', () => {
 					},
 					{ fix: true }
 				);
-				reject(
-					new Error(
-						'Expected to throw error for bad default properties'
-					)
-				);
+				reject(new Error('Expected to throw error for bad default properties'));
 				return;
 			} catch {
 				//

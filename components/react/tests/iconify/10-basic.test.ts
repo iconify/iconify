@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	Icon,
-	InlineIcon,
-	setCustomIconLoader,
-	loadIcon,
-} from '../../dist/iconify';
+import { Icon, InlineIcon, setCustomIconLoader, loadIcon } from '../../dist/iconify';
 import { describe, test, expect } from 'vitest';
 import { render } from 'vitest-browser-react';
 import { createElement } from 'react';

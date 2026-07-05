@@ -29,8 +29,7 @@ interface EmojiItemRegexWithNumbers {
 
 // Numbers
 export interface UTF16EmojiItemRegex
-	extends BaseEmojiItemRegex,
-		Required<EmojiItemRegexWithNumbers> {
+	extends BaseEmojiItemRegex, Required<EmojiItemRegexWithNumbers> {
 	type: 'utf16';
 
 	// Always grouped
@@ -45,8 +44,7 @@ type SequenceEmojiItemRegexItem =
 	| SetEmojiItemRegex
 	| OptionalEmojiItemRegex;
 export interface SequenceEmojiItemRegex
-	extends BaseEmojiItemRegex,
-		EmojiItemRegexWithNumbers {
+	extends BaseEmojiItemRegex, EmojiItemRegexWithNumbers {
 	type: 'sequence';
 
 	// Items in sequence. Any type except another sequence
@@ -59,8 +57,7 @@ export type SetEmojiItemRegexItem =
 	| SequenceEmojiItemRegex
 	| OptionalEmojiItemRegex;
 export interface SetEmojiItemRegex
-	extends BaseEmojiItemRegex,
-		EmojiItemRegexWithNumbers {
+	extends BaseEmojiItemRegex, EmojiItemRegexWithNumbers {
 	type: 'set';
 
 	// Items in set. Any type except another set
@@ -109,9 +106,7 @@ function toString(number: number): string {
 			}
 			return '\\' + char;
 		}
-		return (
-			'\\x' + (number < 16 ? '0' : '') + number.toString(16).toUpperCase()
-		);
+		return '\\x' + (number < 16 ? '0' : '') + number.toString(16).toUpperCase();
 	}
 
 	// Unicode
@@ -294,9 +289,7 @@ export function updateSetEmojiRegexItem(item: SetEmojiItemRegex): string {
 
 	// Multiple items
 	item.group = false;
-	return (item.regex = item.sets
-		.map((childItem) => childItem.regex)
-		.join('|'));
+	return (item.regex = item.sets.map((childItem) => childItem.regex).join('|'));
 }
 
 /**
@@ -339,8 +332,7 @@ export function createSetEmojiRegexItem(
 		sets,
 		regex: '',
 		length: sets.reduce(
-			(length, item) =>
-				length ? Math.min(length, item.length) : item.length,
+			(length, item) => (length ? Math.min(length, item.length) : item.length),
 			0
 		),
 		group: false,
@@ -366,9 +358,8 @@ export function updateOptionalEmojiRegexItem(
 ): string {
 	const childItem = item.item;
 	const regex =
-		(childItem.group
-			? childItem.regex
-			: wrapRegexInGroup(childItem.regex)) + '?';
+		(childItem.group ? childItem.regex : wrapRegexInGroup(childItem.regex)) +
+		'?';
 	return (item.regex = regex);
 }
 

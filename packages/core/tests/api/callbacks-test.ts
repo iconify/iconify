@@ -7,11 +7,7 @@ describe('Testing API callbacks', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return (
-			'api-cb-test-' +
-			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter.toString()
-		);
+		return 'api-cb-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter.toString();
 	}
 
 	it('Simple callback', () => {
@@ -291,14 +287,8 @@ describe('Testing API callbacks', () => {
 			const prefix2 = nextPrefix();
 			let counter = 0;
 
-			const storage1 = getStorage(
-				provider,
-				prefix1
-			) as IconStorageWithAPI;
-			const storage2 = getStorage(
-				provider,
-				prefix2
-			) as IconStorageWithAPI;
+			const storage1 = getStorage(provider, prefix1) as IconStorageWithAPI;
+			const storage2 = getStorage(provider, prefix2) as IconStorageWithAPI;
 
 			const abort = storeCallback(
 				(loaded, missing, pending, unsubscribe) => {
@@ -411,14 +401,8 @@ describe('Testing API callbacks', () => {
 			const prefix2 = nextPrefix();
 			let counter = 0;
 
-			const storage1 = getStorage(
-				provider1,
-				prefix1
-			) as IconStorageWithAPI;
-			const storage2 = getStorage(
-				provider2,
-				prefix2
-			) as IconStorageWithAPI;
+			const storage1 = getStorage(provider1, prefix1) as IconStorageWithAPI;
+			const storage2 = getStorage(provider2, prefix2) as IconStorageWithAPI;
 
 			const abort = storeCallback(
 				(loaded, missing, pending, unsubscribe) => {

@@ -160,9 +160,7 @@ describe('Rendering icon', () => {
 					component = result;
 
 					// Should render placeholder
-					expect(component.container.innerHTML).toEqual(
-						'<span></span>'
-					);
+					expect(component.container.innerHTML).toEqual('<span></span>');
 
 					// onLoad should not have been called yet
 					expect(onLoadCalled).toEqual(false);
@@ -210,12 +208,7 @@ describe('Rendering icon', () => {
 
 						// Content changed???
 						clearInterval(timer);
-						reject(
-							new Error(
-								'Bad icon content: ' +
-									(component?.container.innerHTML ?? '')
-							)
-						);
+						reject(new Error('Bad icon content: ' + (component?.container.innerHTML ?? '')));
 					});
 				},
 			});
@@ -236,9 +229,7 @@ describe('Rendering icon', () => {
 					component = result;
 
 					// Should render placeholder
-					expect(component.container.innerHTML).toEqual(
-						'<span></span>'
-					);
+					expect(component.container.innerHTML).toEqual('<span></span>');
 				})
 				.catch((err) => reject(err));
 		});

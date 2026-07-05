@@ -1,36 +1,33 @@
 {
 	"name": "iconify",
 	"private": true,
-	"packageManager": "pnpm@10.33.2",
 	"description": "The most versatile icon framework",
-	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
 	"homepage": "https://iconify.design/",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git"
 	},
 	"scripts": {
 		"clean": "rm -rf node_modules */*/node_modules */*/lib */*/dist",
+		"fmt": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css|plugins)/**\" run fmt",
 		"lint": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css|plugins)/**\" run lint",
 		"build": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css|plugins)/**\" run build",
 		"test": "pnpm recursive --workspace-concurrency=1 --filter \"./(packages|iconify-icon|components|components-css|plugins)/**\" run test"
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.5",
-		"@eslint/js": "^9.39.4",
 		"@types/node": "^25.6.0",
-		"@typescript-eslint/eslint-plugin": "^8.59.2",
-		"@typescript-eslint/parser": "^8.59.2",
-		"eslint": "^9.39.4",
 		"globals": "^17.5.0",
+		"oxlint": "^1.72.0",
 		"tsdown": "^0.21.10",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.2",
 		"vitest": "^4.1.5"
 	},
+	"packageManager": "pnpm@10.33.2",
 	"pnpm": {
 		"packageExtensions": {
 			"tsutils": {

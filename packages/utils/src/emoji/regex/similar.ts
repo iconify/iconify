@@ -133,9 +133,7 @@ export function findSimilarRegexItemSequences(
 					);
 					addMapItem(startRegex, index, startSequence.regex, i);
 
-					const endSequence = createSequenceEmojiRegexItem(
-						sequence.slice(i)
-					);
+					const endSequence = createSequenceEmojiRegexItem(sequence.slice(i));
 					addMapItem(endRegex, index, endSequence.regex, i);
 				}
 
@@ -223,17 +221,13 @@ export function mergeSimilarRegexItemSequences(
 			}
 		} else {
 			if (item.type !== 'sequence') {
-				throw new Error(
-					`Unexpected partial match for type "${item.type}"`
-				);
+				throw new Error(`Unexpected partial match for type "${item.type}"`);
 			}
 			length = type === 'start' ? slice : item.items.length - slice;
 
 			// Copy remaining chunks
 			differentSequences.push(
-				type === 'start'
-					? item.items.slice(slice)
-					: item.items.slice(0, slice)
+				type === 'start' ? item.items.slice(slice) : item.items.slice(0, slice)
 			);
 		}
 
@@ -266,9 +260,7 @@ export function mergeSimilarRegexItemSequences(
 		sequence =
 			type === 'start'
 				? commonItem.items.slice(0, longestMatch)
-				: commonItem.items.slice(
-						commonItem.items.length - longestMatch
-				  );
+				: commonItem.items.slice(commonItem.items.length - longestMatch);
 	}
 
 	// Merge other chunks
@@ -289,12 +281,12 @@ export function mergeSimilarRegexItemSequences(
 	let mergedChunk: EmojiItemRegex =
 		set.sets.length === 1
 			? // Do not run callback if only 1 item
-			  set.sets[0]
+				set.sets[0]
 			: optimise
-			? // Run callback to optimise it
-			  optimise(set)
-			: // Use set as is
-			  set;
+				? // Run callback to optimise it
+					optimise(set)
+				: // Use set as is
+					set;
 	if (hasFullSequence) {
 		// Wrap in optional
 		mergedChunk = createOptionalEmojiRegexItem(mergedChunk);
@@ -353,9 +345,7 @@ export function mergeSimilarItemsInSet(set: SetEmojiItemRegex): EmojiItemRegex {
 			);
 
 			const mergedItem =
-				merged.length === 1
-					? merged[0]
-					: createSetEmojiRegexItem(merged);
+				merged.length === 1 ? merged[0] : createSetEmojiRegexItem(merged);
 			if (!newItem || mergedItem.regex.length < newItem.regex.length) {
 				newItem = mergedItem;
 			}

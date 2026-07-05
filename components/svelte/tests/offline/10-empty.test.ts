@@ -9,8 +9,6 @@ describe('Empty icon', () => {
 			// @ts-expect-error
 			{}
 		);
-		expect(
-			renderResult.container.innerHTML.replace(/<!--(.*?)-->/gm, '')
-		).toEqual('');
+		expect(renderResult.container.innerHTML.replace(/<!--(.*?)-->/gm, '')).toEqual('');
 	});
 });

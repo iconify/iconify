@@ -8,15 +8,8 @@ export function InlineDemo() {
 			<h1>Inline demo</h1>
 			<div>
 				Block icon (behaving like image):
-				<OfflineIcon
-					id="inline-demo-block-offline"
-					icon="experiment2"
-				/>
-				<FullIcon
-					id="inline-demo-block-full"
-					icon="experiment2"
-					ssr={true}
-				/>
+				<OfflineIcon id="inline-demo-block-offline" icon="experiment2" />
+				<FullIcon id="inline-demo-block-full" icon="experiment2" ssr={true} />
 			</div>
 			<div>
 				Inline icon (behaving line text / icon font):

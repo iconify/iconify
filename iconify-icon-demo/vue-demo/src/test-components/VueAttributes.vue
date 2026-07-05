@@ -7,19 +7,11 @@
 		</div>
 		<div>
 			Icon style as string (red):
-			<iconify-icon
-				icon="admin-users"
-				style="color: red"
-				title="Red icon"
-			/>
+			<iconify-icon icon="admin-users" style="color: red" title="Red icon" />
 		</div>
 		<div>
 			Inline icon with vertical-align style as string (aligned to top):
-			<iconify-icon
-				icon="admin-users"
-				style="vertical-align: 0.25em"
-				inline
-			/>
+			<iconify-icon icon="admin-users" style="vertical-align: 0.25em" inline />
 		</div>
 		<div>
 			Inline icon with bound style as object (purple, 2em, no alignment):
@@ -31,39 +23,27 @@
 		</div>
 		<div>
 			Combined styles (green, 2em, shadow):
-			<iconify-icon
-				icon="admin-users"
-				v-bind:style="[boxShadowStyleObj, fontSizeStyleObj2]"
-			/>
+			<iconify-icon icon="admin-users" v-bind:style="[boxShadowStyleObj, fontSizeStyleObj2]" />
 		</div>
 		<div>
 			Dynamic style (red / green, shadow):
 			<iconify-icon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
-				v-on:click="
-					dynamicStyleObj.color =
-						dynamicStyleObj.color === 'red' ? 'green' : 'red'
-				"
+				v-on:click="dynamicStyleObj.color = dynamicStyleObj.color === 'red' ? 'green' : 'red'"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Dynamic style (shadow / color):
 			<iconify-icon
 				icon="admin-users"
-				v-bind:style="[
-					showShadow ? boxShadowStyleObj : dynamicStyleObj,
-				]"
+				v-bind:style="[showShadow ? boxShadowStyleObj : dynamicStyleObj]"
 				v-on:click="showShadow = !showShadow"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
 			Reference:
-			<iconify-icon
-				icon="admin-users"
-				ref="icon1"
-				@click="logReference"
-			/>&nbsp;(click to log)
+			<iconify-icon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click to log)
 		</div>
 	</section>
 </template>

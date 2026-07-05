@@ -1,20 +1,13 @@
 import type { IconifyAPIConfig } from '../../lib/api/config';
 import { addAPIProvider, getAPIConfig } from '../../lib/api/config';
-import type {
-	IconifyAPIIconsQueryParams,
-	IconifyAPIModule,
-} from '../../lib/api/modules';
+import type { IconifyAPIIconsQueryParams, IconifyAPIModule } from '../../lib/api/modules';
 import { setAPIModule, getAPIModule } from '../../lib/api/modules';
 
 describe('Testing API modules', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return (
-			'api-mod-test-' +
-			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter.toString()
-		);
+		return 'api-mod-test-' + (prefixCounter < 10 ? '0' : '') + prefixCounter.toString();
 	}
 
 	const prepareQuery = (

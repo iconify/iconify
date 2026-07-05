@@ -42,9 +42,7 @@ describe('Flip', () => {
 		// Find first child node
 		const child = node.childNodes[0] as SVGGElement;
 		expect(child.tagName).toBe('g');
-		expect(child.getAttribute('transform')).toBe(
-			'translate(24 0) scale(-1 1)'
-		);
+		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
 	test('string', () => {
@@ -54,9 +52,7 @@ describe('Flip', () => {
 		// Find first child node
 		const child = node.childNodes[0] as SVGGElement;
 		expect(child.tagName).toBe('g');
-		expect(child.getAttribute('transform')).toBe(
-			'translate(0 32) scale(1 -1)'
-		);
+		expect(child.getAttribute('transform')).toBe('translate(0 32) scale(1 -1)');
 	});
 
 	test('string and boolean', () => {
@@ -85,9 +81,7 @@ describe('Flip', () => {
 		// Find first child node
 		const child = node.childNodes[0] as SVGGElement;
 		expect(child.tagName).toBe('g');
-		expect(child.getAttribute('transform')).toBe(
-			'translate(24 0) scale(-1 1)'
-		);
+		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
 	test('shorthand and boolean', () => {
@@ -102,9 +96,7 @@ describe('Flip', () => {
 		// Find first child node
 		const child = node.childNodes[0] as SVGGElement;
 		expect(child.tagName).toBe('g');
-		expect(child.getAttribute('transform')).toBe(
-			'translate(24 0) scale(-1 1)'
-		);
+		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
 	test('shorthand and boolean as string', () => {

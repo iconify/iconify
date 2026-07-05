@@ -3,7 +3,9 @@ import { cpSync } from 'node:fs';
 cpSync(
 	'./tests/fixtures/plain-color-icons',
 	'./node_modules/plain-color-icons',
-	{ recursive: true }
+	{
+		recursive: true,
+	}
 );
 
 cpSync(

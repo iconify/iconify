@@ -1,24 +1,24 @@
 {
 	"name": "@iconify-demo/solid-css",
 	"version": "0.0.0",
-	"description": "",
 	"private": true,
+	"description": "",
+	"license": "MIT",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
 		"serve": "vite preview"
 	},
-	"license": "MIT",
+	"dependencies": {
+		"@iconify/glyphs-poly-solid-test": "file:iconify-glyphs-poly-solid-test-1.0.0.tgz",
+		"@iconify/ri-solid-test": "file:iconify-ri-solid-test-1.0.0.tgz",
+		"solid-js": "^1.9.12"
+	},
 	"devDependencies": {
 		"@iconify-solid/ri": "^1.0.0",
 		"@iconify/css-solid": "workspace:*",
 		"@iconify/types": "workspace:*",
 		"vite-plugin-solid": "^2.11.12"
-	},
-	"dependencies": {
-		"@iconify/ri-solid-test": "file:iconify-ri-solid-test-1.0.0.tgz",
-		"@iconify/glyphs-poly-solid-test": "file:iconify-glyphs-poly-solid-test-1.0.0.tgz",
-		"solid-js": "^1.9.12"
 	}
 }

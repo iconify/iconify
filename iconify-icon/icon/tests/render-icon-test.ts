@@ -129,9 +129,7 @@ describe('Testing rendering loaded icon', () => {
 
 		// Test HTML
 		// Depending on version of jsdom, "currentColor" may be converted to "currentcolor"
-		const currentColor = node.innerHTML.includes('currentcolor')
-			? 'currentcolor'
-			: 'currentColor';
+		const currentColor = node.innerHTML.includes('currentcolor') ? 'currentcolor' : 'currentColor';
 		// Depending on version of jsdom, "-webkit" styles may be included or not
 		const hasWebkit = node.innerHTML.includes('-webkit-mask-image');
 		expect(node.innerHTML).toBe(

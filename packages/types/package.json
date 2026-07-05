@@ -1,21 +1,21 @@
 {
 	"name": "@iconify/types",
-	"type": "module",
-	"description": "Types for Iconify data",
 	"version": "2.0.0",
-	"author": "Vjacheslav Trushkin",
-	"license": "MIT",
-	"main": "./types.js",
-	"types": "./types.d.ts",
-	"scripts": {
-		"test": "tsc --noEmit --strict --typeRoots '[]' types.d.ts"
-	},
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Types for Iconify data",
 	"homepage": "https://iconify.design/docs/types/",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/types"
+	},
+	"type": "module",
+	"main": "./types.js",
+	"types": "./types.d.ts",
+	"scripts": {
+		"test": "tsc --noEmit --strict --typeRoots '[]' types.d.ts"
 	},
 	"devDependencies": {
 		"typescript": "^5.9.3"

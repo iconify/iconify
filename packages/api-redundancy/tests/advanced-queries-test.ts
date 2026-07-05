@@ -325,9 +325,7 @@ describe('Advanced queries with multiple resources', () => {
 							return;
 
 						default:
-							reject(
-								'Callback should have been called only once'
-							);
+							reject('Callback should have been called only once');
 					}
 				}
 			);
@@ -456,9 +454,7 @@ describe('Advanced queries with multiple resources', () => {
 							return;
 
 						default:
-							reject(
-								'Callback should have been called only twice'
-							);
+							reject('Callback should have been called only twice');
 					}
 				}
 			);

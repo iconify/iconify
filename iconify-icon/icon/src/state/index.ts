@@ -1,8 +1,5 @@
 import type { ActualRenderMode } from '../attributes/types';
-import type {
-	CurrentIconData,
-	RenderedCurrentIconData,
-} from '../attributes/icon/state';
+import type { CurrentIconData, RenderedCurrentIconData } from '../attributes/icon/state';
 import type { RenderedIconCustomisations } from '../attributes/customisations';
 
 /**
@@ -58,10 +55,7 @@ export function setPendingState(
 	lastState?: IconState
 ): PendingState {
 	const lastRender: RenderedState | undefined =
-		lastState &&
-		(lastState.rendered
-			? lastState
-			: (lastState as PendingState).lastRender);
+		lastState && (lastState.rendered ? lastState : (lastState as PendingState).lastRender);
 
 	return {
 		rendered: false,

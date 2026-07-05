@@ -7,8 +7,7 @@
 			<iconify-icon icon="mdi:home" mode="style" />
 		</div>
 		<div class="alert">
-			<iconify-icon icon="mdi-light:alert" />Important notice with alert
-			icon!
+			<iconify-icon icon="mdi-light:alert" />Important notice with alert icon!
 		</div>
 	</section>
 </template>

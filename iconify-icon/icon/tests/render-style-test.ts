@@ -19,26 +19,18 @@ describe('Testing rendering style', () => {
 
 		// Add style to empty parent
 		updateStyle(node, false);
-		expect(node.innerHTML).toBe(
-			styleOpeningTag + expectedBlock + '</style>'
-		);
+		expect(node.innerHTML).toBe(styleOpeningTag + expectedBlock + '</style>');
 
 		// Change inline mode
 		updateStyle(node, true);
-		expect(node.innerHTML).toBe(
-			styleOpeningTag + expectedInline + '</style>'
-		);
+		expect(node.innerHTML).toBe(styleOpeningTag + expectedInline + '</style>');
 
 		// Do not change anything
 		updateStyle(node, true);
-		expect(node.innerHTML).toBe(
-			styleOpeningTag + expectedInline + '</style>'
-		);
+		expect(node.innerHTML).toBe(styleOpeningTag + expectedInline + '</style>');
 
 		// Change to block
 		updateStyle(node, false);
-		expect(node.innerHTML).toBe(
-			styleOpeningTag + expectedBlock + '</style>'
-		);
+		expect(node.innerHTML).toBe(styleOpeningTag + expectedBlock + '</style>');
 	});
 });

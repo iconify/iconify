@@ -6,8 +6,8 @@ Type definitions for using Iconify icon sets with TypeScript.
 
 Iconify icon sets are available in several formats:
 
--   Big JSON files that combine many icons in one file
--   Node.js packages split into individual icons
+- Big JSON files that combine many icons in one file
+- Node.js packages split into individual icons
 
 ### Icon format
 
@@ -15,22 +15,22 @@ Each icon is represented by the `IconifyIcon` type. It is a simple object with m
 
 The only required attribute is:
 
--   `body`: string. Value contains inner HTML of an icon as a string, for example `<path d="..."/>`.
+- `body`: string. Value contains inner HTML of an icon as a string, for example `<path d="..."/>`.
 
 Optional attributes are represented by type `IconifyOptional`. They are split into several types: dimensions (`IconifyDimenisons` type) and transformations (`IconifyTransformations` type).
 
 Dimensions attributes:
 
--   `width`: number. viewBox width, number. If missing, value is set to 16.
--   `height`: number. viewBox height, number. If missing, value is set to 16.
--   `left`: number. viewBox left, number. If missing, the value is set to 0.
--   `top`: number. viewBox top, number. If missing, the value is set to 0.
+- `width`: number. viewBox width, number. If missing, value is set to 16.
+- `height`: number. viewBox height, number. If missing, value is set to 16.
+- `left`: number. viewBox left, number. If missing, the value is set to 0.
+- `top`: number. viewBox top, number. If missing, the value is set to 0.
 
 Transformations:
 
--   `rotate`: number. Icon rotation. Iconify icons can be rotated in 90 degrees increments, allowing to reuse the same source icon for multiple icons, such as arrow-up being a copy of arrow-left rotated by 90 degrees. Values are 0 for 0 degrees, 1 for 90 degrees, 2 for 180 degrees, 3 for 270 degrees. The default value is 0.
--   `hFlip`: boolean. Horizontal flip. Similar to the rotation transformation, an icon can be flipped horizontally and vertically. It can be used to quickly create aliases, such as arrow-left being an alias of arrow-right, but with hFlip set to true. The default value is false.
--   `vFlip`: boolean. Vertical flip. The default value is false.
+- `rotate`: number. Icon rotation. Iconify icons can be rotated in 90 degrees increments, allowing to reuse the same source icon for multiple icons, such as arrow-up being a copy of arrow-left rotated by 90 degrees. Values are 0 for 0 degrees, 1 for 90 degrees, 2 for 180 degrees, 3 for 270 degrees. The default value is 0.
+- `hFlip`: boolean. Horizontal flip. Similar to the rotation transformation, an icon can be flipped horizontally and vertically. It can be used to quickly create aliases, such as arrow-left being an alias of arrow-right, but with hFlip set to true. The default value is false.
+- `vFlip`: boolean. Vertical flip. The default value is false.
 
 Example of icon object:
 
@@ -46,14 +46,14 @@ const mdiHandIcon = {
 
 Iconify icon sets format is available from multiple sources:
 
--   NPM package `@iconify/json` that includes all icon sets
--   API responses used by SVG framework
+- NPM package `@iconify/json` that includes all icon sets
+- API responses used by SVG framework
 
 Icon set format structure is available as the `IconifyJSON` type. It is an object with several fields:
 
--   `prefix`: string. Icon set prefix.
--   `icons`: object. Icons data. Value is an object that represents a set of icons, where the key is an icon name and value is `IconifyIcon` object (see "Icon format" above).
--   `aliases`: object. Icon aliases, similar to the `icons` object (see "Aliases" section below).
+- `prefix`: string. Icon set prefix.
+- `icons`: object. Icons data. Value is an object that represents a set of icons, where the key is an icon name and value is `IconifyIcon` object (see "Icon format" above).
+- `aliases`: object. Icon aliases, similar to the `icons` object (see "Aliases" section below).
 
 Example:
 
@@ -199,9 +199,9 @@ In this example `caret-right` is alias of `caret-left`, but with additional `hFl
 
 If both icon and alias have same attribute, following rules apply:
 
--   `rotate`: attributes are combined. For example, icon has rotate = 1, alias has rotate = 1. Result will have rotate = 2. To prevent overflow, if rotate > 3, rotate = rotate - 4.
--   `hFlip` and `vFlip`: attributes are combined. For example, icon has hFlip = true, alias also has hFlip = true (icon.hFlip !== alias.hFlip). Result is false. false + false = false, false + true = true, true + true = false.
--   other attributes are overwritten.
+- `rotate`: attributes are combined. For example, icon has rotate = 1, alias has rotate = 1. Result will have rotate = 2. To prevent overflow, if rotate > 3, rotate = rotate - 4.
+- `hFlip` and `vFlip`: attributes are combined. For example, icon has hFlip = true, alias also has hFlip = true (icon.hFlip !== alias.hFlip). Result is false. false + false = false, false + true = true, true + true = false.
+- other attributes are overwritten.
 
 Example:
 
@@ -303,19 +303,19 @@ Info block is represented by the type `IconifyInfo`. You can see an example abov
 
 IconifyInfo type has the following properties, most of them are optional:
 
--   `name`: string. Icon set name. This field is always set.
--   `total`: number. The total number of icons, optional.
--   `version`: string. The current version, optional.
--   `author`: object. Information about the author, always set. Author information has the following properties:
-    -   `name`: string. Author name. This field is always set.
-    -   `url`: string. Link to icon set, optional. Usually links to GitHub repository.
--   `license`: object. Information about the license, always set. License information has the following properties:
-    -   `title`: string. License title. This field is always set.
-    -   `spdx`: string. SPDX license identifier, optional.
-    -   `url`: string. Link to the license, optional.
--   `samples`: string[]. Value is an array of icon names that should be used as samples when showing the icon set in an icon sets list.
--   `height`: number | number[]. Value is a number or array of numbers, values are pixel grids used in the icon set. If any icons in an icon set do not match the grid, this attribute should not be set.
--   `displayHeight`: number. The height value that should be used for displaying samples. Value is a number between 16 and 30 (inclusive).
+- `name`: string. Icon set name. This field is always set.
+- `total`: number. The total number of icons, optional.
+- `version`: string. The current version, optional.
+- `author`: object. Information about the author, always set. Author information has the following properties:
+  - `name`: string. Author name. This field is always set.
+  - `url`: string. Link to icon set, optional. Usually links to GitHub repository.
+- `license`: object. Information about the license, always set. License information has the following properties:
+  - `title`: string. License title. This field is always set.
+  - `spdx`: string. SPDX license identifier, optional.
+  - `url`: string. Link to the license, optional.
+- `samples`: string[]. Value is an array of icon names that should be used as samples when showing the icon set in an icon sets list.
+- `height`: number | number[]. Value is a number or array of numbers, values are pixel grids used in the icon set. If any icons in an icon set do not match the grid, this attribute should not be set.
+- `displayHeight`: number. The height value that should be used for displaying samples. Value is a number between 16 and 30 (inclusive).
 
 ##### Characters map
 

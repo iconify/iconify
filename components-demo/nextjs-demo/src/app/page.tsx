@@ -11,10 +11,7 @@ export default function Home() {
 				</p>
 				<p>
 					Testing InlineIcon:
-					<InlineIcon
-						icon="mdi:home-outline"
-						style={{ color: '#c40' }}
-					/>
+					<InlineIcon icon="mdi:home-outline" style={{ color: '#c40' }} />
 					<InlineIcon icon="flat-color-icons:home" />
 				</p>
 			</main>

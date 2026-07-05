@@ -1,40 +1,20 @@
 {
 	"name": "@iconify/css-svelte",
-	"description": "Iconify fallback icon component for Svelte 4.",
-	"author": "Vjacheslav Trushkin",
-	"type": "module",
 	"version": "1.0.1",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Iconify fallback icon component for Svelte 4.",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "components-css/svelte"
 	},
-	"scripts": {
-		"lint": "eslint src/*.ts",
-		"prebuild": "pnpm run lint",
-		"build:dist": "tsdown",
-		"build:svelte": "node scripts/build.js",
-		"build": "pnpm run build:dist && pnpm run build:svelte"
-	},
-	"dependencies": {
-		"@iconify/types": "workspace:^"
-	},
-	"devDependencies": {
-		"@iconify/component-utils": "workspace:^",
-		"@iconify/fetch": "workspace:^",
-		"@iconify/utils": "workspace:^",
-		"svelte": "^5.55.5",
-		"svelte-preprocess": "^6.0.3"
-	},
-	"peerDependencies": {
-		"svelte": ">4.0.0"
-	},
-	"svelte": "./dist/full/Icon.svelte",
+	"funding": "https://github.com/sponsors/cyberalien",
+	"type": "module",
 	"types": "./dist/index.d.ts",
+	"svelte": "./dist/full/Icon.svelte",
 	"exports": {
 		".": {
 			"svelte": "./dist/full/Icon.svelte",
@@ -65,5 +45,25 @@
 			"svelte": "./dist/basic/Icon.svelte",
 			"types": "./dist/index.d.ts"
 		}
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build:dist": "tsdown",
+		"build:svelte": "node scripts/build.js",
+		"build": "pnpm run build:dist && pnpm run build:svelte"
+	},
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"svelte": "^5.55.5",
+		"svelte-preprocess": "^6.0.3"
+	},
+	"peerDependencies": {
+		"svelte": ">4.0.0"
 	}
 }

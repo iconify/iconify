@@ -41,15 +41,13 @@ describe('Testing calcSize', () => {
 		expect(calculateSize('24 Pixels', width / height)).toEqual('18 Pixels');
 
 		// Multiple sets of numbers
-		expect(calculateSize('48% + 5em', width / height)).toEqual(
-			'36% + 3.75em'
-		);
+		expect(calculateSize('48% + 5em', width / height)).toEqual('36% + 3.75em');
 		expect(calculateSize('calc(1em + 8px)', height / width)).toEqual(
 			'calc(1.34em + 10.67px)'
 		);
-		expect(
-			calculateSize('-webkit-calc(1em + 8px)', width / height)
-		).toEqual('-webkit-calc(0.75em + 6px)');
+		expect(calculateSize('-webkit-calc(1em + 8px)', width / height)).toEqual(
+			'-webkit-calc(0.75em + 6px)'
+		);
 
 		// Invalid strings
 		expect(calculateSize('-.', width / height)).toEqual('-.');

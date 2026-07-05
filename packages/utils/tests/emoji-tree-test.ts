@@ -65,27 +65,19 @@ describe('Emoji regex tree', () => {
 				end: true,
 				children: [
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fc,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fc]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fd,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fd]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fe,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fe]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3ff,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3ff]),
 						end: true,
 					},
 				],
@@ -94,27 +86,19 @@ describe('Emoji regex tree', () => {
 				regex: createRegexForNumbersSequence([0x1faf1, 0x1f3fc]),
 				children: [
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fb,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fb]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fd,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fd]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fe,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fe]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3ff,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3ff]),
 						end: true,
 					},
 				],
@@ -160,27 +144,19 @@ describe('Emoji regex tree', () => {
 				end: true,
 				children: [
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fc,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fc]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fd,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fd]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fe,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fe]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3ff,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3ff]),
 						end: true,
 					},
 				],
@@ -190,27 +166,19 @@ describe('Emoji regex tree', () => {
 				end: true,
 				children: [
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fc,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fc]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fd,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fd]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3fe,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3fe]),
 						end: true,
 					},
 					{
-						regex: createRegexForNumbersSequence([
-							0x1faf2, 0x1f3ff,
-						]),
+						regex: createRegexForNumbersSequence([0x1faf2, 0x1f3ff]),
 						end: true,
 					},
 				],
@@ -227,9 +195,7 @@ describe('Emoji regex tree', () => {
 			getEmojiSequenceFromString(
 				'1f9d1-1f3fb-200d-2764-fe0f-200d-1f48b-200d-1f9d1-1f3fc'
 			),
-			getEmojiSequenceFromString(
-				'1f9d1-1f3fb-200d-2764-fe0f-200d-1f9d1-1f3fc'
-			),
+			getEmojiSequenceFromString('1f9d1-1f3fb-200d-2764-fe0f-200d-1f9d1-1f3fc'),
 		];
 		const tree = createEmojisTree(numbers);
 		expect(tree).toEqual([
@@ -243,17 +209,13 @@ describe('Emoji regex tree', () => {
 								regex: createRegexForNumbersSequence([0x1f48b]),
 								children: [
 									{
-										regex: createRegexForNumbersSequence([
-											0x1f9d1, 0x1f3fc,
-										]),
+										regex: createRegexForNumbersSequence([0x1f9d1, 0x1f3fc]),
 										end: true,
 									},
 								],
 							},
 							{
-								regex: createRegexForNumbersSequence([
-									0x1f9d1, 0x1f3fc,
-								]),
+								regex: createRegexForNumbersSequence([0x1f9d1, 0x1f3fc]),
 								end: true,
 							},
 						],

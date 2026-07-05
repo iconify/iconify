@@ -40,11 +40,7 @@ describe('Testing storage', () => {
 		addIconToStorage(storage, 'invalid', {} as unknown as IconifyIcon);
 
 		// Should not include 'invalid'
-		expect(Object.keys(storage.icons)).toEqual([
-			'test',
-			'not-really-missing',
-			'constructor',
-		]);
+		expect(Object.keys(storage.icons)).toEqual(['test', 'not-really-missing', 'constructor']);
 
 		// Test iconInStorage
 		expect(iconInStorage(storage, 'test')).toBe(true);
@@ -141,10 +137,7 @@ describe('Testing storage', () => {
 			})
 		).toEqual(['16-chevron-left', '16-chevron-right']);
 
-		expect(Object.keys(storage.icons)).toEqual([
-			'16-chevron-left',
-			'16-chevron-right',
-		]);
+		expect(Object.keys(storage.icons)).toEqual(['16-chevron-left', '16-chevron-right']);
 
 		// Test icon
 		let expected: IconifyIcon = {
@@ -226,8 +219,6 @@ describe('Testing storage', () => {
 			prefix + ':16-chevron-left',
 			prefix + ':16-chevron-right',
 		]);
-		expect(listIcons(provider, prefix)).toEqual([
-			'@' + provider + ':' + prefix + ':test2',
-		]);
+		expect(listIcons(provider, prefix)).toEqual(['@' + provider + ':' + prefix + ':test2']);
 	});
 });

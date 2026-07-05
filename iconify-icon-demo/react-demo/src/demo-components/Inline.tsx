@@ -8,19 +8,12 @@ export function InlineDemo() {
 			<div>
 				Block icon (behaving like image):
 				<Icon icon="experiment2" />
-				<Icon
-					icon="experiment2"
-					inline={true}
-					style={{ verticalAlign: '0' }}
-				/>
+				<Icon icon="experiment2" inline={true} style={{ verticalAlign: '0' }} />
 			</div>
 			<div>
 				Inline icon (behaving line text / icon font):
 				<Icon icon="experiment2" inline={true} />
-				<Icon
-					icon="experiment2"
-					style={{ verticalAlign: '-0.125em' }}
-				/>
+				<Icon icon="experiment2" style={{ verticalAlign: '-0.125em' }} />
 			</div>
 		</section>
 	);

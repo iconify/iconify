@@ -1,5 +1,5 @@
 .objeeb {
-  stroke-width: var(--svg-mask-width, calc(var(--svg-stroke-width, 1.5px) + 1px));
-  fill: #000;
-  stroke: #000;
+	stroke-width: var(--svg-mask-width, calc(var(--svg-stroke-width, 1.5px) + 1px));
+	fill: #000;
+	stroke: #000;
 }

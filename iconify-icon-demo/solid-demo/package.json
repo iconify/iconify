@@ -1,22 +1,22 @@
 {
 	"name": "@iconify-icon/solid-demo",
 	"version": "0.0.0",
-	"description": "",
 	"private": true,
+	"description": "",
+	"license": "MIT",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
 		"serve": "vite preview"
 	},
-	"license": "MIT",
+	"dependencies": {
+		"solid-js": "^1.9.12"
+	},
 	"devDependencies": {
 		"@iconify-icon/solid": "workspace:*",
 		"@iconify-icons/line-md": "^1.2.30",
 		"iconify-icon": "workspace:*",
 		"vite-plugin-solid": "^2.11.12"
-	},
-	"dependencies": {
-		"solid-js": "^1.9.12"
 	}
 }

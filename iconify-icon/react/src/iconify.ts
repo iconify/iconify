@@ -74,9 +74,7 @@ export {
 /**
  * Properties for React component
  */
-export interface IconifyIconProps
-	extends React.HTMLProps<HTMLElement>,
-		IconifyIconProperties {
+export interface IconifyIconProps extends React.HTMLProps<HTMLElement>, IconifyIconProperties {
 	// Rotation can be string or number
 	rotate?: string | number;
 }
@@ -85,10 +83,7 @@ export interface IconifyIconProps
  * React component
  */
 export const Icon = React.forwardRef(
-	(
-		props: IconifyIconProps,
-		ref: React.ForwardedRef<IconifyIconHTMLElement>
-	) => {
+	(props: IconifyIconProps, ref: React.ForwardedRef<IconifyIconHTMLElement>) => {
 		const newProps: Record<string, unknown> = {
 			...props,
 			ref,

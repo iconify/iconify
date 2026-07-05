@@ -8,12 +8,7 @@ function loaded(name: string) {
 	loadedCalled.value = true;
 }
 
-function customise1(
-	content: string,
-	name: string,
-	prefix: string,
-	provider: string
-) {
+function customise1(content: string, name: string, prefix: string, provider: string) {
 	if (name !== 'arrow-right' || prefix !== 'line-md' || provider !== '') {
 		throw new Error('Bad params in customise callback');
 	}
@@ -29,10 +24,7 @@ function customise1(
 			<Icon icon="mdi:home" mode="style" />
 		</div>
 		<div>
-			SSR prop: <Icon icon="mdi:home" :ssr="true" /><Icon
-				icon="line-md:arrow-right"
-				:ssr="true"
-			/>
+			SSR prop: <Icon icon="mdi:home" :ssr="true" /><Icon icon="line-md:arrow-right" :ssr="true" />
 		</div>
 		<div>
 			Customising stroke width:
@@ -41,17 +33,11 @@ function customise1(
 			<Icon
 				icon="line-md:arrow-right"
 				:customise="
-					(content) =>
-						content.replace(
-							/stroke-width=&quot;2&quot;/g,
-							'stroke-width=&quot;1&quot;'
-						)
+					(content) => content.replace(/stroke-width=&quot;2&quot;/g, 'stroke-width=&quot;1&quot;')
 				"
 			/>
 		</div>
-		<div class="alert">
-			<Icon icon="mdi-light:alert" />Important notice with alert icon!
-		</div>
+		<div class="alert"><Icon icon="mdi-light:alert" />Important notice with alert icon!</div>
 		<div>Load event triggered: {{ loadedCalled }}</div>
 	</section>
 </template>

@@ -36,9 +36,7 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).not.toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(wrapper.html()).not.toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('true', () => {
@@ -68,9 +66,7 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).not.toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(wrapper.html()).not.toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('inline and style string', () => {
@@ -86,9 +82,7 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'style="vertical-align: -0.125em; color: red;"'
-		);
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em; color: red;"');
 	});
 
 	test('inline and style object', () => {
@@ -107,9 +101,7 @@ describe('Inline attribute', () => {
 		};
 
 		const wrapper = mount(Wrapper, {});
-		expect(wrapper.html()).toContain(
-			'style="vertical-align: -0.125em; color: red;"'
-		);
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em; color: red;"');
 	});
 
 	test('inline and style overriding it', () => {
@@ -131,8 +123,6 @@ describe('Inline attribute', () => {
 		const html = wrapper.html();
 		// Depending on version of jsdom, "vertical-align: 0" may be converted to "vertical-align: 0px"
 		const hasPX = html.includes('0px');
-		expect(html).toContain(
-			`style="vertical-align: ${hasPX ? '0px' : '0'};"`
-		);
+		expect(html).toContain(`style="vertical-align: ${hasPX ? '0px' : '0'};"`);
 	});
 });

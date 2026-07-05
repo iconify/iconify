@@ -7,19 +7,14 @@
 		</div>
 		<div>
 			Icons referenced by object:
-			<Icon v-bind:icon="demoIcon" /><Icon
-				v-bind:icon="demoIcon"
-				mode="style"
-			/>
+			<Icon v-bind:icon="demoIcon" /><Icon v-bind:icon="demoIcon" mode="style" />
 		</div>
 		<div>
 			2 icons imported from icon set:
 			<Icon icon="offline-mdi-light:account-alert" mode="style" />
 			<Icon icon="offline-mdi-light:link" />
 		</div>
-		<div class="alert">
-			<Icon :icon="alertIcon" />Important notice with alert icon!
-		</div>
+		<div class="alert"><Icon :icon="alertIcon" />Important notice with alert icon!</div>
 	</section>
 </template>
 

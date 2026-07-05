@@ -266,9 +266,9 @@ describe('Testing unicode test data', () => {
 
 	it('Merging variations', () => {
 		// Nothing to replace
-		expect(replaceEmojiComponentsInCombinedSequence([0x1f3c3], {})).toEqual(
-			[0x1f3c3]
-		);
+		expect(replaceEmojiComponentsInCombinedSequence([0x1f3c3], {})).toEqual([
+			0x1f3c3,
+		]);
 
 		// One skin tone
 		expect(
@@ -302,42 +302,22 @@ describe('Testing unicode test data', () => {
 		// Mutiple skin tones
 		expect(
 			replaceEmojiComponentsInCombinedSequence(
-				[
-					0x1f469,
-					'skin-tone',
-					0x200d,
-					0x1f91d,
-					0x200d,
-					0x1f468,
-					'skin-tone',
-				],
+				[0x1f469, 'skin-tone', 0x200d, 0x1f91d, 0x200d, 0x1f468, 'skin-tone'],
 				{
 					'skin-tone': [0x1f3fc, 0x1f3ff],
 				}
 			)
-		).toEqual([
-			0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3ff,
-		]);
+		).toEqual([0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3ff]);
 
 		// Double skin tones
 		expect(
 			replaceEmojiComponentsInCombinedSequence(
-				[
-					0x1f469,
-					'skin-tone',
-					0x200d,
-					0x1f91d,
-					0x200d,
-					0x1f468,
-					'skin-tone',
-				],
+				[0x1f469, 'skin-tone', 0x200d, 0x1f91d, 0x200d, 0x1f468, 'skin-tone'],
 				{
 					'skin-tone': [0x1f3fc],
 				}
 			)
-		).toEqual([
-			0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3fc,
-		]);
+		).toEqual([0x1f469, 0x1f3fc, 0x200d, 0x1f91d, 0x200d, 0x1f468, 0x1f3fc]);
 	});
 
 	it('Checking parent items for all variations', () => {
@@ -380,8 +360,7 @@ describe('Testing unicode test data', () => {
 						subgroup: 'person-activity',
 						sequence: [0x1f3c3, 'skin-tone'],
 						emoji:
-							String.fromCodePoint(0x1f3c3) +
-							String.fromCodePoint(0x1f3ff),
+							String.fromCodePoint(0x1f3c3) + String.fromCodePoint(0x1f3ff),
 						status: 'fully-qualified',
 						version: 'E1.0',
 						name: {
@@ -461,12 +440,7 @@ describe('Testing unicode test data', () => {
 							item: {
 								group: 'People & Body',
 								subgroup: 'person',
-								sequence: [
-									0x1f468,
-									'skin-tone',
-									0x200d,
-									'hair-style',
-								],
+								sequence: [0x1f468, 'skin-tone', 0x200d, 'hair-style'],
 								emoji:
 									String.fromCodePoint(0x1f468) +
 									String.fromCodePoint(0x1f3ff) +
@@ -505,8 +479,7 @@ describe('Testing unicode test data', () => {
 						subgroup: 'person',
 						sequence: [0x1f468, 'skin-tone'],
 						emoji:
-							String.fromCodePoint(0x1f468) +
-							String.fromCodePoint(0x1f3ff),
+							String.fromCodePoint(0x1f468) + String.fromCodePoint(0x1f3ff),
 						status: 'fully-qualified',
 						version: 'E1.0',
 						name: {
@@ -532,12 +505,7 @@ describe('Testing unicode test data', () => {
 							item: {
 								group: 'People & Body',
 								subgroup: 'person',
-								sequence: [
-									0x1f468,
-									'skin-tone',
-									0x200d,
-									'hair-style',
-								],
+								sequence: [0x1f468, 'skin-tone', 0x200d, 'hair-style'],
 								emoji:
 									String.fromCodePoint(0x1f468) +
 									String.fromCodePoint(0x1f3ff) +
@@ -637,8 +605,7 @@ describe('Testing unicode test data', () => {
 								},
 							],
 						},
-						sequenceKey:
-							'1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
+						sequenceKey: '1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
 						components: {
 							'skin-tone': 2,
 							'hair-style': 0,
@@ -684,8 +651,7 @@ describe('Testing unicode test data', () => {
 										},
 									],
 								},
-								sequenceKey:
-									'1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
+								sequenceKey: '1f9d1-skin-tone-200d-1f91d-200d-1f9d1-skin-tone',
 								components: {
 									'skin-tone': 2,
 									'hair-style': 0,

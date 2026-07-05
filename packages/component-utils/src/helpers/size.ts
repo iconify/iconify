@@ -22,10 +22,8 @@ export function getSizeProps(
 	height: string | undefined,
 	ratio: number | ViewBox
 ): Size {
-	const viewBox =
-		typeof ratio === 'object' ? getIconViewBox(ratio) : undefined;
-	const ratioValue =
-		typeof ratio === 'number' ? ratio : ratio.width / ratio.height;
+	const viewBox = typeof ratio === 'object' ? getIconViewBox(ratio) : undefined;
+	const ratioValue = typeof ratio === 'number' ? ratio : ratio.width / ratio.height;
 
 	if (width && height) {
 		return { width, height, viewBox };

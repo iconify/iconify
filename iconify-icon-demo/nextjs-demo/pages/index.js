@@ -34,22 +34,12 @@ export default function Home() {
 					<h1>Iconify demo</h1>
 					<p>
 						Home icons: <Icon icon="mdi:home" inline />
-						<Icon
-							icon="mdi:home-outline"
-							inline
-							style={{ color: '#c40' }}
-						/>
+						<Icon icon="mdi:home-outline" inline style={{ color: '#c40' }} />
 						<Icon icon="flat-color-icons:home" inline />
 					</p>
 					<p>
 						Testing 'carbon:home':
-						{data
-							? ' icon is ' +
-							  data.width +
-							  ' x ' +
-							  data.height +
-							  ' '
-							: ' loading...'}
+						{data ? ' icon is ' + data.width + ' x ' + data.height + ' ' : ' loading...'}
 						{data && <Icon icon={data} inline={true} />}
 					</p>
 				</section>
@@ -130,8 +120,14 @@ export default function Home() {
 					border-radius: 5px;
 					padding: 0.75rem;
 					font-size: 1.1rem;
-					font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-						DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+					font-family:
+						Menlo,
+						Monaco,
+						Lucida Console,
+						Liberation Mono,
+						DejaVu Sans Mono,
+						Bitstream Vera Sans Mono,
+						Courier New,
 						monospace;
 				}
 
@@ -154,7 +150,9 @@ export default function Home() {
 					text-decoration: none;
 					border: 1px solid #eaeaea;
 					border-radius: 10px;
-					transition: color 0.15s ease, border-color 0.15s ease;
+					transition:
+						color 0.15s ease,
+						border-color 0.15s ease;
 				}
 
 				.card:hover,
@@ -211,9 +209,18 @@ export default function Home() {
 				body {
 					padding: 0;
 					margin: 0;
-					font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-						Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-						Helvetica Neue, sans-serif;
+					font-family:
+						-apple-system,
+						BlinkMacSystemFont,
+						Segoe UI,
+						Roboto,
+						Oxygen,
+						Ubuntu,
+						Cantarell,
+						Fira Sans,
+						Droid Sans,
+						Helvetica Neue,
+						sans-serif;
 				}
 
 				* {

@@ -70,9 +70,7 @@ export interface IconifyTransformations {
 /**
  * Combination of dimensions and transformations.
  */
-export interface IconifyOptional
-	extends IconifyDimenisons,
-		IconifyTransformations {}
+export interface IconifyOptional extends IconifyDimenisons, IconifyTransformations {}
 
 /**
  * Icon alias definition.

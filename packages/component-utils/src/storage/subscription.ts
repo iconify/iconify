@@ -3,13 +3,8 @@ import type { IconStorage } from './types.js';
 /**
  * Unsubscribe from icon storage updates
  */
-export function unsubscribeFromIconStorage(
-	storage: IconStorage,
-	key: string | symbol
-): void {
-	const index = storage.subscribers.findIndex(
-		(subscriber) => subscriber.key === key
-	);
+export function unsubscribeFromIconStorage(storage: IconStorage, key: string | symbol): void {
+	const index = storage.subscribers.findIndex((subscriber) => subscriber.key === key);
 	if (index !== -1) {
 		storage.subscribers.splice(index, 1);
 	}

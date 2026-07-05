@@ -1,4 +1,4 @@
 .mbb8cl {
-  fill: var(--svg-secondary-color, currentColor);
-  d: path('M0 0h20v24H0z');
+	fill: var(--svg-secondary-color, currentColor);
+	d: path('M0 0h20v24H0z');
 }

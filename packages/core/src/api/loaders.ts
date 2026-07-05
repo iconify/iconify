@@ -17,8 +17,7 @@ export function setCustomIconsLoader(
 	provider?: string
 ): void {
 	// Assign loader directly to storage
-	(getStorage(provider || '', prefix) as IconStorageWithAPI).loadIcons =
-		loader;
+	(getStorage(provider || '', prefix) as IconStorageWithAPI).loadIcons = loader;
 }
 
 /**
@@ -30,6 +29,5 @@ export function setCustomIconLoader(
 	provider?: string
 ): void {
 	// Assign loader directly to storage
-	(getStorage(provider || '', prefix) as IconStorageWithAPI).loadIcon =
-		loader;
+	(getStorage(provider || '', prefix) as IconStorageWithAPI).loadIcon = loader;
 }

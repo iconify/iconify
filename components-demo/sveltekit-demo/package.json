@@ -1,12 +1,16 @@
 {
 	"name": "@iconify-demo/sveltekit",
 	"version": "0.0.1",
+	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"dependencies": {
+		"@fontsource/fira-mono": "^5.2.7"
 	},
 	"devDependencies": {
 		"@iconify/svelte": "workspace:*",
@@ -18,9 +22,5 @@
 		"svelte-check": "^4.4.6",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1"
-	},
-	"type": "module",
-	"dependencies": {
-		"@fontsource/fira-mono": "^5.2.7"
 	}
 }

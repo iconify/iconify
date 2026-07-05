@@ -121,11 +121,7 @@ export function iconToSVG(
 				// 90deg
 				tempValue = box.height / 2 + box.top;
 				transformations.unshift(
-					'rotate(90 ' +
-						tempValue.toString() +
-						' ' +
-						tempValue.toString() +
-						')'
+					'rotate(90 ' + tempValue.toString() + ' ' + tempValue.toString() + ')'
 				);
 				break;
 
@@ -190,8 +186,8 @@ export function iconToSVG(
 			customisationsHeight === null
 				? '1em'
 				: customisationsHeight === 'auto'
-				? boxHeight
-				: customisationsHeight;
+					? boxHeight
+					: customisationsHeight;
 		width = calculateSize(height, boxWidth / boxHeight);
 	} else {
 		// Width is set
@@ -200,8 +196,8 @@ export function iconToSVG(
 			customisationsHeight === null
 				? calculateSize(width, boxHeight / boxWidth)
 				: customisationsHeight === 'auto'
-				? boxHeight
-				: customisationsHeight;
+					? boxHeight
+					: customisationsHeight;
 	}
 
 	// Attributes for result

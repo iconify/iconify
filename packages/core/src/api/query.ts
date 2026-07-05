@@ -104,6 +104,5 @@ export function sendAPIQuery(
 	}
 
 	// Send API query, return function to abort query
-	return redundancy.query(query, send as QueryModuleCallback, callback)()
-		.abort;
+	return redundancy.query(query, send as QueryModuleCallback, callback)().abort;
 }

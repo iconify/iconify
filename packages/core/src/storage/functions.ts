@@ -72,8 +72,7 @@ export function getIconData(
 		const storage = getStorage(icon.provider, icon.prefix);
 		const iconName = icon.name;
 		return (
-			storage.icons[iconName] ||
-			(storage.missing.has(iconName) ? null : void 0)
+			storage.icons[iconName] || (storage.missing.has(iconName) ? null : void 0)
 		);
 	}
 }
@@ -160,6 +159,6 @@ export function getIcon(
 		? {
 				...defaultIconProps,
 				...result,
-		  }
+			}
 		: result;
 }

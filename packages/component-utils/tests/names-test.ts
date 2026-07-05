@@ -2,9 +2,7 @@ import { splitIconNames } from '../src/icon-lists/split.js';
 
 describe('Testing icon names', () => {
 	it('Split names', () => {
-		expect(
-			splitIconNames(['mdi:home', 'mdi:account', 'mdi:settings'])
-		).toEqual({
+		expect(splitIconNames(['mdi:home', 'mdi:account', 'mdi:settings'])).toEqual({
 			'': {
 				mdi: ['home', 'account', 'settings'],
 			},
@@ -28,10 +26,10 @@ describe('Testing icon names', () => {
 			])
 		).toEqual({
 			'': {
-				'mdi': ['account', 'user'],
+				mdi: ['account', 'user'],
 				'mdi-light': ['account'],
 			},
-			'local': {
+			local: {
 				mdi: ['account'],
 			},
 		});

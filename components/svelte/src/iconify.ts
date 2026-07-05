@@ -45,20 +45,9 @@ export { IconifyIconOnLoad } from './functions.js';
 
 // Functions
 // Important: duplicate of global exports in Icon.svelte. When changing exports, they must be changed in both files.
-export {
-	iconLoaded,
-	getIcon,
-	listIcons,
-	addIcon,
-	addCollection,
-} from './functions.js';
+export { iconLoaded, getIcon, listIcons, addIcon, addCollection } from './functions.js';
 
-export {
-	calculateSize,
-	replaceIDs,
-	clearIDCache,
-	buildIcon,
-} from './functions.js';
+export { calculateSize, replaceIDs, clearIDCache, buildIcon } from './functions.js';
 
 export {
 	addAPIProvider,

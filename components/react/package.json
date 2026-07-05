@@ -1,30 +1,18 @@
 {
 	"name": "@iconify/react",
-	"description": "Iconify icon component for React.",
-	"author": "Vjacheslav Trushkin",
-	"type": "module",
 	"version": "6.0.2",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Iconify icon component for React.",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "components/react"
 	},
-	"scripts": {
-		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"prebuild": "pnpm run clean",
-		"build": "node build",
-		"build:lib": "tsc -b tsconfig.src.json",
-		"build:dist": "rollup -c rollup.config.js",
-		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
-		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
-		"build:cleanup": "node cleanup",
-		"pretest": "pnpm exec playwright install",
-		"test": "vitest"
-	},
+	"funding": "https://github.com/sponsors/cyberalien",
+	"type": "module",
 	"main": "dist/iconify.js",
 	"types": "dist/iconify.d.ts",
 	"exports": {
@@ -47,6 +35,18 @@
 			"default": "./dist/offline.js"
 		},
 		"./*": "./*"
+	},
+	"scripts": {
+		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
+		"prebuild": "pnpm run clean",
+		"build": "node build",
+		"build:lib": "tsc -b tsconfig.src.json",
+		"build:dist": "rollup -c rollup.config.js",
+		"prebuild:api": "api-extractor run --local --verbose --config api-extractor.offline.json",
+		"build:api": "api-extractor run --local --verbose --config api-extractor.iconify.json",
+		"build:cleanup": "node cleanup",
+		"pretest": "pnpm exec playwright install",
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@iconify/types": "workspace:^"

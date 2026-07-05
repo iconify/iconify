@@ -1,3 +1,5 @@
 @keyframes so-from-34 {
-  0%{stroke-dashoffset:34}
+	0% {
+		stroke-dashoffset: 34;
+	}
 }

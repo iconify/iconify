@@ -51,9 +51,7 @@ describe('Testing emoji code points', () => {
 
 		// UTF-32
 		expect(
-			convertEmojiSequenceToUTF16([
-				0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f,
-			])
+			convertEmojiSequenceToUTF16([0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f])
 		).toEqual([0xd83d, 0xdc41, 0xfe0f, 0x200d, 0xd83d, 0xdde8, 0xfe0f]);
 	});
 
@@ -63,9 +61,7 @@ describe('Testing emoji code points', () => {
 		// Nothing to convert
 		expect(convertEmojiSequenceToUTF32([])).toEqual([]);
 		expect(
-			convertEmojiSequenceToUTF32([
-				0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f,
-			])
+			convertEmojiSequenceToUTF32([0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f])
 		).toEqual([0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f]);
 
 		// UTF-16
@@ -123,9 +119,7 @@ describe('Testing emoji code points', () => {
 		thrown = false;
 		try {
 			expect(
-				convertEmojiSequenceToUTF32([
-					0xd83d, 0xdc41, 0xfe0f, 0x200d, 0xd83d,
-				])
+				convertEmojiSequenceToUTF32([0xd83d, 0xdc41, 0xfe0f, 0x200d, 0xd83d])
 			);
 		} catch {
 			thrown = true;

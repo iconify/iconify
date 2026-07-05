@@ -558,18 +558,12 @@ describe('Colors', () => {
 	test('Compare colors', () => {
 		// Identical items
 		expect(
-			compareColors(
-				stringToColor('var(--foo)')!,
-				stringToColor('var(--foo)')!
-			)
+			compareColors(stringToColor('var(--foo)')!, stringToColor('var(--foo)')!)
 		).toBe(true);
 
 		// Black colors
 		expect(
-			compareColors(
-				stringToColor('rgb(0, 0, 0, 1)')!,
-				stringToColor('#000')!
-			)
+			compareColors(stringToColor('rgb(0, 0, 0, 1)')!, stringToColor('#000')!)
 		).toBe(true);
 
 		expect(
@@ -593,10 +587,7 @@ describe('Colors', () => {
 			)
 		).toBe(true);
 		expect(
-			compareColors(
-				stringToColor('transparent')!,
-				stringToColor('#f8a0')!
-			)
+			compareColors(stringToColor('transparent')!, stringToColor('#f8a0')!)
 		).toBe(true);
 
 		// Mismatch

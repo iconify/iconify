@@ -39,9 +39,7 @@ export function createOptimisedRegexForEmojiSequences(
 export function createOptimisedRegex(emojis: (string | number[])[]): string {
 	// Convert to numbers
 	let sequences = emojis.map((item) =>
-		typeof item === 'string'
-			? getSequenceFromEmojiStringOrKeyword(item)
-			: item
+		typeof item === 'string' ? getSequenceFromEmojiStringOrKeyword(item) : item
 	);
 
 	// Add variations

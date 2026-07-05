@@ -25,10 +25,7 @@ describe('Testing replaceIDs', () => {
 		const replaced = replaceIDs(body);
 
 		expect(replaced).toBe(
-			body.replace(
-				/(ssvg-id-1st-place-medal[a-z]+)/g,
-				(match) => `${match}1`
-			)
+			body.replace(/(ssvg-id-1st-place-medal[a-z]+)/g, (match) => `${match}1`)
 		);
 	});
 

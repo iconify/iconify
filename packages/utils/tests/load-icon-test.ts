@@ -50,10 +50,7 @@ describe('Testing loadIcon', () => {
 			},
 			customizations: {
 				transform(svg) {
-					return svg.replace(
-						/<svg\s+/,
-						'<svg width="1em" height="1em" '
-					);
+					return svg.replace(/<svg\s+/, '<svg width="1em" height="1em" ');
 				},
 			},
 		});
@@ -85,10 +82,7 @@ describe('Testing loadIcon', () => {
 
 		expect(svg).not.toEqual(result);
 		expect(
-			svg?.replace(
-				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-				''
-			)
+			svg?.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '')
 		).toEqual(result);
 
 		// warning should not longer be used

@@ -6,10 +6,10 @@ Iconify tries to unify all icon sets. You can use the same code no matter what i
 
 Iconify is the most versatile icon framework.
 
--   Unified icon framework that can be used with any icon library.
--   Out of the box includes 150+ icon sets with more than 200,000 icons.
--   Embed icons in HTML with Iconify icon web component and components for various front-end frameworks.
--   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
+- Unified icon framework that can be used with any icon library.
+- Out of the box includes 150+ icon sets with more than 200,000 icons.
+- Embed icons in HTML with Iconify icon web component and components for various front-end frameworks.
+- Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
@@ -53,14 +53,14 @@ What are advantages of using IconifyIcon web component?
 
 Advantages of using Iconify components:
 
--   No need to pre-bundle icons. Pass icon name as parameter, component will load data for icon from public API and render it.
--   Huge choice of icons, no icon fonts!
--   Easy to style. All monotone icons use font color for color (`currentColor`) and font size for size (height is set to `1em`), making it easy to change color and size.
+- No need to pre-bundle icons. Pass icon name as parameter, component will load data for icon from public API and render it.
+- Huge choice of icons, no icon fonts!
+- Easy to style. All monotone icons use font color for color (`currentColor`) and font size for size (height is set to `1em`), making it easy to change color and size.
 
 Main advantage of web component over other implementations is shadow DOM. Using shadow DOM instead of inlining SVG has the following advantages:
 
--   Document's styles do not affect content of shadow DOM, so there are no conflicting styles.
--   HTML served from server does not contain long code for icons. It only contains `<iconify-icon />` tags, which reduces document size. Frameworks that use SSR and hydration, using web component for icons means same HTML code generated on server and rendered in client, preventing potential hydration errors. Actual icon code is hidden in shadow DOM.
+- Document's styles do not affect content of shadow DOM, so there are no conflicting styles.
+- HTML served from server does not contain long code for icons. It only contains `<iconify-icon />` tags, which reduces document size. Frameworks that use SSR and hydration, using web component for icons means same HTML code generated on server and rendered in client, preventing potential hydration errors. Actual icon code is hidden in shadow DOM.
 
 ## Full documentation
 
@@ -105,10 +105,10 @@ Web component also has `inline` attribute that does the same, to make it easier 
 
 Web component has several render modes, which can be changed by passing `mode` property:
 
--   `svg`: renders icon as `<svg>`.
--   `bg`: renders icon as `<span>` with background set to SVG.
--   `mask`: same as `bg`, but uses masks instead, combined with `background-color: currentColor`, which results in icon rendered as background that uses text color.
--   `style`: `bg` or `mask`, depending on icon content.
+- `svg`: renders icon as `<svg>`.
+- `bg`: renders icon as `<span>` with background set to SVG.
+- `mask`: same as `bg`, but uses masks instead, combined with `background-color: currentColor`, which results in icon rendered as background that uses text color.
+- `style`: `bg` or `mask`, depending on icon content.
 
 Why are these modes needed?
 
@@ -144,8 +144,8 @@ If you want to use icons without Iconify API, [there are many other options avai
 
 There are 2 types of icons: monotone and coloured.
 
--   Monotone icons are icons that use only 1 colour and you can change that colour. Most icon sets fall into this category: FontAwesome, Unicons, Material Design Icons, etc.
--   Coloured icons are icons that use the preset palette. Most emoji icons fall into this category: Noto Emoji, Emoji One, etc. You cannot change the palette for those icons.
+- Monotone icons are icons that use only 1 colour and you can change that colour. Most icon sets fall into this category: FontAwesome, Unicons, Material Design Icons, etc.
+- Coloured icons are icons that use the preset palette. Most emoji icons fall into this category: Noto Emoji, Emoji One, etc. You cannot change the palette for those icons.
 
 Monotone icons use font colour, just like glyph fonts. To change colour, you can do this:
 
@@ -209,8 +209,8 @@ Sample:
 
 If you want to control icon dimensions with CSS, do the following:
 
--   Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
--   In CSS or inline style set both `width` and `height` for iconify-icon.
+- Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
+- In CSS or inline style set both `width` and `height` for iconify-icon.
 
 Example:
 
@@ -260,26 +260,26 @@ There are over 200,000 icons to choose from.
 
 Few popular icon sets (monotone icons):
 
--   [Material Symbols](https://icon-sets.iconify.design/material-symbols/) (7000+ icons)
--   [Material Design Icons](https://icon-sets.iconify.design/mdi/) (5000+ icons)
--   [Carbon](https://icon-sets.iconify.design/carbon/) (1000+ icons)
--   [Unicons](https://icon-sets.iconify.design/uil/) (1000+ icons)
--   [Jam Icons](https://icon-sets.iconify.design/jam/) (900 icons)
--   [IonIcons](https://icon-sets.iconify.design/ion/) (1200+ icons)
--   [FontAwesome 6](https://icon-sets.iconify.design/fa6-solid/) (2000+ icons)
--   [Bootstrap Icons](https://icon-sets.iconify.design/bi/) (500+ icons)
--   [IcoMoon Free](https://icon-sets.iconify.design/icomoon-free/) (400+ icons)
--   [Dashicons](https://icon-sets.iconify.design/dashicons/) (300 icons)
+- [Material Symbols](https://icon-sets.iconify.design/material-symbols/) (7000+ icons)
+- [Material Design Icons](https://icon-sets.iconify.design/mdi/) (5000+ icons)
+- [Carbon](https://icon-sets.iconify.design/carbon/) (1000+ icons)
+- [Unicons](https://icon-sets.iconify.design/uil/) (1000+ icons)
+- [Jam Icons](https://icon-sets.iconify.design/jam/) (900 icons)
+- [IonIcons](https://icon-sets.iconify.design/ion/) (1200+ icons)
+- [FontAwesome 6](https://icon-sets.iconify.design/fa6-solid/) (2000+ icons)
+- [Bootstrap Icons](https://icon-sets.iconify.design/bi/) (500+ icons)
+- [IcoMoon Free](https://icon-sets.iconify.design/icomoon-free/) (400+ icons)
+- [Dashicons](https://icon-sets.iconify.design/dashicons/) (300 icons)
 
 and many others.
 
 Emoji collections (mostly colored icons):
 
--   [Emoji One](https://icon-sets.iconify.design/emojione/) (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
--   [OpenMoji](https://icon-sets.iconify.design/openmoji/) (3500+ icons)
--   [Noto Emoji](https://icon-sets.iconify.design/noto/) (2000+ icons for version 2, 2000+ icons for version 1)
--   [Twitter Emoji](https://icon-sets.iconify.design/twemoji/) (2000+ icons)
--   [Firefox OS Emoji](https://icon-sets.iconify.design/fxemoji/) (1000+ icons)
+- [Emoji One](https://icon-sets.iconify.design/emojione/) (1800+ colored version 2 icons, 1400+ monotone version 2 icons, 1200+ version 1 icons)
+- [OpenMoji](https://icon-sets.iconify.design/openmoji/) (3500+ icons)
+- [Noto Emoji](https://icon-sets.iconify.design/noto/) (2000+ icons for version 2, 2000+ icons for version 1)
+- [Twitter Emoji](https://icon-sets.iconify.design/twemoji/) (2000+ icons)
+- [Firefox OS Emoji](https://icon-sets.iconify.design/fxemoji/) (1000+ icons)
 
 Also, there are several thematic collections, such as weather icons, map icons, etc.
 

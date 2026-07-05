@@ -76,10 +76,7 @@ export function combineSimilarEmojiTestData(
 	for (const key in data) {
 		const sourceItem = data[key];
 		if (sourceItem.status !== 'component') {
-			const item = findComponentsInEmojiTestItem(
-				sourceItem,
-				componentsData
-			);
+			const item = findComponentsInEmojiTestItem(sourceItem, componentsData);
 			results[item.sequenceKey] = item;
 		}
 	}

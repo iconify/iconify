@@ -1,10 +1,10 @@
 Iconify is the most versatile icon framework.
 
--   Unified icon framework that can be used with any icon library.
--   Out of the box includes 200+ icon sets with more than 250,000 icons.
--   Embed icons in HTML with Iconify Icon web component or components for front-end frameworks.
--   Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
--   Add icon search to your applications with Iconify Icon Finder.
+- Unified icon framework that can be used with any icon library.
+- Out of the box includes 200+ icon sets with more than 250,000 icons.
+- Embed icons in HTML with Iconify Icon web component or components for front-end frameworks.
+- Embed icons in designs with plug-ins for Figma, Sketch and Adobe XD.
+- Add icon search to your applications with Iconify Icon Finder.
 
 For more information visit [https://iconify.design/](https://iconify.design/).
 
@@ -14,15 +14,15 @@ There are several parts of project, some are in this repository, some are in oth
 
 What is included in this repository?
 
--   Directory `packages` contains reusable packages: types, utilities, functions used by various components.
--   Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
--   Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
--   Directory `components-css` contains components for rendering SVG with CSS, with Iconify API fallback for Safari browser.
+- Directory `packages` contains reusable packages: types, utilities, functions used by various components.
+- Directory `iconify-icon` contains `iconify-icon` web component that renders icons. It also contains wrappers for various frameworks that cannot handle web components.
+- Directory `components` contains older version of icon components that are native to various frameworks, which do not use web component.
+- Directory `components-css` contains components for rendering SVG with CSS, with Iconify API fallback for Safari browser.
 
 Other repositories you might want to look at:
 
--   Data for all icons is available in [`iconify/icon-sets`](https://github.com/iconify/icon-sets) repository.
--   Tools for parsing icons and generating icon sets are available in [`iconify/tools`](https://github.com/iconify/tools) repository.
+- Data for all icons is available in [`iconify/icon-sets`](https://github.com/iconify/icon-sets) repository.
+- Tools for parsing icons and generating icon sets are available in [`iconify/tools`](https://github.com/iconify/tools) repository.
 
 ## Iconify icon components
 
@@ -36,8 +36,8 @@ Iconify API provides data for over 200,000 open source icons! API is hosted on p
 
 There are currently 2 types of components:
 
--   Iconify icon components. These components render icon by name, loading icon data from Iconify API. They are very easy to use, but they do not work without API. You'll find them in `iconify-icon` (web component) and `components` directories.
--   Iconify CSS icon components (in development). These components render SVG with CSS, which unfortunately is not supported by Safari browser, so for Safari it uses Iconify API as a fallback, loading icon data when needed and rendering it. You'll find them in `components-css` directory.
+- Iconify icon components. These components render icon by name, loading icon data from Iconify API. They are very easy to use, but they do not work without API. You'll find them in `iconify-icon` (web component) and `components` directories.
+- Iconify CSS icon components (in development). These components render SVG with CSS, which unfortunately is not supported by Safari browser, so for Safari it uses Iconify API as a fallback, loading icon data when needed and rendering it. You'll find them in `components-css` directory.
 
 #### Why is API needed?
 
@@ -59,18 +59,18 @@ Directory `packages` contains main packages that are reusable by all other packa
 
 Main packages:
 
--   [Iconify types](./packages/types/) - TypeScript types.
--   [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
+- [Iconify types](./packages/types/) - TypeScript types.
+- [Iconify utils](./packages/utils/) - common files used by various Iconify projects (including tools, API, etc...).
 
 Packages used by Iconify icon components:
 
--   [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable (will be deprecated in future, replaced by "Fetch" package).
--   [Iconify core](./packages/core/) - common files used by icon components (will be deprecated in future, replaced by "Component Utils" package).
+- [API redundancy](./packages/api-redundancy/) - library for managing redundancies for loading data from API: handling timeouts, rotating hosts. It provides fallback for loading icons if main API host is unreachable (will be deprecated in future, replaced by "Fetch" package).
+- [Iconify core](./packages/core/) - common files used by icon components (will be deprecated in future, replaced by "Component Utils" package).
 
 Packages used by Iconify CSS icon components, will also be used in future by new versions of Iconify icon components:
 
--   [Fetch](./packages/fetch/) - Fetch wrapper with built in redundancy, allowing to use multiple hosts for request. Modern replacement of outdated "API redundancy" package.
--   [Component Utils](./packages/component-utils/) - common files used by icon components, modern version of "Iconify core" package.
+- [Fetch](./packages/fetch/) - Fetch wrapper with built in redundancy, allowing to use multiple hosts for request. Modern replacement of outdated "API redundancy" package.
+- [Component Utils](./packages/component-utils/) - common files used by icon components, modern version of "Iconify core" package.
 
 ### Web component
 
@@ -84,23 +84,23 @@ Directory `iconify-icon` contains `iconify-icon` web component and wrappers for 
 
 Frameworks that are confirmed to work with web components without custom wrappers:
 
--   Svelte.
--   Lit.
--   Ember.
--   Vue 2 and Vue 3, but requires custom config when used in Nuxt (see below).
--   React, but with small differences, such as using `class` instead of `className`. Wrapper fixes it and provides types.
+- Svelte.
+- Lit.
+- Ember.
+- Vue 2 and Vue 3, but requires custom config when used in Nuxt (see below).
+- React, but with small differences, such as using `class` instead of `className`. Wrapper fixes it and provides types.
 
 #### Demo
 
 Directory `iconify-icon-demo` contains demo packages that show usage of `iconify-icon` web component.
 
--   [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
--   [Next.js demo](./iconify-icon-demo/nextjs-demo/) - demo for web component with Next.js. Run `npm run dev` to start demo.
--   [Svelte demo with Vite](./iconify-icon-demo/svelte-demo/) - demo for web component with Svelte using Vite. Run `npm run dev` to start demo.
--   [SvelteKit demo](./iconify-icon-demo/sveltekit-demo/) - demo for web component with SvelteKit. Run `npm run dev` to start the demo.
--   [Vue 3 demo](./iconify-icon-demo/vue-demo/) - demo for web component with Vue 3. Run `npm run dev` to start demo.
--   [Nuxt 3 demo](./iconify-icon-demo/nuxt3-demo/) - demo for web component with Nuxt 3. Run `npm run dev` to start demo. Requires custom config, see below.
--   [SolidJS demo](./iconify-icon-demo/solid-demo/) - demo using web component with SolidJS. Run `npm run dev` to start demo.
+- [React demo](./iconify-icon-demo/react-demo/) - demo using web component with React. Run `npm run dev` to start demo.
+- [Next.js demo](./iconify-icon-demo/nextjs-demo/) - demo for web component with Next.js. Run `npm run dev` to start demo.
+- [Svelte demo with Vite](./iconify-icon-demo/svelte-demo/) - demo for web component with Svelte using Vite. Run `npm run dev` to start demo.
+- [SvelteKit demo](./iconify-icon-demo/sveltekit-demo/) - demo for web component with SvelteKit. Run `npm run dev` to start the demo.
+- [Vue 3 demo](./iconify-icon-demo/vue-demo/) - demo for web component with Vue 3. Run `npm run dev` to start demo.
+- [Nuxt 3 demo](./iconify-icon-demo/nuxt3-demo/) - demo for web component with Nuxt 3. Run `npm run dev` to start demo. Requires custom config, see below.
+- [SolidJS demo](./iconify-icon-demo/solid-demo/) - demo using web component with SolidJS. Run `npm run dev` to start demo.
 
 #### Nuxt 3 usage
 
@@ -150,21 +150,21 @@ Components are still maintained and supported, but it is better to switch to web
 
 Functionality is identical, but web component has some advantages:
 
--   No framework specific shenanigans. Events and attributes are supported for all frameworks.
--   Works better with SSR (icon is rendered only in browser, but because icon is contained in shadow DOM, it does not cause hydration problems).
--   Better interoperability. All parts of applicaiton reuse same web component, even if those parts are written in different frameworks.
+- No framework specific shenanigans. Events and attributes are supported for all frameworks.
+- Works better with SSR (icon is rendered only in browser, but because icon is contained in shadow DOM, it does not cause hydration problems).
+- Better interoperability. All parts of applicaiton reuse same web component, even if those parts are written in different frameworks.
 
 Packages that have been deprecated, removed from this repository and are no longer maintained:
 
--   SVG Framework: can be replaced with `iconify-icon`.
--   Vue 2 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
--   Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
+- SVG Framework: can be replaced with `iconify-icon`.
+- Vue 2 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper. Make sure you are not using Webpack older than version 5.
+- Ember component: can be replaced with `iconify-icon`, does not require Ember specific wrapper.
 
 Packages that are still available, but should be avoided:
 
--   React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
--   Svelte component: can be replaced with `iconify-icon`, does not require Svelte specific wrapper.
--   Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper.
+- React component: can be replaced with `iconify-icon` using `@iconify-icon/react` wrapper.
+- Svelte component: can be replaced with `iconify-icon`, does not require Svelte specific wrapper.
+- Vue 3 component: can be replaced with `iconify-icon`, does not require Vue specific wrapper.
 
 To import web component, just import it once in your script, as per [`iconify-icon` README file](./iconify-icon/icon/README.md).
 
@@ -172,12 +172,12 @@ To import web component, just import it once in your script, as per [`iconify-ic
 
 Directory `components-demo` contains demo packages that show usage of icon components.
 
--   [React demo](./components-demo/react-demo/) - demo for React component. Run `npm run dev` to start demo.
--   [Next.js demo](./components-demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run dev` to start demo.
--   [Vue demo](./components-demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
--   [Nuxt demo](./components-demo/nuxt3-demo/) - demo for Vue component with Nuxt. Run `npm run dev` to start demo.
--   [Svelte demo with Vite](./components-demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
--   [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
+- [React demo](./components-demo/react-demo/) - demo for React component. Run `npm run dev` to start demo.
+- [Next.js demo](./components-demo/nextjs-demo/) - demo for React component with Next.js. Run `npm run dev` to start demo.
+- [Vue demo](./components-demo/vue-demo/) - demo for Vue component. Run `npm run dev` to start demo.
+- [Nuxt demo](./components-demo/nuxt3-demo/) - demo for Vue component with Nuxt. Run `npm run dev` to start demo.
+- [Svelte demo with Vite](./components-demo/svelte-demo-vite/) - demo for Svelte component using Vite. Run `npm run dev` to start demo.
+- [SvelteKit demo](./components-demo/sveltekit-demo/) - demo for SvelteKit, using Svelte component on the server and in the browser. Run `npm run dev` to start the demo.
 
 ### Plugins
 
@@ -199,10 +199,10 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 Documentation for all packages is available on [Iconify documentation website](https://iconify.design/docs/):
 
--   [Types documentation](https://iconify.design/docs/types/).
--   [Utilities documentation](https://iconify.design/docs/libraries/utils/).
--   [Icon components documentation](https://iconify.design/docs/icon-components/).
--   [Tailwind CSS plugin documentation](https://iconify.design/docs/usage/css/tailwind/).
+- [Types documentation](https://iconify.design/docs/types/).
+- [Utilities documentation](https://iconify.design/docs/libraries/utils/).
+- [Icon components documentation](https://iconify.design/docs/icon-components/).
+- [Tailwind CSS plugin documentation](https://iconify.design/docs/usage/css/tailwind/).
 
 ## Licence
 

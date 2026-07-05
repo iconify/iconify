@@ -25,7 +25,6 @@ export interface CSSIconComponentProps {
 
 // SVG properties
 export interface CSSIconElementProps
-	extends CSSIconComponentProps,
-		Omit<SVGAttributes, 'viewBox' | 'width' | 'height' | 'xmlns'> {
+	extends CSSIconComponentProps, Omit<SVGAttributes, 'viewBox' | 'width' | 'height' | 'xmlns'> {
 	//
 }

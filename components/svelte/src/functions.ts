@@ -43,25 +43,14 @@ import type {
 	IconifyAPIConfig,
 	GetAPIConfig,
 } from '@iconify/core/lib/api/config';
-import {
-	addAPIProvider,
-	getAPIConfig,
-	listAPIProviders,
-} from '@iconify/core/lib/api/config';
-import {
-	fetchAPIModule,
-	setFetch,
-	getFetch,
-} from '@iconify/core/lib/api/modules/fetch';
+import { addAPIProvider, getAPIConfig, listAPIProviders } from '@iconify/core/lib/api/config';
+import { fetchAPIModule, setFetch, getFetch } from '@iconify/core/lib/api/modules/fetch';
 import type {
 	IconifyIconLoaderCallback,
 	IconifyIconLoaderAbort,
 } from '@iconify/core/lib/api/icons';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
-import {
-	setCustomIconLoader,
-	setCustomIconsLoader,
-} from '@iconify/core/lib/api/loaders';
+import { setCustomIconLoader, setCustomIconsLoader } from '@iconify/core/lib/api/loaders';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
 
 // Properties
@@ -172,11 +161,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 				const err = 'IconifyProviders[' + key + '] is invalid.';
 				try {
 					const value = providers[key];
-					if (
-						typeof value !== 'object' ||
-						!value ||
-						value.resources === void 0
-					) {
+					if (typeof value !== 'object' || !value || value.resources === void 0) {
 						continue;
 					}
 					if (!addAPIProvider(key, value)) {
@@ -255,11 +240,7 @@ export function checkIconState(
 	}
 
 	// Icon is an object
-	if (
-		typeof icon === 'object' &&
-		icon !== null &&
-		typeof icon.body === 'string'
-	) {
+	if (typeof icon === 'object' && icon !== null && typeof icon.body === 'string') {
 		// Stop loading
 		state.name = '';
 		abortLoading();
@@ -268,10 +249,7 @@ export function checkIconState(
 
 	// Invalid icon?
 	let iconName: IconifyIconName | null;
-	if (
-		typeof icon !== 'string' ||
-		(iconName = stringToIcon(icon, false, true)) === null
-	) {
+	if (typeof icon !== 'string' || (iconName = stringToIcon(icon, false, true)) === null) {
 		abortLoading();
 		return null;
 	}
@@ -318,10 +296,7 @@ export function checkIconState(
 /**
  * Generate icon
  */
-export function generateIcon(
-	icon: IconComponentData,
-	props: IconProps
-): RenderResult | null {
+export function generateIcon(icon: IconComponentData, props: IconProps): RenderResult | null {
 	return icon
 		? render(
 				{
@@ -329,7 +304,7 @@ export function generateIcon(
 					...icon,
 				},
 				props
-		  )
+			)
 		: null;
 }
 
@@ -352,13 +327,7 @@ const _api: IconifyAPIInternalFunctions = {
 export { _api };
 
 // IconifyAPIFunctions
-export {
-	addAPIProvider,
-	loadIcons,
-	loadIcon,
-	setCustomIconLoader,
-	setCustomIconsLoader,
-};
+export { addAPIProvider, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader };
 
 // IconifyStorageFunctions
 export { iconLoaded, getIcon, listIcons, addIcon, addCollection };

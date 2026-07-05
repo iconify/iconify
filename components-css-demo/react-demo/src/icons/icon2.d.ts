@@ -8,7 +8,7 @@ interface IconProps {
 }
 
 const Component: ForwardRefExoticComponent<
-    Omit<SVGProps<SVGSVGElement>, 'viewBox' | 'width' | 'height' | 'xmlns'> & IconProps
+	Omit<SVGProps<SVGSVGElement>, 'viewBox' | 'width' | 'height' | 'xmlns'> & IconProps
 >;
 
 export { type IconProps };

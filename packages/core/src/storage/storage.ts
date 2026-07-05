@@ -127,10 +127,7 @@ export function listIcons(provider?: string, prefix?: string): string[] {
 			allIcons = allIcons.concat(
 				Object.keys(storage.icons).map(
 					(name) =>
-						(provider !== '' ? '@' + provider + ':' : '') +
-						prefix +
-						':' +
-						name
+						(provider !== '' ? '@' + provider + ':' : '') + prefix + ':' + name
 				)
 			);
 		});

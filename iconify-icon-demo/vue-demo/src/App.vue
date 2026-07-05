@@ -6,11 +6,7 @@
 		<section>
 			<h1>Checkbox</h1>
 			<div>
-				<Checkbox
-					:checked="true"
-					text="Checkbox example"
-					hint="(click icon to toggle)"
-				/>
+				<Checkbox :checked="true" text="Checkbox example" hint="(click icon to toggle)" />
 				<Checkbox
 					:checked="false"
 					text="Another checkbox example"

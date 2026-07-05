@@ -13,8 +13,8 @@ export function api(method: string, resource: string, data?: Record<string, unkn
 	return fetch(`${base}/${resource}`, {
 		method,
 		headers: {
-			'content-type': 'application/json'
+			'content-type': 'application/json',
 		},
-		body: data && JSON.stringify(data)
+		body: data && JSON.stringify(data),
 	});
 }

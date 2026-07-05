@@ -10,8 +10,7 @@ import {
 import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
 
-export declare interface DebugIconifyIconHTMLElement
-	extends IconifyIconHTMLElement {
+export declare interface DebugIconifyIconHTMLElement extends IconifyIconHTMLElement {
 	// Internal stuff, used for debugging
 	_shadowRoot: ShadowRoot;
 	_state: IconState;
@@ -37,9 +36,7 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 		expect(node instanceof IconifyIcon).toBe(true);
 		expect(node.status).toBe('loading');
 
@@ -48,9 +45,7 @@ describe('Testing icon component', () => {
 		expect(IconifyIcon2).toBe(IconifyIcon);
 
 		// Create another element
-		const node2 = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node2 = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 		expect(node2 instanceof IconifyIcon).toBe(true);
 		expect(node2.status).toBe('loading');
 	});
@@ -69,14 +64,10 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 
 		// Should be empty
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 
 		// Check for dynamically added methods
@@ -97,9 +88,7 @@ describe('Testing icon component', () => {
 		);
 
 		// Should still be empty: waiting for next tick
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 		await nextTick();
 
@@ -140,15 +129,11 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 		expect(node.status).toBe('loading');
 
 		// Should be empty with block style
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 
 		// Check inline
 		expect(node.inline).toBe(false);
@@ -158,9 +143,7 @@ describe('Testing icon component', () => {
 		// Change to inline via property
 		node.inline = true;
 
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedInline}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedInline}</style>`);
 		expect(node.inline).toBe(true);
 		expect(node.hasAttribute('inline')).toBe(true);
 		expect(node.getAttribute('inline')).toBeTruthy();
@@ -168,9 +151,7 @@ describe('Testing icon component', () => {
 		// Change to block by removing attribute
 		node.removeAttribute('inline');
 
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.inline).toBe(false);
 		expect(node.hasAttribute('inline')).toBe(false);
 		expect(node.getAttribute('inline')).toBeFalsy();
@@ -178,9 +159,7 @@ describe('Testing icon component', () => {
 		// Change to inline by setting attribute
 		node.setAttribute('inline', 'inline');
 
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedInline}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedInline}</style>`);
 		expect(node.inline).toBe(true);
 		expect(node.hasAttribute('inline')).toBe(true);
 		expect(node.getAttribute('inline')).toBeTruthy();
@@ -202,9 +181,7 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 		expect(node.status).toBe('loading');
 
 		// Set icon
@@ -274,9 +251,7 @@ describe('Testing icon component', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 		expect(node.status).toBe('loading');
 
 		// Set mode by changing property
@@ -308,9 +283,7 @@ describe('Testing icon component', () => {
 		const html1 = node._shadowRoot.innerHTML;
 		const svg1 = node._shadowRoot.lastChild as SVGSVGElement;
 		const setCurrentTimeSupported = !!svg1.setCurrentTime;
-		expect(html1).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>${renderedIcon}`
-		);
+		expect(html1).toBe(`${styleOpeningTag}${expectedBlock}</style>${renderedIcon}`);
 		expect(svg1.outerHTML).toBe(renderedIcon);
 
 		// Restart animation, test icon again

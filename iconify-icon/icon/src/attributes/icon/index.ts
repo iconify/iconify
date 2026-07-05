@@ -18,10 +18,7 @@ export type IconOnLoadCallback = (
 /**
  * Parse icon value, load if needed
  */
-export function parseIconValue(
-	value: unknown,
-	onload: IconOnLoadCallback
-): CurrentIconData {
+export function parseIconValue(value: unknown, onload: IconOnLoadCallback): CurrentIconData {
 	if (typeof value === 'object') {
 		const data = testIconObject(value);
 		return {
@@ -68,9 +65,7 @@ export function parseIconValue(
 	}
 
 	// Load icon
-	const loading = loadIcons([name], () =>
-		onload(value, name, getIconData(name))
-	);
+	const loading = loadIcons([name], () => onload(value, name, getIconData(name)));
 
 	return {
 		value,

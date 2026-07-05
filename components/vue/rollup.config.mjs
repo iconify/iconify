@@ -6,7 +6,7 @@ const component = 'Icon';
 const config = [];
 
 // Write all packages
-names.forEach(name => {
+names.forEach((name) => {
 	// ES module
 	config.push({
 		input: `lib/${name}.js`,

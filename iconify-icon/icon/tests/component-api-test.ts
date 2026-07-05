@@ -13,8 +13,7 @@ import { defineIconifyIcon, IconifyIconHTMLElement } from '../src/component';
 import type { IconState } from '../src/state';
 import type { IconifyMockAPIDelayDoneCallback } from '@iconify/core/lib/api/modules/mock';
 
-export declare interface DebugIconifyIconHTMLElement
-	extends IconifyIconHTMLElement {
+export declare interface DebugIconifyIconHTMLElement extends IconifyIconHTMLElement {
 	// Internal stuff, used for debugging
 	_shadowRoot: ShadowRoot;
 	_state: IconState;
@@ -39,14 +38,10 @@ describe('Testing icon component with API', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 
 		// Should be empty
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 
 		// Mock data
@@ -78,9 +73,7 @@ describe('Testing icon component with API', () => {
 
 		// Should not have sent query to API yet
 		expect(sendQuery).toBeUndefined();
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 
 		// Wait until sendQuery is defined and send response
@@ -116,14 +109,10 @@ describe('Testing icon component with API', () => {
 		expect(window.customElements.get('iconify-icon')).toBeDefined();
 
 		// Create element
-		const node = document.createElement(
-			'iconify-icon'
-		) as DebugIconifyIconHTMLElement;
+		const node = document.createElement('iconify-icon') as DebugIconifyIconHTMLElement;
 
 		// Should be empty
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 
 		// Mock data
@@ -147,9 +136,7 @@ describe('Testing icon component with API', () => {
 		expect(node.getAttribute('icon')).toBe(iconName);
 
 		// Should not have sent query to API yet
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('loading');
 
 		// Wait until status changes
@@ -157,9 +144,7 @@ describe('Testing icon component with API', () => {
 		await awaitUntil(() => node.status !== 'loading');
 
 		// Should fail to render
-		expect(node._shadowRoot.innerHTML).toBe(
-			`${styleOpeningTag}${expectedBlock}</style>`
-		);
+		expect(node._shadowRoot.innerHTML).toBe(`${styleOpeningTag}${expectedBlock}</style>`);
 		expect(node.status).toBe('failed');
 	});
 });

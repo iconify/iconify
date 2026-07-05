@@ -35,8 +35,7 @@ const replaceCodeLink = (search) => {
 		if (pos2 === -1) {
 			return;
 		}
-		readme =
-			readme.slice(0, start) + packageJSON.version + readme.slice(pos2);
+		readme = readme.slice(0, start) + packageJSON.version + readme.slice(pos2);
 	}
 };
 replaceCodeLink('/code.iconify.design/iconify-icon/');

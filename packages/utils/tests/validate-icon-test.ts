@@ -3,11 +3,7 @@ import { validateIconSet } from '../lib/icon-set/validate';
 describe('Testing validating icon', () => {
 	// Add various types for testing
 	const validationValues = new Map<
-		| boolean
-		| Record<string | number | symbol, never>
-		| []
-		| number
-		| string,
+		boolean | Record<string | number | symbol, never> | [] | number | string,
 		{ text: string; type: string }
 	>();
 
@@ -140,9 +136,7 @@ describe('Testing validating icon', () => {
 					});
 
 					if (item.type !== 'string') {
-						reject(
-							`Expected to throw error when body is ${item.text}`
-						);
+						reject(`Expected to throw error when body is ${item.text}`);
 						return;
 					}
 				} catch {
@@ -169,9 +163,7 @@ describe('Testing validating icon', () => {
 					);
 
 					if (item.type !== 'string') {
-						reject(
-							`Expected to throw error when body is ${item.text}`
-						);
+						reject(`Expected to throw error when body is ${item.text}`);
 						return;
 					}
 				} catch {
@@ -227,16 +219,12 @@ describe('Testing validating icon', () => {
 						});
 
 						if (item.type !== 'number') {
-							reject(
-								`Expected to throw error when ${prop} is ${item.text}`
-							);
+							reject(`Expected to throw error when ${prop} is ${item.text}`);
 							return;
 						}
 					} catch {
 						if (item.type === 'number') {
-							reject(
-								`Expected to pass when ${prop} is ${item.text}`
-							);
+							reject(`Expected to pass when ${prop} is ${item.text}`);
 							return;
 						}
 					}
@@ -265,11 +253,11 @@ describe('Testing validating icon', () => {
 								? {
 										body: '<g />',
 										[prop]: value,
-								  }
+									}
 								: {
 										// [prop] should be deleted
 										body: '<g />',
-								  };
+									};
 
 						expect(result).toEqual({
 							prefix: 'foo',
@@ -278,9 +266,7 @@ describe('Testing validating icon', () => {
 							},
 						});
 					} catch {
-						reject(
-							`Expected to not throw error when ${prop} is being fixed`
-						);
+						reject(`Expected to not throw error when ${prop} is being fixed`);
 						return;
 					}
 				});
@@ -308,16 +294,12 @@ describe('Testing validating icon', () => {
 						});
 
 						if (item.type !== 'boolean') {
-							reject(
-								`Expected to throw error when ${prop} is ${item.text}`
-							);
+							reject(`Expected to throw error when ${prop} is ${item.text}`);
 							return;
 						}
 					} catch {
 						if (item.type === 'boolean') {
-							reject(
-								`Expected to pass when ${prop} is ${item.text}`
-							);
+							reject(`Expected to pass when ${prop} is ${item.text}`);
 							return;
 						}
 					}
@@ -346,11 +328,11 @@ describe('Testing validating icon', () => {
 								? {
 										body: '<g />',
 										[prop]: value,
-								  }
+									}
 								: {
 										// [prop] should be deleted
 										body: '<g />',
-								  };
+									};
 
 						expect(result).toEqual({
 							prefix: 'foo',
@@ -359,9 +341,7 @@ describe('Testing validating icon', () => {
 							},
 						});
 					} catch {
-						reject(
-							`Expected to not throw error when ${prop} is being fixed`
-						);
+						reject(`Expected to not throw error when ${prop} is being fixed`);
 						return;
 					}
 				});
@@ -388,9 +368,7 @@ describe('Testing validating icon', () => {
 					});
 
 					if (item.type === 'object') {
-						reject(
-							`Expected to throw error when value is ${item.text}`
-						);
+						reject(`Expected to throw error when value is ${item.text}`);
 						return;
 					}
 				} catch {
@@ -424,11 +402,11 @@ describe('Testing validating icon', () => {
 							? {
 									body: '<g />',
 									foo: value,
-							  }
+								}
 							: {
 									// should be deleted
 									body: '<g />',
-							  };
+								};
 
 					expect(result).toEqual({
 						prefix: 'foo',
@@ -437,9 +415,7 @@ describe('Testing validating icon', () => {
 						},
 					});
 				} catch {
-					reject(
-						`Expected to not throw error when value is being fixed`
-					);
+					reject(`Expected to not throw error when value is being fixed`);
 					return;
 				}
 			});

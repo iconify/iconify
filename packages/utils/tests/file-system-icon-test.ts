@@ -9,9 +9,8 @@ describe('Testing FileSystemIconLoader', () => {
 	});
 
 	test('FileSystemIconLoader cleanups svg preface', async () => {
-		const result = await FileSystemIconLoader(fixturesDir)(
-			'circle-xml-preface'
-		);
+		const result =
+			await FileSystemIconLoader(fixturesDir)('circle-xml-preface');
 		expect(result && result.indexOf('<svg') === 0).toBeTruthy();
 	});
 

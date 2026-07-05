@@ -40,8 +40,7 @@ export type IconifyIconCustomisationProperties = {
  * All properties
  */
 export interface IconifyIconProperties
-	extends IconifyIconCustomisationProperties,
-		Partial<IconifyIconSVGAttributes> {
+	extends IconifyIconCustomisationProperties, Partial<IconifyIconSVGAttributes> {
 	// Icon to render: name, object or serialised object
 	icon: string | IconifyIcon;
 
@@ -59,9 +58,8 @@ export interface IconifyIconProperties
  * Attributes as properties
  */
 export interface IconifyIconAttributes
-	extends Partial<
-			Record<keyof Omit<IconifyIconProperties, 'icon' | 'mode'>, string>
-		>,
+	extends
+		Partial<Record<keyof Omit<IconifyIconProperties, 'icon' | 'mode'>, string>>,
 		Partial<IconifyIconSVGAttributes> {
 	// Icon to render: name or serialised object
 	icon: string;

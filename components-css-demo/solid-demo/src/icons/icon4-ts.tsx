@@ -38,16 +38,40 @@ interface Props {
 	static?: boolean;
 	width?: string;
 	height?: string;
-};
+}
 
 function Component(props: Props) {
-	const [local, others] = splitProps(props, ["mode","fill","focus","static","width","height"]);
+	const [local, others] = splitProps(props, ['mode', 'fill', 'focus', 'static', 'width', 'height']);
 
-	const states = createMemo(() => ({ 'mode': namedStateValue(local['mode'], 'auto'), 'fill': namedStateValue(local['fill'], 'no-fill'), 'focus': local['focus'], 'static': local['static'] }));
-	const className = createMemo(() => Object.entries(states()).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
+	const states = createMemo(() => ({
+		mode: namedStateValue(local['mode'], 'auto'),
+		fill: namedStateValue(local['fill'], 'no-fill'),
+		focus: local['focus'],
+		static: local['static'],
+	}));
+	const className = createMemo(
+		() =>
+			Object.entries(states())
+				.map(([key, value]) => (value ? `state-${value === true ? key : value}` : ''))
+				.join(' ')
+				.trim() || undefined
+	);
 	const size = createMemo(() => getSizeProps(local.width, local.height, 1));
-	const content = createMemo(() => replaceIDs(`<defs><mask id="SVG5vqpYcTc"><path class="mc7__g reacnl"/><path class="iy2otu r1menc sh2p6x zxndow"/><path class="iy2otu r1menc rg1nfv zxndow"/><path class="l-actj nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG5lwb9bGv"><path class="mc7__g omafcw"/><path class="df7-9f iy2otu r1menc zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG0TyOKeaR"><path class="iy2otu r1menc td9rkk zxndow"/><path class="iy2otu r1menc t50njl zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask></defs><path mask="url(#SVG5vqpYcTc)" class="lsejuv z3aezd"/><path mask="url(#SVG5lwb9bGv)" class="lsejuv z3aezd"/><path mask="url(#SVG0TyOKeaR)" class="b9a3-f lsejuv"/><path class="ia15ro iy2otu r1menc zcx7gx"/>`));
-	return (<svg xmlns="http://www.w3.org/2000/svg" class={className()} {...size()} viewBox={viewBox} innerHTML={content()} {...others} />);
+	const content = createMemo(() =>
+		replaceIDs(
+			`<defs><mask id="SVG5vqpYcTc"><path class="mc7__g reacnl"/><path class="iy2otu r1menc sh2p6x zxndow"/><path class="iy2otu r1menc rg1nfv zxndow"/><path class="l-actj nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG5lwb9bGv"><path class="mc7__g omafcw"/><path class="df7-9f iy2otu r1menc zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG0TyOKeaR"><path class="iy2otu r1menc td9rkk zxndow"/><path class="iy2otu r1menc t50njl zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask></defs><path mask="url(#SVG5vqpYcTc)" class="lsejuv z3aezd"/><path mask="url(#SVG5lwb9bGv)" class="lsejuv z3aezd"/><path mask="url(#SVG0TyOKeaR)" class="b9a3-f lsejuv"/><path class="ia15ro iy2otu r1menc zcx7gx"/>`
+		)
+	);
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class={className()}
+			{...size()}
+			viewBox={viewBox}
+			innerHTML={content()}
+			{...others}
+		/>
+	);
 }
 
 export default Component;

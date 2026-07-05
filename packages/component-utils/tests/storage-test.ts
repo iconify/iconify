@@ -1,8 +1,5 @@
 import { createIconStorage } from '../src/storage/create.js';
-import {
-	subscribeToIconStorage,
-	unsubscribeFromIconStorage,
-} from '../src/storage/subscription.js';
+import { subscribeToIconStorage, unsubscribeFromIconStorage } from '../src/storage/subscription.js';
 
 describe('Testing icon storage', () => {
 	async function testForUpdate(test: () => boolean, limit = 10) {
@@ -61,20 +58,12 @@ describe('Testing icon storage', () => {
 		const storage = createIconStorage();
 
 		// Subscribe to icon updates
-		subscribeToIconStorage(
-			storage,
-			['test1', 'test2', 'test2b', 'test2c'],
-			() => {
-				allCount++;
-			}
-		);
-		const test1Subscriber = subscribeToIconStorage(
-			storage,
-			['test1'],
-			() => {
-				test1Count++;
-			}
-		);
+		subscribeToIconStorage(storage, ['test1', 'test2', 'test2b', 'test2c'], () => {
+			allCount++;
+		});
+		const test1Subscriber = subscribeToIconStorage(storage, ['test1'], () => {
+			test1Count++;
+		});
 		subscribeToIconStorage(storage, ['test2', 'test2b', 'test2c'], () => {
 			test2Count++;
 		});

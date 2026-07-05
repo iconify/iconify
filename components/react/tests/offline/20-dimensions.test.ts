@@ -19,9 +19,7 @@ describe('Dimensions', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'width="48" height="48"'
-		);
+		expect(component.container.innerHTML).toContain('width="48" height="48"');
 		expect(component.container.innerHTML).not.toContain('1em');
 	});
 
@@ -34,9 +32,7 @@ describe('Dimensions', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'width="32" height="48"'
-		);
+		expect(component.container.innerHTML).toContain('width="32" height="48"');
 		expect(component.container.innerHTML).not.toContain('1em');
 	});
 
@@ -48,9 +44,7 @@ describe('Dimensions', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'width="24" height="24"'
-		);
+		expect(component.container.innerHTML).toContain('width="24" height="24"');
 		expect(component.container.innerHTML).not.toContain('1em');
 	});
 

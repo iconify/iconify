@@ -21,9 +21,7 @@ export function getIconCSS(
 	// Get mode
 	const mode =
 		options.mode ||
-		(options.color || !body.includes('currentColor')
-			? 'background'
-			: 'mask');
+		(options.color || !body.includes('currentColor') ? 'background' : 'mask');
 
 	// Get variable name
 	let varName = options.varName;
@@ -44,18 +42,20 @@ export function getIconCSS(
 		delete newOptions.varName;
 	}
 
-	const rules = {
-		...options.rules,
-		...getCommonCSSRules(newOptions),
-		...generateItemCSSRules(
+	const rules = Object.create(null) as Record<string, string>;
+	Object.assign(
+		rules,
+		options.rules,
+		getCommonCSSRules(newOptions),
+		generateItemCSSRules(
 			{
 				...defaultIconProps,
 				...icon,
 				body,
 			},
 			newOptions
-		),
-	};
+		)
+	);
 
 	// Get selector and format CSS
 	const selector = options.iconSelector || '.icon';

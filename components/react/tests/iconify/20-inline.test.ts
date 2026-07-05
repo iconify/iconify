@@ -19,9 +19,7 @@ describe('Inline attribute', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(component.container.innerHTML).toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('string', async () => {
@@ -33,9 +31,7 @@ describe('Inline attribute', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(component.container.innerHTML).toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('false', async () => {

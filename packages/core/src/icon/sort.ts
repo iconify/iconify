@@ -58,10 +58,7 @@ export function sortIcons(icons: IconifyIconName[]): SortedIcons {
 
 		const providerStorage =
 			storage[provider] ||
-			(storage[provider] = Object.create(null) as Record<
-				string,
-				IconStorage
-			>);
+			(storage[provider] = Object.create(null) as Record<string, IconStorage>);
 
 		const localStorage =
 			providerStorage[prefix] ||

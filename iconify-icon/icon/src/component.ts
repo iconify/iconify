@@ -5,10 +5,7 @@ import {
 	RenderedIconCustomisations,
 } from './attributes/customisations';
 import { parseIconValue } from './attributes/icon';
-import type {
-	CurrentIconData,
-	RenderedCurrentIconData,
-} from './attributes/icon/state';
+import type { CurrentIconData, RenderedCurrentIconData } from './attributes/icon/state';
 import { getRenderMode } from './attributes/mode';
 import type { IconifyIconProperties } from './attributes/types';
 import { exportFunctions, IconifyExportedFunctions } from './functions';
@@ -34,7 +31,8 @@ declare interface PartialIconifyIconHTMLElement extends HTMLElement {
 
 // Add dynamically generated getters and setters
 export declare interface IconifyIconHTMLElement
-	extends PartialIconifyIconHTMLElement,
+	extends
+		PartialIconifyIconHTMLElement,
 		// Functions added dynamically after class creation
 		IconifyExportedFunctions,
 		Required<IconifyIconProperties> {}
@@ -57,9 +55,7 @@ export interface IconifyIconHTMLElementClass
 /**
  * Register 'iconify-icon' component, if it does not exist
  */
-export function defineIconifyIcon(
-	name = 'iconify-icon'
-): IconifyIconHTMLElementClass | undefined {
+export function defineIconifyIcon(name = 'iconify-icon'): IconifyIconHTMLElementClass | undefined {
 	// Check for custom elements registry and HTMLElement
 	let customElements: CustomElementRegistry;
 	let ParentClass: typeof HTMLElement;
@@ -300,11 +296,7 @@ export function defineIconifyIcon(
 		 */
 		get status(): IconifyIconStatus {
 			const state = this._state;
-			return state.rendered
-				? 'rendered'
-				: state.icon.data === null
-				? 'failed'
-				: 'loading';
+			return state.rendered ? 'rendered' : state.icon.data === null ? 'failed' : 'loading';
 		}
 
 		/**
@@ -347,10 +339,7 @@ export function defineIconifyIcon(
 			const customisations = getCustomisations(this);
 			if (
 				state.attrMode !== mode ||
-				haveCustomisationsChanged(
-					state.customisations,
-					customisations
-				) ||
+				haveCustomisationsChanged(state.customisations, customisations) ||
 				!findIconElement(this._shadowRoot)
 			) {
 				this._renderIcon(state.icon, customisations, mode);
@@ -390,11 +379,7 @@ export function defineIconifyIcon(
 				this._gotIconData(icon as RenderedCurrentIconData);
 			} else {
 				// Pending icon
-				this._state = setPendingState(
-					icon,
-					this._state.inline,
-					this._state
-				);
+				this._state = setPendingState(icon, this._state.inline, this._state);
 			}
 		}
 
@@ -420,11 +405,7 @@ export function defineIconifyIcon(
 		 */
 		_gotIconData(icon: RenderedCurrentIconData) {
 			this._checkQueued = false;
-			this._renderIcon(
-				icon,
-				getCustomisations(this),
-				this.getAttribute('mode')
-			);
+			this._renderIcon(icon, getCustomisations(this), this.getAttribute('mode'));
 		}
 
 		/**
@@ -462,9 +443,7 @@ export function defineIconifyIcon(
 			if (!this._observer && !this.hasAttribute('noobserver')) {
 				try {
 					this._observer = new IntersectionObserver((entries) => {
-						const intersecting = entries.some(
-							(entry) => entry.isIntersecting
-						);
+						const intersecting = entries.some((entry) => entry.isIntersecting);
 						if (intersecting !== this._visible) {
 							this._visible = intersecting;
 							this._forceRender();

@@ -36,41 +36,34 @@ describe('Replacing emojis in text', () => {
 		let grinningCatCalled = 0;
 		let alienCalled = 0;
 		let testCalled = 0;
-		const replaced = findAndReplaceEmojisInText(
-			regex,
-			text,
-			(match, prev) => {
-				switch (match.match) {
-					case grinningCatEmoji: {
-						expect(prev).toBe('Grinning Cat: ');
-						grinningCatCalled++;
-						return ':cat:';
-					}
+		const replaced = findAndReplaceEmojisInText(regex, text, (match, prev) => {
+			switch (match.match) {
+				case grinningCatEmoji: {
+					expect(prev).toBe('Grinning Cat: ');
+					grinningCatCalled++;
+					return ':cat:';
+				}
 
-					case alienEmoji: {
-						if (alienCalled) {
-							expect(prev).toBe(
-								'Grinning Cat: :cat:, aliens: ' +
-									':alien:'.repeat(alienCalled)
-							);
-						}
-						alienCalled++;
-						return ':alien:';
-					}
-
-					case testEmoji: {
-						testCalled++;
-						return ':test:';
-					}
-
-					default: {
-						throw new Error(
-							`Unexpected match: ${JSON.stringify(match)}`
+				case alienEmoji: {
+					if (alienCalled) {
+						expect(prev).toBe(
+							'Grinning Cat: :cat:, aliens: ' + ':alien:'.repeat(alienCalled)
 						);
 					}
+					alienCalled++;
+					return ':alien:';
+				}
+
+				case testEmoji: {
+					testCalled++;
+					return ':test:';
+				}
+
+				default: {
+					throw new Error(`Unexpected match: ${JSON.stringify(match)}`);
 				}
 			}
-		);
+		});
 
 		expect(grinningCatCalled).toBe(1);
 		expect(alienCalled).toBe(3);

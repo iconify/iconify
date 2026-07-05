@@ -103,10 +103,7 @@ export function createEmojiRegexItemForNumbers(
 
 			// Generate regex, add numbers list for reference
 			results.push(
-				createSequenceEmojiRegexItem(
-					[firstRegex, secondRegex],
-					item.numbers
-				)
+				createSequenceEmojiRegexItem([firstRegex, secondRegex], item.numbers)
 			);
 		}
 	}
@@ -185,9 +182,7 @@ export function optimiseNumbersSet(set: SetEmojiItemRegex): EmojiItemRegex {
 
 		if (item.numbers) {
 			mandatoryMatches.items.push(item);
-			mandatoryMatches.numbers = mandatoryMatches.numbers.concat(
-				item.numbers
-			);
+			mandatoryMatches.numbers = mandatoryMatches.numbers.concat(item.numbers);
 			return false;
 		}
 		return true;

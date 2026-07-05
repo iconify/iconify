@@ -20,23 +20,17 @@ export function Tests(props: TestIconsProps) {
 			<Icon
 				icon={successIcon}
 				inline={true}
-				className={
-					'success ' + (icon === 'success' ? 'visible' : 'hidden')
-				}
+				className={'success ' + (icon === 'success' ? 'visible' : 'hidden')}
 			/>
 			<Icon
 				icon={pendingIcon}
 				inline={true}
-				className={
-					'pending ' + (icon === 'pending' ? 'visible' : 'hidden')
-				}
+				className={'pending ' + (icon === 'pending' ? 'visible' : 'hidden')}
 			/>
 			<Icon
 				icon={failedIcon}
 				inline={true}
-				className={
-					'failed ' + (icon === 'failed' ? 'visible' : 'hidden')
-				}
+				className={'failed ' + (icon === 'failed' ? 'visible' : 'hidden')}
 			/>
 		</span>
 	);

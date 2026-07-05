@@ -1,23 +1,17 @@
 {
 	"name": "@iconify/core",
-	"type": "module",
-	"description": "Reusable files used by multiple Iconify packages",
-	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"version": "4.1.0",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Reusable files used by multiple Iconify packages",
 	"homepage": "https://iconify.design/",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/core"
 	},
-	"scripts": {
-		"lint": "eslint --fix src/**/*.ts",
-		"prebuild": "pnpm run lint",
-		"build": "tsdown",
-		"test": "vitest"
-	},
+	"type": "module",
 	"sideEffects": false,
 	"exports": {
 		"./lib/api/callbacks": "./lib/api/callbacks.js",
@@ -35,6 +29,13 @@
 		"./lib/icon/sort": "./lib/icon/sort.js",
 		"./lib/storage/functions": "./lib/storage/functions.js",
 		"./lib/storage/storage": "./lib/storage/storage.js"
+	},
+	"scripts": {
+		"lint": "npx oxlint --fix src/",
+		"fmt": "npx oxfmt src/ --write",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown",
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@iconify/api-redundancy": "workspace:^",

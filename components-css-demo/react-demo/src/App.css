@@ -205,10 +205,7 @@ select {
 }
 
 .al390y {
-	stroke-width: var(
-		--svg-mask-width,
-		calc(var(--svg-stroke-width, 1.5px) + 1px)
-	);
+	stroke-width: var(--svg-mask-width, calc(var(--svg-stroke-width, 1.5px) + 1px));
 	stroke: #000;
 }
 
@@ -392,10 +389,7 @@ button:hover .z77veu {
 }
 
 .al390y {
-	stroke-width: var(
-		--svg-mask-width,
-		calc(var(--svg-stroke-width, 1.5px) + 1px)
-	);
+	stroke-width: var(--svg-mask-width, calc(var(--svg-stroke-width, 1.5px) + 1px));
 	stroke: #000;
 }
 

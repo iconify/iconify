@@ -3,10 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta
-			http-equiv="Content-Security-Policy"
-			content="require-trusted-types-for 'script';"
-		/>
+		<meta http-equiv="Content-Security-Policy" content="require-trusted-types-for 'script';" />
 		<title>Iconify Icon Demo: Usage</title>
 		<style>
 			html,
@@ -87,9 +84,7 @@
 				function add(data) {
 					// Try iconify-icon
 					try {
-						window.customElements
-							.get('iconify-icon')
-							.addCollection(data);
+						window.customElements.get('iconify-icon').addCollection(data);
 					} catch (err) {
 						// Try SVG framework
 						try {
@@ -97,10 +92,7 @@
 						} catch (err) {
 							// Add to global preload variable
 							try {
-								(
-									window.IconifyPreload ||
-									(window.IconifyPreload = [])
-								).push(data);
+								(window.IconifyPreload || (window.IconifyPreload = [])).push(data);
 							} catch (err) {}
 						}
 					}
@@ -124,9 +116,7 @@
 				function add(data) {
 					// Try iconify-icon
 					try {
-						window.customElements
-							.get('iconify-icon')
-							.addCollection(data);
+						window.customElements.get('iconify-icon').addCollection(data);
 						return;
 					} catch (err) {}
 
@@ -138,10 +128,7 @@
 
 					// Add to global preload variable
 					try {
-						(
-							window.IconifyPreload ||
-							(window.IconifyPreload = [])
-						).push(data);
+						(window.IconifyPreload || (window.IconifyPreload = [])).push(data);
 					} catch (err) {}
 				}
 
@@ -164,8 +151,7 @@
 	<body>
 		<p>
 			This is a simple HTML page with few icons.<br />
-			There are 2 entries for each sample: one as inline SVG, one using
-			style.
+			There are 2 entries for each sample: one as inline SVG, one using style.
 		</p>
 		<p>
 			Icons that behave like images:
@@ -177,166 +163,64 @@
 		<p>
 			Icon that behaves like an glyph (aligned to bottom of this text):
 			<iconify-icon inline icon="bi:house-door"></iconify-icon>
-			<iconify-icon
-				inline="inline"
-				icon="bi:house-door"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline="inline" icon="bi:house-door" mode="style"></iconify-icon>
 			<iconify-icon inline icon="cif:ee"></iconify-icon>
-			<iconify-icon
-				inline="true"
-				icon="cif:ee"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline="true" icon="cif:ee" mode="style"></iconify-icon>
 		</p>
 		<p>
 			Changing icon color:
-			<iconify-icon
-				inline
-				style="color: red"
-				icon="bi:house-door"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				style="color: red"
-				icon="bi:house-door"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline style="color: red" icon="bi:house-door"></iconify-icon>
+			<iconify-icon inline style="color: red" icon="bi:house-door" mode="style"></iconify-icon>
 		</p>
 		<p>
 			Big icon (showing various ways to do it):
-			<iconify-icon
-				inline
-				icon="bi:person-lines-fill"
-				style="font-size: 2em"
-			></iconify-icon>
+			<iconify-icon inline icon="bi:person-lines-fill" style="font-size: 2em"></iconify-icon>
 			<iconify-icon
 				inline
 				icon="bi:person-lines-fill"
 				style="font-size: 2em"
 				mode="style"
 			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="bi:person-lines-fill"
-				height="2em"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="bi:person-lines-fill"
-				width="2em"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline icon="bi:person-lines-fill" height="2em"></iconify-icon>
+			<iconify-icon inline icon="bi:person-lines-fill" width="2em" mode="style"></iconify-icon>
 			<br />
-			Icons above should be aligned differently because they have
-			different font-size. Vertical alignment is relative to font size.
+			Icons above should be aligned differently because they have different font-size. Vertical
+			alignment is relative to font size.
 		</p>
 		<p>
 			Big icon (showing various ways to do it):
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				style="font-size: 2em"
-			></iconify-icon>
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				style="font-size: 2em"
-				mode="style"
-			></iconify-icon>
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				width="2em"
-			></iconify-icon>
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				height="2em"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" style="font-size: 2em"></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" style="font-size: 2em" mode="style"></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" width="2em"></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" height="2em" mode="style"></iconify-icon>
 			<br />
-			Icons above should be aligned identically because they are not using
-			inline mode.
+			Icons above should be aligned identically because they are not using inline mode.
 		</p>
 		<p>
 			Rotation:
 			<iconify-icon inline icon="bi:image"></iconify-icon>
 			<iconify-icon inline icon="bi:image" mode="style"></iconify-icon>
 			<iconify-icon inline icon="bi:image" rotate="1"></iconify-icon>
-			<iconify-icon
-				inline
-				icon="bi:image"
-				rotate="1"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="1" mode="style"></iconify-icon>
 			<iconify-icon inline icon="bi:image" rotate="180deg"></iconify-icon>
-			<iconify-icon
-				inline
-				icon="bi:image"
-				rotate="180deg"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="180deg" mode="style"></iconify-icon>
 			<iconify-icon inline icon="bi:image" rotate="75%"></iconify-icon>
-			<iconify-icon
-				inline
-				icon="bi:image"
-				rotate="75%"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline icon="bi:image" rotate="75%" mode="style"></iconify-icon>
 		</p>
 		<p>
 			Flip (4 icons, repeated 3 times with different mode attribute):
 			<iconify-icon inline icon="test:icon"></iconify-icon>
 			<iconify-icon inline icon="test:icon" mode="svg"></iconify-icon>
 			<iconify-icon inline icon="test:icon" mode="style"></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test:icon"
-				flip="horizontal"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test:icon"
-				flip="horizontal"
-				mode="svg"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test:icon"
-				flip="horizontal"
-				mode="style"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="vertical"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="vertical"
-				mode="svg"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="vertical"
-				mode="style"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="horizontal,vertical"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="horizontal,vertical"
-				mode="svg"
-			></iconify-icon>
-			<iconify-icon
-				inline
-				icon="test2:icon"
-				flip="horizontal,vertical"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon inline icon="test:icon" flip="horizontal"></iconify-icon>
+			<iconify-icon inline icon="test:icon" flip="horizontal" mode="svg"></iconify-icon>
+			<iconify-icon inline icon="test:icon" flip="horizontal" mode="style"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="vertical"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="vertical" mode="svg"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="vertical" mode="style"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="horizontal,vertical"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="horizontal,vertical" mode="svg"></iconify-icon>
+			<iconify-icon inline icon="test2:icon" flip="horizontal,vertical" mode="style"></iconify-icon>
 		</p>
 		<p>
 			Non-square animated icon (with border):
@@ -412,11 +296,7 @@
 		<div class="observer-test">
 			<div>
 				<!-- should not render when not visible -->
-				<iconify-icon
-					icon="test2:icon"
-					flip="horizontal,vertical"
-					mode="style"
-				></iconify-icon>
+				<iconify-icon icon="test2:icon" flip="horizontal,vertical" mode="style"></iconify-icon>
 				<!-- should always render: attribute is boolean, value does not matter -->
 				<iconify-icon
 					noobserver
@@ -436,16 +316,8 @@
 		<h2>Scale icon</h2>
 		<p>Using height="none" and CSS, animating width/height and color</p>
 		<div class="unset-size">
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				height="none"
-				mode="svg"
-			></iconify-icon>
-			<iconify-icon
-				icon="bi:person-lines-fill"
-				height="unset"
-				mode="style"
-			></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" height="none" mode="svg"></iconify-icon>
+			<iconify-icon icon="bi:person-lines-fill" height="unset" mode="style"></iconify-icon>
 		</div>
 	</body>
 </html>

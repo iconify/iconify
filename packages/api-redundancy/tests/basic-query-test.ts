@@ -23,9 +23,7 @@ describe('Basic queries', () => {
 				config,
 				payload,
 				() => {
-					reject(
-						'Query should not be called when resources list is empty'
-					);
+					reject('Query should not be called when resources list is empty');
 				},
 				(data, error) => {
 					expect(isSync).toEqual(false);

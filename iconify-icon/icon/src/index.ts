@@ -43,10 +43,7 @@ import type {
 	IconifyRenderMode,
 } from './attributes/types';
 import { defineIconifyIcon } from './component';
-import type {
-	IconifyIconHTMLElement,
-	IconifyIconHTMLElementClass,
-} from './component';
+import type { IconifyIconHTMLElement, IconifyIconHTMLElementClass } from './component';
 import { exportFunctions } from './functions';
 import { appendCustomStyle } from './render/style';
 

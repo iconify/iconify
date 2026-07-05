@@ -199,7 +199,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 									icons: {
 										[name]: data,
 									},
-							  }
+								}
 							: null;
 						parseLoaderResponse(storage, [name], iconSet);
 					});
@@ -221,9 +221,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
 			}
 
 			// Get API module
-			const api = prefix.match(matchIconName)
-				? getAPIModule(provider)
-				: null;
+			const api = prefix.match(matchIconName) ? getAPIModule(provider) : null;
 			if (!api) {
 				// API module not found
 				parseLoaderResponse(storage, valid, null);
@@ -245,10 +243,7 @@ function loadNewIcons(storage: IconStorageWithAPI, icons: string[]): void {
  * Check if icon is being loaded
  */
 export const isPending: IsPending = (icon: IconifyIconName): boolean => {
-	const storage = getStorage(
-		icon.provider,
-		icon.prefix
-	) as IconStorageWithAPI;
+	const storage = getStorage(icon.provider, icon.prefix) as IconStorageWithAPI;
 	const pending = storage.pendingIcons;
 	return !!(pending && pending.has(icon.name));
 };
@@ -292,10 +287,7 @@ export const loadIcons: IconifyLoadIcons = (
 	type PrefixNewIconsList = string[];
 	type ProviderNewIconsList = Record<string, PrefixNewIconsList>;
 
-	const newIcons = Object.create(null) as Record<
-		string,
-		ProviderNewIconsList
-	>;
+	const newIcons = Object.create(null) as Record<string, ProviderNewIconsList>;
 	const sources: IconStorageWithAPI[] = [];
 	let lastProvider: string, lastPrefix: string;
 
@@ -358,8 +350,7 @@ export const loadIcon = (
 	icon: IconifyIconName | string
 ): Promise<Required<IconifyIcon>> => {
 	return new Promise((fulfill, reject) => {
-		const iconObj =
-			typeof icon === 'string' ? stringToIcon(icon, true) : icon;
+		const iconObj = typeof icon === 'string' ? stringToIcon(icon, true) : icon;
 		if (!iconObj) {
 			reject(icon);
 			return;

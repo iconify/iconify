@@ -10,13 +10,29 @@ interface Props {
 	focus?: boolean;
 	width?: string;
 	height?: string;
-};
+}
 
-function Component({action: actionProp, focus: focusProp, width: widthProp, height: heightProp, ...props}: Props) {
-	const states = useMemo(() => ({ 'action': actionProp, 'focus': focusProp }), [actionProp, focusProp]);
-	const className = useMemo(() => Object.entries(states).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined, [states]);
+function Component({
+	action: actionProp,
+	focus: focusProp,
+	width: widthProp,
+	height: heightProp,
+	...props
+}: Props) {
+	const states = useMemo(() => ({ action: actionProp, focus: focusProp }), [actionProp, focusProp]);
+	const className = useMemo(
+		() =>
+			Object.entries(states)
+				.map(([key, value]) => (value ? `state-${value === true ? key : value}` : ''))
+				.join(' ')
+				.trim() || undefined,
+		[states]
+	);
 	const size = useMemo(() => getSizeProps(widthProp, heightProp, 0.84), [widthProp, heightProp]);
-	const content = useMemo(() => ({__html: cleanupHTML(replaceIDs(`<style>.a8wtkc {
+	const content = useMemo(
+		() => ({
+			__html: cleanupHTML(
+				replaceIDs(`<style>.a8wtkc {
   stroke: var(--svg-primary-color, currentColor);
 }
 
@@ -89,9 +105,13 @@ svg.state-action {
     transition: d 0.4s linear;
   }
 }
-</style><defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"/><path class="g_1xrq objeeb zs6nhs"/></mask></defs><path mask="url(#SVGRErrZbBT)" class="mbb8cl"/><path class="a8wtkc g_1xrq p10gmg zs6nhs"/>`))}), []);
+</style><defs><mask id="SVGRErrZbBT"><path class="ae-3qn g_1xrq p10gmg"/><path class="g_1xrq objeeb zs6nhs"/></mask></defs><path mask="url(#SVGRErrZbBT)" class="mbb8cl"/><path class="a8wtkc g_1xrq p10gmg zs6nhs"/>`)
+			),
+		}),
+		[]
+	);
 	return createElement('svg', {
-		"xmlns": "http://www.w3.org/2000/svg",
+		xmlns: 'http://www.w3.org/2000/svg',
 		...props,
 		className,
 		...size,

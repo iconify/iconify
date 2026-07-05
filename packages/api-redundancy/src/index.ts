@@ -82,20 +82,15 @@ export function initRedundancy(cfg: Partial<RedundancyConfig>): Redundancy {
 		queryCallback: QueryModuleCallback,
 		doneCallback?: QueryDoneCallback
 	): GetQueryStatus {
-		const query = sendQuery(
-			config,
-			payload,
-			queryCallback,
-			(data, error) => {
-				// Remove query from list
-				cleanup();
+		const query = sendQuery(config, payload, queryCallback, (data, error) => {
+			// Remove query from list
+			cleanup();
 
-				// Call callback
-				if (doneCallback) {
-					doneCallback(data, error);
-				}
+			// Call callback
+			if (doneCallback) {
+				doneCallback(data, error);
 			}
-		);
+		});
 		queries.push(query);
 		return query;
 	}

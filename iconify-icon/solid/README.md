@@ -46,14 +46,14 @@ If you want to use icons without Iconify API, [there are many other options avai
 
 Icon name is a string. Few examples:
 
--   `@api-provider:icon-set-prefix:icon-name`
--   `mdi-light:home` (in this example API provider is empty, so it is skipped)
+- `@api-provider:icon-set-prefix:icon-name`
+- `mdi-light:home` (in this example API provider is empty, so it is skipped)
 
 It has 3 parts, separated by ":":
 
--   provider points to API source. Starts with "@", can be empty (empty value is used for public Iconify API).
--   prefix is name of icon set.
--   name is name of icon.
+- provider points to API source. Starts with "@", can be empty (empty value is used for public Iconify API).
+- prefix is name of icon set.
+- name is name of icon.
 
 See [icon names documentation](https://iconify.design/docs/iconify-icon/icon-name.html) for more detailed explanation.
 
@@ -78,11 +78,11 @@ See [icon packages documentation](https://iconify.design/docs/icons/) for more d
 
 The icon component has the following optional properties:
 
--   `inline`. Adds `vertical-align: -0.125em` to style to render it below text baseline, so it fits nicely in text.
--   `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
--   `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
--   `flip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
--   `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
+- `inline`. Adds `vertical-align: -0.125em` to style to render it below text baseline, so it fits nicely in text.
+- `width` and `height`. Icon dimensions. The default values are "1em" for both. See "Dimensions" section below.
+- `color`. Icon colour. This is the same as setting colour in style. See "Icon colour" section below.
+- `flip`. Flip icon horizontally and/or vertically. See "Transformations" section below.
+- `rotate`. Rotate icon by 90, 180 or 270 degrees. See "Transformations" section below.
 
 ### Other properties and events
 
@@ -94,9 +94,9 @@ By default, icon height is "1em". With is dynamic, calculated using the icon's w
 
 There are several ways to change icon dimensions:
 
--   Setting `font-size` in style (or `fontSize` if you are using inline style).
--   Setting `width` and/or `height` property.
--   Setting `height="none"` to remove dimensions from SVG and using CSS to resize icon.
+- Setting `font-size` in style (or `fontSize` if you are using inline style).
+- Setting `width` and/or `height` property.
+- Setting `height="none"` to remove dimensions from SVG and using CSS to resize icon.
 
 Values for `width` and `height` can be numbers or strings.
 
@@ -150,8 +150,8 @@ Keyword "auto" sets dimensions to the icon's `viewBox` dimensions. For example, 
 
 If you want to control icon dimensions with CSS, do the following:
 
--   Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
--   In CSS or inline style set both `width` and `height` for iconify-icon.
+- Set `height` attribute to `none` or `unset`, which will remove attribute from rendered SVG.
+- In CSS or inline style set both `width` and `height` for iconify-icon.
 
 ```jsx
 <Icon icon="mdi-light:home" height="none" style={{width: '40px'; height: '40px'}} />
@@ -192,15 +192,15 @@ You can rotate and flip the icon.
 
 This might seem redundant because icon can also be rotated and flipped using CSS transformations. So why do transformation properties exist? Because it is a different type of transformation.
 
--   CSS transformations transform the entire icon.
--   Icon transformations transform the contents of the icon.
+- CSS transformations transform the entire icon.
+- Icon transformations transform the contents of the icon.
 
 If you have a square icon, this makes no difference. However, if you have an icon that has different width and height values, it makes a huge difference.
 
 Rotating 16x24 icon by 90 degrees results in:
 
--   CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
--   Icon transformation changes bounding box to 24x16, rotating content inside an icon.
+- CSS transformation keeps 16x24 bounding box, which might cause the icon to overlap text around it.
+- Icon transformation changes bounding box to 24x16, rotating content inside an icon.
 
 See [icon transformations documentation](https://iconify.design/docs/iconify-icon/transform.html) for more details.
 

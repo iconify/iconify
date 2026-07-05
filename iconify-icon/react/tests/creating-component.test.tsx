@@ -15,10 +15,7 @@ describe('Creating component', () => {
 		const html = renderResult.container.innerHTML;
 
 		expect(renderResult.container.innerHTML).toEqual(
-			`<iconify-icon icon="${JSON.stringify(iconData).replaceAll(
-				'"',
-				'&quot;'
-			)}"></iconify-icon>`
+			`<iconify-icon icon="${JSON.stringify(iconData).replaceAll('"', '&quot;')}"></iconify-icon>`
 		);
 	});
 });

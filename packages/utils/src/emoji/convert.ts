@@ -74,9 +74,7 @@ export function mergeUTF32Numbers(
 
 	// Merge values
 	return (
-		((part1 - startUTF32Pair1) << 0x0a) +
-		(part2 - startUTF32Pair2) +
-		minUTF32
+		((part1 - startUTF32Pair1) << 0x0a) + (part2 - startUTF32Pair2) + minUTF32
 	);
 }
 

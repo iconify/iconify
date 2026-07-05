@@ -12,9 +12,7 @@ describe('Testing getRenderMode', () => {
 
 	it('Style', () => {
 		expect(getRenderMode('<g />', 'style')).toBe('bg');
-		expect(
-			getRenderMode('<g><path d="" fill="currentColor" /></g>', 'style')
-		).toBe('mask');
+		expect(getRenderMode('<g><path d="" fill="currentColor" /></g>', 'style')).toBe('mask');
 	});
 
 	it('Detect mode', () => {
@@ -23,15 +21,12 @@ describe('Testing getRenderMode', () => {
 		expect(getRenderMode('<g />', '')).toBe(defautToSVG ? 'svg' : 'bg');
 
 		// Icon with 'currentColor'
-		expect(
-			getRenderMode('<g><path d="" fill="currentColor" /></g>', '')
-		).toBe(defautToSVG ? 'svg' : 'mask');
-		expect(
-			getRenderMode(
-				'<g><path d="" fill="currentColor" /></g>',
-				'whatever'
-			)
-		).toBe(defautToSVG ? 'svg' : 'mask');
+		expect(getRenderMode('<g><path d="" fill="currentColor" /></g>', '')).toBe(
+			defautToSVG ? 'svg' : 'mask'
+		);
+		expect(getRenderMode('<g><path d="" fill="currentColor" /></g>', 'whatever')).toBe(
+			defautToSVG ? 'svg' : 'mask'
+		);
 	});
 
 	it('Animated icons', () => {

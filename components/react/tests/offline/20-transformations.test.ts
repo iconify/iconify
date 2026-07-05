@@ -19,9 +19,7 @@ describe('Rotation', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="rotate(90 12 12)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="rotate(90 12 12)">');
 	});
 
 	test('string', async () => {
@@ -33,9 +31,7 @@ describe('Rotation', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="rotate(180 12 12)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="rotate(180 12 12)">');
 	});
 });
 
@@ -48,9 +44,7 @@ describe('Flip', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('string', async () => {
@@ -61,9 +55,7 @@ describe('Flip', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="translate(0 24) scale(1 -1)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="translate(0 24) scale(1 -1)">');
 	});
 
 	test('string and boolean', async () => {
@@ -76,9 +68,7 @@ describe('Flip', () => {
 		);
 
 		// horizontal + vertical = 180deg rotation
-		expect(component.container.innerHTML).toContain(
-			'<g transform="rotate(180 12 12)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="rotate(180 12 12)">');
 		expect(component.container.innerHTML).not.toContain('scale');
 	});
 
@@ -91,9 +81,7 @@ describe('Flip', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('shorthand and boolean', async () => {
@@ -106,9 +94,7 @@ describe('Flip', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'<g transform="translate(24 0) scale(-1 1)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="translate(24 0) scale(-1 1)">');
 	});
 
 	test('shorthand and boolean as string', async () => {
@@ -122,9 +108,7 @@ describe('Flip', () => {
 		);
 
 		// horizontal + vertical = 180deg rotation
-		expect(component.container.innerHTML).toContain(
-			'<g transform="rotate(180 12 12)">'
-		);
+		expect(component.container.innerHTML).toContain('<g transform="rotate(180 12 12)">');
 		expect(component.container.innerHTML).not.toContain('scale');
 	});
 

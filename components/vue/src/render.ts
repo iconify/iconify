@@ -8,21 +8,17 @@ import { iconToSVG } from '@iconify/utils/lib/svg/build';
 import { replaceIDs } from '@iconify/utils/lib/svg/id';
 import { iconToHTML } from '@iconify/utils/lib/svg/html';
 import { svgToURL } from '@iconify/utils/lib/svg/url';
-import type {
-	IconifyIconCustomisations,
-	IconifyRenderMode,
-	IconProps,
-} from './props';
+import type { IconifyIconCustomisations, IconifyRenderMode, IconProps } from './props';
 import { defaultExtendedIconCustomisations } from './props';
 
 /**
  * Default SVG attributes
  */
 const svgDefaults: Record<string, unknown> = {
-	'xmlns': 'http://www.w3.org/2000/svg',
+	xmlns: 'http://www.w3.org/2000/svg',
 	'xmlns:xlink': 'http://www.w3.org/1999/xlink',
 	'aria-hidden': true,
-	'role': 'img',
+	role: 'img',
 };
 
 /**
@@ -98,10 +94,7 @@ export const render = (
 	props: IconProps
 ): VNode => {
 	// Split properties
-	const customisations = mergeCustomisations(
-		defaultExtendedIconCustomisations,
-		props
-	);
+	const customisations = mergeCustomisations(defaultExtendedIconCustomisations, props);
 	const componentProps = { ...svgDefaults };
 
 	// Check mode
@@ -111,9 +104,7 @@ export const render = (
 	const style = {} as VStyle;
 	const propsStyle = props.style;
 	const customStyle =
-		typeof propsStyle === 'object' && !(propsStyle instanceof Array)
-			? propsStyle
-			: {};
+		typeof propsStyle === 'object' && !(propsStyle instanceof Array) ? propsStyle : {};
 
 	// Get element properties
 	for (let key in props) {
@@ -135,8 +126,7 @@ export const render = (
 			case 'inline':
 			case 'hFlip':
 			case 'vFlip':
-				customisations[key] =
-					value === true || value === 'true' || value === 1;
+				customisations[key] = value === true || value === 'true' || value === 1;
 				break;
 
 			// Flip as string: 'horizontal,vertical'
@@ -212,9 +202,7 @@ export const render = (
 
 	// Render <span> with style
 	const { body, width, height } = icon;
-	const useMask =
-		mode === 'mask' ||
-		(mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
+	const useMask = mode === 'mask' || (mode === 'bg' ? false : body.indexOf('currentColor') !== -1);
 
 	// Generate SVG
 	const html = iconToHTML(body, {
@@ -227,8 +215,8 @@ export const render = (
 	componentProps.style = {
 		...style,
 		'--svg': svgToURL(html),
-		'width': fixSize(renderAttribs.width),
-		'height': fixSize(renderAttribs.height),
+		width: fixSize(renderAttribs.width),
+		height: fixSize(renderAttribs.height),
 		...commonProps,
 		...(useMask ? monotoneProps : coloredProps),
 		...customStyle,

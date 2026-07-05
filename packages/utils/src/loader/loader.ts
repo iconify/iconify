@@ -25,12 +25,7 @@ export const loadIcon: UniversalIconLoader = async (
 
 			if (result) {
 				if (typeof result === 'string') {
-					return await getCustomIcon(
-						() => result,
-						collection,
-						icon,
-						options
-					);
+					return await getCustomIcon(() => result, collection, icon, options);
 				}
 				// if using dynamic import and requesting the json file
 				// for example: carbon: () => import('@iconify-json/carbon/icons.json').then(i => i.default as any)
@@ -41,12 +36,7 @@ export const loadIcon: UniversalIconLoader = async (
 						icon.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
 						icon.replace(/([a-z])(\d+)/g, '$1-$2'),
 					];
-					return await searchForIcon(
-						result,
-						collection,
-						ids,
-						options
-					);
+					return await searchForIcon(result, collection, ids, options);
 				}
 			}
 		} else {

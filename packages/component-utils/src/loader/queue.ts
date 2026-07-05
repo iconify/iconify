@@ -49,10 +49,7 @@ function parseQueuedIcons() {
 					}
 
 					// Check if loader is set and validate icon name
-					if (
-						!loader ||
-						(validateNames && !matchIconName.test(name))
-					) {
+					if (!loader || (validateNames && !matchIconName.test(name))) {
 						storage.update(name, null);
 						return;
 					}
@@ -85,17 +82,12 @@ function parseQueuedIcons() {
 						}
 					} else {
 						// Load icons in bulk
-						const batches = splitForBatchLoading(
-							namesToLoad,
-							loader
-						);
+						const batches = splitForBatchLoading(namesToLoad, loader);
 						for (const batch of batches) {
 							// Parse icon set
 							const parse = (data?: IconifyJSON | null) => {
 								// Add icon set
-								const added = data
-									? addIconSetToStorage(data, provider)
-									: new Set<string>();
+								const added = data ? addIconSetToStorage(data, provider) : new Set<string>();
 
 								// Send notifications for missing icons
 								for (const name of batch) {

@@ -1,11 +1,5 @@
 import './init.js';
-import {
-	createEffect,
-	createMemo,
-	createSignal,
-	splitProps,
-	type JSX,
-} from 'solid-js';
+import { createEffect, createMemo, createSignal, splitProps, type JSX } from 'solid-js';
 import { mergeProps, createDynamic } from 'solid-js/web';
 import type { CSSIconElementProps } from '../props.js';
 import type { IconifyIcon } from '@iconify/types';
@@ -21,26 +15,16 @@ import { renderCSS } from './status.js';
  * Can be used when you do not need a fallback icon
  */
 export function Icon(props: CSSIconElementProps): JSX.Element {
-	const [local, others] = splitProps(props, [
-		'content',
-		'fallback',
-		'width',
-		'height',
-		'viewBox',
-	]);
+	const [local, others] = splitProps(props, ['content', 'fallback', 'width', 'height', 'viewBox']);
 
 	// Data for icon to render
-	const [iconData, setIconData] = createSignal<
-		IconifyIcon | null | undefined
-	>(null);
+	const [iconData, setIconData] = createSignal<IconifyIcon | null | undefined>(null);
 	const [subscriberState, setSubscriber] = createSignal<ReturnType<
 		typeof subscribeToIconData
 	> | null>(null);
 
 	// Content
-	const renderedContent = createMemo(() =>
-		renderContent(local.content || '')
-	);
+	const renderedContent = createMemo(() => renderContent(local.content || ''));
 
 	// Icon to render from API, set to empty string if CSS rendering is used
 	const fallbackToRender = createMemo(() =>
@@ -65,14 +49,10 @@ export function Icon(props: CSSIconElementProps): JSX.Element {
 	});
 
 	// Icon size
-	const size = createMemo(() =>
-		getSizeProps(local.width, local.height, local.viewBox)
-	);
+	const size = createMemo(() => getSizeProps(local.width, local.height, local.viewBox));
 
 	// Content
-	const finalContent = createMemo(() =>
-		cleanUpInnerHTML(fallbackIcon() || renderedContent())
-	);
+	const finalContent = createMemo(() => cleanUpInnerHTML(fallbackIcon() || renderedContent()));
 
 	// Render icon
 	return createDynamic(

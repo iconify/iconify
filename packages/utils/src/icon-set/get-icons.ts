@@ -25,8 +25,7 @@ export function getIcons(
 	};
 
 	const sourceIcons = data.icons;
-	const sourceAliases =
-		data.aliases || (Object.create(null) as IconifyAliases);
+	const sourceAliases = data.aliases || (Object.create(null) as IconifyAliases);
 
 	// Add lastModified
 	if (data.lastModified) {

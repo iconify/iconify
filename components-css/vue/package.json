@@ -1,36 +1,19 @@
 {
 	"name": "@iconify/css-vue",
-	"description": "Iconify fallback icon component for Vue 3.",
-	"author": "Vjacheslav Trushkin",
-	"type": "module",
 	"version": "1.0.2",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Iconify fallback icon component for Vue 3.",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "components-css/vue"
 	},
-	"scripts": {
-		"lint": "eslint src/*.ts",
-		"prebuild": "pnpm run lint",
-		"build": "tsdown"
-	},
+	"funding": "https://github.com/sponsors/cyberalien",
+	"type": "module",
 	"types": "./dist/index.d.ts",
-	"dependencies": {
-		"@iconify/types": "workspace:^"
-	},
-	"devDependencies": {
-		"@iconify/component-utils": "workspace:^",
-		"@iconify/fetch": "workspace:^",
-		"@iconify/utils": "workspace:^",
-		"vue": "^3.5.33"
-	},
-	"peerDependencies": {
-		"vue": ">=3.0.0"
-	},
 	"exports": {
 		".": "./dist/index.js",
 		"./basic": "./dist/basic.js",
@@ -47,5 +30,22 @@
 		"./helpers/support": "./dist/helpers/support.js",
 		"./props": "./dist/props.js",
 		"./package.json": "./package.json"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown"
+	},
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"vue": "^3.5.33"
+	},
+	"peerDependencies": {
+		"vue": ">=3.0.0"
 	}
 }

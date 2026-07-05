@@ -9,10 +9,7 @@ import { loadIcons } from '../dist/iconify-icon.mjs';
  */
 function test(value, expected, message) {
 	if (value !== expected) {
-		console.error(
-			'❌',
-			message + `: expected ${value} to equal ${expected}`
-		);
+		console.error('❌', message + `: expected ${value} to equal ${expected}`);
 		process.exit(1);
 	}
 	console.log('✓', message);

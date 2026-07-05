@@ -20,23 +20,17 @@ export function TestIcons(props: TestIconsProps) {
 			<InlineIcon
 				icon={successIcon}
 				mode="style"
-				className={
-					'success ' + (icon === 'success' ? 'visible' : 'hidden')
-				}
+				className={'success ' + (icon === 'success' ? 'visible' : 'hidden')}
 			/>
 			<InlineIcon
 				icon={pendingIcon}
 				mode="style"
-				className={
-					'pending ' + (icon === 'pending' ? 'visible' : 'hidden')
-				}
+				className={'pending ' + (icon === 'pending' ? 'visible' : 'hidden')}
 			/>
 			<InlineIcon
 				icon={failedIcon}
 				mode="style"
-				className={
-					'failed ' + (icon === 'failed' ? 'visible' : 'hidden')
-				}
+				className={'failed ' + (icon === 'failed' ? 'visible' : 'hidden')}
 			/>
 		</span>
 	);

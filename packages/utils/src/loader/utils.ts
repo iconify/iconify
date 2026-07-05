@@ -18,7 +18,9 @@ function getConfiguredSize(
 	scale?: number
 ): string | undefined {
 	if (typeof scale === 'number') {
-		return scale > 0 ? stringifySize(calculateSize(source ?? '1em', scale)) : undefined;
+		return scale > 0
+			? stringifySize(calculateSize(source ?? '1em', scale))
+			: undefined;
 	}
 	return source;
 }

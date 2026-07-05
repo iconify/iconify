@@ -1,27 +1,39 @@
 .zs6nhs {
-  d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
+	d: path('M17 19c0 0 -7 -7 -7 -7c0 0 -7 -7 -7 -7c0 0 7 7 7 7c0 0 7 7 7 7Z');
 }
 
-button:focus-visible:not(:disabled) svg.state-action, button:hover:not(:disabled) svg.state-action, input:focus-visible:not(:disabled) svg.state-action, input:hover:not(:disabled) svg.state-action, svg.state-action.state-focus {
-  .zs6nhs {
-    d: path('M11.74 13.74c-2.34 2.35 -6.14 2.35 -8.48 0c-2.35 -2.34 -2.35 -6.14 0 -8.48c2.34 -2.35 6.14 -2.35 8.48 0c2.35 2.34 2.35 6.14 0 8.48Z');
-  }
+button:focus-visible:not(:disabled) svg.state-action,
+button:hover:not(:disabled) svg.state-action,
+input:focus-visible:not(:disabled) svg.state-action,
+input:hover:not(:disabled) svg.state-action,
+svg.state-action.state-focus {
+	.zs6nhs {
+		d: path(
+			'M11.74 13.74c-2.34 2.35 -6.14 2.35 -8.48 0c-2.35 -2.34 -2.35 -6.14 0 -8.48c2.34 -2.35 6.14 -2.35 8.48 0c2.35 2.34 2.35 6.14 0 8.48Z'
+		);
+	}
 }
 
-button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
-  .zs6nhs {
-    d: path('M18 20c0 0 -8 -8 -8 -8c0 0 -8 -8 -8 -8c0 0 8 8 8 8c0 0 8 8 8 8Z');
-  }
+button:focus-visible:not(:disabled),
+button:hover:not(:disabled),
+input:focus-visible:not(:disabled),
+input:hover:not(:disabled),
+svg.state-focus {
+	.zs6nhs {
+		d: path('M18 20c0 0 -8 -8 -8 -8c0 0 -8 -8 -8 -8c0 0 8 8 8 8c0 0 8 8 8 8Z');
+	}
 }
 
 svg.state-action {
-  .zs6nhs {
-    d: path('M11.4 13.4c-2.16 2.14 -5.64 2.14 -7.79 -0.01c-2.15 -2.15 -2.15 -5.63 0 -7.78c2.15 -2.15 5.63 -2.15 7.78 0c2.15 2.15 2.15 5.63 0 7.78Z');
-  }
+	.zs6nhs {
+		d: path(
+			'M11.4 13.4c-2.16 2.14 -5.64 2.14 -7.79 -0.01c-2.15 -2.15 -2.15 -5.63 0 -7.78c2.15 -2.15 5.63 -2.15 7.78 0c2.15 2.15 2.15 5.63 0 7.78Z'
+		);
+	}
 }
 
 @media not (prefers-reduced-motion) {
-  .zs6nhs {
-    transition: d 0.4s linear;
-  }
+	.zs6nhs {
+		transition: d 0.4s linear;
+	}
 }

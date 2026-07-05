@@ -30,8 +30,8 @@ You can run any commands on any package from that package's directory.
 
 For example, to build only `@iconify/utils` package, you can either:
 
--   Change directory to `packages/utils`
--   Run `pnpm build`
+- Change directory to `packages/utils`
+- Run `pnpm build`
 
 or you can use pnpm filters from root directory:
 
@@ -53,8 +53,8 @@ It is automatically installed if you are using Dev Container.
 
 There are several main branches:
 
--   `main` contains stable version of packages.
--   `next`, if exists, contains next major version.
+- `main` contains stable version of packages.
+- `next`, if exists, contains next major version.
 
 There are also various archive and experimental branches.
 

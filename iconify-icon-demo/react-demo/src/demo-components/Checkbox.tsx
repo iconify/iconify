@@ -21,16 +21,10 @@ export function Checkbox(props: CheckboxProps) {
 		<div className="checkbox-container">
 			<a
 				href="# "
-				className={
-					'checkbox ' +
-					(checked ? 'checkbox--checked' : 'checkbox--unchecked')
-				}
+				className={'checkbox ' + (checked ? 'checkbox--checked' : 'checkbox--unchecked')}
 				onClick={onClick}
 			>
-				<Icon
-					icon={checked ? checkedIcon : uncheckedIcon}
-					mode={checked ? 'mask' : 'svg'}
-				/>
+				<Icon icon={checked ? checkedIcon : uncheckedIcon} mode={checked ? 'mask' : 'svg'} />
 				{props.text}
 			</a>
 			<small>{props.hint}</small>

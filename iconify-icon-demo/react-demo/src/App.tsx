@@ -42,16 +42,8 @@ function App() {
 			<section>
 				<h1>Checkbox</h1>
 				<div>
-					<Checkbox
-						checked={true}
-						text="Checkbox example"
-						hint="(click to toggle)"
-					/>
-					<Checkbox
-						checked={false}
-						text="Another checkbox example"
-						hint="(click to toggle)"
-					/>
+					<Checkbox checked={true} text="Checkbox example" hint="(click to toggle)" />
+					<Checkbox checked={false} text="Another checkbox example" hint="(click to toggle)" />
 				</div>
 			</section>
 

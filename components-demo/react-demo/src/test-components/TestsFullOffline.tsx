@@ -83,18 +83,12 @@ export function TestsFullOffline() {
 							}
 
 							if (style.fontSize !== '24px') {
-								console.log(
-									'Invalid font-size:',
-									style.fontSize
-								);
+								console.log('Invalid font-size:', style.fontSize);
 								errors = true;
 							}
 
 							if (style.verticalAlign !== '-0.25em') {
-								console.log(
-									'Invalid vertical-align:',
-									style.verticalAlign
-								);
+								console.log('Invalid vertical-align:', style.verticalAlign);
 								errors = true;
 							}
 
@@ -176,8 +170,7 @@ export function TestsFullOffline() {
 
 			<div className="test-row">
 				<TestIcons id="full-offline-color3" />
-				Red color from attribute + green from style (style overrides
-				attribute):{' '}
+				Red color from attribute + green from style (style overrides attribute):{' '}
 				<InlineIcon
 					icon="demo"
 					color="red"

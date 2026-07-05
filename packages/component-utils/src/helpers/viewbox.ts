@@ -7,7 +7,5 @@ export function getIconViewBox(viewBox: {
 	left?: number;
 	top?: number;
 }): string {
-	return `${viewBox.left ?? 0} ${viewBox.top ?? 0} ${viewBox.width} ${
-		viewBox.height
-	}`;
+	return `${viewBox.left ?? 0} ${viewBox.top ?? 0} ${viewBox.width} ${viewBox.height}`;
 }

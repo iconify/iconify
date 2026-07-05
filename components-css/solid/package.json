@@ -1,36 +1,19 @@
 {
 	"name": "@iconify/css-solid",
-	"description": "Iconify fallback icon component for Solid.",
-	"author": "Vjacheslav Trushkin",
-	"type": "module",
 	"version": "1.1.0",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Iconify fallback icon component for Solid.",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "components-css/solid"
 	},
-	"scripts": {
-		"lint": "eslint src/*.ts",
-		"prebuild": "pnpm run lint",
-		"build": "tsdown"
-	},
+	"funding": "https://github.com/sponsors/cyberalien",
+	"type": "module",
 	"types": "./dist/index.d.ts",
-	"dependencies": {
-		"@iconify/types": "workspace:^"
-	},
-	"devDependencies": {
-		"@iconify/component-utils": "workspace:^",
-		"@iconify/fetch": "workspace:^",
-		"@iconify/utils": "workspace:^",
-		"solid-js": "^1.9.12"
-	},
-	"peerDependencies": {
-		"solid-js": ">=1.9.0"
-	},
 	"exports": {
 		".": "./dist/index.js",
 		"./basic": "./dist/basic.js",
@@ -47,5 +30,22 @@
 		"./helpers/support": "./dist/helpers/support.js",
 		"./props": "./dist/props.js",
 		"./package.json": "./package.json"
+	},
+	"scripts": {
+		"lint": "eslint src/*.ts",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown"
+	},
+	"dependencies": {
+		"@iconify/types": "workspace:^"
+	},
+	"devDependencies": {
+		"@iconify/component-utils": "workspace:^",
+		"@iconify/fetch": "workspace:^",
+		"@iconify/utils": "workspace:^",
+		"solid-js": "^1.9.12"
+	},
+	"peerDependencies": {
+		"solid-js": ">=1.9.0"
 	}
 }

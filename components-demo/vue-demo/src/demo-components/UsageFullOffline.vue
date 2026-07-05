@@ -7,10 +7,7 @@
 		</div>
 		<div>
 			Icons referenced by object:
-			<Icon v-bind:icon="demoIcon" /><Icon
-				v-bind:icon="demoIcon"
-				mode="style"
-			/>
+			<Icon v-bind:icon="demoIcon" /><Icon v-bind:icon="demoIcon" mode="style" />
 		</div>
 		<div>
 			2 icons imported from icon set:
@@ -18,8 +15,7 @@
 			<Icon icon="link1" mode="style" />
 		</div>
 		<div class="alert">
-			<Icon :icon="alertIcon" mode="style" />Important notice with alert
-			icon!
+			<Icon :icon="alertIcon" mode="style" />Important notice with alert icon!
 		</div>
 		<div>
 			Icon without size, scaled to 48px with CSS:

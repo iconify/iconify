@@ -176,10 +176,7 @@ export function convertIconSetInfo(
 	}
 
 	// Add height
-	if (
-		typeof source.height === 'number' ||
-		typeof source.height === 'string'
-	) {
+	if (typeof source.height === 'number' || typeof source.height === 'string') {
 		const num = parseInt(source.height as string);
 		if (num > 0) {
 			info.height = num;
@@ -220,9 +217,7 @@ export function convertIconSetInfo(
 		const value = source[prop];
 		if (typeof value === 'number' || typeof value === 'string') {
 			// Convert from source.displayHeight or source.samplesHeight
-			const displayHeight = validateDisplayHeight(
-				parseInt(value as string)
-			);
+			const displayHeight = validateDisplayHeight(parseInt(value as string));
 			if (displayHeight) {
 				info.displayHeight = displayHeight;
 			}

@@ -1,23 +1,21 @@
 {
 	"name": "@iconify/utils",
-	"type": "module",
-	"description": "Common functions for working with Iconify icon sets used by various packages.",
-	"author": "Vjacheslav Trushkin",
 	"version": "3.1.3",
-	"license": "MIT",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Common functions for working with Iconify icon sets used by various packages.",
 	"homepage": "https://iconify.design/docs/libraries/utils/",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "packages/utils"
 	},
-	"scripts": {
-		"lint": "eslint --fix src/**/*.ts",
-		"prebuild": "pnpm run lint",
-		"build": "tsdown",
-		"test": "node ./scripts/prepare-tests.mjs && vitest"
-	},
+	"files": [
+		"lib",
+		"*.d.ts"
+	],
+	"type": "module",
 	"sideEffects": false,
 	"main": "lib/index.js",
 	"module": "lib/index.js",
@@ -102,10 +100,13 @@
 		"./lib/svg/viewbox": "./lib/svg/viewbox.js",
 		"./*": "./*"
 	},
-	"files": [
-		"lib",
-		"*.d.ts"
-	],
+	"scripts": {
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
+		"fmt": "npx oxfmt src/ --write",
+		"prebuild": "pnpm run lint",
+		"build": "tsdown",
+		"test": "node ./scripts/prepare-tests.mjs && vitest"
+	},
 	"dependencies": {
 		"@antfu/install-pkg": "^1.1.0",
 		"@iconify/types": "workspace:^",

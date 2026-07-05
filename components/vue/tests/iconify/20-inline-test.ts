@@ -41,9 +41,7 @@ describe('Inline attribute', () => {
 		const wrapper = mount(Wrapper, {});
 		await nextTick();
 
-		expect(wrapper.html()).not.toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(wrapper.html()).not.toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('true', async () => {
@@ -77,9 +75,7 @@ describe('Inline attribute', () => {
 		const wrapper = mount(Wrapper, {});
 		await nextTick();
 
-		expect(wrapper.html()).not.toContain(
-			'style="vertical-align: -0.125em;"'
-		);
+		expect(wrapper.html()).not.toContain('style="vertical-align: -0.125em;"');
 	});
 
 	test('inline and style string', async () => {
@@ -97,9 +93,7 @@ describe('Inline attribute', () => {
 		const wrapper = mount(Wrapper, {});
 		await nextTick();
 
-		expect(wrapper.html()).toContain(
-			'style="vertical-align: -0.125em; color: red;"'
-		);
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em; color: red;"');
 	});
 
 	test('inline and style object', async () => {
@@ -120,9 +114,7 @@ describe('Inline attribute', () => {
 		const wrapper = mount(Wrapper, {});
 		await nextTick();
 
-		expect(wrapper.html()).toContain(
-			'style="vertical-align: -0.125em; color: red;"'
-		);
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em; color: red;"');
 	});
 
 	test('inline and style overriding it', async () => {

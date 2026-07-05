@@ -94,10 +94,11 @@ export function getIconsCSSData(
 	);
 
 	// Get common CSS
-	const commonRules = {
-		...options.rules,
-		...getCommonCSSRules(newOptions),
-	};
+	const commonRules = Object.assign(
+		Object.create(null),
+		options.rules,
+		getCommonCSSRules(newOptions)
+	);
 	const hasCommonRules = commonSelector && commonSelector !== iconSelector;
 	const commonSelectors: Set<string> = new Set();
 	if (hasCommonRules) {

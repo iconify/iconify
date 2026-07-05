@@ -34,9 +34,7 @@ export interface IconifyAPIFunctions {
 	/**
 	 * Load one icon, using Promise syntax
 	 */
-	loadIcon: (
-		icon: IconifyIconName | string
-	) => Promise<Required<IconifyIcon>>;
+	loadIcon: (icon: IconifyIconName | string) => Promise<Required<IconifyIcon>>;
 
 	/**
 	 * Add API provider

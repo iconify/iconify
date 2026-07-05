@@ -11,7 +11,7 @@ const iconData = {
 describe('Creating component', () => {
 	test('basic icon', () => {
 		const component = render(Icon, {
-			'icon': iconData,
+			icon: iconData,
 			'on:load': () => {
 				// Should be called only for icons loaded from API
 				throw new Error('onLoad called for object!');
@@ -48,8 +48,8 @@ describe('Creating component', () => {
 
 		// Create component
 		const component = render(Icon, {
-			'icon': `${prefix}:${name}`,
-			'ssr': true,
+			icon: `${prefix}:${name}`,
+			ssr: true,
 			'on:load': () => {
 				// Should be called only for icons loaded from API
 				throw new Error('onLoad called for object!');

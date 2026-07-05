@@ -1,11 +1,7 @@
 <template>
 	<div class="checkbox-container">
 		<span :class="className">
-			<Icon
-				:icon="icon"
-				:mode="isChecked ? 'svg' : 'style'"
-				@click="check"
-			/>{{ text }}
+			<Icon :icon="icon" :mode="isChecked ? 'svg' : 'style'" @click="check" />{{ text }}
 		</span>
 		<small>{{ hint }}</small>
 	</div>
@@ -41,10 +37,7 @@ export default {
 			return this.state === null ? this.checked === true : this.state;
 		},
 		className() {
-			return (
-				'checkbox checkbox--' +
-				(this.isChecked ? 'checked' : 'unchecked')
-			);
+			return 'checkbox checkbox--' + (this.isChecked ? 'checked' : 'unchecked');
 		},
 		icon() {
 			return this.isChecked ? checkedIcon : uncheckedIcon;

@@ -29,9 +29,7 @@ describe('Testing formatting emoji code points', () => {
 		];
 
 		// UTF-32 = 0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f
-		expect(getEmojiSequenceString(sequence)).toBe(
-			'1f441-fe0f-200d-1f5e8-fe0f'
-		);
+		expect(getEmojiSequenceString(sequence)).toBe('1f441-fe0f-200d-1f5e8-fe0f');
 
 		expect(getEmojiSequenceKeyword(sequence)).toBe(
 			'd83d-dc41-fe0f-200d-d83d-dde8-fe0f'
@@ -42,9 +40,7 @@ describe('Testing formatting emoji code points', () => {
 		const sequence: number[] = [0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f];
 
 		// UTF-16 = 0xd83d, 0xdc41, 0xfe0f, 0x200d, 0xd83d, 0xdde8, 0xfe0f,
-		expect(getEmojiSequenceString(sequence)).toBe(
-			'1f441-fe0f-200d-1f5e8-fe0f'
-		);
+		expect(getEmojiSequenceString(sequence)).toBe('1f441-fe0f-200d-1f5e8-fe0f');
 
 		expect(getEmojiSequenceKeyword(sequence)).toBe(
 			'1f441-fe0f-200d-1f5e8-fe0f'

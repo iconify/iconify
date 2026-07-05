@@ -31,21 +31,35 @@ import './css/so-to-0.css';
 
 const Component = defineComponent(
 	(props) => {
-		const states = computed(() => ({ 'mode': namedStateValue(props['mode'], 'auto'), 'fill': namedStateValue(props['fill'], 'no-fill'), 'focus': props['focus'], 'static': props['static'] }));
-		const className = computed(() => Object.entries(states.value).map(([key, value]) => value ? `state-${value === true ? key : value}` : '').join(' ').trim() || undefined);
+		const states = computed(() => ({
+			mode: namedStateValue(props['mode'], 'auto'),
+			fill: namedStateValue(props['fill'], 'no-fill'),
+			focus: props['focus'],
+			static: props['static'],
+		}));
+		const className = computed(
+			() =>
+				Object.entries(states.value)
+					.map(([key, value]) => (value ? `state-${value === true ? key : value}` : ''))
+					.join(' ')
+					.trim() || undefined
+		);
 		const viewBox = '0 0 24 24';
 		const size = computed(() => getSizeProps(props.width, props.height, 1));
-		const innerHTML = replaceIDs(`<defs><mask id="SVG5vqpYcTc"><path class="mc7__g reacnl"/><path class="iy2otu r1menc sh2p6x zxndow"/><path class="iy2otu r1menc rg1nfv zxndow"/><path class="l-actj nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG5lwb9bGv"><path class="mc7__g omafcw"/><path class="df7-9f iy2otu r1menc zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG0TyOKeaR"><path class="iy2otu r1menc td9rkk zxndow"/><path class="iy2otu r1menc t50njl zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask></defs><path mask="url(#SVG5vqpYcTc)" class="lsejuv z3aezd"/><path mask="url(#SVG5lwb9bGv)" class="lsejuv z3aezd"/><path mask="url(#SVG0TyOKeaR)" class="b9a3-f lsejuv"/><path class="ia15ro iy2otu r1menc zcx7gx"/>`);
-		return () => h('svg', { 
-			"xmlns": "http://www.w3.org/2000/svg",
-			'class': className.value,
-			...size.value,
-			viewBox,
-			"innerHTML": innerHTML,
-		});
+		const innerHTML = replaceIDs(
+			`<defs><mask id="SVG5vqpYcTc"><path class="mc7__g reacnl"/><path class="iy2otu r1menc sh2p6x zxndow"/><path class="iy2otu r1menc rg1nfv zxndow"/><path class="l-actj nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG5lwb9bGv"><path class="mc7__g omafcw"/><path class="df7-9f iy2otu r1menc zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask><mask id="SVG0TyOKeaR"><path class="iy2otu r1menc td9rkk zxndow"/><path class="iy2otu r1menc t50njl zxndow"/><path class="c807hd nf43cj"/><path class="al390y ia15ro r1menc"/></mask></defs><path mask="url(#SVG5vqpYcTc)" class="lsejuv z3aezd"/><path mask="url(#SVG5lwb9bGv)" class="lsejuv z3aezd"/><path mask="url(#SVG0TyOKeaR)" class="b9a3-f lsejuv"/><path class="ia15ro iy2otu r1menc zcx7gx"/>`
+		);
+		return () =>
+			h('svg', {
+				xmlns: 'http://www.w3.org/2000/svg',
+				class: className.value,
+				...size.value,
+				viewBox,
+				innerHTML: innerHTML,
+			});
 	},
 	{
-		props: ["mode","fill","focus","static","width","height"]
+		props: ['mode', 'fill', 'focus', 'static', 'width', 'height'],
 	}
 );
 

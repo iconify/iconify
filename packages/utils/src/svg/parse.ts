@@ -62,11 +62,7 @@ function build(data: ParsedSVGContent): BuildResult | undefined {
 	// Split presentation attributes
 	const groupAttributes: string[] = [];
 	for (const key in attribs) {
-		if (
-			key === 'style' ||
-			key.startsWith('fill') ||
-			key.startsWith('stroke')
-		) {
+		if (key === 'style' || key.startsWith('fill') || key.startsWith('stroke')) {
 			groupAttributes.push(`${key}="${attribs[key]}"`);
 		}
 	}

@@ -2,10 +2,7 @@ import type { IconifyIconName } from '@iconify/utils/lib/icon/name';
 import { getIconStorage } from '../storage/storage.js';
 import { loadIcons } from '../loader/queue.js';
 import type { IconsData } from '../icon-lists/types.js';
-import {
-	toggleIconStorage,
-	unsubscribeFromAllIconStorage,
-} from '../storage/subscribe.js';
+import { toggleIconStorage, unsubscribeFromAllIconStorage } from '../storage/subscribe.js';
 import { splitIconNames } from '../icon-lists/split.js';
 
 /**
@@ -48,9 +45,7 @@ export function loadIconsWithCallback(
 					for (const name of names) {
 						// Convert icon name to string
 						const partialName = `${prefix}:${name}`;
-						const fullName = provider
-							? `@${provider}:${partialName}`
-							: partialName;
+						const fullName = provider ? `@${provider}:${partialName}` : partialName;
 
 						// Check if icon is loaded
 						if (storage.icons[name]) {

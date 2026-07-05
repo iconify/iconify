@@ -31,8 +31,7 @@ export function guessQualifiedEmojiSequence(sequence: number[]): number[] {
 				return [part[0], vs16Emoji, lastNum];
 			}
 			for (const key in emojiComponents) {
-				const range =
-					emojiComponents[key as keyof typeof emojiComponents];
+				const range = emojiComponents[key as keyof typeof emojiComponents];
 				if (lastNum >= range[0] && lastNum < range[1]) {
 					// emoji + component
 					return [part[0], vs16Emoji, lastNum];

@@ -8,8 +8,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@iconify/ri-react-test": "file:iconify-ri-react-test-1.0.0.tgz",
 		"@iconify/glyphs-poly-react-test": "file:iconify-glyphs-poly-react-test-1.0.0.tgz",
+		"@iconify/ri-react-test": "file:iconify-ri-react-test-1.0.0.tgz",
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5"
 	},

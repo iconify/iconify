@@ -3,19 +3,22 @@ import type { Color } from './types';
 /**
  * Color keywords
  */
-export const colorKeywords: Record<string, Color> = {
-	transparent: {
-		type: 'transparent',
-	},
+export const colorKeywords: Record<string, Color> = Object.assign(
+	Object.create(null),
+	{
+		transparent: {
+			type: 'transparent',
+		},
 
-	none: {
-		type: 'none',
-	},
+		none: {
+			type: 'none',
+		},
 
-	currentcolor: {
-		type: 'current',
-	},
-};
+		currentcolor: {
+			type: 'current',
+		},
+	}
+);
 
 /**
  * Add color

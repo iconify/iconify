@@ -171,9 +171,8 @@ export function validateIconSet(
 		// Check other properties
 		const requiredProp = isAlias ? 'parent' : 'body';
 		const key =
-			typeof (item as unknown as Record<string, unknown>)[
-				requiredProp
-			] !== 'string'
+			typeof (item as unknown as Record<string, unknown>)[requiredProp] !==
+			'string'
 				? requiredProp
 				: validateIconProps(item, fix, true);
 		if (key !== null) {
@@ -231,10 +230,7 @@ export function validateIconSet(
 				throw new Error(`Invalid character "${char}"`);
 			}
 			const target = chars[char];
-			if (
-				!data.icons[target] &&
-				(!data.aliases || !data.aliases[target])
-			) {
+			if (!data.icons[target] && (!data.aliases || !data.aliases[target])) {
 				if (fix) {
 					delete chars[char];
 					return;

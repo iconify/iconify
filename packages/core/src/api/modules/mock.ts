@@ -117,9 +117,7 @@ export function mockAPIData(data: IconifyMockAPI): void {
 					IconifyMockIconsAPI[]
 				>);
 
-			(providerStorage[prefix] || (providerStorage[prefix] = [])).push(
-				data
-			);
+			(providerStorage[prefix] || (providerStorage[prefix] = [])).push(data);
 			break;
 		}
 
@@ -128,9 +126,10 @@ export function mockAPIData(data: IconifyMockAPI): void {
 
 			const providerStorage =
 				customProviderStorage[provider] ||
-				(customProviderStorage[provider] = Object.create(
-					null
-				) as Record<string, IconifyMockCustomAPI>);
+				(customProviderStorage[provider] = Object.create(null) as Record<
+					string,
+					IconifyMockCustomAPI
+				>);
 
 			providerStorage[data.uri] = data;
 			break;
@@ -197,10 +196,8 @@ export const mockAPIModule: IconifyAPIModule = {
 					const response = item.response;
 					if (typeof response === 'object') {
 						return (
-							(response.icons &&
-								response.icons[name] !== void 0) ||
-							(response.aliases &&
-								response.aliases[name] !== void 0)
+							(response.icons && response.icons[name] !== void 0) ||
+							(response.aliases && response.aliases[name] !== void 0)
 						);
 					}
 					return false;

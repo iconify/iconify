@@ -60,10 +60,7 @@ describe('Testing getCustomIcon', () => {
 					height: '4em',
 				},
 				transform(svg) {
-					return svg.replace(
-						/<svg\s+/,
-						'<svg width="1em" height="1em" '
-					);
+					return svg.replace(/<svg\s+/, '<svg width="1em" height="1em" ');
 				},
 			},
 			usedProps: {},
@@ -97,10 +94,7 @@ describe('Testing getCustomIcon', () => {
 		console.warn = warn;
 
 		expect(result).toEqual(
-			svg.replace(
-				'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-				''
-			)
+			svg.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '')
 		);
 		expect(warned).toEqual(false);
 	});
@@ -156,8 +150,7 @@ describe('Testing getCustomIcon', () => {
 	});
 
 	test('CustomIconLoader recalculates width from explicit height', async () => {
-		const svg =
-			'<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
+		const svg = '<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
 		const result = await getCustomIcon(() => svg, 'a', 'b', {
 			scale: 1.2,
 			customizations: {
@@ -171,8 +164,7 @@ describe('Testing getCustomIcon', () => {
 	});
 
 	test('CustomIconLoader recalculates height from explicit width', async () => {
-		const svg =
-			'<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
+		const svg = '<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
 		const result = await getCustomIcon(() => svg, 'a', 'b', {
 			scale: 1.2,
 			customizations: {
@@ -186,8 +178,7 @@ describe('Testing getCustomIcon', () => {
 	});
 
 	test('CustomIconLoader omits suppressed dimensions', async () => {
-		const svg =
-			'<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
+		const svg = '<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
 		const result = await getCustomIcon(() => svg, 'a', 'b', {
 			scale: 1.2,
 			customizations: {
@@ -202,8 +193,7 @@ describe('Testing getCustomIcon', () => {
 	});
 
 	test('CustomIconLoader keeps explicit value while omitting suppressed side', async () => {
-		const svg =
-			'<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
+		const svg = '<svg viewBox="0 0 640 512"><path d="M0 0h640v512H0z"/></svg>';
 		const result = await getCustomIcon(() => svg, 'a', 'b', {
 			scale: 1.2,
 			customizations: {

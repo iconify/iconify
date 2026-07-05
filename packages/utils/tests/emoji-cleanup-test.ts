@@ -9,15 +9,13 @@ import {
 describe('Testing formatting emoji cleanup', () => {
 	it('UTF-32 sequence', () => {
 		// Convert from string
-		const sequence = getEmojiSequenceFromString(
-			'1F441 FE0F 200D 1F5E8 FE0F '
-		);
+		const sequence = getEmojiSequenceFromString('1F441 FE0F 200D 1F5E8 FE0F ');
 		expect(sequence).toEqual([0x1f441, 0xfe0f, 0x200d, 0x1f5e8, 0xfe0f]);
 
 		// Various representations of the same sequence
-		expect(
-			getEmojiSequenceFromString('1f441-fe0f-200d-1f5e8-fe0f')
-		).toEqual(sequence);
+		expect(getEmojiSequenceFromString('1f441-fe0f-200d-1f5e8-fe0f')).toEqual(
+			sequence
+		);
 		expect(
 			convertEmojiSequenceToUTF32(
 				getEmojiSequenceFromString(
@@ -53,11 +51,7 @@ describe('Testing formatting emoji cleanup', () => {
 
 		// Split
 		const split = splitEmojiSequences(sequence);
-		expect(split).toEqual([
-			[0x1f9d1, 0x1f3ff],
-			[0x1f91d],
-			[0x1f9d1, 0x1f3ff],
-		]);
+		expect(split).toEqual([[0x1f9d1, 0x1f3ff], [0x1f91d], [0x1f9d1, 0x1f3ff]]);
 
 		// Join again
 		expect(joinEmojiSequences(split)).toEqual(sequence);

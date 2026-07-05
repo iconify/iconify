@@ -10,11 +10,7 @@ describe('Testing mock API module', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return (
-			'api-mock-' +
-			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter.toString()
-		);
+		return 'api-mock-' + (prefixCounter < 10 ? '0' : '') + prefixCounter.toString();
 	}
 
 	// Set API module for provider
@@ -294,9 +290,7 @@ describe('Testing mock API module', () => {
 									break;
 
 								default:
-									reject(
-										'Callback was called more times than expected'
-									);
+									reject('Callback was called more times than expected');
 							}
 						} catch (error) {
 							reject(error);

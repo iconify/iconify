@@ -1,28 +1,36 @@
 .ae-3qn {
-  d: path('M17 5l-14 14M17 19l0 0');
-  stroke: #fff;
+	d: path('M17 5l-14 14M17 19l0 0');
+	stroke: #fff;
 }
 
-button:focus-visible:not(:disabled) svg.state-action, button:hover:not(:disabled) svg.state-action, input:focus-visible:not(:disabled) svg.state-action, input:hover:not(:disabled) svg.state-action, svg.state-action.state-focus {
-  .ae-3qn {
-    d: path('M11 14.4l0 0M11 14.4l6 7.6');
-  }
+button:focus-visible:not(:disabled) svg.state-action,
+button:hover:not(:disabled) svg.state-action,
+input:focus-visible:not(:disabled) svg.state-action,
+input:hover:not(:disabled) svg.state-action,
+svg.state-action.state-focus {
+	.ae-3qn {
+		d: path('M11 14.4l0 0M11 14.4l6 7.6');
+	}
 }
 
-button:focus-visible:not(:disabled), button:hover:not(:disabled), input:focus-visible:not(:disabled), input:hover:not(:disabled), svg.state-focus {
-  .ae-3qn {
-    d: path('M18 4l-16 16M18 20l0 0');
-  }
+button:focus-visible:not(:disabled),
+button:hover:not(:disabled),
+input:focus-visible:not(:disabled),
+input:hover:not(:disabled),
+svg.state-focus {
+	.ae-3qn {
+		d: path('M18 4l-16 16M18 20l0 0');
+	}
 }
 
 svg.state-action {
-  .ae-3qn {
-    d: path('M11.5 13.5l0 0M11.5 13.5l6.5 6.5');
-  }
+	.ae-3qn {
+		d: path('M11.5 13.5l0 0M11.5 13.5l6.5 6.5');
+	}
 }
 
 @media not (prefers-reduced-motion) {
-  .ae-3qn {
-    transition: d 0.4s linear;
-  }
+	.ae-3qn {
+		transition: d 0.4s linear;
+	}
 }

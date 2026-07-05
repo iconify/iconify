@@ -25,7 +25,7 @@ describe('Passing attributes', () => {
 	test('aria-hidden', async () => {
 		const component = await render(
 			createElement(InlineIcon, {
-				'icon': iconData,
+				icon: iconData,
 				'aria-hidden': 'false',
 			})
 		);
@@ -51,9 +51,7 @@ describe('Passing attributes', () => {
 			})
 		);
 
-		expect(component.container.innerHTML).toContain(
-			'style="vertical-align: 0px; color: red;"'
-		);
+		expect(component.container.innerHTML).toContain('style="vertical-align: 0px; color: red;"');
 	});
 
 	test('color', async () => {
@@ -76,9 +74,7 @@ describe('Passing attributes', () => {
 		);
 
 		// `style` overrides `color`
-		expect(component.container.innerHTML).toContain(
-			'style="color: green;"'
-		);
+		expect(component.container.innerHTML).toContain('style="color: green;"');
 		expect(component.container.innerHTML).not.toContain('red');
 	});
 

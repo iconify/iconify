@@ -12,8 +12,7 @@ export function OfflineUsageDemo() {
 				<Icon icon="demo" mode="style" />
 			</div>
 			<div>
-				Icons referenced by object (as SVG, as SPAN):{' '}
-				<Icon icon={accountIcon} />
+				Icons referenced by object (as SVG, as SPAN): <Icon icon={accountIcon} />
 				<Icon icon={accountIcon} mode="style" />
 			</div>
 			<div>

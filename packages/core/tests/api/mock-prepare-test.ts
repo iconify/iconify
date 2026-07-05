@@ -1,19 +1,11 @@
 import type { IconifyMockAPI } from '../../lib/api/modules/mock';
-import {
-	mockAPIModule,
-	mockAPIData,
-	iconsStorage,
-} from '../../lib/api/modules/mock';
+import { mockAPIModule, mockAPIData, iconsStorage } from '../../lib/api/modules/mock';
 
 describe('Testing mock API module prepare function', () => {
 	let prefixCounter = 0;
 	function nextPrefix(): string {
 		prefixCounter++;
-		return (
-			'api-mock-prepare-' +
-			(prefixCounter < 10 ? '0' : '') +
-			prefixCounter.toString()
-		);
+		return 'api-mock-prepare-' + (prefixCounter < 10 ? '0' : '') + prefixCounter.toString();
 	}
 
 	const prepare = mockAPIModule.prepare;
@@ -87,14 +79,7 @@ describe('Testing mock API module prepare function', () => {
 		expect(iconsStorage[provider][prefix]).toEqual([item1, item2, item3]);
 
 		// Find items for icons
-		const result = prepare(provider, prefix, [
-			'foo',
-			'baz',
-			'bar',
-			'test1',
-			'test10',
-			'test2',
-		]);
+		const result = prepare(provider, prefix, ['foo', 'baz', 'bar', 'test1', 'test10', 'test2']);
 		expect(result).toEqual([
 			// Unknown icons first
 			{

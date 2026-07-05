@@ -3,10 +3,7 @@ import { getLoadedIcon } from '../src/icons/get-icon.js';
 import { loadIcon } from '../src/icons/load-icon.js';
 import { setProviderLoader } from '../src/loader/loaders.js';
 import { loadIcons } from '../src/loader/queue.js';
-import {
-	subscribeToIconStorage,
-	unsubscribeFromIconStorage,
-} from '../src/storage/subscription.js';
+import { subscribeToIconStorage, unsubscribeFromIconStorage } from '../src/storage/subscription.js';
 import { createIconifyAPILoader } from '../src/loader/api/create.js';
 import { loadIconsWithCallback } from '../src/icons/load-icons.js';
 import { subscribeToIconData } from '../src/icons/subscribe.js';
@@ -43,7 +40,7 @@ describe('Testing icon loader', () => {
 							? null
 							: {
 									body: `<g id="${name}" />`,
-							  }
+								}
 					);
 					resolveCount++;
 				});
@@ -54,13 +51,9 @@ describe('Testing icon loader', () => {
 		const storage = getIconStorage(provider, 'test');
 
 		// Set subscriber
-		const subscriber = subscribeToIconStorage(
-			storage,
-			['icon1', 'icon2', 'error1'],
-			() => {
-				gotNotification = true;
-			}
-		);
+		const subscriber = subscribeToIconStorage(storage, ['icon1', 'icon2', 'error1'], () => {
+			gotNotification = true;
+		});
 		expect(storage.subscribers.length).toBe(1);
 
 		// Load several icons
@@ -111,7 +104,7 @@ describe('Testing icon loader', () => {
 							? null
 							: {
 									body: `<g id="${name}" />`,
-							  }
+								}
 					);
 					resolveCount++;
 				});
@@ -122,13 +115,9 @@ describe('Testing icon loader', () => {
 		const storage = getIconStorage(provider, 'test');
 
 		// Set subscriber
-		const subscriber = subscribeToIconStorage(
-			storage,
-			['icon1', 'icon2', 'error1'],
-			() => {
-				gotNotification++;
-			}
-		);
+		const subscriber = subscribeToIconStorage(storage, ['icon1', 'icon2', 'error1'], () => {
+			gotNotification++;
+		});
 		expect(storage.subscribers.length).toBe(1);
 
 		// Load icon1
@@ -221,11 +210,7 @@ describe('Testing icon loader', () => {
 		setProviderLoader(
 			provider,
 			createIconifyAPILoader(
-				[
-					'https://api.iconify.design',
-					'https://api.simplesvg.com',
-					'https://api.unisvg.com',
-				],
+				['https://api.iconify.design', 'https://api.simplesvg.com', 'https://api.unisvg.com'],
 				undefined,
 				false
 			)
@@ -271,29 +256,21 @@ describe('Testing icon loader', () => {
 		);
 
 		// Wait for up to 2 seconds
-		await testForUpdate(
-			() => lastPending !== null && lastPending.length === 0,
-			10,
-			200
-		);
+		await testForUpdate(() => lastPending !== null && lastPending.length === 0, 10, 200);
 		abort();
 
 		// Check that all icons loaded
 		expect(lastPending).toEqual([]);
 		expect(lastMissing).toEqual(
-			[
-				'mdi-broken:arrow-left',
-				'mdi-broken:arrow-left-bold',
-				'mdi-broken:arrow-left-thin',
-			].map((name) => `@${provider}:${name}`)
+			['mdi-broken:arrow-left', 'mdi-broken:arrow-left-bold', 'mdi-broken:arrow-left-thin'].map(
+				(name) => `@${provider}:${name}`
+			)
 		);
 		expect(lastLoaded!.length).toBe(8);
 
 		// Test few icons
 		expect(getLoadedIcon(`@${provider}:mdi:home`)).toBeTruthy();
-		expect(
-			getLoadedIcon(`@${provider}:material-symbols:arrow-left`)
-		).toBeTruthy();
+		expect(getLoadedIcon(`@${provider}:material-symbols:arrow-left`)).toBeTruthy();
 		expect(getLoadedIcon(`@${provider}:mdi-broken:arrow-left`)).toBeNull();
 	});
 
@@ -310,19 +287,16 @@ describe('Testing icon loader', () => {
 					? null
 					: {
 							body: `<g id="${name}" />`,
-					  };
+						};
 			},
 		});
 
 		// Subscribe to data
 		// Add 'false' to test to make sure callback was not called yet
 		let lastData: IconifyIcon | null | undefined | false = false;
-		const subscriber = subscribeToIconData(
-			`@${provider}:test:icon1`,
-			(data) => {
-				lastData = data;
-			}
-		);
+		const subscriber = subscribeToIconData(`@${provider}:test:icon1`, (data) => {
+			lastData = data;
+		});
 
 		// Should have subscriber and no data
 		expect(getIconStorage(provider, 'test').subscribers.length).toBe(1);

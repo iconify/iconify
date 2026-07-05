@@ -1,34 +1,22 @@
 {
 	"name": "iconify-icon",
-	"description": "Icon web component that loads icon data on demand. Over 200,000 icons to choose from",
-	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"version": "3.0.2",
-	"license": "MIT",
-	"main": "./dist/iconify-icon.cjs",
-	"types": "./dist/iconify-icon.d.ts",
-	"jsdelivr": "./dist/iconify-icon.min.js",
-	"unpkg": "./dist/iconify-icon.min.js",
-	"module": "./dist/iconify-icon.mjs",
-	"bugs": "https://github.com/iconify/iconify/issues",
+	"description": "Icon web component that loads icon data on demand. Over 200,000 icons to choose from",
 	"homepage": "https://iconify.design/",
-	"funding": "https://github.com/sponsors/cyberalien",
+	"bugs": "https://github.com/iconify/iconify/issues",
+	"license": "MIT",
+	"author": "Vjacheslav Trushkin <cyberalien@gmail.com> (https://iconify.design)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/iconify/iconify.git",
 		"directory": "iconify-icon/icon"
 	},
-	"scripts": {
-		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
-		"lint": "eslint src/**/*.ts",
-		"prebuild": "pnpm run lint && pnpm run clean",
-		"build": "node build",
-		"build:api": "api-extractor run --local --verbose",
-		"build:lib": "tsc -b",
-		"build:dist": "rollup -c rollup.config.mjs",
-		"test:jest": "vitest --config vitest.config.js",
-		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
-		"test": "pnpm run test:jest && pnpm run test:mjs"
-	},
+	"funding": "https://github.com/sponsors/cyberalien",
+	"main": "./dist/iconify-icon.cjs",
+	"module": "./dist/iconify-icon.mjs",
+	"types": "./dist/iconify-icon.d.ts",
+	"unpkg": "./dist/iconify-icon.min.js",
+	"jsdelivr": "./dist/iconify-icon.min.js",
 	"exports": {
 		".": {
 			"types": "./dist/iconify-icon.d.ts",
@@ -49,6 +37,18 @@
 			"default": "./dist/iconify-icon.min.js"
 		},
 		"./*": "./*"
+	},
+	"scripts": {
+		"clean": "rimraf lib dist tsconfig.tsbuildinfo",
+		"lint": "eslint src/**/*.ts",
+		"prebuild": "pnpm run lint && pnpm run clean",
+		"build": "node build",
+		"build:api": "api-extractor run --local --verbose",
+		"build:lib": "tsc -b",
+		"build:dist": "rollup -c rollup.config.mjs",
+		"test:jest": "vitest --config vitest.config.js",
+		"test:mjs": "cross-env NODE_OPTIONS=--experimental-vm-modules node tests/import-test.mjs",
+		"test": "pnpm run test:jest && pnpm run test:mjs"
 	},
 	"dependencies": {
 		"@iconify/types": "workspace:^"

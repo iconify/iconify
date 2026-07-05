@@ -70,8 +70,7 @@ function calculateMaxLength(provider: string, prefix: string): number {
 		// Get available length
 		const url = prefix + '.json?icons=';
 
-		result =
-			config.maxURL - maxHostLength - config.path.length - url.length;
+		result = config.maxURL - maxHostLength - config.path.length - url.length;
 	}
 
 	// Return result

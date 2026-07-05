@@ -4,16 +4,16 @@ const unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
 const precision = 100;
 
 function calculateSize(size, ratio) {
-    if (ratio === 1) {
-        return size;
-    }
+	if (ratio === 1) {
+		return size;
+	}
 
-    const oldParts = size.split(unitsSplit);
+	const oldParts = size.split(unitsSplit);
 	if (oldParts === null || !oldParts.length) {
 		return size;
 	}
 
-    const newParts = [];
+	const newParts = [];
 	let code = oldParts.shift();
 	let isNumber = unitsTest.test(code);
 
@@ -39,22 +39,22 @@ function calculateSize(size, ratio) {
 }
 
 function getSizeProps(width, height, ratio) {
-    if (width && height) {
-        return { width, height };
-    }
-    if (height) {
-        return {
-            width: calculateSize(height, ratio),
-            height,
-        };
-    }
-    if (width) {
-        return {
-            width,
-            height: calculateSize(width, 1 / ratio),
-        };
-    }
-    return {};
+	if (width && height) {
+		return { width, height };
+	}
+	if (height) {
+		return {
+			width: calculateSize(height, ratio),
+			height,
+		};
+	}
+	if (width) {
+		return {
+			width,
+			height: calculateSize(width, 1 / ratio),
+		};
+	}
+	return {};
 }
 
 export { getSizeProps };

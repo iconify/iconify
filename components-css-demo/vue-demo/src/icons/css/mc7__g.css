@@ -1,12 +1,12 @@
 .mc7__g {
-  fill: #fff;
+	fill: #fff;
 }
 
 @media not (prefers-reduced-motion) {
-  svg:not(.state-static) {
-    .mc7__g {
-      opacity: 0;
-      animation: 0.4s linear 0.4s forwards fade-to-1;
-    }
-  }
+	svg:not(.state-static) {
+		.mc7__g {
+			opacity: 0;
+			animation: 0.4s linear 0.4s forwards fade-to-1;
+		}
+	}
 }

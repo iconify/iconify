@@ -15,9 +15,7 @@ describe('Testing parsing SVG content', () => {
 	test('Getting viewBox', () => {
 		// Valid numbers
 		expect(getSVGViewBox('1 2 3 4')).toEqual([1, 2, 3, 4]);
-		expect(getSVGViewBox('-1 0 25.5 -123.5')).toEqual([
-			-1, 0, 25.5, -123.5,
-		]);
+		expect(getSVGViewBox('-1 0 25.5 -123.5')).toEqual([-1, 0, 25.5, -123.5]);
 		expect(getSVGViewBox('  1\t2   3\n4\t ')).toEqual([1, 2, 3, 4]);
 
 		// Bad numbers
@@ -78,10 +76,7 @@ describe('Testing parsing SVG content', () => {
 	});
 
 	test('SVG with XML heading', () => {
-		const svg = readFileSync(
-			fixturesDir + '/circle-xml-preface.svg',
-			'utf8'
-		);
+		const svg = readFileSync(fixturesDir + '/circle-xml-preface.svg', 'utf8');
 		const body = '<circle cx="60" cy="60" r="50"/>';
 
 		// Parse

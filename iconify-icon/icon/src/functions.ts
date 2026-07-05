@@ -1,16 +1,8 @@
 import type { IconifyJSON } from '@iconify/types';
 
 // Core
-import {
-	allowSimpleNames,
-	IconifyStorageFunctions,
-} from '@iconify/core/lib/storage/functions';
-import {
-	iconLoaded,
-	getIcon,
-	addIcon,
-	addCollection,
-} from '@iconify/core/lib/storage/functions';
+import { allowSimpleNames, IconifyStorageFunctions } from '@iconify/core/lib/storage/functions';
+import { iconLoaded, getIcon, addIcon, addCollection } from '@iconify/core/lib/storage/functions';
 import { listIcons } from '@iconify/core/lib/storage/storage';
 import type { IconifyBuilderFunctions } from '@iconify/core/lib/builder/functions';
 import { iconToSVG as buildIcon } from '@iconify/utils/lib/svg/build';
@@ -28,22 +20,11 @@ import type {
 } from '@iconify/core/lib/api/functions';
 import { setAPIModule } from '@iconify/core/lib/api/modules';
 import type { PartialIconifyAPIConfig } from '@iconify/core/lib/api/config';
-import {
-	addAPIProvider,
-	getAPIConfig,
-	listAPIProviders,
-} from '@iconify/core/lib/api/config';
-import {
-	fetchAPIModule,
-	setFetch,
-	getFetch,
-} from '@iconify/core/lib/api/modules/fetch';
+import { addAPIProvider, getAPIConfig, listAPIProviders } from '@iconify/core/lib/api/config';
+import { fetchAPIModule, setFetch, getFetch } from '@iconify/core/lib/api/modules/fetch';
 import { loadIcons, loadIcon } from '@iconify/core/lib/api/icons';
 import { sendAPIQuery } from '@iconify/core/lib/api/query';
-import {
-	setCustomIconLoader,
-	setCustomIconsLoader,
-} from '@iconify/core/lib/api/loaders';
+import { setCustomIconLoader, setCustomIconsLoader } from '@iconify/core/lib/api/loaders';
 
 // Misc
 import { appendCustomStyle } from './render/style';
@@ -52,9 +33,7 @@ import { appendCustomStyle } from './render/style';
  * Interface for exported functions
  */
 export interface IconifyExportedFunctions
-	extends IconifyStorageFunctions,
-		IconifyBuilderFunctions,
-		IconifyAPIFunctions {
+	extends IconifyStorageFunctions, IconifyBuilderFunctions, IconifyAPIFunctions {
 	// API internal functions
 	_api: IconifyAPIInternalFunctions;
 
@@ -99,28 +78,26 @@ export function exportFunctions(): IconifyExportedFunctions {
 			const preload = _window.IconifyPreload;
 			const err = 'Invalid IconifyPreload syntax.';
 			if (typeof preload === 'object' && preload !== null) {
-				(preload instanceof Array ? preload : [preload]).forEach(
-					(item) => {
-						try {
-							if (
-								// Check if item is an object and not null/array
-								typeof item !== 'object' ||
-								item === null ||
-								item instanceof Array ||
-								// Check for 'icons' and 'prefix'
-								typeof item.icons !== 'object' ||
-								typeof item.prefix !== 'string' ||
-								// Add icon set
-								!addCollection(item)
-							) {
-								console.error(err);
-							}
-							// eslint-disable-next-line @typescript-eslint/no-unused-vars
-						} catch (e) {
+				(preload instanceof Array ? preload : [preload]).forEach((item) => {
+					try {
+						if (
+							// Check if item is an object and not null/array
+							typeof item !== 'object' ||
+							item === null ||
+							item instanceof Array ||
+							// Check for 'icons' and 'prefix'
+							typeof item.icons !== 'object' ||
+							typeof item.prefix !== 'string' ||
+							// Add icon set
+							!addCollection(item)
+						) {
 							console.error(err);
 						}
+						// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					} catch (e) {
+						console.error(err);
 					}
-				);
+				});
 			}
 		}
 
@@ -132,11 +109,7 @@ export function exportFunctions(): IconifyExportedFunctions {
 					const err = 'IconifyProviders[' + key + '] is invalid.';
 					try {
 						const value = providers[key];
-						if (
-							typeof value !== 'object' ||
-							!value ||
-							value.resources === void 0
-						) {
+						if (typeof value !== 'object' || !value || value.resources === void 0) {
 							continue;
 						}
 						if (!addAPIProvider(key, value)) {

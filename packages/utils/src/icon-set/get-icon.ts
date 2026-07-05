@@ -21,10 +21,7 @@ export function internalGetIconData(
 
 	// Parse parent item
 	function parse(name: string) {
-		currentProps = mergeIconData(
-			icons[name] || aliases[name],
-			currentProps
-		);
+		currentProps = mergeIconData(icons[name] || aliases[name], currentProps);
 	}
 
 	parse(name);

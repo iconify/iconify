@@ -33,16 +33,12 @@ describe('Testing CSS for multiple icons', () => {
 
 		// Detect mode: mask
 		expect(
-			getIconsCSS(
-				iconSet,
-				['activity', '123', 'airplane_engines', 'missing'],
-				{
-					format: 'expanded',
-					rules: {
-						visibility: 'visible',
-					},
-				}
-			)
+			getIconsCSS(iconSet, ['activity', '123', 'airplane_engines', 'missing'], {
+				format: 'expanded',
+				rules: {
+					visibility: 'visible',
+				},
+			})
 		).toBe(`.icon--test-prefix {
   visibility: visible;
   display: inline-block;
@@ -452,17 +448,13 @@ describe('Testing CSS for multiple icons', () => {
 			);
 
 		expect(
-			getIconsContentCSS(
-				iconSet,
-				['activity', '123', 'airplane', 'whatever'],
-				{
-					height: 16,
-					format: 'expanded',
-					rules: {
-						display: 'inline-block',
-					},
-				}
-			)
+			getIconsContentCSS(iconSet, ['activity', '123', 'airplane', 'whatever'], {
+				height: 16,
+				format: 'expanded',
+				rules: {
+					display: 'inline-block',
+				},
+			})
 		).toBe(`.icon--test-prefix--activity::after {
   display: inline-block;
   content: ${expectedURL('activity')};

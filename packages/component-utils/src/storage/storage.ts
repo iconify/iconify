@@ -9,8 +9,7 @@ const storage = Object.create(null) as IconsData<IconStorage>;
  * Get storage for provider and prefix
  */
 export function getIconStorage(provider: string, prefix: string): IconStorage {
-	const providerData =
-		storage[provider] || (storage[provider] = Object.create(null));
+	const providerData = storage[provider] || (storage[provider] = Object.create(null));
 	return providerData[prefix] || (providerData[prefix] = createIconStorage());
 }
 

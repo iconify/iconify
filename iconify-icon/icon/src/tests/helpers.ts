@@ -81,8 +81,7 @@ export function awaitUntil(callback: WaitUntilCheck, maxDelay = 1000) {
 export function setupDOM(html: string): JSDOM {
 	const dom = new JSDOM(html);
 	(global as unknown as Record<string, unknown>).window = dom.window;
-	(global as unknown as Record<string, unknown>).document =
-		global.window.document;
+	(global as unknown as Record<string, unknown>).document = global.window.document;
 	return dom;
 }
 

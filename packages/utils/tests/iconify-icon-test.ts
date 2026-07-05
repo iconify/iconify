@@ -54,10 +54,7 @@ describe('Testing loadNodeIcon', () => {
 				},
 				// it will never be called, it is not a custom icon
 				transform(svg) {
-					return svg.replace(
-						'<svg ',
-						'<svg width="4em" height="4em" '
-					);
+					return svg.replace('<svg ', '<svg width="4em" height="4em" ');
 				},
 			},
 		});
@@ -80,10 +77,7 @@ describe('Testing loadNodeIcon', () => {
 				},
 				// it will never be called, it is not a custom icon
 				transform(svg) {
-					return svg.replace(
-						'<svg ',
-						'<svg width="4em" height="4em" '
-					);
+					return svg.replace('<svg ', '<svg width="4em" height="4em" ');
 				},
 			},
 		});
