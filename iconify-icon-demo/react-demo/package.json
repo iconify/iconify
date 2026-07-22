@@ -18,7 +18,7 @@
 		"@iconify-icons/uil": "^1.2.3",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"@vitejs/plugin-react": "^5.2.0",
+		"@vitejs/plugin-react": "^6.0.4",
 		"iconify-icon": "workspace:*"
 	}
 }
