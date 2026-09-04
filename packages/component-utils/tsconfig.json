@@ -7,7 +7,7 @@
 		"declarationMap": false,
 		"sourceMap": false,
 		"strict": true,
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"types": ["node", "vitest/globals"]

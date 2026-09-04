@@ -7,7 +7,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.5.39"
+		"vue": "^3.5.42"
 	},
 	"devDependencies": {
 		"@iconify-vue/ri": "^1.0.8",
@@ -15,6 +15,6 @@
 		"@iconify/glyphs-poly-vue-test": "file:iconify-glyphs-poly-vue-test-1.0.0.tgz",
 		"@iconify/ri-vue-test": "file:iconify-ri-vue-test-1.0.0.tgz",
 		"@iconify/types": "workspace:*",
-		"@vitejs/plugin-vue": "^6.0.7"
+		"@vitejs/plugin-vue": "^6.0.8"
 	}
 }

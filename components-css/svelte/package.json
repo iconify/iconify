@@ -30,7 +30,7 @@
 		"@iconify/component-utils": "workspace:^",
 		"@iconify/fetch": "workspace:^",
 		"@iconify/utils": "workspace:^",
-		"svelte": "^5.56.4",
+		"svelte": "^5.57.0",
 		"svelte-preprocess": "^6.0.5"
 	},
 	"peerDependencies": {

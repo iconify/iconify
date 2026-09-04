@@ -9,10 +9,10 @@ const iconData = {
 };
 
 describe('Using storage', () => {
-	test('using storage', () => {
+	test('using storage', async () => {
 		addIcon('test-icon', iconData);
 
-		const component = render(Icon, { icon: 'test-icon' });
+		const component = await render(Icon, { icon: 'test-icon' });
 		const node = component.container.querySelector('svg')!;
 		const html = (node.parentNode as HTMLDivElement).innerHTML;
 
@@ -21,7 +21,7 @@ describe('Using storage', () => {
 		);
 	});
 
-	test('using storage with icon set', () => {
+	test('using storage with icon set', async () => {
 		const iconSet = {
 			prefix: 'mdi-light',
 			icons: {
@@ -38,7 +38,7 @@ describe('Using storage', () => {
 
 		addCollection(iconSet);
 
-		const component = render(Icon, { icon: 'mdi-light:account' });
+		const component = await render(Icon, { icon: 'mdi-light:account' });
 		const node = component.container.querySelector('svg')!;
 		const html = (node.parentNode as HTMLDivElement).innerHTML;
 
@@ -47,14 +47,14 @@ describe('Using storage', () => {
 		);
 	});
 
-	test('using storage with icon set with custom prefix', () => {
+	test('using storage with icon set with custom prefix', async () => {
 		const iconSet = {
 			prefix: 'mdi-light',
 			icons: {
 				'account-alert': {
 					body: '<path d="M10.5 14c4.142 0 7.5 1.567 7.5 3.5V20H3v-2.5c0-1.933 3.358-3.5 7.5-3.5zm6.5 3.5c0-1.38-2.91-2.5-6.5-2.5S4 16.12 4 17.5V19h13v-1.5zM10.5 5a3.5 3.5 0 1 1 0 7a3.5 3.5 0 0 1 0-7zm0 1a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5zM20 16v-1h1v1h-1zm0-3V7h1v6h-1z" fill="currentColor"/>',
 				},
-				link: {
+				'link': {
 					body: '<path d="M8 13v-1h7v1H8zm7.5-6a5.5 5.5 0 1 1 0 11H13v-1h2.5a4.5 4.5 0 1 0 0-9H13V7h2.5zm-8 11a5.5 5.5 0 1 1 0-11H10v1H7.5a4.5 4.5 0 1 0 0 9H10v1H7.5z" fill="currentColor"/>',
 				},
 			},
@@ -64,7 +64,7 @@ describe('Using storage', () => {
 
 		addCollection(iconSet, 'custom-');
 
-		const component = render(Icon, { icon: 'custom-link' });
+		const component = await render(Icon, { icon: 'custom-link' });
 		const node = component.container.querySelector('svg')!;
 		const html = (node.parentNode as HTMLDivElement).innerHTML;
 
@@ -73,8 +73,8 @@ describe('Using storage', () => {
 		);
 	});
 
-	test('missing icon from storage', () => {
-		const component = render(Icon, {
+	test('missing icon from storage', async () => {
+		const component = await render(Icon, {
 			icon: 'missing-icon',
 		});
 		const html = component.container.innerHTML;

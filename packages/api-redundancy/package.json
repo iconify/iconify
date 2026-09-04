@@ -16,7 +16,7 @@
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"lint": "npx oxlint --fix src/ && tsc --noemit src/*.ts",
+		"lint": "npx oxlint --fix src/ && tsc --noemit",
 		"fmt": "npx oxfmt src/ --write",
 		"prebuild": "pnpm run lint",
 		"build": "tsdown",

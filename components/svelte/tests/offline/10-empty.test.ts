@@ -3,12 +3,14 @@ import { render } from 'vitest-browser-svelte';
 import Icon from '../../offline';
 
 describe('Empty icon', () => {
-	test('basic test', () => {
-		const renderResult = render(
+	test('basic test', async () => {
+		const renderResult = await render(
 			Icon,
-			// @ts-expect-error
+			// @ts-ignore
 			{}
 		);
-		expect(renderResult.container.innerHTML.replace(/<!--(.*?)-->/gm, '')).toEqual('');
+		expect(
+			renderResult.container.innerHTML.replace(/<!--(.*?)-->/gm, '')
+		).toEqual('');
 	});
 });

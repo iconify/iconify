@@ -9,8 +9,8 @@ const iconData = {
 };
 
 describe('Rotation', () => {
-	test('number', () => {
-		const component = render(Icon, { icon: iconData, rotate: 1 });
+	test('number', async () => {
+		const component = await render(Icon, { icon: iconData, rotate: 1 });
 		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
@@ -19,8 +19,8 @@ describe('Rotation', () => {
 		expect(child.getAttribute('transform')).toBe('rotate(90 16 16)');
 	});
 
-	test('string', () => {
-		const component = render(Icon, {
+	test('string', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			rotate: '180deg',
@@ -35,8 +35,8 @@ describe('Rotation', () => {
 });
 
 describe('Flip', () => {
-	test('boolean', () => {
-		const component = render(Icon, { icon: iconData, hFlip: true });
+	test('boolean', async () => {
+		const component = await render(Icon, { icon: iconData, hFlip: true });
 		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
@@ -45,8 +45,8 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
-	test('string', () => {
-		const component = render(Icon, { icon: iconData, flip: 'vertical' });
+	test('string', async () => {
+		const component = await render(Icon, { icon: iconData, flip: 'vertical' });
 		const node = component.container.querySelector('svg')!;
 
 		// Find first child node
@@ -55,8 +55,8 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('translate(0 32) scale(1 -1)');
 	});
 
-	test('string and boolean', () => {
-		const component = render(Icon, {
+	test('string and boolean', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			flip: 'horizontal',
 			vFlip: true,
@@ -70,8 +70,8 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('rotate(180 12 16)');
 	});
 
-	test('string for boolean attribute', () => {
-		const component = render(Icon, {
+	test('string for boolean attribute', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			hFlip: 'true',
@@ -84,9 +84,9 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
-	test('shorthand and boolean', () => {
+	test('shorthand and boolean', async () => {
 		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
-		const component = render(Icon, {
+		const component = await render(Icon, {
 			icon: iconData,
 			hFlip: false,
 			flip: 'horizontal',
@@ -99,8 +99,8 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
 	});
 
-	test('shorthand and boolean as string', () => {
-		const component = render(Icon, {
+	test('shorthand and boolean as string', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			flip: 'vertical',
 			hFlip: true,
@@ -113,8 +113,8 @@ describe('Flip', () => {
 		expect(child.getAttribute('transform')).toBe('rotate(180 12 16)');
 	});
 
-	test('wrong case', () => {
-		const component = render(Icon, {
+	test('wrong case', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			vflip: true,

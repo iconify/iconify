@@ -9,7 +9,7 @@
 		"sourceMap": false,
 		"strict": true,
 		"types": ["node", "svelte"],
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,

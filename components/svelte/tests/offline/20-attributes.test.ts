@@ -9,8 +9,8 @@ const iconData = {
 };
 
 describe('Padding attributes', () => {
-	test('title', () => {
-		const renderResult = render(Icon, {
+	test('title', async () => {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			title: 'Icon!',
@@ -18,18 +18,18 @@ describe('Padding attributes', () => {
 		expect(renderResult.container.innerHTML).toContain('title="Icon!"');
 	});
 
-	test('aria-hidden', () => {
+	test('aria-hidden', async () => {
 		// dashes, string value
-		const renderResult = render(Icon, {
-			icon: iconData,
+		const renderResult = await render(Icon, {
+			'icon': iconData,
 			'aria-hidden': 'false',
 		});
 		expect(renderResult.container.innerHTML).not.toContain('aria-hidden');
 	});
 
-	test('ariaHidden', () => {
+	test('ariaHidden', async () => {
 		// camelCase, boolean value
-		const renderResult = render(Icon, {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			ariaHidden: false,
@@ -37,24 +37,26 @@ describe('Padding attributes', () => {
 		expect(renderResult.container.innerHTML).not.toContain('aria-hidden');
 	});
 
-	test('style', () => {
-		const renderResult = render(Icon, {
+	test('style', async () => {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			style: 'vertical-align: 0; color: red;',
 		});
-		expect(renderResult.container.innerHTML).toContain('style="vertical-align: 0px; color: red;"');
+		expect(renderResult.container.innerHTML).toContain(
+			'style="vertical-align: 0px; color: red;"'
+		);
 	});
 
-	test('color', () => {
-		const renderResult = render(Icon, {
+	test('color', async () => {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			color: 'red',
 		});
 		expect(renderResult.container.innerHTML).toContain('style="color: red;"');
 	});
 
-	test('color with style', () => {
-		const renderResult = render(Icon, {
+	test('color with style', async () => {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			color: 'red',
 			style: 'color: green;',
@@ -65,8 +67,8 @@ describe('Padding attributes', () => {
 		expect(renderResult.container.innerHTML).not.toContain('green');
 	});
 
-	test('attributes that cannot change', () => {
-		const renderResult = render(Icon, {
+	test('attributes that cannot change', async () => {
+		const renderResult = await render(Icon, {
 			icon: iconData,
 			viewBox: '0 0 0 0',
 		});

@@ -9,16 +9,16 @@ const iconData = {
 };
 
 describe('Inline attribute', () => {
-	test('boolean true', () => {
-		const component = render(Icon, { icon: iconData, inline: true });
+	test('boolean true', async () => {
+		const component = await render(Icon, { icon: iconData, inline: true });
 		const node = component.container.querySelector('svg')!;
 		const style = node.style;
 
 		expect(style.verticalAlign).toBe('-0.125em');
 	});
 
-	test('string true', () => {
-		const component = render(Icon, {
+	test('string true', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			inline: 'true',
@@ -29,17 +29,17 @@ describe('Inline attribute', () => {
 		expect(style.verticalAlign).toBe('-0.125em');
 	});
 
-	test('false', () => {
-		const component = render(Icon, { icon: iconData, inline: false });
+	test('false', async () => {
+		const component = await render(Icon, { icon: iconData, inline: false });
 		const node = component.container.querySelector('svg')!;
 		const style = node.style;
 
 		expect(style.verticalAlign).toBe('');
 	});
 
-	test('false string', () => {
+	test('false string', async () => {
 		// "false" should be ignored
-		const component = render(Icon, {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			inline: 'false',

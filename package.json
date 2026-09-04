@@ -19,15 +19,15 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "^25.9.4",
-		"globals": "^17.7.0",
-		"oxlint": "^1.72.0",
-		"tsdown": "^0.21.10",
-		"typescript": "^5.9.3",
-		"vite": "^7.3.6",
-		"vitest": "^4.1.9"
+		"@types/node": "^26.4.1",
+		"globals": "^17.12.0",
+		"oxlint": "^1.81.0",
+		"tsdown": "^0.23.0",
+		"typescript": "^7.0.2",
+		"vite": "^8.2.2",
+		"vitest": "^5.0.0"
 	},
-	"packageManager": "pnpm@10.34.4",
+	"packageManager": "pnpm@11.25.0",
 	"pnpm": {
 		"packageExtensions": {
 			"tsutils": {

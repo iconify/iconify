@@ -13,3 +13,10 @@ packages:
   - 'components-css-demo/*'
   - 'iconify-icon-demo/*'
   # - 'debug/*'
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true
+  svelte-preprocess: true
+  unrs-resolver: true
+minimumReleaseAge: 0

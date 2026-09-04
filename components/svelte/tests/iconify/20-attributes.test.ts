@@ -9,8 +9,8 @@ const iconData = {
 };
 
 describe('Padding attributes', () => {
-	test('title', () => {
-		const component = render(Icon, {
+	test('title', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			title: 'Icon!',
@@ -19,19 +19,19 @@ describe('Padding attributes', () => {
 		expect(node.getAttribute('title')).toBe('Icon!');
 	});
 
-	test('aria-hidden', () => {
+	test('aria-hidden', async () => {
 		// dashes, string value
-		const component = render(Icon, {
-			icon: iconData,
+		const component = await render(Icon, {
+			'icon': iconData,
 			'aria-hidden': 'false',
 		});
 		const node = component.container.querySelector('svg')!;
 		expect(node.getAttribute('aria-hidden')).toEqual(null);
 	});
 
-	test('ariaHidden', () => {
+	test('ariaHidden', async () => {
 		// camelCase, boolean value
-		const component = render(Icon, {
+		const component = await render(Icon, {
 			icon: iconData,
 			// @ts-expect-error
 			ariaHidden: false,
@@ -40,8 +40,8 @@ describe('Padding attributes', () => {
 		expect(node.getAttribute('aria-hidden')).toBe(null);
 	});
 
-	test('style', () => {
-		const component = render(Icon, {
+	test('style', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			style: 'vertical-align: 0; color: red;',
 		});
@@ -50,8 +50,8 @@ describe('Padding attributes', () => {
 		expect(node.style.color).toBe('red');
 	});
 
-	test('color', () => {
-		const component = render(Icon, {
+	test('color', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			color: 'red',
 		});
@@ -59,8 +59,8 @@ describe('Padding attributes', () => {
 		expect(node.style.color).toBe('red');
 	});
 
-	test('color with style', () => {
-		const component = render(Icon, {
+	test('color with style', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			color: 'red',
 			style: 'color: green;',
@@ -69,8 +69,8 @@ describe('Padding attributes', () => {
 		expect(node.style.color).toBe('red');
 	});
 
-	test('attributes that cannot change', () => {
-		const component = render(Icon, {
+	test('attributes that cannot change', async () => {
+		const component = await render(Icon, {
 			icon: iconData,
 			viewBox: '0 0 0 0',
 		});

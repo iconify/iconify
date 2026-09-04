@@ -108,7 +108,7 @@
 		"test": "node ./scripts/prepare-tests.mjs && vitest"
 	},
 	"dependencies": {
-		"@antfu/install-pkg": "^1.1.0",
+		"@antfu/install-pkg": "^2.0.1",
 		"@iconify/types": "workspace:^",
 		"import-meta-resolve": "^4.2.0"
 	},

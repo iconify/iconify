@@ -11,12 +11,12 @@
 		"serve": "vite preview"
 	},
 	"dependencies": {
-		"solid-js": "^1.9.14"
+		"solid-js": "^1.9.15"
 	},
 	"devDependencies": {
 		"@iconify-icon/solid": "workspace:*",
-		"@iconify-icons/line-md": "^1.2.30",
+		"@iconify-icons/line-md": "^2.0.0",
 		"iconify-icon": "workspace:*",
-		"vite-plugin-solid": "^2.11.12"
+		"vite-plugin-solid": "^2.11.14"
 	}
 }

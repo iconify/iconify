@@ -9,16 +9,16 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"react": "^19.2.7",
-		"react-dom": "^19.2.7"
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8"
 	},
 	"devDependencies": {
-		"@iconify-icons/mdi-light": "^1.2.5",
-		"@iconify-icons/uil": "^1.2.3",
+		"@iconify-icons/mdi-light": "^2.0.0",
+		"@iconify-icons/uil": "^2.0.0",
 		"@iconify/core": "workspace:*",
 		"@iconify/react": "workspace:*",
-		"@types/react": "^19.2.17",
-		"@types/react-dom": "^19.2.3",
-		"@vitejs/plugin-react": "^5.2.0"
+		"@types/react": "^19.2.18",
+		"@types/react-dom": "^19.2.7",
+		"@vitejs/plugin-react": "^6.1.1"
 	}
 }
