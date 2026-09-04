@@ -10,7 +10,7 @@
 		"vue": "^3.5.39"
 	},
 	"devDependencies": {
-		"@iconify-icons/bx": "^1.2.6",
+		"@iconify-icons/bx": "^1.2.7",
 		"@iconify-icons/dashicons": "^1.2.4",
 		"@iconify/types": "workspace:*",
 		"@iconify/vue": "workspace:*",
