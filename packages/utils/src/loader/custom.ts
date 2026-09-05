@@ -1,8 +1,8 @@
 import type {
-	CustomIconLoader,
+	CustomCollectionIconLoader,
 	IconifyLoaderOptions,
-	InlineCollection,
 } from './types';
+import { isCustomHMRIconLoader } from './hmr-utils';
 import { mergeIconProps } from './utils';
 import { trimSVG } from '../svg/trim';
 
@@ -10,7 +10,7 @@ import { trimSVG } from '../svg/trim';
  * Get custom icon from inline collection or using loader
  */
 export async function getCustomIcon(
-	custom: CustomIconLoader | InlineCollection,
+	custom: CustomCollectionIconLoader,
 	collection: string,
 	icon: string,
 	options?: IconifyLoaderOptions
@@ -20,6 +20,8 @@ export async function getCustomIcon(
 	try {
 		if (typeof custom === 'function') {
 			result = await custom(icon);
+		} else if (isCustomHMRIconLoader(custom)) {
+			result = await custom.iconLoader(icon);
 		} else {
 			const inline = custom[icon];
 			result = typeof inline === 'function' ? await inline() : inline;

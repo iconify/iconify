@@ -205,3 +205,4 @@ export function getPossibleIconNames(icon: string): string[] {
 		icon.replace(/([a-z])(\d+)/g, '$1-$2'),
 	];
 }
+

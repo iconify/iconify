@@ -74,6 +74,7 @@
 		"./lib/loader/custom": "./lib/loader/custom.js",
 		"./lib/loader/external-pkg": "./lib/loader/external-pkg.js",
 		"./lib/loader/fs": "./lib/loader/fs.js",
+		"./lib/loader/hmr-utils": "./lib/loader/hmr-utils.js",
 		"./lib/loader/install-pkg": "./lib/loader/install-pkg.js",
 		"./lib/loader/loader": "./lib/loader/loader.js",
 		"./lib/loader/modern": "./lib/loader/modern.js",

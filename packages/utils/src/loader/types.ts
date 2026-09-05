@@ -25,6 +25,39 @@ export type UniversalIconLoader = (
 export type CustomIconLoader = (name: string) => Awaitable<string | undefined>;
 
 /**
+ * Custom icon loader with HMR support.
+ */
+export interface CustomHMRIconLoader {
+	/**
+	 * Internal marker to avoid wrong detection when using other custom icon loaders like `IconCustomizer`.
+	 */
+	__iconifyCustomHmrIconLoader: true
+	/**
+	 * The name of the custom collection.
+	 */
+	name: string
+	/**
+	 * The custom icon loader to resolve the icon.
+	 */
+	iconLoader: CustomIconLoader
+	/**
+	 * Returns the icon name previously resolved from the given normalized SVG file path.
+	 */
+	resolveModuleIconName: (
+		normalizedSVGPath: string,
+	) => string | undefined
+	/**
+	 * Returns the normalized SVG file path of the icon if this collection resolved the SVG icon.
+	 */
+	resolveSVGIconPath: (name: string) => string | undefined
+}
+
+/**
+ * Generic type for `customCollections` option, can be a `CustomIconLoader`, an `InlineCollection` or a `CustomHMRIconLoader`.
+ */
+export type CustomCollectionIconLoader = CustomIconLoader | InlineCollection | CustomHMRIconLoader
+
+/**
  * Auto-install options
  */
 export type AutoInstall =
@@ -157,8 +190,7 @@ export type IconifyLoaderOptions = {
 		string,
 		| (() => Awaitable<IconifyJSON>)
 		| undefined
-		| CustomIconLoader
-		| InlineCollection
+		| CustomCollectionIconLoader
 	>;
 
 	/**
