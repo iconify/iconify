@@ -41,7 +41,7 @@ export interface CustomHMRIconLoader {
 	 */
 	iconLoader: CustomIconLoader
 	/**
-	 * Returns the module name of the resolved icon if this collection resolved the SVG icon.
+	 * Returns the icon name previously resolved from the given normalized SVG file path.
 	 */
 	resolveModuleIconName: (
 		normalizedSVGPath: string,
