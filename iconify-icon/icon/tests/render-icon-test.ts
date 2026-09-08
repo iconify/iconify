@@ -133,7 +133,7 @@ describe('Testing rendering loaded icon', () => {
 		// Depending on version of jsdom, "-webkit" styles may be included or not
 		const hasWebkit = node.innerHTML.includes('-webkit-mask-image');
 		expect(node.innerHTML).toBe(
-			`${styleOpeningTag}${expectedInline}</style><span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 1em; height: 1em; background-color: ${currentColor};${hasWebkit ? ' -webkit-mask-image: var(--svg); -webkit-mask-repeat: no-repeat; -webkit-mask-size: 100% 100%;' : ''} mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;"></span>`
+			`${styleOpeningTag}${expectedInline}</style><span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg %2F%3E%3C%2Fsvg%3E&quot;); width: 1em; height: 1em; background-color: ${currentColor};${hasWebkit ? ' -webkit-mask-image: var(--svg); -webkit-mask-repeat: no-repeat; -webkit-mask-size: 100% 100%;' : ''} mask-image: var(--svg); mask-repeat: no-repeat; mask-size: 100% 100%;"></span>`
 		);
 
 		// Change mode to background, add some customisations
@@ -156,7 +156,7 @@ describe('Testing rendering loaded icon', () => {
 
 		// Test HTML
 		expect(node.innerHTML).toBe(
-			`${styleOpeningTag}${expectedInline}</style><span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg /%3E%3C/svg%3E&quot;); width: 24px; height: 24px; background-color: transparent; background-image: var(--svg); background-repeat: no-repeat; background-size: 100% 100%;"></span>`
+			`${styleOpeningTag}${expectedInline}</style><span style="--svg: url(&quot;data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg %2F%3E%3C%2Fsvg%3E&quot;); width: 24px; height: 24px; background-color: transparent; background-image: var(--svg); background-repeat: no-repeat; background-size: 100% 100%;"></span>`
 		);
 	});
 });
