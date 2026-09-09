@@ -1,4 +1,4 @@
-import { defineComponent, renderSlot } from 'vue';
+import { ComponentObjectPropsOptions, defineComponent, PropType, renderSlot } from 'vue';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
@@ -99,29 +99,30 @@ export const Icon = defineComponent<IconProps>(
 		};
 	},
 	{
-		props: [
+		props: {
 			// Icon and render mode
-			'icon',
-			'mode',
-			'ssr',
+			icon: { type: [String, Object] as PropType<IconProps['icon']>, required: true },
+			mode: { type: String as PropType<IconProps['mode']> },
+			ssr: { type: Boolean },
 			// Layout and style
-			'width',
-			'height',
-			'style',
-			'color',
-			'inline',
+			width: { type: [String, Number] },
+			height: { type: [String, Number] },
+			style: { type: [String, Object] },
+			color: { type: String },
+			inline: { type: Boolean },
 			// Transformations
-			'rotate',
-			'hFlip',
-			'horizontalFlip',
-			'vFlip',
-			'verticalFlip',
-			'flip',
+			rotate: { type: [Number, String] as PropType<IconProps['rotate']> },
+			hFlip: { type: Boolean },
+			horizontalFlip: { type: Boolean },
+			vFlip: { type: Boolean },
+			verticalFlip: { type: Boolean },
+			flip: { type: String },
 			// Misc
-			'id',
-			'ariaHidden',
-			'customise',
-			'title',
-		],
+			id: { type: String },
+			ariaHidden: { type: Boolean, default: undefined },
+			customise: { type: Function as PropType<IconProps['customise']> },
+			title: { type: String },
+
+		} satisfies Required<ComponentObjectPropsOptions<IconProps>>,
 	}
 );
