@@ -3,7 +3,7 @@
 {
 	"name": "Iconify Development",
 	// Renovate tracks this tag automatically (see renovate.json).
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:26-trixie",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
