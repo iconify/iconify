@@ -66,6 +66,24 @@ describe('Passing attributes', () => {
 		expect(wrapper.html()).not.toContain('aria-hidden="true"');
 	});
 
+	test('ariaHidden shorthands', async () => {
+		// camelCase, boolean value
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" ariaHidden />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
+		expect(wrapper.html()).toContain('aria-hidden="true"');
+	});
+
 	test('style as string', async () => {
 		const Wrapper = {
 			components: { Icon },

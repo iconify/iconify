@@ -8,6 +8,21 @@ const iconData = {
 };
 
 describe('Inline attribute', () => {
+	test('shorthands', () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" inline />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
+	});
+
 	test('string', () => {
 		const Wrapper = {
 			components: { Icon },
