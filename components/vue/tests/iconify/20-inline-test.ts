@@ -9,6 +9,23 @@ const iconData = {
 };
 
 describe('Inline attribute', () => {
+	test('shorthands', async () => {
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" inline />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
+		expect(wrapper.html()).toContain('style="vertical-align: -0.125em;"');
+	});
+
 	test('string', async () => {
 		const Wrapper = {
 			components: { Icon },

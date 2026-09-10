@@ -140,10 +140,8 @@ export const render = (
 				break;
 
 			// Flip as string: 'horizontal,vertical'
+			// Handled after this loop, see below.
 			case 'flip':
-				if (typeof value === 'string') {
-					flipFromString(customisations, value);
-				}
 				break;
 
 			// Color: override style
@@ -182,6 +180,13 @@ export const render = (
 				}
 			}
 		}
+	}
+
+	// Apply flip shorthand ('horizontal,vertical') after all conflicting 
+	// explicit hFlip/vFlip props are processed.
+	// It only sets hFlip/vFlip to `true`, never `false`.
+	if (typeof props.flip === 'string') {
+		flipFromString(customisations, props.flip);
 	}
 
 	// Generate icon

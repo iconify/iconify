@@ -116,10 +116,32 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', async () => {
-		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
+		// hFlip=false conflicts with flip="horizontal": a `true` from either
+		// source always wins over a conflicting `false`, regardless of
+		// attribute/prop order
 		const Wrapper = {
 			components: { Icon },
 			template: `<Icon :icon="icon" :hFlip="false" flip="horizontal" />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {});
+		await nextTick();
+
+		expect(wrapper.html()).toContain('<g transform="translate(24 0) scale(-1 1)">');
+	});
+
+	test('shorthand and boolean reversed', async () => {
+		// hFlip=false conflicts with flip="horizontal": a `true` from either
+		// source always wins over a conflicting `false`, regardless of
+		// attribute/prop order
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" flip="horizontal" :hFlip="false" />`,
 			data() {
 				return {
 					icon: iconData,
