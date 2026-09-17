@@ -4,10 +4,12 @@
 		<div>
 			Block icons (behaving like image):
 			<Icon icon="experiment2" />
+			<Icon icon="experiment2" :inline="false" />
 		</div>
 		<div>
 			Inline icons (behaving line text / icon font):
 			<Icon icon="experiment2" :inline="true" />
+			<Icon icon="experiment2" inline />
 		</div>
 		<div>
 			Using "vertical-align: 0" to override inline attribute:
