@@ -1,6 +1,6 @@
 {
 	"name": "@iconify-icon/solid",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "SolidJS wrapper for Iconify Icon web component",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",
