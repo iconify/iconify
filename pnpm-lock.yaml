@@ -46,8 +46,8 @@ importers:
         version: 19.2.8(react@19.2.8)
     devDependencies:
       '@iconify-react/ri':
-        specifier: ^1.0.2
-        version: 1.0.2(react@19.2.8)
+        specifier: github:iconify/icons-react#ri
+        version: https://codeload.github.com/iconify/icons-react/tar.gz/c6b09288d0bb10e64beb8c64e00276a08a114842(react@19.2.8)
       '@iconify/css-react':
         specifier: workspace:*
         version: link:../../components-css/react
@@ -77,8 +77,8 @@ importers:
         version: 1.9.15
     devDependencies:
       '@iconify-solid/ri':
-        specifier: ^1.0.2
-        version: 1.0.2(solid-js@1.9.15)
+        specifier: github:iconify/icons-solid#ri
+        version: https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@1.9.15)
       '@iconify/css-solid':
         specifier: workspace:*
         version: link:../../components-css/solid
@@ -92,8 +92,8 @@ importers:
   components-css-demo/svelte-demo:
     devDependencies:
       '@iconify-svelte/ri':
-        specifier: ^1.0.7
-        version: 1.0.7(svelte@5.57.0(@typescript-eslint/types@8.59.2))
+        specifier: github:iconify/icons-svelte#ri
+        version: https://codeload.github.com/iconify/icons-svelte/tar.gz/3f1ed9d0d43cf2be10074939fd5482b2626e7d9e(svelte@5.57.0(@typescript-eslint/types@8.59.2))
       '@iconify/css-svelte':
         specifier: workspace:*
         version: link:../../components-css/svelte
@@ -132,8 +132,8 @@ importers:
         version: 3.5.42(typescript@7.0.2)
     devDependencies:
       '@iconify-vue/ri':
-        specifier: ^1.0.8
-        version: 1.0.8(vue@3.5.42(typescript@7.0.2))
+        specifier: github:iconify/icons-vue#ri
+        version: https://codeload.github.com/iconify/icons-vue/tar.gz/eaf584e305571160eff86976cc6813fe543cb6fd(vue@3.5.42(typescript@7.0.2))
       '@iconify/css-vue':
         specifier: workspace:*
         version: link:../../components-css/vue
@@ -2010,17 +2010,21 @@ packages:
   '@iconify-json/flat-color-icons@1.2.3':
     resolution: {integrity: sha512-KcmJ7CY0TKFv5GuBjiS4/v++jEcNXna1jfY+yq014tnw/MN/jMI2oYpoMHGuIpYtUqDu7eove+WySnOYO8nS3w==}
 
-  '@iconify-react/ri@1.0.2':
-    resolution: {integrity: sha512-I8UugTKMp5AggweGbaQEUZhfncr0n34sBp5N1RNN6pQUWDVJNMyaBaFrvN+b/xZXAO2y2TOJdWOvb5i8POf91w==}
+  '@iconify-react/ri@https://codeload.github.com/iconify/icons-react/tar.gz/c6b09288d0bb10e64beb8c64e00276a08a114842':
+    resolution: {gitHosted: true, integrity: sha512-+ryW2fkFLmUloCmJ/6Ptjvs7rqiTUoJ/7ihSzdNzUdX4ukUchviwm2rHG6c3FS8GkRSOmfKSnP9hO+V2Crtubw==, tarball: https://codeload.github.com/iconify/icons-react/tar.gz/c6b09288d0bb10e64beb8c64e00276a08a114842}
+    version: 1.0.3
 
-  '@iconify-solid/ri@1.0.2':
-    resolution: {integrity: sha512-MEszhpg+C2sz+y/yNx26AEaElWrajDhKivjTG42QxI9iY4yHVSbYb5ErIyjF4+dl24LmcO5qtweYtRKQZzuo9g==}
+  '@iconify-solid/ri@https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65':
+    resolution: {gitHosted: true, integrity: sha512-7H6dYFwTF19viNYwBy+HV42K2EpBvDckpWp1/UV6SXhC7olJ3fCW7qv6cKQDs6KhugS7Psw4uVSMhRobplw67Q==, tarball: https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65}
+    version: 1.0.3
 
-  '@iconify-svelte/ri@1.0.7':
-    resolution: {integrity: sha512-LH1ZjpAcQS3W8r7LOoU2Izpq7G4ZMod8se0NRWaec2c+cXn4PxTJy1p5HPPhizyc7jMGrtEqLz62zwgsbKCN/Q==}
+  '@iconify-svelte/ri@https://codeload.github.com/iconify/icons-svelte/tar.gz/3f1ed9d0d43cf2be10074939fd5482b2626e7d9e':
+    resolution: {gitHosted: true, integrity: sha512-YQtrcfa3k40Ede8cGoBjjdUfgatVL57btgB/2CErmso7HZtf3fCxNbtN+D56DnoruxlTJqc/ns7Ta68qw5DbDw==, tarball: https://codeload.github.com/iconify/icons-svelte/tar.gz/3f1ed9d0d43cf2be10074939fd5482b2626e7d9e}
+    version: 1.0.8
 
-  '@iconify-vue/ri@1.0.8':
-    resolution: {integrity: sha512-eX9dnJ89PhFLDjRTVmzzO0gfRIUjOYg609RRLp/+Gsy834YLaz5eXVcmZLeiutDiMcJq5VAtzZ4zwMQHjnaHag==}
+  '@iconify-vue/ri@https://codeload.github.com/iconify/icons-vue/tar.gz/eaf584e305571160eff86976cc6813fe543cb6fd':
+    resolution: {gitHosted: true, integrity: sha512-zCqyskbpKaLprTreXm3Rmnx13l0EDcir0qcfxQP0revTGoilnjEp2fuIf0ZoUVXA/X4sRR0vKp1mfcIH51Qc9g==, tarball: https://codeload.github.com/iconify/icons-vue/tar.gz/eaf584e305571160eff86976cc6813fe543cb6fd}
+    version: 1.0.9
 
   '@iconify/css-react@1.0.2':
     resolution: {integrity: sha512-k33FKG4jGgd8odos+1HdSwCKZOQ5F1heQxwl/zDrA53tLg5IseDPMqsmQbcCEZ6E0Zgcrmfo4ceFSBmbuEvGtw==}
@@ -9010,25 +9014,25 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-react/ri@1.0.2(react@19.2.8)':
+  '@iconify-react/ri@https://codeload.github.com/iconify/icons-react/tar.gz/c6b09288d0bb10e64beb8c64e00276a08a114842(react@19.2.8)':
     dependencies:
       '@iconify/css-react': 1.0.2(react@19.2.8)
     transitivePeerDependencies:
       - react
 
-  '@iconify-solid/ri@1.0.2(solid-js@1.9.15)':
+  '@iconify-solid/ri@https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@1.9.15)':
     dependencies:
       '@iconify/css-solid': 1.1.0(solid-js@1.9.15)
     transitivePeerDependencies:
       - solid-js
 
-  '@iconify-svelte/ri@1.0.7(svelte@5.57.0(@typescript-eslint/types@8.59.2))':
+  '@iconify-svelte/ri@https://codeload.github.com/iconify/icons-svelte/tar.gz/3f1ed9d0d43cf2be10074939fd5482b2626e7d9e(svelte@5.57.0(@typescript-eslint/types@8.59.2))':
     dependencies:
       '@iconify/css-svelte': 1.0.1(svelte@5.57.0(@typescript-eslint/types@8.59.2))
     transitivePeerDependencies:
       - svelte
 
-  '@iconify-vue/ri@1.0.8(vue@3.5.42(typescript@7.0.2))':
+  '@iconify-vue/ri@https://codeload.github.com/iconify/icons-vue/tar.gz/eaf584e305571160eff86976cc6813fe543cb6fd(vue@3.5.42(typescript@7.0.2))':
     dependencies:
       '@iconify/css-vue': 1.0.2(vue@3.5.42(typescript@7.0.2))
     transitivePeerDependencies:

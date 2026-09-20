@@ -10,7 +10,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},
 	"devDependencies": {
-		"@iconify-svelte/ri": "^1.0.7",
+		"@iconify-svelte/ri": "github:iconify/icons-svelte#ri",
 		"@iconify/css-svelte": "workspace:*",
 		"@iconify/glyphs-poly-svelte-test": "file:iconify-glyphs-poly-svelte-test-1.0.0.tgz",
 		"@iconify/ri-svelte-test": "file:iconify-ri-svelte-test-1.0.0.tgz",

@@ -16,7 +16,7 @@
 		"solid-js": "^1.9.15"
 	},
 	"devDependencies": {
-		"@iconify-solid/ri": "^1.0.2",
+		"@iconify-solid/ri": "github:iconify/icons-solid#ri",
 		"@iconify/css-solid": "workspace:*",
 		"@iconify/types": "workspace:*",
 		"vite-plugin-solid": "^2.11.14"
