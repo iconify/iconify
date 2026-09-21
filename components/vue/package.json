@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/vue",
-	"version": "5.0.2",
+	"version": "5.0.3",
 	"description": "Iconify icon component for Vue 3.",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",

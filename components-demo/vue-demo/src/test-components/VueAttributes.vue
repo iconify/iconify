@@ -38,7 +38,10 @@
 			<Icon
 				icon="admin-users"
 				v-bind:style="[boxShadowStyleObj, dynamicStyleObj]"
-				v-on:click="dynamicStyleObj.color = dynamicStyleObj.color === 'red' ? 'green' : 'red'"
+				v-on:click="
+					dynamicStyleObj.color =
+						dynamicStyleObj.color === 'red' ? 'green' : 'red'
+				"
 			/>&nbsp;(click it!)
 		</div>
 		<div>
@@ -51,7 +54,19 @@
 		</div>
 		<div>
 			Reference:
-			<Icon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click to log)
+			<Icon icon="admin-users" ref="icon1" @click="logReference" />&nbsp;(click
+			to log)
+		</div>
+		<div>
+			Aria-hidden (true):
+			<Icon icon="admin-users" aria-hidden />
+			<Icon icon="admin-users" :aria-hidden="true" />
+			<Icon icon="admin-users" aria-hidden="true" />
+		</div>
+		<div>
+			Aria-hidden (false):
+			<Icon icon="admin-users" aria-hidden="false" />
+			<Icon icon="admin-users" :aria-hidden="false" />
 		</div>
 	</section>
 </template>
