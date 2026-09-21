@@ -23,7 +23,9 @@ export type IconifyIconCustomisations = RawIconifyIconCustomisations & {
 	inline?: boolean;
 
 	// Remove aria-hidden attribute
-	ariaHidden?: boolean;
+	// Allow string because Vue passes HTML attribute values, such as
+	// aria-hidden="true", to props as strings
+	ariaHidden?: boolean | string;
 };
 
 export const defaultExtendedIconCustomisations = {

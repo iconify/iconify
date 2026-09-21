@@ -119,7 +119,7 @@ export const Icon = defineComponent<IconProps>(
 			flip: { type: String },
 			// Misc
 			id: { type: String },
-			ariaHidden: { type: Boolean, default: undefined },
+			ariaHidden: { type: [Boolean, String], default: undefined },
 			customise: { type: Function as PropType<IconProps['customise']> },
 			title: { type: String },
 

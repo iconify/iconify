@@ -48,6 +48,34 @@ describe('Passing attributes', () => {
 		expect(wrapper.html()).not.toContain('aria-hidden="true"');
 	});
 
+	test('aria-hidden as string, without warnings', async () => {
+		// dashes, string value: Vue passes it to 'ariaHidden' prop as string
+		const warnings: string[] = [];
+		const Wrapper = {
+			components: { Icon },
+			template: `<Icon :icon="icon" aria-hidden="true" />`,
+			data() {
+				return {
+					icon: iconData,
+				};
+			},
+		};
+
+		const wrapper = mount(Wrapper, {
+			global: {
+				config: {
+					warnHandler: (msg: string) => {
+						warnings.push(msg);
+					},
+				},
+			},
+		});
+		await nextTick();
+
+		expect(warnings).toEqual([]);
+		expect(wrapper.html()).toContain('aria-hidden="true"');
+	});
+
 	test('ariaHidden', async () => {
 		// camelCase, boolean value
 		const Wrapper = {
