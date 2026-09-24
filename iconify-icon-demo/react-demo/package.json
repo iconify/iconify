@@ -9,15 +9,15 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"react": "^19.2.8",
-		"react-dom": "^19.2.8"
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0"
 	},
 	"devDependencies": {
 		"@iconify-icon/react": "workspace:*",
 		"@iconify-icons/mdi-light": "^2.0.0",
 		"@iconify-icons/uil": "^2.0.0",
-		"@types/react": "^19.2.18",
-		"@types/react-dom": "^19.2.7",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.1",
 		"iconify-icon": "workspace:*"
 	}
