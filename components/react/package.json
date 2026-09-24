@@ -65,7 +65,7 @@
 		"react": "^19.2.8",
 		"rimraf": "^6.1.3",
 		"rollup": "^4.63.1",
-		"vitest-browser-react": "^2.2.0"
+		"vitest-browser-react": "^2.3.0"
 	},
 	"peerDependencies": {
 		"react": ">=18.0.0"
