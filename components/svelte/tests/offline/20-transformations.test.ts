@@ -85,11 +85,30 @@ describe('Flip', () => {
 	});
 
 	test('shorthand and boolean', async () => {
-		// 'flip' is processed after 'hFlip' because of order of elements in object, overwriting value
+		// hFlip=false conflicts with flip="horizontal": a `true` from either
+		// source always wins over a conflicting `false`, regardless of
+		// prop order
 		const component = await render(Icon, {
 			icon: iconData,
 			hFlip: false,
 			flip: 'horizontal',
+		});
+		const node = component.container.querySelector('svg')!;
+
+		// Find first child node
+		const child = node.childNodes[0] as SVGGElement;
+		expect(child.tagName).toBe('g');
+		expect(child.getAttribute('transform')).toBe('translate(24 0) scale(-1 1)');
+	});
+
+	test('shorthand and boolean reversed', async () => {
+		// hFlip=false conflicts with flip="horizontal": a `true` from either
+		// source always wins over a conflicting `false`, regardless of
+		// prop order
+		const component = await render(Icon, {
+			icon: iconData,
+			flip: 'horizontal',
+			hFlip: false,
 		});
 		const node = component.container.querySelector('svg')!;
 
