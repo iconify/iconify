@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/svelte",
-	"version": "5.2.2",
+	"version": "5.2.3",
 	"description": "Iconify icon component for Svelte.",
 	"homepage": "https://github.com/iconify/iconify",
 	"bugs": "https://github.com/iconify/iconify/issues",

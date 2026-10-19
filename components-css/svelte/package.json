@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/css-svelte",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Iconify fallback icon component for Svelte 4.",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",

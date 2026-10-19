@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/css-vue",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Iconify fallback icon component for Vue 3.",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",

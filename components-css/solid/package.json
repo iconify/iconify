@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/css-solid",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Iconify fallback icon component for Solid.",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",
