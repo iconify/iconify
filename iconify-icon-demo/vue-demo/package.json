@@ -8,12 +8,12 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.5.42"
+		"vue": "^3.5.44"
 	},
 	"devDependencies": {
 		"@iconify-icons/bx": "^2.0.0",
 		"@iconify-icons/dashicons": "^2.0.0",
-		"@vitejs/plugin-vue": "^6.0.8",
+		"@vitejs/plugin-vue": "^6.0.10",
 		"iconify-icon": "workspace:*"
 	}
 }

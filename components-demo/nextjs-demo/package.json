@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@iconify/react": "workspace:*",
-		"@types/react": "^19.2.18",
-		"@types/react-dom": "^19.2.7"
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0"
 	}
 }

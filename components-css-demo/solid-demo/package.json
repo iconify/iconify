@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@iconify/glyphs-poly-solid-test": "file:iconify-glyphs-poly-solid-test-1.0.0.tgz",
 		"@iconify/ri-solid-test": "file:iconify-ri-solid-test-1.0.0.tgz",
-		"solid-js": "^1.9.15"
+		"solid-js": "^1.9.17"
 	},
 	"devDependencies": {
 		"@iconify-solid/ri": "github:iconify/icons-solid#ri",
