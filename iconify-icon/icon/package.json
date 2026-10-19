@@ -1,6 +1,6 @@
 {
 	"name": "iconify-icon",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "Icon web component that loads icon data on demand. Over 200,000 icons to choose from",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",
