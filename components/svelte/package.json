@@ -60,7 +60,7 @@
 		"@iconify/utils": "workspace:^",
 		"@microsoft/api-extractor": "^7.59.4",
 		"@rollup/plugin-node-resolve": "^16.0.3",
-		"@rollup/plugin-typescript": "^12.3.0",
+		"@rollup/plugin-typescript": "^12.3.1",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tsconfig/svelte": "^5.0.8",
 		"@types/jest": "^30.0.0",
