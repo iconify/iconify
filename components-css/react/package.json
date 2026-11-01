@@ -1,6 +1,6 @@
 {
 	"name": "@iconify/css-react",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Iconify fallback icon component for React.",
 	"homepage": "https://iconify.design/",
 	"bugs": "https://github.com/iconify/iconify/issues",
