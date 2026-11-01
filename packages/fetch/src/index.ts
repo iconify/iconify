@@ -2,7 +2,7 @@
 const indexCache = new Map<string, number>();
 
 // Delay
-const delay = 750;
+const delay = 2000;
 
 // Fetch
 let _fetch = fetch;

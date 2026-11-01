@@ -41,10 +41,10 @@ export function createAPIConfig(
 		maxURL: source.maxURL || 500,
 
 		// Timeout before next host is used.
-		rotate: source.rotate || 750,
+		rotate: source.rotate || 2000,
 
 		// Timeout before failing query.
-		timeout: source.timeout || 5000,
+		timeout: source.timeout || 10000,
 
 		// Randomise default API end point.
 		random: source.random === true,
@@ -66,7 +66,7 @@ const configStorage = Object.create(null) as Record<string, IconifyAPIConfig>;
 
 // Add default API
 configStorage[''] = createAPIConfig({
-	resources: ['https://api.iconify.design'],
+	resources: ['https://api.iconify.design', 'https://api2.iconify.design'],
 }) as IconifyAPIConfig;
 
 /**

@@ -51,7 +51,10 @@ describe('Fetch data', () => {
 		fetchData['https://example.com/simple-fetch'] = {
 			result: { message: 'Success' },
 		};
-		const result = await fetchJSON<{ message: string }>(['https://example.com'], '/simple-fetch');
+		const result = await fetchJSON<{ message: string }>(
+			['https://example.com'],
+			'/simple-fetch'
+		);
 		expect(result).toEqual({ message: 'Success' });
 	});
 
@@ -60,14 +63,17 @@ describe('Fetch data', () => {
 			status: 500,
 		};
 		await expect(
-			fetchJSON<{ message: string }>(['https://example.com'], '/failed-fetch')
+			fetchJSON<{ message: string }>(
+				['https://example.com'],
+				'/failed-fetch'
+			)
 		).rejects.toThrow('All promises were rejected');
 	});
 
 	it('Multiple hosts, returning second result first', async () => {
 		fetchData['https://sequence-test1.com/test1'] = {
 			result: { message: 'Success 1' },
-			delay: 1500,
+			delay: 3000,
 		};
 		fetchData['https://sequence-test2.com/test1'] = {
 			result: { message: 'Success 2' },
@@ -92,16 +98,16 @@ describe('Fetch data', () => {
 			'/test2'
 		);
 		expect(result2).toEqual({ message: 'Success 2.1' });
-	});
+	}, 10000);
 
 	it('Multiple hosts, failure on first host', async () => {
 		fetchData['https://api1.com/test1'] = {
 			status: 500,
-			delay: 2500,
+			delay: 5000,
 		};
 		fetchData['https://api2.com/test1'] = {
 			result: { message: 'Success 2' },
-			delay: 1000,
+			delay: 2000,
 		};
 
 		// Get second item, should also change first index
@@ -110,5 +116,5 @@ describe('Fetch data', () => {
 			'/test1'
 		);
 		expect(result).toEqual({ message: 'Success 2' });
-	});
+	}, 10000);
 });
