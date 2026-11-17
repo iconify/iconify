@@ -12,7 +12,7 @@
 	"devDependencies": {
 		"@iconify/svelte": "workspace:*",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
-		"@tsconfig/svelte": "^5.0.8",
+		"@tsconfig/svelte": "^5.0.9",
 		"svelte": "^5.57.2",
 		"svelte-check": "^4.7.7",
 		"svelte-preprocess": "^6.0.5",
