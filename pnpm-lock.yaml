@@ -238,8 +238,8 @@ importers:
   components-demo/nextjs-demo:
     dependencies:
       next:
-        specifier: 16.4.2
-        version: 16.4.2(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 16.4.5
+        version: 16.4.5(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -522,8 +522,8 @@ importers:
   iconify-icon-demo/nextjs-demo:
     dependencies:
       next:
-        specifier: 16.4.2
-        version: 16.4.2(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 16.4.5
+        version: 16.4.5(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -1829,8 +1829,18 @@ packages:
     peerDependencies:
       react: '>=18.0.0'
 
+  '@iconify/css-react@1.0.4':
+    resolution: {integrity: sha512-q69ANSoNQ45YXSzzDayPjj8JI6eObVzzOJb45tv9+AwXcLbalHjz7uLGExtITbwMx4X6Vpez6Lf5+TSgt+916g==}
+    peerDependencies:
+      react: '>=18.0.0'
+
   '@iconify/css-solid@1.1.1':
     resolution: {integrity: sha512-9UnFhsiCjOaeiKrXax9Wn7oSf5CCDfF1uGdbDUVv1MI8wrRofQZ8TZ6FQU6D1nXILmVoKiwtXqwk5z6zpuPGAQ==}
+    peerDependencies:
+      solid-js: '>=1.9.0'
+
+  '@iconify/css-solid@1.1.2':
+    resolution: {integrity: sha512-jnwlRgttNk8Gf9y2X8e0dnsbNUL6wIYfy6Sa6pQyRpfN6155NeVx8v0UYh+lJTwbIQXq+TBmWUiJW3HAvaDd6w==}
     peerDependencies:
       solid-js: '>=1.9.0'
 
@@ -1839,8 +1849,18 @@ packages:
     peerDependencies:
       svelte: '>4.0.0'
 
+  '@iconify/css-svelte@1.0.3':
+    resolution: {integrity: sha512-RFI9mCvy0bUdEaxd/9LMfzkIDBrIhNPf2hPRdy3oXmTJ4RTlFgY/nF0Gm9rgQJUq5qHWWBEl0tdOFR8fJVBmng==}
+    peerDependencies:
+      svelte: '>4.0.0'
+
   '@iconify/css-vue@1.0.3':
     resolution: {integrity: sha512-fi9qm639zgAdmonbD7ByuE9tt90uFUHSynS9dEDm4CZX8+03jD5pxv2hZZ07eJv9PPAwCsuEauLD9tYoXWBfyg==}
+    peerDependencies:
+      vue: '>=3.0.0'
+
+  '@iconify/css-vue@1.0.4':
+    resolution: {integrity: sha512-XB3j2+q0uTBhEb4t/8gs3oMtl7t0xDdGqO2FdjZd3h+76YCG14oIUnSmGRapkecKwtg2ikGXqX93e5zPMjn1JA==}
     peerDependencies:
       vue: '>=3.0.0'
 
@@ -2198,57 +2218,57 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@next/env@16.4.2':
-    resolution: {integrity: sha512-nTUTFH7G5/J/fmpkjVLegOkqyKOP0CEsJcMsyO4UCYeN1su+YMW/MfaSErnJskL7XM+UDK6aTvslxsRCyya/sA==}
+  '@next/env@16.4.5':
+    resolution: {integrity: sha512-JwSPwpdkZL5VMl2jA/q+JI8MZdweAL3xmw5/tb9y/TLtmS0YXZnmYDzSihwk8xTj1OL+WM53gTqaj96yuLp6Xw==}
 
-  '@next/swc-darwin-arm64@16.4.2':
-    resolution: {integrity: sha512-ONkhFvZNFWlsEHOM/81AtxdyuJP2KRYKYR0JxPwvcu1AuPMMMgcL+wW2luldJvMtZwKtUxoSkCychW5wIeoYSw==}
+  '@next/swc-darwin-arm64@16.4.5':
+    resolution: {integrity: sha512-W5TniBzWKASbNNwHZ/S/f1MxQUXU/LdjklVMWA0Ujbfl7SZnUzFls45hO0i/sF7Bx1jJBWp7WWmoQajXtX/O8A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@16.4.2':
-    resolution: {integrity: sha512-luPCMbOsCoaF+kXJEUjmjmOZg1lC3BflhmUu+ZmW4tBu2vW/4AXak8JBFvePizGkxVmNiAw/r9ra+6UviCWtWQ==}
+  '@next/swc-darwin-x64@16.4.5':
+    resolution: {integrity: sha512-uWq4qkHapBDS1oFltWS4YxTb9pLHAtLNcpbuK6SmRsebLYZqpBML/j/C0op+50JYGTpZgVL/DWNt/6oWlamrrw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@16.4.2':
-    resolution: {integrity: sha512-xhwFTAncJyaCNy5KqKKuKaIIdCy1/1ZV1s5S1G0hhT7wGMkDTlfJ6aQbfRFnIG/s3/kDrxQ8aycVe+c5QnP8ow==}
+  '@next/swc-linux-arm64-gnu@16.4.5':
+    resolution: {integrity: sha512-FdRcyOx5u5P51mlAqLB9EXdd8jZO5fsdHtk4BAQSkqOywCsbTNN/rmw+jO7pnmjNdAtu2AG46NzbCL2FPDrrgw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-arm64-musl@16.4.2':
-    resolution: {integrity: sha512-T1PNmfbPcxr5ndtWUL/3wQtLXsz808lq6sc2GrNT5k2oquF7UyqZddHSuAewHVsWsGXe6nsl9HoN1YNriVjuSg==}
+  '@next/swc-linux-arm64-musl@16.4.5':
+    resolution: {integrity: sha512-cyvmmgtRXR8aGVT86wi9Py53IlfyCx7P2fZxuAXAoTummDnhKtUyjrMeXfapqp4qgD+gT5RqyGD/VfA16jEK7Q==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-linux-x64-gnu@16.4.2':
-    resolution: {integrity: sha512-N9cDUOCGtkJG5PNKDFZUF3xXndrJJcpLp121uAGjIGvO/U2p9tfdNOM9htj7+5f72l0m8rMw/cvYacUJBQoudg==}
+  '@next/swc-linux-x64-gnu@16.4.5':
+    resolution: {integrity: sha512-hPc+Fl+N22DAvqZHq559NmamXboOX5Lu8I5Wl0DezfrhTk1Zz21NQeYoZDmNI/NjTcrdsVxM72Fzn2lI+Q+vAw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-x64-musl@16.4.2':
-    resolution: {integrity: sha512-yY2uh1YhX6ufuYy2FCbw1dqblbhI57GLYAJfCkqD9auTv6pLrH67Uccjc3QMKBeCYAG6lkgu08ExmX1bbjejjQ==}
+  '@next/swc-linux-x64-musl@16.4.5':
+    resolution: {integrity: sha512-gbACYE8IP/jlprNTpiWXHb8N9CofOzpnEwH2SrIz1dUbiJf1FbDssDupCAPeP1Taxe8mgG20sGZamJI7KFOdZw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-win32-arm64-msvc@16.4.2':
-    resolution: {integrity: sha512-j/ArWRIHpMMB6wYLMhr2puTguBt70lNU/Cmjl9p6dTDE8DGknYJMP9PdwPk2dqpCNL/KIX9yfngDvIesxJPmsg==}
+  '@next/swc-win32-arm64-msvc@16.4.5':
+    resolution: {integrity: sha512-+8gj++ZMo8H20Xh2ijjNqyFk5LPLw0AC4Fs4Tq/G94rjjQXhOjN4jgSWsWKPFsyY26hfIeemJIwKtMxOsp5GBA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@16.4.2':
-    resolution: {integrity: sha512-AA4edyWHDko3NCSo0x6GomsdgFb0oR1J3MXU1b5xt6FRFg4AucrMPW3S0hCe/9onU0O1BbpGQBsqo1r0Gneu1g==}
+  '@next/swc-win32-x64-msvc@16.4.5':
+    resolution: {integrity: sha512-qNZj66pYXnaWLiF9R9GUbfBdrCv7kC6TaZfIwB2KH5WPc/8pEM3nVOj8hpQhWJU8S94rlH5MPDcX15+RrgUhiw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -5607,8 +5627,8 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  next@16.4.2:
-    resolution: {integrity: sha512-r+oBJojfefUjOiWkBhXgLS+igxX/7BWyK59uHnyOyplMSLtBZ+QLP3okrdYTbrfrbrmNTVWLBPaHDX9KRaIt3w==}
+  next@16.4.5:
+    resolution: {integrity: sha512-rmdfsWosjTUO+6R0S3KokoIk6Kj0sWDRTe86tZHdqaWH/oXq/udX3/4xb+YQi7aWbyEFoglDU54kaifLCdXbBw==}
     engines: {node: '>=20.9.0'}
     hasBin: true
     peerDependencies:
@@ -8538,7 +8558,17 @@ snapshots:
       '@iconify/types': 2.0.0
       react: 19.3.1
 
+  '@iconify/css-react@1.0.4(react@19.3.1)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.3.1
+
   '@iconify/css-solid@1.1.1(solid-js@1.9.17)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      solid-js: 1.9.17
+
+  '@iconify/css-solid@1.1.2(solid-js@1.9.17)':
     dependencies:
       '@iconify/types': 2.0.0
       solid-js: 1.9.17
@@ -8548,56 +8578,66 @@ snapshots:
       '@iconify/types': 2.0.0
       svelte: 5.57.2(@typescript-eslint/types@8.59.2)
 
+  '@iconify/css-svelte@1.0.3(svelte@5.57.2(@typescript-eslint/types@8.59.2))':
+    dependencies:
+      '@iconify/types': 2.0.0
+      svelte: 5.57.2(@typescript-eslint/types@8.59.2)
+
   '@iconify/css-vue@1.0.3(vue@3.5.44(typescript@6.0.3))':
+    dependencies:
+      '@iconify/types': 2.0.0
+      vue: 3.5.44(typescript@6.0.3)
+
+  '@iconify/css-vue@1.0.4(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@iconify/types': 2.0.0
       vue: 3.5.44(typescript@6.0.3)
 
   '@iconify/glyphs-poly-react-test@file:components-css-demo/react-demo/iconify-glyphs-poly-react-test-1.0.0.tgz(react@19.3.1)':
     dependencies:
-      '@iconify/css-react': 1.0.3(react@19.3.1)
+      '@iconify/css-react': 1.0.4(react@19.3.1)
     transitivePeerDependencies:
       - react
 
   '@iconify/glyphs-poly-solid-test@file:components-css-demo/solid-demo/iconify-glyphs-poly-solid-test-1.0.0.tgz(solid-js@1.9.17)':
     dependencies:
-      '@iconify/css-solid': 1.1.1(solid-js@1.9.17)
+      '@iconify/css-solid': 1.1.2(solid-js@1.9.17)
     transitivePeerDependencies:
       - solid-js
 
   '@iconify/glyphs-poly-svelte-test@file:components-css-demo/svelte-demo/iconify-glyphs-poly-svelte-test-1.0.0.tgz(svelte@5.57.2(@typescript-eslint/types@8.59.2))':
     dependencies:
-      '@iconify/css-svelte': 1.0.2(svelte@5.57.2(@typescript-eslint/types@8.59.2))
+      '@iconify/css-svelte': 1.0.3(svelte@5.57.2(@typescript-eslint/types@8.59.2))
     transitivePeerDependencies:
       - svelte
 
   '@iconify/glyphs-poly-vue-test@file:components-css-demo/vue-demo/iconify-glyphs-poly-vue-test-1.0.0.tgz(vue@3.5.44(typescript@6.0.3))':
     dependencies:
-      '@iconify/css-vue': 1.0.3(vue@3.5.44(typescript@6.0.3))
+      '@iconify/css-vue': 1.0.4(vue@3.5.44(typescript@6.0.3))
     transitivePeerDependencies:
       - vue
 
   '@iconify/ri-react-test@file:components-css-demo/react-demo/iconify-ri-react-test-1.0.0.tgz(react@19.3.1)':
     dependencies:
-      '@iconify/css-react': 1.0.3(react@19.3.1)
+      '@iconify/css-react': 1.0.4(react@19.3.1)
     transitivePeerDependencies:
       - react
 
   '@iconify/ri-solid-test@file:components-css-demo/solid-demo/iconify-ri-solid-test-1.0.0.tgz(solid-js@1.9.17)':
     dependencies:
-      '@iconify/css-solid': 1.1.1(solid-js@1.9.17)
+      '@iconify/css-solid': 1.1.2(solid-js@1.9.17)
     transitivePeerDependencies:
       - solid-js
 
   '@iconify/ri-svelte-test@file:components-css-demo/svelte-demo/iconify-ri-svelte-test-1.0.0.tgz(svelte@5.57.2(@typescript-eslint/types@8.59.2))':
     dependencies:
-      '@iconify/css-svelte': 1.0.2(svelte@5.57.2(@typescript-eslint/types@8.59.2))
+      '@iconify/css-svelte': 1.0.3(svelte@5.57.2(@typescript-eslint/types@8.59.2))
     transitivePeerDependencies:
       - svelte
 
   '@iconify/ri-vue-test@file:components-css-demo/vue-demo/iconify-ri-vue-test-1.0.0.tgz(vue@3.5.44(typescript@6.0.3))':
     dependencies:
-      '@iconify/css-vue': 1.0.3(vue@3.5.44(typescript@6.0.3))
+      '@iconify/css-vue': 1.0.4(vue@3.5.44(typescript@6.0.3))
     transitivePeerDependencies:
       - vue
 
@@ -9001,30 +9041,30 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@next/env@16.4.2': {}
+  '@next/env@16.4.5': {}
 
-  '@next/swc-darwin-arm64@16.4.2':
+  '@next/swc-darwin-arm64@16.4.5':
     optional: true
 
-  '@next/swc-darwin-x64@16.4.2':
+  '@next/swc-darwin-x64@16.4.5':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@16.4.2':
+  '@next/swc-linux-arm64-gnu@16.4.5':
     optional: true
 
-  '@next/swc-linux-arm64-musl@16.4.2':
+  '@next/swc-linux-arm64-musl@16.4.5':
     optional: true
 
-  '@next/swc-linux-x64-gnu@16.4.2':
+  '@next/swc-linux-x64-gnu@16.4.5':
     optional: true
 
-  '@next/swc-linux-x64-musl@16.4.2':
+  '@next/swc-linux-x64-musl@16.4.5':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@16.4.2':
+  '@next/swc-win32-arm64-msvc@16.4.5':
     optional: true
 
-  '@next/swc-win32-x64-msvc@16.4.2':
+  '@next/swc-win32-x64-msvc@16.4.5':
     optional: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -12410,9 +12450,9 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@16.4.2(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  next@16.4.5(@babel/core@8.0.1)(@playwright/test@1.58.2)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
-      '@next/env': 16.4.2
+      '@next/env': 16.4.5
       '@swc/helpers': 0.5.23
       baseline-browser-mapping: 2.11.29
       caniuse-lite: 1.0.30001816
@@ -12421,14 +12461,14 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
       styled-jsx: 5.1.6(@babel/core@8.0.1)(react@19.3.1)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 16.4.2
-      '@next/swc-darwin-x64': 16.4.2
-      '@next/swc-linux-arm64-gnu': 16.4.2
-      '@next/swc-linux-arm64-musl': 16.4.2
-      '@next/swc-linux-x64-gnu': 16.4.2
-      '@next/swc-linux-x64-musl': 16.4.2
-      '@next/swc-win32-arm64-msvc': 16.4.2
-      '@next/swc-win32-x64-msvc': 16.4.2
+      '@next/swc-darwin-arm64': 16.4.5
+      '@next/swc-darwin-x64': 16.4.5
+      '@next/swc-linux-arm64-gnu': 16.4.5
+      '@next/swc-linux-arm64-musl': 16.4.5
+      '@next/swc-linux-x64-gnu': 16.4.5
+      '@next/swc-linux-x64-musl': 16.4.5
+      '@next/swc-win32-arm64-msvc': 16.4.5
+      '@next/swc-win32-x64-msvc': 16.4.5
       '@playwright/test': 1.58.2
       sharp: 0.35.5(@types/node@26.6.5)
     transitivePeerDependencies:
