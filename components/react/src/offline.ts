@@ -1,4 +1,4 @@
-import { forwardRef, createElement, memo } from 'react';
+import { forwardRef, createElement, memo, useRef } from 'react';
 import type { Ref, JSX } from 'react';
 import type { IconifyIcon, IconifyJSON } from '@iconify/types';
 import type { IconifyIconSize } from '@iconify/utils/lib/customisations/defaults';
@@ -13,6 +13,7 @@ import type {
 	IconElement,
 } from './props';
 import { render } from './render';
+import type { InnerHTMLCache } from './render';
 
 /**
  * Export stuff from props.ts
@@ -37,6 +38,9 @@ interface InternalIconProps extends IconProps {
 }
 
 function IconComponent(props: InternalIconProps): JSX.Element {
+	// Keep SVG content between renders while icon does not change
+	const innerHTMLCache = useRef<InnerHTMLCache>({});
+
 	const icon = props.icon;
 	const data = typeof icon === 'string' ? storage[icon] : icon;
 
@@ -52,7 +56,8 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 			...data,
 		},
 		props,
-		typeof icon === 'string' ? icon : undefined
+		typeof icon === 'string' ? icon : undefined,
+		innerHTMLCache.current
 	);
 }
 
