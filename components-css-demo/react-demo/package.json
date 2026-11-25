@@ -17,8 +17,8 @@
 		"@iconify-react/ri": "github:iconify/icons-react#ri",
 		"@iconify/css-react": "workspace:*",
 		"@iconify/types": "workspace:*",
-		"@types/react": "^19.3.0",
+		"@types/react": "^19.3.1",
 		"@types/react-dom": "^19.3.0",
-		"@vitejs/plugin-react": "^6.1.2"
+		"@vitejs/plugin-react": "^6.3.0"
 	}
 }
