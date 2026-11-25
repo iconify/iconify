@@ -77,15 +77,54 @@ function fixSize(value: string): string {
 }
 
 /**
+ * Content of rendered SVG, cached per component instance
+ */
+export interface InnerHTMLCache {
+	// Icon body before replacing IDs
+	body?: string;
+
+	// Value for `dangerouslySetInnerHTML`
+	value?: { __html: string };
+}
+
+/**
+ * Get value for `dangerouslySetInnerHTML`
+ *
+ * React compares `__html` by identity and replaces element's content when it
+ * changes. `cleanUpInnerHTML()` returns a new TrustedHTML object on every call
+ * when Trusted Types are available, and `replaceIDs()` returns new IDs on every
+ * call, so without cache content would be replaced on every render, even if
+ * icon did not change.
+ */
+function getInnerHTML(
+	body: string,
+	cache?: InnerHTMLCache
+): { __html: string } {
+	if (cache && cache.body === body && cache.value) {
+		return cache.value;
+	}
+	const value = {
+		__html: cleanUpInnerHTML(replaceIDs(body)),
+	};
+	if (cache) {
+		cache.body = body;
+		cache.value = value;
+	}
+	return value;
+}
+
+/**
  * Render icon
  * @param icon Icon must be validated before calling this function
  * @param props Partial properties
  * @param name Icon name
+ * @param cache Cache for SVG content, unique to component instance
  */
 export const render = (
 	icon: Required<IconifyIcon>,
 	props: IconProps,
-	name?: string
+	name?: string,
+	cache?: InnerHTMLCache
 ): JSX.Element => {
 	// Get default properties
 	const defaultProps = props.inline
@@ -212,9 +251,7 @@ export const render = (
 		Object.assign(componentProps, renderAttribs);
 
 		// Add icon stuff
-		componentProps.dangerouslySetInnerHTML = {
-			__html: cleanUpInnerHTML(replaceIDs(item.body)),
-		};
+		componentProps.dangerouslySetInnerHTML = getInnerHTML(item.body, cache);
 		return createElement('svg', componentProps);
 	}
 

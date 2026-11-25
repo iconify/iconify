@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef, createElement } from 'react';
+import { useEffect, useState, useRef, forwardRef, createElement } from 'react';
 import type { Ref, JSX } from 'react';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
@@ -76,6 +76,7 @@ import type {
 
 // Render SVG
 import { render } from './render';
+import type { InnerHTMLCache } from './render';
 import { defaultIconProps } from '@iconify/utils/lib/icon/defaults';
 
 /**
@@ -243,6 +244,9 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 	}
 	const [state, setState] = useState<State>(getInitialState(!!props.ssr));
 
+	// Keep SVG content between renders while icon does not change
+	const innerHTMLCache = useRef<InnerHTMLCache>({});
+
 	// Cancel loading
 	function cleanup() {
 		const callback = abort.callback;
@@ -323,7 +327,8 @@ function IconComponent(props: InternalIconProps): JSX.Element {
 			...data,
 		},
 		props,
-		name
+		name,
+		innerHTMLCache.current
 	);
 }
 
