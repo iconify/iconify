@@ -40,7 +40,7 @@
 		"iconify-icon": "workspace:^"
 	},
 	"devDependencies": {
-		"@testing-library/jest-dom": "^7.0.1",
+		"@testing-library/jest-dom": "^8.0.0",
 		"@testing-library/react": "^16.3.3",
 		"@types/react": "^19.3.1",
 		"@types/react-test-renderer": "^19.3.1",
