@@ -19,7 +19,7 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "^26.6.7",
+		"@types/node": "^26.6.11",
 		"globals": "^17.14.0",
 		"oxlint": "^1.95.0",
 		"tsdown": "^0.23.7",
