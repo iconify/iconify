@@ -25,7 +25,7 @@
 		"tsdown": "^0.23.7",
 		"typescript": "^6.0.3",
 		"vite": "^8.3.8",
-		"vitest": "^5.1.1"
+		"vitest": "^5.1.2"
 	},
 	"packageManager": "pnpm@11.29.0"
 }

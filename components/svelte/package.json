@@ -64,7 +64,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.3.2",
 		"@tsconfig/svelte": "^5.0.9",
 		"@types/jest": "^30.0.0",
-		"@vitest/browser-playwright": "^5.1.1",
+		"@vitest/browser-playwright": "^5.1.2",
 		"playwright": "^1.65.1",
 		"rimraf": "^6.1.4",
 		"rollup": "^4.68.8",

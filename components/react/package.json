@@ -60,7 +60,7 @@
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@types/react": "^19.3.1",
 		"@types/react-dom": "^19.3.0",
-		"@vitest/browser-playwright": "^5.1.1",
+		"@vitest/browser-playwright": "^5.1.2",
 		"playwright": "^1.65.1",
 		"react": "^19.3.1",
 		"rimraf": "^6.1.4",
