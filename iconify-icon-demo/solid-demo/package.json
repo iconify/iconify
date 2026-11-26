@@ -11,7 +11,7 @@
 		"serve": "vite preview"
 	},
 	"dependencies": {
-		"solid-js": "^1.9.20"
+		"solid-js": "^2.0.4"
 	},
 	"devDependencies": {
 		"@iconify-icon/solid": "workspace:*",
