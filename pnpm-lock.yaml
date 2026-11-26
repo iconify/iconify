@@ -68,17 +68,17 @@ importers:
     dependencies:
       '@iconify/glyphs-poly-solid-test':
         specifier: file:iconify-glyphs-poly-solid-test-1.0.0.tgz
-        version: file:components-css-demo/solid-demo/iconify-glyphs-poly-solid-test-1.0.0.tgz(solid-js@1.9.20)
+        version: file:components-css-demo/solid-demo/iconify-glyphs-poly-solid-test-1.0.0.tgz(solid-js@2.0.4)
       '@iconify/ri-solid-test':
         specifier: file:iconify-ri-solid-test-1.0.0.tgz
-        version: file:components-css-demo/solid-demo/iconify-ri-solid-test-1.0.0.tgz(solid-js@1.9.20)
+        version: file:components-css-demo/solid-demo/iconify-ri-solid-test-1.0.0.tgz(solid-js@2.0.4)
       solid-js:
-        specifier: ^1.9.20
-        version: 1.9.20
+        specifier: ^2.0.4
+        version: 2.0.4
     devDependencies:
       '@iconify-solid/ri':
         specifier: github:iconify/icons-solid#ri
-        version: https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@1.9.20)
+        version: https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@2.0.4)
       '@iconify/css-solid':
         specifier: workspace:*
         version: link:../../components-css/solid
@@ -87,7 +87,7 @@ importers:
         version: link:../../packages/types
       vite-plugin-solid:
         specifier: ^2.11.17
-        version: 2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@1.9.20)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
+        version: 2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@2.0.4)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
 
   components-css-demo/svelte-demo:
     devDependencies:
@@ -191,8 +191,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/utils
       solid-js:
-        specifier: ^1.9.20
-        version: 1.9.20
+        specifier: ^2.0.4
+        version: 2.0.4
 
   components-css/svelte:
     dependencies:
@@ -578,8 +578,8 @@ importers:
   iconify-icon-demo/solid-demo:
     dependencies:
       solid-js:
-        specifier: ^1.9.20
-        version: 1.9.20
+        specifier: ^2.0.4
+        version: 2.0.4
     devDependencies:
       '@iconify-icon/solid':
         specifier: workspace:*
@@ -592,7 +592,7 @@ importers:
         version: link:../../iconify-icon/icon
       vite-plugin-solid:
         specifier: ^2.11.17
-        version: 2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@1.9.20)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
+        version: 2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@2.0.4)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
 
   iconify-icon-demo/svelte-demo:
     devDependencies:
@@ -727,8 +727,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       solid-js:
-        specifier: ^1.9.20
-        version: 1.9.20
+        specifier: ^2.0.4
+        version: 2.0.4
 
   packages/api-redundancy: {}
 
@@ -3442,6 +3442,10 @@ packages:
 
   '@sinonjs/fake-timers@13.0.5':
     resolution: {integrity: sha512-36/hTbH2uaWuGVERyC6da9YwGWnzUZXuPro/F2LfsdOsLnCojz/iSH8MxUt/FD2S5XBSVPhmArFUXcpCQ2Hkiw==}
+
+  '@solidjs/signals@2.0.4':
+    resolution: {integrity: sha512-U/Z0DOsoJO18Wsw/5piSrJhtj85nMOOD/ldn8ZP+CCA5RVcu4GDheNTOECOZwxCS+l7BVIzIakToJC91Q6lMXQ==}
+    engines: {node: '>=22.12.0'}
 
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
@@ -6624,15 +6628,11 @@ packages:
     resolution: {integrity: sha512-k3CMsaIvvdSwm8oLB4MXSl0wH2/cwlH7xGcnRd2DaeRmBkbzYmyT8j0tsX60DwD1eRwHTpNpH8ljKu9oUT1MeQ==}
     engines: {node: '>=20.0.0'}
 
-  seroval-plugins@1.6.11:
-    resolution: {integrity: sha512-LmB3nd8pL39jKHKvnpTUjcjBtNwR8MLty/ydAR8qbfXt5j6/6KqR1atuw8cVmD2/lDxAkvAwq5tI/HsisD9Fqg==}
-    engines: {node: '>=10'}
+  seroval-plugins@1.8.0:
+    resolution: {integrity: sha512-96vBb12rDvPPwdKUgWw1op3fGq8AVBFOr0IllbnM72yR5J9WWXF18cQ4g1XfDO7HCyh2dt70P3XdtyRayP8FWg==}
+    engines: {node: '>=20'}
     peerDependencies:
-      seroval: ^1.0
-
-  seroval@1.6.11:
-    resolution: {integrity: sha512-hpb6XnMCGN/A+79Uf8V7/iTGkyyyazNn5X0CoCAp7Uy9vT3RT8jZ9GLcnxGoVjg3P8AArbe4ZVHq6C8oT2a0kA==}
-    engines: {node: '>=10'}
+      seroval: ^1.8.0
 
   seroval@1.8.2:
     resolution: {integrity: sha512-zmMxi/9MdLK1MKazLmIP6Rk39RuK0Xydd+QHeOYntS37olJeTjB3+nwVj4ce/ZWiZJeRhcO5htfxt0mUzQBscQ==}
@@ -6695,8 +6695,9 @@ packages:
     resolution: {integrity: sha512-RQsvleCbF8cVHEv+xuDGaA4pOizFqJ0GgjtMSRo6oP8pnN7WsigHgVGey6aILRBKv4W2YOMHLqbKdnB6hpB9fw==}
     engines: {node: '>=20.0.0'}
 
-  solid-js@1.9.20:
-    resolution: {integrity: sha512-7zEbPxRU5/hHX8O/rYtQ34p/wq44w09gv0u4+myOW5Ode8unKhoG5FbcGlqRXKqqDuDW9yOJ1OXoHgUUl/1f3Q==}
+  solid-js@2.0.4:
+    resolution: {integrity: sha512-RaBVDtzYGgQEAcMa9QgyT8UdzOayFgXJ1w1/f8vz7aoeF5tQDZwrHLfM1PDTIuprb8RdMWFGZwwyKCXtXEUX0w==}
+    engines: {node: '>=22.12.0'}
 
   solid-refresh@0.6.3:
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
@@ -9093,9 +9094,9 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@iconify-solid/ri@https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@1.9.20)':
+  '@iconify-solid/ri@https://codeload.github.com/iconify/icons-solid/tar.gz/e94730163742522b7bca37974b8b66c3055dea65(solid-js@2.0.4)':
     dependencies:
-      '@iconify/css-solid': 1.1.1(solid-js@1.9.20)
+      '@iconify/css-solid': 1.1.1(solid-js@2.0.4)
     transitivePeerDependencies:
       - solid-js
 
@@ -9121,15 +9122,15 @@ snapshots:
       '@iconify/types': 2.0.0
       react: 19.3.1
 
-  '@iconify/css-solid@1.1.1(solid-js@1.9.20)':
+  '@iconify/css-solid@1.1.1(solid-js@2.0.4)':
     dependencies:
       '@iconify/types': 2.0.0
-      solid-js: 1.9.20
+      solid-js: 2.0.4
 
-  '@iconify/css-solid@1.1.2(solid-js@1.9.20)':
+  '@iconify/css-solid@1.1.2(solid-js@2.0.4)':
     dependencies:
       '@iconify/types': 2.0.0
-      solid-js: 1.9.20
+      solid-js: 2.0.4
 
   '@iconify/css-svelte@1.0.2(svelte@5.59.1(@typescript-eslint/types@8.59.2))':
     dependencies:
@@ -9157,9 +9158,9 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@iconify/glyphs-poly-solid-test@file:components-css-demo/solid-demo/iconify-glyphs-poly-solid-test-1.0.0.tgz(solid-js@1.9.20)':
+  '@iconify/glyphs-poly-solid-test@file:components-css-demo/solid-demo/iconify-glyphs-poly-solid-test-1.0.0.tgz(solid-js@2.0.4)':
     dependencies:
-      '@iconify/css-solid': 1.1.2(solid-js@1.9.20)
+      '@iconify/css-solid': 1.1.2(solid-js@2.0.4)
     transitivePeerDependencies:
       - solid-js
 
@@ -9181,9 +9182,9 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@iconify/ri-solid-test@file:components-css-demo/solid-demo/iconify-ri-solid-test-1.0.0.tgz(solid-js@1.9.20)':
+  '@iconify/ri-solid-test@file:components-css-demo/solid-demo/iconify-ri-solid-test-1.0.0.tgz(solid-js@2.0.4)':
     dependencies:
-      '@iconify/css-solid': 1.1.2(solid-js@1.9.20)
+      '@iconify/css-solid': 1.1.2(solid-js@2.0.4)
     transitivePeerDependencies:
       - solid-js
 
@@ -10768,6 +10769,8 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
+  '@solidjs/signals@2.0.4': {}
+
   '@speed-highlight/core@1.2.24': {}
 
   '@standard-schema/spec@1.1.0': {}
@@ -11625,12 +11628,12 @@ snapshots:
       babel-plugin-jest-hoist: 30.2.0
       babel-preset-current-node-syntax: 1.2.0(@babel/core@7.29.7(supports-color@10.2.2))
 
-  babel-preset-solid@1.9.9(@babel/core@7.29.7(supports-color@10.2.2))(solid-js@1.9.20):
+  babel-preset-solid@1.9.9(@babel/core@7.29.7(supports-color@10.2.2))(solid-js@2.0.4):
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       babel-plugin-jsx-dom-expressions: 0.40.1(@babel/core@7.29.7(supports-color@10.2.2))
     optionalDependencies:
-      solid-js: 1.9.20
+      solid-js: 2.0.4
 
   balanced-match@1.0.2: {}
 
@@ -14316,11 +14319,9 @@ snapshots:
 
   serialize-javascript@7.1.1: {}
 
-  seroval-plugins@1.6.11(seroval@1.6.11):
+  seroval-plugins@1.8.0(seroval@1.8.2):
     dependencies:
-      seroval: 1.6.11
-
-  seroval@1.6.11: {}
+      seroval: 1.8.2
 
   seroval@1.8.2: {}
 
@@ -14400,18 +14401,18 @@ snapshots:
 
   smob@1.6.2: {}
 
-  solid-js@1.9.20:
+  solid-js@2.0.4:
     dependencies:
-      csstype: 3.2.3
-      seroval: 1.6.11
-      seroval-plugins: 1.6.11(seroval@1.6.11)
+      '@solidjs/signals': 2.0.4
+      seroval: 1.8.2
+      seroval-plugins: 1.8.0(seroval@1.8.2)
 
-  solid-refresh@0.6.3(solid-js@1.9.20)(supports-color@10.2.2):
+  solid-refresh@0.6.3(solid-js@2.0.4)(supports-color@10.2.2):
     dependencies:
       '@babel/generator': 7.29.8
       '@babel/helper-module-imports': 7.29.7(supports-color@10.2.2)
       '@babel/types': 7.29.8
-      solid-js: 1.9.20
+      solid-js: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
@@ -15157,14 +15158,14 @@ snapshots:
       '@nuxt/kit': 4.6.2(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)))
     optional: true
 
-  vite-plugin-solid@2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@1.9.20)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)):
+  vite-plugin-solid@2.11.17(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.1)(vitest@5.1.1))(solid-js@2.0.4)(supports-color@10.2.2)(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)):
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       '@types/babel__core': 7.20.5
-      babel-preset-solid: 1.9.9(@babel/core@7.29.7(supports-color@10.2.2))(solid-js@1.9.20)
+      babel-preset-solid: 1.9.9(@babel/core@7.29.7(supports-color@10.2.2))(solid-js@2.0.4)
       merge-anything: 5.1.7
-      solid-js: 1.9.20
-      solid-refresh: 0.6.3(solid-js@1.9.20)(supports-color@10.2.2)
+      solid-js: 2.0.4
+      solid-refresh: 0.6.3(solid-js@2.0.4)(supports-color@10.2.2)
       vite: 8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
       vitefu: 1.1.3(vite@8.3.8(@types/node@26.6.7)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
     optionalDependencies:
